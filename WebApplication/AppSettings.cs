@@ -474,6 +474,14 @@ namespace WebApplication
             }
         }
 
+        public static bool ForceSSL
+        {
+            get
+            {
+                return bool.Parse(ConfigurationManager.AppSettings["ForceSSL"]);
+            }
+        }        
+
         public static string GoogleAPIKey
         {
             get

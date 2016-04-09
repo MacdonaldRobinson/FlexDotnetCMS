@@ -25,10 +25,15 @@ namespace WebApplication.Handlers
             get { return HttpContext.Current.Response; }
         }
 
-        public IHttpHandler GetHttpHandler(RequestContext requestContext)
+        private void AttemptToLoadFromCache()
         {
-            if (FrameworkSettings.CurrentUser == null && Request.HttpMethod == "GET" && AppSettings.EnableOutputCaching)
+            if(AppSettings.ForceSSL && !URIHelper.IsSSL())
             {
+                URIHelper.ForceSSL();
+            }
+
+            if (FrameworkSettings.CurrentUser == null && Request.HttpMethod == "GET" && AppSettings.EnableOutputCaching)
+            {                
                 var userSelectedVersion = RenderVersion.HTML;
 
                 if (BasePage.IsMobile)
@@ -52,6 +57,11 @@ namespace WebApplication.Handlers
                         BaseService.WriteHtml(cacheData + "<!-- Loaded from level 2 - File Cache -->");
                 }
             }
+        }
+
+        public IHttpHandler GetHttpHandler(RequestContext requestContext)
+        {
+            AttemptToLoadFromCache();
 
             virtualPath = URIHelper.GetCurrentVirtualPath().ToLower();
 
@@ -116,7 +126,15 @@ namespace WebApplication.Handlers
                     FormsAuthentication.RedirectToLoginPage();
                 }
 
-                if ((detail != null) && (detail.ForceSSL))
+                if(detail != null)
+                {
+                    if(URIHelper.ConvertAbsUrlToTilda(detail.AbsoluteUrl).Replace("~","") != Request.Url.AbsolutePath)
+                    {
+                        Response.Redirect(detail.AbsoluteUrl);
+                    }
+                }
+
+                if ((detail != null) && (detail.ForceSSL || AppSettings.ForceSSL))
                     URIHelper.ForceSSL();
                 else
                     URIHelper.ForceNonSSL();

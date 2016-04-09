@@ -8,7 +8,11 @@ namespace WebApplication.Admin
     {
         public AdminBasePage()
         {
-            URIHelper.ForceNonSSL();
+            if (AppSettings.ForceSSL)
+            {
+                URIHelper.ForceSSL();
+            }
+
             this.masterFilesDirPath = "~/Admin/Views/MasterPages/";
         }
 

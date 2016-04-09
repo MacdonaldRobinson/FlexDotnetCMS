@@ -1,7 +1,6 @@
 /packages/*
 /.vs/*
 /.git/*
-/WebApplication/Web.Release.config
 /WebApplication/obj/*
 /WebApplication/App_Data/Cache/*
 /WebApplication/App_Data/ElmahErrorLogs/*
@@ -15,3 +14,4 @@
 /WebApplication/Properties/PublishProfiles/*.pubxml
 /WebApplication/Properties/PublishProfiles/*.user
 /WebApplication/Properties/PublishProfiles/*.PublishSettings
+/WebApplication/Web.Release.config

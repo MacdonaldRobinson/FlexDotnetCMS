@@ -14,3 +14,4 @@
 /TinyFileManager.NET-master/TinyFileManager.NET/bin/*
 /WebApplication/Properties/PublishProfiles/*.pubxml
 /WebApplication/Properties/PublishProfiles/*.user
+/WebApplication/Properties/PublishProfiles/*.PublishSettings

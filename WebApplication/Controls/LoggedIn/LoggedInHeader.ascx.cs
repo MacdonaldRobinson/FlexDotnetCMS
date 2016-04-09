@@ -16,6 +16,10 @@ namespace WebApplication.Controls.OnLogin
 
                 QuickEditCurrentPage.NavigateUrl = WebApplication.BasePage.GetRedirectToMediaDetailUrl(BasePage.CurrentMediaDetail.MediaTypeID, BasePage.CurrentMediaDetail.MediaID) + "&masterFilePath=~/Admin/Views/MasterPages/Popup.Master";
             }
+            else
+            {
+                LoggedInHeaderPanel.Visible = false;
+            }
         }
 
         protected void EditCurrentPage_OnClick(object sender, EventArgs e)

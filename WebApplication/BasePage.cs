@@ -429,6 +429,9 @@ namespace WebApplication
         {
             get
             {
+                if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                    return null;
+
                 return frameworkBaseMedia.CurrentUser;
             }
             set

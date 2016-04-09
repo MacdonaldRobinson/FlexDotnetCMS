@@ -1,0 +1,25 @@
+﻿*
+{
+    margin: 0;
+    padding: 0;
+}
+
+div.clear
+{
+    clear: both;
+}
+
+.floatLeft
+{
+    float: left;
+}
+
+.floatRight
+{
+    float: right;
+}
+
+.comments .comments
+{
+    padding-left: 30px;
+}

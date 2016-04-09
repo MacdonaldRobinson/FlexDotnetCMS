@@ -1,0 +1,2223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>jQuery Plugin - Social Stream Documentation</title>
+<link rel="stylesheet" type="text/css" href="inc/layout.css" media="all" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="inc/js/jquery.plugins.js"></script>
+<script type="text/javascript" src="inc/js/jquery.site.js"></script>
+
+</head>
+
+<body>
+
+<!-- Begin Second Wrapper -->
+
+<div id="wrapper">
+ 
+  <div id="container"> 
+  <!-- Begin Question Block -->
+
+  <div class="opacity pad-btm">
+	<div id="banner">
+		<a href="http://www.designchemical.com/blog/index.php/premium-jquery-plugins/jquery-social-stream-plugin/"><img src="inc/images/banner.png" alt="" /></a>
+		<h1>jQuery Social Stream Plugin Documentation</h1>
+	</div>
+	<div id="nav-container">
+		<ul id="dctsp-nav">
+			<li><a href="index.html">Documentation</a></li>
+			<li><a href="example_1.html">Demo 1</a></li>
+			<li><a href="example_2.html">Demo 2</a></li>
+			<li><a href="example_3.html">Demo 3</a></li>
+			<li><a href="wall.html">Creating A Network Wall</a></li>
+			<li><a href="example_4.html">Demo 4</a></li><li><a href="example_5.html">Demo 5</a></li><li><a href="example_6.html">Demo 6</a></li>
+		</ul>
+		</div>
+	</div>
+	<div class="opacity pad-btm">
+	<div class="col-side">
+	
+	<div class="info">
+		Plugin: jQuery Social Stream<br />
+		By: <a href="http://codecanyon.net/user/designchemical">designchemical</a><br />
+		Created: 28th May 2015<br>
+		Version: 1.5.12
+	</div>
+	</div>
+	<div class="col-main">
+
+    <div class="info ">
+		<p>Thank you for purchasing the jQuery Social Stream plugin.<br />
+		If you have any questions that are beyond the scope of this help file, please feel free to send us an email using the contact form on our <a href="http://codecanyon.net/user/designchemical">codecanyon profile page</a>. We are also <a href="http://www.designchemical.com">available for hire</a> if you require any customisations or assistance with jQuery or Wordpress.
+	</div>
+    </div>
+	<div class="clear"></div>
+  </div>
+  
+  <div class="opacity">  
+  
+  <ul id="adverts">
+		<li><a href="http://www.designchemical.com/blog/index.php/premium-jquery-plugins/jquery-social-media-tabs-plugin/" target="_blank"><img src="inc/images/dcsmt_125.png" alt="jQuery Social Media Plugin" /></a></li>
+		<li><a href="http://www.designchemical.com/blog/index.php/premium-jquery-plugins/jquery-social-share-buttons-plugin/" target="_blank"><img src="inc/images/dcssb_125.png" alt="jQuery Social Share Buttons Plugin" /></a></li>
+		<li><a href="http://www.designchemical.com/blog/index.php/premium-wordpress-plugins/premium-wordpress-plugin-top-social-share-posts/" target="_blank"><img src="inc/images/dctsp_125.jpg" alt="WordPress Top Social Share Posts" /></a></li>
+	</ul>
+
+</div>
+  
+
+<div class="opacity">
+
+ <div class="title">
+    <h3>Setting Up The Plugin</h3>
+    
+  </div>
+
+  <!-- Begin Question Block -->
+<div class="toggle">
+
+	<h2 class="trigger"><span></span>Plugin Files</h2>
+	<div class="togglebox">
+	<div>
+		<p>The files that make up the plugin are:</p>
+		<ol>
+			<li>js/jquery.social.stream.1.5.12.js - main jQuery plugin file</li>
+			<li>js/jquery.social.stream.1.5.12.min.js - minified version of plugin file (41.1 kb vs 29.4 kb)</li>
+			<li>js/jquery.social.stream.wall.1.6.js - Additional file to be included when creating the social network wall</li>
+			<li>twitter.php - PHP file for Twitter authentication - required if creating a Twitter stream</li>
+			<li>facebook.php - PHP file for Facebook authentication - required if creating a Facebook page stream</li>
+			<li style="display:none;">facebook/ - facebook folder contains essential files for facebook feeds. The folder and its contents must also be uploaded to your server</li>
+			<li>css/dcsns_dark.css - plugin css style sheet for creating the dark skin rotating feed</li>
+			<li>css/dcsns_light.css - plugin css style sheet for creating the light skin rotating feed</li>
+			<li>css/dcsns_wall.css - plugin css style sheet for creating the social network wall</li>
+			<li>images - images folder contains images used by CSS</li>
+			<li>images/icons/ - the source for the icons used for the networks</li>
+			<li>inc/ - contains all files required by the documentation & demo pages - not directly related to plugin files</li>
+		</ol>
+
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+<div class="toggle">
+
+	<h2 class="trigger"><span></span>Installation</h2>
+	<div class="togglebox">
+	<div>
+		<p>The plugin requires the jQuery javascript library. So first thing is to add the jquery library from your preferred source. There are no specific requirements for this plugin so you are free to use any of the latest versions:</p>
+		<pre>&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"&gt;&lt;/script&gt;</pre>
+		<p>If you wish to display a social network wall include the following file:</p>
+		<pre>&lt;script type="text/javascript" src="js/jquery.social.stream.wall.1.6.js"&gt;&lt;/script&gt;</pre>
+		<p>Include the social stream plugin file:</p>
+		<pre>&lt;script type="text/javascript" src="js/jquery.social.stream.1.5.12.js"&gt;&lt;/script&gt;</pre>
+		<p>Finally, if you want to use the default styles then either include the dcsns.css file or copy/paste the CSS code to your site's style sheet:</p>
+		<pre>&lt;link rel="stylesheet" type="text/css" href="css/dcsns_dark.css" media="all" /&gt;</pre>
+		<h4>Twitter Stream</h4>
+		<p>If you are wanting to include Twitter you will also need to add the twitter.php file to your website - this can be found in the plugin folder. To set up your Twitter API credentials see <a href="#twitter-api">instructions below</a>.</p>
+		<h4>Facebook Stream</h4>
+		<p>If you are wanting to include Facebook page feeds you will also need to add the facebook.php file to your website - this can be found in the plugin folder. To set up your Facebook API credentials see <a href="#facebook-api">instructions below</a>.</p>
+		<p>The plugin is now ready to use!</p>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+
+<!-- Begin Question Block -->
+<div class="toggle">
+
+	<h2 class="trigger"><span></span>Quick Start</h2>
+	<div class="togglebox">
+	<div> 
+		<p>The easiest way to get started is to just initialize the plugin with the default settings and your relevant social network IDs.</p>
+		<h4>Important Notes</h4>
+		<p>Twitter - to set up your Twitter API credentials see <a href="#twitter-api">instructions below</a>.</p>
+		<p>Facebook - to set up your Facebook API credentials see <a href="#facebook-api">instructions below</a>.</p>
+		<p>Instagram - you will need to setup your own clientId and accessToken - see the <a href="#tag-position-instagram">Creating Your Own Instagram API Client ID & Access Token</a> section for step-by-step instructions on how to do this.</p>
+		<p>1. Insert the following jQuery into the head of your document (before the closing "head" tag) - dont forget to change the settings for your own social network profiles:</p>
+		<pre>&lt;script type="text/javascript"&gt;
+		$(document).ready(function($){
+	$('#social-stream').dcSocialStream({
+		feeds: {
+			twitter: {
+				id: 'designchemical'
+			},
+			rss: {
+				id: 'http://feeds.feedburner.com/DesignChemical'
+			},
+			stumbleupon: {
+				id: 'remix4'
+			},
+			facebook: {
+				id: '157969574262873'
+			},
+			google: {
+				id: '111470071138275408587'
+			},
+			delicious: {
+				id: 'designchemical'
+			},
+			vimeo: {
+				id: 'brad'
+			},
+			youtube: {
+				id: 'FilmTrailerZone/UUPPPrnT5080hPMxK1N4QSjA'
+			},
+			pinterest: {
+				id: 'designchemical'
+			},
+			flickr: {
+				id: ''
+			},
+			lastfm: {
+				id: 'lastfm'
+			},
+			dribbble: {
+				id: 'frogandcode'
+			},
+			deviantart: {
+				id: 'isacg'
+			},
+			tumblr: {
+				id: 'designchemical'
+			}
+		}
+	});
+});&lt;/script&gt;</pre>
+		<p>2. Add the following HTML to your page wherever you want the social feed or wall to appear:</p>
+		<pre>&lt;div id="social-stream"&gt;&lt;/div&gt;</pre>
+		<p>That's all there is to it! The social network stream will automatically be created when the page loads by combining all of the various feeds for the above profiles to create a single feed, displayed in a rotating ticker style list.</p>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+
+
+<!-- Begin Question Block -->
+<div class="toggle">
+	<h2 class="trigger"><span></span>What Is A Social Stream?</h2>
+	<div class="togglebox">
+	<div>
+		<p>The plugin creates a social stream, which is a single stream of items and updates created from all of your individual social network profiles, data feeds and APIs.</p>
+		<p>The social stream combines each different network and orders them by date, giving you a single, standardised feed showing your social interactions over time. This gives you more opportunities to present all of this information in more useful and interesting ways.</p>
+		<h4>Displaying your social stream</h4>
+		<p>The plugin includes 2 different features for you to display your social stream on your website - a rotating feed list plus the social network wall - more information provided on each feature in the following sections & demo pages.</p>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+</div>
+
+
+  <div class="opacity">
+     <div class="title">
+    <h3>Plugin Options</h3>
+  </div>
+  <!-- Begin Question Block -->
+  <div class="toggle">
+	<h2 id="link-options" class="trigger"><span></span>Plugin Options</h2>
+	<div class="togglebox">
+	<div>
+		<p>The plugin includes extensive options, which make the social stream highly customisable. Most of the settings do not need to be changed and the plugin will automatically use the default values where applicable.</p>
+		<p>The following list details the options available for customizing the plugin and the default values:</p>
+		
+<h4>General Settings</h4>
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="tbl">
+		<thead><tr>
+			<th class="first">Option</th>
+			<th>Default</th>
+			<th>Alternatives</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>remove:</td><td> '',</td><td></td><td>This option allows you to remove specific posts from the stream. To remove posts enter the URL of the post.  To remove multiple posts enter each URL separated by a comma - e.g<br /><br />
+		remove: 'https://twitter.com/designchemical/status/364012915533164544'</td></tr>
+<tr><td>twitterId:</td><td> '',</td><td></td><td>Enter your twitter username to be used when sharing posts via twitter - this will be added to the tweets as "via @username"</td></tr>
+<tr><td>days:</td><td> 30,</td><td></td><td>Maximum age of stream items in days'</td></tr>
+<tr><td>limit:</td><td> 50,</td><td></td><td>Maximum number of results to check/return for each social network'</td></tr>
+<tr><td>max:</td><td> 'days',</td><td>days, limit</td><td>Set whether to create the feed based on maximum days or number of results per network'</td></tr>
+<tr><td>external:</td><td> true,</td><td>true, false</td><td>Set to true to open all links in new browser window'</td></tr>
+<tr><td>speed:</td><td> 600,</td><td></td><td>Speed (in milliseconds) of animation'</td></tr>
+<tr><td>height:</td><td> 520,</td><td></td><td>Height in pixels of stream container'</td></tr>
+<tr><td>wall:</td><td> false,</td><td>'true, false</td><td>Set to true to output the social stream as an isotope powered social network wall</td></tr>
+<tr><td>center:</td><td> false,</td><td>'true, false</td><td>Set to true to center the wall feed items in the page</td></tr>
+<tr><td>order:</td><td> 'date',</td><td>date, random</td><td>Set to random to order wall feed items randomly as opposed to by date</td></tr>
+<tr><td>filter:</td><td> true,</td><td>true, false</td><td>Set to true to include a filter navigation allowing the user to filter specific social networks'</td></tr>
+<tr><td>controls:</td><td> true,</td><td>true, false</td><td>Set to true to include links for controlling feed rotator'</td></tr>
+<tr><td>rotate: {</td><td>&nbsp;</td><td></td><td>Feed rotator options'</td></tr>
+<tr><td>direction:</td><td>'up',</td><td>up, down</td><td>Direction for content rotation'</td></tr>
+<tr><td>delay:</td><td>8000,</td><td></td><td>Delay in milliseconds between rotations - if set to 0 the automatic rotation effect is disabled'</td></tr>
+<tr><td>},</td><td>&nbsp;</td><td></td><td>'</td></tr>
+
+<tr><td>transition:</td><td>'0.8s',</td><td></td><td>Time in seconds for the isotope animation speed</td></tr>
+<tr><td>},</td><td>&nbsp;</td><td></td><td>'</td></tr>
+
+<tr><td>cache:</td><td> true,</td><td>true, false</td><td>Set to true to cache AJAX response, set to false to force response not to be cached by the browser'</td></tr>
+<tr><td>container:</td><td> 'dcsns',</td><td></td><td>CSS class of main element'</td></tr>
+<tr><td>cstream:</td><td> 'stream',</td><td></td><td>CSS class of stream ul tag'</td></tr>
+<tr><td>content:</td><td> 'dcsns-content',</td><td></td><td>CSS class of main content wrapper'</td></tr>
+<tr><td>iconPath:</td><td> 'images/icons/',</td><td></td><td>Path for social network icons for feed items'</td></tr>
+<tr><td>imagePath:</td><td> 'images/icons/',</td><td></td><td>Path for filter icon images'</td></tr>
+<tr><td>debug:</td><td> false</td><td>true, false</td><td>Set to true to include returned error messages in feed items'</td></tr>
+
+</tbody>
+	</table>
+
+	<h3>Feed Options</h3>
+	<p>The social stream network feed sources can be set using the plugin's "feeds" option followed by the supported network detail options:</p>
+<h4>Twitter Options</h4>
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="tbl">
+		<thead><tr>
+			<th class="first">Option</th>
+			<th>Default</th>
+			<th>Alternatives</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+<tr><td>twitter: {</td><td>&nbsp;</td><td></td><td>Twitter'</td></tr>
+<tr><td>id:</td><td> '',</td><td></td><td>Twitter has 3 different feed options:<br /><br />
+<ol><li><strong>Tweets from a specific user name -</strong><br />Enter the required user name (minus the "@" symbol) -<br />e.g. "designchemical"</li><li><strong>Tweets from a list -</strong><br />To show a list enter "/" followed by the list ID you want to display -<br />e.g. "/9927875"</li><li><strong>Tweets from a search -</strong><br />Enter "#" followed by the search term -<br />e.g. "#designchemical"</li></ol></td></tr>
+<tr><td>retweets</td><td>false</td><td>true, false</td><td>Set to "true" to include retweets</td></tr>
+<tr><td>replies</td><td>false</td><td>true, false</td><td>Set to "true" to include replies</td></tr>
+<tr><td>intro:</td><td> 'Tweeted',</td><td></td><td>Feed item intro text</td></tr>
+<tr><td>search:</td><td> 'Tweeted',</td><td></td><td>Search item intro text</td></tr>
+<tr><td>out:</td><td> 'intro,date,text,user,share',</td><td>intro, title, text, user, share</td><td>Stream item output - content blocks & order'</td></tr>
+<tr><td>images:</td><td> '',</td><td>thumb, small, medium, large</td><td>Option to show twitter images. Enter one of the sizes to include the image when available or leave blank to exclude images. Image sizes are:<br />
+<br />
+<ol>
+<li>thumb - w: 150 h: 150px</li>
+<li>small - w: 340 h 150px</li>
+<li>medium - w: 600 h: 264px</li>
+<li>large - w: 786 h: 346px</li>
+</ol>
+</td></tr>
+<tr><td>url</td><td>twitter.php</td><td></td><td>The path &amp; file name for the Twitter Authentication file - default file name is "twitter.php"<br /><strong>IMPORTANT - this is required for all Twitter feeds</strong></td></tr>
+<tr><td>icon:</td><td> 'twitter.png'</td><td></td><td>Icon file name'</td></tr>
+<tr><td>},</td><td>&nbsp;</td><td></td><td>'</td></tr>
+</tbody>
+</table>
+
+<h4>Facebook Page</h4>
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="tbl">
+		<thead><tr>
+			<th class="first">Option</th>
+			<th>Default</th>
+			<th>Alternatives</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+<tr><td>facebook: {</td><td>&nbsp;</td><td></td><td>Facebook'</td></tr>
+<tr><td>id:</td><td> '',</td><td></td><td>Facebook has 2 different ID options:<br /><br />
+<ol><li><strong>Facebook page wall posts -</strong><br />Enter the page ID</li>
+<li><strong>Facebook page gallery images -</strong><br />Enter the text you would like to show for the facebook gallery name followed by "/" followed by the page gallery ID -<br />e.g. "Facebook Timeline/376995711728"</li></ol></td></tr>
+<tr><td>intro:</td><td> 'Posted to wall',</td><td></td><td>Feed item intro text'</td></tr>
+<tr><td>out:</td><td> 'intro,thumb,title,text,user,share',</td><td>intro, thumb, title, text, user, share</td><td>Stream item output - content blocks &amp; order'</td></tr>
+
+<tr><td>comments:</td><td>3</td><td></td><td>Enter the maximum number of comments to display for facebook page gallery images - maximum value = 25.</td></tr>
+<tr><td>image_width:</td><td>6</td><td>3, 4, 5, 6</td><td>Enter the image size for facebook gallery images:<br />
+<br />
+<ol>
+<li>3 - w: 600px</li>
+<li>4 - w: 480px</li>
+<li>5 - w: 320px</li>
+<li>6 - w: 180px</li>
+</ol></td></tr>
+<tr><td>url</td><td>facebook.php</td><td></td><td>The path &amp; file name for the Facebook Authentication file - default file name is "facebook.php"<br /><strong>IMPORTANT - this is required for all Facebook page feeds</strong></td></tr>
+<tr><td>feed</td><td>'feed'</td><td>feed,posts</td><td>feed = show all posts on the facebook page, including those by other users, posts = show only those posts made by the page admin</strong></td></tr>
+<tr><td>icon:</td><td> 'facebook.png'</td><td></td><td>Icon file name'</td></tr>
+<tr><td>},</td><td>&nbsp;</td><td></td><td>'</td></tr>
+</tbody>
+</table>
+
+<h4>Google +1 Options</h4>
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="tbl">
+		<thead><tr>
+			<th class="first">Option</th>
+			<th>Default</th>
+			<th>Alternatives</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+<tr><td>google: {</td><td>&nbsp;</td><td></td><td>Google +1'</td></tr>
+<tr><td>id:</td><td> '',</td><td></td><td>Google +1 profile IDs'</td></tr>
+<tr><td>intro:</td><td> 'Shared',</td><td></td><td>Feed item intro text'</td></tr>
+<tr><td>out:</td><td> 'intro,thumb,title,text,share',</td><td>intro, thumb, title, text, share</td><td>Stream item output - content blocks & order'</td></tr>
+<tr><td>api_key:</td><td> '',</td><td></td><td>Google +1 API Key - REQUIRED</td></tr>
+<tr><td>image_height:</td><td> 90,</td><td></td><td>Google +1 Thumbnail height</td></tr>
+<tr><td>image_width:</td><td> 90,</td><td></td><td>Google +1 Thumbnail width</td></tr>
+<tr><td>shares:</td><td> true,</td><td>true, false</td><td>Include share stats'</td></tr>
+<tr><td>icon:</td><td> 'google.png'</td><td></td><td>Icon file name'</td></tr>
+<tr><td>},</td><td>&nbsp;</td><td></td><td>'</td></tr>
+</tbody>
+</table>
+
+<h4>Youtube Options</h4>
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="tbl">
+		<thead><tr>
+			<th class="first">Option</th>
+			<th>Default</th>
+			<th>Alternatives</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+<tr><td>youtube: {</td><td>&nbsp;</td><td></td><td>YouTube'</td></tr>
+<tr><td>id:</td><td> '',</td><td></td><td>Youtube has 2 different ID options:<br /><br />
+<ol><li><strong>Videos from a specific play list ID or Channel ID -</strong><br />Enter the text you would like to show for the feed profile name followed by / followed by the required list ID -<br />e.g. "My Youtube Feed/UUPPPrnT5080hPMxK1N4QSjA"</li>
+<li>To get your youtube list ID from a profile name we have created a simple online tool - <a href="http://designchemical.com/lab/sandbox/youtube_id.html" target="_blank">How to get your Youtube ID</a></li>
+<li><strong>Videos from a search -</strong><br />Enter "#" followed by the search term -<br />e.g. "#designchemical"</li>
+</ol>
+<p>Note: The maximum limit for each youtube feed is 50 - if the limit option is set higher than 50 the plugin will automatically use 50 for youtube feeds.</p></td></tr>
+<tr><td>intro:</td><td> 'Uploaded',</td><td></td><td>Feed item intro text'</td></tr>
+<tr><td>search:</td><td> 'Search',</td><td></td><td>Search item intro text</td></tr>
+<tr><td>out:</td><td> 'intro,thumb,title,text,share',</td><td>intro, thumb, title, text, user, share</td><td>Stream item output - content blocks & order'</td></tr>
+<tr><td>api_key:</td><td> '',</td><td></td><td>Youtube API Key - REQUIRED. See Social Networks Details -> Creating Your Own Youtube API Key</td></tr>
+<tr><td>thumb:</td><td> 'medium',</td><td>default, medium, high, standard</td><td>Size of thumbnail image - default 120 x 90, medium 320 x 180, high 480 x 360, standard 640 x 480</td></tr>
+<tr><td>icon:</td><td> 'youtube.png'</td><td></td><td>Icon file name'</td></tr>
+<tr><td>},</td><td>&nbsp;</td><td></td><td>'</td></tr>
+</tbody>
+</table>
+
+
+<h4>Flickr Options</h4>
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="tbl">
+		<thead><tr>
+			<th class="first">Option</th>
+			<th>Default</th>
+			<th>Alternatives</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+<tr><td>flickr: {</td><td>&nbsp;</td><td></td><td>Flickr'</td></tr>
+<tr><td>id:</td><td> '',</td><td></td><td>Flickr has 2 different ID options:<br /><br />
+<ol><li><strong>Uploads from a specific user name -</strong><br />Enter the required user name -</li><li><strong>Images from a group -</strong><br />Enter "/" followed by the flickr group ID -</li></ol></td></tr>
+<tr><td>out:</td><td> 'intro,thumb,title,text,share',</td><td>intro, thumb, title, text, share</td><td>Stream item output - content blocks & order'</td></tr>
+<tr><td>lang:</td><td> 'en-us',</td><td></td><td>Language'</td></tr>
+<tr><td>icon:</td><td> 'flickr.png'</td><td></td><td>Icon file name'</td></tr>
+<tr><td>},</td><td>&nbsp;</td><td></td><td>'</td></tr>
+
+</tbody>
+</table>
+
+
+<h4>Delicious Options</h4>
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="tbl">
+		<thead><tr>
+			<th class="first">Option</th>
+			<th>Default</th>
+			<th>Alternatives</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+<tr><td>delicious: {</td><td>&nbsp;</td><td></td><td>Delicious'</td></tr>
+<tr><td>id:</td><td> '',</td><td></td><td>Delicious usernames'</td></tr>
+<tr><td>intro:</td><td> 'Bookmarked',</td><td></td><td>Feed item intro text'</td></tr>
+<tr><td>out:</td><td> 'intro,thumb,title,text,user,share',</td><td>intro, thumb, title, text, user, share</td><td>Stream item output - content blocks & order'</td></tr>
+<tr><td>icon:</td><td> 'delicious.png'</td><td></td><td>Icon file name'</td></tr>
+<tr><td>},</td><td>&nbsp;</td><td></td><td>'</td></tr>
+</tbody>
+</table>
+
+<h4>Pinterest Options</h4>
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="tbl">
+		<thead><tr>
+			<th class="first">Option</th>
+			<th>Default</th>
+			<th>Alternatives</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+<tr><td>pinterest: {</td><td>&nbsp;</td><td></td><td>Pinterest'</td></tr>
+<tr><td>id:</td><td> '',</td><td></td><td>Pinterest has 2 different ID options:<br /><br />
+<ol><li><strong>Posts for a user name -</strong><br />Enter the required user name</li><li><strong>Posts for a specific user board -</strong><br />Enter the user name followed by "/" and then the board name - e.g. designchemical/design-ideas</li></ol></td></tr>
+<tr><td>intro:</td><td> 'Pinned',</td><td></td><td>Feed item intro text'</td></tr>
+<tr><td>out:</td><td> 'intro,thumb,title,text,user,share',</td><td>intro, thumb, title, text, user, share</td><td>Stream item output - content blocks & order'</td></tr>
+<tr><td>icon:</td><td> 'pinterest.png'</td><td></td><td>Icon file name'</td></tr>
+<tr><td>},</td><td>&nbsp;</td><td></td><td>'</td></tr>
+</tbody>
+</table>
+<h4>RSS Feed Options</h4>
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="tbl">
+		<thead><tr>
+			<th class="first">Option</th>
+			<th>Default</th>
+			<th>Alternatives</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+<tr><td>rss: {</td><td>&nbsp;</td><td></td><td>RSS Feed'</td></tr>
+<tr><td>id:</td><td> '',</td><td></td><td>RSS feed URLs'</td></tr>
+<tr><td>intro:</td><td> 'Posted',</td><td></td><td>Feed item intro text'</td></tr>
+<tr><td>out:</td><td> 'intro,thumb,title,text,share',</td><td>intro, title, text, share</td><td>Stream item output - content blocks & order'</td></tr>
+<tr><td>text:</td><td>'contentSnippet'</td><td>'content', 'contentSnippet'</td><td>Select the RSS element to use in the feed output. 'content' will output complete wall post text including any images. 'contentSnippet' (default) shows brief introduction.</td></tr>
+<tr><td>icon:</td><td> 'rss.png'</td><td></td><td>Icon file name'</td></tr>
+<tr><td>},</td><td>&nbsp;</td><td></td><td>'</td></tr>
+</tbody>
+</table>
+<h4>Last.fm Options</h4>
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="tbl">
+		<thead><tr>
+			<th class="first">Option</th>
+			<th>Default</th>
+			<th>Alternatives</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+<tr><td>lastfm: {</td><td>&nbsp;</td><td></td><td>Last.fm'</td></tr>
+<tr><td>id:</td><td> '',</td><td></td><td>Last.fm usernames'</td></tr>
+<tr><td>intro:</td><td> 'Listened to,Loved,Replied',</td><td></td><td>Feed item intro text'</td></tr>
+<tr><td>out:</td><td> 'intro,thumb,title,text,user,share',</td><td>intro, thumb, title, text, user, share</td><td>Stream item output - content blocks & order'</td></tr>
+<tr><td>feed:</td><td> 'recenttracks,lovedtracks,replytracker',</td><td>lovedtracks, recenttracks, replytracker</td><td>Feed type. Options include lovedtracks: A feed of tracks a user has loved, recenttracks:  10 recently played tracks for this profile, replytracker:  A feed of replies to a user's forum posts and journal comments'</td></tr>
+<tr><td>icon:</td><td> 'lastfm.png'</td><td></td><td>Icon file name'</td></tr>
+<tr><td>},</td><td>&nbsp;</td><td></td><td>'</td></tr>
+</tbody>
+</table>
+
+<h4>Dribbble Options</h4>
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="tbl">
+		<thead><tr>
+			<th class="first">Option</th>
+			<th>Default</th>
+			<th>Alternatives</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+<tr><td>dribbble: {</td><td>&nbsp;</td><td></td><td>Dribbble'</td></tr>
+<tr><td>id:</td><td> '',</td><td></td><td>'</td></tr>
+<tr><td>intro:</td><td> 'Posted shot,Liked',</td><td></td><td>Feed item intro text'</td></tr>
+<tr><td>out:</td><td> 'intro,thumb,title,text,user,share',</td><td>intro, thumb, title, text, user, share</td><td>Stream item output - content blocks & order'</td></tr>
+<tr><td>feed:</td><td> 'shots,likes',</td><td>shots, likes</td><td>Feed type. Options include latest shots or latest likes'</td></tr>
+<tr><td>icon:</td><td> 'dribbble.png'</td><td></td><td>Icon file name'</td></tr>
+<tr><td>},</td><td>&nbsp;</td><td></td><td>'</td></tr>
+
+</tbody>
+</table>
+
+<h4>Vimeo Options</h4>
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="tbl">
+		<thead><tr>
+			<th class="first">Option</th>
+			<th>Default</th>
+			<th>Alternatives</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+<tr><td>vimeo: {</td><td>&nbsp;</td><td></td><td>Vimeo'</td></tr>
+<tr><td>id:</td><td> '',</td><td></td><td>'</td></tr>
+<tr><td>intro:</td><td> 'Liked,Video,Appeared In,Video,Album,Channel,Group',</td><td></td><td>Feed item intro text'</td></tr>
+<tr><td>out:</td><td> 'intro,thumb,title,text,user,share',</td><td>intro, thumb, title, text, user, share</td><td>Stream item output - content blocks & order'</td></tr>
+<tr><td>feed:</td><td> 'likes,videos,appears_in,all_videos,albums,channels,groups',</td><td>likes, videos, appears_in, all_videos, albums, channels, groups</td><td>likes = Most recent likes, videos = Videos created by user, appears_in = Videos that the user appears in, all_videos = Videos that the user appears in and created, albums = Albums the user has created, channels = Channels the user has created and subscribed to, groups = Groups the user has created and joined'</td></tr>
+<tr><td>thumb:</td><td> 'medium',</td><td>small, medium, large</td><td>Size of thumbnail image - small = 100px wide, medium = 200px, large = 640px'</td></tr>
+<tr><td>stats:</td><td> true,</td><td>true, false</td><td>If set to true the feed will include statistics - e.g. number of likes, views, comments, etc'</td></tr>
+<tr><td>icon:</td><td> 'vimeo.png'</td><td></td><td>Icon file name'</td></tr>
+<tr><td>},</td><td>&nbsp;</td><td></td><td>'</td></tr>
+</tbody>
+</table>
+
+<h4>Stumbleupon</h4>
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="tbl">
+		<thead><tr>
+			<th class="first">Option</th>
+			<th>Default</th>
+			<th>Alternatives</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+<tr><td>stumbleupon: {</td><td>&nbsp;</td><td></td><td>Stumbleupon'</td></tr>
+<tr><td>id:</td><td> '',</td><td></td><td>Stumbleupon usernames'</td></tr>
+<tr><td>intro:</td><td> 'Shared,Reviewed',</td><td></td><td>Feed item intro text'</td></tr>
+<tr><td>out:</td><td> 'intro,thumb,title,text,user,share',</td><td>intro, thumb, title, text, user, share</td><td>Stream item output - content blocks & order'</td></tr>
+<tr><td>feed:</td><td> 'favorites,reviews',</td><td>favorites, reviews</td><td>favorites = The sites you thumbed up, reviews = Reviews you have written'</td></tr>
+<tr><td>icon:</td><td> 'stumbleupon.png'</td><td></td><td>Icon file name'</td></tr>
+<tr><td>},</td><td>&nbsp;</td><td></td><td>'</td></tr>
+</tbody>
+</table>
+
+<h4>Deviantart</h4>
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="tbl">
+		<thead><tr>
+			<th class="first">Option</th>
+			<th>Default</th>
+			<th>Alternatives</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+<tr><td>deviantart: {</td><td>&nbsp;</td><td></td><td>Deviantart'</td></tr>
+<tr><td>id:</td><td> '',</td><td></td><td>Deviantart usernames'</td></tr>
+<tr><td>intro:</td><td> 'Deviation',</td><td></td><td>Feed item intro text'</td></tr>
+<tr><td>out:</td><td> 'intro,thumb,title,text,user,share',</td><td>intro, thumb, title, text, user, share</td><td>Stream item output - content blocks & order'</td></tr>
+<tr><td>icon:</td><td> 'deviantart.png'</td><td></td><td>Icon file name'</td></tr>
+<tr><td>}</td><td>&nbsp;</td><td></td><td>'</td></tr>
+</tbody>
+</table>
+
+<h4>Tumblr</h4>
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="tbl">
+		<thead><tr>
+			<th class="first">Option</th>
+			<th>Default</th>
+			<th>Alternatives</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+<tr><td>tumblr: {</td><td>&nbsp;</td><td></td><td>Tumblr'</td></tr>
+<tr><td>id:</td><td> '',</td><td></td><td>Tumblr usernames'</td></tr>
+<tr><td>intro:</td><td> 'Posted',</td><td></td><td>Feed item intro text'</td></tr>
+<tr><td>out:</td><td> 'intro,title,text,user,share',</td><td>intro, title, text, user, share</td><td>Stream item output - content blocks & order'</td></tr>
+<tr><td>thumb:</td><td> '100',</td><td>75, 100, 250, 400, 500, 1280</td><td>Width of thumbnail image</td></tr>
+<tr><td>video:</td><td> '250',</td><td>400, 500, 250</td><td>Width of video player for video type posts</td></tr>
+<tr><td>icon:</td><td> 'tumblr.png'</td><td></td><td>Icon file name'</td></tr>
+<tr><td>}</td><td>&nbsp;</td><td></td><td>'</td></tr>
+</tbody>
+</table>
+
+<h4>Instagram - REQUIRES CLIENT ID AND ACCESS TOKEN</h4>
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="tbl">
+		<thead><tr>
+			<th class="first">Option</th>
+			<th>Default</th>
+			<th>Alternatives</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+<tr><td>instagram: {</td><td>&nbsp;</td><td></td><td>Instagram'</td></tr>
+<tr><td>id:</td><td> '',</td><td></td><td>
+			<p>Instagram can hande 4 different types of network feed ID - search, tags, user ID and a location ID:</p>
+			<ol>
+				<li><strong>Search - </strong><br />This will return instagram posts based on a geographical location, which is defined by a latitude & longitude plus a distance. To enter a search ID start with the character "?" followed by the latitude, longitude and distance in meters (up to a maximum of 5000) all separated by a "/"<br />
+				e.g. ?55.5/0/20</li>
+				<li><strong>Tags - </strong><br />To search by tag start with the character "#" followed by the tag<br />
+				e.g. #london</li>
+				<li><strong>User ID - </strong><br />To show latest posts by user start the ID with a "!" followed by the user's profile ID<br />e.g. !12345</li>
+				<li><strong>Location ID - </strong><br />To show latest posts by a location ID start with a "@" followed by the ID<br />e.g. @12345</li>
+			</ol>
+			<p>As with all networks multiple feeds can be entered by separating each feed ID with a comma:<br />
+			e.g. id: '?50.3/40.8/10,#london,!12345,@12345'</p>
+			</td></tr>
+<tr><td>intro:</td><td> 'Posted',</td><td></td><td>Feed item intro text'</td></tr>
+<tr><td>search:</td><td> 'Search',</td><td></td><td>Search item intro text</td></tr>
+<tr><td>out:</td><td> 'intro,thumb,text,user,share,meta',</td><td>intro, thumb, text, user, share, meta</td><td>Stream item output - content blocks & order'</td></tr>
+<tr><td>accessToken:</td><td> '',</td><td></td><td>(See Section - Creating Your Own Instagram API Client ID) Access token created from the authorisation of your OAuth Client</td></tr>
+<tr><td>redirectUrl:</td><td> '',</td><td></td><td>(See Section - Creating Your Own Instagram API Client ID)The URL entered as the redirect URL when registering your new OAuth Client in the instagram API setup</td></tr>
+<tr><td>clientId:</td><td> '',</td><td></td><td>(See Section - Creating Your Own Instagram API Client ID)Client ID for API created after registering your new OAuth Client in the instagram API setup</td></tr>
+<tr><td>comments:</td><td> 0,</td><td></td><td>Enter the maximum number of comments to display for each instagram image. Set to zero to disable comments.</td></tr>
+<tr><td>likes:</td><td> 0,</td><td></td><td>Enter the maximum number of profile thumbnails to display for users who have liked a post. Set to zero to disable likes.</td></tr>
+<tr><td>thumb:</td><td> 'low_resolution',</td><td>low_resolution, thumbnail, standard_resolution</td><td>Width & Height of image - low_resolution 306, thumbnail 150, standard_resolution 612</td></tr>
+<tr><td>icon:</td><td> 'instagram.png'</td><td></td><td>Icon file name'</td></tr>
+<tr><td>}</td><td>&nbsp;</td><td></td><td>'</td></tr>
+</tbody>
+</table>
+
+
+	<h4>Using The Plugin Options</h4>
+	<p>Any of the options can be changed by setting the new values when the plugin is initialized. To change an option, include the parameter and it's new value in the initialisation code - e.g.</p>
+	<pre>$(document).ready(function($){
+	$('#social-stream').dcSocialStream({
+				feeds: {
+					facebook: {
+						id: '',
+						intro: 'Posted',
+						out: 'intro,thumb,title,text,user,share',
+						comments: 3,
+						image_width: 6, //3 = 600 4 = 480 5 = 320 6 = 180
+						url: 'facebook.php',
+						thumb:true,
+						icon: 'facebook.png'
+					},
+					twitter: {
+						id: '',
+						intro: 'Tweeted',
+						search: 'Tweeted',
+						out: 'intro,thumb,text,share',
+						retweets: false,
+						replies: false,
+						images: '', // large w: 786 h: 346, thumb w: 150 h: 150, medium w: 600 h: 264, small w: 340 h 150
+						url: 'twitter.php',
+						icon: 'twitter.png'
+					},
+					google: {
+						id: '',
+						intro: 'Shared',
+						out: 'intro,thumb,title,text,share',
+						api_key: '',
+						image_height: 75,
+						image_width: 75,
+						shares: true,
+						icon: 'google.png'
+					},
+					youtube: {
+						id: '',
+						intro: 'Uploaded',
+						profile: '',
+						search: 'Search',
+						out: 'intro,thumb,title,text,user,share',
+						api_key: 'AIzaSyCFSB5p2xsmTo-dGz5y7gmZonB7M93hvVc',
+						thumb: 'default',
+						icon: 'youtube.png'
+					},
+					flickr: {
+						id: '',
+						intro: 'Uploaded',
+						out: 'intro,thumb,title,text,share',
+						lang: 'en-us',
+						icon: 'flickr.png'
+					},
+					delicious: {
+						id: '',
+						intro: 'Bookmarked',
+						out: 'intro,thumb,title,text,user,share',
+						icon: 'delicious.png'
+					},
+					pinterest: {
+						id: '',
+						intro: 'Pinned',
+						out: 'intro,thumb,text,user,share',
+						icon: 'pinterest.png'
+					},
+					rss: {
+						id: '',
+						intro: 'Posted',
+						out: 'intro,title,text,share',
+						text: 'contentSnippet',
+						icon: 'rss.png'
+					},
+					lastfm: {
+						id: '',
+						intro: 'Listened to,Loved,Replied',
+						out: 'intro,thumb,title,text,user,share',
+						feed: 'recenttracks,lovedtracks,replytracker',
+						icon: 'lastfm.png'
+					},
+					dribbble: {
+						id: '',
+						intro: 'Posted,Liked',
+						out: 'intro,thumb,title,text,user,share',
+						feed: 'shots,likes',
+						icon: 'dribbble.png'
+					},
+					vimeo: {
+						id: '',
+						intro: 'Liked,Video,Appeared In,Video,Album,Channel,Group',
+						out: 'intro,thumb,title,text,user,share',
+						feed: 'likes,videos,appears_in,all_videos,albums,channels,groups',
+						thumb: 'medium',
+						stats: true,
+						icon: 'vimeo.png'
+					},
+					stumbleupon: {
+						id: '',
+						intro: 'Shared,Reviewed',
+						out: 'intro,thumb,title,text,user,share',
+						feed: 'favorites,reviews',
+						icon: 'stumbleupon.png'
+					},
+					deviantart: {
+						id: '',
+						intro: 'Deviation',
+						out: 'intro,thumb,title,text,user,share',
+						icon: 'deviantart.png'
+					},
+					tumblr: {
+						id: '',
+						intro: 'Posted',
+						out: 'intro,title,text,user,share',
+						thumb: 100,
+						video: 250,
+						icon: 'tumblr.png'
+					},
+					instagram: {
+						id: '',
+					    intro: 'Posted',
+						search: 'Search',
+					    out: 'intro,thumb,text,user,share,meta',
+						accessToken: '',
+						redirectUrl: '',
+						clientId: '',
+						thumb: 'low_resolution',
+					    comments: 3,
+						likes: 8,
+						icon: 'instagram.png'
+					}
+				},
+				twitterId: '',
+				days: 10,
+				limit: 50,
+				max: 'days',
+				external: true,
+				speed: 600,
+				height: 550,
+				wall: false,
+				order: 'date',
+				filter: true,
+				controls: true,
+				rotate: {
+					direction: 'up',
+					delay: 8000
+				},
+				cache: true,
+				container: 'dcsns',
+				cstream: 'stream',
+				content: 'dcsns-content',
+				iconPath: 'images/dcsns-dark/',
+				imagePath: 'images/dcsns-dark/',
+				debug: false
+	});
+});</pre>
+<p>Options that are not included in the initialisation code will automatically use the default values.</p>
+<p><strong>NOTE: Social network ID's do not have default values. Valid profile IDs must be specified when the plugin is initialised.</strong></p>
+	</div>
+	</div>
+  </div>
+  <!-- End Question Block -->
+
+  <!-- Begin Question Block -->
+  <div class="toggle">
+	<h2 id="tag-position" class="trigger"><span></span>Feed Item Share Links</h2>
+	<div class="togglebox">
+	<div>
+		<p>Each feed item includes share links for facebook, twitter, google + and linkedin - this allows your visitors to quickly and easily share your wall content via both social networks.</p>
+		<p>For twitter posts the facebook and twitter share links are replaced by the standard twitter reply, retweet and favourite links.</p>
+		<p>To remove share options from specific social networks remove "share" from the "out" option for the relevant feed - e.g. to remove from pinterest use:</p>
+		<p><strong>Default Option Setting<strong>
+		<pre>
+		pinterest: {
+			id: 'username',
+			out: 'intro,thumb,title,text,user,share',
+		}
+		</pre>
+		</p>
+		<p><strong>Change To<strong>
+		<pre>
+		pinterest: {
+			id: 'username',
+			out: 'intro,thumb,title,text,user',
+		}
+		</pre>
+		</p>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+  <div class="toggle">
+	<h2 id="tag-position" class="trigger"><span></span>Displaying Your Social Stream</h2>
+	<div class="togglebox">
+	<div>
+		<p>The plugin includes 2 features for displaying your social network stream. Both features use the same options and set up for generating the social stream items, only the method of displaying the output is different.</p>
+		<h4>Rotating Feed (Default option)</h4>
+		<p>The rotating feed feature generates a standard list of your social stream items, which can be set to display as a rotating/looping feed or as a standard, static list. The list includes a filter feature for enabling/disabling individual network items.</p>
+		<p>The plugin files also include 2 style options for the feed - light & dark:</p>
+
+		<p><img src="inc/images/stream_dark.png" alt="" class="img-left" /><img src="inc/images/stream_light.png" alt="" class="img-left" /></p>
+		<div class="clear"></div>
+		<p>For details and code samples on how to create the rotating feed see demos below.</p>
+		<h4>Social Network Wall</h4>
+		<p>The social network wall feature creates a full width display of feed items, ordered by date and laid out using the jQuery isotope plugin. The wall also includes an animated filter system, which allows the user to select any of the available social networks. The social network wall shows all items at the same time and offers an interesting way for your users to view your network interaction over time.</p>
+		<p><img src="inc/images/wall.png" alt="" /></p>
+		<p>For details and code samples on how to create the social network wall see demos below.</p>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+
+<!-- Begin Question Block -->
+  <div class="toggle">
+	<h2 id="tag-position" class="trigger"><span></span>Including Multiple Feeds For Each Social Network</h2>
+	<div class="togglebox">
+	<div>
+		<p>There are no limits on the number of feeds that can be added to the social stream for each social network. To add multiple feeds include the relevant social network IDs as a comma-separated list.</p>
+		<p>Example - Create a social stream, which combines 3 twitter users, a twitter list and a search for "designchemical" into one single feed:</p>
+	
+		<ul>
+			<li>User 1: designchemical</li>
+			<li>User 2: wordpress</li>
+			<li>User 3: jquery</li>
+			<li>List ID: 9927875</li>
+			<li>Search Term: designchemical</li>
+		</ul>
+		
+		<pre>$('#social-stream').dcSocialStream({
+	feeds: {
+		twitter: {
+			id: 'designchemical,wordpress,jquery,/9927875,#designchemical'
+		}
+	}
+});</pre>
+
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+  <div class="toggle">
+	<h2 id="tag-position" class="trigger"><span></span>Customising the Stream Content</h2>
+	<div class="togglebox">
+	<div>
+		<p>The plugin uses a basic template system, which offers some options to add/remove content from the stream items as well as change the order in which these content blocks appear. This can be modified using the "out" option.</p>
+		<p>Each feed (with a couple of exceptions) has the following content blocks:</p>
+	
+			<p class="clear img-left"><img src="inc/images/feed_item_1.png" alt="Feed Item" /></p>
+			
+			<p><strong>intro:</strong><br />Brief text with the age of the feed item created using the "intro" option for the network + the age of the item based on the published date from the social network.</p>
+			<div class="clear"></div>
+			<p class="clear img-left"><img src="inc/images/feed_item_2.png" alt="Feed Item" /></p>
+			<p><strong>thumb:</strong><br />Any thumbnail image available in the feed</p>
+			<div class="clear"></div>
+			<p class="clear img-left"><img src="inc/images/feed_item_3.png" alt="Feed Item" /></p>
+			<p><strong>title:</strong><br />The feed item title (including link to original article)</p>
+			<div class="clear"></div>
+			<p class="clear img-left"><img src="inc/images/feed_item_4.png" alt="Feed Item" /></p>
+			<p><strong>text:</strong><br />Any additional content text/summary - availability of useful additional text varies between social networks</p>
+			<p><strong>user:</strong><br />User name of the feed profile, including link to user profile page</p>
+		<div class="clear"></div>
+		<p class="clear img-left"><img src="inc/images/facebook.png" alt="Facebook" /></p>
+		<p>The plugin will add content based on the blocks listed in the "out" option and in the order in which they are written. E.g. to output latest facebook wall posts showing only the intro and title use:</p>
+		
+		
+		<pre style="width:420px; float:left;clear:none;">$('#social-stream').dcSocialStream({
+	feeds: {
+		facebook: {
+			id: '157969574262873',
+			intro: 'Posted to wall',
+			out: 'intro,title'
+		}
+	}
+});</pre>
+<div class="clear"></div>
+<p class="clear img-left"><img src="inc/images/pinterest.png" alt="Pinterest" /></p>
+<p>Using a combination of the "out" option plus customising the CSS for each feed the layout for each social network is extremely flexible - sample of customised feed can be found with pinterest where the CSS and layout mimics the pinterest.com site:</p>
+<div class="clear"></div>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+
+<!-- Begin Question Block -->
+  <div class="toggle">
+	<h2 id="tag-position" class="trigger"><span></span>Social Stream Filter &amp; Controls</h2>
+	<div class="togglebox">
+	<div>
+		<p>The social stream includes 2 features, which can be enabled to give the user more control over the stream contents:</p>
+
+		<p><img src="inc/images/stream_controls.png" alt="Stream Controls" /></p>
+		
+		<h4>Filter Navigation</h4>
+		<p>If the "filter" option is set to true the plugin will automatically create a list of social network icons for those networks contained in the stream. Clicking on these icons will show/hide the feed items from that network.</p>
+		
+		<h4>Rotator Controls</h4>
+		<p>The plugin includes a feed rotator, which will loop the feed items based on the "delay" settings in the plugin options.</p>
+		<p>If "control" is set to "true" a set of icons will be inserted, which allow the user to stop/start the feed rotator as well as manually cycle through the feed items using the "next" and "previous" links.</p>
+		<p>The direction of the rotator can also be set - see <a href="#link-options">Plugin Options</a></p>
+		<p>Set the "delay" value to zero to disable the auto-rotation.</p>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+
+</div>
+
+
+<div class="opacity">
+
+ <div class="title">
+    <h3>Social Networks Details</h3>
+  </div>
+
+ <!-- Begin Question Block -->
+<div class="toggle">
+	<h2 class="trigger" id="twitter-api"><span></span>Twitter API Credentials</h2>
+	<div class="togglebox">
+	<div>
+		<h4>Twitter API</h4>
+		<p>Starting with version 1.7 of the plugin the Twitter API now requires authentication.</p>
+		<p>To create your own Twitter API credentials</p>
+		
+		<ol>
+			<li>Browse to <a href="https://dev.twitter.com/">https://dev.twitter.com/</a> &amp; login with your Twitter username</li>
+			<li>Browse to <a href="https://dev.twitter.com/apps/new">https://dev.twitter.com/apps/new</a></li>
+		</ol>
+		
+		<p><image src="inc/images/twitter_1.png" width="850" alt="Create New Twitter App" /></p>
+		
+		<ol>
+			<li>Complete name, description & website fields</li>
+			<li>Check the "Yes I agree" box for the Developer Rules of the Road</li>
+			<li>Enter the captcha & click "Create Your Twitter Application"</li>
+		</ol>
+		
+		<p><image src="inc/images/twitter_2.png" width="850" alt="Create New Twitter App" /></p>
+		
+		<ol>
+			<li>Click "Create My Access Token"</li>
+			<li>A success message will be displayed at the top of the page</li>
+			<li>Click the "Details" tab to refresh the page and display your access token</li>
+		</ol>
+		
+		<p><image src="inc/images/twitter_3.png" width="850" alt="Create New Twitter App" /></p>
+		
+		<ol>
+			<li>Open file twitter.php in your text editor</li>
+			<li>From your twitter application page copy the Consumer Key, Consumer Secret, Access Token and Access Token Secret values and enter into the twitter API details at the top of the twitter.php file, save the file and upload to your server.</li>
+		</ol>
+		
+		<p>Example</p>
+		<pre>// SET YOUR TWITTER API DETAILS HERE
+$consumer_key = "cUfx93n2NBU3J8VCZ1pQ"; 
+$consumer_secret = "FvKP8uzrVhGAJ2ncuofsSTUsLV50H2KdW9CkNrhAENo";
+$oauth_access_token = "261263099-mF9o2SrPe5vno5IcwzGE36a0L4MiGf86Ou6a0CJy"; 
+$oauth_access_token_secret = "eqgxmDB7hsBoph18758dRmkzzb0E8emyZfIm8bD9pWg"; </pre>
+		
+		<p>The plugin should now be able to access your Twitter feed.</p>
+		<p>Note that the above values are for demonstration only and will NOT work with your plugin.</p>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+ <!-- Begin Question Block -->
+<div class="toggle">
+	<h2 class="trigger" id="facebook-api"><span></span>Facebook API Credentials</h2>
+	<div class="togglebox">
+	<div>
+		<h4>Facebook API</h4>
+		<p>Starting with version 1.5.8 of the plugin facebook feeds now require authentication.</p>
+		<p>To create your own Facebook App</p>
+		
+		<ol>
+			<li>Browse to <a href="https://developers.facebook.com/">https://developers.facebook.com/</a> &amp; login - if you have not previously regsitered as a developer you will need to do this first before you can create your own facebook app</li>
+			<li>From the top menu go to "My Apps" and click "Add New App"</li>
+		</ol>
+		
+		<p><image src="inc/images/facebook_1.png" width="850" alt="Create New Facebook App" /></p>
+		
+		<ol>
+			<li>Click on the "Website" icon</li>
+		</ol>
+		
+		<p><image src="inc/images/facebook_2.png" width="850" alt="Create New Facebook App" /></p>
+		
+		<ol>
+			<li>Enter a name for your app - e.g Social Stream</li>
+			<li>Click "Create a New Facebook App ID"</li>
+		</ol>
+		
+		<p><image src="inc/images/facebook_3.png" width="850" alt="Create New Facebook App" /></p>
+		
+		<ol>
+			<li>Select a category for your app</li>
+			<li>Click the "Create App ID" button</li>
+		</ol>
+		
+		<p><image src="inc/images/facebook_4.png" width="850" alt="Create New Facebook App" /></p>
+		
+		<ol>
+			<li>On the following page you should see the box shown above - enter your website address</li>
+			<li>Click "Next"</li>
+			<li>Then go to the top of the page and click the "skip quick start" link</li>
+		</ol>
+		
+		<p><image src="inc/images/facebook_6.png" width="850" alt="Create New Facebook App" /></p>
+		
+		<ol>
+			<li>Make a note of your APP ID</li>
+			<li>Click the "show" button on the App Secret field. You may need to enter your password again to confirm this action</li>
+			<li>Make a note of your App Secret</li>
+		</ol>
+		
+		
+		<h4>Adding your APP ID, Secret & Access Token To Your Site</h4>
+		
+		<ol>
+			<li>Open file facebook.php in your text editor and find the following code at the top of the page:</li></br>
+			<pre>
+// SET YOUR FACEBOOK API DETAILS HERE
+$app_id 	= 'INSERT APP ID HERE';
+$app_secret = 'INSERT APP SECRET HERE';
+			</pre>
+			
+			<li>Enter your APP ID & Secret into the facebook API details, save the file and upload to your server - e.g:</li>
+		</ol>
+		
+		<pre>// SET YOUR FACEBOOK API DETAILS HERE
+$app_id 	= '876112410078524';
+$app_secret = 'd26b9883d63c8aeb753063aad93ce61d';</pre>
+		
+		<!-- PHP SDK 4 ACCESS TOKEN
+		<h4>Generate Your Facebook Access Token</h4>
+		
+		<ol>
+			<li>Once you have your APP ID & Secret you need to get your facebook access token</li>
+			
+			<li>You need to build the following URL to create your access token:</br>
+			</br>
+			
+			<p style="color:#990000;">https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=<strong>[APP ID]</strong>&redirect_uri=http%3A%2F%2F<strong>[SITE URL]</strong>&scope=read_stream,public_profile,user_activities,user_photos,user_friends,user_about_me</p>
+
+  
+<p><strong>Replace the [APP ID] with your App ID you created earlier.</strong></p>
+<p><strong>Replace the [SITE URL] with the URL you entered into "Site URL" field when creating the APP (Note - without http://).</strong></p>
+
+
+<p>Copy/paste the complete URL into your browser address bar and press enter.</p></li>
+<li>You will then be taken to a standard facebook allow permissions page - click Allow/Okay &amp; you will be redirected to your web site</li>
+<li>Copy the URL now appearing in your browser address bar - it should look like:</br>
+
+<p>http://designchemical.com/?#access_token=*****************&expires_in=5072</p></li>
+<li>The code appearing after the "#access_token=" is the access token for your site - e.g:</br>
+<p>CAAWMbKZA3bZAoBAJWvH6AOLdxycEAMDlSSQEjswstGIdZBVqQ9ZAOKaFuM40IZCtnlAi5ET23DyMsUQHmLCHW0v8MY147aFSaZAGEt4IFNztnJgG4wclBuHwwRxVCbIIBtyr31FtC2KrrDe9hW3e19lFNE6ceXSi9KlQb1g9m2pipdCYElicIWiJ17LoZBD4oAnAvQSHVfGZCqY1WVR1TSn2mQkWvuhxgv4ZE</p></li>
+<li>Copy this access token</li>
+
+		</ol>
+		
+		<h4>Adding your APP ID, Secret & Access Token To Your Site</h4>
+		
+		<ol>
+			<li>Open file facebook.php in your text editor and find the following code (around line 35):</li></br>
+			<pre>
+// SET YOUR FACEBOOK API DETAILS HERE
+$app_id 	= 'ENTER YOUR APP ID';
+$app_secret = 'ENTER YOUR APP SECRET';
+$app_access_token = 'ENTER YOUR ACCESS TOKEN';
+			</pre>
+			
+			<li>Enter your APP ID, Secret and access token into the facebook API details, save the file and upload to your server - e.g:</li>
+		</ol>
+		
+		<pre>// SET YOUR FACEBOOK API DETAILS HERE
+$app_id 	= '876112410078524';
+$app_secret = 'd26b9883d63c8aeb753063aad93ce61d';
+$app_access_token = 'CAAWMbKZA3bZAoBAJWvH6AOLdxycEAMDlSSQEjswstGIdZBVqQ9ZAOKaFuM40IZCtnlAi5ET23DyMsUQHmLCHW0v8MY147aFSaZAGEt4IFNztnJgG4wclBuHwwRxVCbIIBtyr31FtC2KrrDe9hW3e19lFNE6ceXSi9KlQb1g9m2pipdCYElicIWiJ17LoZBD4oAnAvQSHVfGZCqY1WVR1TSn2mQkWvuhxgv4ZE';</pre>
+		-->
+		
+		
+		
+		<p>The plugin should now be able to access your Facebook feed.</p>
+		<p>Note that the above values are for demonstration only and will NOT work with your plugin.</p>
+		
+		<h4>Facebook Feed Not Working?</h4>
+		<p>Make sure that you have set the facebook "url" option to point to the actual location of your facebook.php file. The default setting is:</p>
+		<pre>url: 'facebook.php'</pre>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+  <div class="toggle">
+	<h2 id="tag-position" class="trigger"><span></span>Creating Your Own Google API Key</h2>
+	<div class="togglebox">
+	<div>
+		<p>The google +1 feed requires an API key. Fortunately creating your own google API key is fairly quick and easy:</p>
+		<ul>
+			<li>Go to <a href="https://code.google.com/apis/console#access" target="_blank">https://code.google.com/apis/console#access</a></li>
+			<li>Login to your google account</li>
+			<li>Click "Create Project"</li>
+			<li>In the left-hand side menu click "APIs & auth" then "APIs"</li>
+			<li>Find the "Google + API" listing and set to "on"</li>
+		</ul>
+		<p><img src="inc/images/google_api_key.png" alt="Google API Key" /></p>
+		<ul>
+			<li>In the left-hand side menu click "Credentials"</li>
+			<li>Click "Create New Key"</li>
+		</ul>
+		<p><img src="inc/images/google_api_key_1.png" alt="Google API Key" /></p>
+		<ul>
+			<li>In the pop-up window select "Server key"</li>
+
+</ul>
+<p><img src="inc/images/google_api_key_2.png" alt="Google API Key" /></p>
+<ul>
+<li>Leave the "Accept requests from these server IP addresses" box blank</li>
+			<li>Click "Create"</li>
+			<li>Copy your API key and paste into the social stream settings</li>
+		</ul>
+		
+		<p><img src="inc/images/google_api_key_3.png" alt="Google API Key" /></p>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+  <div class="toggle">
+	<h2 id="tag-position" class="trigger"><span></span>Creating Your Own Youtube API Key</h2>
+	<div class="togglebox">
+	<div>
+		<p>Youtube feeds now require a google API key:</p>
+		<ul>
+			<li>Go to <a href="https://code.google.com/apis/console#access" target="_blank">https://code.google.com/apis/console#access</a></li>
+			<li>Login to your google account</li>
+			<li>Click "Create Project"</li>
+			<li>In the left-hand side menu click "APIs & auth" then "APIs"</li>
+			<li>Click the "Youtube Data API" listing</li>
+		</ul>
+		<p><img src="inc/images/youtube_api_key.png" alt="Youtube API Key" /></p>
+		<ul>
+			<li>Click the "Enable API" button at the top of the page</li>
+			<li>Then click the "Credentials" option in the left hand menu
+		</ul>
+		<p><img src="inc/images/youtube_api_key_1.png" alt="Google API Key" /></p>
+		<ul>
+			<li>Under the "Public API access" title click the "Create New Key" button</li>
+
+</ul>
+<p><img src="inc/images/youtube_api_key_2.png" alt="Google API Key" /></p>
+<ul>
+
+<ul>
+			<li>In the pop-up window select "Server Key"</li>
+
+</ul>
+<p><img src="inc/images/youtube_api_key_3.png" alt="Google API Key" /></p>
+<ul>
+
+
+<li>Leave the "Accept requests from these server IP addresses" box blank</li>
+			<li>Click "Create"</li>
+			<li>Copy your API key and paste into the social stream settings</li>
+		</ul>
+		
+		<p><img src="inc/images/youtube_api_key_4.png" alt="Google API Key" /></p>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+  <div class="toggle">
+	<h2 id="tag-position" class="trigger"><span></span>Creating Your Own Instagram API Client ID & Access Token</h2>
+	<div class="togglebox">
+	<div>
+		<p>In order to use the Instagram feed you must first create your own "Client ID"</p>
+		<p><img src="inc/images/instagram_1.png" alt="Instagram API" /></p>
+		<ul>
+			<li>Go to <a href="http://instagr.am/developer/" target="_blank">http://instagr.am/developer/</a>.</li>
+			<li> Click "Register Your Application"</li>
+		</ul>
+		<p><img src="inc/images/instagram_2.png" alt="Instagram API" /></p>
+		<ul>
+			<li>On the Developer signup page complete the form</li>
+			<li>Read and accept the terms & conditions and then click "sign up"</li>
+		</ul>
+		<p><img src="inc/images/instagram_3.png" alt="Instagram API" /></p>
+		<ul>
+			<li>If the signup page is submitted successfully and has been accepted click the "manage clients" tab in the top-right of the header.</li>
+			<li>Click the green button - "Register A New Client.</li>
+		</ul>
+		<p><img src="inc/images/instagram_4.png" alt="Instagram API" /></p>
+		<ul>
+			<li>Complete the "Register new OAuth Client" form - e.g:<br />
+			Application name: social stream<br />
+			Description: create a social stream from multiple networks<br />
+			Website: enter your website URL - e.g. http://www.designchemical.com</br />
+			OAuth redirect_uri: enter the URL of a page where the social stream is installed - this is required to get your access token, which you can then insert into the instagram options. Once you have the access token you can use this on all pages, which use the social stream plugin on the website listed above.</li>
+			<li>Click the "Register" button</li>
+		</ul>
+		<p><img src="inc/images/instagram_5.png" alt="Instagram API" /></p>
+		<ul>
+			<li>Copy your CLIENT ID and paste into the "clientId" option for Instagram</li>
+			<li>Enter your redirect_uri into the "redirectUrl" option for Instagram</li>
+		</ul>
+		
+		<h3>How to get your access token</h3>
+		<ul>
+			<li>Browse to the page on your website used for the "redirect_uri" in the Instagram client ID setup (note this page must have the social stream installed - using either the network wall or the rotating feed.</li>
+			<li>You will then be redirected to the Instagram login screen (if not already logged in) and then a confirmation screen where you approve your app's access to your Instagram data.</li>
+			<li>Instagram will then automatically redirect you back to your website page given in the "redirect_uri" setting</li>
+			<li>When the page loads check the URL in the browser - you should see the following URL format:<br /><br />
+			http://your-redirect-uri#access_token=186786085.f59def8.1d34b28a52e04d36ba1dc52ca98215dc</li>
+			<li>Copy the token code after the "http://your-redirect-uri#access_token=" - e.g 186786085.f59def8.1d34b28a52e04d36ba1dc52ca98215dc</li>
+			<li>Add the access token to your Instagram options using the "accessToken" option - you should now have your "accessToken", "redirectUrl" & "clientId" options completed - e.g:<br /><br />
+			<pre>instagram: {
+				id: '!186786085,#husky,@1394578',
+				accessToken: 'YOUR ACCESS TOKEN',
+				redirectUrl: 'http://your-redirect-uri',
+				clientId: 'YOUR CLIENT ID',
+				comments: 3,
+				likes: 10
+			}</pre>
+			</li>
+		</ul>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+<div class="toggle">
+	<h2 class="trigger"><span></span>Google +1</h2>
+	<div class="togglebox">
+	<div>
+		<h4>Google +1 API Key</h4>
+		<p>The google +1 feed requires an API key in order to work. The API key provided in the plugin examples is for test purposes only.</p>
+		<p>Make sure you change the API key for your own - google limit the number of API calls per day for each API key. If you use the test value this may result in your google +1 feed not working correctly.</p>
+		<p>For information on how to create your own API key see the <a href="#tag-position">instructions</a>.</p>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+<div class="toggle">
+	<h2 class="trigger"><span></span>Instagram</h2>
+	<div class="togglebox">
+	<div>
+		<h3>Instagram Feeds</h3>
+		<p>There are 4 different types of feed that can be included from Instagram:</p>
+		<h4>1. User Feed</h4>
+		<p>The user feed will show the latest posts from a specific user ID. To create a user feed use "!" followed by the user ID - e.g.</p>
+		<p>id: '!123456'</p>
+		
+		<h4>2. Location Feed</h4>
+		<p>To display the latest posts for a specific location enter a "@" followed by the instagram location ID - e.g.</p>
+		<p>id: '@123456'</p>
+		
+		<h4>3. Search Based On Tags</h4>
+		<p>To display the latest posts for a specific tag enter a "#" followed by the tag text - e.g. to search for images tagged with "london"</p>
+		<p>id: '#london'</p>
+		
+		<h4>4. Search Based On Geographical Location</h4>
+		<p>To display the latest posts for a geographical location you need 3 parameters - latitude, longitude and distance(in meters up to 5000m). Enter these values starting with a "?" followed by the lat, long and distance separated by a "/" e.g.</p>
+		<p>id: '?55.123/-1.345/1000'</p>
+		
+		<h4>Using Multiple Feeds</h4>
+		<p>As with all of the other networks you can add multiple instagram feeds of any type by separating each ID with a comma - e.g.</p>
+		<p>id: '!123456,@123456,?55.123/-1.345/1000,#london,#newyork'</p>
+		
+		<h3>Displaying Comments & Likes</h3>
+		<p>The instagram feed also includes the option to display the latest comments for each post plus thumbnails of users who liked the post. To add either comments or likes enter the number that you wish to display using the "comments" and "likes" option in the initialisation code - .e.g to display the last 5 comments + 10 liked thumbnails:</p>
+		<p>comments: 5,<br />
+		likes: 10</p>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+</div>
+
+<div class="opacity">
+ <div class="title">
+    <h3>Styling</h3>
+    
+  </div>
+  <!-- Begin Question Block -->
+<div class="toggle">
+
+	<h2 class="trigger"><span></span>CSS</h2>
+	<div class="togglebox">
+	<div>
+		<p>The plugin includes 3 different style sheets, which can be used based on whether you are using the rotating feed or the dark/light skin.</p>
+		<h4>Rotating List - Dark Skin</h4>
+		<p>To use the dark skin include the dcsns_dark.css file in the head of your page:</p>
+		<pre>&lt;link rel="stylesheet" type="text/css" href="css/dcsns_dark.css" media="all" /&gt;</pre>
+		
+		<h4>Rotating List - Light Skin</h4>
+		<p>To use the light skin include the dcsns_light.css file in the head of your page:</p>
+		<pre>&lt;link rel="stylesheet" type="text/css" href="css/dcsns_light.css" media="all" /&gt;</pre>
+		
+		<h4>Social Network Wall</h4>
+		<p>For the social network wall include the dcsns_wall.css file in the head of your page:</p>
+		<pre>&lt;link rel="stylesheet" type="text/css" href="css/dcsns_wall.css" media="all" /&gt;</pre>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+<div class="toggle">
+
+	<h2 class="trigger"><span></span>Default Images</h2>
+	<div class="togglebox">
+	<div>
+		<p>The plugin uses several key images, including the icons for both the stream list as well as the filter/control navigation. If moving the files to a new location with a different directory structure make sure that you update the image paths in the CSS rules.</p>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+  </div>
+  
+  <div class="opacity">
+  
+   <div class="title">
+    <h3>Demos</h3>
+    
+  </div>
+  
+  
+    <!-- Begin Question Block -->
+<div class="toggle">
+
+	<h2 class="trigger"><span></span>Default Settings</h2>
+	<div class="togglebox">
+	<div> 
+	<p>Quick start - no customized options! Only minimum settings for the social network user ID's are required - <a href="example_1.html">View Example 1</a></p>
+	<pre>$(document).ready(function($){
+	$('#social-stream').dcSocialStream({
+		feeds: {
+			twitter: {
+				id: 'designchemical'
+			},
+			rss: {
+				id: 'http://feeds.feedburner.com/DesignChemical'
+			},
+			stumbleupon: {
+				id: 'remix4'
+			},
+			facebook: {
+				id: '157969574262873,Facebook Timeline/376995711728'
+			},
+			google: {
+				id: '111470071138275408587',
+				api_key: 'AIzaSyB1UZNnscjMDjjH-pi_XbnLRld2wAqi3Ek'
+			},
+			delicious: {
+				id: 'designchemical'
+			},
+			vimeo: {
+				id: 'brad'
+			},
+			youtube: {
+				id: 'FilmTrailerZone/UUPPPrnT5080hPMxK1N4QSjA',
+				thumb: '0'
+			},
+			pinterest: {
+				id: 'jaffrey,designchemical/design-ideas'
+			},
+			flickr: {
+				id: ''
+			},
+			lastfm: {
+				id: 'lastfm'
+			},
+			dribbble: {
+				id: 'frogandcode'
+			},
+			deviantart: {
+				id: 'isacg'
+			},
+			tumblr: {
+				id: 'richters',
+				thumb: 250
+			}
+		},
+		twitterId: 'designchemical',
+		iconPath: 'images/dcsns-dark/',
+		imagePath: 'images/dcsns-dark/'
+	});
+});</pre>
+	
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+<div class="toggle">
+
+	<h2 class="trigger"><span></span>Multiple Feeds Per Network</h2>
+	<div class="togglebox">
+	<div>
+		<p>There are no limits on the number of feeds that can be added to the social stream for each social network. To add multiple profiles include the relevant social network IDs as a comma-separated list.</p>
+		<p><a href="example_2.html">View Example 2</a></p>
+	<pre>$(document).ready(function($){
+	$('#social-stream').dcSocialStream({
+		feeds: {
+			twitter: {
+				id: 'designchemical,wordpress,jquery,/9927875,#designchemical'
+			}
+		}
+		twitterId: 'designchemical'
+	});
+});</pre>
+	
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+<div class="toggle">
+
+	<h2 class="trigger"><span></span>Custom Output</h2>
+	<div class="togglebox">
+	<div> 
+	<p>The plugin uses a basic template system, which offers some options to add/remove content from the stream items as well as change the order in which these content blocks appear. This can be modified using the "out" option.</p>
+	<p><a href="example_3.html">View Example 3</a></p>
+	<pre>$(document).ready(function($){
+	$('#social-stream').dcSocialStream({
+		feeds: {
+			twitter: {
+				id: 'designchemical',
+				out: 'intro,text,user,share'
+			},
+			rss: {
+				id: 'http://feeds.feedburner.com/DesignChemical',
+				out: 'intro,title,user,share'
+			},
+			stumbleupon: {
+				id: 'remix4',
+				out: 'intro,title,user,share'
+			},
+			facebook: {
+				id: '157969574262873',
+				out: 'intro,title,user,share'
+			},
+			google: {
+				id: '111470071138275408587',
+				out: 'intro,title,user,share'
+			},
+			delicious: {
+				id: 'designchemical',
+				out: 'intro,title,user,share'
+			},
+			vimeo: {
+				id: 'brad',
+				out: 'intro,title,user,share'
+			},
+			youtube: {
+				id: 'FilmTrailerZone/UUPPPrnT5080hPMxK1N4QSjA',
+				out: 'intro,title,user,share'
+			},
+			pinterest: {
+				id: 'jaffrey,designchemical/design-ideas',
+				out: 'intro,title,user,share'
+			},
+			flickr: {
+				id: '',
+				out: 'intro,title,user,share'
+			},
+			lastfm: {
+				id: 'lastfm',
+				out: 'intro,title,user,share'
+			},
+			dribbble: {
+				id: 'frogandcode',
+				out: 'intro,title,user,share'
+			},
+			deviantart: {
+				id: 'isacg',
+				out: 'intro,title,user,share'
+			}
+		},
+		twitterId: 'designchemical'
+	});
+});</pre>
+	
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+
+<!-- Begin Question Block -->
+<div class="toggle">
+
+	<h2 class="trigger"><span></span>Creating A Social Network Wall</h2>
+	<div class="togglebox">
+	<div> 
+	<p>The plugin's "wall" display feature uses jQuery isotope to create a filterable layout of all your stream items - <a href="example_4.html">View Example 4</a></p>
+	<pre>$(document).ready(function($){
+	$('#social-stream').dcSocialStream({
+		feeds: {
+			twitter: {
+				id: '/9927875,#designchemical,designchemical',
+				thumb: true
+			},
+			rss: {
+				id: 'http://feeds.feedburner.com/DesignChemical,http://feeds.feedburner.com/codecondo'
+			},
+			stumbleupon: {
+				id: 'remix4'
+			},
+			facebook: {
+				id: '157969574262873,Facebook Timeline/376995711728'
+			},
+			google: {
+				id: '111470071138275408587'
+			},
+			delicious: {
+				id: 'designchemical'
+			},
+			vimeo: {
+				id: 'brad'
+			},
+			youtube: {
+				id: 'FilmTrailerZone/UUPPPrnT5080hPMxK1N4QSjA'
+			},
+			pinterest: {
+				id: 'jaffrey,designchemical/design-ideas'
+			},
+			flickr: {
+				id: ''
+			},
+			lastfm: {
+				id: 'lastfm'
+			},
+			dribbble: {
+				id: 'frogandcode'
+			},
+			deviantart: {
+				id: 'isacg'
+			},
+			tumblr: {
+				id: 'richters',
+				thumb: 250
+			}
+		},
+		rotate: {
+			delay: 0
+		},
+		twitterId: 'designchemical',
+		control: false,
+		filter: true,
+		wall: true,
+		cache: false,
+		max: 'limit',
+		limit: 10,
+		iconPath: 'images/dcsns-dark/',
+		imagePath: 'images/dcsns-dark/'
+	});
+});</pre>
+	
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+<div class="toggle">
+
+	<h2 class="trigger"><span></span>Creating A Random Order Social Network Wall</h2>
+	<div class="togglebox">
+	<div> 
+	<p>If you wish to display the wall feed randomly as opposed to date order just set the "order" option to "random" - <a href="example_5.html">View Example 5</a></p>
+	<pre>$(document).ready(function($){
+	$('#social-stream').dcSocialStream({
+		feeds: {
+			twitter: {
+				id: '/9927875,#designchemical',
+				thumb: true
+			},
+			rss: {
+				id: 'http://feeds.feedburner.com/DesignChemical'
+			},
+			stumbleupon: {
+				id: 'remix4'
+			},
+			facebook: {
+				id: '157969574262873,Facebook Timeline/376995711728'
+			},
+			delicious: {
+				id: 'designchemical'
+			},
+			vimeo: {
+				id: 'brad'
+			},
+			youtube: {
+				id: 'FilmTrailerZone/UUPPPrnT5080hPMxK1N4QSjA'
+			},
+			pinterest: {
+				id: 'jaffrey,designchemical/design-ideas',
+			},
+			flickr: {
+				id: ''
+			},
+			lastfm: {
+				id: 'lastfm'
+			},
+			dribbble: {
+				id: 'frogandcode'
+			},
+			deviantart: {
+				id: 'isacg'
+			},
+			tumblr: {
+				id: 'richters',
+				thumb: 250
+			}
+		},
+		rotate: {
+			delay: 0
+		},
+		twitterId: 'designchemical',
+		control: false,
+		filter: true,
+		wall: true,
+		order: 'random',
+		max: 'limit',
+		iconPath: 'images/dcsns-dark/',
+		imagePath: 'images/dcsns-dark/'
+	});
+});</pre>
+	
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+<div class="toggle">
+
+	<h2 class="trigger"><span></span>Creating A Responsive Social Network Wall</h2>
+	<div class="togglebox">
+	<div> 
+	<p>The social network wall is automatically responsive and will adjust the number of columns based on your page width. Just insert the wall into a responsive page - <a href="example_6.html">View Example 6</a></p>
+	
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+</div>
+
+  <div class="opacity">
+  <div class="title">
+    <h3>FAQ / Errors</h3>
+    
+  </div>
+  
+<!-- Begin Question Block -->
+<div class="toggle">
+
+	<h2 class="trigger"><span></span>Social stream not rendering</h2>
+	<div class="togglebox">
+	<div> 
+		<p>If nothing is appearing on the screen check the following:</p>
+		<ul>
+			<li>Is the jQuery library included in the page and positioned BEFORE the social share plugin?</li>
+			<li>Is the jquery social media tabs plugin file included in the page?</li>
+			<li>Is the div tag with the correct ID included in the page between the "body" tags?</li>
+			<li>Check the page using firebug for any other jquery/javascript errors that may be stopping the plugin from initialising</li>
+		</ul>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+<div class="toggle">
+	<h2 class="trigger"><span></span>The Social Network Feed Shows An Error</h2>
+	<div class="togglebox">
+	<div> 
+		<p>If the feed returns an error the plugin will insert the error text into the tab. If the feed cannot be found first check your user ID/username to make sure that this matches your profile.</p>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+<div class="toggle">
+	<h2 class="trigger"><span></span>Twitter Feed Not Showing</h2>
+	<div class="togglebox">
+	<div> 
+		<p>If your twitter feed is not displaying make sure that you have set up your <a href="#twitter-api">Twitter API Credentials</a>. If these have been set up correctly then check that the correct path and filename are inserted into the twitter: url option. The default value is "twitter.php", which will be valid if the location of the twitter.php file is in the same directory as the page containing the tabs. If you are unsure then enter the absolute path & filename for this file - e.g</p>
+		<pre>twitter: {
+    url: 'http://www.yourdomain.com/social-stream-folder-name/twitter.php'
+		}</pre>
+		<p>If the twitter feeds are not showing and there are no errors this may be due to the limits imposed by Twitter on their API:</p>
+		<p>Searches - 180 calls per 15 mins.</p>
+		<p>Lists - 180 calls per 15 mins.</p>
+		<p>Users - 180 calls per 15 mins.</p>
+		<p>During this time other users will still be able to view your twitter feeds as limits are on a per user and per application basis.</p>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+
+<!-- Begin Question Block -->
+<div class="toggle">
+	<h2 class="trigger"><span></span>Facebook Feed Not Showing</h2>
+	<div class="togglebox">
+	<div> 
+		<p>There are 2 main reasons your facebook feed may not work:</p>
+		<p>1. You are trying to use a facebook profile instead of a page.</p>
+		<p>For more information on how to create a facebook page see - <a href="http://blog.hubspot.com/blog/tabid/6307/bid/5492/How-to-Create-a-Facebook-Business-Page-in-5-Simple-Steps-With-Video.aspx" target="_blank">http://blog.hubspot.com/blog/tabid/6307/bid/5492/How-to-Create-a-Facebook-Business-Page-in-5-Simple-Steps-With-Video.aspx</a></p>
+		<p>2. Your facebook settings restrict the age of the user that may view your page - in order for the facebook feed to work you must remove any age restriction from your fan page.</p>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+<div class="toggle">
+	<h2 class="trigger"><span></span>How To Get Your Facebook ID</h2>
+	<div class="togglebox">
+	<div> 
+		<p>For facebook page posts the ID of your facebook page must be used - this should be a numerical value, not the actual name of your facebook page - e.g. 157969574262873</p>
+		<p>To get the ID from your username you can use the following tool from facebook - replace "username" with the name of your facebook page profile:</p>
+		<p><a href="https://graph.facebook.com/username" target="_blank">https://graph.facebook.com/username</a></p>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+<div class="toggle">
+	<h2 class="trigger"><span></span>How To Get Your Facebook Gallery ID</h2>
+	<div class="togglebox">
+	<div> 
+		<p>To get your facebook gallery ID browse to your facebook gallery page - e.g:</p>
+		<p><a href="http://www.facebook.com/media/set/?set=a.110070145819348.18558.110041542488875&type=3">http://www.facebook.com/media/set/?set=a.110070145819348.18558.110041542488875&type=3</a></p>
+		<p>The ID for the gallery is the first set of numbers - in the example above this would be - 110070145819348</p>
+		<p>http://www.facebook.com/media/set/?set=a.<strong style="color: #ff0000;">110070145819348</strong>.18558.110041542488875&type=3</p>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+<div class="toggle">
+	<h2 class="trigger"><span></span>How To Get Your Google +1 ID</h2>
+	<div class="togglebox">
+	<div> 
+		<p>To get your google profile ID for the google +1 tab go to your google accounts page and click on the &#8220;edit profile&#8221; link.</p>
+<p>Check the URL in the browser address bar &#8211; your profile ID is the number in the middle of the URL:</p>
+<p>https://profiles.google.com/<strong style="color: #990000;">100058553707375301897</strong>/about/</p>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+<div class="toggle">
+	<h2 class="trigger"><span></span>How To Get Your Youtube List ID From Your Username</h2>
+	<div class="togglebox">
+	<div> 
+		<p>The latest version of the Youtube API no longer recognises youtube usernames. We have created a quick online tool, which will allow you to get your list ID for your username</p>
+		<p>Browse to the following link - <a href="http://designchemical.com/lab/sandbox/youtube_id.html" target="_blank">How to get your youtube ID</a></p>
+		<p>In the form with the heading "Input your Youtube Profile Name" enter your profile name into the "username" field and click "submit".</p>
+		<p>Your list ID will appear in the "List ID" field</p>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+<div class="toggle">
+	<h2 class="trigger"><span></span>How To Get Your Instagram User ID</h2>
+	<div class="togglebox">
+	<div> 
+		<p>To get your instagram user ID first get your access token - see section above "Plugin Options -> Creating Your Own Instagram API Client ID & Access Token".</p>
+<p>Browse to the following URL - changing YOUR USER NAME & YOUR ACCESS TOKEN for your values:</p>
+<p>https://api.instagram.com/v1/users/search?q=<strong style="color: #990000;">YOUR USER NAME</strong>&access_token=<strong style="color: #990000;">YOUR ACCESS TOKEN</strong></p>
+<p>The Instagram API should then load a page containing text with your profile details similar to the format shown below:</p>
+
+<p>{"meta":{"code":200},"data":[{"username":"YOUR USER NAME","bio":"","website":"","profile_picture":"","full_name":"","id":"<strong style="color: #990000;">YOUR USER ID</strong>"}]}</p>
+<p>Search for the "id" parameter usually located at the end of the text.</p>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+<div class="toggle">
+	<h2 class="trigger"><span></span>How To Show Tweet Searches From Specific Usernames</h2>
+	<div class="togglebox">
+	<div> 
+		<p>You can use the twitter search function to show searches from specific usernames using the following format -</p>
+		<p>e.g. to search tweets containing "jquery" from user "designchemical"</p>
+		<pre>#jquery+from:designchemical</pre>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+<div class="toggle">
+	<h2 class="trigger"><span></span>How To Remove Share Links Using CSS</h2>
+	<div class="togglebox">
+	<div> 
+		<p>To disable specific share links from the feeds add the following css:</p>
+		<p>Facebook:</p>
+		<pre>.share-facebook {display: none;}</pre>
+		<p>Twitter: </p>
+		<pre>.share-twitter {display: none;}</pre>
+		<p>Google +: </p>
+		<pre>.share-google {display: none;}</pre>
+		<p>LinkedIn: </p>
+		<pre>.share-linkedin {display: none;}</pre>
+		<p>To disable all share links from the feeds add the following css:</p>
+		<pre>.section-share {display: none;}</pre>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+<div class="toggle">
+	<h2 class="trigger"><span></span>How To Remove Specific Posts From The Stream</h2>
+	<div class="togglebox">
+	<div> 
+		<p>If you wish to remove specific posts from a stream you can use the "remove" option</p>
+		<p>Enter the URL's of the posts you wish to remove separated by a comma</p>
+		<p>Example - to remove the following 2 posts:</p>
+		<p>https://twitter.com/designchemical/status/364012915533164544</p>
+		<p>http://www.facebook.com/DesignChemical/posts/575999262459900</p>
+		<p>Add the following option to your initialisation code:</p>
+		<pre>remove: 'https://twitter.com/designchemical/status/364012915533164544,http://www.facebook.com/DesignChemical/posts/575999262459900'</pre>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+<div class="toggle">
+	<h2 class="trigger"><span></span>Advanced Customisation - Using The Plugin With A Lightbox</h2>
+	<div class="togglebox">
+	<div> 
+		<p>Although the plugin does not include a lightbox, these can be included separately as a plugin to enhance the social stream. An example of using a lightbox with the stream to show inline youtube and vimeo videos can be found on our demo website - <a href="http://www.designchemical.com/blog/index.php/premium-jquery-plugins/jquery-social-stream-plugin/adding-a-jquery-lightbox/">Adding a jQuery Lightbox</a>.</p>
+<p>In the demo example we have used the jQuery prettyPhoto lightbox. Below is an example of the additional code added to open the videos in the ligthbox popup:</p>
+<pre>jQuery(window).load(function(){
+	jQuery(".dcsns-youtube .section-thumb a, .dcsns-vimeo .section-thumb a").prettyPhoto({
+		autoplay_slideshow: false, overlay_gallery: false, social_tools:false, deeplinking: false, theme:'pp_default', show_title: false});
+		
+});</pre>
+<p>The actual code required would depend on which lightbox you wish to use and usually can be found in the lightbox documentation.</p>
+<p>The only key requirement is that the jQuery code is initialised using the jQuery(window).load(function() as the feed must be fully loaded before the lightbox is added.</p>
+<p>Each social network feed item has its own css class, which allows you to target specific feed - e.g. dcsns-youtube for youtube feeds, dcsns-vimeo for vimeo feeds, etc.</p>
+<h4>Lightbox Code If Using Fancybox</h4>
+<p>If you are using the jQuery Fancybox lightbox plugin you can use the following code for youtube videos:</p>
+<pre>jQuery(window).load(function(){
+	jQuery(".dcsns-youtube .section-thumb a").click(function() {
+    jQuery.fancybox({
+            'padding'       : 0,
+            'autoScale'     : false,
+            'transitionIn'  : 'none',
+            'transitionOut' : 'none',
+            'title'         : this.title,
+            'width'     : 680,
+            'height'        : 495,
+            'href'          : this.href.replace(new RegExp("watch\\?v=", "i"), 'v/'),
+            'type'          : 'swf',
+            'swf'           : {
+                 'wmode'        : 'transparent',
+                'allowfullscreen'   : 'true'
+            }
+        });
+
+    return false;
+	});
+ });</pre>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+
+</div>
+
+
+<!-- Start sources -->
+<div class="opacity">
+  
+   <div class="title">
+    <h3>Sources</h3>
+    
+  </div>
+  
+  
+<!-- Begin Question Block -->
+<div class="toggle">
+	<h2 class="trigger"><span></span>jQuery Plugins</h2>
+	<div class="togglebox">
+	<div> 
+		<ul>
+			<li>jQuery Social Stream: <a href="http://www.designchemical.com/blog/">Design Chemical</a></li>
+			<li>jQuery Isotope: <a href="http://isotope.metafizzy.co">http://isotope.metafizzy.co</a></li>
+		</ul>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+<!-- Begin Question Block -->
+<div class="toggle">
+	<h2 class="trigger"><span></span>Twitter Authentication</h2>
+	<div class="togglebox">
+	<div> 
+		<ul>
+			<li>PHP Library to support OAuth for Twitter's REST API: <a href="http://abrah.am">Abraham Williams</a></li>
+			<li>PHP OAuthToken Class</li>
+		</ul>
+	</div>
+	</div>
+</div>
+<!-- End Question Block -->
+
+</div>
+<!-- End sources -->
+
+<!-- Start sources -->
+<div class="opacity">
+  
+   <div class="title">
+    <h3>Changelog</h3>
+    
+  </div>
+  
+	<div>
+	
+						<p><strong>v1.5.12 28th May 2015 (Current Version)</strong></p>
+<ul>
+<li>Added: Option to select facebook page posts</li>
+<li>Updated: links for facebook text</li>
+</ul>
+
+					<p><strong>v1.5.11.1 8th May 2015</strong></p>
+<ul>
+<li>
+Updated: Facebook event link</li>
+<li>Updated: Facebook video thumbnails</li>
+<li>Updated: Check for file_get_contents function for facebook API</li>
+</ul>
+
+			<p><strong>v1.5.11 5th May 2015</strong></p>
+<ul>
+<li>Updated: Facebook Graph API v2.3</li>
+</ul>
+
+		<p><strong>v1.5.10.1 1st May 2015</strong></p>
+<ul>
+<li>Updated: Facebook feeds</li>
+<li>Updated: Youtube search api order</li>
+<li>Added: Share buttons to tweets</li>
+</ul>
+	
+	<p><strong>v1.5.10 23rd April 2015</strong></p>
+<ul>
+<li>Added: Option to center wall posts</li>
+<li>Added: Description to facebook album posts</li>
+<li>Updated: Youtube API v3</li><li>
+Updated: Fix PHP notices twitter.php file</li><li>
+Updated: Remove encoding on instagram search term</li><li>
+Updated: remove option for twitter</li><li>
+Updated: Add description to facebook feed</li><li>
+Updated: Instagram icon link to user profile</li><li>
+Updated: decode remove urls</li><li>
+Updated: Share links open in new window</li><li>
+Updated: Facebook events links</li><li>
+Updated: remove encoding on twitter search term</li></ul>
+			<p><strong>v1.5.9.1 11th February 2015</strong></p>
+<ul>
+<li>Added: Reset layout on facebook/twitter feed load</li>
+</ul>
+		<p><strong>v1.5.9 3rd February 2015</strong></p>
+<ul>
+<li>Updated: Facebook page posts without images</li>
+</ul>
+
+
+	<p><strong>v1.5.8 1st February 2015</strong></p>
+<ul>
+<li>Updated: Facebook page feeds</li>
+<li>Updated: Minor edits wall.js file</li>
+</ul>
+
+	<p><strong>v1.5.7 24th November 2014</strong></p>
+<ul>
+<li>Added: Larger images for facebook posts</li>
+<li>Added: Automatically remove empty facebook event posts</li>
+<li>Added: Sorting after wall has loaded</li>
+<li>Updated: Reset image layout on page load</li>
+</ul>
+
+		<p><strong>v1.5.6 10th November 2014</strong></p>
+<ul>
+<li>Updated: Youtube feed bug</li>
+<li>Added: transition time option for isotope animation</li>
+	</ul>
+	<p><strong>v1.5.5 7th November 2014</strong></p>
+	
+
+<ul>
+<li>Updated: time function for IE 11</li>
+<li>Updated: Remove special characters from tumblr feed</li>
+<li>
+Updated: Use "standard_resolution" size for instagram image link</li>
+<li>
+Updated: jQuery isotope v 2</li>
+<li>
+Updated: Include default image_width for facebook albums</li>
+<li>
+Updated: Facebook album title link</li>
+<li>
+Updated: Remove facebook redirect link</li>
+<li>
+Updated: Use https for flickr</li>
+<li>
+Updated: Add num parameter to tumblr API call</li>
+<li>
+Added: code to rewrite facebook image links</li>
+<li>
+Added: Decode text for youtube searches</li>
+</ul>
+
+	<p><strong>v1.5.4 9th August 2013</strong></p>
+	
+
+<ul>
+<li>Added: Option to remove specific posts</li>
+<li>Updated: time function for IE</li>
+</ul>
+	<p><strong>v1.5.3 3rd August 2013</strong></p>
+<ul>
+<li>Added: title attributes for youtube and vimeo links</li>
+<li>Updated: Tumblr profile link</li>
+<li>Updated: Remove $.browser function for jQuery 1.9+ support</li>
+<li>Updated: nicetime function</li>
+</ul>
+	
+<p><strong>v1.5.2 7th May 2013</strong></p>
+<ul>
+<li>Updated: URL for facebook album API</li>
+</ul>
+
+<p><strong>v1.5.1 12th March 2013</strong></p>
+<ul>
+<li>Updated: https for google feed API</li>
+<li>Updated: delicious post link</li>
+<li>Updated: clean facebook links</li>
+</ul>
+ 
+<p><strong>v1.5 24th February 2013</strong></p>
+<ul>
+<li>Added: Share feed items via google + & linkedIn</li>
+<li>Added: Flickr title</li>
+<li>Updated: Twitter API v 1.1</li>
+<li>Updated: jQuery Isotope v 1.5.25</li>
+<li>Updated: nicetime function updated for easier translation</li>
+<li>Updated: remove : characters from Tumblr links</li>
+<li>Updated: decode intro text</li>
+<li>Updated: Force orderby published date for youtube playlists</li>
+</ul>
+	
+	<p><strong>v1.4.3 18th November 2012</strong></p>
+<ul>
+<li>Updated: Added check for Instagram caption text</li>
+<li>Updated: Add max limit of 100 to google + feeds</li>
+<li>Updated: Facebook album date in Safari</li>
+</ul>
+	
+	<p><strong>v1.4.2 12th November 2012</strong></p>
+<ul>
+<li>Added: Show feeds from pinterest boards</li>
+<li>Added: Show feeds from facebook galleries including latest comments</li>
+<li>Added: Show feeds from youtube playlists</li>
+<li>Added: share feed items via facebook</li>
+<li>Added: share feed items via twitter</li>
+<li>Added: Retweet link on twitter posts</li>
+<li>Added: Reply link on twitter posts</li>
+<li>Added: Favorite link on twitter posts</li>
+<li>Added: Option to show twitter images</li>
+<li>Added: Option to show twitter retweets & replies</li>
+<li>Updated: No access token required for Instagram tag searches</li>
+<li>Updated: Add count parameter to Instagram URL</li>
+<li>Updated: Change item selector for isotope</li>
+<li>Updated: Facebook relative links</li>
+<li>Updated: Add max limit of 50 to youtube feed items</li>
+</ul>	
+	<p><strong>v1.4.1 - 31st August 2012</strong></p>
+	<ul>
+<li>Fixed: Rotating feed date order in Safari</li>
+<li>Fixed: Rotating feed facebook page link</li>
+</ul>
+	<p><strong>v1.4 - 23rd August 2012</strong></p>
+	<ul>
+<li>Added: Instagram</li>
+</ul>
+	<p><strong>v1.3.1 - 16th August 2012</strong></p>
+	<ul>
+<li>Added: Flickr groups</li>
+<li>Added: User name option for facebook</li>
+<li>Updated: Twitter display date for Safari</li>
+<li>Updated: Time since function</li>
+<li>Updated: Trim user IDs & intro text</li>
+<li>Updated: Facebook icon link for wall feed items</li>
+<li>Updated: Facebook feed content link URLs</li>
+</ul>
+	<p><strong>v1.3 - 4th June 2012</strong></p>
+<ul>
+<li>Added: Show feed from twitter lists</li>
+<li>Added: Show feed from twitter search</li>
+<li>Added: Option to show twitter profile avatar in feed item</li>
+<li>Added: Show feed from youtube search</li>
+<li>Added: Option to display random order</li>
+<li>Added: Option to change google +1 thumbnail size</li>
+<li>Added: Span tag for feed item date</li>
+<li>Added: CSS class for each network feed</li>
+<li>Updated: Facebook feed output - now includes option to show complete post text + images</li>
+<li>Updated: RSS feed output - now includes option to show complete post text + images</li>
+<li>Updated: Feed URL for last.fm loved tracks</li>
+<li>Updated: Social stream wall isotope layout on page load</li>
+<li>Fixed: Facebook profile link</li>
+</ul>
+	<p><strong>v1.2 - 24th April 2012</strong></p>
+<ul><li>Added: Tumblr social network</li>
+<li>Updated: Facebook feed output to include all post text</li>
+</ul>
+		<p><strong>v1.1 - 18th April 2012</strong></p>
+<ul><li>Added: Trigger network wall filter on page load</li>
+<li>Added: Multiple feed options per network</li>
+<li>Added: Option to display username</li>
+<li>Added: YouTube feed - newsubscriptionvideos</li>
+<li>Fix: Bug with control option</li>
+<li>Fix: Bug with local time correction</li>
+<li>Fix: Bug with images in facebook feed</li></ul>
+		<p><strong>v1.0 - 11th April 2012</strong></p>
+		<ul><li>First release</li></ul>
+		<p></p>
+	</div>
+	
+
+</div>
+<!-- End sources -->
+
+  <div class="opacity">
+  <div class="title">
+    <h3>Thank You</h3>
+    
+  </div>
+  
+  <!-- Begin Question Block -->
+  
+    <div class="info">
+		<p class="margin-bottom">Once again, thank you for purchasing the jQuery Social Stream plugin!</p>
+		<p class="margin-bottom">If you have any questions relating to this plugin or suggestions for future improvements please contact us via our <a href="http://codecanyon.net/user/designchemical">Code Canyon profile</a> or via our website - <a href="http://www.designchemical.com/blog/">http://www.designchemical.com/blog/</a></div>
+ 
+  <!-- End Question Block --> 
+  <div id="copyright">
+	<p>jQuery Social Stream Plugin was created by <a href="http://www.designchemical.com">Design Chemical</a>.</p>
+  </div>
+  </div>
+  
+  
+</div>
+<!-- End Wrapper -->
+</body>
+</html>

@@ -1,0 +1,36 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Template2.Master.cs" Inherits="WebApplication.Views.MasterPages.SiteTemplate2.Site2" %>
+
+<%@ Import Namespace="WebApplication" %>
+<!DOCTYPE html>
+<html lang="en-US" class="no-js">
+<head runat="server">
+    <asp:ContentPlaceHolder ID="HeaderContentPlaceHolder" runat="server">
+    </asp:ContentPlaceHolder>
+    <Site:CommonIncludes ID="CommonIncludes" runat="server" />
+    <asp:PlaceHolder ID="CssIncludes" runat="server"></asp:PlaceHolder>
+    <asp:PlaceHolder ID="JsIncludes" runat="server"></asp:PlaceHolder>
+    <asp:PlaceHolder ID="MetaIncludes" runat="server"></asp:PlaceHolder>
+</head>
+<body>
+    <%= FrontEndBasePage.GetSettings().GlobalCodeInBody %>
+
+    <form id="form1" runat="server">
+        <asp:ScriptManager runat="server" />
+        <Site:LoggedInHeader runat="server" id="LoggedInHeader" />
+
+        <!--[if lt IE 9]>
+        <script src="{BaseUrl}Scripts/respond.min.js"></script>
+    <![endif]-->
+        <div id="wrapper">
+            <div class="container">
+                <Site:Header ID="Header" runat="server" />
+                <Site:GenerateBreadCrumb runat="server" id="GenerateBreadCrumb" />
+                <Site:GenerateSubNav runat="server" id="GenerateSubNav" />
+                <asp:ContentPlaceHolder ID="MainContentPlaceHolder" runat="server"></asp:ContentPlaceHolder>
+            </div>
+        </div>
+        <!-- Wrapper end -->
+        <Site:Footer ID="Footer" runat="server" />
+    </form>
+</body>
+</html>

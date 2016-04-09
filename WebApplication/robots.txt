@@ -1,0 +1,16 @@
+User-agent: *
+Disallow: /Admin/
+Disallow: /login/
+Disallow: /admin/
+Disallow: /App_Data/
+Disallow: /bin/
+Disallow: /Controls/
+Disallow: /FlashVersion/
+Disallow: /Handlers/
+Disallow: /media/
+Disallow: /obj/
+Disallow: /Properties/
+Disallow: /Scripts/
+Disallow: /Styles/
+Disallow: /Views/
+Disallow: /WebServices/

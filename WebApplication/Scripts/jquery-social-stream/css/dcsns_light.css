@@ -1,0 +1,549 @@
+/* Reset */
+.dcsns ul, .dcsns li {
+	padding: 0; 
+	margin: 0; 
+	list-style: none!important;
+	background: none;
+}
+
+/* Main styles */
+/* Feeds */
+.dcsns {
+	background: #E5E5E5;
+    border-radius: 7px;
+	-webkit-border-radius: 7px; 
+	-moz-border-radius: 7px; 
+    color: #444;
+    list-style: none outside none;
+    margin: 0;
+    padding: 10px 10px 0;
+}
+.dcsns-content {
+	position: relative;
+	overflow: hidden;
+	padding: 0;
+	margin: 0 0 5px 0;
+	border-radius: 5px; 
+	-webkit-border-radius: 5px; 
+	-moz-border-radius: 5px; 
+}
+.dcsns-loading {
+	background: url(../images/loading_light.gif) no-repeat 0 0;
+	height: 24px;
+	padding: 6px 0 0 30px;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+}
+.stream p {
+	margin: 0;
+	padding: 0;
+}
+.stream li a {
+	color: #2DB6E8;
+}
+.stream li {
+	padding: 0;
+	position: relative;
+    font-size: 11px;
+	color: #444;
+	background: #fff;
+    border: 1px solid #D3D3D3;
+	border-radius: 5px; 
+	-webkit-border-radius: 5px; 
+	-moz-border-radius: 5px;
+    margin-bottom: 4px;
+	font-family: Arial, sans-serif;
+	line-height: 1.35em;
+}
+.stream li .inner {
+	padding: 10px 10px 0 10px;
+	margin: 0;
+	position: relative;
+	line-height: 1.5em;
+}
+.stream li .icon {
+	position: absolute;
+	left: 8px;
+	bottom: 5px;
+	z-index: 2;
+	height: 20px;
+}
+.stream li .clear {
+	clear: both;
+}
+
+/* Content blocks */
+.stream li .section-intro {
+	clear: both;
+	display: block;
+	font-style: italic;
+	padding: 8px 0 5px 35px;
+	margin: 0;
+	height: 19px;
+	color: #fff;
+	border-radius: 0 0 5px 5px; 
+	-webkit-border-radius: 0 0 5px 5px;  
+	-moz-border-radius: 0 0 5px 5px; 
+}
+.stream li .section-intro a {
+	text-decoration: underline;
+	margin-right: 3px;
+	color: #fff;
+}
+.stream li .section-title {
+	display: block;
+	font-weight: bold;
+	margin-bottom: 3px;
+	font-size: 12px;
+	color: #f0f0f0;
+}
+.stream li .section-title a {
+	color: #555;
+}
+.stream li .section-title a:hover {
+	color: #2DB6E8;
+}
+.stream li .section-thumb {
+	float: left;
+	margin: 0 7px 0 0;
+	max-width: 99%;
+}
+.stream li .section-thumb img {
+	border: 1px solid #ccc;
+	padding: 1px;
+	background: #fff;
+	max-width: 99%;
+}
+.stream li .section-text {
+	display: block;
+	margin-bottom: 3px;
+}
+.stream li .section-text br {
+	display: block;
+}
+.stream li .section-user {
+	clear: both;
+	display: block;
+	font-style: italic;
+	margin: 0 8px 5px 0;
+	display: block;
+	float: left;
+	padding: 5px 0 5px 15px;
+	line-height: 12px;
+	background: url(../images/profile.png) no-repeat 0 5px;
+}
+.stream li .meta {
+	display: block;
+	font-size: 90%;
+	color: #999;
+}
+.stream li .meta span {
+	margin: 0 8px 5px 0;
+	display: block;
+	float: left;
+	padding: 0 0 0 15px;
+	line-height: 12px;
+}
+.meta span.shares {
+	background: url(../images/shares.png) no-repeat 0 0;
+	padding-left: 20px;
+}
+.meta span.views {
+	background: url(../images/views.png) no-repeat 0 0;
+	padding-left: 18px;
+}
+.meta span.likes {
+	background: url(../images/likes.png) no-repeat 0 0;
+	padding-left: 16px;
+}
+.meta span.comments {
+	background: url(../images/comments.png) no-repeat 0 0;
+}
+.meta span.users {
+	background: url(../images/users.png) no-repeat 0 0;
+}
+.meta span.videos {
+	background: url(../images/videos.png) no-repeat 0 0;
+	padding-left: 16px;
+}
+.stream li .section-meta {
+	display: block;
+	margin: 0;
+	padding: 0;
+	clear: both;
+}
+.stream li .meta.item-comments {
+	padding: 0 0 0 35px;
+	margin: 0 0 5px 0;
+	min-height: 30px;
+	position: relative;
+	clear: both;
+	line-height: 1.3em;
+}
+.stream li .meta.item-comments img {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 30px;
+}
+.stream li .meta.item-likes {
+	padding: 0;
+	width: 100%;
+	overflow: hidden;
+	clear: both;
+	line-height: 1.3em;
+}
+.stream li .meta.item-likes img {
+	float: left;
+	margin: 0 5px 5px 0;
+	width: 30px;
+	border: 1px solid #ddd;
+	padding: 1px;
+	background: #fff;
+}
+.stream li.dcsns-error {
+	color: #990000;
+}
+.stream li .section-share {
+	display: block;
+	margin: 0 0 5px 0;
+	padding: 4px 0 0;
+	float: right;
+}
+.stream li .section-share a {
+	display: block;
+	width: 16px;
+	height: 16px;
+	float: left;
+	margin: 0 2px 0 0;
+	background: url(../images/share.png) no-repeat 0 0;
+}
+.stream li .section-share a.share-twitter {
+	background-position: 0 -16px;
+}
+.stream li .section-share a.share-reply {
+	background-position: 0 -32px;
+}
+.stream li .section-share a.share-retweet {
+	background-position: 0 -48px;
+}
+.stream li .section-share a.share-favorite {
+	background-position: 0 -64px;
+}
+.stream li .section-share a.share-google {
+	background-position: 0 -80px;
+}
+.stream li .section-share a.share-linkedin {
+	background-position: 0 -96px;
+}
+.stream li .section-share a.share-facebook:hover {
+	background-position: -16px 0;
+}
+.stream li .section-share a.share-twitter:hover {
+	background-position: -16px -16px;
+}
+.stream li .section-share a.share-reply:hover {
+	background-position: -16px -32px;
+}
+.stream li .section-share a.share-retweet:hover {
+	background-position: -16px -48px;
+}
+.stream li .section-share a.share-favorite:hover {
+	background-position: -16px -64px;
+}
+.stream li .section-share a.share-google:hover {
+	background-position: -16px -80px;
+}
+.stream li .section-share a.share-linkedin:hover {
+	background-position: -16px -96px;
+}
+.stream li.dcsns-twitter .section-share .share-facebook, .stream li.dcsns-twitter .section-share .share-google, .stream li.dcsns-twitter .section-share .share-linkedin, .stream li.dcsns-twitter .section-share .share-twitter {
+	display:none;
+}
+/* Toolbar */
+.dcsns-toolbar {
+	padding: 5px 80px 5px 0;
+	position: relative;
+	border-radius: 5px; 
+	-webkit-border-radius: 5px; 
+	-moz-border-radius: 5px; 
+}
+/* Filter */
+.dcsns .filter {
+	padding: 0;
+	margin: 0;
+}
+.dcsns .filter li {
+	display: inline-block;
+	background: none;
+	padding: 0;
+	margin: 0 2px 0 0;
+	height: 24px;
+}
+.dcsns .filter li a {
+	padding: 0;
+	margin: 0;
+	display: block;
+	float: left;
+	height: 24px;
+}
+.dcsns .filter li img {
+	margin: 0;
+	height: 22px;
+}
+/* Controls */
+.dcsns .controls {
+	position: absolute;
+	right: 0;
+	top: 7px;
+	height: 22px;
+	padding: 0;
+	z-index: 12;
+}
+.dcsns .controls li {
+	display: inline;
+	background: none;
+}
+.dcsns .controls a {
+	display: block;
+	width: 22px;
+	height: 22px;
+	float: left;
+	margin: 0 0 0 2px;
+	background: url(../images/controls.png) no-repeat 0 0;
+}
+.dcsns .controls .prev {
+	background-position: -44px 0;
+}
+.dcsns .controls .next {
+	background-position: -66px 0;
+}
+.dcsns .controls .play {
+	background-position: 0 0;
+}
+.dcsns .controls .pause {
+	background-position: -22px 0;
+}
+.dcsns .controls .prev:hover {
+	background-position: -44px -22px;
+}
+.dcsns .controls .next:hover {
+	background-position: -66px -22px;
+}
+.dcsns .controls .play:hover {
+	background-position: 0 -22px;
+}
+.dcsns .controls .pause:hover {
+	background-position: -22px -22px;
+}
+
+/* feeds network specific styles */
+.stream li.dcsns-rss .section-intro, .filter .f-rss a:hover {
+	background-color: #FF9800;
+}
+.stream li.dcsns-flickr .section-intro, .filter .f-flickr a:hover {
+	background-color: #f90784;
+}
+.stream li.dcsns-delicious .section-intro, .filter .f-delicious a:hover {
+	background-color: #3271CB;
+}
+.stream li.dcsns-twitter .section-intro, .filter .f-twitter a:hover {
+	background-color: #4ec2dc;
+}
+.stream li.dcsns-facebook .section-intro, .filter .f-facebook a:hover {
+	background-color: #3b5998;
+}
+.stream li.dcsns-google .section-intro, .filter .f-google a:hover {
+	background-color: #2d2d2d;
+}
+.stream li.dcsns-youtube .section-intro, .filter .f-youtube a:hover {
+	background-color: #DF1F1C;
+}
+.stream li.dcsns-pinterest .section-intro, .filter .f-pinterest a:hover {
+	background-color: #CB2528;
+}
+.stream li.dcsns-lastfm .section-intro, .filter .f-lastfm a:hover {
+	background-color: #C90E12;
+}
+.stream li.dcsns-dribbble .section-intro, .filter .f-dribbble a:hover {
+	background-color: #F175A8;
+}
+.stream li.dcsns-vimeo .section-intro, .filter .f-vimeo a:hover {
+	background-color: #4EBAFF;
+}
+.stream li.dcsns-stumbleupon .section-intro, .filter .f-stumbleupon a:hover {
+	background-color: #EB4924;
+}
+.stream li.dcsns-deviantart .section-intro, .filter .f-deviantart a:hover {
+	background-color: #EB4924;
+}
+.stream li.dcsns-tumblr .section-intro, .filter .f-tumblr a:hover {
+	background-color: #365472;
+}
+.stream li.dcsns-instagram .section-intro, .filter .f-instagram a:hover {
+	background-color: #413A33;
+}
+/* Facebook */
+.stream li.dcsns-facebook .section-text img {
+	margin: 0 7px 5px 0;
+	float: left;
+	border: 1px solid #ddd;
+	padding: 1px;
+	background: #fff;
+	max-width: 98%;
+}
+.stream li.dcsns-facebook .section-text-fb a {
+	display:none;
+}
+.stream li.dcsns-facebook .meta {
+	display: block;
+	clear: both;
+}
+.stream li.dcsns-facebook .meta.item-comments {
+	padding: 0;
+	min-height: auto;
+}
+.stream li.dcsns-facebook .meta.item-comments a {
+	display: block;
+	margin: 0 0 2px 0;
+}
+.stream li.dcsns-facebook .share-facebook {
+	display: none;
+}
+/* twitter */
+.stream li.dcsns-twitter .section-thumb {
+	margin-top: 3px;
+}
+.stream li.dcsns-twitter .section-user {
+	padding: 0;
+	background: none;
+}
+.stream li.dcsns-twitter .section-text img {
+	margin: 5px 0 0;
+	border: 1px solid #ddd;
+	padding: 1px;
+	background: #fff;
+	max-width: 99%;
+}
+.stream li.dcsns-twitter a {
+	color: #38AEAE;
+}
+.stream li.dcsns-twitter .section-intro a, .stream li.dcsns-twitter .section-intro a:hover {
+	color: #fff;
+}
+.stream li.dcsns-twitter .section-intro span a {
+	text-decoration: none;
+	margin-left: 0;
+}
+.stream li.dcsns-twitter .section-intro span a:hover {
+	text-decoration: underline;
+}
+.stream li.dcsns-twitter a:hover {
+	color: #38AEAE;
+	text-decoration: underline;
+}
+.stream li.dcsns-twitter .twitter-user {
+	margin-bottom: 2px;
+	display: block;
+}
+.stream li.dcsns-twitter .twitter-user a {
+	color: #999;
+	line-height: 1.35em;
+}
+.stream li.dcsns-twitter .twitter-user a:hover {
+	color: #999;
+	text-decoration: none;
+}
+.stream li.dcsns-twitter .twitter-user a strong{
+	color: #444;
+}
+.stream li.dcsns-twitter .twitter-user a:hover strong {
+	color: #38AEAE;
+	text-decoration: underline;
+}
+/* google */
+.stream li.dcsns-google .section-title {
+	margin-bottom: 5px;
+}
+.stream li.dcsns-google .meta span.plusones {
+	padding-left: 0;
+}
+/* vimeo */
+.dcsns .stream li.dcsns-vimeo .section-title {
+	display: block;
+	clear: both;
+}
+.stream li.dcsns-vimeo .section-text {
+	margin-bottom: 5px;
+}
+.stream li.dcsns-vimeo .section-text .meta {
+	padding-top: 5px;
+}
+.stream li.dcsns-vimeo .logo {
+	margin-bottom: 3px;
+}
+/** Flickr **/
+.stream li.dcsns-flickr .section-thumb {
+	margin: 0;
+}
+/* Pinterest */
+.stream li.dcsns-pinterest .section-thumb {
+	display: block;
+}
+.stream li.dcsns-pinterest .section-text {
+	clear: both;
+}
+/* dribbble */
+.stream li.dcsns-dribbble .inner img {
+	margin-bottom: 5px;
+}
+/* lastfm */
+.stream li.dcsns-lastfm .section-title {
+	background: url(../images/tracks.png) no-repeat 0 0;
+	padding-left: 17px;
+	margin-bottom: 0;
+}
+/* deviantart */
+.stream li.dcsns-deviantart .section-thumb {
+	display: block;
+	float: none;
+}
+.stream li.dcsns-deviantart .section-thumb img {
+	max-width: 250px;
+}
+/* tumblr */
+.stream li.dcsns-tumblr .section-text img {
+	margin: 0 7px 5px 0;
+	float: left;
+	border: 1px solid #ddd;
+	padding: 1px;
+	background: #fff;
+	max-width: 99%;
+}
+.stream li.dcsns-tumblr .track {
+	display: block;
+	background: url(../images/tracks.png) no-repeat 0 5px;
+	padding: 5px 0 0 17px;
+	margin-bottom: 0;
+}
+/* instagram */
+.stream li.dcsns-instagram .section-title {
+	font-weight: normal;
+	clear: both;
+}
+.stream li.dcsns-instagram .section-thumb img {
+	margin-bottom: 10px;
+}
+.stream li.dcsns-instagram .section-meta {
+	clear: both;
+	margin-bottom: 5px;
+}
+.stream li.dcsns-instagram .section-meta .meta .comments, .stream li.dcsns-instagram .section-meta .meta .likes {
+	margin: 0 0 5px 0;
+	padding-top: 5px;
+	background-position: 0px 5px;
+	float: none;
+	font-size: 100%;
+	font-weight: bold;
+}

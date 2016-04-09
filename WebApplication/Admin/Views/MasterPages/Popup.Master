@@ -1,0 +1,36 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Popup.master.cs" Inherits="WebApplication.Admin.Views.MasterPages.Popup" %>
+
+<%@ Register Src="~/Admin/Controls/CommonIncludes.ascx" TagPrefix="Admin" TagName="CommonIncludes" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+
+    <form id="form1" runat="server">
+        <asp:ScriptManager runat="server" />
+
+        <Admin:CommonIncludes runat="server" ID="CommonIncludes" />
+        <style type="text/css">
+            html, body {
+                overflow: auto;
+            }
+        </style>
+
+        <fieldset style="width: 98%; height: 100%">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </fieldset>
+        <script type="text/javascript">
+            $(window).load(function () {
+                if (typeof hidePreviewPanel == 'function')
+                    hidePreviewPanel();
+            });
+        </script>
+    </form>
+</body>
+</html>

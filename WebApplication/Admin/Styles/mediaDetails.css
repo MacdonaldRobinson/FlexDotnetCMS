@@ -1,0 +1,111 @@
+﻿.pageBanners ul li
+{
+    list-style-type: none;
+}
+
+.column
+{
+    float: left;
+    margin-right: 10px;
+}
+
+/*Banner Styles*/
+
+.pageBanners .column2 ul li{float:left;margin:1em;}
+.pageBanners .column2 ul{float:left;}
+
+.pageBanners li
+{
+    margin-top: 10px;
+}
+
+.pageBanners > .column1 img
+{
+    max-width: 300px;
+    max-height: 200px;
+}
+
+.pageBanners > .column1 .imageHolder
+{
+    width: 300px;
+    height: 200px;
+}
+
+.pageBanners > .column1 input[type="text"]
+{
+    width: 300px;
+}
+
+.pageBanners > .column2 img
+{
+    max-width: 100px;
+    max-height: 50px;
+}
+
+.pageBanners > .column2 .imageHolder
+{
+    height: 50px;
+}
+
+.pageBanners > .column1
+{
+    width: 60%;
+}
+
+.columnContainer
+{
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.pageBanners > .column2
+{
+    width: 35%;
+}
+
+.fullHeight{
+    height: 100%;
+}
+
+#EditPanel{    
+    width: 50%;
+}
+
+#PreviewSection {
+    width: 45%;
+}
+
+#PreviewPanel{
+    float: left;
+    width: 100%;
+    height: 100%;
+}
+
+.SavePanel{
+    position: fixed;
+    z-index:10;
+    right:0;
+    top: 35px;
+    background-color: #fff;
+    padding: 10px;
+}
+
+#mainArea {
+    overflow:hidden;
+}
+
+#mainArea #left-component {
+    width: 75em;
+}
+
+#mainArea #my-divider {
+    left: 75em; /* Same as left component width */
+    width: 5px;
+}
+
+#mainArea #right-component {
+    left: 75em; /* Same as left component width */
+    margin-left: 5px; /* Same as divider width */
+    margin-top: 40px;
+}
+

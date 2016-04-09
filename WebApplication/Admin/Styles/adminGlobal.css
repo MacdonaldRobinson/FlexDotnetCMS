@@ -1,0 +1,378 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+
+div.clear {
+    clear: both;
+}
+
+.floatLeft {
+    float: left;
+}
+
+.floatRight {
+    float: right;
+}
+
+.comments .comments {
+    padding-left: 30px;
+}
+
+body {
+    font-family: Arial, Sans-Serif;
+    font-size: 0.8em;
+    color: black;
+    background: white;
+    /*background: #ccc url(../media/images/css/background.jpg) repeat;*/
+}
+
+h1 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    color: black;
+}
+
+#mainArea h1 {
+    margin-top: 10px;
+}
+
+#mainArea .EditorPanel h1 {
+    border-bottom: 1px solid;
+    margin-bottom: 25px;
+    margin-left: 0;
+    margin-top: 10px;
+    padding-bottom: 15px;
+}
+
+#treeView h1 {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+}
+
+h1 span, h2 {
+    color: black;
+}
+
+#mainArea {
+    padding: 0;
+    line-height: 22px;    
+    margin-left: 5px;
+    height: 100%;
+}
+
+.buttons {
+    margin: 10px 0;
+}
+
+    .buttons a {
+        padding: 0.4em 1.5em 0.4em 1.5em !important;
+        background-color: #99ccff !important;
+        color: #000000 !important;
+        text-decoration: none !important;
+        text-transform: uppercase;
+        border: 0px !important;
+        cursor: hand !important;
+        float: left;
+        margin-right: 10px;
+        font-weight: bold;
+    }
+
+        .buttons a:hover {
+            background-color: lightblue !important;
+        }
+
+#ContentPlaceHolder1_Main {
+    background-color: white !important;
+}
+
+#loggedInUser {
+    padding: 0.4em 1.2em 0.4em 1.2em;
+    color: black;
+}
+
+    #loggedInUser a {
+        color: black;
+    }
+
+html, body, form, #page, #mainWrapper {
+    height: 96%;
+}
+
+html {
+    overflow: hidden;
+}
+
+#SiteTree a {
+    color: black;
+    font-weight: bold;
+}
+
+#SiteTree .isHidden > a, #SiteTree .unPublished > a {
+    font-style: italic;
+    color: gray;
+}
+
+#SiteTree .isDeleted > a {
+    text-decoration: line-through;
+}
+
+fieldset {
+    padding: 10px;
+    border-color: #4e5054;
+    border-width: 3px 0 0 0;
+    background-color: white;
+}
+
+    fieldset fieldset {
+        border-color: #000000;
+        border-width: 1px;
+    }
+
+    fieldset > div {
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+        fieldset > div ul {
+            list-style-type: none;
+        }
+
+        fieldset > div input[type="text"], fieldset > div textarea {
+            display: block;
+            width: 100%;
+            /*overflow: hidden;*/
+        }
+
+            fieldset > div input[type="text"].riTextBox {
+                display: inline-block;
+            }
+
+        fieldset > div textarea {
+            height: 100px;
+        }
+
+        fieldset > div label {
+            font-weight: bold;
+            padding-bottom: 2px;
+        }
+
+.RadEditor textarea {
+    height: 500px;
+}
+
+.HistoryPanel {
+    padding: 10px 10px 20px 0px;
+}
+
+.loadingPanel {
+    width: 100%;
+    height: 100%;
+    background: #ffffff url(../media/images/css/ajax-loading.gif) no-repeat center;
+}
+
+#topNavWrapper, #logoWrapper {
+    background-color: white;
+}
+
+#topNavWrapper {
+    padding: 10px 0 10px 0;
+}
+
+#logoWrapper {
+    padding: 20px 0 20px 0;
+}
+
+#logoWrapper {
+    border: 1px solid #000000;
+    border-width: 0 0 1px 0;
+    border-style: ridge;
+}
+
+.logo {
+    background: url(../media/images/css/logo.png) no-repeat;
+    width: 64px;
+    height: 23px;
+}
+
+#branding {
+    float: right;
+    text-transform: uppercase;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+    #branding sup {
+        font-size: 6px;
+    }
+
+    #branding span {
+        color: #99ccff;
+    }
+
+#brandingWrapper {
+    background-color: #141414;
+    padding: 5px 0 5px 0;
+}
+
+a, a:active, a:link, a:visited {
+    color: #99ccff;
+}
+
+.box {
+    background-color: #fff;
+    padding: 30px;
+}
+
+hr {
+    margin: 20px 0 20px 0;
+}
+
+.leftArrow {
+    background: url(../media/images/css/leftArrow.png) no-repeat;
+    min-width: 55px;
+    min-height: 101px;
+    padding-left: 70px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+ul li {
+    list-style-type: none;
+}
+
+.imageHolder {
+    background-color: #545454;
+    text-align: center;
+}
+
+.recentEdits {
+    margin-right: 50px;
+    margin-bottom: 20px;
+}
+
+.feeds {
+    width: 70%;
+}
+
+    .feeds h2 {
+        color: #d9d9d9;
+    }
+
+    .feeds .blogpostTitle a {
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .feeds .blogpostInfo {
+        color: #838383;
+    }
+
+#loggedInUser a {
+    color: #99ccff;
+    margin-left: 5px;
+    display: inline-block;
+}
+
+.loginName {
+    font-weight: bold;
+}
+
+#treeView {
+    padding: 5px 0 0 10px;
+}
+
+    #treeView ul {
+        font-size: 0.8rem !important;
+        padding-left: 10px;
+    }
+
+        #treeView ul li a {
+        }
+
+.RadSplitter_BlackMetroTouch .rspResizeBar, .RadSplitter_BlackMetroTouch .rspResizeBarOver, .RadSplitter_BlackMetroTouch td.rspSlideContainerResize, .RadSplitter_BlackMetroTouch td.rspResizeBar, .RadSplitter_BlackMetroTouch .rspResizeBarOver .rspCollapseBarExpand, .RadSplitter_BlackMetroTouch .rspResizeBarOver .rspCollapseBarCollapse, .RadSplitter_BlackMetroTouch .rspResizeBarOverHorizontal .rspCollapseBarHorizontalExpand, .RadSplitter_BlackMetroTouch .rspResizeBarOverHorizontal .rspCollapseBarHorizontalCollapse, .RadSplitter_BlackMetroTouch div.rspPaneTabContainer {
+    background-color: #f00;
+}
+
+.RadSplitter_BlackMetroTouch, .RadSplitter_BlackMetroTouch .rspPaneTabContainer, .RadSplitter_BlackMetroTouch .rspPane, .RadSplitter_BlackMetroTouch td.rspResizeBar, .RadSplitter_BlackMetroTouch .rspSlideContainerResize, .RadSplitter_BlackMetroTouch .rspPaneHorizontal, .RadSplitter_BlackMetroTouch .rspResizeBarHorizontal, .RadSplitter_BlackMetroTouch .rspSlideContainerResizeHorizontal {
+}
+
+.RadTreeView_Metro {
+    color: #ffffff !important;
+}
+
+.EditorPanel {
+    overflow-x: hidden !important;
+}
+
+#PreviewIFrame {
+    overflow-y: hidden;
+}
+
+#Filter {
+    margin: 10px 0;
+}
+
+.ace-editor {
+    /** Setting height is also important, otherwise editor wont showup**/
+    height: 300px;
+}
+
+.split-pane.fixed-left > .split-pane-component, .split-pane.fixed-right > .split-pane-component, .split-pane.vertical-percent > .split-pane-component,
+.split-pane.fixed-left > .split-pane-divider, .split-pane.fixed-right > .split-pane-divider, .split-pane.vertical-percent > .split-pane-divider {
+    z-index: 0;
+}
+
+.loading-panel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 10;
+}
+
+    .loading-panel .copy {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        color: #fff;
+        font-weight: bold;
+    }
+
+#topMenu a {
+    color: inherit;
+    background-color: #99ccff;
+}
+
+    #topMenu a:hover {
+        background-color: #e78f08;
+    }
+
+html, body {
+    height: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.split-pane-divider {
+    background: #aaa;
+}
+
+#left-component {
+    width: 30em;
+}
+
+#my-divider {
+    left: 30em; /* Same as left component width */
+    width: 5px;
+}
+
+#right-component {
+    left: 30em; /* Same as left component width */
+    margin-left: 5px; /* Same as divider width */
+}

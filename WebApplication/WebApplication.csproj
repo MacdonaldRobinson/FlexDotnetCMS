@@ -1,0 +1,2091 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0C6D2B96-20DB-4998-8EFC-A638FA09290C}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WebApplication</RootNamespace>
+    <AssemblyName>WebApplication</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>9939e24d</NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>1.7</TypeScriptToolsVersion>
+    <UseGlobalApplicationHostFile />
+    <IsCompassProject>True</IsCompassProject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="Prod-Deployment" Order="1" xmlns="">
+          <Destination Path="Data Source=localhost\SQLEXPRESS%3bInitial Catalog=Framework%3bIntegrated Security=True%3bMultipleActiveResultSets=True%3b" />
+          <Object Type="dbFullSql">
+            <PreSource Path="Data Source=Mac-PC\SQLEXPRESS%3bInitial Catalog=Framework%3bIntegrated Security=True%3bMultipleActiveResultSets=True%3bApplication Name=EntityFramework" ScriptSchema="True" ScriptData="True" CopyAllFullTextCatalogs="False" />
+            <Source Path="obj\Debug\AutoScripts\Prod-Deployment_SchemaAndData.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
+    <DesktopBuildPackageLocation>obj\Debug\Package\CMS.zip</DesktopBuildPackageLocation>
+    <DeployIisAppPath>Default Web Site/CMS</DeployIisAppPath>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Elmah">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\iseee\trunk\ISEEE\Website\bin\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageProcessor, Version=2.3.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ImageProcessor.2.3.3.0\lib\net45\ImageProcessor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ImageProcessor.Web, Version=4.5.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ImageProcessor.Web.4.5.3.0\lib\net45\ImageProcessor.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="LinqToTwitterPcl, Version=3.1.2.18329, Culture=neutral, PublicKeyToken=957107be965c25d9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\LinqToTwitterPcl.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.5840.25917, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.6\lib\net40\System.Linq.Dynamic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Controls\CommonIncludes.ascx" />
+    <Content Include="Admin\Controls\Editors\MediaDetailHistoryEditor.ascx" />
+    <Content Include="Admin\Controls\Editors\MediaDetailUsersAssociationEditor.ascx" />
+    <Content Include="Admin\Controls\Editors\MediaFieldsEditor.ascx" />
+    <Content Include="Admin\Controls\Editors\MediaTypeFieldsEditor.ascx" />
+    <Content Include="Admin\Controls\Fields\AssociationCheckBoxList.ascx" />
+    <Content Include="Admin\Controls\Fields\AssociationDropDownList.ascx" />
+    <Content Include="Admin\Controls\Fields\MultiFileUploader.ascx" />
+    <Content Include="Admin\Controls\MediaTypes\Common\CommonPanel.ascx" />
+    <Content Include="Admin\Controls\MediaTypes\Common\Tabs\AdvancedSettingsTab.ascx" />
+    <Content Include="Admin\Controls\MediaTypes\Common\Tabs\ChildrensTab.ascx" />
+    <Content Include="Admin\Controls\MediaTypes\Common\Tabs\CommentsTab.ascx" />
+    <Content Include="Admin\Controls\MediaTypes\Common\Tabs\FieldsTab.ascx" />
+    <Content Include="Admin\Controls\MediaTypes\Common\Tabs\HistoryTab.ascx" />
+    <Content Include="Admin\Controls\MediaTypes\Common\Tabs\LayoutsTab.ascx" />
+    <Content Include="Admin\Controls\MediaTypes\Common\Tabs\LinkSettingsTab.ascx" />
+    <Content Include="Admin\Controls\MediaTypes\Common\Tabs\PublishSettingsTab.ascx" />
+    <Content Include="Admin\Controls\MediaTypes\Common\Tabs\RolesUsersTab.ascx" />
+    <Content Include="Admin\Controls\MediaTypes\Common\Tabs\SEOSettingsTab.ascx" />
+    <Content Include="Admin\Controls\MediaTypes\Common\Tabs\ShoppingCartSettingsTab.ascx" />
+    <Content Include="Admin\Controls\MediaTypes\Common\Tabs\TagsTab.ascx" />
+    <Content Include="Admin\Controls\MediaTypes\RootPage\RootPagePanel.ascx" />
+    <Content Include="Admin\Controls\MediaTypes\Page\PagePanel.ascx" />
+    <Content Include="Admin\Controls\MediaTypes\UrlRedirectRule\UrlRedirectRulePanel.ascx" />
+    <Content Include="Admin\Controls\MediaTypes\Website\Tabs\WebsiteSettingsTab.ascx" />
+    <Content Include="Admin\Controls\MediaTypes\Website\WebsitePanel.ascx" />
+    <Content Include="Admin\Controls\Fields\AssociationDragDrop.ascx" />
+    <Content Include="Admin\Controls\Fields\AssociationAutoSuggest.ascx" />
+    <Content Include="Admin\Controls\Editors\DeletedItemsEditor.ascx" />
+    <Content Include="Admin\Controls\Editors\MediaDetailRolesAssociationEditor.ascx" />
+    <Content Include="Admin\Controls\Selectors\FlickerPhotoSetSelector.ascx" />
+    <Content Include="Admin\Controls\Selectors\Generic\PermissionsSelector.ascx" />
+    <Content Include="Admin\Controls\Selectors\WebService.asmx" />
+    <Content Include="Admin\media\images\css\ajax-loading.gif" />
+    <Content Include="Admin\media\images\css\background.jpg" />
+    <Content Include="Admin\media\images\css\leftArrow.png" />
+    <Content Include="Admin\media\images\css\logo.png" />
+    <Content Include="Admin\Views\MasterPages\WebService.asmx" />
+    <Content Include="Admin\Views\PageHandlers\FieldFiles\Default.aspx" />
+    <Content Include="Admin\Views\PageHandlers\FieldFiles\Detail.aspx" />
+    <Content Include="Admin\Views\PageHandlers\FieldFiles\ItemServices.asmx" />
+    <Content Include="Admin\Views\PageHandlers\GlossaryTerms\Default.aspx" />
+    <Content Include="Admin\Views\PageHandlers\GlossaryTerms\Detail.aspx" />
+    <Content Include="Admin\Views\PageHandlers\GlossaryTerms\ItemServices.asmx" />
+    <Content Include="Admin\Views\PageHandlers\MasterPages\Default.aspx" />
+    <Content Include="Admin\Views\PageHandlers\MasterPages\Detail.aspx" />
+    <Content Include="Admin\Views\PageHandlers\MasterPages\ItemServices.asmx" />
+    <Content Include="App_Readme\Elmah.txt" />
+    <Content Include="bin\Antlr3.Runtime.dll" />
+    <Content Include="bin\EcmaScript.NET.dll" />
+    <Content Include="bin\Elmah.dll" />
+    <Content Include="bin\EntityFramework.dll" />
+    <Content Include="bin\EntityFramework.SqlServer.dll" />
+    <Content Include="bin\FrameworkLibrary.dll" />
+    <Content Include="bin\ImageProcessor.dll" />
+    <Content Include="bin\ImageProcessor.Web.dll" />
+    <Content Include="bin\LinqToTwitter.AspNet.dll" />
+    <Content Include="bin\LinqToTwitterPcl.dll" />
+    <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="bin\NAnt.Core.dll" />
+    <Content Include="bin\Newtonsoft.Json.dll" />
+    <Content Include="bin\RazorEngine.dll" />
+    <Content Include="bin\RazorEngine.xml" />
+    <Content Include="bin\System.Linq.Dynamic.dll" />
+    <Content Include="bin\System.Net.Http.Extensions.dll" />
+    <Content Include="bin\System.Reactive.PlatformServices.dll" />
+    <Content Include="bin\System.Web.Optimization.dll" />
+    <Content Include="bin\System.Web.Razor.dll" />
+    <Content Include="bin\TinyFileManager.dll" />
+    <Content Include="bin\WebApplication.dll" />
+    <Content Include="bin\WebGrease.dll" />
+    <Content Include="Controls\AddIMediaDetailToUser.ascx" />
+    <Content Include="Controls\BootStrap\BootStrapTabbedLayout.ascx" />
+    <Content Include="Controls\Forms\CommentsForm.ascx" />
+    <Content Include="Controls\Generic\BugHerd.ascx" />
+    <Content Include="Controls\EmailTemplates\CreateAccount\AutoResponder.ascx" />
+    <Content Include="Controls\EmailTemplates\CreateAccount\Notification.ascx" />
+    <Content Include="Controls\Generic\FlickerGallery.ascx" />
+    <Content Include="Controls\Generic\ShareThis.ascx" />
+    <Content Include="Controls\Lists\CommentsList.ascx" />
+    <Content Include="Controls\Lists\TwitterFeedList.ascx" />
+    <Content Include="Controls\MasterPageSelector.ascx" />
+    <Content Include="Admin\Controls\Selectors\MultiSelectors\MultiMediaTypeRoleSelector.ascx" />
+    <Content Include="Admin\Controls\Selectors\MultiSelectors\MultiMediaTypeSelector.ascx" />
+    <Content Include="Admin\Controls\Selectors\MultiSelectors\Roles\MultiRoleSelector.ascx" />
+    <Content Include="Admin\Controls\Selectors\MultiSelectors\Users\MultiUserSelector.ascx" />
+    <Content Include="Admin\Controls\Selectors\RolePermissionsSelector.ascx" />
+    <Content Include="Admin\Controls\Selectors\Generic\RoleSelector.ascx" />
+    <Content Include="Admin\Controls\Selectors\Generic\UserSelector.ascx" />
+    <Content Include="Admin\Controls\Selectors\UserPermissionsSelector.ascx" />
+    <Content Include="Admin\Styles\popup.css" />
+    <Content Include="Admin\Views\PageHandlers\AdminTools\Default.aspx" />
+    <Content Include="Admin\Views\PageHandlers\Permissions\Default.aspx" />
+    <Content Include="Admin\Views\PageHandlers\Permissions\Detail.aspx" />
+    <Content Include="Admin\Views\PageHandlers\Permissions\ItemServices.asmx" />
+    <Content Include="Admin\Views\PageHandlers\Settings\Default.aspx" />
+    <Content Include="Admin\Views\PageHandlers\Users\ItemServices.asmx" />
+    <Content Include="bin\HtmlAgilityPack.dll" />
+    <Content Include="Controls\Facebook\FBComments.ascx" />
+    <Content Include="Admin\Controls\Fields\Editor.ascx" />
+    <Content Include="Admin\Controls\Fields\FileSelector.ascx" />
+    <Content Include="Admin\Controls\Generic\MediaDetailsGrid.ascx" />
+    <Content Include="Admin\Controls\Editors\HiddenItemsEditor.ascx" />
+    <Content Include="Admin\Controls\LanguageSwitcher.ascx" />
+    <Content Include="Admin\Controls\Selectors\Generic\MediaTypeSelector.ascx" />
+    <Content Include="Admin\Controls\Editors\TagsAssociationEditor.ascx" />
+    <Content Include="Admin\Controls\Selectors\TagsSelector.ascx" />
+    <Content Include="Admin\Controls\Editors\UnpublishedAndExpiredItemsEditor.ascx" />
+    <Content Include="Admin\Default.aspx" />
+    <Content Include="Admin\FileExplorerDialog.aspx" />
+    <Content Include="Admin\media\images\adminbg.gif" />
+    <Content Include="Admin\media\images\loginuserIcon.gif" />
+    <Content Include="Admin\Scripts\adminGlobal.js" />
+    <Content Include="Admin\Scripts\jquery.autoSuggest.packed.js" />
+    <Content Include="Admin\Styles\adminGlobal.css" />
+    <Content Include="Admin\Styles\autoSuggest.css" />
+    <Content Include="Admin\Styles\editor.css" />
+    <Content Include="Admin\Styles\mediaDetails.css" />
+    <Content Include="Admin\Views\MasterPages\Admin.Master" />
+    <Content Include="Admin\Views\MasterPages\Popup.Master" />
+    <Content Include="Admin\Views\PageHandlers\Languages\Default.aspx" />
+    <Content Include="Admin\Views\PageHandlers\Languages\Detail.aspx" />
+    <Content Include="Admin\Views\PageHandlers\Languages\ItemServices.asmx" />
+    <Content Include="Admin\Views\PageHandlers\MediaTypes\Default.aspx" />
+    <Content Include="Admin\Views\PageHandlers\MediaTypes\Detail.aspx" />
+    <Content Include="Admin\Views\PageHandlers\MediaTypes\ItemServices.asmx" />
+    <Content Include="Admin\Views\PageHandlers\Media\Create.aspx" />
+    <Content Include="Admin\Views\PageHandlers\Media\Default.aspx" />
+    <Content Include="Admin\Views\PageHandlers\Media\Detail.aspx" />
+    <Content Include="Admin\Views\PageHandlers\Media\ItemServices.asmx" />
+    <Content Include="Admin\Views\PageHandlers\Moderate\Default.aspx" />
+    <Content Include="Admin\Views\PageHandlers\Roles\Default.aspx" />
+    <Content Include="Admin\Views\PageHandlers\Roles\Detail.aspx" />
+    <Content Include="Admin\Views\PageHandlers\Roles\ItemServices.asmx" />
+    <Content Include="Admin\Views\PageHandlers\Tags\Default.aspx" />
+    <Content Include="Admin\Views\PageHandlers\Tags\Detail.aspx" />
+    <Content Include="Admin\Views\PageHandlers\Tags\ItemServices.asmx" />
+    <Content Include="Admin\Views\PageHandlers\Users\Default.aspx" />
+    <Content Include="Admin\Views\PageHandlers\Users\Detail.aspx" />
+    <Content Include="Controls\Generic\GenericSlideShow.ascx" />
+    <Content Include="Controls\Generic\GenericVideoPlayer.ascx" />
+    <Content Include="Controls\Header.ascx" />
+    <Content Include="Controls\Lists\BlogFeedList.ascx" />
+    <Content Include="Controls\ContactForm.ascx" />
+    <Content Include="Controls\EmailTemplates\ContactUs.ascx" />
+    <Content Include="Controls\Footer.ascx" />
+    <Content Include="Controls\Mobile\ToggleView.ascx" />
+    <Content Include="Controls\Navs\GenerateBreadCrumb.ascx" />
+    <Content Include="Controls\Navs\GenerateFooterNav.ascx" />
+    <Content Include="Controls\Navs\GenerateMainNav.ascx" />
+    <Content Include="Controls\Navs\GenerateSubNav.ascx" />
+    <Content Include="Controls\Lists\RssListView.ascx" />
+    <Content Include="Controls\Generic\GenerateNav.ascx" />
+    <Content Include="Controls\Generic\LoginSuccess.ascx" />
+    <Content Include="Controls\Generic\Pager.ascx" />
+    <Content Include="Controls\CommonIncludes.ascx" />
+    <Content Include="Controls\Login.ascx" />
+    <Content Include="Controls\LoggedIn\LoggedInHeader.ascx" />
+    <Content Include="Controls\PayPalBuyNowSelector.ascx" />
+    <Content Include="Controls\PdfTemplates\Template1\Body.ascx" />
+    <Content Include="Controls\PdfTemplates\Template1\Footer.ascx" />
+    <Content Include="Controls\Lists\RelatedItemsList.ascx" />
+    <Content Include="Controls\RenderChildren\RenderChildren.ascx" />
+    <Content Include="Controls\RenderMediaDetail\RenderMediaDetail.ascx" />
+    <Content Include="Controls\Widgets\GoogleMaps.ascx" />
+    <Content Include="Controls\Widgets\Instagram.ascx" />
+    <Content Include="Controls\Widgets\LanguageToggle.ascx" />
+    <Content Include="Controls\Widgets\MailChipSignupForm.ascx" />
+    <Content Include="Controls\Widgets\RssReader.ascx" />
+    <Content Include="Controls\Widgets\Search.ascx" />
+    <Content Include="Controls\Widgets\SearchResults.ascx" />
+    <Content Include="Controls\ShoppingCart\AddToCartButton.ascx" />
+    <Content Include="Controls\ShoppingCart\ShoppingCart.ascx" />
+    <Content Include="Controls\Sliders\WeatherSlider.ascx" />
+    <Content Include="Controls\TakeActionTab.ascx" />
+    <Content Include="Controls\ToolTipFromIMediaDetail.ascx" />
+    <Content Include="Controls\WeatherWidget.ascx" />
+    <Content Include="favicon.ico" />
+    <Content Include="FlashVersion\Default.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="Installer\Default.aspx" />
+    <Content Include="Installer\Images\loading-gear.gif" />
+    <Content Include="Installer\SqlFiles\CreateAndDelete_Framework.sql" />
+    <Content Include="media\images\appleIcon.gif" />
+    <Content Include="media\images\facebookIcon.gif" />
+    <Content Include="media\images\weatherIcons\wsymbol_0001_sunny.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0002_sunny_intervals.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0003_white_cloud.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0004_black_low_cloud.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0005_hazy_sun.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0006_mist.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0007_fog.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0008_clear_sky_night.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0009_light_rain_showers.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0010_heavy_rain_showers.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0011_light_snow_showers.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0012_heavy_snow_showers.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0013_sleet_showers.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0014_light_hail_showers.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0015_heavy_hail_showers.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0016_thundery_showers.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0017_cloudy_with_light_rain.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0018_cloudy_with_heavy_rain.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0019_cloudy_with_light_snow.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0020_cloudy_with_heavy_snow.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0021_cloudy_with_sleet.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0022_cloudy_with_light_hail.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0023_cloudy_with_heavy_hail.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0024_thunderstorms.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0025_light_rain_showers_night.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0026_heavy_rain_showers_night.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0027_light_snow_showers_night.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0028_heavy_snow_showers_night.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0029_sleet_showers_night.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0030_light_hail_showers_night.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0031_heavy_hail_showers_night.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0032_thundery_showers_night.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0033_cloudy_with_light_rain_night.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0034_cloudy_with_heavy_rain_night.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0035_cloudy_with_light_snow_night.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0036_cloudy_with_heavy_snow_night.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0037_cloudy_with_sleet_night.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0038_cloudy_with_light_hail_night.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0039_cloudy_with_heavy_hail_night.png" />
+    <Content Include="media\images\weatherIcons\wsymbol_0040_thunderstorms_night.png" />
+    <Content Include="robots.txt" />
+    <Content Include="Scripts\colorbox-master\content\ajax.html" />
+    <Content Include="Scripts\colorbox-master\content\daisy%402x.jpg" />
+    <Content Include="Scripts\colorbox-master\content\daisy.jpg" />
+    <Content Include="Scripts\colorbox-master\content\homer.jpg" />
+    <Content Include="Scripts\colorbox-master\content\marylou.jpg" />
+    <Content Include="Scripts\colorbox-master\content\ohoopee1.jpg" />
+    <Content Include="Scripts\colorbox-master\content\ohoopee2.jpg" />
+    <Content Include="Scripts\colorbox-master\content\ohoopee3.jpg" />
+    <Content Include="Scripts\colorbox-master\example1\colorbox.css" />
+    <Content Include="Scripts\colorbox-master\example1\images\border.png" />
+    <Content Include="Scripts\colorbox-master\example1\images\controls.png" />
+    <Content Include="Scripts\colorbox-master\example1\images\loading.gif" />
+    <Content Include="Scripts\colorbox-master\example1\images\loading_background.png" />
+    <Content Include="Scripts\colorbox-master\example1\images\overlay.png" />
+    <Content Include="Scripts\colorbox-master\example1\index.html" />
+    <Content Include="Scripts\colorbox-master\example2\colorbox.css" />
+    <Content Include="Scripts\colorbox-master\example2\images\controls.png" />
+    <Content Include="Scripts\colorbox-master\example2\images\loading.gif" />
+    <Content Include="Scripts\colorbox-master\example2\index.html" />
+    <Content Include="Scripts\colorbox-master\example3\colorbox.css" />
+    <Content Include="Scripts\colorbox-master\example3\images\controls.png" />
+    <Content Include="Scripts\colorbox-master\example3\images\loading.gif" />
+    <Content Include="Scripts\colorbox-master\example3\index.html" />
+    <Content Include="Scripts\colorbox-master\example4\colorbox.css" />
+    <Content Include="Scripts\colorbox-master\example4\images\border1.png" />
+    <Content Include="Scripts\colorbox-master\example4\images\border2.png" />
+    <Content Include="Scripts\colorbox-master\example4\images\loading.gif" />
+    <Content Include="Scripts\colorbox-master\example4\index.html" />
+    <Content Include="Scripts\colorbox-master\example5\colorbox.css" />
+    <Content Include="Scripts\colorbox-master\example5\images\border.png" />
+    <Content Include="Scripts\colorbox-master\example5\images\controls.png" />
+    <Content Include="Scripts\colorbox-master\example5\images\loading.gif" />
+    <Content Include="Scripts\colorbox-master\example5\images\loading_background.png" />
+    <Content Include="Scripts\colorbox-master\example5\index.html" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-ar.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-cs.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-da.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-de.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-es.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-fa.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-fi.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-fr.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-hr.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-hu.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-it.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-ja.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-kr.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-lv.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-nl.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-no.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-pl.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-pt-br.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-ro.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-ru.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-sk.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-tr.js" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-zh-CN.js" />
+    <Content Include="Scripts\colorbox-master\jquery.colorbox-min.js" />
+    <Content Include="Scripts\colorbox-master\jquery.colorbox.js" />
+    <Content Include="Scripts\jquery-social-stream\css\dcsns_dark.css" />
+    <Content Include="Scripts\jquery-social-stream\css\dcsns_light.css" />
+    <Content Include="Scripts\jquery-social-stream\css\dcsns_wall.css" />
+    <Content Include="Scripts\jquery-social-stream\example_1.html" />
+    <Content Include="Scripts\jquery-social-stream\example_1_dark.html" />
+    <Content Include="Scripts\jquery-social-stream\example_1_light.html" />
+    <Content Include="Scripts\jquery-social-stream\example_2.html" />
+    <Content Include="Scripts\jquery-social-stream\example_2_dark.html" />
+    <Content Include="Scripts\jquery-social-stream\example_2_light.html" />
+    <Content Include="Scripts\jquery-social-stream\example_3.html" />
+    <Content Include="Scripts\jquery-social-stream\example_3_dark.html" />
+    <Content Include="Scripts\jquery-social-stream\example_3_light.html" />
+    <Content Include="Scripts\jquery-social-stream\example_4.html" />
+    <Content Include="Scripts\jquery-social-stream\example_5.html" />
+    <Content Include="Scripts\jquery-social-stream\example_6.html" />
+    <Content Include="Scripts\jquery-social-stream\images\bdr1.png" />
+    <Content Include="Scripts\jquery-social-stream\images\bdr2.png" />
+    <Content Include="Scripts\jquery-social-stream\images\bg_shadow.png" />
+    <Content Include="Scripts\jquery-social-stream\images\comments.png" />
+    <Content Include="Scripts\jquery-social-stream\images\controls.png" />
+    <Content Include="Scripts\jquery-social-stream\images\controls1.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark-1\delicious.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark-1\deviantart.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark-1\digg.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark-1\dribbble.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark-1\facebook.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark-1\flickr.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark-1\google.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark-1\lastfm.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark-1\pinterest.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark-1\rss.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark-1\stumbleupon.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark-1\temp.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark-1\tumblr.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark-1\twitter.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark-1\vimeo.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark-1\youtube.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark\delicious.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark\deviantart.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark\digg.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark\dribbble.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark\facebook.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark\flickr.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark\google.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark\instagram.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark\lastfm.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark\pinterest.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark\rss.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark\stumbleupon.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark\tumblr.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark\twitter.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark\vimeo.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-dark\youtube.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light-1\delicious.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light-1\deviantart.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light-1\digg.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light-1\dribbble.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light-1\facebook.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light-1\flickr.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light-1\google.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light-1\instagram.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light-1\lastfm.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light-1\pinterest.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light-1\rss.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light-1\stumbleupon.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light-1\temp.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light-1\tumblr.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light-1\twitter.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light-1\vimeo.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light-1\youtube.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light\delicious.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light\deviantart.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light\digg.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light\dribbble.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light\facebook.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light\flickr.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light\google.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light\instagram.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light\lastfm.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light\rss.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light\stumbleupon.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light\tumblr.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light\twitter.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light\vimeo.png" />
+    <Content Include="Scripts\jquery-social-stream\images\dcsns-light\youtube.png" />
+    <Content Include="Scripts\jquery-social-stream\images\hot.png" />
+    <Content Include="Scripts\jquery-social-stream\images\likes.png" />
+    <Content Include="Scripts\jquery-social-stream\images\loading.gif" />
+    <Content Include="Scripts\jquery-social-stream\images\loading_dark.gif" />
+    <Content Include="Scripts\jquery-social-stream\images\loading_light.gif" />
+    <Content Include="Scripts\jquery-social-stream\images\loves.png" />
+    <Content Include="Scripts\jquery-social-stream\images\noize.png" />
+    <Content Include="Scripts\jquery-social-stream\images\profile.png" />
+    <Content Include="Scripts\jquery-social-stream\images\share.png" />
+    <Content Include="Scripts\jquery-social-stream\images\shares.png" />
+    <Content Include="Scripts\jquery-social-stream\images\tracks.png" />
+    <Content Include="Scripts\jquery-social-stream\images\users.png" />
+    <Content Include="Scripts\jquery-social-stream\images\videos.png" />
+    <Content Include="Scripts\jquery-social-stream\images\views.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\banner.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\bg2.jpg" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\bullet.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\codebg.jpg" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\dcsmt_125.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\dcssb_125.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\dctsp_125.jpg" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\down.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\facebook.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\facebook_1.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\facebook_2.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\facebook_3.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\facebook_4.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\facebook_5.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\facebook_6.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\feed_item_1.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\feed_item_2.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\feed_item_3.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\feed_item_4.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\google_api_key.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\google_api_key_1.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\google_api_key_2.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\google_api_key_3.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\h1.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\hdr.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\hdr_on.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\hr.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\instagram_1.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\instagram_2.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\instagram_3.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\instagram_4.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\instagram_5.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\menu.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\noize.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\pinterest.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\refresh.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\stream_controls.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\stream_dark.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\stream_light.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\trans-bottom.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\trans-mid.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\trans-top.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\twitter_1.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\twitter_2.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\twitter_3.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\wall.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\youtube_api_key.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\youtube_api_key_1.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\youtube_api_key_2.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\youtube_api_key_3.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\images\youtube_api_key_4.png" />
+    <Content Include="Scripts\jquery-social-stream\inc\js\collapse.js" />
+    <Content Include="Scripts\jquery-social-stream\inc\js\cufon.yui.js" />
+    <Content Include="Scripts\jquery-social-stream\inc\js\jquery-1.4.min.js" />
+    <Content Include="Scripts\jquery-social-stream\inc\js\jquery.plugins.js" />
+    <Content Include="Scripts\jquery-social-stream\inc\js\jquery.site.js" />
+    <Content Include="Scripts\jquery-social-stream\inc\js\league.js" />
+    <Content Include="Scripts\jquery-social-stream\inc\js\titillium.js" />
+    <Content Include="Scripts\jquery-social-stream\inc\layout.css" />
+    <Content Include="Scripts\jquery-social-stream\inc\museo\museo-300-webfont.svg" />
+    <Content Include="Scripts\jquery-social-stream\inc\museo\museo-500-webfont.svg" />
+    <Content Include="Scripts\jquery-social-stream\inc\museo\museo-700-webfont.svg" />
+    <Content Include="Scripts\jquery-social-stream\inc\oswald\oswald-webfont.svg" />
+    <Content Include="Scripts\jquery-social-stream\inc\ptsans\Paratype PT Sans Free Font License.txt" />
+    <Content Include="Scripts\jquery-social-stream\inc\ptsans\ptsans-italic-webfont.svg" />
+    <Content Include="Scripts\jquery-social-stream\inc\ptsans\ptsans-regular-webfont.svg" />
+    <Content Include="Scripts\jquery-social-stream\index.html" />
+    <Content Include="Scripts\jquery-social-stream\js\changelog.txt" />
+    <Content Include="Scripts\jquery-social-stream\js\jquery.social.stream.1.5.12.js" />
+    <Content Include="Scripts\jquery-social-stream\js\jquery.social.stream.1.5.12.min.js" />
+    <Content Include="Scripts\jquery-social-stream\js\jquery.social.stream.wall.1.6.js" />
+    <Content Include="Scripts\jquery-social-stream\wall.html" />
+    <Content Include="Scripts\split-pane-master\.gitignore" />
+    <Content Include="Scripts\split-pane-master\examples\basic.html" />
+    <Content Include="Scripts\split-pane-master\examples\fixed-bottom.html" />
+    <Content Include="Scripts\split-pane-master\examples\fixed-left.html" />
+    <Content Include="Scripts\split-pane-master\examples\fixed-right.html" />
+    <Content Include="Scripts\split-pane-master\examples\fixed-top.html" />
+    <Content Include="Scripts\split-pane-master\examples\nested.html" />
+    <Content Include="Scripts\split-pane-master\examples\percent-horizontal.html" />
+    <Content Include="Scripts\split-pane-master\examples\percent-vertical.html" />
+    <Content Include="Scripts\split-pane-master\examples\with-banner.html" />
+    <Content Include="Scripts\split-pane-master\pretty-split-pane.css" />
+    <Content Include="Scripts\split-pane-master\split-pane.css" />
+    <Content Include="Scripts\split-pane-master\split-pane.js" />
+    <Content Include="Scripts\tinyfilemanager.net\bin\TinyFileManager.dll" />
+    <Content Include="Scripts\tinyfilemanager.net\css\basic.css" />
+    <Content Include="Scripts\tinyfilemanager.net\css\bootstrap-lightbox.min.css" />
+    <Content Include="Scripts\tinyfilemanager.net\css\bootstrap.min.css" />
+    <Content Include="Scripts\tinyfilemanager.net\css\dropzone.css" />
+    <Content Include="Scripts\tinyfilemanager.net\css\style.css" />
+    <Content Include="Scripts\tinyfilemanager.net\dialog.aspx" />
+    <Content Include="Scripts\tinyfilemanager.net\img\fabric_plaid.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\glyphicons-halflings-white.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\glyphicons-halflings.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\AC3.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\ACE.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\ADE.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\ADP.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\AI.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\AIFF.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\AU.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\AVI.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\BAT.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\BIN.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\BMP.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\BUP.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\CAB.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\CAT.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\CHM.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\CSS.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\CSV.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\CUE.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\DAT.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\DCR.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\Default.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\Default2.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\DER.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\DIC.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\DIVX.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\DIZ.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\DLL.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\DOC.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\DOCX.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\DOS.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\DVD.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\DWG.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\DWT.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\EMF.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\EXC.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\EXE.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\FLA.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\folder.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\folder_return.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\FON.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\GIF.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\HLP.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\HTM.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\HTML.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\IFO.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\INF.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\INI.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\INS.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\IP.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\ISO.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\ISP.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\JAVA.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\JFIF.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\JPEG.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\JPG.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\JS.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\LOG.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\M4A.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\MID.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\MMF.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\MMM.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\MOV.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\MOVIE.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\MP2.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\MP2V.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\MP3.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\MP4.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\MPE.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\MPEG.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\MPG.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\MPV2.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\NFO.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\PDD.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\PDF.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\PHP.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\PNG.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\PPT.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\PPTX.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\PSD.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\RAR.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\REG.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\RTF.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\SCP.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\SQL.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\THEME.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\TIF.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\TIFF.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\TLB.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\TTF.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\TXT.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\UIS.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\URL.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\VBS.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\VCR.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\VOB.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\WAV.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\WBA.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\WMA.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\WMV.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\WPL.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\WRI.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\WTX.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\XLS.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\XLSX.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\XML.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\XSL.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\ZAP.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\ico\ZIP.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\loading.gif" />
+    <Content Include="Scripts\tinyfilemanager.net\img\processing.gif" />
+    <Content Include="Scripts\tinyfilemanager.net\img\spritemap%402x.png" />
+    <Content Include="Scripts\tinyfilemanager.net\img\spritemap.png" />
+    <Content Include="Scripts\tinyfilemanager.net\js\bootstrap-lightbox.min.js" />
+    <Content Include="Scripts\tinyfilemanager.net\js\bootstrap.min.js" />
+    <Content Include="Scripts\tinyfilemanager.net\js\dropzone.min.js" />
+    <Content Include="Scripts\tinyfilemanager.net\js\jquery.1.9.1.min.js" />
+    <Content Include="Scripts\tinymce\changelog.txt" />
+    <Content Include="Scripts\tinymce\js\tinymce\license.txt" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\advlist\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\anchor\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\autolink\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\autoresize\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\autosave\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\bbcode\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\charmap\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\code\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\colorpicker\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\contextmenu\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\directionality\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\emoticons\img\smiley-cool.gif" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\emoticons\img\smiley-cry.gif" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\emoticons\img\smiley-embarassed.gif" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\emoticons\img\smiley-foot-in-mouth.gif" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\emoticons\img\smiley-frown.gif" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\emoticons\img\smiley-innocent.gif" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\emoticons\img\smiley-kiss.gif" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\emoticons\img\smiley-laughing.gif" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\emoticons\img\smiley-money-mouth.gif" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\emoticons\img\smiley-sealed.gif" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\emoticons\img\smiley-smile.gif" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\emoticons\img\smiley-surprised.gif" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\emoticons\img\smiley-tongue-out.gif" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\emoticons\img\smiley-undecided.gif" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\emoticons\img\smiley-wink.gif" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\emoticons\img\smiley-yell.gif" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\emoticons\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\example\dialog.html" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\example\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\example_dependency\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\fullpage\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\fullscreen\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\hr\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\imagetools\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\image\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\importcss\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\insertdatetime\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\layer\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\legacyoutput\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\link\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\lists\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\media\moxieplayer.swf" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\media\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\nonbreaking\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\noneditable\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\pagebreak\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\paste\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\preview\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\print\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\save\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\searchreplace\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\spellchecker\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\tabfocus\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\table\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\template\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\textcolor\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\textpattern\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\visualblocks\css\visualblocks.css" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\visualblocks\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\visualchars\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\plugins\wordcount\plugin.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\content.inline.min.css" />
+    <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\content.min.css" />
+    <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\fonts\tinymce-small.svg" />
+    <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\fonts\tinymce.svg" />
+    <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\img\anchor.gif" />
+    <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\img\loader.gif" />
+    <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\img\object.gif" />
+    <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\img\trans.gif" />
+    <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\skin.ie7.min.css" />
+    <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\skin.min.css" />
+    <Content Include="Scripts\tinymce\js\tinymce\themes\modern\theme.min.js" />
+    <Content Include="Scripts\tinymce\js\tinymce\tinymce.min.js" />
+    <Content Include="Scripts\tinymce\LICENSE.TXT" />
+    <Content Include="Styles\adminAndFrontEndGlobal.css" />
+    <Content Include="Views\MasterPages\SiteTemplates\css\Style.min.css">
+      <DependentUpon>style.css</DependentUpon>
+    </Content>
+    <Content Include="Views\MasterPages\SiteTemplates\images\arrows-ffffff.png" />
+    <Content Include="Views\MasterPages\SiteTemplates\images\logo.gif" />
+    <Content Include="Views\MasterPages\SiteTemplates\images\messageIcon_correct.jpg" />
+    <Content Include="Views\MasterPages\SiteTemplates\images\messageIcon_error.jpg" />
+    <Content Include="Views\MasterPages\SiteTemplates\images\messageIcon_feedback.jpg" />
+    <Content Include="media\uploads\images\banners\textRotate.jpg" />
+    <Content Include="media\uploads\images\banners\xampp-logo.jpg" />
+    <Content Include="Scripts\commonFrontEnd.js" />
+    <Content Include="Scripts\global.js" />
+    <Content Include="Views\MasterPages\SiteTemplates\images\shadow.png" />
+    <Content Include="Views\MasterPages\SiteTemplates\images\siteBg.gif" />
+    <Content Include="Views\MasterPages\SiteTemplates\images\takeActionTab.png" />
+    <Content Include="Views\MasterPages\SiteTemplates\images\transparentBackground.png" />
+    <Content Include="Views\MediaTypeHandlers\NoTemplatePage.aspx" />
+    <Content Include="Views\MediaTypeHandlers\RootPage.aspx" />
+    <Content Include="Views\MediaTypeHandlers\UrlRedirectRule.aspx" />
+    <Content Include="Views\MediaTypeHandlers\UrlRedirectRuleList.aspx" />
+    <Content Include="Views\MediaTypeHandlers\Website.aspx" />
+    <Content Include="Views\PageHandlers\CreateAnAccount.aspx" />
+    <Content Include="Views\PageHandlers\SiteOffline.aspx" />
+    <Content Include="Views\PageHandlers\Tags.aspx" />
+    <Content Include="WebServices\BaseService.asmx" />
+    <Content Include="WebServices\ConstantContact.asmx" />
+    <Content Include="WebServices\Facebook.asmx" />
+    <Content Include="WebServices\Flicker.asmx" />
+    <Content Include="WebServices\IMediaDetails.asmx" />
+    <Content Include="WebServices\Twitter.asmx" />
+    <Content Include="Styles\jquery.jgrowl.css" />
+    <Content Include="Styles\jquery.jgrowl.lightwindow.css" />
+    <Content Include="Styles\jquery.mobile.custom.css" />
+    <Content Include="Views\MasterPages\SiteTemplates\css\print.css" />
+    <Content Include="Views\MasterPages\SiteTemplates\css\style.css" />
+    <Content Include="Views\MasterPages\SiteTemplates\images\bar.gif" />
+    <Content Include="Views\MasterPages\SiteTemplates\images\footer-bg.gif" />
+    <Content Include="Views\MasterPages\SiteTemplates\images\header-bg.gif" />
+    <Content Include="Views\MediaTypeHandlers\Page.aspx" />
+    <Content Include="Views\PageHandlers\Login.aspx" />
+    <Content Include="Views\PageHandlers\PageNotFound.aspx" />
+    <Content Include="Views\PageHandlers\Search.aspx" />
+    <Content Include="Views\PageHandlers\ShoppingCart\CheckOut.aspx" />
+    <Content Include="Views\PageHandlers\SiteMap.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admin\AdminBasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\CommonIncludes.ascx.cs">
+      <DependentUpon>CommonIncludes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\CommonIncludes.ascx.designer.cs">
+      <DependentUpon>CommonIncludes.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Editors\BaseFieldsEditor.cs" />
+    <Compile Include="Admin\Controls\Editors\MediaDetailHistoryEditor.ascx.cs">
+      <DependentUpon>MediaDetailHistoryEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Editors\MediaDetailHistoryEditor.ascx.designer.cs">
+      <DependentUpon>MediaDetailHistoryEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Editors\MediaDetailUsersAssociationEditor.ascx.cs">
+      <DependentUpon>MediaDetailUsersAssociationEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Editors\MediaDetailUsersAssociationEditor.ascx.designer.cs">
+      <DependentUpon>MediaDetailUsersAssociationEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Editors\MediaFieldsEditor.ascx.cs">
+      <DependentUpon>MediaFieldsEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Editors\MediaFieldsEditor.ascx.designer.cs">
+      <DependentUpon>MediaFieldsEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Editors\MediaTypeFieldsEditor.ascx.cs">
+      <DependentUpon>MediaTypeFieldsEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Editors\MediaTypeFieldsEditor.ascx.designer.cs">
+      <DependentUpon>MediaTypeFieldsEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Fields\AssociationCheckBoxList.ascx.cs">
+      <DependentUpon>AssociationCheckBoxList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Fields\AssociationCheckBoxList.ascx.designer.cs">
+      <DependentUpon>AssociationCheckBoxList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Fields\AssociationDropDownList.ascx.cs">
+      <DependentUpon>AssociationDropDownList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Fields\AssociationDropDownList.ascx.designer.cs">
+      <DependentUpon>AssociationDropDownList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Fields\BaseFieldControl.cs" />
+    <Compile Include="Admin\Controls\Fields\IFieldControl.cs" />
+    <Compile Include="Admin\Controls\Fields\MultiFileUploader.ascx.cs">
+      <DependentUpon>MultiFileUploader.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Fields\MultiFileUploader.ascx.designer.cs">
+      <DependentUpon>MultiFileUploader.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\BaseTab.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\CommonPanel.ascx.cs">
+      <DependentUpon>CommonPanel.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\CommonPanel.ascx.designer.cs">
+      <DependentUpon>CommonPanel.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\AdvancedSettingsTab.ascx.cs">
+      <DependentUpon>AdvancedSettingsTab.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\AdvancedSettingsTab.ascx.designer.cs">
+      <DependentUpon>AdvancedSettingsTab.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\ChildrensTab.ascx.cs">
+      <DependentUpon>ChildrensTab.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\ChildrensTab.ascx.designer.cs">
+      <DependentUpon>ChildrensTab.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\CommentsTab.ascx.cs">
+      <DependentUpon>CommentsTab.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\CommentsTab.ascx.designer.cs">
+      <DependentUpon>CommentsTab.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\FieldsTab.ascx.cs">
+      <DependentUpon>FieldsTab.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\FieldsTab.ascx.designer.cs">
+      <DependentUpon>FieldsTab.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\HistoryTab.ascx.cs">
+      <DependentUpon>HistoryTab.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\HistoryTab.ascx.designer.cs">
+      <DependentUpon>HistoryTab.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\LayoutsTab.ascx.cs">
+      <DependentUpon>LayoutsTab.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\LayoutsTab.ascx.designer.cs">
+      <DependentUpon>LayoutsTab.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\LinkSettingsTab.ascx.cs">
+      <DependentUpon>LinkSettingsTab.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\LinkSettingsTab.ascx.designer.cs">
+      <DependentUpon>LinkSettingsTab.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\PublishSettingsTab.ascx.cs">
+      <DependentUpon>PublishSettingsTab.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\PublishSettingsTab.ascx.designer.cs">
+      <DependentUpon>PublishSettingsTab.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\RolesUsersTab.ascx.cs">
+      <DependentUpon>RolesUsersTab.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\RolesUsersTab.ascx.designer.cs">
+      <DependentUpon>RolesUsersTab.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\SEOSettingsTab.ascx.cs">
+      <DependentUpon>SEOSettingsTab.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\SEOSettingsTab.ascx.designer.cs">
+      <DependentUpon>SEOSettingsTab.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\ShoppingCartSettingsTab.ascx.cs">
+      <DependentUpon>ShoppingCartSettingsTab.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\ShoppingCartSettingsTab.ascx.designer.cs">
+      <DependentUpon>ShoppingCartSettingsTab.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\TagsTab.ascx.cs">
+      <DependentUpon>TagsTab.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\TagsTab.ascx.designer.cs">
+      <DependentUpon>TagsTab.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\RootPage\RootPagePanel.ascx.cs">
+      <DependentUpon>RootPagePanel.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\RootPage\RootPagePanel.ascx.designer.cs">
+      <DependentUpon>RootPagePanel.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\ITab.cs" />
+    <Compile Include="Admin\Controls\MediaTypes\Page\PagePanel.ascx.cs">
+      <DependentUpon>PagePanel.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Page\PagePanel.ascx.designer.cs">
+      <DependentUpon>PagePanel.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\UrlRedirectRule\UrlRedirectRulePanel.ascx.cs">
+      <DependentUpon>UrlRedirectRulePanel.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\UrlRedirectRule\UrlRedirectRulePanel.ascx.designer.cs">
+      <DependentUpon>UrlRedirectRulePanel.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Website\Tabs\WebsiteSettingsTab.ascx.cs">
+      <DependentUpon>WebsiteSettingsTab.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Website\Tabs\WebsiteSettingsTab.ascx.designer.cs">
+      <DependentUpon>WebsiteSettingsTab.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Website\WebsitePanel.ascx.cs">
+      <DependentUpon>WebsitePanel.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Website\WebsitePanel.ascx.designer.cs">
+      <DependentUpon>WebsitePanel.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Fields\AssociationDragDrop.ascx.cs">
+      <DependentUpon>AssociationDragDrop.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Fields\AssociationDragDrop.ascx.designer.cs">
+      <DependentUpon>AssociationDragDrop.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Fields\AssociationAutoSuggest.ascx.cs">
+      <DependentUpon>AssociationAutoSuggest.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Fields\AssociationAutoSuggest.ascx.designer.cs">
+      <DependentUpon>AssociationAutoSuggest.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Editors\DeletedItemsEditor.ascx.cs">
+      <DependentUpon>DeletedItemsEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Editors\DeletedItemsEditor.ascx.designer.cs">
+      <DependentUpon>DeletedItemsEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Editors\MediaDetailRolesAssociationEditor.ascx.cs">
+      <DependentUpon>MediaDetailRolesAssociationEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Editors\MediaDetailRolesAssociationEditor.ascx.designer.cs">
+      <DependentUpon>MediaDetailRolesAssociationEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\FlickerPhotoSetSelector.ascx.cs">
+      <DependentUpon>FlickerPhotoSetSelector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\FlickerPhotoSetSelector.ascx.designer.cs">
+      <DependentUpon>FlickerPhotoSetSelector.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\Generic\PermissionsSelector.ascx.cs">
+      <DependentUpon>PermissionsSelector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\Generic\PermissionsSelector.ascx.designer.cs">
+      <DependentUpon>PermissionsSelector.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\WebService.asmx.cs">
+      <DependentUpon>WebService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\MasterPages\WebService.asmx.cs">
+      <DependentUpon>WebService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\FieldFiles\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\FieldFiles\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\FieldFiles\Detail.aspx.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\FieldFiles\Detail.aspx.designer.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\FieldFiles\ItemServices.asmx.cs">
+      <DependentUpon>ItemServices.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\GlossaryTerms\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\GlossaryTerms\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\GlossaryTerms\Detail.aspx.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\GlossaryTerms\Detail.aspx.designer.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\GlossaryTerms\ItemServices.asmx.cs">
+      <DependentUpon>ItemServices.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\MasterPages\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\MasterPages\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\MasterPages\Detail.aspx.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\MasterPages\Detail.aspx.designer.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\MasterPages\ItemServices.asmx.cs">
+      <DependentUpon>ItemServices.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\AddIMediaDetailToUser.ascx.cs">
+      <DependentUpon>AddIMediaDetailToUser.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\AddIMediaDetailToUser.ascx.designer.cs">
+      <DependentUpon>AddIMediaDetailToUser.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\BootStrap\BootStrapTabbedLayout.ascx.cs">
+      <DependentUpon>BootStrapTabbedLayout.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\BootStrap\BootStrapTabbedLayout.ascx.designer.cs">
+      <DependentUpon>BootStrapTabbedLayout.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Forms\CommentsForm.ascx.cs">
+      <DependentUpon>CommentsForm.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Forms\CommentsForm.ascx.designer.cs">
+      <DependentUpon>CommentsForm.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Generic\BugHerd.ascx.cs">
+      <DependentUpon>BugHerd.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Generic\BugHerd.ascx.designer.cs">
+      <DependentUpon>BugHerd.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EmailTemplates\CreateAccount\AutoResponder.ascx.cs">
+      <DependentUpon>AutoResponder.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\EmailTemplates\CreateAccount\AutoResponder.ascx.designer.cs">
+      <DependentUpon>AutoResponder.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EmailTemplates\CreateAccount\Notification.ascx.cs">
+      <DependentUpon>Notification.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\EmailTemplates\CreateAccount\Notification.ascx.designer.cs">
+      <DependentUpon>Notification.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Generic\FlickerGallery.ascx.cs">
+      <DependentUpon>FlickerGallery.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Generic\FlickerGallery.ascx.designer.cs">
+      <DependentUpon>FlickerGallery.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Generic\ShareThis.ascx.cs">
+      <DependentUpon>ShareThis.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Generic\ShareThis.ascx.designer.cs">
+      <DependentUpon>ShareThis.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Lists\CommentsList.ascx.cs">
+      <DependentUpon>CommentsList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Lists\CommentsList.ascx.designer.cs">
+      <DependentUpon>CommentsList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Lists\TwitterFeedList.ascx.cs">
+      <DependentUpon>TwitterFeedList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Lists\TwitterFeedList.ascx.designer.cs">
+      <DependentUpon>TwitterFeedList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MasterPageSelector.ascx.cs">
+      <DependentUpon>MasterPageSelector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\MasterPageSelector.ascx.designer.cs">
+      <DependentUpon>MasterPageSelector.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\MultiSelectors\MultiMediaTypeRoleSelector.ascx.cs">
+      <DependentUpon>MultiMediaTypeRoleSelector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\MultiSelectors\MultiMediaTypeRoleSelector.ascx.designer.cs">
+      <DependentUpon>MultiMediaTypeRoleSelector.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\MultiSelectors\MultiMediaTypeSelector.ascx.cs">
+      <DependentUpon>MultiMediaTypeSelector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\MultiSelectors\MultiMediaTypeSelector.ascx.designer.cs">
+      <DependentUpon>MultiMediaTypeSelector.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\MultiSelectors\Roles\MultiRoleSelector.ascx.cs">
+      <DependentUpon>MultiRoleSelector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\MultiSelectors\Roles\MultiRoleSelector.ascx.designer.cs">
+      <DependentUpon>MultiRoleSelector.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\MultiSelectors\Users\MultiUserSelector.ascx.cs">
+      <DependentUpon>MultiUserSelector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\MultiSelectors\Users\MultiUserSelector.ascx.designer.cs">
+      <DependentUpon>MultiUserSelector.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\RolePermissionsSelector.ascx.cs">
+      <DependentUpon>RolePermissionsSelector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\RolePermissionsSelector.ascx.designer.cs">
+      <DependentUpon>RolePermissionsSelector.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\Generic\RoleSelector.ascx.cs">
+      <DependentUpon>RoleSelector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\Generic\RoleSelector.ascx.designer.cs">
+      <DependentUpon>RoleSelector.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\Generic\UserSelector.ascx.cs">
+      <DependentUpon>UserSelector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\Generic\UserSelector.ascx.designer.cs">
+      <DependentUpon>UserSelector.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\UserPermissionsSelector.ascx.cs">
+      <DependentUpon>UserPermissionsSelector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\UserPermissionsSelector.ascx.designer.cs">
+      <DependentUpon>UserPermissionsSelector.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\AdminTools\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\AdminTools\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\AdvanceOptionsBasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Media\Detail.aspx.designer.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Permissions\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Permissions\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Permissions\Detail.aspx.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Permissions\Detail.aspx.designer.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Permissions\ItemServices.asmx.cs">
+      <DependentUpon>ItemServices.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Settings\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Settings\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Facebook\FBComments.ascx.cs">
+      <DependentUpon>FBComments.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Facebook\FBComments.ascx.designer.cs">
+      <DependentUpon>FBComments.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Fields\Editor.ascx.cs">
+      <DependentUpon>Editor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Fields\Editor.ascx.designer.cs">
+      <DependentUpon>Editor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Fields\FileSelector.ascx.cs">
+      <DependentUpon>FileSelector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Fields\FileSelector.ascx.designer.cs">
+      <DependentUpon>FileSelector.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Generic\MediaDetailsGrid.ascx.cs">
+      <DependentUpon>MediaDetailsGrid.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Generic\MediaDetailsGrid.ascx.designer.cs">
+      <DependentUpon>MediaDetailsGrid.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Editors\HiddenItemsEditor.ascx.cs">
+      <DependentUpon>HiddenItemsEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Editors\HiddenItemsEditor.ascx.designer.cs">
+      <DependentUpon>HiddenItemsEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\LanguageSwitcher.ascx.cs">
+      <DependentUpon>LanguageSwitcher.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\LanguageSwitcher.ascx.designer.cs">
+      <DependentUpon>LanguageSwitcher.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\BaseMediaDetailPanel.cs" />
+    <Compile Include="Admin\Controls\MediaTypes\IMediaDetailPanel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\Generic\MediaTypeSelector.ascx.cs">
+      <DependentUpon>MediaTypeSelector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\Generic\MediaTypeSelector.ascx.designer.cs">
+      <DependentUpon>MediaTypeSelector.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Editors\TagsAssociationEditor.ascx.cs">
+      <DependentUpon>TagsAssociationEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Editors\TagsAssociationEditor.ascx.designer.cs">
+      <DependentUpon>TagsAssociationEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\TagsSelector.ascx.cs">
+      <DependentUpon>TagsSelector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\TagsSelector.ascx.designer.cs">
+      <DependentUpon>TagsSelector.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Editors\UnpublishedAndExpiredItemsEditor.ascx.cs">
+      <DependentUpon>UnpublishedAndExpiredItemsEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Editors\UnpublishedAndExpiredItemsEditor.ascx.designer.cs">
+      <DependentUpon>UnpublishedAndExpiredItemsEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\FileExplorerDialog.aspx.cs">
+      <DependentUpon>FileExplorerDialog.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\FileExplorerDialog.aspx.designer.cs">
+      <DependentUpon>FileExplorerDialog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\MasterPages\Admin.Master.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\MasterPages\Admin.Master.designer.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\MasterPages\BaseMasterPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\MasterPages\Popup.Master.cs">
+      <DependentUpon>Popup.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\MasterPages\Popup.Master.designer.cs">
+      <DependentUpon>Popup.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Languages\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Languages\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Languages\Detail.aspx.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Languages\Detail.aspx.designer.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Languages\ItemServices.asmx.cs">
+      <DependentUpon>ItemServices.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\MediaTypes\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\MediaTypes\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\MediaTypes\Detail.aspx.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\MediaTypes\Detail.aspx.designer.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\MediaTypes\ItemServices.asmx.cs">
+      <DependentUpon>ItemServices.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Media\Create.aspx.cs">
+      <DependentUpon>Create.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Media\Create.aspx.designer.cs">
+      <DependentUpon>Create.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Media\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Media\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Media\Detail.aspx.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Media\ItemServices.asmx.cs">
+      <DependentUpon>ItemServices.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Moderate\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Moderate\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Roles\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Roles\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Roles\Detail.aspx.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Roles\Detail.aspx.designer.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Roles\ItemServices.asmx.cs">
+      <DependentUpon>ItemServices.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Tags\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Tags\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Tags\Detail.aspx.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Tags\Detail.aspx.designer.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Tags\ItemServices.asmx.cs">
+      <DependentUpon>ItemServices.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Users\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Users\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Users\Detail.aspx.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Users\Detail.aspx.designer.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Users\ItemServices.asmx.cs">
+      <DependentUpon>ItemServices.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AppSettings.cs" />
+    <Compile Include="Controls\Generic\GenericSlideShow.ascx.cs">
+      <DependentUpon>GenericSlideShow.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Generic\GenericSlideShow.ascx.designer.cs">
+      <DependentUpon>GenericSlideShow.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Generic\GenericVideoPlayer.ascx.cs">
+      <DependentUpon>GenericVideoPlayer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Generic\GenericVideoPlayer.ascx.designer.cs">
+      <DependentUpon>GenericVideoPlayer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Header.ascx.cs">
+      <DependentUpon>Header.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Header.ascx.designer.cs">
+      <DependentUpon>Header.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Lists\BlogFeedList.ascx.cs">
+      <DependentUpon>BlogFeedList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Lists\BlogFeedList.ascx.designer.cs">
+      <DependentUpon>BlogFeedList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ContactForm.ascx.cs">
+      <DependentUpon>ContactForm.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\ContactForm.ascx.designer.cs">
+      <DependentUpon>ContactForm.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EmailTemplates\ContactUs.ascx.cs">
+      <DependentUpon>ContactUs.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\EmailTemplates\ContactUs.ascx.designer.cs">
+      <DependentUpon>ContactUs.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Footer.ascx.cs">
+      <DependentUpon>Footer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Footer.ascx.designer.cs">
+      <DependentUpon>Footer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Mobile\ToggleView.ascx.cs">
+      <DependentUpon>ToggleView.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Mobile\ToggleView.ascx.designer.cs">
+      <DependentUpon>ToggleView.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Navs\GenerateBreadCrumb.ascx.cs">
+      <DependentUpon>GenerateBreadCrumb.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Navs\GenerateBreadCrumb.ascx.designer.cs">
+      <DependentUpon>GenerateBreadCrumb.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Navs\GenerateFooterNav.ascx.cs">
+      <DependentUpon>GenerateFooterNav.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Navs\GenerateFooterNav.ascx.designer.cs">
+      <DependentUpon>GenerateFooterNav.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Navs\GenerateMainNav.ascx.cs">
+      <DependentUpon>GenerateMainNav.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Navs\GenerateMainNav.ascx.designer.cs">
+      <DependentUpon>GenerateMainNav.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Navs\GenerateSubNav.ascx.cs">
+      <DependentUpon>GenerateSubNav.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Navs\GenerateSubNav.ascx.designer.cs">
+      <DependentUpon>GenerateSubNav.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Lists\RssListView.ascx.cs">
+      <DependentUpon>RssListView.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Lists\RssListView.ascx.designer.cs">
+      <DependentUpon>RssListView.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Generic\GenerateNav.ascx.cs">
+      <DependentUpon>GenerateNav.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Generic\GenerateNav.ascx.designer.cs">
+      <DependentUpon>GenerateNav.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Generic\LoginSuccess.ascx.cs">
+      <DependentUpon>LoginSuccess.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Generic\LoginSuccess.ascx.designer.cs">
+      <DependentUpon>LoginSuccess.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Generic\Pager.ascx.cs">
+      <DependentUpon>Pager.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Generic\Pager.ascx.designer.cs">
+      <DependentUpon>Pager.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CommonIncludes.ascx.cs">
+      <DependentUpon>CommonIncludes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CommonIncludes.ascx.designer.cs">
+      <DependentUpon>CommonIncludes.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Login.ascx.cs">
+      <DependentUpon>Login.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Login.ascx.designer.cs">
+      <DependentUpon>Login.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LoggedIn\LoggedInHeader.ascx.cs">
+      <DependentUpon>LoggedInHeader.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\LoggedIn\LoggedInHeader.ascx.designer.cs">
+      <DependentUpon>LoggedInHeader.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PayPalBuyNowSelector.ascx.cs">
+      <DependentUpon>PayPalBuyNowSelector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\PayPalBuyNowSelector.ascx.designer.cs">
+      <DependentUpon>PayPalBuyNowSelector.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PdfTemplates\Template1\Body.ascx.cs">
+      <DependentUpon>Body.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\PdfTemplates\Template1\Body.ascx.designer.cs">
+      <DependentUpon>Body.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PdfTemplates\Template1\Footer.ascx.cs">
+      <DependentUpon>Footer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\PdfTemplates\Template1\Footer.ascx.designer.cs">
+      <DependentUpon>Footer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Lists\RelatedItemsList.ascx.cs">
+      <DependentUpon>RelatedItemsList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Lists\RelatedItemsList.ascx.designer.cs">
+      <DependentUpon>RelatedItemsList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RenderChildren\RenderChildren.ascx.cs">
+      <DependentUpon>RenderChildren.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\RenderChildren\RenderChildren.ascx.designer.cs">
+      <DependentUpon>RenderChildren.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RenderMediaDetail\RenderMediaDetail.ascx.cs">
+      <DependentUpon>RenderMediaDetail.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\RenderMediaDetail\RenderMediaDetail.ascx.designer.cs">
+      <DependentUpon>RenderMediaDetail.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Widgets\GoogleMaps.ascx.cs">
+      <DependentUpon>GoogleMaps.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Widgets\GoogleMaps.ascx.designer.cs">
+      <DependentUpon>GoogleMaps.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Widgets\Instagram.ascx.cs">
+      <DependentUpon>Instagram.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Widgets\Instagram.ascx.designer.cs">
+      <DependentUpon>Instagram.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Widgets\LanguageToggle.ascx.cs">
+      <DependentUpon>LanguageToggle.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Widgets\LanguageToggle.ascx.designer.cs">
+      <DependentUpon>LanguageToggle.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Widgets\MailChipSignupForm.ascx.cs">
+      <DependentUpon>MailChipSignupForm.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Widgets\MailChipSignupForm.ascx.designer.cs">
+      <DependentUpon>MailChipSignupForm.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Widgets\RssReader.ascx.cs">
+      <DependentUpon>RssReader.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Widgets\RssReader.ascx.designer.cs">
+      <DependentUpon>RssReader.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Widgets\Search.ascx.cs">
+      <DependentUpon>Search.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Widgets\Search.ascx.designer.cs">
+      <DependentUpon>Search.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Widgets\SearchResults.ascx.cs">
+      <DependentUpon>SearchResults.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Widgets\SearchResults.ascx.designer.cs">
+      <DependentUpon>SearchResults.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ShoppingCart\AddToCartButton.ascx.cs">
+      <DependentUpon>AddToCartButton.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\ShoppingCart\AddToCartButton.ascx.designer.cs">
+      <DependentUpon>AddToCartButton.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ShoppingCart\ShoppingCart.ascx.cs">
+      <DependentUpon>ShoppingCart.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\ShoppingCart\ShoppingCart.ascx.designer.cs">
+      <DependentUpon>ShoppingCart.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Sliders\WeatherSlider.ascx.cs">
+      <DependentUpon>WeatherSlider.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Sliders\WeatherSlider.ascx.designer.cs">
+      <DependentUpon>WeatherSlider.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TakeActionTab.ascx.cs">
+      <DependentUpon>TakeActionTab.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\TakeActionTab.ascx.designer.cs">
+      <DependentUpon>TakeActionTab.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ToolTipFromIMediaDetail.ascx.cs">
+      <DependentUpon>ToolTipFromIMediaDetail.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\ToolTipFromIMediaDetail.ascx.designer.cs">
+      <DependentUpon>ToolTipFromIMediaDetail.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WeatherWidget.ascx.cs">
+      <DependentUpon>WeatherWidget.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\WeatherWidget.ascx.designer.cs">
+      <DependentUpon>WeatherWidget.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="FlashVersion\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FlashVersion\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FrontEndBasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\CustomRouteHandler.cs" />
+    <Compile Include="Handlers\CustomPageStatePersister.cs" />
+    <Compile Include="Installer\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Installer\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MasterPages\SiteTemplates\Template2.Master.cs">
+      <DependentUpon>Template2.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\MasterPages\SiteTemplates\Template2.Master.designer.cs">
+      <DependentUpon>Template2.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MediaTypeHandlers\NoTemplatePage.aspx.cs">
+      <DependentUpon>NoTemplatePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\MediaTypeHandlers\NoTemplatePage.aspx.designer.cs">
+      <DependentUpon>NoTemplatePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MediaTypeHandlers\RootPage.aspx.cs">
+      <DependentUpon>RootPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\MediaTypeHandlers\RootPage.aspx.designer.cs">
+      <DependentUpon>RootPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MediaTypeHandlers\UrlRedirectRule.aspx.cs">
+      <DependentUpon>UrlRedirectRule.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\MediaTypeHandlers\UrlRedirectRule.aspx.designer.cs">
+      <DependentUpon>UrlRedirectRule.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MediaTypeHandlers\UrlRedirectRuleList.aspx.cs">
+      <DependentUpon>UrlRedirectRuleList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\MediaTypeHandlers\UrlRedirectRuleList.aspx.designer.cs">
+      <DependentUpon>UrlRedirectRuleList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MediaTypeHandlers\Website.aspx.cs">
+      <DependentUpon>Website.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\MediaTypeHandlers\Website.aspx.designer.cs">
+      <DependentUpon>Website.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PageHandlers\CreateAnAccount.aspx.cs">
+      <DependentUpon>CreateAnAccount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\PageHandlers\CreateAnAccount.aspx.designer.cs">
+      <DependentUpon>CreateAnAccount.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PageHandlers\SiteOffline.aspx.cs">
+      <DependentUpon>SiteOffline.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\PageHandlers\SiteOffline.aspx.designer.cs">
+      <DependentUpon>SiteOffline.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PageHandlers\Tags.aspx.cs">
+      <DependentUpon>Tags.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\PageHandlers\Tags.aspx.designer.cs">
+      <DependentUpon>Tags.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebServices\BaseService.asmx.cs">
+      <DependentUpon>BaseService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\ConstantContact.asmx.cs">
+      <DependentUpon>ConstantContact.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Facebook.asmx.cs">
+      <DependentUpon>Facebook.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Handlers\FileServiceHandler.ashx.cs">
+      <DependentUpon>FileServiceHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="WebServices\Flicker.asmx.cs">
+      <DependentUpon>Flicker.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\IMediaDetails.asmx.cs">
+      <DependentUpon>IMediaDetails.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Twitter.asmx.cs">
+      <DependentUpon>Twitter.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Views\MasterPages\SiteTemplates\Template1.Master.cs">
+      <DependentUpon>Template1.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\MasterPages\SiteTemplates\Template1.Master.designer.cs">
+      <DependentUpon>Template1.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MediaTypeHandlers\Page.aspx.cs">
+      <DependentUpon>Page.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\MediaTypeHandlers\Page.aspx.designer.cs">
+      <DependentUpon>Page.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PageHandlers\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\PageHandlers\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PageHandlers\PageNotFound.aspx.cs">
+      <DependentUpon>PageNotFound.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\PageHandlers\PageNotFound.aspx.designer.cs">
+      <DependentUpon>PageNotFound.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PageHandlers\Search.aspx.cs">
+      <DependentUpon>Search.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\PageHandlers\Search.aspx.designer.cs">
+      <DependentUpon>Search.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PageHandlers\ShoppingCart\CheckOut.aspx.cs">
+      <DependentUpon>CheckOut.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\PageHandlers\ShoppingCart\CheckOut.aspx.designer.cs">
+      <DependentUpon>CheckOut.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PageHandlers\SiteMap.aspx.cs">
+      <DependentUpon>SiteMap.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\PageHandlers\SiteMap.aspx.designer.cs">
+      <DependentUpon>SiteMap.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MasterPages\SiteTemplates\Template1.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\Cache\" />
+    <Folder Include="App_Data\DBBackups\" />
+    <Folder Include="App_Data\ElmahErrorLogs\" />
+    <Folder Include="media\uploads\documents\pdfs\" />
+    <Folder Include="media\uploads\documents\word\" />
+    <Folder Include="media\uploads\flash\" />
+    <Folder Include="media\uploads\images\profile-photos\" />
+    <Folder Include="media\uploads\images\speaker-images\" />
+    <Folder Include="media\uploads\images\thumbnails\" />
+    <Folder Include="media\uploads\media\" />
+    <Folder Include="media\uploads\movies\" />
+    <Folder Include="media\uploads\templates\" />
+    <Folder Include="Properties\" />
+    <Folder Include="Views\MasterPages\SiteTemplates\js\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Scripts\colorbox-master\colorbox.ai" />
+    <Content Include="Scripts\colorbox-master\colorbox.jquery.json" />
+    <Content Include="Scripts\colorbox-master\component.json" />
+    <Content Include="Scripts\colorbox-master\i18n\jquery.colorbox-bg" />
+    <Content Include="Scripts\colorbox-master\README.md" />
+    <Content Include="packages.config" />
+    <Content Include="Scripts\jquery-social-stream\facebook.php" />
+    <Content Include="Scripts\jquery-social-stream\inc\museo\museo-300-webfont.eot" />
+    <Content Include="Scripts\jquery-social-stream\inc\museo\museo-300-webfont.ttf" />
+    <Content Include="Scripts\jquery-social-stream\inc\museo\museo-300-webfont.woff" />
+    <Content Include="Scripts\jquery-social-stream\inc\museo\museo-500-webfont.eot" />
+    <Content Include="Scripts\jquery-social-stream\inc\museo\museo-500-webfont.ttf" />
+    <Content Include="Scripts\jquery-social-stream\inc\museo\museo-500-webfont.woff" />
+    <Content Include="Scripts\jquery-social-stream\inc\museo\museo-700-webfont.eot" />
+    <Content Include="Scripts\jquery-social-stream\inc\museo\museo-700-webfont.ttf" />
+    <Content Include="Scripts\jquery-social-stream\inc\museo\museo-700-webfont.woff" />
+    <Content Include="Scripts\jquery-social-stream\inc\oswald\oswald-webfont.eot" />
+    <Content Include="Scripts\jquery-social-stream\inc\oswald\oswald-webfont.ttf" />
+    <Content Include="Scripts\jquery-social-stream\inc\oswald\oswald-webfont.woff" />
+    <Content Include="Scripts\jquery-social-stream\inc\ptsans\ptsans-italic-webfont.eot" />
+    <Content Include="Scripts\jquery-social-stream\inc\ptsans\ptsans-italic-webfont.ttf" />
+    <Content Include="Scripts\jquery-social-stream\inc\ptsans\ptsans-italic-webfont.woff" />
+    <Content Include="Scripts\jquery-social-stream\inc\ptsans\ptsans-regular-webfont.eot" />
+    <Content Include="Scripts\jquery-social-stream\inc\ptsans\ptsans-regular-webfont.ttf" />
+    <Content Include="Scripts\jquery-social-stream\inc\ptsans\ptsans-regular-webfont.woff" />
+    <Content Include="Scripts\jquery-social-stream\twitter.php" />
+    <Content Include="App_Browsers\Custom.browser" />
+    <Content Include="config\imageprocessor\security.config" />
+    <Content Include="config\imageprocessor\processing.config" />
+    <Content Include="config\imageprocessor\cache.config" />
+    <Content Include="Handlers\FileServiceHandler.ashx" />
+    <Content Include="Views\MasterPages\SiteTemplates\Template2.Master" />
+    <Content Include="Scripts\tinymce\js\tinymce\langs\readme.md" />
+    <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\fonts\tinymce-small.eot" />
+    <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\fonts\tinymce-small.ttf" />
+    <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\fonts\tinymce-small.woff" />
+    <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\fonts\tinymce.eot" />
+    <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\fonts\tinymce.ttf" />
+    <Content Include="Scripts\tinymce\js\tinymce\skins\lightgray\fonts\tinymce.woff" />
+    <Content Include="Scripts\tinyfilemanager.net\Web.config" />
+    <Content Include="Scripts\split-pane-master\bower.json" />
+    <Content Include="Scripts\split-pane-master\LICENSE" />
+    <Content Include="Scripts\split-pane-master\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FrameworkLibrary\FrameworkLibrary.csproj">
+      <Project>{745ABEAF-8007-4E75-8EA4-46AFAF83B91E}</Project>
+      <Name>FrameworkLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TinyFileManager.NET-master\TinyFileManager.NET\TinyFileManager.NET.csproj">
+      <Project>{45332b17-62be-4e74-b64f-fd35509ea1bd}</Project>
+      <Name>TinyFileManager.NET</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>58594</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:1112/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,2953 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FrameworkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Comments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UserID" Type="bigint" />
+          <Property Name="LanguageID" Type="bigint" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+          <Property Name="ReplyToCommentID" Type="bigint" />
+        </EntityType>
+        <EntityType Name="EmailLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SenderName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="SenderEmailAddress" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ToEmailAddresses" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FromEmailAddress" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="VisitorIP" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="RequestUrl" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ServerMessage" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FieldFiles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MediaDetailFieldID" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PathToFile" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OrderIndex" Type="int" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fields">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FieldCode" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="FieldLabel" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="RenderLabelAfterControl" Type="bit" Nullable="false" />
+          <Property Name="AdminControl" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FieldValue" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="GetAdminControlValue" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SetAdminControlValue" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OrderIndex" Type="bigint" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="FrontEndLayout" Type="nvarchar(max)" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FieldsAssociations">
+          <Key>
+            <PropertyRef Name="MediaDetailFieldID" />
+            <PropertyRef Name="AssociatedMediaDetailID" />
+          </Key>
+          <Property Name="MediaDetailFieldID" Type="bigint" Nullable="false" />
+          <Property Name="AssociatedMediaDetailID" Type="bigint" Nullable="false" />
+          <Property Name="OrderIndex" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GlossaryTerms">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Term" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Definition" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IPLocationTracker">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IPAddress" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Location" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Languages">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UriSegment" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CultureCode" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MasterPages">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="PathToFile" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="MobileTemplate" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Media">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentMediaID" Type="bigint" />
+          <Property Name="OrderIndex" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MediaDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MediaID" Type="bigint" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="LinkTitle" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UseDirectLink" Type="bit" Nullable="false" />
+          <Property Name="OpenInNewWindow" Type="bit" Nullable="false" />
+          <Property Name="DirectLink" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="SectionTitle" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ShortDescription" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="MainContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="MetaKeywords" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="MetaDescription" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LanguageID" Type="bigint" Nullable="false" />
+          <Property Name="NumberOfViews" Type="bigint" Nullable="false" />
+          <Property Name="NumberOfStars" Type="bigint" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="AllowCommenting" Type="bit" Nullable="false" />
+          <Property Name="ExpiryDate" Type="datetime" />
+          <Property Name="PublishDate" Type="datetime" />
+          <Property Name="ShowInMenu" Type="bit" Nullable="false" />
+          <Property Name="ShowInSearchResults" Type="bit" Nullable="false" />
+          <Property Name="EnableCaching" Type="bit" Nullable="false" />
+          <Property Name="SefTitle" Type="nvarchar" MaxLength="255" />
+          <Property Name="Handler" Type="nvarchar" MaxLength="255" />
+          <Property Name="CachedVirtualPath" Type="nvarchar" MaxLength="255" />
+          <Property Name="MediaTypeID" Type="bigint" Nullable="false" />
+          <Property Name="HistoryVersionNumber" Type="int" Nullable="false" />
+          <Property Name="HistoryForMediaDetailID" Type="bigint" />
+          <Property Name="IsDraft" Type="bit" Nullable="false" />
+          <Property Name="CreatedByUserID" Type="bigint" Nullable="false" />
+          <Property Name="LastUpdatedByUserID" Type="bigint" Nullable="false" />
+          <Property Name="CanAddToCart" Type="bit" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="QuantityInStock" Type="bigint" Nullable="false" />
+          <Property Name="RecurringTimePeriod" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RedirectToFirstChild" Type="bit" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+          <Property Name="RenderInFooter" Type="bit" Nullable="false" />
+          <Property Name="ForceSSL" Type="bit" Nullable="false" />
+          <Property Name="IsProtected" Type="bit" Nullable="false" />
+          <Property Name="CssClasses" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MasterPageID" Type="bigint" />
+          <Property Name="MainLayout" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SummaryLayout" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FeaturedLayout" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UseMediaTypeLayouts" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MediaDetailsComments">
+          <Key>
+            <PropertyRef Name="MediaDetailID" />
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="MediaDetailID" Type="bigint" Nullable="false" />
+          <Property Name="CommentID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MediaDetailsFields">
+          <Key>
+            <PropertyRef Name="FieldID" />
+          </Key>
+          <Property Name="FieldID" Type="bigint" Nullable="false" />
+          <Property Name="MediaDetailID" Type="bigint" Nullable="false" />
+          <Property Name="MediaTypeFieldID" Type="bigint" />
+          <Property Name="UseMediaTypeFieldFrontEndLayout" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MediaTags">
+          <Key>
+            <PropertyRef Name="TagID" />
+            <PropertyRef Name="MediaID" />
+          </Key>
+          <Property Name="TagID" Type="bigint" Nullable="false" />
+          <Property Name="MediaID" Type="bigint" Nullable="false" />
+          <Property Name="OrderIndex" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MediaTypeRolesPermissions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MediaTypeRoleID" Type="bigint" Nullable="false" />
+          <Property Name="PermissionID" Type="bigint" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MediaTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Label" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="MediaTypeHandler" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="MasterPageID" Type="bigint" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="ShowInMenu" Type="bit" Nullable="false" />
+          <Property Name="ShowInSearchResults" Type="bit" Nullable="false" />
+          <Property Name="ShowInSiteTree" Type="bit" Nullable="false" />
+          <Property Name="EnableCaching" Type="bit" Nullable="false" />
+          <Property Name="MainLayout" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SummaryLayout" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FeaturedLayout" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UseMediaTypeLayouts" Type="bit" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MediaTypesChildren">
+          <Key>
+            <PropertyRef Name="MediaTypeID" />
+            <PropertyRef Name="AllowedChildMediaTypeID" />
+          </Key>
+          <Property Name="MediaTypeID" Type="bigint" Nullable="false" />
+          <Property Name="AllowedChildMediaTypeID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MediaTypesFields">
+          <Key>
+            <PropertyRef Name="FieldID" />
+          </Key>
+          <Property Name="FieldID" Type="bigint" Nullable="false" />
+          <Property Name="MediaTypeID" Type="bigint" Nullable="false" />
+          <Property Name="Instructions" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MediaTypesRoles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MediaTypeID" Type="bigint" Nullable="false" />
+          <Property Name="RoleID" Type="bigint" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pages">
+          <Key>
+            <PropertyRef Name="MediaDetailID" />
+          </Key>
+          <Property Name="MediaDetailID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Permissions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="EnumName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="EnumName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="350" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RolesMediaDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MediaDetailID" Type="bigint" Nullable="false" />
+          <Property Name="RoleID" Type="bigint" Nullable="false" />
+          <Property Name="PermissionID" Type="bigint" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RolesPermissions">
+          <Key>
+            <PropertyRef Name="RoleID" />
+            <PropertyRef Name="PermissionID" />
+          </Key>
+          <Property Name="RoleID" Type="bigint" Nullable="false" />
+          <Property Name="PermissionID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RootPages">
+          <Key>
+            <PropertyRef Name="MediaDetailID" />
+          </Key>
+          <Property Name="MediaDetailID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Settings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GlobalCodeInHead" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="GlobalCodeInBody" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ShoppingCartTax" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="MaxRequestLength" Type="int" Nullable="false" />
+          <Property Name="MaxUploadFileSizePerFile" Type="int" Nullable="false" />
+          <Property Name="SiteOnlineAtDateTime" Type="datetime" Nullable="false" />
+          <Property Name="SiteOfflineAtDateTime" Type="datetime" />
+          <Property Name="SiteOfflineUrl" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="OutputCacheDurationInSeconds" Type="bigint" Nullable="false" />
+          <Property Name="DefaultLanguageID" Type="bigint" Nullable="false" />
+          <Property Name="DefaultMasterPageID" Type="bigint" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tags">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="SefTitle" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ThumbnailPath" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UrlRedirectRules">
+          <Key>
+            <PropertyRef Name="MediaDetailID" />
+          </Key>
+          <Property Name="MediaDetailID" Type="bigint" Nullable="false" />
+          <Property Name="VirtualPathToRedirect" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="RedirectToUrl" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Is301Redirect" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProfilePhoto" Type="nvarchar" MaxLength="255" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="AfterLoginStartPage" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="AuthenticationType" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="LastLoggedInAt" Type="datetime" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsersMediaDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="MediaDetailID" Type="bigint" Nullable="false" />
+          <Property Name="PermissionID" Type="bigint" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsersRoles">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="RoleID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WebserviceRequests">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Url" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UrlReferrer" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="QueryString" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Method" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Response" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Website">
+          <Key>
+            <PropertyRef Name="MediaDetailID" />
+          </Key>
+          <Property Name="MediaDetailID" Type="bigint" Nullable="false" />
+          <Property Name="CodeInHead" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CodeInBody" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Comments_Languages">
+          <End Role="Languages" Type="Self.Languages" Multiplicity="1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Languages">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_ReplyToCommentID">
+          <End Role="Comments" Type="Self.Comments" Multiplicity="0..1" />
+          <End Role="Comments1" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comments">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comments1">
+              <PropertyRef Name="ReplyToCommentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FieldAssociations_MediaDetails">
+          <End Role="MediaDetails" Type="Self.MediaDetails" Multiplicity="1" />
+          <End Role="FieldsAssociations" Type="Self.FieldsAssociations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FieldsAssociations">
+              <PropertyRef Name="AssociatedMediaDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FieldFiles_MediaDetailsFields">
+          <End Role="MediaDetailsFields" Type="Self.MediaDetailsFields" Multiplicity="1" />
+          <End Role="FieldFiles" Type="Self.FieldFiles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetailsFields">
+              <PropertyRef Name="FieldID" />
+            </Principal>
+            <Dependent Role="FieldFiles">
+              <PropertyRef Name="MediaDetailFieldID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FieldsAssociations_MediaDetailsFields">
+          <End Role="MediaDetailsFields" Type="Self.MediaDetailsFields" Multiplicity="1" />
+          <End Role="FieldsAssociations" Type="Self.FieldsAssociations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetailsFields">
+              <PropertyRef Name="FieldID" />
+            </Principal>
+            <Dependent Role="FieldsAssociations">
+              <PropertyRef Name="MediaDetailFieldID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Media_ParentMediaID">
+          <End Role="Media" Type="Self.Media" Multiplicity="0..1" />
+          <End Role="Media1" Type="Self.Media" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Media">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Media1">
+              <PropertyRef Name="ParentMediaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaCommentID_CommentID">
+          <End Role="Comments" Type="Self.Comments" Multiplicity="1" />
+          <End Role="MediaDetailsComments" Type="Self.MediaDetailsComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comments">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaDetailsComments">
+              <PropertyRef Name="CommentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaComments_MediaDetailID_MediaDetails_ID">
+          <End Role="MediaDetails" Type="Self.MediaDetails" Multiplicity="1" />
+          <End Role="MediaDetailsComments" Type="Self.MediaDetailsComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaDetailsComments">
+              <PropertyRef Name="MediaDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaDetailFields_MediaDetails">
+          <End Role="MediaDetails" Type="Self.MediaDetails" Multiplicity="1" />
+          <End Role="MediaDetailsFields" Type="Self.MediaDetailsFields" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaDetailsFields">
+              <PropertyRef Name="MediaDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaDetails_CreatedByUserID">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="MediaDetails" Type="Self.MediaDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaDetails">
+              <PropertyRef Name="CreatedByUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaDetails_HistoryForMediaDetailID">
+          <End Role="MediaDetails" Type="Self.MediaDetails" Multiplicity="0..1" />
+          <End Role="MediaDetails1" Type="Self.MediaDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaDetails1">
+              <PropertyRef Name="HistoryForMediaDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaDetails_LanguageID_Languages_ID">
+          <End Role="Languages" Type="Self.Languages" Multiplicity="1" />
+          <End Role="MediaDetails" Type="Self.MediaDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Languages">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaDetails">
+              <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaDetails_LastUpdatedByUserID">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="MediaDetails" Type="Self.MediaDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaDetails">
+              <PropertyRef Name="LastUpdatedByUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaDetails_MasterPage">
+          <End Role="MasterPages" Type="Self.MasterPages" Multiplicity="0..1" />
+          <End Role="MediaDetails" Type="Self.MediaDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterPages">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaDetails">
+              <PropertyRef Name="MasterPageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaDetails_MediaID_Media_ID">
+          <End Role="Media" Type="Self.Media" Multiplicity="1" />
+          <End Role="MediaDetails" Type="Self.MediaDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Media">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaDetails">
+              <PropertyRef Name="MediaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaDetails_MediaTypeID_MediaType_ID">
+          <End Role="MediaTypes" Type="Self.MediaTypes" Multiplicity="1" />
+          <End Role="MediaDetails" Type="Self.MediaDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaDetails">
+              <PropertyRef Name="MediaTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaDetailsFields_Fields">
+          <End Role="Fields" Type="Self.Fields" Multiplicity="1" />
+          <End Role="MediaDetailsFields" Type="Self.MediaDetailsFields" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Fields">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaDetailsFields">
+              <PropertyRef Name="FieldID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaDetailsFields_MediaTypesFields">
+          <End Role="MediaTypesFields" Type="Self.MediaTypesFields" Multiplicity="0..1" />
+          <End Role="MediaDetailsFields" Type="Self.MediaDetailsFields" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaTypesFields">
+              <PropertyRef Name="FieldID" />
+            </Principal>
+            <Dependent Role="MediaDetailsFields">
+              <PropertyRef Name="MediaTypeFieldID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaTags_MediaID_Media_ID">
+          <End Role="Media" Type="Self.Media" Multiplicity="1" />
+          <End Role="MediaTags" Type="Self.MediaTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Media">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaTags">
+              <PropertyRef Name="MediaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaTags_TagID_Tags_ID">
+          <End Role="Tags" Type="Self.Tags" Multiplicity="1" />
+          <End Role="MediaTags" Type="Self.MediaTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaTags">
+              <PropertyRef Name="TagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaTypeRolesPermissions_MediaTypeRolesPermissionID">
+          <End Role="Permissions" Type="Self.Permissions" Multiplicity="1" />
+          <End Role="MediaTypeRolesPermissions" Type="Self.MediaTypeRolesPermissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permissions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaTypeRolesPermissions">
+              <PropertyRef Name="PermissionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaTypeRolesPermissions_MediaTypesRoleID">
+          <End Role="MediaTypesRoles" Type="Self.MediaTypesRoles" Multiplicity="1" />
+          <End Role="MediaTypeRolesPermissions" Type="Self.MediaTypeRolesPermissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaTypesRoles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaTypeRolesPermissions">
+              <PropertyRef Name="MediaTypeRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaTypes_MasterPages">
+          <End Role="MasterPages" Type="Self.MasterPages" Multiplicity="0..1" />
+          <End Role="MediaTypes" Type="Self.MediaTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterPages">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaTypes">
+              <PropertyRef Name="MasterPageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaTypesChildren_AllowedChildMediaTypeID">
+          <End Role="MediaTypes" Type="Self.MediaTypes" Multiplicity="1" />
+          <End Role="MediaTypesChildren" Type="Self.MediaTypesChildren" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaTypesChildren">
+              <PropertyRef Name="AllowedChildMediaTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaTypesChildren_MediaTypeID">
+          <End Role="MediaTypes" Type="Self.MediaTypes" Multiplicity="1" />
+          <End Role="MediaTypesChildren" Type="Self.MediaTypesChildren" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaTypesChildren">
+              <PropertyRef Name="MediaTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaTypesFields_Fields">
+          <End Role="Fields" Type="Self.Fields" Multiplicity="1" />
+          <End Role="MediaTypesFields" Type="Self.MediaTypesFields" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Fields">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaTypesFields">
+              <PropertyRef Name="FieldID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaTypesFields_MediaTypes">
+          <End Role="MediaTypes" Type="Self.MediaTypes" Multiplicity="1" />
+          <End Role="MediaTypesFields" Type="Self.MediaTypesFields" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaTypesFields">
+              <PropertyRef Name="MediaTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaTypesRoles_MediaTypeID">
+          <End Role="MediaTypes" Type="Self.MediaTypes" Multiplicity="1" />
+          <End Role="MediaTypesRoles" Type="Self.MediaTypesRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaTypesRoles">
+              <PropertyRef Name="MediaTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaTypesRoles_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="MediaTypesRoles" Type="Self.MediaTypesRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaTypesRoles">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pages_MediaDetailID_MediaDetails_ID">
+          <End Role="MediaDetails" Type="Self.MediaDetails" Multiplicity="1" />
+          <End Role="Pages" Type="Self.Pages" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Pages">
+              <PropertyRef Name="MediaDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RolesMediaDetails_MediaDetailID">
+          <End Role="MediaDetails" Type="Self.MediaDetails" Multiplicity="1" />
+          <End Role="RolesMediaDetails" Type="Self.RolesMediaDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RolesMediaDetails">
+              <PropertyRef Name="MediaDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RolesMediaDetails_PermissionID">
+          <End Role="Permissions" Type="Self.Permissions" Multiplicity="1" />
+          <End Role="RolesMediaDetails" Type="Self.RolesMediaDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permissions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RolesMediaDetails">
+              <PropertyRef Name="PermissionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RolesMediaDetails_RoleID">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="RolesMediaDetails" Type="Self.RolesMediaDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RolesMediaDetails">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RolesPermissions_PermissionID">
+          <End Role="Permissions" Type="Self.Permissions" Multiplicity="1" />
+          <End Role="RolesPermissions" Type="Self.RolesPermissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permissions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RolesPermissions">
+              <PropertyRef Name="PermissionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RolesPermissions_RolesID">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="RolesPermissions" Type="Self.RolesPermissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RolesPermissions">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RootPages_MediaDetails">
+          <End Role="MediaDetails" Type="Self.MediaDetails" Multiplicity="1" />
+          <End Role="RootPages" Type="Self.RootPages" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RootPages">
+              <PropertyRef Name="MediaDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Settings_Languages">
+          <End Role="Languages" Type="Self.Languages" Multiplicity="1" />
+          <End Role="Settings" Type="Self.Settings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Languages">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Settings">
+              <PropertyRef Name="DefaultLanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Settings_MasterPages">
+          <End Role="MasterPages" Type="Self.MasterPages" Multiplicity="1" />
+          <End Role="Settings" Type="Self.Settings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterPages">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Settings">
+              <PropertyRef Name="DefaultMasterPageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UrlRedirectRules_MediaDetails">
+          <End Role="MediaDetails" Type="Self.MediaDetails" Multiplicity="1" />
+          <End Role="UrlRedirectRules" Type="Self.UrlRedirectRules" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UrlRedirectRules">
+              <PropertyRef Name="MediaDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersMediaDetails_MediaDetailID">
+          <End Role="MediaDetails" Type="Self.MediaDetails" Multiplicity="1" />
+          <End Role="UsersMediaDetails" Type="Self.UsersMediaDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsersMediaDetails">
+              <PropertyRef Name="MediaDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersMediaDetails_PermissionID">
+          <End Role="Permissions" Type="Self.Permissions" Multiplicity="1" />
+          <End Role="UsersMediaDetails" Type="Self.UsersMediaDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permissions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsersMediaDetails">
+              <PropertyRef Name="PermissionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersMediaDetails_UserID">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UsersMediaDetails" Type="Self.UsersMediaDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsersMediaDetails">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersRoles_RoleID_Roles_ID">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="UsersRoles" Type="Self.UsersRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsersRoles">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersRoles_UserID_Users_ID">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UsersRoles" Type="Self.UsersRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsersRoles">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Website_MediaDetails">
+          <End Role="MediaDetails" Type="Self.MediaDetails" Multiplicity="1" />
+          <End Role="Website" Type="Self.Website" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Website">
+              <PropertyRef Name="MediaDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FrameworkModelStoreContainer">
+          <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailLog" EntityType="Self.EmailLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FieldFiles" EntityType="Self.FieldFiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fields" EntityType="Self.Fields" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FieldsAssociations" EntityType="Self.FieldsAssociations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GlossaryTerms" EntityType="Self.GlossaryTerms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IPLocationTracker" EntityType="Self.IPLocationTracker" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Languages" EntityType="Self.Languages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterPages" EntityType="Self.MasterPages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Media" EntityType="Self.Media" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MediaDetails" EntityType="Self.MediaDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MediaDetailsComments" EntityType="Self.MediaDetailsComments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MediaDetailsFields" EntityType="Self.MediaDetailsFields" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MediaTags" EntityType="Self.MediaTags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MediaTypeRolesPermissions" EntityType="Self.MediaTypeRolesPermissions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MediaTypes" EntityType="Self.MediaTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MediaTypesChildren" EntityType="Self.MediaTypesChildren" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MediaTypesFields" EntityType="Self.MediaTypesFields" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MediaTypesRoles" EntityType="Self.MediaTypesRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pages" EntityType="Self.Pages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Permissions" EntityType="Self.Permissions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RolesMediaDetails" EntityType="Self.RolesMediaDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RolesPermissions" EntityType="Self.RolesPermissions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RootPages" EntityType="Self.RootPages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UrlRedirectRules" EntityType="Self.UrlRedirectRules" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersMediaDetails" EntityType="Self.UsersMediaDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersRoles" EntityType="Self.UsersRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WebserviceRequests" EntityType="Self.WebserviceRequests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Website" EntityType="Self.Website" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Comments_Languages" Association="Self.FK_Comments_Languages">
+            <End Role="Languages" EntitySet="Languages" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_ReplyToCommentID" Association="Self.FK_Comments_ReplyToCommentID">
+            <End Role="Comments" EntitySet="Comments" />
+            <End Role="Comments1" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_Users" Association="Self.FK_Comments_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FieldAssociations_MediaDetails" Association="Self.FK_FieldAssociations_MediaDetails">
+            <End Role="MediaDetails" EntitySet="MediaDetails" />
+            <End Role="FieldsAssociations" EntitySet="FieldsAssociations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FieldFiles_MediaDetailsFields" Association="Self.FK_FieldFiles_MediaDetailsFields">
+            <End Role="MediaDetailsFields" EntitySet="MediaDetailsFields" />
+            <End Role="FieldFiles" EntitySet="FieldFiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FieldsAssociations_MediaDetailsFields" Association="Self.FK_FieldsAssociations_MediaDetailsFields">
+            <End Role="MediaDetailsFields" EntitySet="MediaDetailsFields" />
+            <End Role="FieldsAssociations" EntitySet="FieldsAssociations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Media_ParentMediaID" Association="Self.FK_Media_ParentMediaID">
+            <End Role="Media" EntitySet="Media" />
+            <End Role="Media1" EntitySet="Media" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaCommentID_CommentID" Association="Self.FK_MediaCommentID_CommentID">
+            <End Role="Comments" EntitySet="Comments" />
+            <End Role="MediaDetailsComments" EntitySet="MediaDetailsComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaComments_MediaDetailID_MediaDetails_ID" Association="Self.FK_MediaComments_MediaDetailID_MediaDetails_ID">
+            <End Role="MediaDetails" EntitySet="MediaDetails" />
+            <End Role="MediaDetailsComments" EntitySet="MediaDetailsComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaDetailFields_MediaDetails" Association="Self.FK_MediaDetailFields_MediaDetails">
+            <End Role="MediaDetails" EntitySet="MediaDetails" />
+            <End Role="MediaDetailsFields" EntitySet="MediaDetailsFields" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaDetails_CreatedByUserID" Association="Self.FK_MediaDetails_CreatedByUserID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="MediaDetails" EntitySet="MediaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaDetails_HistoryForMediaDetailID" Association="Self.FK_MediaDetails_HistoryForMediaDetailID">
+            <End Role="MediaDetails" EntitySet="MediaDetails" />
+            <End Role="MediaDetails1" EntitySet="MediaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaDetails_LanguageID_Languages_ID" Association="Self.FK_MediaDetails_LanguageID_Languages_ID">
+            <End Role="Languages" EntitySet="Languages" />
+            <End Role="MediaDetails" EntitySet="MediaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaDetails_LastUpdatedByUserID" Association="Self.FK_MediaDetails_LastUpdatedByUserID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="MediaDetails" EntitySet="MediaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaDetails_MasterPage" Association="Self.FK_MediaDetails_MasterPage">
+            <End Role="MasterPages" EntitySet="MasterPages" />
+            <End Role="MediaDetails" EntitySet="MediaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaDetails_MediaID_Media_ID" Association="Self.FK_MediaDetails_MediaID_Media_ID">
+            <End Role="Media" EntitySet="Media" />
+            <End Role="MediaDetails" EntitySet="MediaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaDetails_MediaTypeID_MediaType_ID" Association="Self.FK_MediaDetails_MediaTypeID_MediaType_ID">
+            <End Role="MediaTypes" EntitySet="MediaTypes" />
+            <End Role="MediaDetails" EntitySet="MediaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaDetailsFields_Fields" Association="Self.FK_MediaDetailsFields_Fields">
+            <End Role="Fields" EntitySet="Fields" />
+            <End Role="MediaDetailsFields" EntitySet="MediaDetailsFields" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaDetailsFields_MediaTypesFields" Association="Self.FK_MediaDetailsFields_MediaTypesFields">
+            <End Role="MediaTypesFields" EntitySet="MediaTypesFields" />
+            <End Role="MediaDetailsFields" EntitySet="MediaDetailsFields" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaTags_MediaID_Media_ID" Association="Self.FK_MediaTags_MediaID_Media_ID">
+            <End Role="Media" EntitySet="Media" />
+            <End Role="MediaTags" EntitySet="MediaTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaTags_TagID_Tags_ID" Association="Self.FK_MediaTags_TagID_Tags_ID">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="MediaTags" EntitySet="MediaTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaTypeRolesPermissions_MediaTypeRolesPermissionID" Association="Self.FK_MediaTypeRolesPermissions_MediaTypeRolesPermissionID">
+            <End Role="Permissions" EntitySet="Permissions" />
+            <End Role="MediaTypeRolesPermissions" EntitySet="MediaTypeRolesPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaTypeRolesPermissions_MediaTypesRoleID" Association="Self.FK_MediaTypeRolesPermissions_MediaTypesRoleID">
+            <End Role="MediaTypesRoles" EntitySet="MediaTypesRoles" />
+            <End Role="MediaTypeRolesPermissions" EntitySet="MediaTypeRolesPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaTypes_MasterPages" Association="Self.FK_MediaTypes_MasterPages">
+            <End Role="MasterPages" EntitySet="MasterPages" />
+            <End Role="MediaTypes" EntitySet="MediaTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaTypesChildren_AllowedChildMediaTypeID" Association="Self.FK_MediaTypesChildren_AllowedChildMediaTypeID">
+            <End Role="MediaTypes" EntitySet="MediaTypes" />
+            <End Role="MediaTypesChildren" EntitySet="MediaTypesChildren" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaTypesChildren_MediaTypeID" Association="Self.FK_MediaTypesChildren_MediaTypeID">
+            <End Role="MediaTypes" EntitySet="MediaTypes" />
+            <End Role="MediaTypesChildren" EntitySet="MediaTypesChildren" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaTypesFields_Fields" Association="Self.FK_MediaTypesFields_Fields">
+            <End Role="Fields" EntitySet="Fields" />
+            <End Role="MediaTypesFields" EntitySet="MediaTypesFields" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaTypesFields_MediaTypes" Association="Self.FK_MediaTypesFields_MediaTypes">
+            <End Role="MediaTypes" EntitySet="MediaTypes" />
+            <End Role="MediaTypesFields" EntitySet="MediaTypesFields" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaTypesRoles_MediaTypeID" Association="Self.FK_MediaTypesRoles_MediaTypeID">
+            <End Role="MediaTypes" EntitySet="MediaTypes" />
+            <End Role="MediaTypesRoles" EntitySet="MediaTypesRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaTypesRoles_Roles" Association="Self.FK_MediaTypesRoles_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="MediaTypesRoles" EntitySet="MediaTypesRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pages_MediaDetailID_MediaDetails_ID" Association="Self.FK_Pages_MediaDetailID_MediaDetails_ID">
+            <End Role="MediaDetails" EntitySet="MediaDetails" />
+            <End Role="Pages" EntitySet="Pages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RolesMediaDetails_MediaDetailID" Association="Self.FK_RolesMediaDetails_MediaDetailID">
+            <End Role="MediaDetails" EntitySet="MediaDetails" />
+            <End Role="RolesMediaDetails" EntitySet="RolesMediaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RolesMediaDetails_PermissionID" Association="Self.FK_RolesMediaDetails_PermissionID">
+            <End Role="Permissions" EntitySet="Permissions" />
+            <End Role="RolesMediaDetails" EntitySet="RolesMediaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RolesMediaDetails_RoleID" Association="Self.FK_RolesMediaDetails_RoleID">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="RolesMediaDetails" EntitySet="RolesMediaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RolesPermissions_PermissionID" Association="Self.FK_RolesPermissions_PermissionID">
+            <End Role="Permissions" EntitySet="Permissions" />
+            <End Role="RolesPermissions" EntitySet="RolesPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RolesPermissions_RolesID" Association="Self.FK_RolesPermissions_RolesID">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="RolesPermissions" EntitySet="RolesPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RootPages_MediaDetails" Association="Self.FK_RootPages_MediaDetails">
+            <End Role="MediaDetails" EntitySet="MediaDetails" />
+            <End Role="RootPages" EntitySet="RootPages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Settings_Languages" Association="Self.FK_Settings_Languages">
+            <End Role="Languages" EntitySet="Languages" />
+            <End Role="Settings" EntitySet="Settings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Settings_MasterPages" Association="Self.FK_Settings_MasterPages">
+            <End Role="MasterPages" EntitySet="MasterPages" />
+            <End Role="Settings" EntitySet="Settings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UrlRedirectRules_MediaDetails" Association="Self.FK_UrlRedirectRules_MediaDetails">
+            <End Role="MediaDetails" EntitySet="MediaDetails" />
+            <End Role="UrlRedirectRules" EntitySet="UrlRedirectRules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersMediaDetails_MediaDetailID" Association="Self.FK_UsersMediaDetails_MediaDetailID">
+            <End Role="MediaDetails" EntitySet="MediaDetails" />
+            <End Role="UsersMediaDetails" EntitySet="UsersMediaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersMediaDetails_PermissionID" Association="Self.FK_UsersMediaDetails_PermissionID">
+            <End Role="Permissions" EntitySet="Permissions" />
+            <End Role="UsersMediaDetails" EntitySet="UsersMediaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersMediaDetails_UserID" Association="Self.FK_UsersMediaDetails_UserID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersMediaDetails" EntitySet="UsersMediaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersRoles_RoleID_Roles_ID" Association="Self.FK_UsersRoles_RoleID_Roles_ID">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="UsersRoles" EntitySet="UsersRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersRoles_UserID_Users_ID" Association="Self.FK_UsersRoles_UserID_Users_ID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersRoles" EntitySet="UsersRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Website_MediaDetails" Association="Self.FK_Website_MediaDetails">
+            <End Role="MediaDetails" EntitySet="MediaDetails" />
+            <End Role="Website" EntitySet="Website" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FrameworkModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+          <EntitySet Name="Comments" EntityType="FrameworkModel.Comment" />
+          <EntitySet Name="EmailLogs" EntityType="FrameworkModel.EmailLog" />
+          <EntitySet Name="Languages" EntityType="FrameworkModel.Language" />
+          <EntitySet Name="AllMedia" EntityType="FrameworkModel.Media" />
+          <EntitySet Name="MediaDetails" EntityType="FrameworkModel.MediaDetail" />
+          <AssociationSet Name="FK_Comments_Languages" Association="FrameworkModel.FK_Comments_Languages">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaDetails_LanguageID_Languages_ID" Association="FrameworkModel.FK_MediaDetails_LanguageID_Languages_ID">
+            <End EntitySet="Languages" Role="Language" />
+            <End EntitySet="MediaDetails" Role="MediaDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Media_ParentMediaID" Association="FrameworkModel.FK_Media_ParentMediaID">
+            <End Role="Medium" EntitySet="AllMedia" />
+            <End Role="Medium1" EntitySet="AllMedia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaDetails_MediaID_Media_ID" Association="FrameworkModel.FK_MediaDetails_MediaID_Media_ID">
+            <End EntitySet="AllMedia" Role="Medium" />
+            <End EntitySet="MediaDetails" Role="MediaDetail" />
+          </AssociationSet>
+          <EntitySet Name="Permissions" EntityType="FrameworkModel.Permission" />
+          <EntitySet Name="UsersMediaDetails" EntityType="FrameworkModel.UserMediaDetail" />
+          <AssociationSet Name="FK_UsersMediaDetails_MediaDetailID" Association="FrameworkModel.FK_UsersMediaDetails_MediaDetailID">
+            <End Role="MediaDetail" EntitySet="MediaDetails" />
+            <End Role="UsersMediaDetail" EntitySet="UsersMediaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersMediaDetails_PermissionID" Association="FrameworkModel.FK_UsersMediaDetails_PermissionID">
+            <End Role="Permission" EntitySet="Permissions" />
+            <End Role="UsersMediaDetail" EntitySet="UsersMediaDetails" />
+          </AssociationSet>
+          <EntitySet Name="RolesMediaDetails" EntityType="FrameworkModel.RoleMediaDetail" />
+          <AssociationSet Name="FK_RolesMediaDetails_MediaDetailID" Association="FrameworkModel.FK_RolesMediaDetails_MediaDetailID">
+            <End Role="MediaDetail" EntitySet="MediaDetails" />
+            <End Role="RolesMediaDetail" EntitySet="RolesMediaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RolesMediaDetails_PermissionID" Association="FrameworkModel.FK_RolesMediaDetails_PermissionID">
+            <End Role="Permission" EntitySet="Permissions" />
+            <End Role="RolesMediaDetail" EntitySet="RolesMediaDetails" />
+          </AssociationSet>
+          <EntitySet Name="Roles" EntityType="FrameworkModel.Role" />
+          <AssociationSet Name="FK_RolesMediaDetails_RoleID" Association="FrameworkModel.FK_RolesMediaDetails_RoleID">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="RoleMediaDetail" EntitySet="RolesMediaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="RolesPermissions" Association="FrameworkModel.RolesPermissions">
+            <End Role="Permission" EntitySet="Permissions" />
+            <End Role="Role" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_ReplyToCommentID" Association="FrameworkModel.FK_Comments_ReplyToCommentID">
+            <End Role="Comment" EntitySet="Comments" />
+            <End Role="Comment1" EntitySet="Comments" />
+          </AssociationSet>
+          <EntitySet Name="Tags" EntityType="FrameworkModel.Tag" />
+          <EntitySet Name="MediaTypes" EntityType="FrameworkModel.MediaType" />
+          <AssociationSet Name="FK_MediaDetails_MediaTypeID_MediaType_ID" Association="FrameworkModel.FK_MediaDetails_MediaTypeID_MediaType_ID">
+            <End EntitySet="MediaTypes" Role="MediaType" />
+            <End EntitySet="MediaDetails" Role="MediaDetail" />
+          </AssociationSet>
+          <AssociationSet Name="MediaTypesChildren" Association="FrameworkModel.MediaTypesChildren">
+            <End EntitySet="MediaTypes" Role="MediaType" />
+            <End EntitySet="MediaTypes" Role="MediaType1" />
+          </AssociationSet>
+          <EntitySet Name="Users" EntityType="FrameworkModel.User" />
+          <AssociationSet Name="FK_MediaDetails_CreatedByUserID" Association="FrameworkModel.FK_MediaDetails_CreatedByUserID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="MediaDetail" EntitySet="MediaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaDetails_LastUpdatedByUserID" Association="FrameworkModel.FK_MediaDetails_LastUpdatedByUserID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="MediaDetail" EntitySet="MediaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersMediaDetails_UserID" Association="FrameworkModel.FK_UsersMediaDetails_UserID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserMediaDetail" EntitySet="UsersMediaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="UsersRoles" Association="FrameworkModel.UsersRoles">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaDetails_HistoryForMediaDetailID" Association="FrameworkModel.FK_MediaDetails_HistoryForMediaDetailID">
+            <End Role="MediaDetail" EntitySet="MediaDetails" />
+            <End Role="MediaDetail1" EntitySet="MediaDetails" />
+          </AssociationSet>
+          <EntitySet Name="MediaTypeRolesPermissions" EntityType="FrameworkModel.MediaTypeRolePermission" />
+          <AssociationSet Name="FK_MediaTypeRolesPermissions_MediaTypeRolesPermissionID" Association="FrameworkModel.FK_MediaTypeRolesPermissions_MediaTypeRolesPermissionID">
+            <End Role="Permission" EntitySet="Permissions" />
+            <End Role="MediaTypeRolesPermission" EntitySet="MediaTypeRolesPermissions" />
+          </AssociationSet>
+          <EntitySet Name="MediaTypeRoles" EntityType="FrameworkModel.MediaTypeRole" />
+          <AssociationSet Name="FK_MediaTypesRoles_MediaTypeID" Association="FrameworkModel.FK_MediaTypesRoles_MediaTypeID">
+            <End Role="MediaType" EntitySet="MediaTypes" />
+            <End Role="MediaTypesRole" EntitySet="MediaTypeRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaTypesRoles_Roles" Association="FrameworkModel.FK_MediaTypesRoles_Roles">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="MediaTypesRole" EntitySet="MediaTypeRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaTypeRolesPermissions_MediaTypesRoleID" Association="FrameworkModel.FK_MediaTypeRolesPermissions_MediaTypesRoleID">
+            <End Role="MediaTypeRole" EntitySet="MediaTypeRoles" />
+            <End Role="MediaTypeRolesPermission" EntitySet="MediaTypeRolesPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_Users" Association="FrameworkModel.FK_Comments_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <EntitySet Name="MasterPages" EntityType="FrameworkModel.MasterPage" />
+          <AssociationSet Name="FK_MediaTypes_MasterPages" Association="FrameworkModel.FK_MediaTypes_MasterPages">
+            <End Role="MasterPage" EntitySet="MasterPages" />
+            <End Role="MediaType" EntitySet="MediaTypes" />
+          </AssociationSet>
+          <EntitySet Name="AllSettings" EntityType="FrameworkModel.Settings" />
+          <EntitySet Name="WebserviceRequests" EntityType="FrameworkModel.WebserviceRequest" />
+          <EntitySet Name="MediaTags" EntityType="FrameworkModel.MediaTag" />
+          <AssociationSet Name="FK_MediaTags_MediaID_Media_ID" Association="FrameworkModel.FK_MediaTags_MediaID_Media_ID">
+            <End Role="Media" EntitySet="AllMedia" />
+            <End Role="MediaTag" EntitySet="MediaTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaTags_TagID_Tags_ID" Association="FrameworkModel.FK_MediaTags_TagID_Tags_ID">
+            <End Role="Tag" EntitySet="Tags" />
+            <End Role="MediaTag" EntitySet="MediaTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaDetails_MasterPage" Association="FrameworkModel.FK_MediaDetails_MasterPage">
+            <End Role="MasterPage" EntitySet="MasterPages" />
+            <End Role="MediaDetail" EntitySet="MediaDetails" />
+          </AssociationSet>
+          <EntitySet Name="GlossaryTerms" EntityType="FrameworkModel.GlossaryTerm" />
+          <EntitySet Name="Fields" EntityType="FrameworkModel.Field" />
+          <AssociationSet Name="FK_MediaDetailFields_MediaDetails" Association="FrameworkModel.FK_MediaDetailFields_MediaDetails">
+            <End EntitySet="MediaDetails" Role="MediaDetail" />
+            <End EntitySet="Fields" Role="MediaDetailsField" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaTypesFields_MediaTypes" Association="FrameworkModel.FK_MediaTypesFields_MediaTypes">
+            <End Role="MediaType" EntitySet="MediaTypes" />
+            <End Role="MediaTypesField" EntitySet="Fields" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaDetailsFields_MediaTypesFields" Association="FrameworkModel.FK_MediaDetailsFields_MediaTypesFields">
+            <End Role="MediaTypeField" EntitySet="Fields" />
+            <End Role="MediaDetailField" EntitySet="Fields" />
+          </AssociationSet>
+          <EntitySet Name="FieldAssociations" EntityType="FrameworkModel.FieldAssociation" />
+          <AssociationSet Name="FK_FieldAssociations_MediaDetails" Association="FrameworkModel.FK_FieldAssociations_MediaDetails">
+            <End Role="MediaDetail" EntitySet="MediaDetails" />
+            <End Role="FieldsAssociation" EntitySet="FieldAssociations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FieldsAssociations_MediaDetailsFields" Association="FrameworkModel.FK_FieldsAssociations_MediaDetailsFields">
+            <End Role="MediaDetailField" EntitySet="Fields" />
+            <End Role="FieldsAssociation" EntitySet="FieldAssociations" />
+          </AssociationSet>
+          <EntitySet Name="FieldFiles" EntityType="FrameworkModel.FieldFile" />
+          <AssociationSet Name="FK_FieldFiles_MediaDetailsFields" Association="FrameworkModel.FK_FieldFiles_MediaDetailsFields">
+            <End Role="MediaDetailField" EntitySet="Fields" />
+            <End Role="FieldFile" EntitySet="FieldFiles" />
+          </AssociationSet>
+          <EntitySet Name="IPLocationTrackerEntries" EntityType="FrameworkModel.IPLocationTrackerEntry" />
+          <AssociationSet Name="FK_Settings_Languages" Association="FrameworkModel.FK_Settings_Languages">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="Settings" EntitySet="AllSettings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Settings_MasterPages" Association="FrameworkModel.FK_Settings_MasterPages">
+            <End Role="MasterPage" EntitySet="MasterPages" />
+            <End Role="Settings" EntitySet="AllSettings" />
+          </AssociationSet>
+          <AssociationSet Name="MediaDetailsComments" Association="FrameworkModel.MediaDetailsComments">
+            <End Role="Comment" EntitySet="Comments" />
+            <End Role="MediaDetail" EntitySet="MediaDetails" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Message" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int64" Name="LanguageID" Nullable="false" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="DateLastModified" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Language" Relationship="FrameworkModel.FK_Comments_Languages" FromRole="Comment" ToRole="Language" />
+          <Property Type="Int64" Name="ReplyToCommentID" />
+          <NavigationProperty Name="ReplyToComments" Relationship="FrameworkModel.FK_Comments_ReplyToCommentID" FromRole="Comment" ToRole="Comment1" />
+          <NavigationProperty Name="ReplyToComment" Relationship="FrameworkModel.FK_Comments_ReplyToCommentID" FromRole="Comment1" ToRole="Comment" />
+          <Property Type="Int64" Name="UserID" />
+          <NavigationProperty Name="User" Relationship="FrameworkModel.FK_Comments_Users" FromRole="Comment" ToRole="User" />
+          <NavigationProperty Name="MediaDetails" Relationship="FrameworkModel.MediaDetailsComments" FromRole="Comment" ToRole="MediaDetail" />
+        </EntityType>
+        <EntityType Name="EmailLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="SenderName" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SenderEmailAddress" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ToEmailAddresses" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FromEmailAddress" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Subject" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Message" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="VisitorIP" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="RequestUrl" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="DateLastModified" Nullable="false" Precision="3" />
+          <Property Name="ServerMessage" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CultureCode" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="DateLastModified" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Comments" Relationship="FrameworkModel.FK_Comments_Languages" FromRole="Language" ToRole="Comment" />
+          <NavigationProperty Name="MediaDetails" Relationship="FrameworkModel.FK_MediaDetails_LanguageID_Languages_ID" FromRole="Language" ToRole="MediaDetail" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="String" Name="UriSegment" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Settings" Relationship="FrameworkModel.FK_Settings_Languages" FromRole="Language" ToRole="Settings" />
+        </EntityType>
+        <EntityType Name="Media">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="Int64" Name="ParentMediaID" />
+          <NavigationProperty Name="ChildMedias" Relationship="FrameworkModel.FK_Media_ParentMediaID" FromRole="Medium" ToRole="Medium1" />
+          <NavigationProperty Name="ParentMedia" Relationship="FrameworkModel.FK_Media_ParentMediaID" FromRole="Medium1" ToRole="Medium" />
+          <NavigationProperty Name="MediaDetails" Relationship="FrameworkModel.FK_MediaDetails_MediaID_Media_ID" FromRole="Medium" ToRole="MediaDetail" />
+          <Property Type="Int32" Name="OrderIndex" Nullable="false" />
+          <NavigationProperty Name="MediaTags" Relationship="FrameworkModel.FK_MediaTags_MediaID_Media_ID" FromRole="Media" ToRole="MediaTag" />
+          </EntityType>
+        <EntityType Name="MediaDetail" Abstract="true">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int64" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="MediaID" Nullable="false" Type="Int64" />
+          <Property Name="Title" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="LinkTitle" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="ShortDescription" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="LanguageID" Nullable="false" Type="Int64" />
+          <Property Name="NumberOfViews" Nullable="false" Type="Int64" />
+          <Property Name="NumberOfStars" Nullable="false" Type="Int64" />
+          <Property Name="IsDeleted" Nullable="false" Type="Boolean" />
+          <Property Name="ShowInMenu" Nullable="false" Type="Boolean" />
+          <Property Name="SefTitle" MaxLength="255" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="Handler" MaxLength="255" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="MediaTypeID" Nullable="false" Type="Int64" />
+          <Property Name="DateCreated" Nullable="false" Type="DateTime" Precision="3" />
+          <Property Name="DateLastModified" Nullable="false" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Language" Relationship="FrameworkModel.FK_MediaDetails_LanguageID_Languages_ID" FromRole="MediaDetail" ToRole="Language" />
+          <NavigationProperty Name="Media" Relationship="FrameworkModel.FK_MediaDetails_MediaID_Media_ID" FromRole="MediaDetail" ToRole="Medium" />
+          <Property Type="Int64" Name="CreatedByUserID" Nullable="false" />
+          <Property Type="Int64" Name="LastUpdatedByUserID" Nullable="false" />
+          <NavigationProperty Name="UsersMediaDetails" Relationship="FrameworkModel.FK_UsersMediaDetails_MediaDetailID" FromRole="MediaDetail" ToRole="UsersMediaDetail" />
+          <NavigationProperty Name="RolesMediaDetails" Relationship="FrameworkModel.FK_RolesMediaDetails_MediaDetailID" FromRole="MediaDetail" ToRole="RolesMediaDetail" />
+          <Property Type="Boolean" Name="AllowCommenting" Nullable="false" />
+          <NavigationProperty Name="MediaType" Relationship="FrameworkModel.FK_MediaDetails_MediaTypeID_MediaType_ID" FromRole="MediaDetail" ToRole="MediaType" />
+          <NavigationProperty Name="CreatedByUser" Relationship="FrameworkModel.FK_MediaDetails_CreatedByUserID" FromRole="MediaDetail" ToRole="User" />
+          <NavigationProperty Name="LastUpdatedByUser" Relationship="FrameworkModel.FK_MediaDetails_LastUpdatedByUserID" FromRole="MediaDetail" ToRole="User" />
+          <Property Type="Int64" Name="HistoryForMediaDetailID" />
+          <Property Type="Int32" Name="HistoryVersionNumber" Nullable="false" />
+          <NavigationProperty Name="History" Relationship="FrameworkModel.FK_MediaDetails_HistoryForMediaDetailID" FromRole="MediaDetail" ToRole="MediaDetail1" />
+          <NavigationProperty Name="HistoryForMediaDetail" Relationship="FrameworkModel.FK_MediaDetails_HistoryForMediaDetailID" FromRole="MediaDetail1" ToRole="MediaDetail" />
+          <Property Type="String" Name="SectionTitle" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="CanAddToCart" Nullable="false" />
+          <Property Type="Decimal" Name="Price" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int64" Name="QuantityInStock" Nullable="false" />
+          <Property Type="Boolean" Name="UseDirectLink" Nullable="false" />
+          <Property Type="String" Name="DirectLink" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="OpenInNewWindow" Nullable="false" />
+          <Property Type="Boolean" Name="IsDraft" Nullable="false" />
+          <Property Type="Boolean" Name="RedirectToFirstChild" Nullable="false" />
+          <Property Type="Boolean" Name="RenderInFooter" Nullable="false" />
+          <Property Type="Boolean" Name="ForceSSL" Nullable="false" />
+          <Property Type="Boolean" Name="IsProtected" Nullable="false" />
+          <Property Type="Int64" Name="MasterPageID" />
+          <NavigationProperty Name="MasterPage" Relationship="FrameworkModel.FK_MediaDetails_MasterPage" FromRole="MediaDetail" ToRole="MasterPage" />
+          <Property Type="Boolean" Name="ShowInSearchResults" Nullable="false" />
+          <Property Type="String" Name="MetaKeywords" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="EnableCaching" Nullable="false" />
+          <Property Type="String" Name="CachedVirtualPath" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CssClasses" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MetaDescription" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecurringTimePeriod" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" DefaultValue="''" />
+          <Property Name="MainLayout" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SummaryLayout" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FeaturedLayout" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UseMediaTypeLayouts" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Fields" Relationship="FrameworkModel.FK_MediaDetailFields_MediaDetails" FromRole="MediaDetail" ToRole="MediaDetailsField" />
+          <NavigationProperty Name="FieldAssociations" Relationship="FrameworkModel.FK_FieldAssociations_MediaDetails" FromRole="MediaDetail" ToRole="FieldsAssociation" />
+          <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
+          <Property Name="PublishDate" Type="DateTime" Precision="3" />
+          <Property Name="MainContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Comments" Relationship="FrameworkModel.MediaDetailsComments" FromRole="MediaDetail" ToRole="Comment" />
+          </EntityType>
+        <EntityType Name="Page" BaseType="FrameworkModel.MediaDetail">
+        </EntityType>
+        <Association Name="FK_Comments_Languages">
+          <End Type="FrameworkModel.Language" Role="Language" Multiplicity="1" />
+          <End Type="FrameworkModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaDetails_LanguageID_Languages_ID">
+          <End Type="FrameworkModel.Language" Multiplicity="1" Role="Language" />
+          <End Type="FrameworkModel.MediaDetail" Multiplicity="*" Role="MediaDetail" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaDetail">
+              <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Media_ParentMediaID">
+          <End Type="FrameworkModel.Media" Role="Medium" Multiplicity="0..1" />
+          <End Type="FrameworkModel.Media" Role="Medium1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medium">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Medium1">
+              <PropertyRef Name="ParentMediaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaDetails_MediaID_Media_ID">
+          <End Type="FrameworkModel.Media" Multiplicity="1" Role="Medium" />
+          <End Type="FrameworkModel.MediaDetail" Multiplicity="*" Role="MediaDetail" />
+          <ReferentialConstraint>
+            <Principal Role="Medium">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaDetail">
+              <PropertyRef Name="MediaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="EnumName" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="DateLastModified" Nullable="false" Precision="3" />
+          <NavigationProperty Name="UsersMediaDetails" Relationship="FrameworkModel.FK_UsersMediaDetails_PermissionID" FromRole="Permission" ToRole="UsersMediaDetail" />
+          <NavigationProperty Name="RolesMediaDetails" Relationship="FrameworkModel.FK_RolesMediaDetails_PermissionID" FromRole="Permission" ToRole="RolesMediaDetail" />
+          <NavigationProperty Name="Roles" Relationship="FrameworkModel.RolesPermissions" FromRole="Permission" ToRole="Role" />
+          <NavigationProperty Name="MediaTypeRolesPermissions" Relationship="FrameworkModel.FK_MediaTypeRolesPermissions_MediaTypeRolesPermissionID" FromRole="Permission" ToRole="MediaTypeRolesPermission" />
+        </EntityType>
+        <EntityType Name="UserMediaDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int64" Name="UserID" Nullable="false" />
+          <Property Type="Int64" Name="MediaDetailID" Nullable="false" />
+          <Property Type="Int64" Name="PermissionID" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="DateLastModified" Nullable="false" Precision="3" />
+          <NavigationProperty Name="MediaDetail" Relationship="FrameworkModel.FK_UsersMediaDetails_MediaDetailID" FromRole="UsersMediaDetail" ToRole="MediaDetail" />
+          <NavigationProperty Name="Permission" Relationship="FrameworkModel.FK_UsersMediaDetails_PermissionID" FromRole="UsersMediaDetail" ToRole="Permission" />
+          <NavigationProperty Name="User" Relationship="FrameworkModel.FK_UsersMediaDetails_UserID" FromRole="UserMediaDetail" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_UsersMediaDetails_MediaDetailID">
+          <End Type="FrameworkModel.MediaDetail" Role="MediaDetail" Multiplicity="1" />
+          <End Type="FrameworkModel.UserMediaDetail" Role="UsersMediaDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsersMediaDetail">
+              <PropertyRef Name="MediaDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersMediaDetails_PermissionID">
+          <End Type="FrameworkModel.Permission" Role="Permission" Multiplicity="1" />
+          <End Type="FrameworkModel.UserMediaDetail" Role="UsersMediaDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permission">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UsersMediaDetail">
+              <PropertyRef Name="PermissionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="RoleMediaDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int64" Name="MediaDetailID" Nullable="false" />
+          <Property Type="Int64" Name="RoleID" Nullable="false" />
+          <Property Type="Int64" Name="PermissionID" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="DateLastModified" Nullable="false" Precision="3" />
+          <NavigationProperty Name="MediaDetail" Relationship="FrameworkModel.FK_RolesMediaDetails_MediaDetailID" FromRole="RolesMediaDetail" ToRole="MediaDetail" />
+          <NavigationProperty Name="Permission" Relationship="FrameworkModel.FK_RolesMediaDetails_PermissionID" FromRole="RolesMediaDetail" ToRole="Permission" />
+          <NavigationProperty Name="Role" Relationship="FrameworkModel.FK_RolesMediaDetails_RoleID" FromRole="RoleMediaDetail" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK_RolesMediaDetails_MediaDetailID">
+          <End Type="FrameworkModel.MediaDetail" Role="MediaDetail" Multiplicity="1" />
+          <End Type="FrameworkModel.RoleMediaDetail" Role="RolesMediaDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RolesMediaDetail">
+              <PropertyRef Name="MediaDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RolesMediaDetails_PermissionID">
+          <End Type="FrameworkModel.Permission" Role="Permission" Multiplicity="1" />
+          <End Type="FrameworkModel.RoleMediaDetail" Role="RolesMediaDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permission">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RolesMediaDetail">
+              <PropertyRef Name="PermissionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="DateLastModified" Nullable="false" Precision="3" />
+          <NavigationProperty Name="RolesMediaDetails" Relationship="FrameworkModel.FK_RolesMediaDetails_RoleID" FromRole="Role" ToRole="RoleMediaDetail" />
+          <NavigationProperty Name="Permissions" Relationship="FrameworkModel.RolesPermissions" FromRole="Role" ToRole="Permission" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="FrameworkModel.UsersRoles" FromRole="Role" ToRole="User" />
+          <Property Type="String" Name="EnumName" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MediaTypesRoles" Relationship="FrameworkModel.FK_MediaTypesRoles_Roles" FromRole="Role" ToRole="MediaTypesRole" />
+        </EntityType>
+        <Association Name="FK_RolesMediaDetails_RoleID">
+          <End Type="FrameworkModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="FrameworkModel.RoleMediaDetail" Role="RoleMediaDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RoleMediaDetail">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RolesPermissions">
+          <End Type="FrameworkModel.Permission" Role="Permission" Multiplicity="*" />
+          <End Type="FrameworkModel.Role" Role="Role" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_Comments_ReplyToCommentID">
+          <End Type="FrameworkModel.Comment" Role="Comment" Multiplicity="0..1" />
+          <End Type="FrameworkModel.Comment" Role="Comment1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comment1">
+              <PropertyRef Name="ReplyToCommentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SefTitle" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="DateLastModified" Nullable="false" Precision="3" />
+          <NavigationProperty Name="MediaTags" Relationship="FrameworkModel.FK_MediaTags_TagID_Tags_ID" FromRole="Tag" ToRole="MediaTag" />
+          <Property Type="String" Name="ThumbnailPath" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MediaType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int64" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Name" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="Label" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="IsActive" Nullable="false" Type="Boolean" />
+          <Property Name="DateCreated" Nullable="false" Type="DateTime" Precision="3" />
+          <Property Name="DateLastModified" Nullable="false" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MediaDetails" Relationship="FrameworkModel.FK_MediaDetails_MediaTypeID_MediaType_ID" FromRole="MediaType" ToRole="MediaDetail" />
+          <NavigationProperty Name="MediaTypes" Relationship="FrameworkModel.MediaTypesChildren" FromRole="MediaType1" ToRole="MediaType" />
+          <Property Name="ShowInMenu" Nullable="false" Type="Boolean" />
+          <NavigationProperty Name="MediaTypesRoles" Relationship="FrameworkModel.FK_MediaTypesRoles_MediaTypeID" FromRole="MediaType" ToRole="MediaTypesRole" />
+          <Property Type="String" Name="MediaTypeHandler" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Int64" Name="MasterPageID" />
+          <NavigationProperty Name="MasterPage" Relationship="FrameworkModel.FK_MediaTypes_MasterPages" FromRole="MediaType" ToRole="MasterPage" />
+          <Property Type="Boolean" Name="ShowInSearchResults" Nullable="false" />
+          <Property Type="Boolean" Name="EnableCaching" Nullable="false" />
+          <Property Name="MainLayout" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SummaryLayout" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FeaturedLayout" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UseMediaTypeLayouts" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Fields" Relationship="FrameworkModel.FK_MediaTypesFields_MediaTypes" FromRole="MediaType" ToRole="MediaTypesField" />
+          <Property Name="ShowInSiteTree" Type="Boolean" Nullable="false" />
+          </EntityType>
+        <Association Name="FK_MediaDetails_MediaTypeID_MediaType_ID">
+          <End Type="FrameworkModel.MediaType" Multiplicity="1" Role="MediaType" />
+          <End Type="FrameworkModel.MediaDetail" Multiplicity="*" Role="MediaDetail" />
+          <ReferentialConstraint>
+            <Principal Role="MediaType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaDetail">
+              <PropertyRef Name="MediaTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MediaTypesChildren">
+          <End Type="FrameworkModel.MediaType" Multiplicity="*" Role="MediaType" />
+          <End Type="FrameworkModel.MediaType" Multiplicity="*" Role="MediaType1" />
+        </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="ProfilePhoto" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="AuthenticationType" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="DateLastModified" Nullable="false" Precision="3" />
+          <NavigationProperty Name="CreatedMediaDetails" Relationship="FrameworkModel.FK_MediaDetails_CreatedByUserID" FromRole="User" ToRole="MediaDetail" />
+          <NavigationProperty Name="LastUpdatedMediaDetails" Relationship="FrameworkModel.FK_MediaDetails_LastUpdatedByUserID" FromRole="User" ToRole="MediaDetail" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <NavigationProperty Name="UsersMediaDetails" Relationship="FrameworkModel.FK_UsersMediaDetails_UserID" FromRole="User" ToRole="UserMediaDetail" />
+          <NavigationProperty Name="Roles" Relationship="FrameworkModel.UsersRoles" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Comments" Relationship="FrameworkModel.FK_Comments_Users" FromRole="User" ToRole="Comment" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="AfterLoginStartPage" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="LastLoggedInAt" Precision="3" />
+        </EntityType>
+        <Association Name="FK_MediaDetails_CreatedByUserID">
+          <End Type="FrameworkModel.User" Role="User" Multiplicity="1" />
+          <End Type="FrameworkModel.MediaDetail" Role="MediaDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaDetail">
+              <PropertyRef Name="CreatedByUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaDetails_LastUpdatedByUserID">
+          <End Type="FrameworkModel.User" Role="User" Multiplicity="1" />
+          <End Type="FrameworkModel.MediaDetail" Role="MediaDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaDetail">
+              <PropertyRef Name="LastUpdatedByUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersMediaDetails_UserID">
+          <End Type="FrameworkModel.User" Role="User" Multiplicity="1" />
+          <End Type="FrameworkModel.UserMediaDetail" Role="UserMediaDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserMediaDetail">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsersRoles">
+          <End Type="FrameworkModel.Role" Role="Role" Multiplicity="*" />
+          <End Type="FrameworkModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_MediaDetails_HistoryForMediaDetailID">
+          <End Type="FrameworkModel.MediaDetail" Role="MediaDetail" Multiplicity="0..1" />
+          <End Type="FrameworkModel.MediaDetail" Role="MediaDetail1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaDetail1">
+              <PropertyRef Name="HistoryForMediaDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MediaTypeRolePermission">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int64" Name="MediaTypeRoleID" Nullable="false" />
+          <Property Type="Int64" Name="PermissionID" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="DateLastModified" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Permission" Relationship="FrameworkModel.FK_MediaTypeRolesPermissions_MediaTypeRolesPermissionID" FromRole="MediaTypeRolesPermission" ToRole="Permission" />
+          <NavigationProperty Name="MediaTypesRole" Relationship="FrameworkModel.FK_MediaTypeRolesPermissions_MediaTypesRoleID" FromRole="MediaTypeRolesPermission" ToRole="MediaTypeRole" />
+        </EntityType>
+        <Association Name="FK_MediaTypeRolesPermissions_MediaTypeRolesPermissionID">
+          <End Type="FrameworkModel.Permission" Role="Permission" Multiplicity="1" />
+          <End Type="FrameworkModel.MediaTypeRolePermission" Role="MediaTypeRolesPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permission">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaTypeRolesPermission">
+              <PropertyRef Name="PermissionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MediaTypeRole">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="Int64" Name="MediaTypeID" Nullable="false" />
+          <Property Type="Int64" Name="RoleID" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="DateLastModified" Nullable="false" Precision="3" />
+          <NavigationProperty Name="MediaType" Relationship="FrameworkModel.FK_MediaTypesRoles_MediaTypeID" FromRole="MediaTypesRole" ToRole="MediaType" />
+          <NavigationProperty Name="Role" Relationship="FrameworkModel.FK_MediaTypesRoles_Roles" FromRole="MediaTypesRole" ToRole="Role" />
+          <NavigationProperty Name="MediaTypeRolesPermissions" Relationship="FrameworkModel.FK_MediaTypeRolesPermissions_MediaTypesRoleID" FromRole="MediaTypeRole" ToRole="MediaTypeRolesPermission" />
+        </EntityType>
+        <Association Name="FK_MediaTypesRoles_MediaTypeID">
+          <End Type="FrameworkModel.MediaType" Role="MediaType" Multiplicity="1" />
+          <End Type="FrameworkModel.MediaTypeRole" Role="MediaTypesRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaTypesRole">
+              <PropertyRef Name="MediaTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaTypesRoles_Roles">
+          <End Type="FrameworkModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="FrameworkModel.MediaTypeRole" Role="MediaTypesRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaTypesRole">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaTypeRolesPermissions_MediaTypesRoleID">
+          <End Type="FrameworkModel.MediaTypeRole" Role="MediaTypeRole" Multiplicity="1" />
+          <End Type="FrameworkModel.MediaTypeRolePermission" Role="MediaTypeRolesPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaTypeRole">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaTypeRolesPermission">
+              <PropertyRef Name="MediaTypeRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_Users">
+          <End Type="FrameworkModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="FrameworkModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MasterPage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PathToFile" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="DateLastModified" Nullable="false" Precision="3" />
+          <NavigationProperty Name="MediaTypes" Relationship="FrameworkModel.FK_MediaTypes_MasterPages" FromRole="MasterPage" ToRole="MediaType" />
+          <NavigationProperty Name="MediaDetails" Relationship="FrameworkModel.FK_MediaDetails_MasterPage" FromRole="MasterPage" ToRole="MediaDetail" />
+          <Property Type="String" Name="MobileTemplate" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Settings" Relationship="FrameworkModel.FK_Settings_MasterPages" FromRole="MasterPage" ToRole="Settings" />
+        </EntityType>
+        <Association Name="FK_MediaTypes_MasterPages">
+          <End Type="FrameworkModel.MasterPage" Role="MasterPage" Multiplicity="0..1" />
+          <End Type="FrameworkModel.MediaType" Role="MediaType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterPage">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaType">
+              <PropertyRef Name="MasterPageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Settings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
+          <Property Name="DateLastModified" Nullable="false" Type="DateTime" Precision="3" />
+          <Property Name="GlobalCodeInHead" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GlobalCodeInBody" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ShoppingCartTax" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="MaxRequestLength" Type="Int32" Nullable="false" />
+          <Property Name="MaxUploadFileSizePerFile" Type="Int32" Nullable="false" />
+          <Property Name="SiteOnlineAtDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SiteOfflineAtDateTime" Type="DateTime" Precision="3" />
+          <Property Name="SiteOfflineUrl" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="OutputCacheDurationInSeconds" Type="Int64" Nullable="false" />
+          <Property Name="DefaultLanguageID" Type="Int64" Nullable="false" />
+          <Property Name="DefaultMasterPageID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="DefaultLanguage" Relationship="FrameworkModel.FK_Settings_Languages" FromRole="Settings" ToRole="Language" />
+          <NavigationProperty Name="DefaultMasterPage" Relationship="FrameworkModel.FK_Settings_MasterPages" FromRole="Settings" ToRole="MasterPage" />
+        </EntityType>
+        <EntityType Name="WebserviceRequest">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Url" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="QueryString" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Method" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Response" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="DateLastModified" Nullable="false" Precision="3" />
+          <Property Type="String" Name="UrlReferrer" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UrlRedirectRule" BaseType="FrameworkModel.MediaDetail">
+          <Property Type="String" Name="VirtualPathToRedirect" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="RedirectToUrl" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="Is301Redirect" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MediaTag">
+          <Key>
+            <PropertyRef Name="TagID" />
+            <PropertyRef Name="MediaID" />
+          </Key>
+          <Property Type="Int64" Name="TagID" Nullable="false" />
+          <Property Type="Int64" Name="MediaID" Nullable="false" />
+          <Property Type="Int32" Name="OrderIndex" Nullable="false" />
+          <NavigationProperty Name="Media" Relationship="FrameworkModel.FK_MediaTags_MediaID_Media_ID" FromRole="MediaTag" ToRole="Media" />
+          <NavigationProperty Name="Tag" Relationship="FrameworkModel.FK_MediaTags_TagID_Tags_ID" FromRole="MediaTag" ToRole="Tag" />
+        </EntityType>
+        <Association Name="FK_MediaTags_MediaID_Media_ID">
+          <End Type="FrameworkModel.Media" Role="Media" Multiplicity="1" />
+          <End Type="FrameworkModel.MediaTag" Role="MediaTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Media">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaTag">
+              <PropertyRef Name="MediaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaTags_TagID_Tags_ID">
+          <End Type="FrameworkModel.Tag" Role="Tag" Multiplicity="1" />
+          <End Type="FrameworkModel.MediaTag" Role="MediaTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaTag">
+              <PropertyRef Name="TagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Website" BaseType="FrameworkModel.MediaDetail">
+          <Property Name="CodeInHead" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CodeInBody" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_MediaDetails_MasterPage">
+          <End Type="FrameworkModel.MasterPage" Role="MasterPage" Multiplicity="0..1" />
+          <End Type="FrameworkModel.MediaDetail" Role="MediaDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterPage">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaDetail">
+              <PropertyRef Name="MasterPageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="RootPage" BaseType="FrameworkModel.MediaDetail">
+        </EntityType>
+        <EntityType Name="GlossaryTerm">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Term" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Definition" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="DateLastModified" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Field" Abstract="true">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="FieldCode" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FieldLabel" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FieldValue" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OrderIndex" Type="Int64" Nullable="false" />
+          <Property Name="FrontEndLayout" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateLastModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="RenderLabelAfterControl" Type="Boolean" Nullable="false" />
+          <Property Name="AdminControl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GetAdminControlValue" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SetAdminControlValue" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MediaDetailField" BaseType="FrameworkModel.Field">
+          <Property Name="MediaDetailID" Type="Int64" Nullable="false" />
+          <Property Name="MediaTypeFieldID" Type="Int64" />
+          <NavigationProperty Name="MediaDetail" Relationship="FrameworkModel.FK_MediaDetailFields_MediaDetails" FromRole="MediaDetailsField" ToRole="MediaDetail" />
+          <NavigationProperty Name="MediaTypeField" Relationship="FrameworkModel.FK_MediaDetailsFields_MediaTypesFields" FromRole="MediaDetailField" ToRole="MediaTypeField" />
+          <NavigationProperty Name="FieldAssociations" Relationship="FrameworkModel.FK_FieldsAssociations_MediaDetailsFields" FromRole="MediaDetailField" ToRole="FieldsAssociation" />
+          <NavigationProperty Name="FieldFiles" Relationship="FrameworkModel.FK_FieldFiles_MediaDetailsFields" FromRole="MediaDetailField" ToRole="FieldFile" />
+          <Property Name="UseMediaTypeFieldFrontEndLayout" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_MediaDetailFields_MediaDetails">
+          <End Type="FrameworkModel.MediaDetail" Multiplicity="1" Role="MediaDetail" />
+          <End Type="FrameworkModel.MediaDetailField" Multiplicity="*" Role="MediaDetailsField" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaDetailsField">
+              <PropertyRef Name="MediaDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MediaTypeField" BaseType="FrameworkModel.Field">
+          <Property Name="MediaTypeID" Type="Int64" Nullable="false" />
+          <Property Name="Instructions" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MediaType" Relationship="FrameworkModel.FK_MediaTypesFields_MediaTypes" FromRole="MediaTypesField" ToRole="MediaType" />
+          <NavigationProperty Name="MediaDetailFields" Relationship="FrameworkModel.FK_MediaDetailsFields_MediaTypesFields" FromRole="MediaTypeField" ToRole="MediaDetailField" />
+        </EntityType>
+        <Association Name="FK_MediaTypesFields_MediaTypes">
+          <End Type="FrameworkModel.MediaType" Role="MediaType" Multiplicity="1" />
+          <End Type="FrameworkModel.MediaTypeField" Role="MediaTypesField" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaTypesField">
+              <PropertyRef Name="MediaTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaDetailsFields_MediaTypesFields">
+          <End Type="FrameworkModel.MediaTypeField" Role="MediaTypeField" Multiplicity="0..1" />
+          <End Type="FrameworkModel.MediaDetailField" Role="MediaDetailField" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaTypeField">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaDetailField">
+              <PropertyRef Name="MediaTypeFieldID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FieldAssociation">
+          <Key>
+            <PropertyRef Name="MediaDetailFieldID" />
+            <PropertyRef Name="AssociatedMediaDetailID" />
+          </Key>
+          <Property Name="MediaDetailFieldID" Type="Int64" Nullable="false" />
+          <Property Name="AssociatedMediaDetailID" Type="Int64" Nullable="false" />
+          <Property Name="OrderIndex" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MediaDetail" Relationship="FrameworkModel.FK_FieldAssociations_MediaDetails" FromRole="FieldsAssociation" ToRole="MediaDetail" />
+          <NavigationProperty Name="MediaDetailField" Relationship="FrameworkModel.FK_FieldsAssociations_MediaDetailsFields" FromRole="FieldsAssociation" ToRole="MediaDetailField" />
+        </EntityType>
+        <Association Name="FK_FieldAssociations_MediaDetails">
+          <End Type="FrameworkModel.MediaDetail" Role="MediaDetail" Multiplicity="1" />
+          <End Type="FrameworkModel.FieldAssociation" Role="FieldsAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FieldsAssociation">
+              <PropertyRef Name="AssociatedMediaDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FieldsAssociations_MediaDetailsFields">
+          <End Type="FrameworkModel.MediaDetailField" Role="MediaDetailField" Multiplicity="1" />
+          <End Type="FrameworkModel.FieldAssociation" Role="FieldsAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetailField">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FieldsAssociation">
+              <PropertyRef Name="MediaDetailFieldID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FieldFile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="MediaDetailFieldID" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PathToFile" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateLastModified" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="MediaDetailsField" Relationship="FrameworkModel.FK_FieldFiles_MediaDetailsFields" FromRole="FieldFile" ToRole="MediaDetailField" />
+          <Property Name="OrderIndex" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_FieldFiles_MediaDetailsFields">
+          <End Type="FrameworkModel.MediaDetailField" Role="MediaDetailField" Multiplicity="1" />
+          <End Type="FrameworkModel.FieldFile" Role="FieldFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetailField">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FieldFile">
+              <PropertyRef Name="MediaDetailFieldID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="IPLocationTrackerEntry">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="IPAddress" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateLastModified" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK_Settings_Languages">
+          <End Type="FrameworkModel.Language" Role="Language" Multiplicity="1" />
+          <End Type="FrameworkModel.Settings" Role="Settings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Settings">
+              <PropertyRef Name="DefaultLanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Settings_MasterPages">
+          <End Type="FrameworkModel.MasterPage" Role="MasterPage" Multiplicity="1" />
+          <End Type="FrameworkModel.Settings" Role="Settings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterPage">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Settings">
+              <PropertyRef Name="DefaultMasterPageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MediaDetailsComments">
+          <End Type="FrameworkModel.Comment" Role="Comment" Multiplicity="*" />
+          <End Type="FrameworkModel.MediaDetail" Role="MediaDetail" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FrameworkModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="FrameworkModel.Comment">
+              <MappingFragment StoreEntitySet="Comments">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ReplyToCommentID" ColumnName="ReplyToCommentID" />
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailLogs">
+            <EntityTypeMapping TypeName="FrameworkModel.EmailLog">
+              <MappingFragment StoreEntitySet="EmailLog">
+                <ScalarProperty Name="ServerMessage" ColumnName="ServerMessage" />
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="RequestUrl" ColumnName="RequestUrl" />
+                <ScalarProperty Name="VisitorIP" ColumnName="VisitorIP" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="FromEmailAddress" ColumnName="FromEmailAddress" />
+                <ScalarProperty Name="ToEmailAddresses" ColumnName="ToEmailAddresses" />
+                <ScalarProperty Name="SenderEmailAddress" ColumnName="SenderEmailAddress" />
+                <ScalarProperty Name="SenderName" ColumnName="SenderName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Languages">
+            <EntityTypeMapping TypeName="FrameworkModel.Language">
+              <MappingFragment StoreEntitySet="Languages">
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="UriSegment" ColumnName="UriSegment" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CultureCode" ColumnName="CultureCode" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AllMedia">
+            <EntityTypeMapping TypeName="FrameworkModel.Media">
+              <MappingFragment StoreEntitySet="Media">
+                <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
+                <ScalarProperty Name="ParentMediaID" ColumnName="ParentMediaID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MediaDetails">
+            <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.MediaDetail)">
+              <MappingFragment StoreEntitySet="MediaDetails">
+                <ScalarProperty Name="MainContent" ColumnName="MainContent" />
+                <ScalarProperty Name="PublishDate" ColumnName="PublishDate" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="UseMediaTypeLayouts" ColumnName="UseMediaTypeLayouts" />
+                <ScalarProperty Name="FeaturedLayout" ColumnName="FeaturedLayout" />
+                <ScalarProperty Name="SummaryLayout" ColumnName="SummaryLayout" />
+                <ScalarProperty Name="MainLayout" ColumnName="MainLayout" />
+                <ScalarProperty Name="RecurringTimePeriod" ColumnName="RecurringTimePeriod" />
+                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
+                <ScalarProperty Name="CssClasses" ColumnName="CssClasses" />
+                <ScalarProperty Name="CachedVirtualPath" ColumnName="CachedVirtualPath" />
+                <ScalarProperty Name="EnableCaching" ColumnName="EnableCaching" />
+                <ScalarProperty Name="MetaKeywords" ColumnName="MetaKeywords" />
+                <ScalarProperty Name="ShowInSearchResults" ColumnName="ShowInSearchResults" />
+                <ScalarProperty Name="MasterPageID" ColumnName="MasterPageID" />
+                <ScalarProperty Name="IsProtected" ColumnName="IsProtected" />
+                <ScalarProperty Name="ForceSSL" ColumnName="ForceSSL" />
+                <ScalarProperty Name="RenderInFooter" ColumnName="RenderInFooter" />
+                <ScalarProperty Name="RedirectToFirstChild" ColumnName="RedirectToFirstChild" />
+                <ScalarProperty Name="IsDraft" ColumnName="IsDraft" />
+                <ScalarProperty Name="OpenInNewWindow" ColumnName="OpenInNewWindow" />
+                <ScalarProperty Name="DirectLink" ColumnName="DirectLink" />
+                <ScalarProperty Name="UseDirectLink" ColumnName="UseDirectLink" />
+                <ScalarProperty Name="QuantityInStock" ColumnName="QuantityInStock" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="CanAddToCart" ColumnName="CanAddToCart" />
+                <ScalarProperty Name="SectionTitle" ColumnName="SectionTitle" />
+                <ScalarProperty Name="HistoryVersionNumber" ColumnName="HistoryVersionNumber" />
+                <ScalarProperty Name="HistoryForMediaDetailID" ColumnName="HistoryForMediaDetailID" />
+                <ScalarProperty Name="AllowCommenting" ColumnName="AllowCommenting" />
+                <ScalarProperty Name="LastUpdatedByUserID" ColumnName="LastUpdatedByUserID" />
+                <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="MediaTypeID" ColumnName="MediaTypeID" />
+                <ScalarProperty Name="Handler" ColumnName="Handler" />
+                <ScalarProperty Name="SefTitle" ColumnName="SefTitle" />
+                <ScalarProperty Name="ShowInMenu" ColumnName="ShowInMenu" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="NumberOfStars" ColumnName="NumberOfStars" />
+                <ScalarProperty Name="NumberOfViews" ColumnName="NumberOfViews" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+                <ScalarProperty Name="LinkTitle" ColumnName="LinkTitle" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="MediaID" ColumnName="MediaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.Page)">
+              <MappingFragment StoreEntitySet="Pages">
+                <ScalarProperty Name="ID" ColumnName="MediaDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.UrlRedirectRule)">
+              <MappingFragment StoreEntitySet="UrlRedirectRules">
+                <ScalarProperty Name="Is301Redirect" ColumnName="Is301Redirect" />
+                <ScalarProperty Name="RedirectToUrl" ColumnName="RedirectToUrl" />
+                <ScalarProperty Name="VirtualPathToRedirect" ColumnName="VirtualPathToRedirect" />
+                <ScalarProperty Name="ID" ColumnName="MediaDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.Website)">
+              <MappingFragment StoreEntitySet="Website">
+                <ScalarProperty Name="CodeInBody" ColumnName="CodeInBody" />
+                <ScalarProperty Name="CodeInHead" ColumnName="CodeInHead" />
+                <ScalarProperty Name="ID" ColumnName="MediaDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.RootPage)">
+              <MappingFragment StoreEntitySet="RootPages">
+                <ScalarProperty Name="ID" ColumnName="MediaDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            </EntitySetMapping>
+          <EntitySetMapping Name="Permissions">
+            <EntityTypeMapping TypeName="FrameworkModel.Permission">
+              <MappingFragment StoreEntitySet="Permissions">
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="EnumName" ColumnName="EnumName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersMediaDetails">
+            <EntityTypeMapping TypeName="FrameworkModel.UserMediaDetail">
+              <MappingFragment StoreEntitySet="UsersMediaDetails">
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+                <ScalarProperty Name="MediaDetailID" ColumnName="MediaDetailID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RolesMediaDetails">
+            <EntityTypeMapping TypeName="FrameworkModel.RoleMediaDetail">
+              <MappingFragment StoreEntitySet="RolesMediaDetails">
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="MediaDetailID" ColumnName="MediaDetailID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="FrameworkModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="EnumName" ColumnName="EnumName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="RolesPermissions" TypeName="FrameworkModel.RolesPermissions" StoreEntitySet="RolesPermissions">
+            <EndProperty Name="Role">
+              <ScalarProperty Name="ID" ColumnName="RoleID" />
+            </EndProperty>
+            <EndProperty Name="Permission">
+              <ScalarProperty Name="ID" ColumnName="PermissionID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="FrameworkModel.Tag">
+              <MappingFragment StoreEntitySet="Tags">
+                <ScalarProperty Name="ThumbnailPath" ColumnName="ThumbnailPath" />
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="SefTitle" ColumnName="SefTitle" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MediaTypes">
+            <EntityTypeMapping TypeName="FrameworkModel.MediaType">
+              <MappingFragment StoreEntitySet="MediaTypes">
+                <ScalarProperty Name="ShowInSiteTree" ColumnName="ShowInSiteTree" />
+                <ScalarProperty Name="UseMediaTypeLayouts" ColumnName="UseMediaTypeLayouts" />
+                <ScalarProperty Name="FeaturedLayout" ColumnName="FeaturedLayout" />
+                <ScalarProperty Name="SummaryLayout" ColumnName="SummaryLayout" />
+                <ScalarProperty Name="MainLayout" ColumnName="MainLayout" />
+                <ScalarProperty Name="EnableCaching" ColumnName="EnableCaching" />
+                <ScalarProperty Name="ShowInSearchResults" ColumnName="ShowInSearchResults" />
+                <ScalarProperty Name="MasterPageID" ColumnName="MasterPageID" />
+                <ScalarProperty Name="MediaTypeHandler" ColumnName="MediaTypeHandler" />
+                <ScalarProperty Name="ShowInMenu" ColumnName="ShowInMenu" />
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Label" ColumnName="Label" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="MediaTypesChildren" TypeName="FrameworkModel.MediaTypesChildren" StoreEntitySet="MediaTypesChildren">
+            <EndProperty Name="MediaType1">
+              <ScalarProperty Name="ID" ColumnName="MediaTypeID" />
+            </EndProperty>
+            <EndProperty Name="MediaType">
+              <ScalarProperty Name="ID" ColumnName="AllowedChildMediaTypeID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="FrameworkModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="LastLoggedInAt" ColumnName="LastLoggedInAt" />
+                <ScalarProperty Name="AfterLoginStartPage" ColumnName="AfterLoginStartPage" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="AuthenticationType" ColumnName="AuthenticationType" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ProfilePhoto" ColumnName="ProfilePhoto" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="UsersRoles" TypeName="FrameworkModel.UsersRoles" StoreEntitySet="UsersRoles">
+            <EndProperty Name="User">
+              <ScalarProperty Name="ID" ColumnName="UserID" />
+            </EndProperty>
+            <EndProperty Name="Role">
+              <ScalarProperty Name="ID" ColumnName="RoleID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="MediaTypeRolesPermissions">
+            <EntityTypeMapping TypeName="FrameworkModel.MediaTypeRolePermission">
+              <MappingFragment StoreEntitySet="MediaTypeRolesPermissions">
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+                <ScalarProperty Name="MediaTypeRoleID" ColumnName="MediaTypeRoleID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MediaTypeRoles">
+            <EntityTypeMapping TypeName="FrameworkModel.MediaTypeRole">
+              <MappingFragment StoreEntitySet="MediaTypesRoles">
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="MediaTypeID" ColumnName="MediaTypeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterPages">
+            <EntityTypeMapping TypeName="FrameworkModel.MasterPage">
+              <MappingFragment StoreEntitySet="MasterPages">
+                <ScalarProperty Name="MobileTemplate" ColumnName="MobileTemplate" />
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="PathToFile" ColumnName="PathToFile" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AllSettings">
+            <EntityTypeMapping TypeName="FrameworkModel.Settings">
+              <MappingFragment StoreEntitySet="Settings">
+                <ScalarProperty Name="DefaultMasterPageID" ColumnName="DefaultMasterPageID" />
+                <ScalarProperty Name="DefaultLanguageID" ColumnName="DefaultLanguageID" />
+                <ScalarProperty Name="OutputCacheDurationInSeconds" ColumnName="OutputCacheDurationInSeconds" />
+                <ScalarProperty Name="SiteOfflineUrl" ColumnName="SiteOfflineUrl" />
+                <ScalarProperty Name="SiteOfflineAtDateTime" ColumnName="SiteOfflineAtDateTime" />
+                <ScalarProperty Name="SiteOnlineAtDateTime" ColumnName="SiteOnlineAtDateTime" />
+                <ScalarProperty Name="MaxUploadFileSizePerFile" ColumnName="MaxUploadFileSizePerFile" />
+                <ScalarProperty Name="MaxRequestLength" ColumnName="MaxRequestLength" />
+                <ScalarProperty Name="ShoppingCartTax" ColumnName="ShoppingCartTax" />
+                <ScalarProperty Name="GlobalCodeInBody" ColumnName="GlobalCodeInBody" />
+                <ScalarProperty Name="GlobalCodeInHead" ColumnName="GlobalCodeInHead" />
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WebserviceRequests">
+            <EntityTypeMapping TypeName="FrameworkModel.WebserviceRequest">
+              <MappingFragment StoreEntitySet="WebserviceRequests">
+                <ScalarProperty Name="UrlReferrer" ColumnName="UrlReferrer" />
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Response" ColumnName="Response" />
+                <ScalarProperty Name="Method" ColumnName="Method" />
+                <ScalarProperty Name="QueryString" ColumnName="QueryString" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MediaTags">
+            <EntityTypeMapping TypeName="FrameworkModel.MediaTag">
+              <MappingFragment StoreEntitySet="MediaTags">
+                <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
+                <ScalarProperty Name="MediaID" ColumnName="MediaID" />
+                <ScalarProperty Name="TagID" ColumnName="TagID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GlossaryTerms">
+            <EntityTypeMapping TypeName="FrameworkModel.GlossaryTerm">
+              <MappingFragment StoreEntitySet="GlossaryTerms">
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Definition" ColumnName="Definition" />
+                <ScalarProperty Name="Term" ColumnName="Term" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fields">
+            <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.Field)">
+              <MappingFragment StoreEntitySet="Fields">
+                <ScalarProperty Name="SetAdminControlValue" ColumnName="SetAdminControlValue" />
+                <ScalarProperty Name="GetAdminControlValue" ColumnName="GetAdminControlValue" />
+                <ScalarProperty Name="AdminControl" ColumnName="AdminControl" />
+                <ScalarProperty Name="RenderLabelAfterControl" ColumnName="RenderLabelAfterControl" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="FrontEndLayout" ColumnName="FrontEndLayout" />
+                <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
+                <ScalarProperty Name="FieldValue" ColumnName="FieldValue" />
+                <ScalarProperty Name="FieldLabel" ColumnName="FieldLabel" />
+                <ScalarProperty Name="FieldCode" ColumnName="FieldCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.MediaDetailField)">
+              <MappingFragment StoreEntitySet="MediaDetailsFields">
+                <ScalarProperty Name="UseMediaTypeFieldFrontEndLayout" ColumnName="UseMediaTypeFieldFrontEndLayout" />
+                <ScalarProperty Name="ID" ColumnName="FieldID" />
+                <ScalarProperty Name="MediaDetailID" ColumnName="MediaDetailID" />
+                <ScalarProperty Name="MediaTypeFieldID" ColumnName="MediaTypeFieldID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.MediaTypeField)" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+              <MappingFragment StoreEntitySet="MediaTypesFields">
+                <ScalarProperty Name="ID" ColumnName="FieldID" />
+                <ScalarProperty Name="MediaTypeID" ColumnName="MediaTypeID" />
+                <ScalarProperty Name="Instructions" ColumnName="Instructions" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FieldAssociations">
+            <EntityTypeMapping TypeName="FrameworkModel.FieldAssociation">
+              <MappingFragment StoreEntitySet="FieldsAssociations">
+                <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
+                <ScalarProperty Name="AssociatedMediaDetailID" ColumnName="AssociatedMediaDetailID" />
+                <ScalarProperty Name="MediaDetailFieldID" ColumnName="MediaDetailFieldID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FieldFiles">
+            <EntityTypeMapping TypeName="FrameworkModel.FieldFile">
+              <MappingFragment StoreEntitySet="FieldFiles">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="PathToFile" ColumnName="PathToFile" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MediaDetailFieldID" ColumnName="MediaDetailFieldID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IPLocationTrackerEntries">
+            <EntityTypeMapping TypeName="FrameworkModel.IPLocationTrackerEntry">
+              <MappingFragment StoreEntitySet="IPLocationTracker">
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="MediaDetailsComments" TypeName="FrameworkModel.MediaDetailsComments" StoreEntitySet="MediaDetailsComments">
+            <EndProperty Name="MediaDetail">
+              <ScalarProperty Name="ID" ColumnName="MediaDetailID" />
+            </EndProperty>
+            <EndProperty Name="Comment">
+              <ScalarProperty Name="ID" ColumnName="CommentID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Model" ZoomLevel="81">
+        <EntityTypeShape EntityType="FrameworkModel.Comment" Width="1.5" PointX="3" PointY="7.875" Height="3.9033007812499996" />
+        <EntityTypeShape EntityType="FrameworkModel.EmailLog" Width="1.5" PointX="10.25" PointY="11.5" Height="3.1340950520833282" />
+        <EntityTypeShape EntityType="FrameworkModel.Language" Width="1.5" PointX="0.75" PointY="7.375" Height="2.9417936197916674" />
+        <EntityTypeShape EntityType="FrameworkModel.Media" Width="1.5" PointX="3" PointY="3.5" Height="2.3648893229166665" />
+        <EntityTypeShape EntityType="FrameworkModel.MediaDetail" PointX="5.25" PointY="4.125" Width="1.5" Height="9.8646451822916656" />
+        <EntityTypeShape EntityType="FrameworkModel.Page" Width="1.5" PointX="7" PointY="12.5" Height="1.0187792968749996" />
+        <AssociationConnector Association="FrameworkModel.FK_Comments_Languages">
+          <ConnectorPoint PointX="2.25" PointY="9.2881982421875" />
+          <ConnectorPoint PointX="3" PointY="9.2881982421875" />
+        </AssociationConnector>
+        <AssociationConnector Association="FrameworkModel.FK_MediaDetails_LanguageID_Languages_ID">
+          <ConnectorPoint PointX="2.25" PointY="7.59375" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="7.5937499999999991" />
+          <ConnectorPoint PointX="4.958333333333333" PointY="7.59375" />
+          <ConnectorPoint PointX="5.0066666666666668" PointY="7.5937499999999991" />
+          <ConnectorPoint PointX="5.1733333333333329" PointY="7.59375" />
+          <ConnectorPoint PointX="5.25" PointY="7.59375" />
+        </AssociationConnector>
+        <AssociationConnector Association="FrameworkModel.FK_Media_ParentMediaID">
+          <ConnectorPoint PointX="3.5319230769230767" PointY="5.8648893229166665" />
+          <ConnectorPoint PointX="3.5319230769230767" PointY="6.1148893229166674" />
+          <ConnectorPoint PointX="3.9784615384615383" PointY="6.1148893229166674" />
+          <ConnectorPoint PointX="3.9784615384615383" PointY="5.8648893229166665" />
+        </AssociationConnector>
+        <AssociationConnector Association="FrameworkModel.FK_MediaDetails_MediaID_Media_ID">
+          <ConnectorPoint PointX="4.5" PointY="4.9949446614583346" />
+          <ConnectorPoint PointX="5.0066666666666668" PointY="4.9949446614583337" />
+          <ConnectorPoint PointX="5.1733333333333329" PointY="4.9949446614583346" />
+          <ConnectorPoint PointX="5.25" PointY="4.9949446614583346" />
+        </AssociationConnector>
+        <InheritanceConnector ManuallyRouted="false" EntityType="FrameworkModel.Page">
+          <ConnectorPoint PointX="6.75" PointY="14.789431959042608" />
+          <ConnectorPoint PointX="6.8341624547499391" PointY="13.590930115688376" />
+          <ConnectorPoint PointX="6.8458375452500615" PointY="13.42467287512547" />
+          <ConnectorPoint PointX="6.875" PointY="13.0093896484375" />
+          <ConnectorPoint PointX="7" PointY="13.0093896484375" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="FrameworkModel.Permission" Width="1.5" PointX="10.625" PointY="15.625" Height="3.1340950520833353" />
+        <EntityTypeShape EntityType="FrameworkModel.UserMediaDetail" Width="1.5" PointX="7.5" PointY="15.375" Height="2.7494921875000102" />
+        <AssociationConnector Association="FrameworkModel.FK_UsersMediaDetails_MediaDetailID">
+          <ConnectorPoint PointX="6.75" PointY="15.582497029229863" />
+          <ConnectorPoint PointX="6.7566666666666668" PointY="15.582497029229863" />
+          <ConnectorPoint PointX="6.9233333333333329" PointY="15.582497029229863" />
+          <ConnectorPoint PointX="7.166666666666667" PointY="15.582497029229863" />
+          <ConnectorPoint PointX="7.333333333333333" PointY="15.582497029229863" />
+          <ConnectorPoint PointX="7.5" PointY="15.582497029229863" />
+        </AssociationConnector>
+        <AssociationConnector Association="FrameworkModel.FK_UsersMediaDetails_PermissionID">
+          <ConnectorPoint PointX="10.625" PointY="16.874746093750005" />
+          <ConnectorPoint PointX="9.8020833333333339" PointY="16.874746093750005" />
+          <ConnectorPoint PointX="9.6354166666666661" PointY="16.874746093750005" />
+          <ConnectorPoint PointX="9" PointY="16.874746093750005" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="FrameworkModel.RoleMediaDetail" Width="1.5" PointX="17" PointY="17.625" Height="2.7494921875000102" />
+        <AssociationConnector Association="FrameworkModel.FK_RolesMediaDetails_MediaDetailID">
+          <ConnectorPoint PointX="6.71875" PointY="15.720358072916666" />
+          <ConnectorPoint PointX="6.71875" PointY="19.766551106770834" />
+          <ConnectorPoint PointX="6.7566666666666668" PointY="19.766551106770834" />
+          <ConnectorPoint PointX="6.9233333333333329" PointY="19.766551106770834" />
+          <ConnectorPoint PointX="9.6354166666666661" PointY="19.766551106770834" />
+          <ConnectorPoint PointX="9.8020833333333339" PointY="19.766551106770834" />
+          <ConnectorPoint PointX="12.166666666666666" PointY="19.766551106770834" />
+          <ConnectorPoint PointX="12.333333333333334" PointY="19.766551106770834" />
+          <ConnectorPoint PointX="16.666666666666668" PointY="19.766551106770834" />
+          <ConnectorPoint PointX="16.833333333333332" PointY="19.766551106770834" />
+          <ConnectorPoint PointX="17" PointY="19.766551106770834" />
+        </AssociationConnector>
+        <AssociationConnector Association="FrameworkModel.FK_RolesMediaDetails_PermissionID">
+          <ConnectorPoint PointX="12.125" PointY="18.192047526041669" />
+          <ConnectorPoint PointX="12.166666666666666" PointY="18.192047526041669" />
+          <ConnectorPoint PointX="12.333333333333334" PointY="18.192047526041669" />
+          <ConnectorPoint PointX="16.666666666666668" PointY="18.192047526041669" />
+          <ConnectorPoint PointX="16.833333333333332" PointY="18.192047526041669" />
+          <ConnectorPoint PointX="17" PointY="18.192047526041669" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="FrameworkModel.Role" Width="1.5" PointX="1.875" PointY="15.125" Height="2.5571907552083353" />
+        <AssociationConnector Association="FrameworkModel.FK_RolesMediaDetails_RoleID">
+          <ConnectorPoint PointX="2.59375" PointY="17.384095052083335" />
+          <ConnectorPoint PointX="2.59375" PointY="19.577763357338597" />
+          <ConnectorPoint PointX="3.6529956666666661" PointY="19.577763357338597" />
+          <ConnectorPoint PointX="3.819662333333333" PointY="19.577763357338597" />
+          <ConnectorPoint PointX="4.166666666666667" PointY="19.577763357338597" />
+          <ConnectorPoint PointX="4.333333333333333" PointY="19.577763357338597" />
+          <ConnectorPoint PointX="6.635416666666667" PointY="19.577763357338597" />
+          <ConnectorPoint PointX="6.9233333333333329" PointY="19.577763357338597" />
+          <ConnectorPoint PointX="9.6354166666666661" PointY="19.577763357338597" />
+          <ConnectorPoint PointX="9.8020833333333339" PointY="19.577763357338597" />
+          <ConnectorPoint PointX="12.166666666666666" PointY="19.577763357338597" />
+          <ConnectorPoint PointX="12.333333333333334" PointY="19.577763357338597" />
+          <ConnectorPoint PointX="16.666666666666668" PointY="19.577763357338597" />
+          <ConnectorPoint PointX="16.833333333333332" PointY="19.577763357338597" />
+          <ConnectorPoint PointX="17" PointY="19.577763357338597" />
+        </AssociationConnector>
+        <AssociationConnector Association="FrameworkModel.RolesPermissions">
+          <ConnectorPoint PointX="10.625" PointY="17.192047526041669" />
+          <ConnectorPoint PointX="9.8020833333333339" PointY="17.192047526041669" />
+          <ConnectorPoint PointX="9.6354166666666661" PointY="17.192047526041669" />
+          <ConnectorPoint PointX="9.25" PointY="17.192047526041669" />
+          <ConnectorPoint PointX="9.25" PointY="19.595602213541667" />
+          <ConnectorPoint PointX="6.9233333333333329" PointY="19.595602213541667" />
+          <ConnectorPoint PointX="6.635416666666667" PointY="19.595602213541667" />
+          <ConnectorPoint PointX="4.333333333333333" PointY="19.595602213541667" />
+          <ConnectorPoint PointX="4.166666666666667" PointY="19.595602213541667" />
+          <ConnectorPoint PointX="3.819662333333333" PointY="19.595602213541667" />
+          <ConnectorPoint PointX="3.6529956666666661" PointY="19.595602213541667" />
+          <ConnectorPoint PointX="3.1962919999999997" PointY="19.595602213541667" />
+          <ConnectorPoint PointX="3.1962919999999997" PointY="17.384095052083335" />
+        </AssociationConnector>
+        <AssociationConnector Association="FrameworkModel.FK_Comments_ReplyToCommentID">
+          <ConnectorPoint PointX="3.5319230769230767" PointY="11.77830078125" />
+          <ConnectorPoint PointX="3.5319230769230767" PointY="12.02830078125" />
+          <ConnectorPoint PointX="3.9784615384615383" PointY="12.02830078125" />
+          <ConnectorPoint PointX="3.9784615384615383" PointY="11.77830078125" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="FrameworkModel.Tag" Width="1.5" PointX="5.25" PointY="0.75" Height="2.5571907552083246" />
+        <EntityTypeShape EntityType="FrameworkModel.MediaType" PointX="14.875" PointY="7.625" Width="1.5" Height="3.5186979166666656" />
+        <AssociationConnector Association="FrameworkModel.FK_MediaDetails_MediaTypeID_MediaType_ID">
+          <ConnectorPoint PointX="15.125" PointY="9.6537881753252641" />
+          <ConnectorPoint PointX="8.3333333333333339" PointY="9.6537881753252641" />
+          <ConnectorPoint PointX="8.1666666666666661" PointY="9.6537881753252641" />
+          <ConnectorPoint PointX="7.333333333333333" PointY="9.6537881753252641" />
+          <ConnectorPoint PointX="7.166666666666667" PointY="9.6537881753252641" />
+          <ConnectorPoint PointX="6.9933333333333332" PointY="9.6537881753252641" />
+          <ConnectorPoint PointX="6.8266666666666671" PointY="9.6537881753252641" />
+          <ConnectorPoint PointX="6.75" PointY="9.6537881753252641" />
+        </AssociationConnector>
+        <AssociationConnector Association="FrameworkModel.MediaTypesChildren">
+          <ConnectorPoint PointX="15.656923076923077" PointY="11.393697916666666" />
+          <ConnectorPoint PointX="15.656923076923077" PointY="11.643697916666666" />
+          <ConnectorPoint PointX="16.103461538461538" PointY="11.643697916666666" />
+          <ConnectorPoint PointX="16.103461538461538" PointY="11.393697916666666" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="FrameworkModel.User" Width="1.5" PointX="4.75" PointY="19.875" Height="3.7109993489583353" />
+        <AssociationConnector Association="FrameworkModel.FK_MediaDetails_CreatedByUserID">
+          <ConnectorPoint PointX="4.5" PointY="17.297801106770834" />
+          <ConnectorPoint PointX="4.25" PointY="17.297801106770834" />
+          <ConnectorPoint PointX="4.25" PointY="9.9226790364583337" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="9.9226790364583337" />
+          <ConnectorPoint PointX="4.958333333333333" PointY="9.9226790364583337" />
+          <ConnectorPoint PointX="5.0066666666666668" PointY="9.9226790364583337" />
+          <ConnectorPoint PointX="5.1733333333333329" PointY="9.9226790364583337" />
+          <ConnectorPoint PointX="5.25" PointY="9.9226790364583337" />
+        </AssociationConnector>
+        <AssociationConnector Association="FrameworkModel.FK_MediaDetails_LastUpdatedByUserID">
+          <ConnectorPoint PointX="5.25" PointY="19.345602213541667" />
+          <ConnectorPoint PointX="5.25" PointY="19.720602213541667" />
+          <ConnectorPoint PointX="6" PointY="19.720602213541667" />
+          <ConnectorPoint PointX="6" PointY="15.720358072916666" />
+        </AssociationConnector>
+        <AssociationConnector Association="FrameworkModel.FK_UsersMediaDetails_UserID">
+          <ConnectorPoint PointX="6" PointY="16.53934394006912" />
+          <ConnectorPoint PointX="6.276041666666667" PointY="16.53934394006912" />
+          <ConnectorPoint PointX="6.442708333333333" PointY="16.53934394006912" />
+          <ConnectorPoint PointX="6.455729166666667" PointY="16.53934394006912" />
+          <ConnectorPoint PointX="6.622395833333333" PointY="16.53934394006912" />
+          <ConnectorPoint PointX="6.635416666666667" PointY="16.53934394006912" />
+          <ConnectorPoint PointX="6.9233333333333329" PointY="16.53934394006912" />
+          <ConnectorPoint PointX="7.1172145541747733" PointY="16.53934394006912" />
+          <ConnectorPoint PointX="7.333333333333333" PointY="16.53934394006912" />
+          <ConnectorPoint PointX="7.5" PointY="16.53934394006912" />
+        </AssociationConnector>
+        <AssociationConnector Association="FrameworkModel.UsersRoles">
+          <ConnectorPoint PointX="4" PointY="16.659134753002817" />
+          <ConnectorPoint PointX="4.135416666666667" PointY="16.659134753002817" />
+          <ConnectorPoint PointX="4.333333333333333" PointY="16.659134753002817" />
+          <ConnectorPoint PointX="4.5" PointY="16.659134753002817" />
+        </AssociationConnector>
+        <AssociationConnector Association="FrameworkModel.FK_MediaDetails_HistoryForMediaDetailID">
+          <ConnectorPoint PointX="5.7819230769230767" PointY="4.125" />
+          <ConnectorPoint PointX="5.7819230769230767" PointY="3.8750000000000018" />
+          <ConnectorPoint PointX="6.2284615384615378" PointY="3.8750000000000018" />
+          <ConnectorPoint PointX="6.2284615384615378" PointY="4.125" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="FrameworkModel.MediaTypeRolePermission" Width="1.625" PointX="15.375" PointY="13.75" Height="2.3648893229166674" />
+        <AssociationConnector Association="FrameworkModel.FK_MediaTypeRolesPermissions_MediaTypeRolesPermissionID">
+          <ConnectorPoint PointX="12.125" PointY="17.752271263020841" />
+          <ConnectorPoint PointX="12.166666666666666" PointY="17.752271263020841" />
+          <ConnectorPoint PointX="12.333333333333334" PointY="17.752271263020841" />
+          <ConnectorPoint PointX="16.0625" PointY="17.752271263020841" />
+          <ConnectorPoint PointX="16.0625" PointY="16.114889322916667" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="FrameworkModel.MediaTypeRole" Width="1.5" PointX="17.75" PointY="4.5" Height="2.5571907552083335" />
+        <AssociationConnector Association="FrameworkModel.FK_MediaTypesRoles_MediaTypeID">
+          <ConnectorPoint PointX="16.625" PointY="9.7785953776041659" />
+          <ConnectorPoint PointX="17.301666666666669" PointY="9.7785953776041659" />
+          <ConnectorPoint PointX="17.468333333333334" PointY="9.7785953776041659" />
+          <ConnectorPoint PointX="17.625" PointY="9.7785953776041659" />
+        </AssociationConnector>
+        <AssociationConnector Association="FrameworkModel.FK_MediaTypesRoles_Roles">
+          <ConnectorPoint PointX="4" PointY="15.860814876501415" />
+          <ConnectorPoint PointX="4.285" PointY="15.860814876501415" />
+          <ConnectorPoint PointX="4.285" PointY="11.93830078125" />
+          <ConnectorPoint PointX="4.666666666666667" PointY="11.938300781249998" />
+          <ConnectorPoint PointX="4.958333333333333" PointY="11.93830078125" />
+          <ConnectorPoint PointX="5.09" PointY="11.93830078125" />
+          <ConnectorPoint PointX="5.09" PointY="3.9767936197916667" />
+          <ConnectorPoint PointX="10.34" PointY="3.9767936197916667" />
+          <ConnectorPoint PointX="10.34" PointY="4.8325878906249962" />
+          <ConnectorPoint PointX="17.385" PointY="4.8325878906249962" />
+          <ConnectorPoint PointX="17.385" PointY="10.449145066406242" />
+          <ConnectorPoint PointX="17.625" PointY="10.449145066406242" />
+        </AssociationConnector>
+        <AssociationConnector Association="FrameworkModel.FK_MediaTypeRolesPermissions_MediaTypesRoleID">
+          <ConnectorPoint PointX="18.43725685546875" PointY="11.057190755208334" />
+          <ConnectorPoint PointX="18.43725685546875" PointY="14.932444661458334" />
+          <ConnectorPoint PointX="17" PointY="14.932444661458334" />
+        </AssociationConnector>
+        <AssociationConnector Association="FrameworkModel.FK_Comments_Users">
+          <ConnectorPoint PointX="4.999998" PointY="15.25" />
+          <ConnectorPoint PointX="4.999998" PointY="15.198141276041667" />
+          <ConnectorPoint PointX="5.1875" PointY="15.198141276041667" />
+          <ConnectorPoint PointX="5.1875" PointY="10.8337275859375" />
+          <ConnectorPoint PointX="4.5" PointY="10.8337275859375" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="FrameworkModel.MasterPage" Width="1.5" PointX="12.875" PointY="14.375" Height="2.5571907552083246" />
+        <AssociationConnector Association="FrameworkModel.FK_MediaTypes_MasterPages">
+          <ConnectorPoint PointX="14.15625" PointY="14.375" />
+          <ConnectorPoint PointX="14.15625" PointY="10.048481298567204" />
+          <ConnectorPoint PointX="15.125" PointY="10.048481298567204" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="FrameworkModel.Settings" Width="1.5" PointX="13.375" PointY="0.75" Height="1.787985026041667" />
+        <EntityTypeShape EntityType="FrameworkModel.WebserviceRequest" Width="1.5" PointX="12.5" PointY="11.5" Height="2.5571907552083335" />
+        <EntityTypeShape EntityType="FrameworkModel.UrlRedirectRule" Width="1.5" PointX="9.625" PointY="21.625" Height="1.5956835937500031" />
+        <InheritanceConnector EntityType="FrameworkModel.UrlRedirectRule" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="14.154103127958809" />
+          <ConnectorPoint PointX="6.7566666666666668" PointY="14.154103127958807" />
+          <ConnectorPoint PointX="7.0122378550765356" PointY="14.154103127958809" />
+          <ConnectorPoint PointX="7.166666666666667" PointY="14.154103127958809" />
+          <ConnectorPoint PointX="7.333333333333333" PointY="14.154103127958809" />
+          <ConnectorPoint PointX="9.71875" PointY="14.154103127958809" />
+          <ConnectorPoint PointX="9.71875" PointY="20.125" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="FrameworkModel.MediaTag" Width="1.5" PointX="3" PointY="0.5" Height="1.9802864583333388" />
+        <AssociationConnector Association="FrameworkModel.FK_MediaTags_MediaID_Media_ID">
+          <ConnectorPoint PointX="3.75" PointY="3.5" />
+          <ConnectorPoint PointX="3.75" PointY="2.4802864583333388" />
+        </AssociationConnector>
+        <AssociationConnector Association="FrameworkModel.FK_MediaTags_TagID_Tags_ID">
+          <ConnectorPoint PointX="5.25" PointY="1.6151432291666696" />
+          <ConnectorPoint PointX="4.5" PointY="1.6151432291666696" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="FrameworkModel.Website" Width="1.5" PointX="11.5" PointY="20.375" Height="1.0187792968750031" />
+        <InheritanceConnector EntityType="FrameworkModel.Website">
+          <ConnectorPoint PointX="6.75" PointY="12.242987072863235" />
+          <ConnectorPoint PointX="6.8322329094217444" PointY="13.121425649606946" />
+          <ConnectorPoint PointX="6.859940961212744" PointY="13.417412034507878" />
+          <ConnectorPoint PointX="7.0438643249471324" PointY="15.38214098554305" />
+          <ConnectorPoint PointX="7.166666666666667" PointY="15.38214098554305" />
+          <ConnectorPoint PointX="7.333333333333333" PointY="15.38214098554305" />
+          <ConnectorPoint PointX="7.7686356750528676" PointY="15.38214098554305" />
+          <ConnectorPoint PointX="9.6376143249471316" PointY="15.820080976735454" />
+          <ConnectorPoint PointX="9.7998856750528684" PointY="15.858104478844538" />
+          <ConnectorPoint PointX="12.25" PointY="16.432216465596465" />
+          <ConnectorPoint PointX="12.25" PointY="20.375" />
+        </InheritanceConnector>
+        <AssociationConnector Association="FrameworkModel.FK_MediaDetails_MasterPage">
+          <ConnectorPoint PointX="12.875" PointY="15.054538972292821" />
+          <ConnectorPoint PointX="9.8020833333333339" PointY="15.054538972292821" />
+          <ConnectorPoint PointX="9.6354166666666661" PointY="15.054538972292821" />
+          <ConnectorPoint PointX="7.333333333333333" PointY="15.054538972292821" />
+          <ConnectorPoint PointX="7.166666666666667" PointY="15.054538972292821" />
+          <ConnectorPoint PointX="7.096529985667714" PointY="15.054538972292821" />
+          <ConnectorPoint PointX="6.9298633190010479" PointY="15.054538972292821" />
+          <ConnectorPoint PointX="6.9233333333333329" PointY="15.054538972292821" />
+          <ConnectorPoint PointX="6.7566666666666668" PointY="15.054538972292821" />
+          <ConnectorPoint PointX="6.75" PointY="15.054538972292821" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="FrameworkModel.RootPage" Width="1.5" PointX="2.5" PointY="21.75" Height="1.0187792968750031" />
+        <InheritanceConnector EntityType="FrameworkModel.RootPage">
+          <ConnectorPoint PointX="5.25" PointY="6.5939552832598505" />
+          <ConnectorPoint PointX="5.1733333333333329" PointY="6.59395528325985" />
+          <ConnectorPoint PointX="5.0066666666666668" PointY="6.5939552832598505" />
+          <ConnectorPoint PointX="4.875" PointY="6.5939552832598505" />
+          <ConnectorPoint PointX="4.875" PointY="15.125" />
+          <ConnectorPoint PointX="4.25" PointY="15.125" />
+          <ConnectorPoint PointX="4.25" PointY="19.375" />
+          <ConnectorPoint PointX="3.7363289999999996" PointY="19.375" />
+          <ConnectorPoint PointX="3.7363289999999996" PointY="20" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="FrameworkModel.GlossaryTerm" Width="1.5" PointX="16" PointY="1.875" />
+        <EntityTypeShape EntityType="FrameworkModel.Field" Width="1.5" PointX="7.375" PointY="4" />
+        <EntityTypeShape EntityType="FrameworkModel.MediaDetailField" Width="1.5" PointX="9.75" PointY="8.875" />
+        <AssociationConnector Association="FrameworkModel.FK_MediaDetailFields_MediaDetails" />
+        <InheritanceConnector EntityType="FrameworkModel.MediaDetailField" />
+        <EntityTypeShape EntityType="FrameworkModel.MediaTypeField" Width="1.5" PointX="13" PointY="5.75" />
+        <AssociationConnector Association="FrameworkModel.FK_MediaTypesFields_MediaTypes" />
+        <InheritanceConnector EntityType="FrameworkModel.MediaTypeField" />
+        <AssociationConnector Association="FrameworkModel.FK_MediaDetailsFields_MediaTypesFields" />
+        <EntityTypeShape EntityType="FrameworkModel.FieldAssociation" Width="1.5" PointX="7.375" PointY="8.625" />
+        <AssociationConnector Association="FrameworkModel.FK_FieldAssociations_MediaDetails" />
+        <AssociationConnector Association="FrameworkModel.FK_FieldsAssociations_MediaDetailsFields" />
+        <EntityTypeShape EntityType="FrameworkModel.FieldFile" Width="1.5" PointX="12.25" PointY="8" />
+        <AssociationConnector Association="FrameworkModel.FK_FieldFiles_MediaDetailsFields" />
+        <EntityTypeShape EntityType="FrameworkModel.IPLocationTrackerEntry" Width="1.5" PointX="7.375" PointY="0.75" />
+        <AssociationConnector Association="FrameworkModel.FK_Settings_Languages" />
+        <AssociationConnector Association="FrameworkModel.FK_Settings_MasterPages" />
+        <AssociationConnector Association="FrameworkModel.MediaDetailsComments" />
+        </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

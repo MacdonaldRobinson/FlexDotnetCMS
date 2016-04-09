@@ -1,0 +1,34 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Template1.Master.cs"
+    Inherits="WebApplication.SiteMaster" %>
+
+<%@ Import Namespace="WebApplication" %>
+<!DOCTYPE html>
+<html lang="en-US" class="no-js">
+<head runat="server">
+    <asp:ContentPlaceHolder ID="HeaderContentPlaceHolder" runat="server">
+    </asp:ContentPlaceHolder>
+    <Site:CommonIncludes ID="CommonIncludes" runat="server" />
+    <asp:PlaceHolder ID="CssIncludes" runat="server"></asp:PlaceHolder>
+    <asp:PlaceHolder ID="JsIncludes" runat="server"></asp:PlaceHolder>
+    <asp:PlaceHolder ID="MetaIncludes" runat="server"></asp:PlaceHolder>
+</head>
+<body>
+    <%= FrontEndBasePage.GetSettings().GlobalCodeInBody %>
+
+    <form id="form1" runat="server">
+        <asp:ScriptManager runat="server" />
+
+        <Site:LoggedInHeader runat="server" id="LoggedInHeader" />
+
+        <div id="wrapper">
+            <div class="container">
+                <Site:Header ID="Header" runat="server" />
+                <Site:GenerateBreadCrumb ID="GenerateBreadCrumb" runat="server" />
+                <asp:ContentPlaceHolder ID="MainContentPlaceHolder" runat="server"></asp:ContentPlaceHolder>
+            </div>
+        </div>
+        <!-- Wrapper end -->
+        <Site:Footer ID="Footer" runat="server" />
+    </form>
+</body>
+</html>

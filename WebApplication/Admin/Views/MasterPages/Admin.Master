@@ -1,0 +1,96 @@
+﻿<%@ Master Language="C#" AutoEventWireup="True" CodeBehind="Admin.master.cs" Inherits="WebApplication.Admin.Admin" ViewStateMode="Disabled" %>
+
+<%@ Register Assembly="FrameworkLibrary" Namespace="FrameworkLibrary.Classes" TagPrefix="Site" %>
+<%@ Register Src="~/Admin/Controls/CommonIncludes.ascx" TagPrefix="Admin" TagName="CommonIncludes" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body scroll="no">
+    <form id="form1" runat="server" class="dropzone">
+        <asp:ScriptManager runat="server" />
+
+        <Admin:CommonIncludes runat="server" ID="CommonIncludes" />
+
+        <script type="text/javascript">
+
+            function RefreshSiteTreeViewAjaxPanel() {
+                window.location.reload();
+                <%--__doPostBack('<%= SiteTreeViewAjaxPanel.ClientID %>', '');--%>
+            }
+        </script>
+
+        <div id="page">
+            <div id="header">
+                <div id="topNavWrapper">
+                    <div id="loggedInUser" class="floatRight">
+                        Welcome, <span class="loginName">
+                            <asp:LoginName ID="LoginName1" runat="Server" />
+                        </span>
+                        <asp:LoginStatus ID="LoginStatus" runat="Server" OnLoggedOut="LoginStatus_OnLoggedOut" />
+                    </div>
+                    <div id="topMenu" class="floatLeft">
+                        <ul class="sf-menu">
+                            <li><a href="/Admin/Default.aspx">Dashboard</a></li>
+                            <li><a href="/Scripts/tinyfilemanager.net/dialog.aspx" class="colorbox iframe">FileManager</a></li>
+                            <%  if (BasePage.CurrentUser.IsInRole(RoleEnum.Administrator))
+                                { %>
+                            <li><a href="#">Advance Options</a>
+                                <ul>
+                                    <li><a href="/Admin/Views/PageHandlers/Tags/Default.aspx">Manage Tags</a></li>
+                                    <%--<li><a href="/Admin/Views/PageHandlers/GlossaryTerms/Default.aspx">Manage Glossary Terms</a></li>--%>
+                                    <%--<li><a href="/Admin/Views/PageHandlers/FieldFiles/Default.aspx">Manage Field Files</a></li>--%>
+                                    <li><a href="/Admin/Views/PageHandlers/Settings/Default.aspx">Manage Settings</a></li>
+                                    <li><a href="/Admin/Views/PageHandlers/Users/Default.aspx">Manage Users</a></li>
+                                    <li><a href="/Admin/Views/PageHandlers/Roles/Default.aspx">Manage Roles</a></li>
+                                    <li><a href="/Admin/Views/PageHandlers/Permissions/Default.aspx">Manage Permissions</a></li>
+                                    <li><a href="/Admin/Views/PageHandlers/Languages/Default.aspx">Manage Languages</a></li>
+                                    <li><a href="/Admin/Views/PageHandlers/MediaTypes/Default.aspx">Manage MediaTypes</a></li>
+                                    <li><a href="/Admin/Views/PageHandlers/MasterPages/Default.aspx">Manage MasterPages</a></li>
+                                    <li><a href="/Admin/Views/PageHandlers/AdminTools/Default.aspx">Admin Tools</a></li>
+                                </ul>
+                            </li>
+                            <% } %>
+                        </ul>
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+            <div id="mainWrapper">
+
+                <div class="split-pane fixed-left">
+                    <div class="split-pane-component" id="left-component">
+                        <div id="treeView">
+                            <h1>Edit Sections</h1>
+                            <Admin:LanguageSwitcher ID="LanguageSwitcher" runat="server" />
+                            <div id="SiteTreeWrapper">
+                                <asp:TextBox runat="server" ID="Filter" AutoPostBack="True" placeholder="Search ..." Width="90%"></asp:TextBox>
+
+                                <div id="SiteTree">
+                                    <Site:CustomTreeView runat="server" ID="SiteTree">
+                                    </Site:CustomTreeView>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="split-pane-divider" id="my-divider"></div>
+                    <div class="split-pane-component" id="right-component">
+                        <div id="mainArea">
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

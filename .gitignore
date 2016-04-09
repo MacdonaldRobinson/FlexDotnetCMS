@@ -1,0 +1,11 @@
+/packages/*
+/.vs/*
+/.git/*
+/WebApplication/obj/*
+/WebApplication/App_Data/Cache/*
+/WebApplication/App_Data/ElmahErrorLogs/*
+/WebApplication/App_Data/DBBackups/*
+/WebApplication/aspnet_client/*
+/FrameworkLibrary/obj/*
+/FrameworkLibrary/bin/*
+/TinyFileManager.NET-master/TinyFileManager.NET/obj/*

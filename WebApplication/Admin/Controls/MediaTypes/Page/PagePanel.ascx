@@ -1,0 +1,2 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PagePanel.ascx.cs" Inherits="WebApplication.Admin.Controls.MediaTypes.Page.PagePanel" %>
+<Admin:CommonPanel ID="CommonPanel" runat="server" />

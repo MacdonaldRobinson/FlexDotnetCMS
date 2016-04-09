@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>jQuery Plugin - Social Stream Network Wall</title>
+<link rel="stylesheet" type="text/css" href="inc/layout.css" media="all" />
+<link rel="stylesheet" type="text/css" href="css/dcsns_wall.css" media="all" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="inc/js/jquery.plugins.js"></script>
+<script type="text/javascript" src="inc/js/jquery.site.js"></script>
+
+<script type="text/javascript" src="js/jquery.social.stream.wall.1.6.js"></script>
+<script type="text/javascript" src="js/jquery.social.stream.1.5.12.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($){
+	$('#social-stream').dcSocialStream({
+		feeds: {
+			twitter: {
+				id: 'designchemical'
+			},
+			rss: {
+				id: 'http://feeds.feedburner.com/DesignChemical'
+			},
+			stumbleupon: {
+				id: 'remix4'
+			},
+			facebook: {
+				id: '157969574262873'
+			},
+			google: {
+				id: '111470071138275408587'
+			},
+			delicious: {
+				id: 'designchemical'
+			},
+			vimeo: {
+				id: 'brad'
+			},
+			youtube: {
+				id: 'wired'
+			},
+			pinterest: {
+				id: 'designchemical'
+			},
+			flickr: {
+				id: ''
+			},
+			lastfm: {
+				id: 'lastfm'
+			},
+			dribbble: {
+				id: 'frogandcode'
+			},
+			deviantart: {
+				id: 'isacg'
+			},
+			tumblr: {
+				id: 'richters'
+			}
+		},
+		rotate: {
+			delay: 0
+		},
+		control: false,
+		filter: true,
+		wall: true,
+		days: 60,
+		iconPath: 'images/dcsns-dark/',
+		imagePath: 'images/dcsns-dark/'
+	});
+				 
+});
+</script>
+</head>
+
+<body>
+
+<!-- Begin Second Wrapper -->
+
+<div id="wrapper">
+ 
+  <div id="container"> 
+  <!-- Begin Question Block -->
+
+  <div class="opacity pad-btm">
+	<div id="banner">
+		<a href="http://www.designchemical.com/blog/index.php/premium-jquery-plugins/jquery-social-media-tabs-plugin/"><img src="inc/images/banner.png" alt="" /></a>
+		<h1>Creating A Network Wall</h1>
+	</div>
+	<div id="nav-container">
+		<ul id="dctsp-nav">
+			<li><a href="index.html">Documentation</a></li>
+			<li><a href="example_1.html">Demo 1</a></li>
+			<li><a href="example_2.html">Demo 2</a></li>
+			<li><a href="example_3.html">Demo 3</a></li>
+			<li><a href="wall.html">Creating A Network Wall</a></li>
+			<li><a href="example_4.html">Demo 4</a></li><li><a href="example_5.html">Demo 5</a></li><li><a href="example_6.html">Demo 6</a></li>
+			
+		</ul>
+		</div>
+	</div>
+	<div class="opacity">
+
+ <div class="title">
+<h3>Creating A Social Network Wall</h3>
+<div id="wall">
+	<p>The social network wall requires a different CSS file - see file dcsns_wall.css to use the supplied skin for the wall layout.  Add this to the head of your page as normal:</p>
+	<pre>&lt;link rel="stylesheet" type="text/css" href="css/dcsns_wall.css" media="all" /&gt;</pre>
+	
+	<p>This feature also requires some additional jQuery code to handle the wall layout and filtering. All of the required code has been placed in file jquery.social.stream.wall.1.36js. Add this file to the head of your page just before the social stream plugin file:</p>
+	
+	<pre>&lt;script type="text/javascript" src="js/jquery.social.stream.wall.1.6.js"&gt;&lt;/script&gt;</pre>
+	
+	<p>The source data for the network wall is exactly the same as the rotating feed so the first thing you need to do is add the initialisation code with the relevant social network ID's or usernames.</p>
+	<p>To switch to creating the wall instead of the rotating list you must also set the "wall" option to true - in the demo we have set the wall to show the last 10 items from each feed using the max: "limit" & limit: 5 options, disabled the rotating feed plus disabled the controls since they are not required:</p>
+	<p></p>
+	<h4>jQuery Code</h4>
+	<pre>$(document).ready(function($){
+	$('#social-stream').dcSocialStream({
+		feeds: {
+			twitter: {
+				id: '/9927875,#designchemical,designchemical',
+				thumb: true
+			},
+			rss: {
+				id: 'http://feeds.feedburner.com/DesignChemical,http://feeds.feedburner.com/codecondo'
+			},
+			stumbleupon: {
+				id: 'remix4'
+			},
+			facebook: {
+				id: '157969574262873,Facebook Timeline/376995711728'
+			},
+			google: {
+				id: '111470071138275408587'
+			},
+			delicious: {
+				id: 'designchemical'
+			},
+			vimeo: {
+				id: 'brad'
+			},
+			youtube: {
+				id: 'wired'
+			},
+			pinterest: {
+				id: 'jaffrey,designchemical/design-ideas'
+			},
+			flickr: {
+				id: ''
+			},
+			lastfm: {
+				id: 'lastfm'
+			},
+			dribbble: {
+				id: 'frogandcode'
+			},
+			deviantart: {
+				id: 'isacg'
+			},
+			tumblr: {
+				id: 'richters',
+				thumb: 250
+			}
+		},
+		rotate: {
+			delay: 0
+		},
+		twitterId: 'designchemical',
+		control: false,
+		filter: true,
+		wall: true,
+		cache: false,
+		max: 'limit',
+		limit: 10,
+		iconPath: 'images/dcsns-dark/',
+		imagePath: 'images/dcsns-dark/'
+	});
+});</pre>
+	<h4>HTML</h4>
+	<p>Now just include the div tag where you want the network wall to appear:</p>
+<pre>&lt;div id="social-stream"&gt;&lt;/div&gt;</pre>
+  <h4>Social Network Wall Demo</h4>
+  <p><a href="example_4.html">Demo page</a></p>
+<div class="clear"></div>
+
+</div>
+</div>
+</div>
+
+  
+  <div id="copyright">
+	jQuery Social Stream plugin was created by <a href="http://www.designchemical.com">Design Chemical</a>.
+  </div>
+</div>
+<!-- End Wrapper -->
+</body>
+</html>

@@ -1,6 +1,7 @@
 /packages/*
 /.vs/*
 /.git/*
+/WebApplication/Web.Release.config
 /WebApplication/obj/*
 /WebApplication/App_Data/Cache/*
 /WebApplication/App_Data/ElmahErrorLogs/*
@@ -9,3 +10,7 @@
 /FrameworkLibrary/obj/*
 /FrameworkLibrary/bin/*
 /TinyFileManager.NET-master/TinyFileManager.NET/obj/*
+/TinyFileManager.NET-master/TinyFileManager.NET/.vs/*
+/TinyFileManager.NET-master/TinyFileManager.NET/bin/*
+/WebApplication/Properties/PublishProfiles/*.pubxml
+/WebApplication/Properties/PublishProfiles/*.user

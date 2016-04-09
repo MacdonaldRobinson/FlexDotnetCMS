@@ -299,48 +299,6 @@
     <Content Include="Installer\Default.aspx" />
     <Content Include="Installer\Images\loading-gear.gif" />
     <Content Include="Installer\SqlFiles\CreateAndDelete_Framework.sql" />
-    <Content Include="media\images\appleIcon.gif" />
-    <Content Include="media\images\facebookIcon.gif" />
-    <Content Include="media\images\weatherIcons\wsymbol_0001_sunny.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0002_sunny_intervals.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0003_white_cloud.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0004_black_low_cloud.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0005_hazy_sun.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0006_mist.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0007_fog.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0008_clear_sky_night.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0009_light_rain_showers.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0010_heavy_rain_showers.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0011_light_snow_showers.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0012_heavy_snow_showers.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0013_sleet_showers.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0014_light_hail_showers.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0015_heavy_hail_showers.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0016_thundery_showers.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0017_cloudy_with_light_rain.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0018_cloudy_with_heavy_rain.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0019_cloudy_with_light_snow.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0020_cloudy_with_heavy_snow.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0021_cloudy_with_sleet.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0022_cloudy_with_light_hail.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0023_cloudy_with_heavy_hail.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0024_thunderstorms.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0025_light_rain_showers_night.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0026_heavy_rain_showers_night.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0027_light_snow_showers_night.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0028_heavy_snow_showers_night.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0029_sleet_showers_night.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0030_light_hail_showers_night.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0031_heavy_hail_showers_night.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0032_thundery_showers_night.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0033_cloudy_with_light_rain_night.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0034_cloudy_with_heavy_rain_night.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0035_cloudy_with_light_snow_night.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0036_cloudy_with_heavy_snow_night.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0037_cloudy_with_sleet_night.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0038_cloudy_with_light_hail_night.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0039_cloudy_with_heavy_hail_night.png" />
-    <Content Include="media\images\weatherIcons\wsymbol_0040_thunderstorms_night.png" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\colorbox-master\content\ajax.html" />
     <Content Include="Scripts\colorbox-master\content\daisy%402x.jpg" />
@@ -792,19 +750,8 @@
     <Content Include="Views\MasterPages\SiteTemplates\css\Style.min.css">
       <DependentUpon>style.css</DependentUpon>
     </Content>
-    <Content Include="Views\MasterPages\SiteTemplates\images\arrows-ffffff.png" />
-    <Content Include="Views\MasterPages\SiteTemplates\images\logo.gif" />
-    <Content Include="Views\MasterPages\SiteTemplates\images\messageIcon_correct.jpg" />
-    <Content Include="Views\MasterPages\SiteTemplates\images\messageIcon_error.jpg" />
-    <Content Include="Views\MasterPages\SiteTemplates\images\messageIcon_feedback.jpg" />
-    <Content Include="media\uploads\images\banners\textRotate.jpg" />
-    <Content Include="media\uploads\images\banners\xampp-logo.jpg" />
     <Content Include="Scripts\commonFrontEnd.js" />
     <Content Include="Scripts\global.js" />
-    <Content Include="Views\MasterPages\SiteTemplates\images\shadow.png" />
-    <Content Include="Views\MasterPages\SiteTemplates\images\siteBg.gif" />
-    <Content Include="Views\MasterPages\SiteTemplates\images\takeActionTab.png" />
-    <Content Include="Views\MasterPages\SiteTemplates\images\transparentBackground.png" />
     <Content Include="Views\MediaTypeHandlers\NoTemplatePage.aspx" />
     <Content Include="Views\MediaTypeHandlers\RootPage.aspx" />
     <Content Include="Views\MediaTypeHandlers\UrlRedirectRule.aspx" />
@@ -824,9 +771,6 @@
     <Content Include="Styles\jquery.mobile.custom.css" />
     <Content Include="Views\MasterPages\SiteTemplates\css\print.css" />
     <Content Include="Views\MasterPages\SiteTemplates\css\style.css" />
-    <Content Include="Views\MasterPages\SiteTemplates\images\bar.gif" />
-    <Content Include="Views\MasterPages\SiteTemplates\images\footer-bg.gif" />
-    <Content Include="Views\MasterPages\SiteTemplates\images\header-bg.gif" />
     <Content Include="Views\MediaTypeHandlers\Page.aspx" />
     <Content Include="Views\PageHandlers\Login.aspx" />
     <Content Include="Views\PageHandlers\PageNotFound.aspx" />
@@ -1972,16 +1916,18 @@
     <Folder Include="App_Data\Cache\" />
     <Folder Include="App_Data\DBBackups\" />
     <Folder Include="App_Data\ElmahErrorLogs\" />
+    <Folder Include="media\images\" />
     <Folder Include="media\uploads\documents\pdfs\" />
     <Folder Include="media\uploads\documents\word\" />
     <Folder Include="media\uploads\flash\" />
+    <Folder Include="media\uploads\images\banners\" />
     <Folder Include="media\uploads\images\profile-photos\" />
     <Folder Include="media\uploads\images\speaker-images\" />
     <Folder Include="media\uploads\images\thumbnails\" />
     <Folder Include="media\uploads\media\" />
     <Folder Include="media\uploads\movies\" />
     <Folder Include="media\uploads\templates\" />
-    <Folder Include="Properties\" />
+    <Folder Include="Views\MasterPages\SiteTemplates\images\" />
     <Folder Include="Views\MasterPages\SiteTemplates\js\" />
   </ItemGroup>
   <ItemGroup>
@@ -2044,6 +1990,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\FlexCMS.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

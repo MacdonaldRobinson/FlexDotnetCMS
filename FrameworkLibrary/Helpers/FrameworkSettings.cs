@@ -112,6 +112,12 @@ namespace FrameworkLibrary
 
                 user = BaseMapper.GetObjectFromContext(user);
 
+                if (System.Web.HttpContext.Current.User == null)
+                    user = null;
+
+                if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                    user = null;
+
                 return user;
             }
             set

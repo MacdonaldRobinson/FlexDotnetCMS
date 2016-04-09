@@ -7,6 +7,7 @@ using System.Web.Compilation;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
+using WebApplication.Services;
 
 namespace WebApplication.Handlers
 {
@@ -26,6 +27,32 @@ namespace WebApplication.Handlers
 
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
+            if (FrameworkSettings.CurrentUser == null && Request.HttpMethod == "GET" && AppSettings.EnableOutputCaching)
+            {
+                var userSelectedVersion = RenderVersion.HTML;
+
+                if (BasePage.IsMobile)
+                    userSelectedVersion = RenderVersion.Mobile;
+
+                var cacheKey = (userSelectedVersion.ToString() + "_" + Request.Url.PathAndQuery).ToLower();
+
+                if (AppSettings.EnableLevel1MemoryCaching)
+                {
+                    var cacheData = (string)ContextHelper.GetFromCache(cacheKey);
+
+                    if (!string.IsNullOrEmpty(cacheData))
+                        BaseService.WriteHtml(cacheData + "<!-- Loaded from level 1 - Memory Cache -->");
+                }
+
+                if (AppSettings.EnableLevel2FileCaching)
+                {
+                    var cacheData = FileCacheHelper.GetFromCache(cacheKey);
+
+                    if (!string.IsNullOrEmpty(cacheData))
+                        BaseService.WriteHtml(cacheData + "<!-- Loaded from level 2 - File Cache -->");
+                }
+            }
+
             virtualPath = URIHelper.GetCurrentVirtualPath().ToLower();
 
             if ((virtualPath != "~/") && (!virtualPath.EndsWith("/")))

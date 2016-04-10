@@ -61,6 +61,7 @@ namespace FrameworkLibrary
             {
                 var returnVal = GetDataModel().SaveChanges();
                 returnObj.SetRawData(returnVal);
+
                 if (returnVal == 0)
                     throw new Exception("No changes made", new Exception("The transaction was successfull but no changes were made"));
             }

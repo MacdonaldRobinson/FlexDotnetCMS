@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Flexdotnetcms by MacdonaldRobinson</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Flexdotnetcms</h1>
+        <p class="header">A powerful, flexible and easy to use ASP .NET CMS</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/MacdonaldRobinson/FlexDotnetCMS/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/MacdonaldRobinson/FlexDotnetCMS/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/MacdonaldRobinson/FlexDotnetCMS">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/MacdonaldRobinson">MacdonaldRobinson</a></p>
+
+
+      </header>
+      <section>
+        <h1>
+<a id="flexdotnetcms" class="anchor" href="#flexdotnetcms" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>FlexDotnetCMS</h1>
+
+<p>A powerful, flexible and easy to use ASP .NET CMS</p>
+
+<h1>
+<a id="below-is-what-you-will-need-inorder-to-get-started" class="anchor" href="#below-is-what-you-will-need-inorder-to-get-started" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Below is what you will need inorder to get started</h1>
+
+<ul>
+<li>Visual Studio Community 2015 </li>
+<li>.NET 4.5.2 + ( will keep updating this as new versions come out )</li>
+<li>Microsoft SQL Server 2012 + ( might work with older versions )</li>
+<li>Microsoft SQL Server Management studio 2012 + ( Once again might work with older versions )</li>
+</ul>
+
+<h1>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Getting Started</h1>
+
+<ul>
+<li>Download the zip file and unzip it to a folder</li>
+<li>Double click the .sln file, this should open the solution consisting of 3 projects</li>
+<li>Right click on the "WebApplication" Project and set it as the "Start Up project"</li>
+</ul>
+
+<p><img src="Github/images/SetAsStartUpProject.jpg" alt="alt tag"></p>
+
+<ul>
+<li>Open up the "Web.config" file under the "WebApplication" project and search for the AppSetting "EnableInstaller" and set its value to "True"</li>
+</ul>
+
+<p><img src="Github/images/EnableInstaller.jpg" alt="alt tag"></p>
+
+<ul>
+<li>Create a new empty database in SQL Server</li>
+<li>Now you can run the project</li>
+<li>Follow the steps in the installer, this will update the "Web.Config" with your DB connection information and execute the .sql scripts needed to setup the database, in the final step you will be asked to "Disable The installer" click on this link and you will be done.</li>
+</ul>
+
+<p><img src="Github/images/Installer.jpg" alt="alt tag"></p>
+
+<ul>
+<li>You can now login to the CMS by going to [domain]/admin/</li>
+<li>The default username is: admin</li>
+<li>The default password is: password</li>
+</ul>
+
+<p><img src="Github/images/CMSLogin.jpg" alt="alt tag"></p>
+
+<ul>
+<li>Once you login you will see something similar to the screenshot below</li>
+</ul>
+
+<p><img src="Github/images/CMSLoggedIn.jpg" alt="alt tag"></p>
+
+<h1>
+<a id="editing-a-page" class="anchor" href="#editing-a-page" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Editing a page</h1>
+
+<ul>
+<li>Click on a node in the site tree</li>
+<li>You will now be taken to a page with an editing area and a preview panel</li>
+</ul>
+
+<p><img src="Github/images/EditingAPagePart1.jpg" alt="alt tag"></p>
+
+<ul>
+<li>The way I have descided to structure the CMS is that it splits up the Content of the page and the Layout of the page.</li>
+<li>Inorder to change the layout of the page you will need to click on the "Layouts" Tab</li>
+<li>The layout of the page is determend by the HTML that you place in the "Main Layout" Editor</li>
+<li>The way it works is you can enter whatever HTML you would like to structure the page, and then simply put short codes in places you want to pull in fields</li>
+<li>The HTML Editor also provides basic code completion and syntax highlighting, including code completion for the shortcodes</li>
+<li>Short codes are denoted by braces "{FieldCode}" for example: {SectiontTitle} will pull in the section title field from the "Main" Tab, {MainContent} will pull in the value entered in the "Main Content" Field under the "Main" Tab etc.</li>
+</ul>
+
+<p><img src="Github/images/EditingAPagePart2.jpg" alt="alt tag"></p>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>

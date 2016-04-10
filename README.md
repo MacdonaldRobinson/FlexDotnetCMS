@@ -14,7 +14,7 @@ For More Details Please visit the project website at: http://macdonaldrobinson.g
 - Double click the .sln file, this should open the solution consisting of 3 projects
 - Right click on the "WebApplication" Project and set it as the "Start Up project"
 
-![alt tag](http://macdonaldrobinson.github.io/FlexDotnetCMS/SetAsStartUpProject.jpg)
+![alt tag](http://macdonaldrobinson.github.io/FlexDotnetCMS/images/SetAsStartUpProject.jpg)
 
 - Open up the "Web.config" file under the "WebApplication" project and search for the AppSetting "EnableInstaller" and set its value to "True"
 

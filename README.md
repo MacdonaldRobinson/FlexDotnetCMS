@@ -11,10 +11,19 @@ A powerful, flexible and easy to use ASP .NET CMS
 - Download the zip file and unzip it to a folder
 - Double click the .sln file, this should open the solution consisting of 3 projects
 - Right click on the "WebApplication" Project and set it as the "Start Up project"
+
+![alt tag](Github/images/SetAsStartUpProject.jpg)
+
 - Open up the "Web.config" file under the "WebApplication" project and search for the AppSetting "EnableInstaller" and set its value to "True"
+
+![alt tag](Github/images/EnableInstaller.jpg)
+
 - Create a new empty database in SQL Server
 - Now you can run the project
 - Follow the steps in the installer, this will update the "Web.Config" with your DB connection information and execute the .sql scripts needed to setup the database, in the final step you will be asked to "Disable The installer" click on this link and you will be done.
+
+![alt tag](Github/images/Installer.jpg)
+
 - You can now login to the CMS by going to [domain]/admin/
 - The default username is: admin
 - The default password is: password

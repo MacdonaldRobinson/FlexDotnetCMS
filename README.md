@@ -1,7 +1,7 @@
 # FlexDotnetCMS
 A powerful, flexible and easy to use ASP .NET CMS
 
-For More Details Please visit the project website at: http://macdonaldrobinson.github.io/
+For More Details Please visit the project website at: http://macdonaldrobinson.github.io/FlexDotnetCMS/
 
 # Below is what you will need inorder to get started
 - Visual Studio Community 2015 

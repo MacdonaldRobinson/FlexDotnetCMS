@@ -14,4 +14,3 @@
 /WebApplication/Properties/PublishProfiles/*.pubxml
 /WebApplication/Properties/PublishProfiles/*.user
 /WebApplication/Properties/PublishProfiles/*.PublishSettings
-/WebApplication/Web.Release.config

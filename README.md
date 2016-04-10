@@ -28,3 +28,25 @@ A powerful, flexible and easy to use ASP .NET CMS
 - The default username is: admin
 - The default password is: password
 
+![alt tag](Github/images/CMSLogin.jpg)
+
+- Once you login you will see something similar to the screenshot below
+
+![alt tag](Github/images/CMSLoggedIn.jpg)
+
+#Editing a page
+- Click on a node in the site tree
+- You will now be taken to a page with an editing area and a preview panel
+
+![alt tag](Github/images/EditingAPagePart1.jpg)
+
+- The way I have descided to structure the CMS is that it splits up the Content of the page and the Layout of the page.
+- Inorder to change the layout of the page you will need to click on the "Layouts" Tab
+- The layout of the page is determend by the HTML that you place in the "Main Layout" Editor
+- The way it works is you can enter whatever HTML you would like to structure the page, and then simply put short codes in places you want to pull in fields
+- The HTML Editor also provides basic code completion and syntax highlighting, including code completion for the shortcodes
+- Short codes are denoted by braces "{FieldCode}" for example: {SectiontTitle} will pull in the section title field from the "Main" Tab, {MainContent} will pull in the value entered in the "Main Content" Field under the "Main" Tab etc.
+
+![alt tag](Github/images/EditingAPagePart2.jpg)
+
+

@@ -3,33 +3,25 @@ A powerful, flexible and easy to use ASP .NET CMS
 
 For More Details Please visit the project website at: http://macdonaldrobinson.github.io/FlexDotnetCMS/
 
-# Below is what you will need inorder to get started
-- Visual Studio Community 2015 
-- .NET 4.5.2 + ( will keep updating this as new versions come out )
-- Microsoft SQL Server 2012 + ( might work with older versions )
-- Microsoft SQL Server Management studio 2012 + ( Once again might work with older versions )
-
-#Getting Started
-- Download the zip file and unzip it to a folder
-- Double click the .sln file, this should open the solution consisting of 3 projects
-- Right click on the "WebApplication" Project and set it as the "Start Up project"
-
-![alt tag](http://macdonaldrobinson.github.io/FlexDotnetCMS/images/SetAsStartUpProject.jpg)
-
-- Open up the "Web.config" file under the "WebApplication" project and search for the AppSetting "EnableInstaller" and set its value to "True"
-
-![alt tag](http://macdonaldrobinson.github.io/FlexDotnetCMS/images/EnableInstaller.jpg)
-
-- Create a new empty database in SQL Server
-- Now you can run the project
-- Follow the steps in the installer, this will update the "Web.Config" with your DB connection information and execute the .sql scripts needed to setup the database, in the final step you will be asked to "Disable The installer" click on this link and you will be done.
-
-![alt tag](http://macdonaldrobinson.github.io/FlexDotnetCMS/images/Installer.jpg)
-
-- You can now login to the CMS by going to [domain]/admin/
-- The default username is: admin
-- The default password is: password
-
-![alt tag](http://macdonaldrobinson.github.io/FlexDotnetCMS/images/CMSLogin.jpg)
-
-
+# Features
+- Ability to change the Page title, Meta Description, Meta Keywords, Link title ( Url Segment for the page )
+- Search engine friendly URLs
+- All pages automatically get Open Graph Meta Tags
+- Every time you save a page in the CMS it will automatically create a history versions ( I have it set to a max of 10 history versions ) 
+- Ability to save as draft
+- Ability to create custom fields with their own unique layouts
+- Ability to modify the layout of all pages with a specific page type or unlink from a page type and create a unique layout for every page
+- Ability to automatically publish a page live at a specified date time
+- Ability to automatically take down a page at a specified date time
+- Ability to create 301 or 302 redirects
+- Ability to manage glossary terms
+- Ability to Manage Users and Roles
+- Ability to Create, Edit, Delete, Permanently Delete, Hide, Duplicate and Publish/unpublish pages 
+- Ability to create Protected Pages ( Only logged in users can access the page )
+- Ability to add new languages to each page
+- Ability to clear all cache
+- Ability to search for a page based on the title in the backend for quick access
+- You can view the email logs from the CMS
+- You can view the error logs from the CMS 
+- When you edit content and save it you can see how it looks right away in the browser panel instead of having to open a new window and browse to the page
+- You can resize the browser panel and see how the site looks in different sizes i.e test responsive layout directly through the cms

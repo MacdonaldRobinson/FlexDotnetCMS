@@ -1,0 +1,17 @@
+﻿// Modules
+@import "mixins";
+
+//colors
+$blue: #10689e;
+$blue-dark: #0e5d8e;
+$blue-light: #8eaed2;
+$yellow: #caba4b;
+$grey: #e2e4e6;
+$grey-dark: #2b2b2b;
+$green: #9cb65f;
+$orange: #c99b62;
+$brown: #7a634e;
+$white: #fff;
+//fonts
+$main-font: 'Maven Pro', sans-serif;
+$secondary-font: 'Fjalla One', sans-serif;

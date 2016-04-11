@@ -1,0 +1,162 @@
+﻿@import "global";
+
+footer {
+    bottom: 0;
+    height: 25vh;
+    width: 100%;
+    color: $white;
+
+    @include font-size(16px);
+    @extend %clearfix;
+
+    a {
+        color: $white;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: $blue-light;
+    }
+
+    .strong {
+        font-weight: 700;
+    }
+
+    .fa {
+        @include font-size(60px);
+        padding: 0.25em;
+
+        @include tablet {
+            @include font-size(40px);
+        }
+    }
+}
+
+.footer-top {
+    background-image: url('/Views/MasterPages/SiteTemplates/images/footer_pattern_bg.png');
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: auto;
+    @extend %clearfix;
+
+    @include mobile {
+        justify-content: center;
+    }
+}
+
+.footer-top-left {
+    padding: 0.5em 1em;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: auto;
+    margin-left: 0;
+    @extend %clearfix;
+
+    @include tablet {
+        justify-content: center;
+        margin-left: auto;
+    }
+
+    img {
+        padding: 1em;
+        height: 100%;
+        display: block;
+        @extend %clearfix;
+    }
+}
+
+.footer-top-right {
+    padding: 0.5em 1em;
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    align-items: center;
+    margin-right: 0;
+    @extend %clearfix;
+
+    @include tablet {
+        justify-content: center;
+        margin-right: auto;
+    }
+}
+
+.footer-contact {
+    padding: 0 1em;
+}
+
+.footer-bar {
+    height: 1em;
+}
+
+.footer-stripe {
+    color: $white;
+    background-image: url('/Views/MasterPages/SiteTemplates/images/footer_stripes.png');
+    @extend %clearfix;
+}
+
+.footer-bottom {
+    background: $grey-dark;
+    padding: 1em;
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    @extend %clearfix;
+
+    @include tablet {
+        padding: 0.5em;
+        justify-content: center;
+        @include font-size(14px);
+    }
+}
+
+.footer-bottom-left {
+    margin: auto;
+    @extend %clearfix;
+
+    @include tablet {
+        justify-content: center;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0.5em;
+        display: inline-flex;
+
+        @include mobile {
+            display: inline;
+        }
+
+        li {
+            border-right: 1px solid $white;
+            align-items: center;
+            padding: 0 0.75em;
+
+            @include mobile {
+                text-align: center;
+                border: none;
+                padding: 0.5em;
+            }
+        }
+    }
+
+    li:last-child {
+        border-right: none;
+    }
+}
+
+.footer-bottom-right {
+    flex-wrap: wrap;
+    margin: auto;
+    @extend %clearfix;
+
+    @include tablet {
+        justify-content: center;
+    }
+}

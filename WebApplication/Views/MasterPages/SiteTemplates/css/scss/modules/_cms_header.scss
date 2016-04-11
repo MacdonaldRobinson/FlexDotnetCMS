@@ -1,0 +1,52 @@
+﻿@import "global";
+
+.cms-header {
+    @include flex;
+    background-color: #000;
+    padding: 0.5em 0 0.5em 0;
+    color: #fff;
+    line-height: 19px;
+    z-index: 999999;
+    border-bottom: 1px solid white;
+
+    @include tablet {
+        display: none;
+    }
+
+    a {
+        @include flex;
+        align-items: center;
+        color: white;
+        @include font-size(18px);
+        font-family: $secondary-font;
+        padding: 5px 15px;
+        border: 1px solid white;
+        margin: auto 5px;
+        text-transform: uppercase;
+
+        &:hover {
+            background: $red;
+            border: 1px solid $red;
+            text-decoration: none;
+        }
+
+        .fa {
+            @include font-size(24px);
+            margin-right: 5px;
+        }
+    }
+
+    .cms-header-controls {
+        @include flex;
+        @include justify-content(flex-start);
+        align-items: center;
+        width: 50%;
+    }
+
+    .cms-header-logout {
+        width: 50%;
+        @include flex;
+        @include justify-content(flex-end);
+        align-items: center;
+    }
+}

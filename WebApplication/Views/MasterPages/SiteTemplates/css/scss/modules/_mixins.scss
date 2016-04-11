@@ -1,0 +1,122 @@
+﻿@mixin flex {
+    display: -webkit-flex; /* NEW - Chrome */
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+
+@mixin justify-content($justify) {
+    -webkit-justify-content: $justify;
+    justify-content: $justify;
+}
+
+@mixin flex-flow($flow) {
+    -webkit-flex-flow: $flow;
+    flex-flow: $flow;
+}
+
+@mixin align-items($align) {
+    -webkit-align-items: $align;
+    align-items: $align;
+}
+
+// Border radius
+// Usage:
+// @include border-radius(5px);
+
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    border-radius: $radius;
+}
+
+// Set a rem font size with pixel fallback (prevents compounding font sizes)
+// Usage:
+// @include font-size(14px);
+
+@function calculateRem($size) {
+    $remSize: $size / 16px;
+    @return $remSize * 1rem;
+}
+
+@mixin font-size($size) {
+    font-size: $size;
+    font-size: calculateRem($size);
+}
+
+// Breakpoints for Desktop/Tablet/Mobile
+// Usage:
+// @include mobile {width: 100%; float: none; margin: 0;}
+
+@mixin desktop {
+    @media only screen and (max-width: 60em) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media only screen and (max-width: 1030px) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media only screen and (max-width: 30em) {
+        @content;
+    }
+}
+
+@mixin animation($str) {
+    -webkit-animation: #{$str};
+    -moz-animation: #{$str};
+    -ms-animation: #{$str};
+    -o-animation: #{$str};
+    animation: #{$str};
+}
+
+// Transitions
+// Usage:
+// .element { @include transition(color .3s ease);
+// &:hover { color: black;}}
+
+@mixin transition($args...) {
+    -webkit-transition: $args;
+    -moz-transition: $args;
+    -ms-transition: $args;
+    -o-transition: $args;
+    transition: $args;
+}
+
+// Cross browser opacity back to IE5!!!
+// Usage:
+// @include opacity(0.8);
+
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    $opacity-ie: $opacity * 100;
+    filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+// Clearfix
+// Usage:
+// .element-with-floated-children { @extend %clearfix;}
+%clearfix {
+    *zoom: 1;
+
+    &:before, &:after {
+        content: " ";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+}
+
+// Size
+// Usage:
+// .element {@include size(100%);}
+// .other-element {  @include size(100%, 1px);}
+
+@mixin size($width, $height: $width) {
+    width: $width;
+    height: $height;
+}

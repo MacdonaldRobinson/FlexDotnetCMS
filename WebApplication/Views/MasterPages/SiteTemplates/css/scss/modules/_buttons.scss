@@ -1,0 +1,108 @@
+﻿@import "global";
+
+.button-blue {
+    color: #FFF;
+    background: $blue;
+    border: 1px solid white;
+    padding: 0.5em 1.5em;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 0 white;
+    -webkit-transition: all ease 0.3s;
+    -moz-transition: all ease 0.3s;
+    transition: all ease 0.3s;
+}
+
+.button-blue:hover {
+    box-shadow: inset 0 100px 0 0 white;
+    color: $blue;
+}
+
+.button-blue-light {
+    color: #FFF;
+    background: $blue-light;
+    padding: 0.5em 1.5em;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 0 $blue;
+    -webkit-transition: all ease 0.3s;
+    -moz-transition: all ease 0.3s;
+    transition: all ease 0.3s;
+}
+
+.button-blue-light:hover {
+    box-shadow: inset 0 100px 0 0 $blue;
+}
+
+.button-white {
+    color: $blue-light;
+    background: white;
+    padding: 0.5em 1.5em;
+    border: 1px solid $blue-light;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 0 $blue-light;
+    -webkit-transition: all ease 0.3s;
+    -moz-transition: all ease 0.3s;
+    transition: all ease 0.3s;
+}
+
+.button-white:hover {
+    box-shadow: inset 0 100px 0 0 $blue-light;
+    color: white;
+}
+
+.button-sedar {
+    color: $white;
+    background: $green;
+    padding: 0.1em 1.5em;
+    border: 1px solid $white;
+    text-decoration: none;
+    display: inline-block;
+    @include font-size(18px);
+    text-align: center;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 0 $white;
+    -webkit-transition: all ease 0.3s;
+    -moz-transition: all ease 0.3s;
+    transition: all ease 0.3s;
+}
+
+.button-sedar:hover {
+    box-shadow: inset 0 100px 0 0 $white;
+    color: $green;
+}
+
+.input-sedar {
+    background: darken($green, 12.5%);
+    padding: 0.1em;
+    padding-left: 0.5em;
+    color: $white;
+    border: none;
+    font-family: $main-font;
+    @include font-size(18px);
+    margin-right: 1em;
+    margin-bottom: 0.5em;
+}
+
+::-webkit-input-placeholder {
+    color: $white !important;
+}
+
+::-moz-placeholder {
+    color: $white !important;
+}
+/* firefox 19+ */
+:-ms-input-placeholder {
+    color: $white !important;
+}
+/* ie */
+input:-moz-placeholder {
+    color: $white !important;
+}

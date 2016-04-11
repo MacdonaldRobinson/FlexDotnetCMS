@@ -1,0 +1,271 @@
+﻿@import "global";
+
+.nav {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-family: $main-font;
+    @include font-size(16px);
+    font-weight: 400;
+    float: right;
+    z-index: 10;
+
+    @extend %clearfix;
+}
+
+.nav ul {
+    list-style: none;
+    padding-left: 0;
+    text-align: center;
+    position: relative;
+    float: none;
+    margin: 0 auto;
+    width: (120px * 5);
+    line-height: 1.25em;
+    height: 100%;
+
+    @include tablet {
+        display: none;
+    }
+}
+
+.nav ul li {
+    float: left;
+    width: 110px;
+    height: 100%;
+    *display: inline;
+    zoom: 1;
+    position: relative;
+    border-top: 2px solid $blue;
+
+    &:hover {
+        border-top: 2px solid white;
+    }
+}
+
+.nav ul li span.arrow {
+    display: block;
+    /* "display:none" to hide arrows for the non-mobile nav */
+    position: absolute;
+    bottom: 0;
+    color: white;
+    width: 20px;
+    left: 50%;
+    text-align: center;
+    font-size: 10px;
+    z-index: 5;
+    margin-left: -15px;
+    cursor: pointer;
+}
+
+.nav ul li ul li span.arrow {
+    display: none;
+}
+//main button color
+.nav ul li a {
+    display: block;
+    color: #ffffff;
+    padding-top: 25px;
+    background: $blue;
+    height: 100%;
+    text-transform: uppercase;
+    //border: 0.5px solid white;
+    text-decoration: none;
+}
+
+.nav ul li ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: $blue-dark;
+    border: none;
+    display: none;
+    text-align: left;
+    position: absolute;
+    left: 0;
+    width: 280px;
+}
+
+.nav ul li ul li {
+    width: 280px;
+    margin: 0;
+    border: none;
+    padding: 0;
+    font-weight: 200;
+    //font-style: italic;
+    //font-weight: bold;
+    height: 50px;
+
+    &:hover {
+        border: none;
+    }
+}
+
+.nav ul li ul li a {
+    background: $blue-dark;
+    display: block;
+    padding: 1em;
+    height: 50px;
+    margin: 0;
+    border: none;
+    text-transform: none;
+}
+
+.nav ul li ul li a:hover {
+    background: $blue-dark;
+    color: $yellow;
+    padding: 1em;
+    margin: 0;
+    border: none;
+}
+
+.nav ul li:hover a {
+    background-color: $blue-dark;
+    border: none;
+}
+
+.nav ul li:hover a:hover {
+    background: $blue-dark;
+    border: none;
+}
+
+.nav ul li:hover ul {
+    display: block;
+    background-color: $blue-dark;
+    border: none;
+}
+
+.nav ul li:hover ul a {
+    background: $blue-dark;
+    border: none;
+}
+
+.nav ul li:hover ul a:hover {
+    background: $blue-dark;
+    border: none;
+}
+
+.nav .nav-bars {
+    display: none;
+    position: absolute;
+    top: 0.3em;
+    right: 0.25em;
+    color: white;
+    font-size: 2em;
+    cursor: pointer;
+    margin-bottom: .1em;
+    @extend %clearfix;
+}
+
+.nav .nav-bars i {
+}
+
+.nav.mobile {
+    width: 100%;
+    padding-top: 0;
+    // float: left;
+    background-color: $blue;
+}
+
+.nav.mobile ul {
+    display: none;
+    width: 100%;
+    float: left;
+    margin: 0;
+    border: none;
+    height: auto;
+}
+//Shows submenu items
+.nav.mobile ul li {
+    width: 100%;
+    height: auto;
+    border: none;
+
+    &:hover {
+        border: none;
+    }
+}
+
+.nav.mobile ul li span.arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    font-size: 18px;
+    margin: 0;
+    right: 0;
+    left: auto;
+    height: 56px;
+    width: 75px;
+    background: rgba(255,255,255, 0.1);
+}
+
+.nav.mobile ul li span.arrow:hover {
+    color: white;
+}
+
+.nav.mobile ul li span.arrow.arrow-rotate {
+    -webkit-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav.mobile ul li a {
+    padding: 1em;
+    width: 100%;
+    height: auto;
+    border: none;
+
+    &:hover {
+        border: none;
+        background-color: $blue-light;
+    }
+}
+
+.nav.mobile ul li ul {
+    position: static;
+    width: 100%;
+    border: none;
+}
+
+.nav.mobile ul li ul li {
+    width: 100%;
+    background: $blue-dark;
+    border: none;
+}
+
+.nav.mobile ul li:hover ul li ul li a {
+    background: $blue;
+}
+
+//first level
+.nav.mobile ul li:hover a {
+    background: $blue-light;
+    //border: 1px solid white;
+}
+//first level hover
+.nav.mobile ul li:hover a:hover {
+    background: $blue-light;
+}
+
+.nav.mobile ul li:hover ul {
+    background: $blue-light;
+    display: none;
+}
+//second level hover
+.nav.mobile ul li:hover ul a {
+    background: $blue-dark;
+}
+
+.nav.mobile ul li:hover ul a:hover {
+    background: $blue-dark;
+}
+
+.nav.mobile .nav-bars {
+    display: block;
+}

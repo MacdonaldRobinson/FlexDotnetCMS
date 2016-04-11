@@ -1,0 +1,10 @@
+﻿@import "scss/modules/reset";
+@import "scss/modules/global";
+
+@import "scss/modules/menu";
+@import "scss/modules/buttons";
+@import "scss/modules/hover";
+
+@import "scss/modules/header";
+@import "scss/modules/footer";
+@import "scss/modules/page_content";

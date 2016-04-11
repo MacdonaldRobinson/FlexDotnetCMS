@@ -1,0 +1,46 @@
+﻿@import "global";
+
+#SubNav {
+    float: left;
+    width: 19%;
+    margin-top: 2em;
+    text-align: center;
+    @extend %clearfix;
+
+    ul {
+        width: 100%;
+        margin: auto;
+        float: left;
+        display: block;
+        padding: 1em;
+        @extend %clearfix;
+    }
+
+    li {
+        float: left;
+        width: 100%;
+        text-align: left;
+        display: block;
+        margin: 0;
+    }
+
+    li a {
+        //color: $main-dark;
+        width: 100%;
+        display: block;
+        padding: 1em;
+        @include font-size(14px);
+        text-decoration: none;
+    }
+
+    li a:hover, li a:focus {
+        //background-color: $main-light;
+        color: white;
+    }
+}
+
+@include tablet {
+    #SubNav {
+        display: none;
+    }
+}

@@ -1,7 +1,7 @@
 # FlexDotnetCMS
 A powerful, flexible and easy to use ASP .NET CMS
 
-For More Details Please visit the project website at: http://macdonaldrobinson.github.io/FlexDotnetCMS/
+For More Details Please visit the project wiki at: https://github.com/MacdonaldRobinson/FlexDotnetCMS/wiki
 
 # Features
 - Ability to change the Page title, Meta Description, Meta Keywords, Link title ( Url Segment for the page )

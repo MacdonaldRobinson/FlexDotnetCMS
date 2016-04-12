@@ -27,13 +27,13 @@ namespace WebApplication.Handlers
 
         private void AttemptToLoadFromCache()
         {
-            if(AppSettings.ForceSSL && !URIHelper.IsSSL())
+            if (AppSettings.ForceSSL && !URIHelper.IsSSL())
             {
                 URIHelper.ForceSSL();
             }
 
             if (FrameworkSettings.CurrentUser == null && Request.HttpMethod == "GET" && AppSettings.EnableOutputCaching)
-            {                
+            {
                 var userSelectedVersion = RenderVersion.HTML;
 
                 if (BasePage.IsMobile)
@@ -56,7 +56,14 @@ namespace WebApplication.Handlers
                     if (!string.IsNullOrEmpty(cacheData))
                         BaseService.WriteHtml(cacheData + "<!-- Loaded from level 2 - File Cache -->");
                 }
+
             }
+
+            if (BaseMapper.CanConnectToDB != null && !(bool)BaseMapper.CanConnectToDB)
+            {
+                BaseService.WriteHtml("<h1>Cannot connect to DB and no cached version for this page exists</h1>");
+            }
+
         }
 
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
@@ -107,13 +114,16 @@ namespace WebApplication.Handlers
 
             if (!File.Exists(HttpContext.Current.Server.MapPath(virtualPath)) && !virtualPath.Contains(ParserHelper.OpenToken) && !virtualPath.Contains(ParserHelper.CloseToken))
             {
-                
+
                 if ((virtualPath != "~/login/") && (virtualPath != "~/admin/"))
                 {
                     var settings = SettingsMapper.GetSettings();
 
-                    if (!virtualPath.Contains(settings.SiteOfflineUrl) && (!settings.IsSiteOnline()) && (virtualPath != settings.SiteOfflineUrl))
-                        Response.Redirect(settings.SiteOfflineUrl);
+                    if (settings != null)
+                    {
+                        if (!virtualPath.Contains(settings.SiteOfflineUrl) && (!settings.IsSiteOnline()) && (virtualPath != settings.SiteOfflineUrl))
+                            Response.Redirect(settings.SiteOfflineUrl);
+                    }
                 }
 
                 string viewPath = "";
@@ -126,9 +136,9 @@ namespace WebApplication.Handlers
                     FormsAuthentication.RedirectToLoginPage();
                 }
 
-                if(detail != null)
+                if (detail != null)
                 {
-                    if(URIHelper.ConvertAbsUrlToTilda(detail.AbsoluteUrl).Replace("~","") != Request.Url.AbsolutePath)
+                    if (URIHelper.ConvertAbsUrlToTilda(detail.AbsoluteUrl).Replace("~", "") != Request.Url.AbsolutePath)
                     {
                         Response.Redirect(detail.AbsoluteUrl);
                     }

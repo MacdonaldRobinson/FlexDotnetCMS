@@ -13,7 +13,7 @@ namespace FrameworkLibrary
         {
             get
             {
-                return SettingsMapper.GetSettings().OutputCacheDurationInSeconds;
+                return SettingsMapper.GetSettings()?.OutputCacheDurationInSeconds;
             }
         }
 

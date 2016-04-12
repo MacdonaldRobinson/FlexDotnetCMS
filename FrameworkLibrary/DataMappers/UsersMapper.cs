@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core;
 using System.Linq;
 
 namespace FrameworkLibrary
@@ -62,7 +61,7 @@ namespace FrameworkLibrary
 
         public static User GetByUserName(string username)
         {
-            return GetDataModel().Users.FirstOrDefault(item => item.UserName == username);
+            return GetDataModel()?.Users.FirstOrDefault(item => item.UserName == username);
         }
 
         public static IEnumerable<User> FilterByActiveStatus(IEnumerable<User> items, bool isActive)

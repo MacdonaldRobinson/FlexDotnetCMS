@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Core;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Data.Entity.Core.Objects.DataClasses;
 using System.Linq;
 
 namespace FrameworkLibrary
@@ -155,6 +151,25 @@ namespace FrameworkLibrary
             return notInCurrentContexts.Select(obj => GetObjectFromContext(obj));
         }
 
+        public static bool? CanConnectToDB { get; private set; }
+        public static bool CanConnectToDBUsingEntities(Entities context)
+        {
+            if (CanConnectToDB != null)
+                return (bool)CanConnectToDB;
+
+            try
+            {
+                context.Database.Connection.Open();
+                CanConnectToDB = true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                CanConnectToDB = false;
+                return false;
+            }
+        }
+
         public static Entities GetDataModel(bool forceNew = false)
         {
             Entities context;
@@ -162,6 +177,10 @@ namespace FrameworkLibrary
             if ((ContextHelper.Get(DataModelKey, dataContextStorageContext) == null) || (forceNew))
             {
                 context = new Entities(FrameworkBaseMedia.ConnectionSettings.ConnectionString);
+
+                if (!CanConnectToDBUsingEntities(context))
+                    return null;
+
                 context.Configuration.LazyLoadingEnabled = true;
                 context.Configuration.ProxyCreationEnabled = true;
 

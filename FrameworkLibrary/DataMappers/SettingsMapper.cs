@@ -9,7 +9,7 @@ namespace FrameworkLibrary
 
         public static Settings GetSettings()
         {
-            var settings = GetDataModel().AllSettings.FirstOrDefault();
+            var settings = GetDataModel()?.AllSettings.FirstOrDefault();
 
             return settings;
         }

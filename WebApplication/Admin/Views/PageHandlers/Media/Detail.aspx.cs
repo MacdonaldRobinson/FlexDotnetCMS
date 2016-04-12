@@ -263,17 +263,13 @@ namespace WebApplication.Admin.MediaArticle
             WebApplication.BasePage.RedirectToMediaDetail(selectedItem);
         }
 
-        protected override void OnPreRender(EventArgs e)
+        /*protected override void OnPreRender(EventArgs e)
         {
             base.OnPreRender(e);
 
             if (!IsPostBack)
                 UpdateFieldsFromObject();
-
-            //RadTab t1 = new RadTab();
-            //RadMultiPage m1 = new RadMultiPage();
-            //RadMultiPage.SelectedIndex = ContentTabs.SelectedIndex;
-        }
+        }*/
 
         private void UpdateSectionTitles()
         {

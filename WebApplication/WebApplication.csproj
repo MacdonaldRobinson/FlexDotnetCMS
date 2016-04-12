@@ -1929,6 +1929,7 @@
     <Folder Include="media\uploads\media\" />
     <Folder Include="media\uploads\movies\" />
     <Folder Include="media\uploads\templates\" />
+    <Folder Include="Properties\" />
     <Folder Include="Views\MasterPages\SiteTemplates\images\" />
     <Folder Include="Views\MasterPages\SiteTemplates\js\" />
   </ItemGroup>
@@ -1992,9 +1993,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\PublishProfiles\FlexCMS.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

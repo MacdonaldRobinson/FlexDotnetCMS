@@ -21,7 +21,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
 
             BindMediaFields();
 
-            LoadTabs();            
+            LoadTabs();
 
             UpdateFieldsFromObject();
         }
@@ -56,7 +56,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
 
             //AddShoppingCartSettingsTab();
 
-            if(SelectedItem.Comments.Any())
+            if (SelectedItem.Comments.Any())
                 AddCommentsTab();
 
             if ((this.SelectedItem != null) && ((this.SelectedItem.ID != 0)))
@@ -73,7 +73,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
             TabPanels.DataSource = base.Tabs;
             TabPanels.DataBind();
 
-            UpdateFieldsFromObject();
+            //UpdateFieldsFromObject();
         }
 
         public void AddLinkSettingsTab()
@@ -107,7 +107,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
         public void AddCommentsTab()
         {
             var pendingComments = SelectedItem.Comments.Where(i => i.Status == StatusEnum.Pending.ToString()).Count();
-            AddTab("Comments("+ pendingComments + ")", "~/Admin/Controls/MediaTypes/Common/Tabs/CommentsTab.ascx");
+            AddTab("Comments(" + pendingComments + ")", "~/Admin/Controls/MediaTypes/Common/Tabs/CommentsTab.ascx");
         }
 
         public void AddAdvancedSettingsTab()
@@ -183,7 +183,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
             keyValuePair.Add("TemplateBaseUrl", BasePage.TemplateVars["TemplateBaseUrl"]);
             keyValuePair.Add("BaseUrl", BasePage.TemplateVars["BaseUrl"]);
 
-            item.MainContent = ParserHelper.ParseData(MainContent.GetValue().ToString().Replace("%7B", "{").Replace("%7D", "}"), keyValuePair, true);            
+            item.MainContent = ParserHelper.ParseData(MainContent.GetValue().ToString().Replace("%7B", "{").Replace("%7D", "}"), keyValuePair, true);
             //item.LongDescriptionMobileVersion = ParserHelper.ParseData(LongDescriptionMobileVersion.GetSiteEditor.Text.Replace("%7B", "{").Replace("%7D", "}"), keyValuePair, true);
             item.SectionTitle = SectionTitle.Text;
             item.ShortDescription = ParserHelper.ParseData(ShortDescription.GetValue().ToString().Replace("%7B", "{").Replace("%7D", "}"), keyValuePair, true);
@@ -236,7 +236,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
             UpdateObjectFromMediaFields();
 
             SEOSettingsTab.UpdateObjectFromFields();
-            PublishSettingsTab.UpdateObjectFromFields();            
+            PublishSettingsTab.UpdateObjectFromFields();
         }
 
         private void UpdateObjectFromMediaFields()
@@ -271,7 +271,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
                     {
                         var valAsString = ((WebApplication.Admin.Controls.Fields.IFieldControl)control).GetValue().ToString();
 
-                        if(!string.IsNullOrEmpty(valAsString) && valAsString.Contains(URIHelper.BaseUrl))
+                        if (!string.IsNullOrEmpty(valAsString) && valAsString.Contains(URIHelper.BaseUrl))
                         {
                             valAsString = valAsString.Replace(URIHelper.BaseUrl, "{BaseUrl}");
                         }
@@ -288,7 +288,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
                         }
                         else
                         {
-                            fieldValue = ParserHelper.ParseData("{"+dataItem.GetAdminControlValue + "}", control);
+                            fieldValue = ParserHelper.ParseData("{" + dataItem.GetAdminControlValue + "}", control);
                         }
 
                         if (fieldValue != "{" + dataItem.GetAdminControlValue + "}")
@@ -300,7 +300,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
                     if (returnObj.IsError)
                         BasePage.DisplayErrorMessage("Error", returnObj.Error);
                 }
-            }            
+            }
         }
 
         private void UpdateMediaFieldsFromObject()
@@ -362,25 +362,25 @@ namespace WebApplication.Admin.Controls.MediaTypes
                                 ParserHelper.SetValue(control, mediaDetailField.SetAdminControlValue, fieldValue);
                             }
                         }
-                    }                    
+                    }
                 }
 
             }
-            
+
         }
 
         public void UpdateFieldsFromObject()
         {
             IMediaDetail item = (IMediaDetail)SelectedItem;
 
-            if((item.ID == 0) && (item.LinkTitle == null || item.LinkTitle == ""))
+            if ((item.ID == 0) && (item.LinkTitle == null || item.LinkTitle == ""))
             {
                 var mediaType = MediaTypesMapper.GetByID(item.MediaTypeID);
-                var createdItems = mediaType.MediaDetails.Where(i => !i.IsHistory && i.ParentMediaID == item.ParentMediaID).Select(i=>i);
+                var createdItems = mediaType.MediaDetails.Where(i => !i.IsHistory && i.ParentMediaID == item.ParentMediaID).Select(i => i);
 
                 var newIndex = createdItems.Count() + 1;
 
-                item.LinkTitle = mediaType.Name +" "+ newIndex;
+                item.LinkTitle = mediaType.Name + " " + newIndex;
             }
 
             LinkTitle.Text = item.LinkTitle;
@@ -403,7 +403,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
 
             UpdateMediaFieldsFromObject();
 
-            SEOSettingsTab.UpdateFieldsFromObject();            
+            SEOSettingsTab.UpdateFieldsFromObject();
             PublishSettingsTab.UpdateFieldsFromObject();
         }
 
@@ -419,7 +419,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
             var FieldWrapper = (Panel)e.Item.FindControl("FieldWrapper");
 
             FieldID.Value = mediaDetailField.ID.ToString();
-            FieldWrapper.CssClass += " "+ mediaDetailField.FieldCode;
+            FieldWrapper.CssClass += " " + mediaDetailField.FieldCode;
             //FieldLabel.Text = mediaDetailField.FieldLabel;
 
             //var propertyName = mediaDetailField.GetValueCode;
@@ -428,7 +428,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
             Control control = null;
             string code = "";
             try
-            {                
+            {
                 dynamicField = this.ParseControl(MediaDetailsMapper.ParseSpecialTags(SelectedItem, mediaDetailField.AdminControl, 0, new RazorFieldParams() { MediaDetail = SelectedItem }));
             }
             catch (Exception ex)
@@ -472,7 +472,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
 
             if (MediaFieldsList != null)
             {
-                MediaFieldsList.DataSource = controlsList.OrderBy(i=> ((MediaDetailField)i).OrderIndex);
+                MediaFieldsList.DataSource = controlsList.OrderBy(i => ((MediaDetailField)i).OrderIndex);
                 MediaFieldsList.DataBind();
             }
         }

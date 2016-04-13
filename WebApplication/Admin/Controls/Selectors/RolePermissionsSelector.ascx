@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="RolePermissionsSelector.ascx.cs"
     Inherits="WebApplication.Admin.Controls.Selectors.RolePermissionsSelector" %>
+
 <div>
     <label>
         Roles:</label>

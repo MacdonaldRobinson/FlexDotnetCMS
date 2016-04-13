@@ -16,6 +16,8 @@ namespace WebApplication.Admin.MediaArticle
         private long mediaTypeId;
         private long historyVersion = 0;
 
+        public Return CanAccessItem { get; set; }
+
         protected void Page_Init(object sender, EventArgs e)
         {
             long id;
@@ -66,6 +68,10 @@ namespace WebApplication.Admin.MediaArticle
                 if (canAccessReturnObj.IsError)
                 {
                     DisplayErrorMessage("Cannot edit item", canAccessReturnObj.Error);
+
+                    CanAccessItem = canAccessReturnObj;
+
+                    return;
                 }
                 else
                 {
@@ -78,6 +84,9 @@ namespace WebApplication.Admin.MediaArticle
                         if (checkedOutItem.Value.ID != CurrentUser.ID)
                         {
                             Return returnObj = BaseMapper.GenerateReturn("Cannot edit item", "The item has been checked out by user: ( " + checkedOutItem.Value.UserName + " )");
+
+                            CanAccessItem = returnObj;
+
                             DisplayErrorMessage("Error", returnObj.Error);
 
                             return;
@@ -521,6 +530,12 @@ namespace WebApplication.Admin.MediaArticle
 
         protected void Save_OnClick(object sender, EventArgs e)
         {
+            if(CanAccessItem.IsError)
+            {
+                DisplayErrorMessage("Error saving item", CanAccessItem.Error);
+                return;
+            }
+
             if (!CurrentUser.HasPermission(PermissionsEnum.SaveItems))
             {
                 DisplayErrorMessage("Error saving item", ErrorHelper.CreateError(new Exception("You do not have the appropriate permissions to save items")));

@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin/Views/MasterPages/Popup.Master"
-    AutoEventWireup="true" CodeBehind="Detail.aspx.cs" Inherits="WebApplication.Admin.Views.PageHandlers.MediaTypes.Detail" ValidateRequest="false" %>
+    AutoEventWireup="true" CodeBehind="Detail.aspx.cs" Inherits="WebApplication.Admin.Views.PageHandlers.MediaTypes.Detail" ValidateRequest="false"%>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -61,12 +61,12 @@
                         <asp:CheckBox ID="EnableCaching" runat="server"></asp:CheckBox>
                         Enable Caching</label>                    
                 </div>
-                <%--<div>
+                <div>
                     <label for="<%= MultiRoleSelector.ClientID %>">
                         Roles That Can Access this item:
                     </label>
                     <Admin:MultiRoleSelector ID="MultiRoleSelector" runat="server" />
-                </div>--%>
+                </div>
                 <div>
                     <label for="<%= MultiMediaTypeSelector.ClientID %>">
                         Allowed Child Media Types:

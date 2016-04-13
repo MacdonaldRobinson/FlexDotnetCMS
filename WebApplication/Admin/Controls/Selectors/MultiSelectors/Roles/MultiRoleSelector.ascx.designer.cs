@@ -13,13 +13,13 @@ namespace WebApplication.Admin.Controls.Selectors {
     public partial class MultiRolesSelector {
         
         /// <summary>
-        /// RolePermissionsSelector control.
+        /// RoleSelector control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::WebApplication.Admin.Controls.Selectors.RolePermissionsSelector RolePermissionsSelector;
+        protected global::WebApplication.Admin.Controls.RolesSelector RoleSelector;
         
         /// <summary>
         /// Add control.

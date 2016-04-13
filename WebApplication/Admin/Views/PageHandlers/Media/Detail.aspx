@@ -4,7 +4,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="MediaDetailPanel" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
     <script type="text/javascript">
         $(document).ready(function(){
             $(document).on('click', 'a.preview', function(event){
@@ -79,4 +78,5 @@
             </script>
         </asp:Panel>
     </div>
+
 </asp:Content>

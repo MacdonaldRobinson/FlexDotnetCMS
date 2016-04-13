@@ -51,7 +51,7 @@ namespace WebApplication.Admin.Views.PageHandlers.MediaTypes
             selectedItem.ShowInSiteTree = ShowInSiteTree.Checked;
             selectedItem.ShowInSearchResults = ShowInSearchResults.Checked;
             selectedItem.EnableCaching = EnableCaching.Checked;
-            //selectedItem.AddRolesPermissions(MultiRoleSelector.GetSelectedRolePermissions());
+            selectedItem.AddRoles(MultiRoleSelector.GetSelectedRoles());
             selectedItem.AddChildMediaTypes(MultiMediaTypeSelector.GetSelectedMediaTypes());
             selectedItem.MainLayout = MainLayout.Text;
             selectedItem.SummaryLayout = SummaryLayout.Text;
@@ -79,19 +79,7 @@ namespace WebApplication.Admin.Views.PageHandlers.MediaTypes
             FeaturedLayout.Text = selectedItem.FeaturedLayout;
             UseMediaTypeLayouts.Checked = selectedItem.UseMediaTypeLayouts;
 
-            Dictionary<Role, IEnumerable<Permission>> rolesPermissions = new Dictionary<Role, IEnumerable<Permission>>();
-
-            selectedItem.MediaTypesRoles.ToList().ForEach(i =>
-            {
-                var permissions = new List<Permission>();
-
-                foreach (var mediaTypeRolesPermission in i.MediaTypeRolesPermissions)
-                    permissions.Add(mediaTypeRolesPermission.Permission);
-
-                rolesPermissions.Add(i.Role, permissions);
-            });
-
-            //MultiRoleSelector.SetRolePermissions(rolesPermissions);
+            MultiRoleSelector.SetSelectedRoles(selectedItem.GetRoles());
             MultiMediaTypeSelector.SetMediaTypes(selectedItem.MediaTypes.ToList());
         }
 

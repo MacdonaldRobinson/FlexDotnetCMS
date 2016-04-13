@@ -12,18 +12,13 @@ namespace FrameworkLibrary
             var returnOnj = BaseMapper.GenerateReturn();
             MediaTypeHandler = MediaTypeHandler.Trim();
 
-            if (!File.Exists(URIHelper.ConvertToAbsPath(MediaTypeHandler)))
+            if (!File.Exists(URIHelper.ConvertToAbsPath(URIHelper.ConvertAbsUrlToTilda(MediaTypeHandler))))
             {
                 var ex = new Exception("Media Type MediaTypeHandler is invalid", new Exception("File (" + MediaTypeHandler + ") does not exist"));
                 returnOnj.Error = ErrorHelper.CreateError(ex);
             }
 
             return returnOnj;
-        }
-
-        public IEnumerable<Role> GetRoles()
-        {
-            return MediaTypesRoles.Select(mediaTypeRole => RolesMapper.GetByID(mediaTypeRole.RoleID));
         }
 
         public void AddChildMediaTypes(IEnumerable<MediaType> items)
@@ -36,33 +31,32 @@ namespace FrameworkLibrary
             }
         }
 
-        public void AddRolesPermissions(Dictionary<Role, IEnumerable<Permission>> rolesPermissions)
+        public void AddRoles(List<Role> roles)
         {
-            var roles = MediaTypesRoles;
+            var mediaTypesRoles = MediaTypesRoles.ToList();
 
-            foreach (var mediaTypeRole in roles)
-                MediaTypesRolesMapper.DeletePermanently(mediaTypeRole);
-
-            foreach (var rolePermissions in rolesPermissions)
+            foreach (var mediaTypesRole in mediaTypesRoles)
             {
-                if (MediaTypesRoles.Where(i => i.RoleID == rolePermissions.Key.ID).Count() != 0) continue;
-                var mediaTypeRole = new MediaTypeRole { MediaTypeID = ID, RoleID = rolePermissions.Key.ID };
+                var mediaTypeRole = BaseMapper.GetDataModel().MediaTypeRoles.FirstOrDefault(i=>i.ID == mediaTypesRole.ID);
 
-                mediaTypeRole.DateCreated = mediaTypeRole.DateLastModified = DateTime.Now;
-
-                foreach (var mediaTypeRolesPermission in rolePermissions.Value.Select(permission => new MediaTypeRolePermission
-                                                                                                        {
-                                                                                                            MediaTypeRoleID = mediaTypeRole.RoleID,
-                                                                                                            PermissionID = permission.ID
-                                                                                                        }))
-                {
-                    mediaTypeRolesPermission.DateCreated = mediaTypeRolesPermission.DateLastModified = DateTime.Now;
-
-                    mediaTypeRole.MediaTypeRolesPermissions.Add(mediaTypeRolesPermission);
-                }
-
-                MediaTypesRoles.Add(mediaTypeRole);
+                if(mediaTypeRole != null)
+                    BaseMapper.GetDataModel().MediaTypeRoles.Remove(mediaTypeRole);                
             }
+
+            var savedChanges = BaseMapper.GetDataModel().SaveChanges();
+            
+            foreach (var role in roles)
+            {
+                var contextRole = BaseMapper.GetObjectFromContext(role);
+
+                MediaTypesRoles.Add(new MediaTypeRole() { Role = contextRole, DateCreated = DateTime.Now, DateLastModified = DateTime.Now });
+            }            
         }
+
+        public List<Role> GetRoles()
+        {
+            return MediaTypesRoles.Select(i => i.Role).ToList();
+        }
+
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
+using System.Web.UI.WebControls;
 
 namespace WebApplication.Admin.Controls.Selectors
 {
@@ -10,69 +11,63 @@ namespace WebApplication.Admin.Controls.Selectors
     {
         protected void Page_Init(object sender, EventArgs e)
         {
-            if (RolePermissions == null)
-                RolePermissions = new Dictionary<Role, IEnumerable<Permission>>();
+            if (Roles == null)
+                Roles = new List<Role>();
 
             Bind();
         }
 
-        private Dictionary<Role, IEnumerable<Permission>> RolePermissions
+        private List<Role> Roles
         {
             get
             {
-                return (Dictionary<Role, IEnumerable<Permission>>)ViewState["MultiRolesSelectorRolePermissions"];
+                return (List<Role>)Session["MultiRolesSelectorRoles"];
             }
             set
             {
-                ViewState["MultiRolesSelectorRolePermissions"] = value;
+                Session["MultiRolesSelectorRoles"] = value;
             }
         }
 
-        public Dictionary<Role, IEnumerable<Permission>> GetSelectedRolePermissions()
+        public List<Role> GetSelectedRoles()
         {
-            return RolePermissions;
+            return Roles;
         }
 
-        public void SetRolePermissions(Dictionary<Role, IEnumerable<Permission>> rolesPermissions)
+        public void SetSelectedRoles(List<Role> roles)
         {
-            RolePermissions = rolesPermissions;
+            Roles = roles;
+            Bind();
         }
 
         private void Bind()
         {
-            this.ItemList.DataSource = RolePermissions;
+            this.ItemList.DataSource = Roles;
             this.ItemList.DataBind();
-
-            Dictionary<User, IEnumerable<Permission>> usersPermissions = new Dictionary<User, IEnumerable<Permission>>();
-
-            foreach (KeyValuePair<Role, IEnumerable<Permission>> rolePermissions in RolePermissions)
-            {
-                foreach (User user in rolePermissions.Key.Users)
-                {
-                    if (usersPermissions.Keys.Where(i => i.ID == user.ID).Count() == 0)
-                        usersPermissions.Add(user, rolePermissions.Value);
-                }
-            }
-
-            //MultiUserSelector.ShowUsersPermissions(usersPermissions);
         }
 
         protected void Add_OnClick(object sender, EventArgs e)
         {
-            Role addRole = RolePermissionsSelector.GetSelectedRole();
+            Role role = RoleSelector.GetSelectedRole();
+            Roles.Add(role);
 
-            IEnumerable<KeyValuePair<Role, IEnumerable<Permission>>> rolesPermissions = RolePermissions.Where(i => i.Key.ID == addRole.ID).ToList();
-
-            foreach (KeyValuePair<Role, IEnumerable<Permission>> rolePermissions in rolesPermissions)
-                RolePermissions.Remove(rolePermissions.Key);
-
-            RolePermissions.Add(addRole, RolePermissionsSelector.GetSelectedPermissions());
+            Bind();
         }
 
         protected void ItemList_PageIndexChanging(object sender, System.Web.UI.WebControls.GridViewPageEventArgs e)
         {
             ItemList.PageIndex = e.NewPageIndex;
             ItemList.DataBind();
+        }
+
+        protected void Delete_Click(object sender, EventArgs e)
+        {
+            var roleId = long.Parse(((LinkButton)sender).CommandArgument);
+            var role = Roles.FirstOrDefault(i => i.ID == roleId);
+
+            Roles.Remove(role);
+
+            Bind();
         }
     }
 }

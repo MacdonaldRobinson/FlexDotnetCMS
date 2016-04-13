@@ -178,6 +178,8 @@ namespace WebApplication.Handlers
                     if ((viewPath == null) || (viewPath.Trim() == ""))
                         viewPath = MediaTypesMapper.GetByID(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.MediaTypeID).MediaTypeHandler;
 
+                    viewPath = URIHelper.ConvertAbsUrlToTilda(viewPath);
+
                     return CreateInstanceFromVirtualPath(viewPath, typeof(BasePage));
                 }
             }

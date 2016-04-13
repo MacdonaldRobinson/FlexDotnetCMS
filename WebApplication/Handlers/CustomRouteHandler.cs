@@ -64,6 +64,7 @@ namespace WebApplication.Handlers
                 }
 
             }
+        }
 
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {

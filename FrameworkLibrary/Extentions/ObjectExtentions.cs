@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Web.Script.Serialization;
 using System.Web.UI.WebControls;
 
 namespace FrameworkLibrary
@@ -105,6 +104,8 @@ namespace FrameworkLibrary
 
             var properties = from.GetType().GetProperties();
 
+            var updatedProperties = new Dictionary<PropertyInfo, object>();
+
             foreach (var property in properties)
             {
                 if (omitPoperties.Contains(property.Name))
@@ -117,6 +118,9 @@ namespace FrameworkLibrary
 
                 if (toProperty == null) continue;
                 var value = property.GetValue(from, null);
+
+                updatedProperties.Add(toProperty, value);
+
                 UpdateProperty(toProperty, value, to, from);
             }
         }
@@ -278,7 +282,7 @@ namespace FrameworkLibrary
                         {
                             max = Enumerable.Count(dynValue);
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                         }
 

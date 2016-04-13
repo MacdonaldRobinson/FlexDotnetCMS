@@ -6,9 +6,7 @@ namespace FrameworkLibrary
     {
         public bool HasPermission(Permission permission, IMediaDetail mediaDetail)
         {
-            var items = RolesMediaDetails.Where(i => i.RoleID == ID && i.MediaDetailID == mediaDetail.ID && i.PermissionID == permission.ID);
-
-            return items.Any();
+            return mediaDetail.RolesMediaDetails.Select(i => i.Role).Any(i => i.Permissions.Any(j => j.ID == permission.ID));
         }
     }
 }

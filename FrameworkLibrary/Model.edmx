@@ -302,7 +302,6 @@
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MediaDetailID" Type="bigint" Nullable="false" />
           <Property Name="RoleID" Type="bigint" Nullable="false" />
-          <Property Name="PermissionID" Type="bigint" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateLastModified" Type="datetime" Nullable="false" />
         </EntityType>
@@ -803,18 +802,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RolesMediaDetails_PermissionID">
-          <End Role="Permissions" Type="Self.Permissions" Multiplicity="1" />
-          <End Role="RolesMediaDetails" Type="Self.RolesMediaDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Permissions">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="RolesMediaDetails">
-              <PropertyRef Name="PermissionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_RolesMediaDetails_RoleID">
           <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
           <End Role="RolesMediaDetails" Type="Self.RolesMediaDetails" Multiplicity="*" />
@@ -1133,10 +1120,6 @@
             <End Role="MediaDetails" EntitySet="MediaDetails" />
             <End Role="RolesMediaDetails" EntitySet="RolesMediaDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_RolesMediaDetails_PermissionID" Association="Self.FK_RolesMediaDetails_PermissionID">
-            <End Role="Permissions" EntitySet="Permissions" />
-            <End Role="RolesMediaDetails" EntitySet="RolesMediaDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_RolesMediaDetails_RoleID" Association="Self.FK_RolesMediaDetails_RoleID">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="RolesMediaDetails" EntitySet="RolesMediaDetails" />
@@ -1226,20 +1209,7 @@
             <End Role="Permission" EntitySet="Permissions" />
             <End Role="UsersMediaDetail" EntitySet="UsersMediaDetails" />
           </AssociationSet>
-          <EntitySet Name="RolesMediaDetails" EntityType="FrameworkModel.RoleMediaDetail" />
-          <AssociationSet Name="FK_RolesMediaDetails_MediaDetailID" Association="FrameworkModel.FK_RolesMediaDetails_MediaDetailID">
-            <End Role="MediaDetail" EntitySet="MediaDetails" />
-            <End Role="RolesMediaDetail" EntitySet="RolesMediaDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RolesMediaDetails_PermissionID" Association="FrameworkModel.FK_RolesMediaDetails_PermissionID">
-            <End Role="Permission" EntitySet="Permissions" />
-            <End Role="RolesMediaDetail" EntitySet="RolesMediaDetails" />
-          </AssociationSet>
           <EntitySet Name="Roles" EntityType="FrameworkModel.Role" />
-          <AssociationSet Name="FK_RolesMediaDetails_RoleID" Association="FrameworkModel.FK_RolesMediaDetails_RoleID">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="RoleMediaDetail" EntitySet="RolesMediaDetails" />
-          </AssociationSet>
           <AssociationSet Name="RolesPermissions" Association="FrameworkModel.RolesPermissions">
             <End Role="Permission" EntitySet="Permissions" />
             <End Role="Role" EntitySet="Roles" />
@@ -1362,6 +1332,15 @@
             <End Role="Comment" EntitySet="Comments" />
             <End Role="MediaDetail" EntitySet="MediaDetails" />
           </AssociationSet>
+          <EntitySet Name="RolesMediaDetails" EntityType="FrameworkModel.RoleMediaDetail" />
+          <AssociationSet Name="FK_RolesMediaDetails_MediaDetailID" Association="FrameworkModel.FK_RolesMediaDetails_MediaDetailID">
+            <End Role="MediaDetail" EntitySet="MediaDetails" />
+            <End Role="RolesMediaDetail" EntitySet="RolesMediaDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RolesMediaDetails_RoleID" Association="FrameworkModel.FK_RolesMediaDetails_RoleID">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="RolesMediaDetail" EntitySet="RolesMediaDetails" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Comment">
           <Key>
@@ -1453,7 +1432,6 @@
           <Property Type="Int64" Name="CreatedByUserID" Nullable="false" />
           <Property Type="Int64" Name="LastUpdatedByUserID" Nullable="false" />
           <NavigationProperty Name="UsersMediaDetails" Relationship="FrameworkModel.FK_UsersMediaDetails_MediaDetailID" FromRole="MediaDetail" ToRole="UsersMediaDetail" />
-          <NavigationProperty Name="RolesMediaDetails" Relationship="FrameworkModel.FK_RolesMediaDetails_MediaDetailID" FromRole="MediaDetail" ToRole="RolesMediaDetail" />
           <Property Type="Boolean" Name="AllowCommenting" Nullable="false" />
           <NavigationProperty Name="MediaType" Relationship="FrameworkModel.FK_MediaDetails_MediaTypeID_MediaType_ID" FromRole="MediaDetail" ToRole="MediaType" />
           <NavigationProperty Name="CreatedByUser" Relationship="FrameworkModel.FK_MediaDetails_CreatedByUserID" FromRole="MediaDetail" ToRole="User" />
@@ -1493,6 +1471,7 @@
           <Property Name="PublishDate" Type="DateTime" Precision="3" />
           <Property Name="MainContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Comments" Relationship="FrameworkModel.MediaDetailsComments" FromRole="MediaDetail" ToRole="Comment" />
+          <NavigationProperty Name="RolesMediaDetails" Relationship="FrameworkModel.FK_RolesMediaDetails_MediaDetailID" FromRole="MediaDetail" ToRole="RolesMediaDetail" />
           </EntityType>
         <EntityType Name="Page" BaseType="FrameworkModel.MediaDetail">
         </EntityType>
@@ -1556,7 +1535,6 @@
           <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
           <Property Type="DateTime" Name="DateLastModified" Nullable="false" Precision="3" />
           <NavigationProperty Name="UsersMediaDetails" Relationship="FrameworkModel.FK_UsersMediaDetails_PermissionID" FromRole="Permission" ToRole="UsersMediaDetail" />
-          <NavigationProperty Name="RolesMediaDetails" Relationship="FrameworkModel.FK_RolesMediaDetails_PermissionID" FromRole="Permission" ToRole="RolesMediaDetail" />
           <NavigationProperty Name="Roles" Relationship="FrameworkModel.RolesPermissions" FromRole="Permission" ToRole="Role" />
           <NavigationProperty Name="MediaTypeRolesPermissions" Relationship="FrameworkModel.FK_MediaTypeRolesPermissions_MediaTypeRolesPermissionID" FromRole="Permission" ToRole="MediaTypeRolesPermission" />
         </EntityType>
@@ -1598,44 +1576,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="RoleMediaDetail">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Type="Int64" Name="MediaDetailID" Nullable="false" />
-          <Property Type="Int64" Name="RoleID" Nullable="false" />
-          <Property Type="Int64" Name="PermissionID" Nullable="false" />
-          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
-          <Property Type="DateTime" Name="DateLastModified" Nullable="false" Precision="3" />
-          <NavigationProperty Name="MediaDetail" Relationship="FrameworkModel.FK_RolesMediaDetails_MediaDetailID" FromRole="RolesMediaDetail" ToRole="MediaDetail" />
-          <NavigationProperty Name="Permission" Relationship="FrameworkModel.FK_RolesMediaDetails_PermissionID" FromRole="RolesMediaDetail" ToRole="Permission" />
-          <NavigationProperty Name="Role" Relationship="FrameworkModel.FK_RolesMediaDetails_RoleID" FromRole="RoleMediaDetail" ToRole="Role" />
-        </EntityType>
-        <Association Name="FK_RolesMediaDetails_MediaDetailID">
-          <End Type="FrameworkModel.MediaDetail" Role="MediaDetail" Multiplicity="1" />
-          <End Type="FrameworkModel.RoleMediaDetail" Role="RolesMediaDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MediaDetail">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="RolesMediaDetail">
-              <PropertyRef Name="MediaDetailID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RolesMediaDetails_PermissionID">
-          <End Type="FrameworkModel.Permission" Role="Permission" Multiplicity="1" />
-          <End Type="FrameworkModel.RoleMediaDetail" Role="RolesMediaDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Permission">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="RolesMediaDetail">
-              <PropertyRef Name="PermissionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="ID" />
@@ -1645,25 +1585,13 @@
           <Property Type="String" Name="Description" MaxLength="350" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
           <Property Type="DateTime" Name="DateLastModified" Nullable="false" Precision="3" />
-          <NavigationProperty Name="RolesMediaDetails" Relationship="FrameworkModel.FK_RolesMediaDetails_RoleID" FromRole="Role" ToRole="RoleMediaDetail" />
           <NavigationProperty Name="Permissions" Relationship="FrameworkModel.RolesPermissions" FromRole="Role" ToRole="Permission" />
           <Property Type="Boolean" Name="IsActive" Nullable="false" />
           <NavigationProperty Name="Users" Relationship="FrameworkModel.UsersRoles" FromRole="Role" ToRole="User" />
           <Property Type="String" Name="EnumName" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="MediaTypesRoles" Relationship="FrameworkModel.FK_MediaTypesRoles_Roles" FromRole="Role" ToRole="MediaTypesRole" />
+          <NavigationProperty Name="RolesMediaDetails" Relationship="FrameworkModel.FK_RolesMediaDetails_RoleID" FromRole="Role" ToRole="RolesMediaDetail" />
         </EntityType>
-        <Association Name="FK_RolesMediaDetails_RoleID">
-          <End Type="FrameworkModel.Role" Role="Role" Multiplicity="1" />
-          <End Type="FrameworkModel.RoleMediaDetail" Role="RoleMediaDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="RoleMediaDetail">
-              <PropertyRef Name="RoleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="RolesPermissions">
           <End Type="FrameworkModel.Permission" Role="Permission" Multiplicity="*" />
           <End Type="FrameworkModel.Role" Role="Role" Multiplicity="*" />
@@ -2192,6 +2120,42 @@
           <End Type="FrameworkModel.Comment" Role="Comment" Multiplicity="*" />
           <End Type="FrameworkModel.MediaDetail" Role="MediaDetail" Multiplicity="*" />
         </Association>
+        <EntityType Name="RoleMediaDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="MediaDetailID" Type="Int64" Nullable="false" />
+          <Property Name="RoleID" Type="Int64" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateLastModified" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="MediaDetail" Relationship="FrameworkModel.FK_RolesMediaDetails_MediaDetailID" FromRole="RolesMediaDetail" ToRole="MediaDetail" />
+          <NavigationProperty Name="Role" Relationship="FrameworkModel.FK_RolesMediaDetails_RoleID" FromRole="RolesMediaDetail" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK_RolesMediaDetails_MediaDetailID">
+          <End Type="FrameworkModel.MediaDetail" Role="MediaDetail" Multiplicity="1" />
+          <End Type="FrameworkModel.RoleMediaDetail" Role="RolesMediaDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RolesMediaDetail">
+              <PropertyRef Name="MediaDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RolesMediaDetails_RoleID">
+          <End Type="FrameworkModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="FrameworkModel.RoleMediaDetail" Role="RolesMediaDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RolesMediaDetail">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2355,18 +2319,6 @@
                 <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
                 <ScalarProperty Name="MediaDetailID" ColumnName="MediaDetailID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RolesMediaDetails">
-            <EntityTypeMapping TypeName="FrameworkModel.RoleMediaDetail">
-              <MappingFragment StoreEntitySet="RolesMediaDetails">
-                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-                <ScalarProperty Name="MediaDetailID" ColumnName="MediaDetailID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2627,6 +2579,17 @@
               <ScalarProperty Name="ID" ColumnName="CommentID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="RolesMediaDetails">
+            <EntityTypeMapping TypeName="FrameworkModel.RoleMediaDetail">
+              <MappingFragment StoreEntitySet="RolesMediaDetails">
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="MediaDetailID" ColumnName="MediaDetailID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2703,46 +2666,7 @@
           <ConnectorPoint PointX="9.6354166666666661" PointY="16.874746093750005" />
           <ConnectorPoint PointX="9" PointY="16.874746093750005" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="FrameworkModel.RoleMediaDetail" Width="1.5" PointX="17" PointY="17.625" Height="2.7494921875000102" />
-        <AssociationConnector Association="FrameworkModel.FK_RolesMediaDetails_MediaDetailID">
-          <ConnectorPoint PointX="6.71875" PointY="15.720358072916666" />
-          <ConnectorPoint PointX="6.71875" PointY="19.766551106770834" />
-          <ConnectorPoint PointX="6.7566666666666668" PointY="19.766551106770834" />
-          <ConnectorPoint PointX="6.9233333333333329" PointY="19.766551106770834" />
-          <ConnectorPoint PointX="9.6354166666666661" PointY="19.766551106770834" />
-          <ConnectorPoint PointX="9.8020833333333339" PointY="19.766551106770834" />
-          <ConnectorPoint PointX="12.166666666666666" PointY="19.766551106770834" />
-          <ConnectorPoint PointX="12.333333333333334" PointY="19.766551106770834" />
-          <ConnectorPoint PointX="16.666666666666668" PointY="19.766551106770834" />
-          <ConnectorPoint PointX="16.833333333333332" PointY="19.766551106770834" />
-          <ConnectorPoint PointX="17" PointY="19.766551106770834" />
-        </AssociationConnector>
-        <AssociationConnector Association="FrameworkModel.FK_RolesMediaDetails_PermissionID">
-          <ConnectorPoint PointX="12.125" PointY="18.192047526041669" />
-          <ConnectorPoint PointX="12.166666666666666" PointY="18.192047526041669" />
-          <ConnectorPoint PointX="12.333333333333334" PointY="18.192047526041669" />
-          <ConnectorPoint PointX="16.666666666666668" PointY="18.192047526041669" />
-          <ConnectorPoint PointX="16.833333333333332" PointY="18.192047526041669" />
-          <ConnectorPoint PointX="17" PointY="18.192047526041669" />
-        </AssociationConnector>
         <EntityTypeShape EntityType="FrameworkModel.Role" Width="1.5" PointX="1.875" PointY="15.125" Height="2.5571907552083353" />
-        <AssociationConnector Association="FrameworkModel.FK_RolesMediaDetails_RoleID">
-          <ConnectorPoint PointX="2.59375" PointY="17.384095052083335" />
-          <ConnectorPoint PointX="2.59375" PointY="19.577763357338597" />
-          <ConnectorPoint PointX="3.6529956666666661" PointY="19.577763357338597" />
-          <ConnectorPoint PointX="3.819662333333333" PointY="19.577763357338597" />
-          <ConnectorPoint PointX="4.166666666666667" PointY="19.577763357338597" />
-          <ConnectorPoint PointX="4.333333333333333" PointY="19.577763357338597" />
-          <ConnectorPoint PointX="6.635416666666667" PointY="19.577763357338597" />
-          <ConnectorPoint PointX="6.9233333333333329" PointY="19.577763357338597" />
-          <ConnectorPoint PointX="9.6354166666666661" PointY="19.577763357338597" />
-          <ConnectorPoint PointX="9.8020833333333339" PointY="19.577763357338597" />
-          <ConnectorPoint PointX="12.166666666666666" PointY="19.577763357338597" />
-          <ConnectorPoint PointX="12.333333333333334" PointY="19.577763357338597" />
-          <ConnectorPoint PointX="16.666666666666668" PointY="19.577763357338597" />
-          <ConnectorPoint PointX="16.833333333333332" PointY="19.577763357338597" />
-          <ConnectorPoint PointX="17" PointY="19.577763357338597" />
-        </AssociationConnector>
         <AssociationConnector Association="FrameworkModel.RolesPermissions">
           <ConnectorPoint PointX="10.625" PointY="17.192047526041669" />
           <ConnectorPoint PointX="9.8020833333333339" PointY="17.192047526041669" />
@@ -2947,6 +2871,9 @@
         <AssociationConnector Association="FrameworkModel.FK_Settings_Languages" />
         <AssociationConnector Association="FrameworkModel.FK_Settings_MasterPages" />
         <AssociationConnector Association="FrameworkModel.MediaDetailsComments" />
+        <EntityTypeShape EntityType="FrameworkModel.RoleMediaDetail" Width="1.5" PointX="7" PointY="19.5" />
+        <AssociationConnector Association="FrameworkModel.FK_RolesMediaDetails_MediaDetailID" />
+        <AssociationConnector Association="FrameworkModel.FK_RolesMediaDetails_RoleID" />
         </Diagram>
     </Diagrams>
   </Designer>

@@ -17,12 +17,10 @@ namespace FrameworkLibrary
         public long ID { get; set; }
         public long MediaDetailID { get; set; }
         public long RoleID { get; set; }
-        public long PermissionID { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.DateTime DateLastModified { get; set; }
     
         public virtual MediaDetail MediaDetail { get; set; }
-        public virtual Permission Permission { get; set; }
         public virtual Role Role { get; set; }
     }
 }

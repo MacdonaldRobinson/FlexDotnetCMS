@@ -68,7 +68,7 @@ namespace WebApplication.Admin.Controls.Selectors
                 var RoleMediaDetail = new RoleMediaDetail();
                 RoleMediaDetail.DateCreated = RoleMediaDetail.DateLastModified = DateTime.Now;
                 RoleMediaDetail.RoleID = role.ID;
-                RoleMediaDetail.PermissionID = permission.ID;
+                //RoleMediaDetail.PermissionID = permission.ID;
                 RoleMediaDetail.MediaDetailID = AdminBasePage.SelectedMediaDetail.ID;
 
                 RoleMediaDetails.Add(RoleMediaDetail);

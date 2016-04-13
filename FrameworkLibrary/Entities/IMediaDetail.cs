@@ -99,7 +99,7 @@ namespace FrameworkLibrary
         bool HasAnyRoles();
         bool HasAnyUsers();
         bool HasRole(Role role);
-        bool HasUser(User user);        
+        bool HasUser(User user);
         Field LoadField(string fieldCode);
         void RemoveFromCache();
         void SaveToFileCache(RenderVersion renderVersion, string html, string queryString = "");

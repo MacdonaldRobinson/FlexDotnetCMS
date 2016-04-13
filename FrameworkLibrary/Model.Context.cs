@@ -32,7 +32,6 @@ namespace FrameworkLibrary
         public virtual DbSet<MediaDetail> MediaDetails { get; set; }
         public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<UserMediaDetail> UsersMediaDetails { get; set; }
-        public virtual DbSet<RoleMediaDetail> RolesMediaDetails { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<MediaType> MediaTypes { get; set; }
@@ -48,5 +47,6 @@ namespace FrameworkLibrary
         public virtual DbSet<FieldAssociation> FieldAssociations { get; set; }
         public virtual DbSet<FieldFile> FieldFiles { get; set; }
         public virtual DbSet<IPLocationTrackerEntry> IPLocationTrackerEntries { get; set; }
+        public virtual DbSet<RoleMediaDetail> RolesMediaDetails { get; set; }
     }
 }

@@ -17,10 +17,10 @@ namespace FrameworkLibrary
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Role()
         {
-            this.RolesMediaDetails = new HashSet<RoleMediaDetail>();
             this.Permissions = new HashSet<Permission>();
             this.Users = new HashSet<User>();
             this.MediaTypesRoles = new HashSet<MediaTypeRole>();
+            this.RolesMediaDetails = new HashSet<RoleMediaDetail>();
         }
     
         public long ID { get; set; }
@@ -32,12 +32,12 @@ namespace FrameworkLibrary
         public string EnumName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RoleMediaDetail> RolesMediaDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Permission> Permissions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MediaTypeRole> MediaTypesRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RoleMediaDetail> RolesMediaDetails { get; set; }
     }
 }

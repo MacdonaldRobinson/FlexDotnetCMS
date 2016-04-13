@@ -13,21 +13,12 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs {
     public partial class RolesUsersTab {
         
         /// <summary>
-        /// MediaDetailRolesAssociationEditor control.
+        /// MultiRoleSelector control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::WebApplication.Admin.Controls.MediaDetailRolesAssociationEditor MediaDetailRolesAssociationEditor;
-        
-        /// <summary>
-        /// MediaDetailUsersAssociationEditor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::WebApplication.Admin.Controls.Editors.MediaDetailUsersAssociationEditor MediaDetailUsersAssociationEditor;
+        protected global::WebApplication.Admin.Controls.Selectors.MultiRolesSelector MultiRoleSelector;
     }
 }

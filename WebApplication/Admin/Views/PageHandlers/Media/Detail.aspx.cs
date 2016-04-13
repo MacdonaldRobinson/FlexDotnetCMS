@@ -530,7 +530,7 @@ namespace WebApplication.Admin.MediaArticle
 
         protected void Save_OnClick(object sender, EventArgs e)
         {
-            if(CanAccessItem.IsError)
+            if (CanAccessItem != null && CanAccessItem.IsError)
             {
                 DisplayErrorMessage("Error saving item", CanAccessItem.Error);
                 return;

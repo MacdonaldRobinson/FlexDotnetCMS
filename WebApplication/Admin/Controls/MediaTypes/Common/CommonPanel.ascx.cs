@@ -61,7 +61,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
 
             if ((this.SelectedItem != null) && ((this.SelectedItem.ID != 0)))
             {
-                //AddRolesUsersTab();
+                AddRolesUsersTab();
                 AddHistoryTab();
             }
 
@@ -132,7 +132,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
         {
             if (BasePage.CurrentUser.IsInRole(RoleEnum.Administrator))
             {
-                AddTab("Roles / Users", "~/Admin/Controls/MediaTypes/Common/Tabs/RolesUsersTab.ascx");
+                AddTab("Roles", "~/Admin/Controls/MediaTypes/Common/Tabs/RolesUsersTab.ascx");
             }
         }
 

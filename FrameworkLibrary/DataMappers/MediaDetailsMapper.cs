@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core;
 
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -326,11 +325,17 @@ namespace FrameworkLibrary
             else if (mediaDetail.RolesMediaDetails.Count != 0)
             {
                 if (user.Roles.Count == 0)
+                {
                     returnObj = GenerateReturn("Cannot access item", "You do not belong to any role, this item is restricted to certin roles");
+                }
                 else if (!mediaDetail.RolesMediaDetails.Where(i => user.IsInRole(i.Role)).Any())
+                {
                     returnObj = GenerateReturn("Cannot access item", "The roles that you belong to do not have permissions to access this item");
+                }
                 else if ((mediaDetail.UsersMediaDetails.Count != 0) && (!mediaDetail.UsersMediaDetails.Where(i => i.UserID == user.ID).Any()))
+                {
                     returnObj = GenerateReturn("Cannot access item", "You do not have permissions to access this item");
+                }
             }
 
             return returnObj;
@@ -777,7 +782,8 @@ namespace FrameworkLibrary
                 GetDataModel().Fields.Remove(item);
             }
 
-            var roleMediaDetails = obj.RolesMediaDetails;
+            var roleMediaDetails = obj.RolesMediaDetails.ToList();
+
             foreach (RoleMediaDetail item in roleMediaDetails)
             {
                 GetDataModel().RolesMediaDetails.Remove(item);
@@ -934,7 +940,7 @@ namespace FrameworkLibrary
                         }
                         else
                         {
-                            if(!string.IsNullOrEmpty(mediaField.FrontEndLayout))
+                            if (!string.IsNullOrEmpty(mediaField.FrontEndLayout))
                             {
                                 var parsedValue = ParseSpecialTags(mediaDetail, mediaField.FrontEndLayout, 0, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail });
                                 customCode = customCode.Replace(field.ToString(), parsedValue);
@@ -956,7 +962,7 @@ namespace FrameworkLibrary
                 }
             }
 
-            if(passToParser == null)
+            if (passToParser == null)
             {
                 passToParser = mediaDetail;
             }

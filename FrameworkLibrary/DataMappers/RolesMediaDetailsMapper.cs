@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core;
 
 using System.Linq;
 
@@ -32,14 +31,14 @@ namespace FrameworkLibrary
         {
             var allItems = GetByRole(role, mediaDetail);
 
-            return (from item in allItems where item.Permission.IsActive select item.Permission);
+            return allItems.SelectMany(i => i.Role.Permissions.Where(j => j.IsActive));
         }
 
         public static IEnumerable<RoleMediaDetail> GetAllWithPermission(Permission permission)
         {
             var items = GetAll();
 
-            return items.Where(item => item.PermissionID == permission.ID);
+            return items.Where(item => item.Role.Permissions.Any(i => i.ID == permission.ID));
         }
 
         public static IEnumerable<Permission> GetRolesPermissions(IEnumerable<Role> roles, IMediaDetail mediaDetail)

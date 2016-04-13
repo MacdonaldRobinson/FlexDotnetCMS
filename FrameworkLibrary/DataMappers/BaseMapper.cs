@@ -152,6 +152,7 @@ namespace FrameworkLibrary
         }
 
         public static bool? CanConnectToDB { get; private set; }
+
         public static bool CanConnectToDBUsingEntities(Entities context)
         {
             if (CanConnectToDB != null)

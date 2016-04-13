@@ -55,16 +55,15 @@ namespace WebApplication.Handlers
 
                     if (!string.IsNullOrEmpty(cacheData))
                         BaseService.WriteHtml(cacheData + "<!-- Loaded from level 2 - File Cache -->");
+
+                }
+
+                if (BaseMapper.CanConnectToDB != null && !(bool)BaseMapper.CanConnectToDB)
+                {
+                    BaseService.WriteHtml("<h1>Cannot connect to DB and no cached version for this page exists</h1>");
                 }
 
             }
-
-            if (BaseMapper.CanConnectToDB != null && !(bool)BaseMapper.CanConnectToDB)
-            {
-                BaseService.WriteHtml("<h1>Cannot connect to DB and no cached version for this page exists</h1>");
-            }
-
-        }
 
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {

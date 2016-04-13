@@ -22,7 +22,7 @@ namespace FrameworkLibrary
                 }
             }
 
-            if ((language != null) &&  (Thread.CurrentThread.CurrentCulture.Name != language.CultureCode))
+            if ((language != null) && (Thread.CurrentThread.CurrentCulture.Name != language.CultureCode))
                 Thread.CurrentThread.CurrentCulture = new CultureInfo(language.CultureCode);
 
             return language;
@@ -37,28 +37,6 @@ namespace FrameworkLibrary
 
             return wasSet;
         }
-
-        /*public static IMediaDetail RootMediaDetail
-        {
-            get
-            {
-                var rootMediaDetail = (IMediaDetail)ContextHelper.GetFromRequestContext("RootMediaDetail");
-
-                if (rootMediaDetail != null)
-                    return rootMediaDetail;
-                else
-                {
-                    rootMediaDetail = MediaDetailsMapper.GetByMedia(RootMedia, GetCurrentLanguage());
-
-                    if (rootMediaDetail == null)
-                        rootMediaDetail = MediaDetailsMapper.GetByMedia(RootMedia, LanguagesMapper.GetDefaultLanguage());
-
-                    ContextHelper.SetToRequestContext("RootMediaDetail", rootMediaDetail);
-
-                    return rootMediaDetail;
-                }
-            }
-        }*/
 
         public static Dictionary<IMediaDetail, User> CheckedOutItems
         {
@@ -130,23 +108,6 @@ namespace FrameworkLibrary
         {
             return WebsitesMapper.GetWebsite(0, language).AutoCalculatedVirtualPath + "page-not-found/";
         }
-
-        /*public static Media RootMedia
-        {
-            get
-            {
-                var rootMedia = (Media)ContextHelper.GetFromRequestContext("RootMedia");
-
-                if (rootMedia != null)
-                    return rootMedia;
-                else
-                {
-                    rootMedia = MediasMapper.GetRootMedia();
-                    ContextHelper.SetToRequestContext("RootMedia", rootMedia);
-                    return rootMedia;
-                }
-            }
-        }*/
 
         public static string SelectedLanguageKey
         {

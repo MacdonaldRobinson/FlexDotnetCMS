@@ -39,39 +39,44 @@
                 <div>
                     <label for="<%= IsActive.ClientID %>">
                         <asp:CheckBox ID="IsActive" runat="server"></asp:CheckBox>
-                        Is Active</label>                    
+                        Is Active</label>
                 </div>
                 <div>
                     <label for="<%= ShowInMenu.ClientID %>">
                         <asp:CheckBox ID="ShowInMenu" runat="server"></asp:CheckBox>
-                        Show In Menu</label>                    
+                        Show In Menu</label>
                 </div>
                 <div>
                     <label for="<%= ShowInSearchResults.ClientID %>">
                         <asp:CheckBox ID="ShowInSearchResults" runat="server"></asp:CheckBox>
-                        Show In Search Results</label>                    
+                        Show In Search Results</label>
                 </div>
                 <div>
                     <label for="<%= ShowInSiteTree.ClientID %>">
                         <asp:CheckBox ID="ShowInSiteTree" runat="server"></asp:CheckBox>
-                        Show In SiteTree</label>                    
+                        Show In SiteTree</label>
                 </div>
                 <div>
                     <label for="<%= EnableCaching.ClientID %>">
                         <asp:CheckBox ID="EnableCaching" runat="server"></asp:CheckBox>
-                        Enable Caching</label>                    
+                        Enable Caching</label>
                 </div>
                 <div>
-                    <label for="<%= MultiRoleSelector.ClientID %>">
-                        Roles That Can Access this item:
-                    </label>
-                    <Admin:MultiRoleSelector ID="MultiRoleSelector" runat="server" />
+                    <fieldset>
+                        <label for="<%= MultiRoleSelector.ClientID %>">
+                            Roles That Can Access this item:
+                        </label>
+                        <Admin:MultiRoleSelector ID="MultiRoleSelector" runat="server" />
+                    </fieldset>
                 </div>
                 <div>
-                    <label for="<%= MultiMediaTypeSelector.ClientID %>">
-                        Allowed Child Media Types:
-                    </label>
-                    <Admin:MultiMediaTypeSelector ID="MultiMediaTypeSelector" runat="server" />
+                    <fieldset>
+                        <label for="<%= MultiMediaTypeSelector.ClientID %>">
+                            Allowed Child Media Types:
+                        </label>
+                        <Admin:MultiMediaTypeSelector ID="MultiMediaTypeSelector" runat="server" />
+
+                    </fieldset>
                 </div>
             </fieldset>
         </div>

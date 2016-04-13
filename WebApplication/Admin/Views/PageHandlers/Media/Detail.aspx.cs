@@ -363,7 +363,7 @@ namespace WebApplication.Admin.MediaArticle
             {
                 DisplaySuccessMessage("Successfully Published Item");
 
-                //UpdateFieldsFromObject();
+                UpdateFieldsFromObject();
 
                 PublishNow.Visible = false;
                 ContextHelper.Clear(ContextType.Cache);

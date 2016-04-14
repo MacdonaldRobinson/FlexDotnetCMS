@@ -70,7 +70,7 @@
                     <asp:TextBox runat="server" ID="SetAdminControlValue" TextMode="MultiLine" class="AceEditor"/>
                 </div>
                 <div>
-                    <label for="<%# FieldValue.ClientID %>">Field Value:</label>
+                    <label for="<%# FieldValue.ClientID %>">Default Field Value:</label>
                 <asp:TextBox runat="server" ID="FieldValue" TextMode="MultiLine" />
                 </div>
                 <div class="buttons">

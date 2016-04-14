@@ -295,7 +295,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
                             dataItem.FieldValue = fieldValue.Replace(URIHelper.BaseUrl, "{BaseUrl}");
                     }
 
-                    var returnObj = MediaDetailsMapper.Update(dataItem.MediaDetail);
+                    var returnObj = MediaDetailsMapper.Update(SelectedItem);
 
                     if (returnObj.IsError)
                         BasePage.DisplayErrorMessage("Error", returnObj.Error);
@@ -376,11 +376,11 @@ namespace WebApplication.Admin.Controls.MediaTypes
             if ((item.ID == 0) && (item.LinkTitle == null || item.LinkTitle == ""))
             {
                 var mediaType = MediaTypesMapper.GetByID(item.MediaTypeID);
-                var createdItems = mediaType.MediaDetails.Where(i => !i.IsHistory && i.ParentMediaID == item.ParentMediaID).Select(i => i);
+                var createdItems = mediaType.MediaDetails.Where(i => !i.IsHistory && i.ParentMediaID == item.ParentMediaID && i.LanguageID == AdminBasePage.CurrentLanguage.ID).Select(i => i);
 
                 var newIndex = createdItems.Count() + 1;
 
-                item.LinkTitle = mediaType.Name + " " + newIndex;
+                item.LinkTitle = AdminBasePage.CurrentLanguage.DisplayName + " - " + mediaType.Name + " " + newIndex;
             }
 
             LinkTitle.Text = item.LinkTitle;

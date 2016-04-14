@@ -147,11 +147,11 @@ namespace WebApplication.Admin.Views.MasterPages
             if (duplicatedItem.ID == 0)
             {
                 var mediaType = MediaTypesMapper.GetByID(detail.MediaTypeID);
-                var createdItems = mediaType.MediaDetails.Where(i => !i.IsHistory && i.ParentMediaID == detail.ParentMediaID).Select(i => i);
+                var createdItems = mediaType.MediaDetails.Where(i => !i.IsHistory && i.ParentMediaID == detail.ParentMediaID && i.LanguageID == detail.LanguageID).Select(i => i);
 
                 var newIndex = createdItems.Count() + 1;
 
-                duplicatedItem.LinkTitle = mediaType.Name + " " + newIndex;
+                duplicatedItem.LinkTitle = detail.Language.DisplayName+" - "+ mediaType.Name + " " + newIndex;
             }
 
             //duplicatedItem.LinkTitle = duplicatedItem.LinkTitle;
@@ -164,6 +164,7 @@ namespace WebApplication.Admin.Views.MasterPages
                 mediaDetailField.FieldLabel = item.FieldLabel;
                 mediaDetailField.AdminControl = item.AdminControl;
                 mediaDetailField.FieldValue = item.FieldValue;
+                mediaDetailField.GroupName = "";
                 mediaDetailField.GetAdminControlValue = item.GetAdminControlValue;
                 mediaDetailField.SetAdminControlValue = item.SetAdminControlValue;
                 mediaDetailField.DateCreated = mediaDetailField.DateLastModified = DateTime.Now;

@@ -29,21 +29,18 @@
             <em>NOTE: If this is checked then the media type layouts will be used instead of the layouts below</em>
         </label>
     </div>
-    <div id="ItemLayouts">
+    <div id="ItemLayouts" class="accordian opened">
+        <h3>Main Layout</h3>
         <div>
-            <label class="exception" for="<%= MainLayout.ClientID %>">
-                Main Layout:</label>
-            <asp:TextBox runat="server" ID="MainLayout" TextMode="MultiLine" Height="300px" CssClass="AceEditor" />
+            <asp:TextBox runat="server" ID="MainLayout" TextMode="MultiLine" Height="600px" CssClass="AceEditor" />
         </div>
+        <h3>Summary Layout</h3>
         <div>
-            <label class="exception" for="<%= SummaryLayout.ClientID %>">
-                Summary Layout:</label>
-            <asp:TextBox runat="server" ID="SummaryLayout" TextMode="MultiLine" Height="150px" CssClass="AceEditor" />
+            <asp:TextBox runat="server" ID="SummaryLayout" TextMode="MultiLine" Height="200px" CssClass="AceEditor" />
         </div>
+        <h3>Featured Layout</h3>
         <div>
-            <label class="exception" for="<%= FeaturedLayout.ClientID %>">
-                Featured Layout:</label>
-            <asp:TextBox runat="server" ID="FeaturedLayout" TextMode="MultiLine" Height="150px" CssClass="AceEditor" />
+            <asp:TextBox runat="server" ID="FeaturedLayout" TextMode="MultiLine" Height="200px" CssClass="AceEditor" />
         </div>
     </div>
 </fieldset>

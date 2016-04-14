@@ -196,6 +196,8 @@ namespace WebApplication.Admin.MediaArticle
                 RemovePreviewPanelScript.Visible = false;
             }
 
+            UpdateSectionTitles();
+
         }
 
         public IMediaDetailPanel Panel

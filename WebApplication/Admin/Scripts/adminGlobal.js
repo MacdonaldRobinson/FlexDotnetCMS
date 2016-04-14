@@ -664,8 +664,32 @@ function getFieldsAutoComplete()
 function initAceEditors() {
     var wordList = getFieldsAutoComplete();
 
+    $(document).on("change", "#AttachEditorToBrowserPanel", function () {
+        if(!$(this).is(":checked"))
+        {
+            $("#PreviewPanel")[0].src = $("#PreviewPanel")[0].src;
+        }
+        else
+        {
+            var textarea = $(this).parent().find("textarea");
+            var value = textarea.val();
+
+            $("#PreviewPanel")[0].contentWindow.document.getElementById("MainContentPlaceHolder").innerHTML = value;
+        }
+    });
+
+
     $(".AceEditor").each(function () {
+        var id = $(this).attr("id");
         var editorId = $(this).attr("name") + "-editor";
+
+        if ($("#PreviewPanel").length > 0) {
+            if ($(this).hasClass("CanAttachToBrowserPanel"))
+            {
+                $("#" + id).parent().prepend("<input type='checkbox' id='AttachEditorToBrowserPanel' /> Attach editor to browser panel");
+            }
+        }
+
         var style = $(this).attr("style");
 
         $(this).parent().append("<div id='" + editorId + "' class='ace-editor' style='" + style + "'></div>");
@@ -703,7 +727,15 @@ function initAceEditors() {
         editor.completers = [langTools.snippetCompleter, langTools.textCompleter, customCompleter]
 
         editor.getSession().on('change', function () {
-            textarea.val(editor.getSession().getValue());
+            var value = editor.getSession().getValue();
+
+            textarea.val(value);
+
+            if ($("#PreviewPanel").length > 0) {
+                if (textarea.parent().find("#AttachEditorToBrowserPanel").is(":checked")) {
+                    $("#PreviewPanel")[0].contentWindow.document.getElementById("MainContentPlaceHolder").innerHTML = value;
+                }
+            }
         });
     });
 }

@@ -24,7 +24,9 @@
             <div class="container">
                 <Site:Header ID="Header" runat="server" />
                 <Site:GenerateBreadCrumb ID="GenerateBreadCrumb" runat="server" />
-                <asp:ContentPlaceHolder ID="MainContentPlaceHolder" runat="server"></asp:ContentPlaceHolder>
+                <div id="MainContentPlaceHolder">
+                    <asp:ContentPlaceHolder ID="MainContentPlaceHolder" runat="server"></asp:ContentPlaceHolder>
+                </div>
             </div>
         </div>
         <!-- Wrapper end -->

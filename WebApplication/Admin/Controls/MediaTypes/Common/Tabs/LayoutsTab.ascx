@@ -32,7 +32,7 @@
     <div id="ItemLayouts" class="accordian opened">
         <h3>Main Layout</h3>
         <div>
-            <asp:TextBox runat="server" ID="MainLayout" TextMode="MultiLine" Height="400px" CssClass="AceEditor" />
+            <asp:TextBox runat="server" ID="MainLayout" TextMode="MultiLine" Height="400px" CssClass="AceEditor CanAttachToBrowserPanel"/>
         </div>
         <h3>Summary Layout</h3>
         <div>
@@ -43,4 +43,5 @@
             <asp:TextBox runat="server" ID="FeaturedLayout" TextMode="MultiLine" Height="200px" CssClass="AceEditor" />
         </div>
     </div>
+
 </fieldset>

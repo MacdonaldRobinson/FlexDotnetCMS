@@ -26,7 +26,9 @@
                 <Site:Header ID="Header" runat="server" />
                 <Site:GenerateBreadCrumb runat="server" id="GenerateBreadCrumb" />
                 <Site:GenerateSubNav runat="server" id="GenerateSubNav" />
-                <asp:ContentPlaceHolder ID="MainContentPlaceHolder" runat="server"></asp:ContentPlaceHolder>
+                <div id="MainContentPlaceHolder">
+                    <asp:ContentPlaceHolder ID="MainContentPlaceHolder" runat="server"></asp:ContentPlaceHolder>
+                </div>
             </div>
         </div>
         <!-- Wrapper end -->

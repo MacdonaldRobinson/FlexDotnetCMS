@@ -42,8 +42,18 @@
                 {
                     msg += "<br /><br /><strong>Error Details -</strong><br /><br />" + error.Exception.Message;
 
-                    if (error.Exception.InnerException != null && !string.IsNullOrEmpty(error.Exception.InnerException.Message))
-                        msg += "<br /><br />Inner Exception:<br />" + error.Exception.InnerException.Message;
+                    var exception = error.Exception;
+                    var innerExceptionMessages = "";
+
+                    while (exception !=null && exception?.InnerException?.Message !="")
+                    {
+                        exception = exception?.InnerException;
+
+                        if(exception != null)
+                            innerExceptionMessages = exception.Message + "<br /><br />";
+                    }
+
+                    msg += "<br /><br />Inner Exception:<br />" + innerExceptionMessages;
                 }
             }
 

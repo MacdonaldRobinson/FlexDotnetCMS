@@ -599,6 +599,14 @@ namespace WebApplication.Admin.MediaArticle
 
             UpdateObjectFromFields(selectedItem);
 
+            var validate = selectedItem.Validate();
+
+            if (validate.IsError)
+            {
+                DisplayErrorMessage("Error saving item", validate.Error);                
+                return;
+            }
+
             if ((oldPostPublishDate != selectedItem.PublishDate) && !CurrentUser.HasPermission(PermissionsEnum.PublishItems))
             {
                 DisplayErrorMessage("Error saving item", ErrorHelper.CreateError(new Exception("You do not have the appropriate permissions to publish items")));

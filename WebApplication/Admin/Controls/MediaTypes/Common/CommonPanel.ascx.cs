@@ -294,13 +294,13 @@ namespace WebApplication.Admin.Controls.MediaTypes
                         if (fieldValue != "{" + dataItem.GetAdminControlValue + "}")
                             dataItem.FieldValue = fieldValue.Replace(URIHelper.BaseUrl, "{BaseUrl}");
                     }
-
-                    var returnObj = MediaDetailsMapper.Update(SelectedItem);
-
-                    if (returnObj.IsError)
-                        BasePage.DisplayErrorMessage("Error", returnObj.Error);
                 }
             }
+
+            /*var returnObj = MediaDetailsMapper.Update(SelectedItem);
+
+            if (returnObj.IsError)
+                BasePage.DisplayErrorMessage("Error", returnObj.Error);*/
         }
 
         private void UpdateMediaFieldsFromObject()

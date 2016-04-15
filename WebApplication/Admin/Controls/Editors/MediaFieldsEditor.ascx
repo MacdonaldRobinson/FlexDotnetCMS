@@ -19,14 +19,14 @@
 
             initAceEditors();
             BindReOrder();
-                       
+
             if (event._postBackSettings.asyncTarget.indexOf("$Update") != -1 || event._postBackSettings.asyncTarget.indexOf("$Delete") != -1)
             {
                 //window.location.reload();
             }
         });
 
-        function check(elem) {            
+        function check(elem) {
             if ($(elem).is(":checked")) {
                 $("#FrontEndLayoutWrapper").hide();
             }
@@ -36,7 +36,7 @@
         }
     });
 
-    $(document).ajaxComplete(function () {        
+    $(document).ajaxComplete(function () {
         BindReOrder();
     });
 
@@ -93,7 +93,7 @@
                     <asp:Literal ID="FieldDetailsTitle" runat="server" /></h2>
                 <asp:HiddenField ID="FieldID" runat="server" Value="0" />
                 <div>
-                    <label for="<%# FieldCode.ClientID %>">Field Code:</label>                    
+                    <label for="<%# FieldCode.ClientID %>">Field Code:</label>
                 <asp:TextBox runat="server" ID="FieldCode" />
                 </div>
                 <div>
@@ -101,7 +101,7 @@
                 <asp:TextBox runat="server" ID="FieldLabel" />
                 </div>
                 <div>
-                    <asp:CheckBox runat="server" ID="RenderLabelAfterControl" /> <label for="<%# RenderLabelAfterControl.ClientID %>">Render Label After Control</label> 
+                    <asp:CheckBox runat="server" ID="RenderLabelAfterControl" /> <label for="<%# RenderLabelAfterControl.ClientID %>">Render Label After Control</label>
                 </div>
                 <div>
                     <label for="<%# GroupName.ClientID %>">Group Name:</label>
@@ -114,29 +114,32 @@
                 </div>
                 <div>
                     <label for="<%# AdminControl.ClientID %>">Admin Control:</label>
-                <asp:TextBox runat="server" ID="AdminControl" TextMode="MultiLine" class="AceEditor" Height="200" />
+                <asp:TextBox runat="server" ID="AdminControl" TextMode="MultiLine" class="AceEditor" Height="300" />
                 </div>
                 <div>
                     <label>
                         <asp:CheckBox ID="UseMediaTypeFieldFrontEndLayout" runat="server" />
-                        <label for="<%# UseMediaTypeFieldFrontEndLayout.ClientID %>">Use Media Type Field FrontEnd Layout</label>                        
+                        <label for="<%# UseMediaTypeFieldFrontEndLayout.ClientID %>">Use Media Type Field FrontEnd Layout</label>
                     </label>
                 </div>
-                <div id="FrontEndLayoutWrapper">
-                    <label for="<%# FrontEndLayout.ClientID %>">Front End Layout:</label>                    
-                    <asp:TextBox runat="server" ID="FrontEndLayout" TextMode="MultiLine" class="AceEditor" />
-                </div>
-                <div>
-                    <label for="<%# GetAdminControlValue.ClientID %>">Get Admin Control Value:</label>                    
-                <asp:TextBox runat="server" ID="GetAdminControlValue" TextMode="MultiLine" class="AceEditor" Height="200"/>
-                </div>
-                <div>
-                    <label for="<%# SetAdminControlValue.ClientID %>">Set Admin Control Value:</label>                    
-                <asp:TextBox runat="server" ID="SetAdminControlValue" TextMode="MultiLine" class="AceEditor" Height="200"/>
-                </div>
-                <div>
-                    <label for="<%# FieldValue.ClientID %>">Field Value:</label>
-                <asp:TextBox runat="server" ID="FieldValue" TextMode="MultiLine" />
+
+                <div class="accordian opened">
+                    <h3>Front End Layout</h3>
+                    <div>
+                        <asp:TextBox runat="server" ID="FrontEndLayout" TextMode="MultiLine" class="AceEditor" Height="400"/>
+                    </div>
+                    <h3>Get Admin Control Value</h3>
+                    <div>
+                        <asp:TextBox runat="server" ID="GetAdminControlValue" TextMode="MultiLine" class="AceEditor" Height="200"/>
+                    </div>
+                    <h3>Set Admin Control Value</h3>
+                    <div>
+                        <asp:TextBox runat="server" ID="SetAdminControlValue" TextMode="MultiLine" class="AceEditor" Height="200"/>
+                    </div>
+                    <h3>Field Value</h3>
+                    <div>
+                        <asp:TextBox runat="server" ID="FieldValue" TextMode="MultiLine" />
+                    </div>
                 </div>
             </fieldset>
         </asp:Panel>

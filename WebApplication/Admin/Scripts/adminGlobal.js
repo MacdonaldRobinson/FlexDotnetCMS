@@ -863,7 +863,7 @@ function BindGridViewSortable(CssSelector, WebserviceUrl, UpdatePanelClientId, O
 }
 $(function () {
 
-    console.log(window.location.href);
+    //console.log(window.location.href);
     $('div.split-pane').splitPane();
     //$("#SiteTree ul").sortable({ connectWith: "ul" });
     BindTree();

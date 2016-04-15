@@ -1,5 +1,4 @@
 ﻿using RazorEngine;
-using RazorEngine.Configuration;
 using RazorEngine.Templating;
 using System;
 using System.Collections.Generic;
@@ -178,7 +177,7 @@ namespace FrameworkLibrary
                         tagValue = data.Replace(item.ToString(), StringHelper.FormatOnlyDate((DateTime)tempNestedProperty));
 
                     if (tempNestedProperty is string || tempNestedProperty is bool || tempNestedProperty is long)
-                        tagValue = data.Replace(item.ToString(), tempNestedProperty.ToString()); 
+                        tagValue = data.Replace(item.ToString(), tempNestedProperty.ToString());
                 }
 
                 if (tagValue.StartsWith("~/"))
@@ -197,9 +196,15 @@ namespace FrameworkLibrary
                     tagValue = "@using FrameworkLibrary\n" + tagValue;
                     var tagKey = "templateKey:" + tagValue;
 
-                    var result = Engine.Razor.RunCompile(tagValue, tagKey, null, obj);
+                    try
+                    {
+                        var result = Engine.Razor.RunCompile(tagValue, tagKey, null, obj);
+                        data = data.Replace(tag, result);
+                    }
+                    catch (Exception ex)
+                    {
 
-                    data = data.Replace(tag, result);
+                    }
                 }
                 else
                 {
@@ -208,14 +213,19 @@ namespace FrameworkLibrary
                 }
             }
 
-            if (!string.IsNullOrEmpty(data) && data.Contains("@") && compileRazor)
+            if (!string.IsNullOrEmpty(data) && data.Contains("@") && !data.StartsWith("{") && compileRazor)
             {
                 data = "@using FrameworkLibrary\n" + data;
                 var topTagKey = "templateKey:" + data;
 
-                var topResult = Engine.Razor.RunCompile(data, topTagKey, null, obj);
-
-                data = data.Replace(data, topResult);
+                try
+                {
+                    var topResult = Engine.Razor.RunCompile(data, topTagKey, null, obj);
+                    data = data.Replace(data, topResult);
+                }
+                catch (Exception ex)
+                {
+                }
             }
 
             return data;
@@ -235,7 +245,7 @@ namespace FrameworkLibrary
             {
                 object tempNestedProperty = obj;
                 foreach (var nestedProperty in nestedProperties)
-                {                    
+                {
                     var tempPropertyInfo = tempNestedProperty.GetType().GetProperty(nestedProperty);
 
                     if (tempPropertyInfo != null)

@@ -151,7 +151,7 @@ namespace WebApplication.Admin.Views.MasterPages
 
                 var newIndex = createdItems.Count() + 1;
 
-                duplicatedItem.LinkTitle = detail.Language.DisplayName+" - "+ mediaType.Name + " " + newIndex;
+                duplicatedItem.LinkTitle = detail.Language.DisplayName + " - " + mediaType.Name + " " + newIndex;
             }
 
             //duplicatedItem.LinkTitle = duplicatedItem.LinkTitle;

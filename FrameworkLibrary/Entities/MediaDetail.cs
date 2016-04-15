@@ -142,6 +142,11 @@ namespace FrameworkLibrary
             return Fields.SingleOrDefault(i => i.FieldCode == fieldCode);
         }
 
+        public string RenderShortCode(string shortCode)
+        {
+            return MediaDetailsMapper.ParseSpecialTags(this, shortCode);
+        }
+
         public MasterPage GetMasterPage()
         {
             if (this.MasterPage != null)

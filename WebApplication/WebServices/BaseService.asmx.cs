@@ -1,6 +1,5 @@
 ﻿using FrameworkLibrary;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -18,7 +17,7 @@ namespace WebApplication.Services
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line.
-    // [System.Web.Script.Services.ScriptService]
+    [System.Web.Script.Services.ScriptService]
     public class BaseService : System.Web.Services.WebService
     {
         private static HttpRequest Request
@@ -51,6 +50,13 @@ namespace WebApplication.Services
             return found > 0;
         }
 
+        [WebMethod]
+        public void MakeWebRequest(string url)
+        {
+            var WebRequestHelper = new WebRequestHelper();
+            WriteRaw(WebRequestHelper.MakeWebRequest(url));
+        }
+
         public static void AddResponseHeaders(bool enableCaching = true, bool enableGzip = true)
         {
             var absPath = Request.Url.AbsolutePath.ToLower();
@@ -58,7 +64,7 @@ namespace WebApplication.Services
             if ((enableCaching) && (!BasePage.IsInAdminSection))
             {
                 Response.Cache.SetExpires(DateTime.Now.AddYears(30));
-                Response. Cache.SetMaxAge(TimeSpan.FromDays(365.0 * 3.0));
+                Response.Cache.SetMaxAge(TimeSpan.FromDays(365.0 * 3.0));
             }
 
             Response.Cache.SetLastModified(DateTime.Now);

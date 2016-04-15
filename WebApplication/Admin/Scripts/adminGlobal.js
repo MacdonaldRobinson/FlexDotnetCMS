@@ -686,7 +686,10 @@ function initAceEditors() {
         if ($("#PreviewPanel").length > 0) {
             if ($(this).hasClass("CanAttachToBrowserPanel"))
             {
-                $("#" + id).parent().prepend("<input type='checkbox' id='AttachEditorToBrowserPanel' /> Attach editor to browser panel");
+                if ($("#" + id).parent().find("#AttachEditorToBrowserPanel").length == 0)
+                {
+                    $("#" + id).parent().prepend("<input type='checkbox' id='AttachEditorToBrowserPanel' /> Attach editor to browser panel");
+                }
             }
         }
 

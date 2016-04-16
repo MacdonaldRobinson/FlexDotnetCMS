@@ -6,7 +6,7 @@
         $(document).ready(function () {
             $(document).on("keyup", "#<%=SelectedFile.ClientID%>", function () {
                 var src = $(this).val().replace("~/", "/");
-                $("#<%=SelectedImage.ClientID%>").attr("src", src+"?width=300&height=300&mode=max");
+                $("#<%=SelectedImage.ClientID%>").attr("src", src+"?width=300&height=300&mode=min");
             });
 
             $("#<%=SelectedImage.ClientID%>").load(function () {
@@ -14,7 +14,7 @@
 
                 if (src.indexOf("?width") == -1)
                 {
-                    $(this).attr("src", src + "?width=300&height=300&mode=max");
+                    $(this).attr("src", src + "?width=300&height=300&mode=min");
                 }                
             });
         });

@@ -39,6 +39,11 @@
             top: 50%;
             transform: translateY(-50%);
         }
+
+        .step{
+            border-bottom: 1px solid #000000;
+            padding-bottom:20px;
+        }
     </style>
 </head>
 <body>
@@ -67,14 +72,14 @@
                         <div>
                             <i>NOTE: Please make sure that your web.config file has write permissions, after this process is complete you can remove write permissions</i>
                         </div>
-                        <div>
+                        <div class="step">
                             <h3>Step 1: Are you installing this on the dev. server</h3>
                             <asp:RadioButtonList runat="server" RepeatLayout="UnorderedList" ID="IsRunningOnDev" OnSelectedIndexChanged="IsRunningOnDev_SelectedIndexChanged" AutoPostBack="true">
                                 <asp:ListItem Text="Yes" Value="True" />
                                 <asp:ListItem Text="No" Value="False" />
                             </asp:RadioButtonList>
                         </div>
-                        <div>
+                        <div class="step">
                             <h3>Step 2: Connection String Settings</h3>
                             <div>
                                 <div>
@@ -101,12 +106,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div>
+                        <div class="step">
                             <h3>Step 3: Attempt connecting using the connection string settings provided</h3>
                             <asp:LinkButton Text="Attempt Connecting" runat="server" ID="Attempt" OnClick="Attempt_Click" />
                         </div>
                         <asp:PlaceHolder runat="server" ID="ExecutePanel" Visible="false">
-                            <div>
+                            <div class="step">
                                 <h3>Step 4: Select SQL file to execute</h3>
                                 <div>
                                     <i>Note: Based on the script that is being executed, all data in the existing database will be lost, it is best that you backup the database prior to executing any scripts</i>
@@ -116,7 +121,7 @@
                                     <asp:LinkButton Text="Execute SQL File" runat="server" ID="ExecuteSQLFile" OnClick="ExecuteSQL_Click" OnClientClick="return confirm('Are you sure you want to execute the selected sql script against the database? All existing data in the database will be lost.')" />
                                 </div>
                             </div>
-                            <div>
+                            <div class="step">
                                 <h3>Step 5: Disable Installer</h3>
                                 <asp:LinkButton Text="Disable Installer" runat="server" ID="DisableInstaller" OnClick="DisableInstaller_Click" />
                             </div>

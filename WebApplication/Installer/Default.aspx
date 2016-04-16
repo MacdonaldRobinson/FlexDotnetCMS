@@ -94,6 +94,9 @@
                                     <asp:TextBox runat="server" ID="Password" />
                                 </div>
                                 <div>
+                                    <label><asp:CheckBox ID="IntegratedSecurity" runat="server" />Integrated Security</label>
+                                </div>
+                                <div>
                                     <asp:LinkButton Text="Save Login" runat="server" ID="SaveLogin" OnClick="SaveLogin_Click" />
                                 </div>
                             </div>

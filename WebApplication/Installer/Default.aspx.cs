@@ -74,6 +74,7 @@ namespace WebApplication.Installer
                 DatabaseName.Text = connectionStringSettings.InitialCatalog;
                 UserID.Text = connectionStringSettings.UserID;
                 Password.Text = connectionStringSettings.Password;
+                IntegratedSecurity.Checked = connectionStringSettings.IntegratedSecurity;                
             }
             catch (Exception ex)
             {
@@ -245,6 +246,7 @@ namespace WebApplication.Installer
                 connectionStringBuilder.UserID = UserID.Text;
                 connectionStringBuilder.Password = Password.Text;
                 connectionStringBuilder.PersistSecurityInfo = true;
+                connectionStringBuilder.IntegratedSecurity = IntegratedSecurity.Checked;
 
                 var newConnectionString = connectionStringBuilder.ConnectionString;
 

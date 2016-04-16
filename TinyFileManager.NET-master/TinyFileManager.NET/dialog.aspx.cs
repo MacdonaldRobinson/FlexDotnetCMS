@@ -261,10 +261,10 @@ namespace TinyFileManager.NET
                         strThumbFile = this.objConfig.strThumbPath + this.strFolder + filUpload.FileName.ToLower();
                         filUpload.SaveAs(strTargetFile);
 
-                        if (this.isImageFile(strTargetFile))
+                        /*if (this.isImageFile(strTargetFile))
                         {
                             this.createThumbnail(strTargetFile, strThumbFile);
-                        }
+                        }*/
                     }
 
                     // end response

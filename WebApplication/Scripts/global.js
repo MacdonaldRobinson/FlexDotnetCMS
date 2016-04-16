@@ -67,17 +67,25 @@ function GetQueryStringParams(url) {
 	return vars;
 }
 
+function initAccordians() {
+    if ($(".accordian").length > 0) {
+        $(".accordian.opened").accordion({ heightStyle: "content" });
+
+        $(".accordian.closed").accordion({
+            active: false,
+            collapsible: true,
+            heightStyle: "content"
+        });
+    }
+}
+
 $(document).ready(function () {
 
-	if ($(".accordian").length > 0) {
-		$(".accordian.opened").accordion({ heightStyle: "content" });
+    initAccordians();
 
-		$(".accordian.closed").accordion({
-			active: false,
-			collapsible: true,
-			heightStyle: "content"
-		});
-	}
+    OnUpdatePanelRefreshComplete(function (event) {
+        initAccordians();
+    });
 
 	$(document).on("click", ".colorbox.iframe", function () {
 		//console.log("ran");

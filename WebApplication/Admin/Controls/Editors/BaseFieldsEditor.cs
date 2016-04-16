@@ -247,7 +247,7 @@ namespace WebApplication.Admin.Controls.Editors
     <ul>
     @foreach(var item in field.FieldFiles.OrderBy(i=>i.OrderIndex))
     {
-        <li><a href='@URIHelper.ConvertToAbsUrl(item.PathToFile)'><img src='@URIHelper.ConvertToAbsUrl(item.PathToFile)?width=300&mode=max' alt='@item.Name'></a></li>
+        <li><a href='@URIHelper.ConvertToAbsUrl(item.PathToFile)'><img src='@URIHelper.ConvertToAbsUrl(item.PathToFile)?width=300&height=300&mode=max' alt='@item.Name'></a></li>
     }
     </ul>
 }"

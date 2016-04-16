@@ -300,7 +300,7 @@
     <Content Include="Global.asax" />
     <Content Include="Installer\Default.aspx" />
     <Content Include="Installer\Images\loading-gear.gif" />
-    <Content Include="Installer\SqlFiles\CreateAndDelete_Framework.sql" />
+    <Content Include="Installer\SqlFiles\CreateAndDelete_FlexDotnetCMS.sql" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\colorbox-master\content\ajax.html" />
     <Content Include="Scripts\colorbox-master\content\daisy%402x.jpg" />

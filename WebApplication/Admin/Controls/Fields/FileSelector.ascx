@@ -5,11 +5,19 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $(document).on("keyup", "#<%=SelectedFile.ClientID%>", function () {
-            var src = $(this).val().replace("~/", "/");
+                var src = $(this).val().replace("~/", "/");
+                $("#<%=SelectedImage.ClientID%>").attr("src", src+"?width=300&height=300&mode=max");
+            });
 
-            $("#<%=SelectedImage.ClientID%>").attr("src", src+"?width=300&mode=max");
+            $("#<%=SelectedImage.ClientID%>").load(function () {
+                var src = $(this).attr("src");
+
+                if (src.indexOf("?width") == -1)
+                {
+                    $(this).attr("src", src + "?width=300&height=300&mode=max");
+                }                
+            });
         });
-    });
     </script>
 
     <asp:UpdatePanel runat="server">

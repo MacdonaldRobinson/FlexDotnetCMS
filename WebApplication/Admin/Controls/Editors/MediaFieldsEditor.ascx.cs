@@ -73,7 +73,7 @@ namespace WebApplication.Admin.Controls.Editors
 
             if (!returnObj.IsError)
             {
-                Bind();
+                Bind();                
             }
             else
             {

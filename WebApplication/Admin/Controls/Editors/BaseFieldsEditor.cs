@@ -156,6 +156,7 @@ namespace WebApplication.Admin.Controls.Editors
                 AdminControl = "<Admin:FileSelector runat='server' DirPath='/media/uploads/' />",
                 GetAdminControlValue = "SelectedFilePath",
                 SetAdminControlValue = "SelectedFilePath",
+                FrontEndLayout = "<img src='@Model.Field.FieldValue' alt='@Model.Field.FieldValue' />"
             });
 
             SelectorFieldOptions.Add(new SelectorFieldOption()

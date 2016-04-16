@@ -22,6 +22,7 @@
 
             if (event._postBackSettings.asyncTarget.indexOf("$Update") != -1 || event._postBackSettings.asyncTarget.indexOf("$Delete") != -1)
             {
+                ReloadPreviewPanel();
                 //window.location.reload();
             }
         });
@@ -45,6 +46,10 @@
         BindGridViewSortable("#<%=ItemList.ClientID%>", "/Admin/Views/MasterPages/Webservice.asmx/ReOrderMediaFields", "<%= MediaFieldsUpdatePanel.ClientID%>", function () {
             window.location.reload();
         });
+    }
+
+    function ReloadPreviewPanel() {
+        $("#PreviewPanel")[0].src = $("#PreviewPanel")[0].src;
     }
 </script>
 

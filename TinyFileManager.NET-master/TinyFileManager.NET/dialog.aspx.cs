@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace TinyFileManager.NET
 {
@@ -45,23 +41,23 @@ namespace TinyFileManager.NET
             strProfile = Request.QueryString["profile"] + "";
             baseUrl = Request.QueryString["BaseUrl"] + "";
             var defaultRootPath = "/media/uploads/";
-            
-            if(string.IsNullOrEmpty(baseUrl))
+
+            if (string.IsNullOrEmpty(baseUrl))
             {
                 var protocal = (Request.IsSecureConnection) ? "https://" : "http://";
 
                 baseUrl = protocal + Request.Url.Authority;
-            }        
+            }
 
             if (strCurrPath == "")
                 strCurrPath = defaultRootPath;
 
-            if(strCurrPath.Contains(baseUrl))
+            if (strCurrPath.Contains(baseUrl))
             {
                 strCurrPath = strCurrPath.Replace(baseUrl, "");
             }
 
-            strCurrPath = strCurrPath.Replace("/", "\\").Replace("\\\\","\\");
+            strCurrPath = strCurrPath.Replace("/", "\\").Replace("\\\\", "\\");
 
             // load config
             this.objConfig = new clsConfig(strProfile);
@@ -257,8 +253,10 @@ namespace TinyFileManager.NET
                     //check file was submitted
                     if ((filUpload != null) && (filUpload.ContentLength > 0))
                     {
-                        strTargetFile = this.objConfig.strUploadPath + this.strFolder + filUpload.FileName.ToLower();
-                        strThumbFile = this.objConfig.strThumbPath + this.strFolder + filUpload.FileName.ToLower();
+                        var name = new FileInfo(filUpload.FileName).Name.ToLower();
+
+                        strTargetFile = this.objConfig.strUploadPath + this.strFolder + name;
+                        strThumbFile = this.objConfig.strThumbPath + this.strFolder + name;
                         filUpload.SaveAs(strTargetFile);
 
                         /*if (this.isImageFile(strTargetFile))
@@ -447,14 +445,19 @@ namespace TinyFileManager.NET
                             this.objFItem.strDownFormOpen = "<form action=\"dialog.aspx?cmd=download&file=" + this.objFItem.strPath + "\" method=\"post\" class=\"download-form\">";
                             if (this.objFItem.boolIsImage)
                             {
-                                this.objFItem.strPreviewLink = "<a class=\"btn preview\" title=\"Preview\" data-url=\"" + this.objConfig.strUploadURL+ "/" + this.objFItem.strPath + "\" data-toggle=\"lightbox\" href=\"#previewLightbox\"><i class=\"icon-eye-open\"></i></a>";
+                                this.objFItem.strPreviewLink = "<a class=\"btn preview\" title=\"Preview\" data-url=\"" + this.objConfig.strUploadURL + "/" + this.objFItem.strPath + "\" data-toggle=\"lightbox\" href=\"#previewLightbox\"><i class=\"icon-eye-open\"></i></a>";
                             }
                             else
                             {
                                 this.objFItem.strPreviewLink = "<a class=\"btn preview disabled\" title=\"Preview\"><i class=\"icon-eye-open\"></i></a>";
                             }
 
-                            this.objFItem.strLink = "<a href=\"#\" title=\"Select\" onclick=\"" + this.strApply + "('" + baseUrl +strF.Replace(Server.MapPath("~/"), "").Replace("\\", "/") + "'," + this.strType + ")\";\"><img data-src=\"holder.js/140x100\" alt=\"140x100\" src=\"" + this.objFItem.strThumbImage + "\" height=\"100\"><h4>" + this.objFItem.strName + "</h4></a>";
+                            var path = strF.Replace(Server.MapPath("~/"), "").Replace("\\", "/");
+
+                            if (!path.StartsWith("/"))
+                                path = "/" + path;
+
+                            this.objFItem.strLink = "<a href=\"#\" title=\"Select\" onclick=\"" + this.strApply + "('" + baseUrl + path + "'," + this.strType + ")\";\"><img data-src=\"holder.js/140x100\" alt=\"140x100\" src=\"" + this.objFItem.strThumbImage + "\" height=\"100\"><h4>" + this.objFItem.strName + "</h4></a>";
 
                             this.arrLinks.Add(objFItem);
                         }

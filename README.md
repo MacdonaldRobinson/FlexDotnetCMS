@@ -23,6 +23,6 @@ For More Details Please visit the project wiki at: https://github.com/MacdonaldR
 - Ability to search for a page based on the title in the backend for quick access
 - You can view the email logs from the CMS
 - You can view the error logs from the CMS 
+- Ability to limit access to a page or a page type ( role based )
 - When you edit content and save it you can see how it looks right away in the browser panel instead of having to open a new window and browse to the page
 - You can resize the browser panel and see how the site looks in different sizes i.e test responsive layout directly through the cms
-- Ability to limit access by role to a media type or to an individual page

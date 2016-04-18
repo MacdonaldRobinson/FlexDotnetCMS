@@ -14,7 +14,6 @@ For More Details Please visit the project wiki at: https://github.com/MacdonaldR
 - Ability to automatically publish a page live at a specified date time
 - Ability to automatically take down a page at a specified date time
 - Ability to create 301 or 302 redirects
-- Ability to manage glossary terms
 - Ability to Manage Users and Roles
 - Ability to Create, Edit, Delete, Permanently Delete, Hide, Duplicate and Publish/unpublish pages 
 - Ability to create Protected Pages ( Only logged in users can access the page )

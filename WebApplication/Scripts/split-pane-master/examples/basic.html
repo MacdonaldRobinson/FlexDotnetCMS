@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<title>Basic Example</title>
 		<link rel="stylesheet" href="../split-pane.css" />
 		<script src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -43,6 +44,7 @@
 			<div class="split-pane-divider" id="divider"></div>
 			<div class="split-pane-component" id="right-component">
 				This is the right component
+				<button onclick="$('div.split-pane').splitPane('firstComponentSize', 0);">Collapse first component</button>
 			</div>
 		</div>
 	</body>

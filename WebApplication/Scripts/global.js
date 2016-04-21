@@ -79,6 +79,23 @@ function initAccordians() {
     }
 }
 
+function RefreshUpdatePanel(UpdatePanelClientId, OnAfterRefreshFunction) {
+    //$("#" + UpdatePanelClientId).prepend("<div class='loading-panel'><div class='copy'>Loading ...</div></div>");
+
+    var OnCompleteFunction = function () {
+        //$("#" + UpdatePanelClientId).find("loading-panel").remove();
+        OnAfterRefreshFunction();
+    }
+
+    OnUpdatePanelRefreshComplete(OnCompleteFunction);
+
+    __doPostBack(UpdatePanelClientId, '');
+}
+
+function OnUpdatePanelRefreshComplete(OnUpdatePanelRefreshCompleteFunction) {
+    Sys.WebForms.PageRequestManager.getInstance().add_endRequest(OnUpdatePanelRefreshCompleteFunction);
+}
+
 $(document).ready(function () {
 
     initAccordians();

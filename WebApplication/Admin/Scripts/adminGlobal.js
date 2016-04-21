@@ -864,9 +864,9 @@ function BindGridViewSortable(CssSelector, WebserviceUrl, UpdatePanelClientId, O
         }
     });
 }
+
 $(function () {
 
-    //console.log(window.location.href);
     $('div.split-pane').splitPane();
     //$("#SiteTree ul").sortable({ connectWith: "ul" });
     BindTree();
@@ -1040,21 +1040,4 @@ function BindDataTable() {
         //    });
         //}
     });
-}
-
-function RefreshUpdatePanel(UpdatePanelClientId, OnAfterRefreshFunction) {
-    //$("#" + UpdatePanelClientId).prepend("<div class='loading-panel'><div class='copy'>Loading ...</div></div>");
-
-    var OnCompleteFunction = function () {
-        //$("#" + UpdatePanelClientId).find("loading-panel").remove();
-        OnAfterRefreshFunction();
-    }
-
-    OnUpdatePanelRefreshComplete(OnCompleteFunction);
-
-    __doPostBack(UpdatePanelClientId, '');
-}
-
-function OnUpdatePanelRefreshComplete(OnUpdatePanelRefreshCompleteFunction) {
-    Sys.WebForms.PageRequestManager.getInstance().add_endRequest(OnUpdatePanelRefreshCompleteFunction);
 }

@@ -297,8 +297,8 @@ namespace WebApplication
                 switch (Request["devAction"])
                 {
                     case "ClearAllCache":
-                        ContextHelper.ClearAllMemoryCache();
-                        break;
+                    ContextHelper.ClearAllMemoryCache();
+                    break;
                 }
             }
 
@@ -468,7 +468,6 @@ namespace WebApplication
 
             return null;
         }
-
 
         public string CurrentVisitorIP
         {

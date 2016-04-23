@@ -220,9 +220,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\PublishProfiles\Demo Site.pubxml" />
-    <None Include="Properties\PublishProfiles\Github.pubxml" />
-    <None Include="Properties\PublishProfiles\Test Site.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

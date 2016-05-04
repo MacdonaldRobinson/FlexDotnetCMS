@@ -72,7 +72,7 @@
                     <div>
                         <asp:TextBox runat="server" ID="SetAdminControlValue" TextMode="MultiLine" class="AceEditor" Height="200"/>
                     </div>
-                    <h3>Field Value</h3>
+                    <h3>Default Field Value</h3>
                     <div>
                         <asp:TextBox runat="server" ID="FieldValue" TextMode="MultiLine" />
                     </div>

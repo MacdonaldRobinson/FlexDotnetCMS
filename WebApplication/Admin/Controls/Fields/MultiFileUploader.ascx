@@ -17,7 +17,9 @@
                 </LayoutTemplate>
                 <ItemTemplate>
                     <li class="item" data-fieldfileid="<%# Item.ID %>">
+                        <a href="<%# URIHelper.ConvertToAbsUrl(Item.PathToFile) %>" target="_blank">
                         <img src="<%# URIHelper.ConvertToAbsUrl(Item.PathToFile) %>?width=200&mode=max" alt="<%# Item.Name %>" />
+                        </a>
                         <div>
                             <a href="/Admin/Views/PageHandlers/FieldFiles/Detail.aspx?id=<%# Item.ID %>" target="_blank" class="colorbox iframe EditImage" data-id="<%# Item.ID %>">Edit</a> |
                             <a href="javascript:void(0)" class="DeleteImage" data-id="<%# Item.ID %>">Delete</a>
@@ -42,7 +44,7 @@
 
             .UploadedItems .item img {
                 height: 100px;
-                width: 100px;                
+                width: 100px;
             }
     </style>
     <script language="javascript" type="text/javascript">

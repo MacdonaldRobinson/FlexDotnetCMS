@@ -50,6 +50,10 @@
     <script language="javascript" type="text/javascript">
         $(function () {
 
+            $("#<%= UploadedItems.ClientID%> img").error(function () {
+                $(this).attr("src", "/media/images/icons/File.jpg");
+            });
+
             $("#<%= UploadedItems.ClientID%> .DeleteImage").click(function () {
                 var parentItem = $(this).parents(".item");
                 var ImagesToDelete = $("#<%= FilesToDelete.ClientID %>");

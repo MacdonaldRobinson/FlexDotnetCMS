@@ -53,25 +53,29 @@
                         <asp:ListItem Text="--Select A Type--" Value="" />
                     </asp:DropDownList>
                 </div>
+
                 <div>
                     <label for="<%# AdminControl.ClientID %>">Admin Control:</label>
                     <asp:TextBox runat="server" ID="AdminControl" TextMode="MultiLine" class="AceEditor" />
                 </div>
-                <div>
-                    <label for="<%# FrontEndLayout.ClientID %>">Front End Layout:</label>
-                    <asp:TextBox runat="server" ID="FrontEndLayout" TextMode="MultiLine" class="AceEditor" />
-                </div>
-                <div>
-                    <label for="<%# GetAdminControlValue.ClientID %>">Get Admin Control Value:</label>
-                    <asp:TextBox runat="server" ID="GetAdminControlValue" TextMode="MultiLine" class="AceEditor"/>
-                </div>
-                <div>
-                    <label for="<%# SetAdminControlValue.ClientID %>">Set Admin Control Value:</label>
-                    <asp:TextBox runat="server" ID="SetAdminControlValue" TextMode="MultiLine" class="AceEditor"/>
-                </div>
-                <div>
-                    <label for="<%# FieldValue.ClientID %>">Default Field Value:</label>
-                <asp:TextBox runat="server" ID="FieldValue" TextMode="MultiLine" />
+
+                <div class="accordian opened">
+                    <h3>Front End Layout</h3>
+                    <div>
+                        <asp:TextBox runat="server" ID="FrontEndLayout" TextMode="MultiLine" class="AceEditor" Height="400"/>
+                    </div>
+                    <h3>Get Admin Control Value</h3>
+                    <div>
+                        <asp:TextBox runat="server" ID="GetAdminControlValue" TextMode="MultiLine" class="AceEditor" Height="200"/>
+                    </div>
+                    <h3>Set Admin Control Value</h3>
+                    <div>
+                        <asp:TextBox runat="server" ID="SetAdminControlValue" TextMode="MultiLine" class="AceEditor" Height="200"/>
+                    </div>
+                    <h3>Field Value</h3>
+                    <div>
+                        <asp:TextBox runat="server" ID="FieldValue" TextMode="MultiLine" />
+                    </div>
                 </div>
                 <div class="buttons">
                     <asp:LinkButton Text="Save" runat="server" ID="Update" OnClick="Update_Click" />

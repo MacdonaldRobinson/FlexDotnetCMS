@@ -36,6 +36,10 @@
             opacity: 0.5;
         }
 
+        .sortable li a{
+            cursor:move;
+        }
+
         .UploadedItems .item {
             float: left;
             margin-left: 5px;

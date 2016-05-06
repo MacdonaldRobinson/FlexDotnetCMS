@@ -64,7 +64,7 @@
                 <div>
                     <fieldset>
                         <label for="<%= MultiRoleSelector.ClientID %>">
-                            Roles That Can Access this item:
+                            Limit roles that can access this item:
                         </label>
                         <Admin:MultiRoleSelector ID="MultiRoleSelector" runat="server" />
                     </fieldset>

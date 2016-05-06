@@ -57,7 +57,7 @@ h1 span, h2 {
 
 #mainArea {
     padding: 0;
-    line-height: 22px;    
+    line-height: 22px;
     margin-left: 5px;
     height: 100%;
 }
@@ -177,7 +177,7 @@ fieldset {
 }
 
 #topNavWrapper {
-    padding: 10px 0 10px 0;
+    padding: 0;
 }
 
 #logoWrapper {

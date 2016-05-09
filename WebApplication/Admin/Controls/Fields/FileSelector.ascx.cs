@@ -1,7 +1,6 @@
 ﻿using FrameworkLibrary;
 using System;
 using System.IO;
-using System.Web.UI.WebControls;
 
 namespace WebApplication.Admin.Controls.Fields
 {
@@ -66,10 +65,12 @@ namespace WebApplication.Admin.Controls.Fields
             if (SelectedFile.Text == "")
                 return "";
 
-            if (SelectedFile.Text.Contains("#"))
-                return SelectedFile.Text;
+            if (SelectedFile.Text.Contains(URIHelper.BaseUrl))
+            {
+                SelectedFile.Text = SelectedFile.Text.Replace(URIHelper.BaseUrl, "/");
+            }
 
-            return URIHelper.ConvertToAbsUrl(SelectedFile.Text);
+            return SelectedFile.Text;
         }
 
         public override void SetValue(object value)
@@ -93,13 +94,13 @@ namespace WebApplication.Admin.Controls.Fields
                         SelectedFile.Text = ParserHelper.ParseData(SelectedFile.Text, BasePage.GetDefaultTemplateVars(""));
                         DirPath = URIHelper.ConvertAbsUrlToTilda(URIHelper.ConvertAbsPathToAbsUrl(new FileInfo(URIHelper.ConvertToAbsPath(URIHelper.ConvertAbsUrlToTilda(SelectedFile.Text))).DirectoryName)).Replace("~", "");
                     }
-                    catch(Exception ex)
-                    {                        
+                    catch (Exception ex)
+                    {
                     }
                 }
 
                 if (CanSetSelectedImage(SelectedFile.Text))
-                    SelectedImage.ImageUrl = SelectedFile.Text+ "?width=300&mode=max";
+                    SelectedImage.ImageUrl = SelectedFile.Text + "?width=300&mode=max";
                 else
                     return;
             }

@@ -17,7 +17,7 @@
     <div>
         <label for="<%= Description.ClientID %>">
             Description</label>
-        <asp:TextBox ID="Description" runat="server" TextMode="MultiLine"></asp:TextBox>
+        <asp:TextBox ID="Description" runat="server" TextMode="MultiLine" CssClass="editor" Height="250px"></asp:TextBox>
     </div>
     <div class="buttons">
         <asp:LinkButton ID="Save" runat="server" OnClick="Save_OnClick">Save</asp:LinkButton>

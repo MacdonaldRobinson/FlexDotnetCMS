@@ -17,9 +17,10 @@
                 check(this);
             });
 
-            initAceEditors();
+            initAccordians();
             BindReOrder();
             BindScrollMagic();
+            initAceEditors();
 
             if (event._postBackSettings.asyncTarget.indexOf("$Update") != -1 || event._postBackSettings.asyncTarget.indexOf("$Delete") != -1)
             {
@@ -44,6 +45,7 @@
     $(document).ajaxComplete(function () {
         BindReOrder();
         BindScrollMagic();
+        initAccordians();
     });
 
     function BindScrollMagic()

@@ -19,6 +19,7 @@
 
             initAceEditors();
             BindReOrder();
+            BindScrollMagic();
 
             if (event._postBackSettings.asyncTarget.indexOf("$Update") != -1 || event._postBackSettings.asyncTarget.indexOf("$Delete") != -1)
             {
@@ -35,16 +36,29 @@
                 $("#FrontEndLayoutWrapper").show();
             }
         }
+
+        BindScrollMagic();
+
     });
 
     $(document).ajaxComplete(function () {
         BindReOrder();
+        BindScrollMagic();
     });
+
+    function BindScrollMagic()
+    {
+        var controller = new ScrollMagic.Controller();
+
+        var scene = new ScrollMagic.Scene({ offset: 220, triggerElement: "#SaveFields" })
+                        .setPin("#SaveFields")
+                        .addTo(controller);
+    }
 
     function BindReOrder()
     {
         BindGridViewSortable("#<%=ItemList.ClientID%>", "/Admin/Views/MasterPages/Webservice.asmx/ReOrderMediaFields", "<%= MediaFieldsUpdatePanel.ClientID%>", function () {
-            window.location.reload();
+            window.location.href = window.location.href;
         });
     }
 
@@ -60,7 +74,9 @@
 
     #SaveFields {
         right: 0;
-        position: absolute;
+        position: relative;
+        z-index:100;
+        background-color:#fff;
     }
 </style>
 

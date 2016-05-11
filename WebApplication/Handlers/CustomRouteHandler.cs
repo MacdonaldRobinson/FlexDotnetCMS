@@ -32,7 +32,7 @@ namespace WebApplication.Handlers
                 URIHelper.ForceSSL();
             }
 
-            if (FrameworkSettings.CurrentUser == null && Request.HttpMethod == "GET" && AppSettings.EnableOutputCaching)
+            if (FrameworkSettings.CurrentUserInSession == null && Request.HttpMethod == "GET" && AppSettings.EnableOutputCaching)
             {
                 var userSelectedVersion = RenderVersion.HTML;
 

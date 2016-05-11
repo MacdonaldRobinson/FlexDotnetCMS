@@ -66,6 +66,14 @@ namespace FrameworkLibrary
             }
         }
 
+        public static User CurrentUserInSession
+        {
+            get
+            {
+                return (User)ContextHelper.Get("CurrentUser", ContextType.Session);
+            }
+        }
+
         public static User CurrentUser
         {
             get

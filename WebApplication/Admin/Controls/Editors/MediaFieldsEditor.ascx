@@ -52,7 +52,7 @@
     {
         var controller = new ScrollMagic.Controller();
 
-        var scene = new ScrollMagic.Scene({ offset: -65, triggerElement: "#SaveFields", triggerHook: 0 })
+        var scene = new ScrollMagic.Scene({ offset: -45, triggerElement: "#SaveFields", triggerHook: 0 })
                         .setPin("#SaveFields")
                         .addTo(controller);
     }

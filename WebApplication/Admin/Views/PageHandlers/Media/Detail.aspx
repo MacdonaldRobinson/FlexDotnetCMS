@@ -51,7 +51,9 @@
 
 
             <div class="clear"></div>
-
+        </div>
+        <div class="split-pane-divider" id="my-divider"></div>
+        <div class="split-pane-component" id="right-component">
             <asp:Panel ID="SavePanel" runat="server" Visible="false" CssClass="SavePanel buttons">
                 <asp:LinkButton ID="Save" runat="server" OnClick="Save_OnClick" Text="Save" />
                 <asp:LinkButton ID="SaveAsDraft" runat="server" OnClick="Save_OnClick" Text="Save As Draft" CommandArgument="SaveAsDraft" />
@@ -61,9 +63,6 @@
                 <asp:LinkButton runat="server" ID="PublishLive" OnClick="PublishLive_OnClick" Text="Publish LIVE" Visible="false" />
                 <asp:HyperLink ID="EditMediaType" runat="server" Text="Edit Media Type" Visible="false" CssClass="colorbox iframe" />
             </asp:Panel>
-        </div>
-        <div class="split-pane-divider" id="my-divider"></div>
-        <div class="split-pane-component" id="right-component">
             <iframe id="PreviewPanel" runat="server" clientidmode="Static"></iframe>
         </div>
 

@@ -67,7 +67,7 @@
     height: 100%;
 }
 
-#EditPanel{    
+#EditPanel{
     width: 50%;
 }
 
@@ -87,7 +87,6 @@
     right:0;
     top: 35px;
     background-color: #fff;
-    padding: 10px;
 }
 
 #mainArea {

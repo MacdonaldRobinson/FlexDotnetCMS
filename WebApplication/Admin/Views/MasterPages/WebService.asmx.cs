@@ -144,7 +144,7 @@ namespace WebApplication.Admin.Views.MasterPages
             duplicatedItem.CopyFrom(detail, new List<string> { "MediaID", "Media" });
             duplicatedItem.CachedVirtualPath = duplicatedItem.CalculatedVirtualPath();
 
-            if (duplicatedItem.ID == 0)
+            /*if (duplicatedItem.ID == 0)
             {
                 var mediaType = MediaTypesMapper.GetByID(detail.MediaTypeID);
                 var createdItems = mediaType.MediaDetails.Where(i => !i.IsHistory && i.ParentMediaID == detail.ParentMediaID && i.LanguageID == detail.LanguageID).Select(i => i);
@@ -152,9 +152,8 @@ namespace WebApplication.Admin.Views.MasterPages
                 var newIndex = createdItems.Count() + 1;
 
                 duplicatedItem.LinkTitle = detail.Language.DisplayName + " - " + mediaType.Name + " " + newIndex;
-            }
+            }*/
 
-            //duplicatedItem.LinkTitle = duplicatedItem.LinkTitle;
             duplicatedItem.Media.OrderIndex = parentMedia.ChildMedias.Count(i => i.ID != 0);
 
             foreach (var item in detail.Fields)

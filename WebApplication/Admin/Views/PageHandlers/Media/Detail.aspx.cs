@@ -129,6 +129,7 @@ namespace WebApplication.Admin.MediaArticle
                     newField.SetAdminControlValue = field.SetAdminControlValue;
                     newField.FieldValue = field.FieldValue;
                     newField.FrontEndLayout = field.FrontEndLayout;
+                    newField.MediaTypeField = field;
 
                     newField.DateCreated = DateTime.Now;
                     newField.DateLastModified = DateTime.Now;
@@ -603,7 +604,7 @@ namespace WebApplication.Admin.MediaArticle
 
             if (validate.IsError)
             {
-                DisplayErrorMessage("Error saving item", validate.Error);                
+                DisplayErrorMessage("Error saving item", validate.Error);
                 return;
             }
 

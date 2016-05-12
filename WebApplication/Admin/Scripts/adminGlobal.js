@@ -1041,3 +1041,117 @@ function BindDataTable() {
         //}
     });
 }
+
+function RefreshAdminUpdatePanel(elem) {
+
+    RefreshUpdatePanel(elem, function () {
+        BindSortable();
+    });
+}
+
+$(document).ready(function () {
+    init();
+
+    $(".MultiFileUploader img").error(function () {
+        $(this).attr("src", "/media/images/icons/File.jpg");
+    });
+
+
+});
+
+function BindSortable() {
+    $(".sortable").sortable({
+        update: function (event, ui) {
+            var arr = new Array();
+            $(this).children("li").each(function () {
+                var id = $(this).attr("data-fieldfileid");
+                arr.push(id);
+            });
+
+            var root = $(this).parents(".MultiFileUploader");
+
+            root.find(".ReorderFiles").val(JSON.stringify(arr));
+        }
+    });
+}
+
+function init() {
+
+    BindSortable();
+
+    $(document).on("click", ".DeleteImage", function () {
+
+        var root = $(this).parents(".MultiFileUploader");
+
+        var parentItem = $(this).parents(".item");
+        var ImagesToDelete = root.find(".FilesToDelete");
+        var image = parentItem.find("img");
+        var fieldFileId = $(this).attr('data-id');
+
+        var ImagesToDeleteJson = JSON.parse(ImagesToDelete.val());
+        var src = image.attr("src");
+
+        if (!image.hasClass("MarkedAsDeleted")) {
+            image.addClass("MarkedAsDeleted");
+
+            if (ImagesToDeleteJson.indexOf(fieldFileId) == -1) {
+                ImagesToDeleteJson.push(fieldFileId);
+            }
+
+            ImagesToDelete.val(JSON.stringify(ImagesToDeleteJson));
+
+            $(this).text("UnDelete");
+        }
+        else {
+            image.removeClass("MarkedAsDeleted");
+
+            var index = ImagesToDeleteJson.indexOf(fieldFileId)
+
+            if (index != -1) {
+                ImagesToDeleteJson.splice(index, 1);
+                //ImagesToDeleteJson.push(fieldFileId);
+            }
+
+            ImagesToDelete.val(JSON.stringify(ImagesToDeleteJson));
+
+            $(this).text("Delete");
+        }
+    });
+
+    $(document).on("change", ".MultiFileUpload", function () {
+        if (typeof (FileReader) != "undefined") {
+            var root = $(this).parents(".MultiFileUploader");
+            var dvPreview = root.find(".dvPreview");
+
+            dvPreview.html("");
+            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp|.pdf|.csv|.docx|.doc)$/;
+            $($(this)[0].files).each(function () {
+                var file = $(this);
+                if (regex.test(file[0].name.toLowerCase())) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+
+                        if (file[0].type.indexOf("image") != -1) {
+                            var img = $("<img />");
+                            img.attr("style", "width: 100px; height: 100px;");
+                            img.attr("src", e.target.result);
+                            dvPreview.append(img);
+                        }
+                        else {
+                            var link = $("<a>" + file[0].name + "</a>");
+                            link.attr("href", e.target.result);
+                            dvPreview.append(link);
+                        }
+                    }
+                    reader.readAsDataURL(file[0]);
+                } else {
+                    alert(file[0].name + " is not a valid image file.");
+                    dvPreview.html("");
+                    return false;
+                }
+            });
+        } else {
+            alert("This browser does not support HTML5 FileReader.");
+        }
+    });
+}

@@ -109,7 +109,6 @@ $(document).ready(function () {
 		var dataOnColorboxClose = $(this).attr("data-OnColorboxClose");
 		$.colorbox({
 			href: $(this).attr("href"), width: colorBoxWidth, height: colorBoxHeight, iframe: true, fixed: true, onClosed: function () {
-
 				if (dataOnColorboxClose != undefined)
 					eval(dataOnColorboxClose);
 			}

@@ -68,7 +68,7 @@ namespace WebApplication.Admin.Controls.Fields
 
                         if (!field.FieldFiles.Any(i => i.PathToFile == filePath))
                         {
-                            field.FieldFiles.Add(new FieldFile { Name = file.FileName, Description="", PathToFile = filePath, DateCreated = DateTime.Now, DateLastModified = DateTime.Now, OrderIndex = index });
+                            field.FieldFiles.Add(new FieldFile { Name = file.FileName, Description = "", PathToFile = filePath, DateCreated = DateTime.Now, DateLastModified = DateTime.Now, OrderIndex = index });
 
                             index++;
                         }
@@ -104,7 +104,7 @@ namespace WebApplication.Admin.Controls.Fields
             if (ReorderFiles.Text != "" && ReorderFiles.Text != "[]")
             {
                 var reorderedIds = StringHelper.JsonToObject(ReorderFiles.Text);
-                
+
                 var index = 0;
                 foreach (var id in reorderedIds)
                 {
@@ -126,6 +126,12 @@ namespace WebApplication.Admin.Controls.Fields
             if (hasDeleted || hasReordered)
                 BaseMapper.SaveDataModel();
 
+
+            BindValues();
+        }
+
+        private void BindValues()
+        {
             Values.DataSource = GetValue();
             Values.DataBind();
 
@@ -134,5 +140,16 @@ namespace WebApplication.Admin.Controls.Fields
         }
 
         public string SaveToFolder { get; set; }
+
+
+        protected void AddFieldFile_Click(object sender, EventArgs e)
+        {
+            var field = GetField();
+
+            field.FieldFiles.Add(new FieldFile() { Name = "New Item", Description = "New Item", PathToFile = "/media/images/icons/File.jpg", DateCreated = DateTime.Now, DateLastModified = DateTime.Now });
+            BaseMapper.SaveDataModel();
+
+            BindValues();
+        }
     }
 }

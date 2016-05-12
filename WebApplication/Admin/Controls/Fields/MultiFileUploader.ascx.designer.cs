@@ -22,6 +22,24 @@ namespace WebApplication.Admin.Controls.Fields {
         protected global::System.Web.UI.WebControls.Panel AdminPanel;
         
         /// <summary>
+        /// AdminUpdatePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel AdminUpdatePanel;
+        
+        /// <summary>
+        /// AddFieldFile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton AddFieldFile;
+        
+        /// <summary>
         /// MultiFileUpload control.
         /// </summary>
         /// <remarks>
@@ -29,15 +47,6 @@ namespace WebApplication.Admin.Controls.Fields {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload MultiFileUpload;
-        
-        /// <summary>
-        /// dvPreview control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvPreview;
         
         /// <summary>
         /// UploadedItems control.

@@ -108,3 +108,19 @@
     margin-top: 40px;
 }
 
+img.MarkedAsDeleted {
+    opacity: 0.5;
+}
+
+
+.UploadedItems .item {
+    float: left;
+    margin-left: 5px;
+    text-align: center;
+    padding-top: 10px;
+}
+
+    .UploadedItems .item img {
+        height: 100px;
+        width: 100px;
+    }

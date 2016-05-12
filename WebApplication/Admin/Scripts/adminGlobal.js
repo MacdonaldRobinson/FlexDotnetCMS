@@ -1016,6 +1016,7 @@ $(document)
 
 function pageLoad() {
     BindDataTable();
+    BindSortable();
 }
 
 function BindDataTable() {

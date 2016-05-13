@@ -375,5 +375,5 @@ html, body {
 #right-component {
     left: 30em; /* Same as left component width */
     margin-left: 5px; /* Same as divider width */
-    overflow:hidden;
+    /*overflow:hidden;*/
 }

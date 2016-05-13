@@ -940,9 +940,20 @@ namespace FrameworkLibrary
                         }
                         else
                         {
-                            if (!string.IsNullOrEmpty(mediaField.FrontEndLayout))
+                            var frontEndLayout = mediaField.FrontEndLayout;
+
+                            if (mediaField is MediaDetailField)
                             {
-                                var parsedValue = ParseSpecialTags(mediaDetail, mediaField.FrontEndLayout, 0, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail });
+                                var mediaDetailField = mediaField as MediaDetailField;
+                                if (mediaDetailField.UseMediaTypeFieldFrontEndLayout)
+                                {
+                                    frontEndLayout = mediaDetailField.MediaTypeField?.FrontEndLayout;
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(frontEndLayout))
+                            {
+                                var parsedValue = ParseSpecialTags(mediaDetail, frontEndLayout, 0, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail });
                                 customCode = customCode.Replace(field.ToString(), parsedValue);
                             }
                             else

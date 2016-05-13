@@ -133,6 +133,7 @@ namespace WebApplication.Admin.MediaArticle
                     newField.FieldValue = field.FieldValue;
                     newField.FrontEndLayout = field.FrontEndLayout;
                     newField.MediaTypeField = field;
+                    newField.UseMediaTypeFieldFrontEndLayout = true;
 
                     newField.DateCreated = DateTime.Now;
                     newField.DateLastModified = DateTime.Now;

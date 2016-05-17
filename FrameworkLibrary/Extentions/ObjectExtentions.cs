@@ -299,9 +299,9 @@ namespace FrameworkLibrary
                             {
                                 foreach (var item in dynValue)
                                 {
-                                    if (dynValue.GetType().IsValueType)
+                                    if (dynValue.GetType().GetInterface("IEnumerator") != null)
                                     {
-                                        tmpJson += ObjectExtentions.ToJSON(item, depthCount + 1);
+                                        tmpJson += ObjectExtentions.ToJSON(item, depthCount);
                                     }
                                     else
                                     {

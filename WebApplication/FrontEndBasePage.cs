@@ -60,8 +60,12 @@ namespace WebApplication
             switch (Request.QueryString["format"])
             {
                 case "json":
-                    RenderJSON();
-                break;
+                    {
+                        var depth = (Request.QueryString["depth"] != null) ? long.Parse(Request.QueryString["depth"]) : 1;
+
+                        RenderJSON(depth);
+                    }
+                    break;
                 case "rss":
                     RenderRss();
                     break;
@@ -74,16 +78,11 @@ namespace WebApplication
             //barcode.GenerateQRCode(URIHelper.ConvertToAbsUrl(this.CurrentMediaDetail.VirtualPath));
         }
 
-        public void RenderJSON()
+        public void RenderJSON(long depth)
         {
             Response.ContentEncoding = System.Text.Encoding.UTF8;
             Response.ContentType = "application/json";
             Response.StatusCode = 200;
-
-            long depth = 1;
-
-            if (!string.IsNullOrEmpty(Request.QueryString.Get("depth")))
-                depth = long.Parse(Request.QueryString.Get("depth"));
 
             var json = ParserHelper.ParseData(this.CurrentMediaDetail.ToJSON(depth), TemplateVars);
 

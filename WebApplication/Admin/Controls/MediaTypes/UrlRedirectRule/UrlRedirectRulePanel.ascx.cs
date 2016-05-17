@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrameworkLibrary;
+using System;
 
 namespace WebApplication.Admin.Controls.MediaTypes.UrlRedirectRule
 {
@@ -7,6 +8,12 @@ namespace WebApplication.Admin.Controls.MediaTypes.UrlRedirectRule
         protected void Page_Init(object sender, EventArgs e)
         {
             LoadTabs();
+        }
+
+        public override void SetObject(IMediaDetail obj)
+        {
+            base.SetObject(obj);
+            UpdateFieldsFromObject();
         }
 
         private void LoadTabs()

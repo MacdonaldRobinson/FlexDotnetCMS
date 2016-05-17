@@ -203,7 +203,7 @@ namespace FrameworkLibrary
                     }
                     catch (Exception ex)
                     {
-
+                        ErrorHelper.LogException(ex);
                     }
                 }
                 else
@@ -225,6 +225,7 @@ namespace FrameworkLibrary
                 }
                 catch (Exception ex)
                 {
+                    ErrorHelper.LogException(ex);
                 }
             }
 

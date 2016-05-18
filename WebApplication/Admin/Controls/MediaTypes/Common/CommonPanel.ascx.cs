@@ -260,7 +260,12 @@ namespace WebApplication.Admin.Controls.MediaTypes
                     if (dynamicField.Controls.Count == 0)
                         return;
 
-                    var control = dynamicField.Controls[0].Controls[0];
+                    var control = dynamicField.Controls[0];
+
+                    if (control.Controls.Count > 0)
+                    {
+                        control = control.Controls[0];
+                    }
 
                     var adminPanel = WebFormHelper.FindControlRecursive(dynamicField, "AdminPanel");
 

@@ -193,13 +193,21 @@ namespace FrameworkLibrary
 
                 if (!string.IsNullOrEmpty(tagValue) && tagValue.Contains("@") && compileRazor)
                 {
-                    tagValue = "@using FrameworkLibrary\n" + tagValue;
+                    var razorTagValue = "@using FrameworkLibrary\n" + tagValue;
                     var tagKey = "templateKey:" + tagValue;
 
                     try
                     {
-                        var result = Engine.Razor.RunCompile(tagValue, tagKey, null, obj);
-                        data = data.Replace(tag, result);
+                        var result = Engine.Razor.RunCompile(razorTagValue, tagKey, null, obj);
+
+                        if (tagValue != result)
+                        {
+                            data = data.Replace(tag, result);
+                        }
+                        else
+                        {
+                            data = tagValue;
+                        }
                     }
                     catch (Exception ex)
                     {

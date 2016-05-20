@@ -198,7 +198,7 @@ namespace FrameworkLibrary
 
                     try
                     {
-                        var result = Engine.Razor.RunCompile(razorTagValue, tagKey, null, obj);
+                        var result = RunOrCompileRazorCode(razorTagValue, tagKey, obj);
 
                         if (tagValue != result)
                         {
@@ -228,7 +228,7 @@ namespace FrameworkLibrary
 
                 try
                 {
-                    var topResult = Engine.Razor.RunCompile(data, topTagKey, null, obj);
+                    var topResult = RunOrCompileRazorCode(data, topTagKey, obj);
                     data = data.Replace(data, topResult);
                 }
                 catch (Exception ex)
@@ -238,6 +238,18 @@ namespace FrameworkLibrary
             }
 
             return data;
+        }
+
+        public static string RunOrCompileRazorCode(string code, string key, object obj)
+        {
+            if (Engine.Razor.IsTemplateCached(key, null))
+            {
+                return Engine.Razor.Run(key, null, obj);
+            }
+
+            var result = Engine.Razor.RunCompile(code, key, null, obj);
+
+            return result;
         }
 
         public static void SetValue(object obj, string propertyName, object value)

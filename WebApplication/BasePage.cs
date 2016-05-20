@@ -297,8 +297,8 @@ namespace WebApplication
                 switch (Request["devAction"])
                 {
                     case "ClearAllCache":
-                    ContextHelper.ClearAllMemoryCache();
-                    break;
+                        ContextHelper.ClearAllMemoryCache();
+                        break;
                 }
             }
 
@@ -635,10 +635,19 @@ namespace WebApplication
                     html = StringHelper.StripExtraSpacesBetweenMarkup(html);
             }
 
+            if (CurrentMediaDetail != null)
+            {
+                if (!IsAjaxRequest)
+                {
+                    html = MediaDetailsMapper.ParseSpecialTags(CurrentMediaDetail, html);
+                }
+            }
+
             HtmlAgilityPack.HtmlDocument document = null;
 
             if (!IsInAdminSection)
             {
+                HtmlNode.ElementsFlags.Remove("form");
                 document = new HtmlAgilityPack.HtmlDocument();
                 document.LoadHtml(html);
 
@@ -652,9 +661,10 @@ namespace WebApplication
                         item.ParentNode.InnerHtml = item.ParentNode.InnerHtml.Replace("form", "div data-form");
                     }
 
-                    html = document.DocumentNode.OuterHtml;
+                    html = document.DocumentNode.WriteContentTo();
                 }
             }
+
 
             if (AppSettings.EnableGlossaryTerms && !IsInAdminSection)
             {
@@ -681,15 +691,13 @@ namespace WebApplication
                     }
                 }
 
-                html = document.DocumentNode.OuterHtml;
+                html = document.DocumentNode.WriteContentTo();
             }
 
             if (CurrentMediaDetail != null)
             {
                 if (!IsAjaxRequest)
                 {
-                    html = MediaDetailsMapper.ParseSpecialTags(CurrentMediaDetail, html);
-
                     if (CurrentUser == null && AppSettings.EnableOutputCaching && CurrentMediaDetail.EnableCaching && CurrentMediaDetail.CanRender)
                     {
                         if (AppSettings.EnableLevel1MemoryCaching)

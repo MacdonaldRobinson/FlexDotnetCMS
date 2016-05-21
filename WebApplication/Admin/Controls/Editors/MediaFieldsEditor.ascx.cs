@@ -20,7 +20,15 @@ namespace WebApplication.Admin.Controls.Editors
             ItemList.DataSource = mediaDetail.Fields.OrderBy(i => i.OrderIndex).ToList();
             ItemList.DataBind();
 
-            BindFieldTypeDropDown(FieldTypeDropDown);            
+            BindFieldTypeDropDown(FieldTypeDropDown);
+
+            var field = (MediaDetailField)BaseMapper.GetDataModel().Fields.Find(long.Parse(FieldID.Value));
+
+            if(field != null)
+            {
+                BindVisibility(field);
+            }
+
         }
 
         private void BindVisibility(MediaDetailField mediaField)

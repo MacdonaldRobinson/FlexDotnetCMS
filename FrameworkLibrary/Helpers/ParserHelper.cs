@@ -278,7 +278,16 @@ namespace FrameworkLibrary
                             if (System.ComponentModel.TypeDescriptor.GetConverter(tempPropertyInfo.PropertyType).CanConvertFrom(value.GetType()))
                             {
                                 if (value != "")
-                                    tempPropertyInfo.SetValue(tempNestedProperty, Convert.ChangeType(value, tempPropertyInfo.PropertyType), null);
+                                {
+                                    try
+                                    {
+                                        tempPropertyInfo.SetValue(tempNestedProperty, Convert.ChangeType(value, tempPropertyInfo.PropertyType), null);
+                                    }
+                                    catch(Exception ex)
+                                    {
+                                        ErrorHelper.LogException(new Exception($"Error updating property '{tempPropertyInfo.Name}' with value {value} for control {((System.Web.UI.Control)obj).ClientID}", ex));
+                                    }
+                                }
                             }
                         }
                         else

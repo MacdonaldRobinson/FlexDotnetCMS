@@ -285,7 +285,7 @@ namespace FrameworkLibrary
                                     }
                                     catch(Exception ex)
                                     {
-                                        ErrorHelper.LogException(new Exception($"Error updating property '{tempPropertyInfo.Name}' with value {value} for control {((System.Web.UI.Control)obj).ClientID}", ex));
+                                        ErrorHelper.LogException(new Exception($"Error setting value for property '{tempPropertyInfo.Name}' with value '{value}' for control with ID '{((System.Web.UI.Control)obj).ClientID}'", ex));
                                     }
                                 }
                             }

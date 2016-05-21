@@ -47,12 +47,12 @@ namespace WebApplication.Admin.Controls.Editors
             if (FieldID.Value == "0")
             {
                 FieldDetailsTitle.Text = "Create a new field";
-                Update.Text = "Add";
+                Update.Text = "Add Field";
             }
             else
             {
                 FieldDetailsTitle.Text = "Currently Editing Field ID: " + FieldID.Value;
-                Update.Text = "Save";
+                Update.Text = "Save Field";
             }
         }
 

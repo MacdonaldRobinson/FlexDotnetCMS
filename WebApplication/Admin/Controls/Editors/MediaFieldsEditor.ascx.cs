@@ -25,12 +25,16 @@ namespace WebApplication.Admin.Controls.Editors
 
         private void BindVisibility(MediaDetailField mediaField)
         {
-            var possibleMediaTypeField = mediaField.MediaDetail.MediaType.Fields.SingleOrDefault(i => i.FieldCode == mediaField.FieldCode);
+            var possibleMediaTypeField = mediaField?.MediaDetail?.MediaType.Fields.SingleOrDefault(i => i.FieldCode == mediaField.FieldCode);
 
             if (possibleMediaTypeField != null)
             {
                 AssociateWithMediaTypeFieldWrapper.Visible = true;
                 AssociateWithMediaTypeField.Checked = (mediaField.MediaTypeField != null);
+            }
+            else
+            {
+                AssociateWithMediaTypeFieldWrapper.Visible = false;
             }
         }
 

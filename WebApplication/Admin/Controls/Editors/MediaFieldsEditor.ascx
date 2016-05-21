@@ -142,7 +142,7 @@
                     <label for="<%# AdminControl.ClientID %>">Admin Control:</label>
                 <asp:TextBox runat="server" ID="AdminControl" TextMode="MultiLine" class="AceEditor" Height="300" />
                 </div>
-                <div>
+                <div id="UseMediaTypeFieldFrontEndLayoutWrapper" runat="server" visible="false">
                     <label>
                         <asp:CheckBox ID="UseMediaTypeFieldFrontEndLayout" runat="server" />
                         <label for="<%# UseMediaTypeFieldFrontEndLayout.ClientID %>">Use Media Type Field FrontEnd Layout</label>

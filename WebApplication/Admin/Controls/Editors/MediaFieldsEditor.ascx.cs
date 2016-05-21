@@ -31,10 +31,25 @@ namespace WebApplication.Admin.Controls.Editors
             {
                 AssociateWithMediaTypeFieldWrapper.Visible = true;
                 AssociateWithMediaTypeField.Checked = (mediaField.MediaTypeField != null);
+
+                if(AssociateWithMediaTypeField.Checked)
+                {
+                    UseMediaTypeFieldFrontEndLayout.Checked = mediaField.UseMediaTypeFieldFrontEndLayout;
+                    UseMediaTypeFieldFrontEndLayoutWrapper.Visible = true;
+                }
+                else
+                {
+                    UseMediaTypeFieldFrontEndLayoutWrapper.Visible = false;
+                    UseMediaTypeFieldFrontEndLayout.Checked = false;
+                    mediaField.UseMediaTypeFieldFrontEndLayout = false;
+                }
             }
             else
             {
-                AssociateWithMediaTypeFieldWrapper.Visible = false;
+                UseMediaTypeFieldFrontEndLayoutWrapper.Visible = AssociateWithMediaTypeFieldWrapper.Visible = false;
+                UseMediaTypeFieldFrontEndLayout.Checked = false;
+                mediaField.MediaTypeField = null;
+                mediaField.UseMediaTypeFieldFrontEndLayout = false;
             }
         }
 
@@ -112,17 +127,25 @@ namespace WebApplication.Admin.Controls.Editors
             mediaField.GetAdminControlValue = GetAdminControlValue.Text;
             mediaField.SetAdminControlValue = SetAdminControlValue.Text;
             mediaField.FrontEndLayout = FrontEndLayout.Text;
-            mediaField.UseMediaTypeFieldFrontEndLayout = UseMediaTypeFieldFrontEndLayout.Checked;
 
             var mediaTypeField = mediaField.MediaDetail.MediaType.Fields.SingleOrDefault(i => i.FieldCode == mediaField.FieldCode);
 
-            if (AssociateWithMediaTypeField.Checked)
+            if(mediaTypeField != null)
             {
-                mediaField.MediaTypeField = mediaTypeField;
+                mediaField.UseMediaTypeFieldFrontEndLayout = UseMediaTypeFieldFrontEndLayout.Checked;
+
+                if (AssociateWithMediaTypeField.Checked)
+                {
+                    mediaField.MediaTypeField = mediaTypeField;
+                }
+                else
+                {
+                    mediaField.MediaTypeField = null;
+                }
             }
             else
             {
-                mediaField.MediaTypeField = null;
+                mediaField.UseMediaTypeFieldFrontEndLayout = false;
             }
 
             mediaField.DateCreated = DateTime.Now;

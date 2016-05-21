@@ -20,7 +20,18 @@ namespace WebApplication.Admin.Controls.Editors
             ItemList.DataSource = mediaDetail.Fields.OrderBy(i => i.OrderIndex).ToList();
             ItemList.DataBind();
 
-            BindFieldTypeDropDown(FieldTypeDropDown);
+            BindFieldTypeDropDown(FieldTypeDropDown);            
+        }
+
+        private void BindVisibility(MediaDetailField mediaField)
+        {
+            var possibleMediaTypeField = mediaField.MediaDetail.MediaType.Fields.SingleOrDefault(i => i.FieldCode == mediaField.FieldCode);
+
+            if (possibleMediaTypeField != null)
+            {
+                AssociateWithMediaTypeFieldWrapper.Visible = true;
+                AssociateWithMediaTypeField.Checked = (mediaField.MediaTypeField != null);
+            }
         }
 
         public AdminBasePage BasePage
@@ -54,9 +65,11 @@ namespace WebApplication.Admin.Controls.Editors
             }
             var fieldId = long.Parse(FieldID.Value);
 
+            MediaDetailField mediaField = null;
+
             if (fieldId == 0)
             {
-                var mediaField = new MediaDetailField();
+                mediaField = new MediaDetailField();
                 UpdatedObjectFromFields(mediaField);
 
                 mediaField.OrderIndex = mediaDetail.Fields.Count;
@@ -65,7 +78,7 @@ namespace WebApplication.Admin.Controls.Editors
             }
             else
             {
-                var mediaField = mediaDetail.Fields.SingleOrDefault(i => i.ID == fieldId);
+                mediaField = mediaDetail.Fields.SingleOrDefault(i => i.ID == fieldId);
                 UpdatedObjectFromFields(mediaField);
             }
 
@@ -73,7 +86,9 @@ namespace WebApplication.Admin.Controls.Editors
 
             if (!returnObj.IsError)
             {
-                Bind();                
+                FieldID.Value = mediaField.ID.ToString();
+                BindVisibility(mediaField);
+                Bind();                                
             }
             else
             {
@@ -95,6 +110,17 @@ namespace WebApplication.Admin.Controls.Editors
             mediaField.FrontEndLayout = FrontEndLayout.Text;
             mediaField.UseMediaTypeFieldFrontEndLayout = UseMediaTypeFieldFrontEndLayout.Checked;
 
+            var mediaTypeField = mediaField.MediaDetail.MediaType.Fields.SingleOrDefault(i => i.FieldCode == mediaField.FieldCode);
+
+            if (AssociateWithMediaTypeField.Checked)
+            {
+                mediaField.MediaTypeField = mediaTypeField;
+            }
+            else
+            {
+                mediaField.MediaTypeField = null;
+            }
+
             mediaField.DateCreated = DateTime.Now;
             mediaField.DateLastModified = DateTime.Now;
         }
@@ -112,6 +138,8 @@ namespace WebApplication.Admin.Controls.Editors
             GetAdminControlValue.Text = mediaField.GetAdminControlValue;
             SetAdminControlValue.Text = mediaField.SetAdminControlValue;
             UseMediaTypeFieldFrontEndLayout.Checked = mediaField.UseMediaTypeFieldFrontEndLayout;
+
+            BindVisibility(mediaField);
         }
 
         protected void ItemList_PageIndexChanging(object sender, System.Web.UI.WebControls.GridViewPageEventArgs e)

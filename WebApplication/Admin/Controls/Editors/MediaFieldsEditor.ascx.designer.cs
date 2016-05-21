@@ -103,6 +103,24 @@ namespace WebApplication.Admin.Controls.Editors {
         protected global::System.Web.UI.WebControls.TextBox GroupName;
         
         /// <summary>
+        /// AssociateWithMediaTypeFieldWrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AssociateWithMediaTypeFieldWrapper;
+        
+        /// <summary>
+        /// AssociateWithMediaTypeField control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox AssociateWithMediaTypeField;
+        
+        /// <summary>
         /// FieldTypeDropDown control.
         /// </summary>
         /// <remarks>

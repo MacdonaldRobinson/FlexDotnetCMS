@@ -36,12 +36,12 @@ namespace WebApplication.Admin.Controls.Editors
             if (FieldID.Value == "0")
             {
                 FieldDetailsTitle.Text = "Create a new field";
-                Update.Text = "Add";
+                Update.Text = "Add Field";
             }
             else
             {
                 FieldDetailsTitle.Text = "Currently Editing Field ID: " + FieldID.Value;
-                Update.Text = "Save";
+                Update.Text = "Save Field";
             }
         }
 
@@ -94,7 +94,10 @@ namespace WebApplication.Admin.Controls.Editors
                     mediaDetailField.FieldCode = mediaTypeField.FieldCode;
                     mediaDetailField.FieldLabel = mediaTypeField.FieldLabel;
                     mediaDetailField.AdminControl = mediaTypeField.AdminControl;
-                    mediaDetailField.FrontEndLayout = mediaTypeField.FrontEndLayout;
+
+                    if(mediaDetailField.UseMediaTypeFieldFrontEndLayout)
+                        mediaDetailField.FrontEndLayout = mediaTypeField.FrontEndLayout;
+
                     mediaDetailField.GroupName = mediaTypeField.GroupName;
                     mediaDetailField.RenderLabelAfterControl = mediaTypeField.RenderLabelAfterControl;
 
@@ -103,7 +106,6 @@ namespace WebApplication.Admin.Controls.Editors
 
                     mediaDetailField.GetAdminControlValue = mediaTypeField.GetAdminControlValue;
                     mediaDetailField.SetAdminControlValue = mediaTypeField.SetAdminControlValue;
-
                     mediaDetailField.DateLastModified = DateTime.Now;
                 }
             }

@@ -39,14 +39,15 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldFiles
         {
             selectedItem.Name = Name.Text;
             selectedItem.PathToFile = PathToFile.GetValue().ToString();
-            selectedItem.Description = Description.Text;
+            selectedItem.Description = ParserHelper.ParseData(Description.Text, TemplateVars, true);
         }
 
         private void UpdateFieldsFromObject()
         {
             Name.Text = selectedItem.Name;
             PathToFile.SetValue(selectedItem.PathToFile);
-            Description.Text = selectedItem.Description;
+
+            Description.Text = ParserHelper.ParseData(selectedItem.Description, TemplateVars);
         }
 
         protected void Save_OnClick(object sender, EventArgs e)

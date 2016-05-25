@@ -18,7 +18,7 @@ namespace WebApplication.Controls
             SearchResults.SearchResultItems = rssItems;
             SearchResults.SearchResultText = SearchTerms.Text;*/
 
-            Response.Redirect("~/search/?q=" + SearchTerms.Text);
+            //Response.Redirect("~/search/?q=" + SearchTerms.Text);
         }
     }
 }

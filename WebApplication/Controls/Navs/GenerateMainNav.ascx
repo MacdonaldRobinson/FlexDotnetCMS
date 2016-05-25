@@ -1,33 +1,40 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="GenerateMainNav.ascx.cs" Inherits="WebApplication.Controls.GenerateMainNav" %>
 
-<script type="text/javascript">
+<script>
     var isMobile = false;
 
     $(document).ready(function () {
-        $("#mainMenu ul li ul").addClass("dropdown-menu");
+        $(".nav li ul").addClass("dropdown-menu");
 
         $('.dropdown').mouseover(function () {
-            $(this).find(".dropdown-menu").show();
+            if(!isMobile) {
+                $(this).find(".dropdown-menu").show();
+            }
         });
 
         $('.dropdown').mouseout(function () {
-            $(this).find(".dropdown-menu").hide();
+            if (!isMobile) {
+                $(this).find(".dropdown-menu").hide();
+            }
         });
 
         $('.dropdown a').click(function () {
             var topNavLinkClicked = ($(this).parents(".level1").length == 0);
+            var hasChildNav = ($(this).parent().find("ul").length > 0);
+
             var href = $(this).attr("href");
 
-            if ((isMobile) && (topNavLinkClicked))
+            if ((isMobile) && (hasChildNav))
                 return;
 
             window.location.href = href;
+
+
         });
 
         function resizer() {
             var w = $(window).width();
             if (w < 768) {
-                console.log("resize");
                 isMobile = true;
             } else {
                 isMobile = false;
@@ -37,7 +44,9 @@
         $(window).on('load resize', function () {
             resizer();
         });
+
     });
+
 </script>
 
 <div id="mainMenu">

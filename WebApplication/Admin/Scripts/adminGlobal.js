@@ -1023,7 +1023,10 @@ function BindDataTable() {
     $('.DataTable').DataTable({
         dom: 'Bfrtip',
         buttons: [
-            'excel',
+            {
+                extend: 'csvHtml5',
+                title: 'Data export'
+            }
         ]//,
         //"drawCallback": function (settings) {
         //    var api = this.api();

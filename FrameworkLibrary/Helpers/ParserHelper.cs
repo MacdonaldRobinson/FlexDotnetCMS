@@ -273,7 +273,7 @@ namespace FrameworkLibrary
                     {
                         var val = tempPropertyInfo.GetValue(tempNestedProperty, null);
 
-                        if (val is string || val is bool || val is long)
+                        if (val is string || val is bool || val is long || val == null)
                         {
                             if (System.ComponentModel.TypeDescriptor.GetConverter(tempPropertyInfo.PropertyType).CanConvertFrom(value.GetType()))
                             {
@@ -283,7 +283,7 @@ namespace FrameworkLibrary
                                     {
                                         tempPropertyInfo.SetValue(tempNestedProperty, Convert.ChangeType(value, tempPropertyInfo.PropertyType), null);
                                     }
-                                    catch(Exception ex)
+                                    catch (Exception ex)
                                     {
                                         ErrorHelper.LogException(new Exception($"Error setting value for property '{tempPropertyInfo.Name}' with value '{value}' for control with ID '{((System.Web.UI.Control)obj).ClientID}'", ex));
                                     }

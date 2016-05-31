@@ -73,7 +73,16 @@ namespace WebApplication.Handlers
             virtualPath = URIHelper.GetCurrentVirtualPath().ToLower();
 
             if ((virtualPath != "~/") && (!virtualPath.EndsWith("/")))
-                HttpContext.Current.Response.RedirectPermanent(virtualPath + "/");
+            {
+                var queryString = HttpContext.Current.Request.QueryString.ToString();
+
+                var path = virtualPath + "/";
+
+                if (!string.IsNullOrEmpty(queryString))
+                    path = path + "?" + queryString;
+
+                HttpContext.Current.Response.RedirectPermanent(path);
+            }
 
             var segments = URIHelper.GetUriSegments(virtualPath).ToList();
 

@@ -27,8 +27,7 @@ namespace FrameworkLibrary
 
         public static string ObjectToJson(object to)
         {
-            var Serializer = new JavaScriptSerializer();
-            return Serializer.Serialize(to);
+            return to.ToJSON();
         }
 
         public static bool ContainsWord(string inputString, string term)
@@ -241,6 +240,6 @@ namespace FrameworkLibrary
             var sha1data = sha1.ComputeHash(data);
 
             return Encoding.ASCII.GetString(sha1data);
-        }        
+        }
     }
 }

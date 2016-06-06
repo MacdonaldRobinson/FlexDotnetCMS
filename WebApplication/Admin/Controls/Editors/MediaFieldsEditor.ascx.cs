@@ -24,7 +24,7 @@ namespace WebApplication.Admin.Controls.Editors
 
             var field = (MediaDetailField)BaseMapper.GetDataModel().Fields.Find(long.Parse(FieldID.Value));
 
-            if(field != null)
+            if (field != null)
             {
                 BindVisibility(field);
             }
@@ -40,7 +40,7 @@ namespace WebApplication.Admin.Controls.Editors
                 AssociateWithMediaTypeFieldWrapper.Visible = true;
                 AssociateWithMediaTypeField.Checked = (mediaField.MediaTypeField != null);
 
-                if(AssociateWithMediaTypeField.Checked)
+                if (AssociateWithMediaTypeField.Checked)
                 {
                     UseMediaTypeFieldFrontEndLayout.Checked = mediaField.UseMediaTypeFieldFrontEndLayout;
                     UseMediaTypeFieldFrontEndLayoutWrapper.Visible = true;
@@ -115,7 +115,7 @@ namespace WebApplication.Admin.Controls.Editors
             {
                 FieldID.Value = mediaField.ID.ToString();
                 BindVisibility(mediaField);
-                Bind();                                
+                Bind();
             }
             else
             {
@@ -136,9 +136,9 @@ namespace WebApplication.Admin.Controls.Editors
             mediaField.SetAdminControlValue = SetAdminControlValue.Text;
             mediaField.FrontEndLayout = FrontEndLayout.Text;
 
-            var mediaTypeField = mediaField.MediaDetail.MediaType.Fields.SingleOrDefault(i => i.FieldCode == mediaField.FieldCode);
+            var mediaTypeField = mediaDetail.MediaType.Fields.SingleOrDefault(i => i.FieldCode == mediaField.FieldCode);
 
-            if(mediaTypeField != null)
+            if (mediaTypeField != null)
             {
                 mediaField.UseMediaTypeFieldFrontEndLayout = UseMediaTypeFieldFrontEndLayout.Checked;
 

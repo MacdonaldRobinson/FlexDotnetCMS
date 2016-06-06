@@ -302,7 +302,7 @@ namespace WebApplication
                 }
             }
 
-            frameworkBaseMedia = FrameworkBaseMedia.GetInstance(currentPageVirtualPath, true);
+            frameworkBaseMedia = FrameworkBaseMedia.GetInstanceByVirtualPath(currentPageVirtualPath, true);
 
             if (this.MasterPageFile != null)
             {
@@ -666,7 +666,9 @@ namespace WebApplication
             }
 
 
-            if (AppSettings.EnableGlossaryTerms && !IsInAdminSection)
+            var cmsSettings = GetSettings();
+
+            if (cmsSettings.EnableGlossaryTerms && !IsInAdminSection)
             {
                 if (Master.ToString().Contains("views_masterpages"))
                 {

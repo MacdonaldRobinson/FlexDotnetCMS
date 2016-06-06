@@ -148,14 +148,6 @@ namespace WebApplication
             }
         }
 
-        public static bool EnableGlossaryTerms
-        {
-            get
-            {
-                return bool.Parse(ConfigurationManager.AppSettings["EnableGlossaryTerms"]);
-            }
-        }
-
         public static string GetCurrentFlashUrl()
         {
             return URIHelper.BaseUrl + URIHelper.GetCurrentVirtualPath().Replace("~", "#");
@@ -241,7 +233,7 @@ namespace WebApplication
                 return ConfigurationManager.AppSettings["EnableAutoIPLocationTracking"];
             }
         }
-        
+
         public static bool UseLoadFileServiceUrl
         {
             get
@@ -480,7 +472,7 @@ namespace WebApplication
             {
                 return bool.Parse(ConfigurationManager.AppSettings["ForceSSL"]);
             }
-        }        
+        }
 
         public static string GoogleAPIKey
         {

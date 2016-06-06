@@ -58,7 +58,7 @@ namespace WebApplication.Admin.MediaArticle
                     SelectedMedia = parentMediaItem;
 
                 if (parentMediaItem == null)
-                    return;
+                    parentMediaItem = SelectedMedia.ParentMedia;
 
                 selectedItem = MediaDetailsMapper.CreateObject(mediaTypeId, selectedMediaItem, parentMediaItem);
             }

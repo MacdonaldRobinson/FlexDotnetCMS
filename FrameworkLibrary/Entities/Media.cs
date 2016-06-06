@@ -5,6 +5,14 @@ namespace FrameworkLibrary
 {
     public partial class Media : IMustContainID
     {
+        public IMediaDetail LiveMediaDetail
+        {
+            get
+            {
+                return this.MediaDetails.SingleOrDefault(i => i.HistoryForMediaDetail == null);
+            }
+        }
+
         public string GetTagsAsString()
         {
             return MediaTags.Select(i => i.Tag).Aggregate("", (current, item) => current + (item.Name + ","));
@@ -101,6 +109,14 @@ namespace FrameworkLibrary
                 }
 
                 index++;
+            }
+        }
+
+        public string PermaLink
+        {
+            get
+            {
+                return "/?MediaID=" + this.ID;
             }
         }
     }

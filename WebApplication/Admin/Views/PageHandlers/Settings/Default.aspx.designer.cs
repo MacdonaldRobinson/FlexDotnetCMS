@@ -67,6 +67,15 @@ namespace WebApplication.Admin.Views.PageHandlers.Settings {
         protected global::System.Web.UI.WebControls.TextBox MaxRequestLengthInMB;
         
         /// <summary>
+        /// EnableGlossaryTerms control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox EnableGlossaryTerms;
+        
+        /// <summary>
         /// OutputCacheDurationInSeconds control.
         /// </summary>
         /// <remarks>
@@ -110,6 +119,15 @@ namespace WebApplication.Admin.Views.PageHandlers.Settings {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox SiteOfflineUrl;
+        
+        /// <summary>
+        /// PageNotFoundUrl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox PageNotFoundUrl;
         
         /// <summary>
         /// Save control.

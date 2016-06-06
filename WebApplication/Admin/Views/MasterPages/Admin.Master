@@ -37,12 +37,12 @@
                         <ul class="sf-menu">
                             <li><a href="/Admin/Default.aspx">Dashboard</a></li>
                             <li><a href="/Scripts/tinyfilemanager.net/dialog.aspx" class="colorbox iframe">FileManager</a></li>
+                            <li id="GlossaryTermsNavItem" runat="server" visible="false"><a href="/Admin/Views/PageHandlers/GlossaryTerms/Default.aspx">Manage Glossary Terms</a></li>
                             <%  if (BasePage.CurrentUser.IsInRole(RoleEnum.Administrator))
                                 { %>
                             <li><a href="#">Advance Options</a>
                                 <ul>
                                     <li><a href="/Admin/Views/PageHandlers/Tags/Default.aspx">Manage Tags</a></li>
-                                    <%--<li><a href="/Admin/Views/PageHandlers/GlossaryTerms/Default.aspx">Manage Glossary Terms</a></li>--%>
                                     <%--<li><a href="/Admin/Views/PageHandlers/FieldFiles/Default.aspx">Manage Field Files</a></li>--%>
                                     <li><a href="/Admin/Views/PageHandlers/Settings/Default.aspx">Manage Settings</a></li>
                                     <li><a href="/Admin/Views/PageHandlers/Users/Default.aspx">Manage Users</a></li>

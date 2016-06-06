@@ -28,6 +28,8 @@ namespace FrameworkLibrary
         public long OutputCacheDurationInSeconds { get; set; }
         public long DefaultLanguageID { get; set; }
         public long DefaultMasterPageID { get; set; }
+        public string PageNotFoundUrl { get; set; }
+        public bool EnableGlossaryTerms { get; set; }
     
         public virtual Language DefaultLanguage { get; set; }
         public virtual MasterPage DefaultMasterPage { get; set; }

@@ -22,7 +22,7 @@ public class FrameworkBaseMedia
     private static Language defaultLanguage;
     private string currentVirtualPath = "";
 
-    public static FrameworkBaseMedia GetInstance(string virtualPath, bool selectParentIfPossible = false)
+    public static FrameworkBaseMedia GetInstanceByVirtualPath(string virtualPath, bool selectParentIfPossible = false)
     {
         if (FrameworkSettings.CurrentFrameworkBaseMedia != null)
             return FrameworkSettings.CurrentFrameworkBaseMedia;
@@ -30,12 +30,20 @@ public class FrameworkBaseMedia
         return new FrameworkBaseMedia(virtualPath);
     }
 
-    public static FrameworkBaseMedia GetInstance(Media media)
+    public static FrameworkBaseMedia GetInstanceByMedia(Media media)
     {
         if (FrameworkSettings.CurrentFrameworkBaseMedia != null)
             return FrameworkSettings.CurrentFrameworkBaseMedia;
 
         return new FrameworkBaseMedia(media);
+    }
+
+    public static FrameworkBaseMedia GetInstanceByMediaDetail(IMediaDetail mediaDetail)
+    {
+        if (FrameworkSettings.CurrentFrameworkBaseMedia != null)
+            return FrameworkSettings.CurrentFrameworkBaseMedia;
+
+        return new FrameworkBaseMedia(mediaDetail);
     }
 
     public static void InitConnectionSettings(ConnectionStringSettings connectionStringSettings)
@@ -57,6 +65,12 @@ public class FrameworkBaseMedia
     {
         Init();
         LoadByMedia(media);
+    }
+
+    private FrameworkBaseMedia(IMediaDetail mediaDetail)
+    {
+        Init();
+        LoadByMediaDetail(mediaDetail);
     }
 
     private void Init()
@@ -112,6 +126,18 @@ public class FrameworkBaseMedia
     {
         currentMedia = media;
         currentMediaDetail = MediaDetailsMapper.GetByMedia(media, CurrentLanguage);
+    }
+
+    public void LoadByMediaDetail(IMediaDetail mediaDetail)
+    {
+        long version = 0;
+        long.TryParse(HttpContext.Current.Request["version"], out version);
+
+        if (version == 0 && mediaDetail?.HistoryForMediaDetail != null)
+            mediaDetail = mediaDetail.HistoryForMediaDetail;
+
+        currentMediaDetail = mediaDetail;
+        currentMedia = currentMediaDetail?.Media;
     }
 
     public Language CurrentLanguage

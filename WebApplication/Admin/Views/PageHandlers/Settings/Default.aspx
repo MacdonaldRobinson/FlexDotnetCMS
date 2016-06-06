@@ -54,6 +54,10 @@
             </div>
         </div>
         <div>
+            <label for="<%= EnableGlossaryTerms.ClientID %>">
+                <asp:CheckBox ID="EnableGlossaryTerms" runat="server" /> Enable Glossary Terms</label>
+        </div>
+        <div>
             <label for="<%= OutputCacheDurationInSeconds.ClientID %>">
                 Output Cache Duration ( in Seconds)</label>
             <div>
@@ -86,6 +90,13 @@
                 Site Offline Url</label>
             <div>
                 <asp:TextBox runat="server" ID="SiteOfflineUrl"></asp:TextBox>
+            </div>
+        </div>
+        <div>
+            <label for="<%= PageNotFoundUrl.ClientID %>">
+                Page Not Found Url</label>
+            <div>
+                <asp:TextBox runat="server" ID="PageNotFoundUrl"></asp:TextBox>
             </div>
         </div>
         <div class="buttons">

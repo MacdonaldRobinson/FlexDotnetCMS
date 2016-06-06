@@ -217,6 +217,7 @@
     <Compile Include="Enums\StatusEnum.cs" />
     <Compile Include="Enums\RenderVersion.cs" />
     <Compile Include="Extentions\MediaDetailExtentions.cs" />
+    <Compile Include="Extentions\MediaExtentions.cs" />
     <Compile Include="Extentions\ObjectExtentions.cs" />
     <Compile Include="Field.cs">
       <DependentUpon>Model.tt</DependentUpon>

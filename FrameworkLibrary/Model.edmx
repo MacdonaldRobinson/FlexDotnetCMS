@@ -332,6 +332,8 @@
           <Property Name="SiteOnlineAtDateTime" Type="datetime" Nullable="false" />
           <Property Name="SiteOfflineAtDateTime" Type="datetime" />
           <Property Name="SiteOfflineUrl" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="PageNotFoundUrl" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EnableGlossaryTerms" Type="bit" Nullable="false" />
           <Property Name="OutputCacheDurationInSeconds" Type="bigint" Nullable="false" />
           <Property Name="DefaultLanguageID" Type="bigint" Nullable="false" />
           <Property Name="DefaultMasterPageID" Type="bigint" Nullable="false" />
@@ -1870,6 +1872,8 @@
           <Property Name="DefaultMasterPageID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="DefaultLanguage" Relationship="FrameworkModel.FK_Settings_Languages" FromRole="Settings" ToRole="Language" />
           <NavigationProperty Name="DefaultMasterPage" Relationship="FrameworkModel.FK_Settings_MasterPages" FromRole="Settings" ToRole="MasterPage" />
+          <Property Name="PageNotFoundUrl" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="EnableGlossaryTerms" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="WebserviceRequest">
           <Key>
@@ -2452,6 +2456,8 @@
           <EntitySetMapping Name="AllSettings">
             <EntityTypeMapping TypeName="FrameworkModel.Settings">
               <MappingFragment StoreEntitySet="Settings">
+                <ScalarProperty Name="EnableGlossaryTerms" ColumnName="EnableGlossaryTerms" />
+                <ScalarProperty Name="PageNotFoundUrl" ColumnName="PageNotFoundUrl" />
                 <ScalarProperty Name="DefaultMasterPageID" ColumnName="DefaultMasterPageID" />
                 <ScalarProperty Name="DefaultLanguageID" ColumnName="DefaultLanguageID" />
                 <ScalarProperty Name="OutputCacheDurationInSeconds" ColumnName="OutputCacheDurationInSeconds" />
@@ -2794,7 +2800,7 @@
           <ConnectorPoint PointX="14.15625" PointY="10.048481298567204" />
           <ConnectorPoint PointX="15.125" PointY="10.048481298567204" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="FrameworkModel.Settings" Width="1.5" PointX="13.375" PointY="0.75" Height="1.787985026041667" />
+        <EntityTypeShape EntityType="FrameworkModel.Settings" Width="1.5" PointX="13.25" PointY="0.5" Height="1.787985026041667" />
         <EntityTypeShape EntityType="FrameworkModel.WebserviceRequest" Width="1.5" PointX="12.5" PointY="11.5" Height="2.5571907552083335" />
         <EntityTypeShape EntityType="FrameworkModel.UrlRedirectRule" Width="1.5" PointX="9.625" PointY="21.625" Height="1.5956835937500031" />
         <InheritanceConnector EntityType="FrameworkModel.UrlRedirectRule" ManuallyRouted="false">

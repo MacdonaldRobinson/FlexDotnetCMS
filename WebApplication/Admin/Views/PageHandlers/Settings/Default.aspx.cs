@@ -26,10 +26,10 @@ namespace WebApplication.Admin.Views.PageHandlers.Settings
             base.OnPreLoad(e);
 
             if (IsPostBack)
-                return;            
+                return;
 
             UpdateFieldsFromObject(SettingsMapper.GetSettings());
-        }        
+        }
 
         public void UpdateFieldsFromObject(FrameworkLibrary.Settings settings)
         {
@@ -39,6 +39,8 @@ namespace WebApplication.Admin.Views.PageHandlers.Settings
             GlobalCodeInHead.Text = settings.GlobalCodeInHead;
             GlobalCodeInBody.Text = settings.GlobalCodeInBody;
             OutputCacheDurationInSeconds.Text = settings.OutputCacheDurationInSeconds.ToString();
+            PageNotFoundUrl.Text = settings.PageNotFoundUrl;
+            EnableGlossaryTerms.Checked = settings.EnableGlossaryTerms;
 
             if (settings.SiteOnlineAtDateTime > DateTime.MinValue)
                 SiteOnlineAtDateTime.Text = settings.SiteOnlineAtDateTime.ToString();
@@ -60,6 +62,8 @@ namespace WebApplication.Admin.Views.PageHandlers.Settings
             settings.GlobalCodeInHead = GlobalCodeInHead.Text;
             settings.GlobalCodeInBody = GlobalCodeInBody.Text;
             settings.SiteOfflineUrl = SiteOfflineUrl.Text;
+            settings.PageNotFoundUrl = PageNotFoundUrl.Text;
+            settings.EnableGlossaryTerms = EnableGlossaryTerms.Checked;
             settings.OutputCacheDurationInSeconds = long.Parse(OutputCacheDurationInSeconds.Text);
 
             if (!string.IsNullOrEmpty(SiteOnlineAtDateTime.Text))

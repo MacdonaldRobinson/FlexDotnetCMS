@@ -137,8 +137,33 @@ namespace WebApplication.Handlers
 
                 string viewPath = "";
 
-                FrameworkSettings.CurrentFrameworkBaseMedia = FrameworkBaseMedia.GetInstance(virtualPath, true);
-                MediaDetail detail = (MediaDetail)FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail;
+                long mediaDetailId = 0;
+                long.TryParse(requestContext.HttpContext.Request["MediaDetailID"], out mediaDetailId);
+
+                long mediaId = 0;
+                long.TryParse(requestContext.HttpContext.Request["MediaID"], out mediaId);
+
+                MediaDetail detail = null;
+
+                if (mediaDetailId == 0 && mediaId == 0)
+                {
+                    FrameworkSettings.CurrentFrameworkBaseMedia = FrameworkBaseMedia.GetInstanceByVirtualPath(virtualPath, true);
+                    detail = (MediaDetail)FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail;
+                }
+                else if (mediaDetailId != 0)
+                {
+                    var mediaDetail = MediaDetailsMapper.GetByID(mediaDetailId);
+
+                    FrameworkSettings.CurrentFrameworkBaseMedia = FrameworkBaseMedia.GetInstanceByMediaDetail(mediaDetail);
+                    detail = (MediaDetail)FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail;
+                }
+                else if (mediaId != 0)
+                {
+                    var media = MediasMapper.GetByID(mediaId);
+
+                    FrameworkSettings.CurrentFrameworkBaseMedia = FrameworkBaseMedia.GetInstanceByMedia(media);
+                    detail = (MediaDetail)FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail;
+                }
 
                 if (detail != null && !detail.CanUserAccessSection(FrameworkSettings.CurrentUser))
                 {
@@ -149,7 +174,7 @@ namespace WebApplication.Handlers
                 {
                     if (URIHelper.ConvertAbsUrlToTilda(detail.AbsoluteUrl).Replace("~", "") != Request.Url.AbsolutePath)
                     {
-                        Response.Redirect(detail.AbsoluteUrl);
+                        Response.Redirect(detail.AbsoluteUrl + Request.Url.Query);
                     }
                 }
 
@@ -160,14 +185,11 @@ namespace WebApplication.Handlers
 
                 if ((detail == null) || (!IsValidRequest(detail)))
                 {
-                    IMediaDetail pageNotFoundHandler = MediaDetailsMapper.GetByVirtualPath(FrameworkSettings.GetPageNotFoundHandler(FrameworkSettings.GetCurrentLanguage()), false);
+                    var cmsSettings = SettingsMapper.GetSettings();
 
-                    if (pageNotFoundHandler == null)
-                        pageNotFoundHandler = MediaDetailsMapper.GetByVirtualPath(FrameworkSettings.GetPageNotFoundHandler(LanguagesMapper.GetDefaultLanguage()), false);
-
-                    if (pageNotFoundHandler != null)
+                    if (!string.IsNullOrEmpty(cmsSettings.PageNotFoundUrl))
                     {
-                        Response.Redirect(pageNotFoundHandler.AutoCalculatedVirtualPath + "?requestVirtualPath=" + virtualPath);
+                        Response.Redirect(cmsSettings.PageNotFoundUrl + "?requestVirtualPath=" + virtualPath);
                         Response.End();
                     }
                 }

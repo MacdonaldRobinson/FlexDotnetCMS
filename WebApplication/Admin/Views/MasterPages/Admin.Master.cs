@@ -19,6 +19,13 @@ namespace WebApplication.Admin
 
         protected void Page_PreRender(object sender, EventArgs e)
         {
+            var settings = SettingsMapper.GetSettings();
+
+            if (settings.EnableGlossaryTerms)
+            {
+                GlossaryTermsNavItem.Visible = true;
+            }
+
             BindSiteTreeView();
 
             var allNodes = SiteTree.GetAllNodes();
@@ -147,7 +154,7 @@ namespace WebApplication.Admin
             if ((AdminBasePage.SelectedMediaDetail != null) && (AdminBasePage.SelectedMediaDetail.ID.ToString() == node.Value))
             {
                 node.LIClasses.Add("selected");
-                node.LinkClasses.Add("jstree-clicked");                
+                node.LinkClasses.Add("jstree-clicked");
 
                 while (node.Parent != null)
                 {

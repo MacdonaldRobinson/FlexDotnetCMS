@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Web;
 
 namespace FrameworkLibrary
 {
@@ -34,7 +35,7 @@ namespace FrameworkLibrary
             if (obj == null)
                 return "";
 
-            var matches = Regex.Matches(data, openToken + "[a-zA-Z0-9.\\[\\]\\(\\=>\"\"\\(),\') ]+" + closeToken);
+            var matches = Regex.Matches(data, openToken + "[a-zA-Z0-9.\\[\\]\\(\\=><\"\"\\(),\'?&/) ]+" + closeToken);
 
             foreach (var item in matches)
             {
@@ -53,6 +54,7 @@ namespace FrameworkLibrary
                     {
                         PropertyInfo tempPropertyInfo = null;
                         MethodInfo tempMethodInfo = null;
+
                         var methodParamsMatches = Regex.Matches(nestedProperty, "([a-zA-Z0-9]+)");
 
                         if (nestedProperty.Contains("(") && !nestedProperty.Contains("."))
@@ -61,7 +63,14 @@ namespace FrameworkLibrary
                         }
                         else
                         {
-                            tempPropertyInfo = tempNestedProperty.GetType().GetProperty(nestedProperty);
+                            var prop = nestedProperty;
+
+                            var queryParamsSplit = nestedProperty.Split('?');
+
+                            if (queryParamsSplit.Count() > 1)
+                                prop = queryParamsSplit.ElementAt(0);
+
+                            tempPropertyInfo = tempNestedProperty.GetType().GetProperty(prop);
                         }
 
                         if (tempPropertyInfo != null || tempMethodInfo != null)
@@ -177,7 +186,25 @@ namespace FrameworkLibrary
                         tagValue = data.Replace(item.ToString(), StringHelper.FormatOnlyDate((DateTime)tempNestedProperty));
 
                     if (tempNestedProperty is string || tempNestedProperty is bool || tempNestedProperty is long)
-                        tagValue = data.Replace(item.ToString(), tempNestedProperty.ToString());
+                    {
+                        var val = tempNestedProperty.ToString();
+
+                        var queryStringSplit = item.ToString().Replace(OpenToken, "").Replace(CloseToken, "").Split('?');
+
+                        if (queryStringSplit.Count() > 1)
+                        {
+                            var nv = HttpUtility.ParseQueryString(queryStringSplit.ElementAt(1));
+
+                            foreach (string key in nv)
+                            {
+                                var value = nv[key];
+                                val = val.Replace(OpenToken + key + CloseToken, value);
+                            }
+
+                        }
+
+                        tagValue = data.Replace(item.ToString(), val);
+                    }
                 }
 
                 if (tagValue.StartsWith("~/"))
@@ -193,7 +220,7 @@ namespace FrameworkLibrary
 
                 if (!string.IsNullOrEmpty(tagValue) && tagValue.Contains("@") && compileRazor)
                 {
-                    var razorTagValue = "@using FrameworkLibrary\n" + tagValue;
+                    var razorTagValue = "@using FrameworkLibrary\n@using System\n@using System.Linq\n@using System.Web\n" + tagValue;
                     var tagKey = "templateKey:" + tagValue;
 
                     try
@@ -223,7 +250,7 @@ namespace FrameworkLibrary
 
             if (!string.IsNullOrEmpty(data) && data.Contains("@") && !data.StartsWith("{") && compileRazor)
             {
-                data = "@using FrameworkLibrary\n" + data;
+                data = "@using FrameworkLibrary\n@using System\n@using System.Linq\n@using System.Web\n" + data;
                 var topTagKey = "templateKey:" + data;
 
                 try

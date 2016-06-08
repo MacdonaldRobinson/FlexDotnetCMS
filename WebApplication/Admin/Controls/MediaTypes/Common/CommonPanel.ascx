@@ -133,7 +133,7 @@
             <div id="VirtualPathHolder">
                 <label class="exception" for="<%= VirtualPath.ClientID %>">
                     Virtual Path:</label>
-                <asp:HyperLink ID="VirtualPath" runat="server" Target="_blank" CssClass="preview"></asp:HyperLink>
+                <asp:HyperLink ID="VirtualPath" runat="server" Target="_blank"></asp:HyperLink>
             </div>
             <div id="LinkTitleHolder">
                 <label for="<%= LinkTitle.ClientID %>">

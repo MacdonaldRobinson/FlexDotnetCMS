@@ -14,3 +14,5 @@
 /WebApplication/Properties/PublishProfiles/*.pubxml
 /WebApplication/Properties/PublishProfiles/*.user
 /WebApplication/Properties/PublishProfiles/*.PublishSettings
+/WebApplication/Admin/Controls/Fields/*.bak
+*.bak

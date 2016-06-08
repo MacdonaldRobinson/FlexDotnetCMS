@@ -75,7 +75,15 @@ namespace WebApplication.Admin.Controls
                 if ((tagName == "") || (items.Any(i => i.Name == tagName)))
                     continue;
 
-                Tag item = TagsMapper.GetByName(tagName);
+                long id;
+                long.TryParse(tagName, out id);
+                Tag item = null;
+
+                if (id != 0)
+                    item = TagsMapper.GetByID(long.Parse(tagName));
+
+                if (item == null)
+                    item = TagsMapper.GetByName(tagName);
 
                 if (item != null)
                     item = BaseMapper.GetObjectFromContext<Tag>(item);

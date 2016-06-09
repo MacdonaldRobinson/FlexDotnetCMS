@@ -619,8 +619,6 @@ namespace WebApplication
 
             string html = str.ToString();
 
-            html = ParserHelper.ParseData(html, TemplateVars);
-
             /*if (!IsInAdminSection)
             {
                 if ((AppSettings.EnableMobileDetection) && (FrontEndBasePage.IsMobile))
@@ -716,6 +714,8 @@ namespace WebApplication
                     ContextHelper.SetToSession("CurrentMediaDetail", CurrentMediaDetail);
                 }
             }
+
+            html = ParserHelper.ParseData(html, TemplateVars);
 
             writer.Write(html);
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 
 namespace FrameworkLibrary
 {
@@ -133,7 +134,19 @@ namespace FrameworkLibrary
             }
             else if (string.IsNullOrEmpty(cache))
             {
-                FileCacheHelper.SaveToCache(cacheKey + queryString, html);
+                var items = HttpUtility.ParseQueryString(queryString);
+
+                foreach (var item in items)
+                {
+                    var str = item + "=" + items[item.ToString()];
+
+                    cacheKey = cacheKey.Replace(str, "");
+                }
+
+                cacheKey = cacheKey + queryString;
+                cacheKey = cacheKey.Replace("?&", "?").Replace("??", "?").ToLower();
+
+                FileCacheHelper.SaveToCache(cacheKey, html);
             }
         }
 

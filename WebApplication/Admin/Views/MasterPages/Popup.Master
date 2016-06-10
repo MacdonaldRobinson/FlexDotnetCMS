@@ -8,6 +8,8 @@
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+
+    <link href="/Admin/Styles/popup.css" rel="stylesheet" />
 </head>
 <body>
 

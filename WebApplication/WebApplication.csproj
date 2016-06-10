@@ -97,7 +97,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\LinqToTwitterPcl.dll</HintPath>
     </Reference>
+    <Reference Include="MaxMind.GeoIP2, Version=2.6.0.0, Culture=neutral, PublicKeyToken=66afa4cc5ae853ac, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\MaxMind.GeoIP2.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System" />
@@ -258,7 +267,6 @@
     <Content Include="Admin\Views\PageHandlers\Users\Default.aspx" />
     <Content Include="Admin\Views\PageHandlers\Users\Detail.aspx" />
     <Content Include="Controls\Generic\GenericSlideShow.ascx" />
-    <Content Include="Controls\Generic\GenericVideoPlayer.ascx" />
     <Content Include="Controls\Header.ascx" />
     <Content Include="Controls\Lists\BlogFeedList.ascx" />
     <Content Include="Controls\ContactForm.ascx" />
@@ -1318,13 +1326,6 @@
     </Compile>
     <Compile Include="Controls\Generic\GenericSlideShow.ascx.designer.cs">
       <DependentUpon>GenericSlideShow.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Generic\GenericVideoPlayer.ascx.cs">
-      <DependentUpon>GenericVideoPlayer.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\Generic\GenericVideoPlayer.ascx.designer.cs">
-      <DependentUpon>GenericVideoPlayer.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controls\Header.ascx.cs">
       <DependentUpon>Header.ascx</DependentUpon>

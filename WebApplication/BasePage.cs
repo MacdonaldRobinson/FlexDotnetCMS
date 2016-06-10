@@ -1,5 +1,6 @@
 ﻿using FrameworkLibrary;
 using HtmlAgilityPack;
+using MaxMind.GeoIP2.Responses;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,17 +16,7 @@ namespace WebApplication
 {
     public class BasePage : System.Web.UI.Page
     {
-        private FrameworkBaseMedia frameworkBaseMedia;
-        private Dictionary<string, string> templateVars = new Dictionary<string, string>();
-        private string currentPageVirtualPath = "";
-
-        private List<string> uriSegments = new List<string>();
-        private IEnumerable<Role> roles = new List<Role>();
         protected string masterFilesDirPath = "";
-        private IEnumerable<Control> mobiles = new List<Control>();
-        private IEnumerable<Control> nonMobiles = new List<Control>();
-        public WebFormHelper WebFormHelper = new WebFormHelper();
-
         private PageStatePersister pageStatePersister;
 
         protected override PageStatePersister PageStatePersister
@@ -40,35 +31,22 @@ namespace WebApplication
 
         public BasePage()
         {
-            this.PreInit += new EventHandler(Page_PreInit);
-            this.Init += new EventHandler(Page_Init);
-            this.PreLoad += new EventHandler(Page_PreLoad);
-            this.Load += new EventHandler(Page_Load);
-            this.PreRender += new EventHandler(Page_PreRender);
+            if (FrameworkSettings.CurrentFrameworkBaseMedia == null)
+                FrameworkSettings.CurrentFrameworkBaseMedia = FrameworkBaseMedia.GetInstanceByVirtualPath("", true);
+
+            AddDefaultTemplateVars();
+        }
+
+        public void AddDefaultTemplateVars()
+        {
+            this.TemplateVars = GetDefaultTemplateVars("");
+            //this.TemplateVars["PageID"] = this.Page.ToString();
+            Page.MaintainScrollPositionOnPostBack = true;
         }
 
         public static Settings GetSettings()
         {
             return SettingsMapper.GetSettings();
-        }
-
-        public void Page_PreRender(object sender, EventArgs e)
-        {
-            WebFormHelper.GetJSIncludes(this.Page);
-
-            if (AppSettings.CombineCssAndJsIncludes)
-            {
-                var slug = StringHelper.CreateSlug(Request.Url.PathAndQuery);
-                var cssLoader = WebFormHelper.GenerateCssFileTag(AppSettings.LoadCssIncludesUrl + "_" + slug, TemplateBaseUrl, null, true);
-                var jsLoader = WebFormHelper.GenerateJsFileTag(AppSettings.LoadJsIncludesUrl + "_" + slug, TemplateBaseUrl, null, true);
-
-                JsIncludesPlaceHolder.Controls.Add(jsLoader);
-                CssIncludesPlaceHolder.Controls.Add(cssLoader);
-            }
-        }
-
-        public void Page_Load(object sender, EventArgs e)
-        {
         }
 
         private string HandleMobileLayout(string html)
@@ -206,16 +184,6 @@ namespace WebApplication
             }
         }
 
-        public void Page_PreLoad(object sender, EventArgs e)
-        {
-            if ((FrameworkBaseMedia.CurrentMediaDetail != null) && (Page.Master != null))
-            {
-                Page.MetaDescription = StringHelper.StripExtraSpaces(StringHelper.StripHtmlTags(FrameworkBaseMedia.CurrentMediaDetail.GetMetaDescription()));
-                Page.MetaKeywords = StringHelper.StripExtraSpaces(StringHelper.StripHtmlTags(FrameworkBaseMedia.CurrentMediaDetail.GetMetaKeywords()));
-                Page.Title = FrameworkBaseMedia.CurrentMediaDetail.GetPageTitle();
-            }
-        }
-
         public void AddToCart(IMediaDetail detail)
         {
             CurrentCart.AddItem(detail);
@@ -252,80 +220,10 @@ namespace WebApplication
             HttpContext.Current.Response.Redirect(GetRedirectToMediaDetailUrl(mediaTypeId, selectedMediaId, parentMediaId, historyVersion), true);
         }
 
-        public void Page_Init(object sender, EventArgs e)
-        {
-            AddCommonIncludes();
-            AddDefaultTemplateVars();
-        }
 
         public void AddToJSPreload(string preloadUrl)
         {
             PreloadHelper.AddToList(preloadUrl);
-        }
-
-        public void AddCommonIncludes()
-        {
-            if (Master == null)
-                return;
-
-            if (AppSettings.IsRunningOnDev)
-            {
-                this.AddNoIndexAndNoFollowMetaTag();
-            }
-        }
-
-        public void Page_PreInit(object sender, EventArgs e)
-        {
-            var httpRuntimeSection = new System.Web.Configuration.HttpRuntimeSection();
-            var settings = GetSettings();
-
-            if (settings.MaxRequestLength > 0)
-                httpRuntimeSection.MaxRequestLength = settings.MaxRequestLength;
-
-            WebFormHelper.ClearIncludesList();
-            PreloadHelper.PreloadList.Clear();
-
-            if (AppSettings.UseLoadFileServiceUrl)
-                WebFormHelper.LoadFileServiceUrl = AppSettings.FileServiceHandlerUrl + AppSettings.LoadFileUriSegment;
-            else
-                WebFormHelper.LoadFileServiceUrl = "";
-
-            WebFormHelper.CombineCssAndJsIncludes = AppSettings.CombineCssAndJsIncludes;
-
-            if (Request["devAction"] != null)
-            {
-                switch (Request["devAction"])
-                {
-                    case "ClearAllCache":
-                        ContextHelper.ClearAllMemoryCache();
-                        break;
-                }
-            }
-
-            frameworkBaseMedia = FrameworkBaseMedia.GetInstanceByVirtualPath(currentPageVirtualPath, true);
-
-            if (this.MasterPageFile != null)
-            {
-                var masterFilePath = GetMasterPageFilePath();
-
-                if (File.Exists(URIHelper.ConvertToAbsPath(masterFilePath)))
-                    MasterPageFile = masterFilePath;
-            }
-
-            if (currentPageVirtualPath == "")
-                currentPageVirtualPath = URIHelper.GetCurrentVirtualPath();
-
-            if (frameworkBaseMedia.CurrentMediaDetail == null)
-                return;
-
-            if (currentPageVirtualPath == "")
-                currentPageVirtualPath = URIHelper.GetCurrentVirtualPath();
-
-            if (!CanAccessSection())
-            {
-                FormsAuthentication.RedirectToLoginPage();
-                return;
-            }
         }
 
         public string GetMasterPageFilePath()
@@ -345,11 +243,11 @@ namespace WebApplication
                 return Page.MasterPageFile;
             }
 
-            if (string.IsNullOrEmpty(masterFilePath) && frameworkBaseMedia != null && frameworkBaseMedia.CurrentMediaDetail != null)
+            if (string.IsNullOrEmpty(masterFilePath) && FrameworkSettings.CurrentFrameworkBaseMedia?.CurrentMediaDetail != null)
             {
-                var mediaType = MediaTypesMapper.GetByID(frameworkBaseMedia.CurrentMediaDetail.MediaTypeID);
+                var mediaType = MediaTypesMapper.GetByID(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.MediaTypeID);
 
-                var masterPage = ((MediaDetail)frameworkBaseMedia.CurrentMediaDetail).GetMasterPage();
+                var masterPage = ((MediaDetail)FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail).GetMasterPage();
 
                 if (masterPage != null)
                 {
@@ -360,7 +258,7 @@ namespace WebApplication
                 }
                 else
                 {
-                    if ((frameworkBaseMedia.CurrentMediaDetail.Handler == null) || (frameworkBaseMedia.CurrentMediaDetail.Handler == ""))
+                    if ((FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.Handler == null) || (FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.Handler == ""))
                     {
                         if (mediaType.MasterPage == null)
                         {
@@ -405,7 +303,7 @@ namespace WebApplication
         {
             get
             {
-                return frameworkBaseMedia.CurrentMedia;
+                return FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMedia;
             }
         }
 
@@ -413,7 +311,7 @@ namespace WebApplication
         {
             get
             {
-                return frameworkBaseMedia.CurrentMediaDetail;
+                return FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail;
             }
         }
 
@@ -421,7 +319,7 @@ namespace WebApplication
         {
             get
             {
-                return frameworkBaseMedia.CurrentLanguage;
+                return FrameworkSettings.CurrentFrameworkBaseMedia.CurrentLanguage;
             }
         }
 
@@ -429,51 +327,35 @@ namespace WebApplication
         {
             get
             {
-                return frameworkBaseMedia.CurrentUser;
+                return FrameworkSettings.CurrentFrameworkBaseMedia.CurrentUser;
             }
             set
             {
-                frameworkBaseMedia.CurrentUser = value;
+                FrameworkSettings.CurrentFrameworkBaseMedia.CurrentUser = value;
             }
         }
 
-        public string CurrentPageVirtualPath
-        {
-            get
-            {
-                return currentPageVirtualPath;
-            }
-        }
+        public string CurrentPageVirtualPath { get; set; }
 
-        public Location CurrentVisitorLocation
+        public CityResponse CurrentVisitorLocation
         {
             get
             {
                 if (AppSettings.EnableGeoLocation)
                 {
                     GeoLocationHelper.APIKey = AppSettings.GeoLocationAPIKey;
-                    return FrameworkBaseMedia.CurrentVisitorLocation;
+                    return FrameworkSettings.CurrentFrameworkBaseMedia.CurrentVisitorLocation;
                 }
 
                 return null;
             }
         }
 
-        public Location TrackCurrentVisitorLocation()
-        {
-            if (AppSettings.EnableGeoLocation)
-            {
-                return FrameworkBaseMedia.TrackCurrentVisitorLocation();
-            }
-
-            return null;
-        }
-
         public string CurrentVisitorIP
         {
             get
             {
-                return FrameworkBaseMedia.CurrentVisitorIP;
+                return FrameworkSettings.CurrentFrameworkBaseMedia.CurrentVisitorIP;
             }
         }
 
@@ -541,36 +423,6 @@ namespace WebApplication
             }
         }
 
-        public string TemplateBaseUrl
-        {
-            get
-            {
-                var masterPageFile = this.MasterPageFile;
-
-                if (masterPageFile == null)
-                    masterPageFile = URIHelper.ConvertToAbsPath(GetMasterPageFilePath());
-
-                var tmp = URIHelper.GetUriSegments(masterPageFile).ToList();
-
-                tmp.RemoveAt(tmp.Count - 1);
-                var masterFolder = string.Join("/", tmp);
-
-                var baseUrl = URIHelper.ConvertAbsUrlToTilda(URIHelper.ConvertAbsPathToAbsUrl(masterFolder));
-
-                if (!baseUrl.EndsWith("/"))
-                    baseUrl += "/";
-
-                return URIHelper.ConvertToAbsUrl(baseUrl);
-            }
-        }
-
-        public void AddDefaultTemplateVars()
-        {
-            this.TemplateVars = GetDefaultTemplateVars(TemplateBaseUrl);
-            //this.TemplateVars["PageID"] = this.Page.ToString();
-            Page.MaintainScrollPositionOnPostBack = true;
-        }
-
         public static Dictionary<string, string> GetDefaultTemplateVars(string templateBaseUrl)
         {
             var templateVars = new Dictionary<string, string>();
@@ -608,118 +460,7 @@ namespace WebApplication
             }
         }
 
-        protected override void Render(HtmlTextWriter writer)
-        {
-            System.IO.StringWriter str = new System.IO.StringWriter();
-            HtmlTextWriter wrt = new HtmlTextWriter(str);
-
-            // render html
-            base.Render(wrt); //CAPTURE THE CURRENT PAGE HTML SOURCE AS STRING
-            //wrt.Close();
-
-            string html = str.ToString();
-
-            /*if (!IsInAdminSection)
-            {
-                if ((AppSettings.EnableMobileDetection) && (FrontEndBasePage.IsMobile))
-                    html = HandleMobileLayout(html);
-                else
-                    html = HandleNonMobileLayout(html);
-            }*/
-
-            if (!IsPostBack)
-            {
-                if (AppSettings.MinifyOutput)
-                    html = StringHelper.StripExtraSpacesBetweenMarkup(html);
-            }
-
-            if (CurrentMediaDetail != null)
-            {
-                if (!IsAjaxRequest)
-                {
-                    html = MediaDetailsMapper.ParseSpecialTags(CurrentMediaDetail, html);
-                }
-            }
-
-            HtmlAgilityPack.HtmlDocument document = null;
-
-            if (!IsInAdminSection)
-            {
-                HtmlNode.ElementsFlags.Remove("form");
-                document = new HtmlAgilityPack.HtmlDocument();
-                document.LoadHtml(html);
-
-                var forms = document.DocumentNode.SelectNodes("//form");
-
-                if (forms != null && forms.Count > 1)
-                {
-                    forms.RemoveAt(0);
-                    foreach (HtmlNode item in forms)
-                    {
-                        item.ParentNode.InnerHtml = item.ParentNode.InnerHtml.Replace("form", "div data-form");
-                    }
-
-                    html = document.DocumentNode.WriteContentTo();
-                }
-            }
-
-
-            var cmsSettings = GetSettings();
-
-            if (cmsSettings.EnableGlossaryTerms && !IsInAdminSection)
-            {
-                if (Master.ToString().Contains("views_masterpages"))
-                {
-                    var selectedNodes = document.DocumentNode.SelectNodes("//p|//li");
-                    var terms = GlossaryTermsMapper.GetAll();
-
-                    if (selectedNodes != null)
-                    {
-                        foreach (HtmlNode node in selectedNodes)
-                        {
-                            foreach (var term in terms)
-                            {
-                                var tempTerm = term.Term.Trim();
-
-                                node.InnerHtml = Regex.Replace(node.InnerHtml, @"\b" + Regex.Escape(tempTerm) + @"\b", me =>
-                                {
-                                    var template = "<span data-toggle=\"tooltip\" title=\"" + term.Definition + "\">" + me.Value + "</span>";
-                                    return template;
-                                }, RegexOptions.IgnoreCase);
-                            }
-                        }
-                    }
-                }
-
-                html = document.DocumentNode.WriteContentTo();
-            }
-
-            if (CurrentMediaDetail != null)
-            {
-                if (!IsAjaxRequest)
-                {
-                    if (CurrentUser == null && AppSettings.EnableOutputCaching && CurrentMediaDetail.EnableCaching && CurrentMediaDetail.CanRender)
-                    {
-                        if (AppSettings.EnableLevel1MemoryCaching)
-                        {
-                            CurrentMediaDetail.SaveToMemoryCache(UserSelectedVersion, html, Request.Url.Query);
-                        }
-
-                        if (AppSettings.EnableLevel2FileCaching)
-                        {
-                            CurrentMediaDetail.SaveToFileCache(UserSelectedVersion, html, Request.Url.Query);
-                        }
-                    }
-
-                    ContextHelper.SetToSession("CurrentMediaDetail", CurrentMediaDetail);
-                }
-            }
-
-            html = ParserHelper.ParseData(html, TemplateVars);
-
-            writer.Write(html);
-        }
-
+        private string currentPageVirtualPath = "";
         public string CurrentMediaVirtualPath
         {
             get
@@ -732,21 +473,8 @@ namespace WebApplication
             }
         }
 
-        public List<string> UriSegments
-        {
-            get
-            {
-                return uriSegments;
-            }
-        }
+        public List<string> UriSegments { get; set; } = new List<string>();
 
-        public FrameworkBaseMedia FrameworkBaseMedia
-        {
-            get
-            {
-                return frameworkBaseMedia;
-            }
-        }
 
         public Control JsIncludesPlaceHolder
         {
@@ -772,17 +500,7 @@ namespace WebApplication
             }
         }
 
-        public Dictionary<string, string> TemplateVars
-        {
-            get
-            {
-                return templateVars;
-            }
-            set
-            {
-                templateVars = value;
-            }
-        }
+        public Dictionary<string, string> TemplateVars { get; set; } = new Dictionary<string, string>();
 
         public void ClearIncludes()
         {
@@ -801,33 +519,7 @@ namespace WebApplication
             return WebFormHelper.FindControlRecursive(this.Page, id);
         }
 
-        public void AddJSFile(string path)
-        {
-            if (JsIncludesPlaceHolder == null)
-                return;
 
-            WebFormHelper.AddJSFile(path, JsIncludesPlaceHolder, TemplateBaseUrl);
-        }
-
-        public void AddNoIndexAndNoFollowMetaTag()
-        {
-            if (MetaIncludesPlaceHolder == null)
-                return;
-
-            StateBag bag = new StateBag();
-            bag.Add("name", "robots");
-            bag.Add("content", "noindex, nofollow");
-
-            WebFormHelper.AddMetaTag(new AttributeCollection(bag), MetaIncludesPlaceHolder);
-        }
-
-        public void AddCSSFile(string path, Dictionary<string, string> attributes = null)
-        {
-            if (CssIncludesPlaceHolder == null)
-                return;
-
-            WebFormHelper.AddCSSFile(path, CssIncludesPlaceHolder, TemplateBaseUrl, attributes);
-        }
 
         public void ExecuteRawJS(string js)
         {

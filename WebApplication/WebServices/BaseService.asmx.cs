@@ -1,5 +1,6 @@
 ﻿using FrameworkLibrary;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -34,6 +35,18 @@ namespace WebApplication.Services
             {
                 return HttpContext.Current.Response;
             }
+        }
+
+        public string GetIP()
+        {
+            var ip = HttpContext.Current.Request.ServerVariables["HTTP_X_CLUSTER_CLIENT_IP"];
+
+            if (ip == null)
+            {
+                ip = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+            }
+
+            return ip;
         }
 
         public static bool CanAddGZIP()
@@ -101,6 +114,16 @@ namespace WebApplication.Services
             WriteRaw(json);
         }
 
+        public static void WriteCsv<T>(List<T> Obj, string filename) where T : class
+        {
+            Response.Clear();
+            Response.ContentType = "text/csv";
+            Response.AddHeader("Content-Disposition", $"attachment; filename={filename}.csv");
+
+            var csv = Obj.ToCsv();
+            WriteRaw(csv);
+        }
+
         public static void WriteXML(string xmlString)
         {
             Response.ContentType = "application/xml";
@@ -111,6 +134,12 @@ namespace WebApplication.Services
         {
             Response.ContentType = "text/html";
             WriteRaw(htmlString);
+        }
+
+        public static void WriteRaw(byte[] bytes)
+        {
+            Response.Write(bytes);
+            Response.End();
         }
 
         public static void WriteRaw(string str)

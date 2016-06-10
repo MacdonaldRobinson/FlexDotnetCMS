@@ -1,4 +1,6 @@
 ﻿using FrameworkLibrary;
+using MaxMind.GeoIP2.Responses;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,30 +25,18 @@ namespace WebApplication.Services
         [WebMethod]
         public void GetLocation()
         {
-            string response = GetGeoLocation(GetIP());
+            string response = JsonConvert.SerializeObject(GeoLocationHelper.GetLocation(GetIP()));
 
             WriteJSON(response);
         }
 
-        public string GetIP()
-        {
-            var ip = HttpContext.Current.Request.ServerVariables["HTTP_X_CLUSTER_CLIENT_IP"];
-
-            if (ip == null)
-            {
-                ip = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-            }
-
-            return ip;
-        }
-
         [WebMethod]
-        public string GetGeoLocation(string ip)
+        public void GetGeoLocation(string ip)
         {
             GeoLocationHelper.APIKey = AppSettings.GeoLocationAPIKey;
-            string response = GeoLocationHelper.GetLocation(ip);
+            string response = JsonConvert.SerializeObject(GeoLocationHelper.GetLocation(ip));
 
-            return response;
+            WriteJSON(response);
         }
 
         [WebMethod]
@@ -54,13 +44,10 @@ namespace WebApplication.Services
         {
             var ip = GetIP();
 
-            var location = (new JavaScriptSerializer()).Deserialize<Location>(GetGeoLocation(ip));
+            var location = GeoLocationHelper.GetLocation(ip);
             var imagesBaseDir = URIHelper.BasePath + "/media/uploads/images/banners/homebanners/";
 
-            if (string.IsNullOrEmpty(location.city))
-                location.city = "others";
-
-            var cityBaseDir = imagesBaseDir + location.city.ToLower() + "/";
+            var cityBaseDir = imagesBaseDir + location.City.Name.ToLower() + "/";
 
             var path = "";
 
@@ -141,41 +128,5 @@ namespace WebApplication.Services
 
             WriteJSON(items.ToJSON());
         }
-
-        //[WebMethod]
-        //public void GetFilteredChildItems(long id, string filterOption)
-        //{
-        //    string json = "";
-
-        //    IMediaDetail item = MediaDetailsMapper.GetByID(id);
-
-        //    if(item == null)
-        //        return;
-
-        //    IEnumerable<IMediaDetail> items = new List<IMediaDetail>();
-        //    Tag tag = TagsMapper.GetByName(filterOption);
-
-        //    Language language = LanguagesMapper.GetByID(item.LanguageID);
-
-        //    if (language != null)
-        //    {
-        //        if (tag != null)
-        //            items = MediaDetailsMapper.GetOnlyActiveAndVisibleMediaDetails(MediaDetailsMapper.GetByMedias(MediasMapper.GetByTag(tag), language, 0), item);
-        //        else
-        //        {
-        //            switch(filterOption)
-        //            {
-        //                case "Latest":
-        //                    items = MediaDetailsMapper.GetOnlyActiveAndVisibleMediaDetails(MediaDetailsMapper.GetAll(), item).OrderBy(i => i.DateCreated);
-        //                break;
-        //                case "Alphabetical":
-        //                    items = MediaDetailsMapper.GetOnlyActiveAndVisibleMediaDetails(MediaDetailsMapper.GetAll(), item).OrderBy(i => i.LinkTitle);
-        //                break;
-        //            }
-        //        }
-        //    }
-
-        //    WriteJSON(items.ToJSON());
-        //}
     }
 }

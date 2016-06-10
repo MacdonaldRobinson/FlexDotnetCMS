@@ -4,6 +4,7 @@ using System.Linq;
 using System.Configuration;
 using System.Web;
 using System.Web.Script.Serialization;
+using MaxMind.GeoIP2.Responses;
 
 /// <summary>
 /// Summary description for BaseMedia
@@ -233,19 +234,12 @@ public class FrameworkBaseMedia
         }
     }
 
-    public Location CurrentVisitorLocation
+    public CityResponse CurrentVisitorLocation
     {
         get
         {
-            return TrackCurrentVisitorLocation();
+            return GeoLocationHelper.GetLocation(CurrentVisitorIP);
         }
-    }
-
-    public Location TrackCurrentVisitorLocation()
-    {
-        string response = GeoLocationHelper.GetLocation(CurrentVisitorIP);
-        JavaScriptSerializer js = new JavaScriptSerializer();
-        return js.Deserialize<Location>(response);
     }
 
     public static ConnectionStringSettings ConnectionSettings

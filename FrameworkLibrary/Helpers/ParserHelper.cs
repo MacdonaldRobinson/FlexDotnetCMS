@@ -22,7 +22,10 @@ namespace FrameworkLibrary
             foreach (KeyValuePair<string, string> item in keyValuePair)
             {
                 if (isReverseParse)
-                    data = data.Replace(item.Value, openToken + item.Key + closeToken);
+                {
+                    if (!string.IsNullOrEmpty(item.Value))
+                        data = data.Replace(item.Value, openToken + item.Key + closeToken);
+                }
                 else
                     data = data.Replace(openToken + item.Key + closeToken, item.Value);
             }

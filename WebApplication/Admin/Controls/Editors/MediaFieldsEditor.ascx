@@ -56,7 +56,7 @@
                         .addTo(controller);
     }
 
-    function BindReOrder()
+   function BindReOrder()
     {
         BindGridViewSortable("#<%=ItemList.ClientID%>", "/Admin/Views/MasterPages/Webservice.asmx/ReOrderMediaFields", "<%= MediaFieldsUpdatePanel.ClientID%>", function () {
             window.location.href = window.location.href;

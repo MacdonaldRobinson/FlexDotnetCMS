@@ -158,7 +158,7 @@
             </div>
             <div id="TagsHolder">
                 <label>Tags</label>
-                <Admin:TagsSelector ID="TagsSelector" runat="server" />
+                <Admin:TagsSelector ID="TagsSelector" runat="server"/>
             </div>
 
             <asp:PlaceHolder runat="server" ID="PanelFieldsPlaceHolder" />

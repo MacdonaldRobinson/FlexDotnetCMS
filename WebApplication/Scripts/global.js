@@ -1,53 +1,6 @@
-﻿function sanatize(str) {
-	str = str.replace(/[~!@#$%^*()+=<>.|\[\]{}\",:;`?\\]/g, "");
-	str = str.replace(/^\s+|\s+$/g, "");
-	return str;
-}
-
-function prepairUri(str) {
-	str = str.toLowerCase();
-	str = str.replace(/\s/g, "-");
-	str = sanatize(str);
-	str = str.replace(/&/g, "");
-	str = str.replace(/\//g, "_");
-	str = str.replace(/--/g, "-");
-	str = str.replace(/:/g, "");
-	str = str.replace(/\'/g, "");
-	return str;
-}
-
-function clearAllTagged() {
+﻿function clearAllTagged() {
 	jQuery(".tagged").attr('value', '');
 }
-
-(function ($) {
-	var imgList = [];
-	$.extend({
-		preload: function (imgArr, option) {
-			var setting = $.extend({
-				init: function (loaded, total) { },
-				loaded: function (img, loaded, total) { },
-				loaded_all: function (loaded, total) { }
-			}, option);
-			var total = imgArr.length;
-			var loaded = 0;
-
-			setting.init(0, total);
-			for (var i in imgArr) {
-				imgList.push($("<img />")
-					.attr("src", imgArr[i])
-					.load(function () {
-						loaded++;
-						setting.loaded(this, loaded, total);
-						if (loaded == total) {
-							setting.loaded_all(loaded, total);
-						}
-					})
-				);
-			}
-		}
-	});
-})(jQuery);
 
 var colorBoxWidth = "90%";
 var colorBoxHeight = "90%";
@@ -80,10 +33,8 @@ function initAccordians() {
 }
 
 function RefreshUpdatePanel(UpdatePanelClientId, OnAfterRefreshFunction) {
-    //$("#" + UpdatePanelClientId).prepend("<div class='loading-panel'><div class='copy'>Loading ...</div></div>");
 
     var OnCompleteFunction = function () {
-        //$("#" + UpdatePanelClientId).find("loading-panel").remove();
         OnAfterRefreshFunction();
     }
 
@@ -93,8 +44,7 @@ function RefreshUpdatePanel(UpdatePanelClientId, OnAfterRefreshFunction) {
 }
 
 function OnUpdatePanelRefreshComplete(OnUpdatePanelRefreshCompleteFunction) {
-    if (typeof (Sys) == 'undefined')
-        Sys.WebForms.PageRequestManager.getInstance().add_endRequest(OnUpdatePanelRefreshCompleteFunction);
+    Sys.WebForms.PageRequestManager.getInstance().add_endRequest(OnUpdatePanelRefreshCompleteFunction);
 }
 
 $(document).ready(function () {
@@ -106,7 +56,6 @@ $(document).ready(function () {
     });
 
 	$(document).on("click", ".colorbox.iframe", function () {
-		//console.log("ran");
 		var dataOnColorboxClose = $(this).attr("data-OnColorboxClose");
 		$.colorbox({
 			href: $(this).attr("href"), width: colorBoxWidth, height: colorBoxHeight, iframe: true, fixed: true, onClosed: function () {
@@ -116,13 +65,6 @@ $(document).ready(function () {
 		});
 		return false;
 	});
-
-	//$(".colorbox.iframe").colorbox({ width: colorBoxWidth, height: colorBoxHeight, iframe: true, fixed: true });
-	//$(".colorbox-iframe-refreshOnClose").colorbox({ width: colorBoxWidth, height: colorBoxHeight, iframe: true, onClosed: function () { window.location.reload() }, fixed: true, overlayClose: false });
-	//$(".colorbox").colorbox({ fixed: true });
-	//$(".colorbox-refreshOnClose").colorbox({ width: colorBoxWidth, height: colorBoxHeight, onClosed: function () { window.location.reload() }, fixed: true });
-
-	//$(".applyToolTip").tipTip();
 
 	$(document).bind('cbox_open', function () {
 		$('html').css({ overflow: 'hidden' });
@@ -136,21 +78,11 @@ $(document).ready(function () {
 		}
 	}
 
-	//function autoIframeHeight() {
-	//    $('iframe').iframeAutoHeight({
-	//        minHeight: 20, // Sets the iframe height to this value if the calculated value is less
-	//        heightOffset: 10  // Optionally add some buffer to the bottom
-	//    });
-	//}
-
 	$(window).resize(function () {
 		resizeColorBox();
-		//autoIframeHeight();
 	});
 
 	if (document.addEventListener != undefined) {
 		window.addEventListener("orientationchange", resizeColorBox, false);
 	}
-
-	//autoIframeHeight();
 });

@@ -1,37 +1,4 @@
-﻿/// <reference path="../Views/MasterPages/Webservice.asmx" />
-var currentRadWindow = null;
-var selectedItemId = null;
-
-function RefreshGrid(sender, args) {
-    if (typeof (getMasterTableView) == "undefined")
-        return;
-
-    var masterTable = getMasterTableView();
-
-    if (masterTable != null)
-        masterTable.rebind();
-    else
-        window.location.href = window.location.href;
-}
-
-function GetSelectedItemID() {
-    if (typeof (getMasterTableView) == "undefined")
-        return;
-
-    var masterTable = getMasterTableView();
-
-    if (masterTable == null)
-        return;
-
-    var selectedItems = masterTable.get_selectedItems();
-
-    if (selectedItems.length == 0)
-        return null;
-
-    return selectedItems[0].getDataKeyValue("ID");
-}
-
-function DisplayJsonException(xhr) {
+﻿function DisplayJsonException(xhr) {
     try {
         var jsonError = JSON.parse(xhr.responseText);
 
@@ -184,172 +151,6 @@ function executeAction(action, id, updatePanelId) {
     }
 }
 
-function clientButtonClicked(sender, args) {
-    var toolBar = sender;
-    var button = args.get_item();
-    var currentRadWindow = "";
-
-    var newWindowWidth = $telerik.$(window).width() - 20;
-    var newWindowHeight = $telerik.$(window).height() - 20;
-
-    $(window).resize(function () {
-        newWindowWidth = $telerik.$(window).width() - 20;
-        newWindowHeight = $telerik.$(window).height() - 20;
-
-        currentRadWindow.setSize(newWindowWidth, newWindowHeight);
-
-        currentRadWindow.center();
-    });
-
-    switch (button.get_value()) {
-        case "Create":
-            createUrl = "Detail.aspx?mediaTypeEnum=" + getParameterByName("mediaTypeEnum");
-
-            currentRadWindow = window.radopen(createUrl);
-            currentRadWindow.set_modal(true);
-            currentRadWindow.setActive(true);
-
-            currentRadWindow.setSize(newWindowWidth, newWindowHeight);
-            currentRadWindow.center();
-            break;
-        case "Edit":
-            editUrl = "Detail.aspx?mediaTypeEnum=" + getParameterByName("mediaTypeEnum") + "&id=" + GetSelectedItemID();
-
-            currentRadWindow = window.radopen(editUrl);
-            currentRadWindow.set_modal(true);
-            currentRadWindow.setActive(true);
-            currentRadWindow.setSize(newWindowWidth, newWindowHeight);
-            currentRadWindow.center();
-            break;
-        case "Delete":
-            if (confirm("Are you sure you want to delete this item?")) {
-                jQuery.ajax({
-                    type: "POST",
-                    url: "ItemServices.asmx/DeleteItem",
-                    data: "{'id':'" + GetSelectedItemID() + "'}",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success:
-                function (msg) {
-                    eval(msg.d);
-
-                    if (msg.d.indexOf('Error') == -1)
-                        RefreshGrid();
-                },
-                    error: function (xhr, status, error) {
-                        DisplayErrorMessage("Error Deleting Item", "An unexpected error occured while attempting to delete the item.");
-                    }
-                });
-            }
-            break;
-        case "UnDelete":
-            if (confirm("Are you sure you want to un-delete this item?")) {
-                jQuery.ajax({
-                    type: "POST",
-                    url: "ItemServices.asmx/UnDeleteItem",
-                    data: "{'id':'" + GetSelectedItemID() + "'}",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success:
-                    function (msg) {
-                        eval(msg.d);
-
-                        if (msg.d.indexOf('Error') == -1)
-                            RefreshGrid();
-                    },
-                    error: function (xhr, status, error) {
-                        DisplayErrorMessage("Error Un-Deleting Item", "An unexpected error occured while attempting to delete the item.");
-                    }
-                });
-            }
-            break;
-        case "DeletePermanently":
-            if (confirm("Are you sure you want to delete this item permanently?")) {
-                jQuery.ajax({
-                    type: "POST",
-                    url: "ItemServices.asmx/DeleteItemPermanently",
-                    data: "{'id':'" + GetSelectedItemID() + "'}",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success:
-                    function (msg) {
-                        eval(msg.d);
-
-                        if (msg.d.indexOf('Error') == -1)
-                            RefreshGrid();
-                    },
-                    error: function (xhr, status, error) {
-                        DisplayErrorMessage("Error Removing Item", "An unexpected error occured while attempting to delete the item.");
-                    }
-                });
-            }
-            break;
-        case "Approve":
-            if (confirm("Are you sure you want to approve this item?")) {
-                jQuery.ajax({
-                    type: "POST",
-                    url: "ItemServices.asmx/ApproveItem",
-                    data: "{'id':'" + GetSelectedItemID() + "'}",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success:
-                    function (msg) {
-                        eval(msg.d);
-
-                        if (msg.d.indexOf('Error') == -1)
-                            RefreshGrid();
-                    },
-                    error: function (xhr, status, error) {
-                        DisplayErrorMessage("Error Approving Item", "An unexpected error occured while attempting to delete the item.");
-                    }
-                });
-            }
-            break;
-        case "TakeOwnership":
-            if (confirm("Are you sure you want to take ownership of all items assigned to the selected user with ID (" + GetSelectedItemID() + ") ?")) {
-                jQuery.ajax({
-                    type: "POST",
-                    url: "ItemServices.asmx/TakeOwnership",
-                    data: "{'id':'" + GetSelectedItemID() + "'}",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success:
-                    function (msg) {
-                        eval(msg.d);
-
-                        if (msg.d.indexOf('Error') == -1)
-                            RefreshGrid();
-                    },
-                    error: function (xhr, status, error) {
-                        DisplayErrorMessage("Error Approving Item", "An unexpected error occured while attempting to delete the item.");
-                    }
-                });
-            }
-            break;
-        case "Reject":
-            if (confirm("Are you sure you want to reject this item? Changes will be deleted permanently.")) {
-                jQuery.ajax({
-                    type: "POST",
-                    url: "ItemServices.asmx/RejectItem",
-                    data: "{'id':'" + GetSelectedItemID() + "'}",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success:
-                    function (msg) {
-                        eval(msg.d);
-
-                        if (msg.d.indexOf('Error') == -1)
-                            RefreshGrid();
-                    },
-                    error: function (xhr, status, error) {
-                        DisplayErrorMessage("Error Rejecting Item", "An unexpected error occured while attempting to delete the item.");
-                    }
-                });
-            }
-            break;
-    }
-}
-
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
     var regexS = "[\\?&]" + name + "=([^&#]*)";
@@ -360,12 +161,6 @@ function getParameterByName(name) {
     else
         return decodeURIComponent(results[1].replace(/\+/g, " "));
 }
-
-$(document).ready(function () {
-    $(window).resize(function () {
-        sizeWindow();
-    });
-});
 
 function HandleContextMenuClick(action, target) {
     var mediaDetailId = target.parent().attr("data-mediadetailid");
@@ -547,100 +342,6 @@ function HandleContextMenuClick(action, target) {
             //console.log(target.attr("data-frontendurl"));
             window.open(target.attr("data-frontendurl"));
             break;
-    }
-}
-
-function SiteTreeView_OnClientNodeDropping(sender, eventArgs) {
-    var sourceNodeId = eventArgs.get_sourceNode().get_value();
-
-    var target = eventArgs.get_htmlElement();
-
-    while (target) {
-        if (target.id === "ContentBuckets") {
-            eventArgs.set_cancel(true);
-            jQuery.ajax({
-                type: "POST",
-                url: "/Admin/Views/PageHandlers/Media/ItemServices.asmx/AssignContentBucketToMedia",
-                data: "{'id':'" + selectedMediaId + "','contentBucketId':'" + sourceNodeId + "'}",
-                contentType: "application/json; charset=utf-8",
-                dataType: "text",
-                success:
-                function (msg) {
-                    ContentBucketsRefresh();
-                },
-                error: function (xhr, status, error) {
-                    ContentBucketsRefresh();
-                }
-            });
-        }
-
-        target = target.parentNode;
-    }
-
-    if (eventArgs.get_destNode() == null)
-        return;
-
-    var destNodeId = eventArgs.get_destNode().get_value();
-    var position = eventArgs.get_dropPosition();
-    var destIndex = eventArgs.get_destNode().get_index();
-
-    eventArgs.set_cancel(true);
-
-    jQuery.ajax({
-        type: "POST",
-        url: "/Admin/Views/MasterPages/Webservice.asmx/HandleNodeDragDrop",
-        data: "{'sourceNodeId':'" + sourceNodeId + "', 'destNodeId':'" + destNodeId + "', 'position':'" + position + "', 'destIndex':'" + destIndex + "'}",
-        contentType: "application/json; charset=utf-8",
-        dataType: "text",
-        success:
-        function (msg) {
-            //window.location.href = eventArgs.get_sourceNode().get_navigateUrl();
-            RefreshSiteTreeViewAjaxPanel();
-        },
-        error: function (xhr, status, error) {
-            //console.log(xhr);
-        }
-    });
-}
-
-function SiteTreeView_OnClientContextMenuShowing(sender, args) {
-    var node = args.get_node();
-    var menu = args.get_menu();
-
-    var classes = node.get_cssClass();
-    var ShowInMenu = menu._findItemByValue("ShowInMenu");
-    var HideFromMenu = menu._findItemByValue("HideFromMenu");
-
-    var Delete = menu._findItemByValue("Delete");
-    var UnDelete = menu._findItemByValue("UnDelete");
-    var DeletePermanently = menu._findItemByValue("DeletePermanently");
-
-    if (classes != null) {
-        if (classes.indexOf("isHidden") !== -1) {
-            ShowInMenu.show();
-            HideFromMenu.hide();
-        }
-
-        if (classes.indexOf("isDeleted") !== -1) {
-            Delete.hide();
-            UnDelete.show();
-            DeletePermanently.show();
-        }
-    }
-    else {
-        ShowInMenu.hide();
-        HideFromMenu.show();
-        Delete.show();
-        UnDelete.hide();
-        DeletePermanently.hide();
-    }
-}
-
-function sizeWindow() {
-    if (currentRadWindow != null) {
-        if (currentRadWindow.isVisible()) {
-            currentRadWindow.center();
-        }
     }
 }
 
@@ -978,10 +679,8 @@ function BindTree() {
             success:
             function (msg) {
                 RefreshSiteTreeViewAjaxPanel();
-                //window.location.reload();
             },
             error: function (xhr, status, error) {
-                //console.log(xhr);
             }
         });
 
@@ -990,7 +689,6 @@ function BindTree() {
 }
 $(document)
     .on('dnd_move.vakata', function (e, data) {
-        //console.log("ran");
     })
     .on('dnd_stop.vakata', function (e, data) {
         var elem = $(data.element);
@@ -1027,22 +725,7 @@ function BindDataTable() {
                 extend: 'csvHtml5',
                 title: 'Data export'
             }
-        ]//,
-        //"drawCallback": function (settings) {
-        //    var api = this.api();
-        //    var rows = api.rows({ page: 'current' }).nodes();
-        //    var last = null;
-
-        //    api.column(1, { page: 'current' }).data().each(function (group, i) {
-        //        if (last !== group) {
-        //            $(rows).eq(i).before(
-        //                '<tr class="group"><td colspan="5">' + group + '</td></tr>'
-        //            );
-
-        //            last = group;
-        //        }
-        //    });
-        //}
+        ]
     });
 }
 

@@ -78,11 +78,11 @@ namespace WebApplication.Admin.Controls.Fields
 
             if (FilesToDelete.Text != "" && FilesToDelete.Text != "[]")
             {
-                var deleteIds = StringHelper.JsonToObject(FilesToDelete.Text);
+                var deleteIds = StringHelper.JsonToObject<List<long>>(FilesToDelete.Text);
 
                 foreach (var id in deleteIds)
                 {
-                    var fieldFile = field.FieldFiles.SingleOrDefault(i => i.ID == long.Parse(id));
+                    var fieldFile = field.FieldFiles.SingleOrDefault(i => i.ID == id);
 
                     if (fieldFile != null)
                     {
@@ -103,7 +103,7 @@ namespace WebApplication.Admin.Controls.Fields
 
             if (ReorderFiles.Text != "" && ReorderFiles.Text != "[]")
             {
-                var reorderedIds = StringHelper.JsonToObject(ReorderFiles.Text);
+                var reorderedIds = StringHelper.JsonToObject<List<long>>(ReorderFiles.Text);
 
                 var index = 0;
                 foreach (var id in reorderedIds)
@@ -111,7 +111,7 @@ namespace WebApplication.Admin.Controls.Fields
                     if (id == null)
                         return;
 
-                    var fieldFile = field.FieldFiles.SingleOrDefault(i => i.ID == long.Parse(id));
+                    var fieldFile = field.FieldFiles.SingleOrDefault(i => i.ID == id);
 
                     if (fieldFile != null)
                     {

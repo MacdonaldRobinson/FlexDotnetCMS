@@ -1,4 +1,5 @@
 ﻿using FrameworkLibrary;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace WebApplication.Admin.Controls.Fields
     public class JsonObj
     {
         public string name { get; set; }
-        public string id { get; set; }
+        public long id { get; set; }
     }
 
     public partial class AssociationDragDrop : BaseFieldControl
@@ -29,7 +30,7 @@ namespace WebApplication.Admin.Controls.Fields
 
         private void SaveToDB(string value)
         {
-            var obj = StringHelper.JsonToObject(value);
+            var obj = StringHelper.JsonToObject<List<JsonObj>>(value);
             var field = GetField();
 
             field.FieldAssociations.Clear();
@@ -37,7 +38,7 @@ namespace WebApplication.Admin.Controls.Fields
             var orderIndex = 0;
             foreach (var item in obj)
             {
-                var mediaDetail = (MediaDetail)MediaDetailsMapper.GetByID(long.Parse(item["id"]));
+                var mediaDetail = (MediaDetail)MediaDetailsMapper.GetByID(item.id);
 
                 if (mediaDetail != null)
                 {
@@ -74,7 +75,7 @@ namespace WebApplication.Admin.Controls.Fields
                 {
                     var jsonObj = new JsonObj();
                     jsonObj.name = item.MediaDetail.Title;
-                    jsonObj.id = item.MediaDetail.ID.ToString();
+                    jsonObj.id = item.MediaDetail.ID;
 
                     jsonObjList.Add(jsonObj);
                 }

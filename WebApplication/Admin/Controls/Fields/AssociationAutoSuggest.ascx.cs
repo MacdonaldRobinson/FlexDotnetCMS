@@ -60,7 +60,7 @@ namespace WebApplication.Admin.Controls.Fields
 
         private void SaveToDB(string values)
         {
-            var ids = StringHelper.JsonToObject(values.ToString());
+            var ids = StringHelper.JsonToObject<List<long>>(values);
             var field = GetField();
 
             field.FieldAssociations.Clear();

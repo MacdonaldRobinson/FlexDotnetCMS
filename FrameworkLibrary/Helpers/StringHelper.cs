@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -15,19 +16,17 @@ namespace FrameworkLibrary
             return Regex.Replace(text, @"<(.|\n)*?>", string.Empty);
         }
 
-        public static dynamic JsonToObject(string to)
+        public static T JsonToObject<T>(string to)
         {
-            var Serializer = new JavaScriptSerializer();
-
             if (to.StartsWith("{") || to.StartsWith("["))
-                return Serializer.Deserialize<dynamic>(to);
+                return JsonConvert.DeserializeObject<T>(to);
 
-            return new object[0];
+            return default(T);
         }
 
-        public static string ObjectToJson(object to)
+        public static string ObjectToJson(object to, long depth=1)
         {
-            return to.ToJSON();
+            return JsonConvert.SerializeObject(to);            
         }
 
         public static bool ContainsWord(string inputString, string term)

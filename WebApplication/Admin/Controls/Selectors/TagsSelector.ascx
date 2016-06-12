@@ -2,8 +2,8 @@
     Inherits="WebApplication.Admin.Controls.TagsSelector" %>
 <script type="text/javascript">
     jQuery(document).ready(function () {
-        var data = {TagsJSON};
-        var preFillData = {CurrentItemTagsJSON};
+        var data = <%= TagsMapper.GetAllJSON() %>;
+        var preFillData = <%= TagsMapper.GetJSON(SelectedTags) %>;
 
         jQuery("#<%= TagSelectorPanel.ClientID %> .autoSuggestTags").autoSuggest(data, { selectedItemProp: "name", searchObjProps: "name", selectedValuesProp: "id", preFill: preFillData });
 

@@ -87,6 +87,10 @@
                                     <asp:TextBox runat="server" ID="DataSource" />
                                 </div>
                                 <div>
+                                    <label>Attach Db Filename</label><br />
+                                    <asp:TextBox runat="server" ID="AttachDBFilename" />
+                                </div>
+                                <div>
                                     <label>DatabaseName</label><br />
                                     <asp:TextBox runat="server" ID="DatabaseName" />
                                 </div>

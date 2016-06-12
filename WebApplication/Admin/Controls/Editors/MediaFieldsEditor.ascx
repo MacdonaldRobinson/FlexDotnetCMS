@@ -10,7 +10,7 @@
             check($("#<%= UseMediaTypeFieldFrontEndLayout.ClientID %>"));
         });
 
-        OnUpdatePanelRefreshComplete(function (event) {
+        OnUpdatePanelRefreshComplete(function (event) {            
             check($("#<%= UseMediaTypeFieldFrontEndLayout.ClientID %>"));
 
             $("#<%= UseMediaTypeFieldFrontEndLayout.ClientID %>").click(function () {
@@ -25,7 +25,6 @@
             if (event._postBackSettings.asyncTarget.indexOf("$Update") != -1 || event._postBackSettings.asyncTarget.indexOf("$Delete") != -1)
             {
                 ReloadPreviewPanel();
-                //window.location.reload();
             }
         });
 

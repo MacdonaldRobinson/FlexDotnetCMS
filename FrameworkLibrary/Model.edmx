@@ -350,6 +350,7 @@
           <Property Name="SefTitle" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="ThumbnailPath" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="OrderIndex" Type="int" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateLastModified" Type="datetime" Nullable="false" />
         </EntityType>
@@ -1623,6 +1624,7 @@
           <Property Type="DateTime" Name="DateLastModified" Nullable="false" Precision="3" />
           <NavigationProperty Name="MediaTags" Relationship="FrameworkModel.FK_MediaTags_TagID_Tags_ID" FromRole="Tag" ToRole="MediaTag" />
           <Property Type="String" Name="ThumbnailPath" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="OrderIndex" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="MediaType">
           <Key>
@@ -2351,6 +2353,7 @@
           <EntitySetMapping Name="Tags">
             <EntityTypeMapping TypeName="FrameworkModel.Tag">
               <MappingFragment StoreEntitySet="Tags">
+                <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
                 <ScalarProperty Name="ThumbnailPath" ColumnName="ThumbnailPath" />
                 <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />

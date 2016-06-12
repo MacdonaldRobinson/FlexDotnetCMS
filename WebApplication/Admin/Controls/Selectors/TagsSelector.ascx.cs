@@ -7,15 +7,6 @@ namespace WebApplication.Admin.Controls
 {
     public partial class TagsSelector : System.Web.UI.UserControl
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!this.AdminBasePage.TemplateVars.ContainsKey("TagsJSON"))
-                this.AdminBasePage.TemplateVars.Add("TagsJSON", TagsMapper.GetAllJSON());
-
-            if (!this.AdminBasePage.TemplateVars.ContainsKey("CurrentItemTagsJSON"))
-                this.AdminBasePage.TemplateVars.Add("CurrentItemTagsJSON", "[{}]");
-        }
-
         public IEnumerable<Tag> SelectedTags
         {
             get
@@ -40,18 +31,6 @@ namespace WebApplication.Admin.Controls
             }
         }
 
-        private void Bind()
-        {
-            this.AdminBasePage.TemplateVars["CurrentItemTagsJSON"] = TagsMapper.GetJSON(SelectedTags);
-        }
-
-        protected override void OnPreRender(EventArgs e)
-        {
-            base.OnPreRender(e);
-
-            Bind();
-        }
-
         public void SetMedia(Media item)
         {
             SelectedTags = item.MediaTags.OrderBy(i => i.OrderIndex).Select(i => i.Tag);
@@ -68,6 +47,7 @@ namespace WebApplication.Admin.Controls
             var items = new List<Tag>();
             IEnumerable<string> values = TagValues.Value.Trim().ToLower().Split(',').Distinct();
 
+            var count = 0;
             foreach (string value in values)
             {
                 var tagName = value.Trim().ToLower();
@@ -93,12 +73,15 @@ namespace WebApplication.Admin.Controls
                     item = TagsMapper.CreateObject();
                     item.Name = tagName;
                     item.Description = tagName;
+                    item.OrderIndex = count;
                     item.SefTitle = URIHelper.PrepairUri(tagName);
                     item.DateCreated = item.DateLastModified = DateTime.Now;
                 }
 
                 if (item != null)
                     items.Add(item);
+
+                count++;
             }
 
             return items;

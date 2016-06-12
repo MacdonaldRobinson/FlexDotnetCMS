@@ -74,7 +74,8 @@ namespace WebApplication.Installer
                 DatabaseName.Text = connectionStringSettings.InitialCatalog;
                 UserID.Text = connectionStringSettings.UserID;
                 Password.Text = connectionStringSettings.Password;
-                IntegratedSecurity.Checked = connectionStringSettings.IntegratedSecurity;                
+                IntegratedSecurity.Checked = connectionStringSettings.IntegratedSecurity;
+                AttachDBFilename.Text = connectionStringSettings.AttachDBFilename;
             }
             catch (Exception ex)
             {
@@ -242,11 +243,21 @@ namespace WebApplication.Installer
 
                 var connectionStringBuilder = new SqlConnectionStringBuilder(connectionString);
                 connectionStringBuilder.DataSource = DataSource.Text;
-                connectionStringBuilder.InitialCatalog = DatabaseName.Text;
-                connectionStringBuilder.UserID = UserID.Text;
-                connectionStringBuilder.Password = Password.Text;
+
+                if(!string.IsNullOrEmpty(DatabaseName.Text))
+                    connectionStringBuilder.InitialCatalog = DatabaseName.Text;
+
+                if(!string.IsNullOrEmpty(UserID.Text))
+                    connectionStringBuilder.UserID = UserID.Text;
+
+                if(!string.IsNullOrEmpty(Password.Text))
+                    connectionStringBuilder.Password = Password.Text;
+
+                if (!string.IsNullOrEmpty(AttachDBFilename.Text))
+                    connectionStringBuilder.AttachDBFilename = AttachDBFilename.Text;
+
                 connectionStringBuilder.PersistSecurityInfo = true;
-                connectionStringBuilder.IntegratedSecurity = IntegratedSecurity.Checked;
+                connectionStringBuilder.IntegratedSecurity = IntegratedSecurity.Checked;                
 
                 var newConnectionString = connectionStringBuilder.ConnectionString;
 

@@ -48,8 +48,6 @@
 
             <asp:PlaceHolder runat="server" ID="PanelsPlaceHolder" />
 
-
-
             <div class="clear"></div>
         </div>
         <div class="split-pane-divider" id="my-divider"></div>

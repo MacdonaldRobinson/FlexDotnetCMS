@@ -661,7 +661,7 @@ function getFieldsAutoComplete()
     return wordsArray;
 }
 
-function initAceEditors() {
+function initAceEditors() {    
     var wordList = getFieldsAutoComplete();
 
     $(document).on("change", "#AttachEditorToBrowserPanel", function () {

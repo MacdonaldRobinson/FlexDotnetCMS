@@ -28,6 +28,7 @@ namespace FrameworkLibrary
         public System.DateTime DateCreated { get; set; }
         public System.DateTime DateLastModified { get; set; }
         public string ThumbnailPath { get; set; }
+        public int OrderIndex { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MediaTag> MediaTags { get; set; }

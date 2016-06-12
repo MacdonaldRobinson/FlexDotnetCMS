@@ -5,6 +5,8 @@
 </asp:Content>
 <asp:Content ID="MediaDetailPanel" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script type="text/javascript">
+        var baseUrl = '<%= URIHelper.BaseUrl %>';
+
         $(document).ready(function(){
             $(document).on('click', 'a.preview', function(event){
                 return UpdatePreview(event);
@@ -19,8 +21,8 @@
             }
 
             function UpdatePreviewUrl(url)
-            {
-                if(url.indexOf("{BaseUrl}") != -1){
+            {                
+                if(url.indexOf(baseUrl) != -1){
                     $("#PreviewPanel").attr("src", url);
                 }
                 return false;

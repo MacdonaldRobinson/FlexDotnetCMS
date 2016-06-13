@@ -45,6 +45,7 @@
           <Property Name="MediaDetailFieldID" Type="bigint" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="PathToFile" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Link" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="OrderIndex" Type="int" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
@@ -2075,6 +2076,7 @@
           <NavigationProperty Name="MediaDetailsField" Relationship="FrameworkModel.FK_FieldFiles_MediaDetailsFields" FromRole="FieldFile" ToRole="MediaDetailField" />
           <Property Name="OrderIndex" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Link" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_FieldFiles_MediaDetailsFields">
           <End Type="FrameworkModel.MediaDetailField" Role="MediaDetailField" Multiplicity="1" />
@@ -2558,6 +2560,7 @@
           <EntitySetMapping Name="FieldFiles">
             <EntityTypeMapping TypeName="FrameworkModel.FieldFile">
               <MappingFragment StoreEntitySet="FieldFiles">
+                <ScalarProperty Name="Link" ColumnName="Link" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
                 <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />

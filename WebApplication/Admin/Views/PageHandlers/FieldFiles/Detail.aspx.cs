@@ -38,6 +38,7 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldFiles
         private void UpdateObjectFromFields()
         {
             selectedItem.Name = Name.Text;
+            selectedItem.Link = Link.Text;
             selectedItem.PathToFile = PathToFile.GetValue().ToString();
             selectedItem.Description = ParserHelper.ParseData(Description.Text, TemplateVars, true);
         }
@@ -45,8 +46,8 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldFiles
         private void UpdateFieldsFromObject()
         {
             Name.Text = selectedItem.Name;
+            Link.Text = selectedItem.Link;
             PathToFile.SetValue(selectedItem.PathToFile);
-
             Description.Text = ParserHelper.ParseData(selectedItem.Description, TemplateVars);
         }
 

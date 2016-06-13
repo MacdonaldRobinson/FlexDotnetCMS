@@ -40,6 +40,15 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldFiles {
         protected global::WebApplication.Admin.Controls.Fields.FileSelector PathToFile;
         
         /// <summary>
+        /// Link control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Link;
+        
+        /// <summary>
         /// Description control.
         /// </summary>
         /// <remarks>

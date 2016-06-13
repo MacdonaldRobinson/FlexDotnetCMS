@@ -15,6 +15,11 @@
         <Admin:FileSelector ID="PathToFile" runat="server" />
     </div>
     <div>
+        <label for="<%= Link.ClientID %>">
+            Link</label>
+        <asp:TextBox ID="Link" runat="server"></asp:TextBox>
+    </div>
+    <div>
         <label for="<%= Description.ClientID %>">
             Description</label>
         <asp:TextBox ID="Description" runat="server" TextMode="MultiLine" CssClass="editor" Height="250px"></asp:TextBox>

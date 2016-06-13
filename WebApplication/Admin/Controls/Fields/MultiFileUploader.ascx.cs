@@ -68,7 +68,7 @@ namespace WebApplication.Admin.Controls.Fields
 
                         if (!field.FieldFiles.Any(i => i.PathToFile == filePath))
                         {
-                            field.FieldFiles.Add(new FieldFile { Name = file.FileName, Description = "", PathToFile = filePath, DateCreated = DateTime.Now, DateLastModified = DateTime.Now, OrderIndex = index });
+                            field.FieldFiles.Add(new FieldFile { Name = file.FileName, Link = "", Description = "", PathToFile = filePath, DateCreated = DateTime.Now, DateLastModified = DateTime.Now, OrderIndex = index });
 
                             index++;
                         }
@@ -146,7 +146,7 @@ namespace WebApplication.Admin.Controls.Fields
         {
             var field = GetField();
 
-            field.FieldFiles.Add(new FieldFile() { Name = "New Item", Description = "New Item", PathToFile = "/media/images/icons/File.jpg", DateCreated = DateTime.Now, DateLastModified = DateTime.Now });
+            field.FieldFiles.Add(new FieldFile() { Name = "New Item", Link = "", Description = "New Item", PathToFile = "/media/images/icons/File.jpg", DateCreated = DateTime.Now, DateLastModified = DateTime.Now });
             BaseMapper.SaveDataModel();
 
             BindValues();

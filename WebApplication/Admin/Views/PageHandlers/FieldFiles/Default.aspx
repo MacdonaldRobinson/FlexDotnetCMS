@@ -10,7 +10,8 @@
                 <Columns>
                     <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
                     <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
-                    <asp:BoundField DataField="PathToFile" HeaderText="PathToFile" SortExpression="PathToFile" />                    
+                    <asp:BoundField DataField="PathToFile" HeaderText="PathToFile" SortExpression="PathToFile" />
+                    <asp:BoundField DataField="Link" HeaderText="Link" SortExpression="Link" />
                     <asp:BoundField DataField="DateCreated" HeaderText="DateCreated" SortExpression="DateCreated" />
                     <asp:BoundField DataField="DateLastModified" HeaderText="DateLastModified" SortExpression="DateLastModified" />
                     <asp:TemplateField HeaderText="">

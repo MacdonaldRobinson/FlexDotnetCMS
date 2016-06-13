@@ -27,7 +27,7 @@
         </div>
     </fieldset>
 
-    <%--    <fieldset>
+    <fieldset>
         <legend>Database Tools</legend>
         <p>
             <h3>Backup Database</h3>
@@ -38,7 +38,7 @@
                 <asp:LinkButton ID="BackupNow" runat="server" Text="Backup Now" OnClick="BackupNow_OnClick" />
             </div>
         </p>
-    </fieldset>--%>
+    </fieldset>
 
     <fieldset>
         <legend>Email Log</legend>
@@ -76,43 +76,9 @@
                 <asp:GridView runat="server" ID="ErrorLog" AutoGenerateColumns="false" AllowPaging="true" OnPageIndexChanging="ErrorLog_PageIndexChanging" OnSorting="ErrorLog_Sorting">
                     <Columns>
                         <asp:BoundField DataField="HostName" HeaderText="HostName" SortExpression="HostName" />
-                        <asp:BoundField DataField="Type" HeaderText="Type" SortExpression="Type" />
-                        <asp:BoundField DataField="Message" HeaderText="Message" SortExpression="Message" />
+                        <asp:BoundField DataField="Type" HeaderText="Type" SortExpression="Type" />                        
                     </Columns>
                 </asp:GridView>
-
-                <%--<telerik:RadGrid ID="ErrorLog" runat="server" OnNeedDataSource="ErrorLog_NeedDataSource" AutoGenerateColumns="True" GridLines="None"
-                    AllowPaging="true" AllowSorting="true" PageSize="10"
-                    AllowCustomPaging="False" AllowFilteringByColumn="false">
-                    <ClientSettings ReorderColumnsOnClient="True" EnablePostBackOnRowClick="false">
-                        <Selecting AllowRowSelect="true" />
-                    </ClientSettings>
-                    <GroupingSettings CaseSensitive="False"></GroupingSettings>
-                    <PagerStyle Mode="NextPrevNumericAndAdvanced" />
-
-                    <MasterTableView AutoGenerateColumns="False" DataKeyNames="HostName" ClientDataKeyNames="HostName">
-                        <RowIndicatorColumn Visible="False">
-                            <HeaderStyle Width="20px"></HeaderStyle>
-                        </RowIndicatorColumn>
-                        <ExpandCollapseColumn Visible="False" Resizable="False">
-                            <HeaderStyle Width="20px"></HeaderStyle>
-                        </ExpandCollapseColumn>
-                        <Columns>
-                            <telerik:GridBoundColumn DataField="HostName" HeaderText="HostName" SortExpression="HostName" UniqueName="HostName"
-                                AutoPostBackOnFilter="true" FilterControlWidth="20px">
-                            </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn DataField="Type" HeaderText="Type" SortExpression="Type"
-                                UniqueName="Type" AutoPostBackOnFilter="true" FilterControlWidth="75px">
-                            </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn DataField="Message" HeaderText="Message" SortExpression="Message"
-                                UniqueName="Message" AutoPostBackOnFilter="true" FilterControlWidth="75px">
-                            </telerik:GridBoundColumn>
-                        </Columns>
-                        <EditFormSettings>
-                            <PopUpSettings ScrollBars="None"></PopUpSettings>
-                        </EditFormSettings>
-                    </MasterTableView>
-                </telerik:RadGrid>--%>
             </ContentTemplate>
         </asp:UpdatePanel>
     </fieldset>

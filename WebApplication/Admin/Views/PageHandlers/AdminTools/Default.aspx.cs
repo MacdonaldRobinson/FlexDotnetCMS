@@ -38,32 +38,32 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
             ErrorLog.DataSource = errorLogEntries;
             ErrorLog.DataBind();
 
-            //DBBackupPath.Text = AppSettings.DBBackupPath;
+            DBBackupPath.Text = AppSettings.DBBackupPath;
         }
 
         protected void BackupNow_OnClick(object sender, EventArgs e)
         {
-            DisplayErrorMessage("This functionality is not implemented");
-            //if (!canAccessSection)
-            //{
-            //    DisplayAccessError();
-            //    return;
-            //}
+            //DisplayErrorMessage("This functionality is not implemented");
+            if (!canAccessSection)
+            {
+                DisplayAccessError();
+                return;
+            }
 
-            //try
-            //{
-            //    Return returnObj = BackupHelper.BackupDatabase(AppSettings.GetConnectionSettings().ConnectionString);
+            try
+            {
+                Return returnObj = BackupHelper.BackupDatabase(AppSettings.GetConnectionSettings().ConnectionString);
 
-            //    if (returnObj.IsError)
-            //        DisplayErrorMessage("Error backing up DB", returnObj.Error);
-            //    else
-            //        DisplaySuccessMessage("Successfully backed up DB");
-            //}
-            //catch (Exception ex)
-            //{
-            //    ErrorHelper.LogException(ex);
-            //    DisplayErrorMessage("Error backing up DB", ErrorHelper.CreateError(ex));
-            //}
+                if (returnObj.IsError)
+                    DisplayErrorMessage("Error backing up DB", returnObj.Error);
+                else
+                    DisplaySuccessMessage("Successfully backed up DB");
+            }
+            catch (Exception ex)
+            {
+                ErrorHelper.LogException(ex);
+                DisplayErrorMessage("Error backing up DB", ErrorHelper.CreateError(ex));
+            }
         }
 
         protected void ClearAllCache_OnClick(object sender, EventArgs e)

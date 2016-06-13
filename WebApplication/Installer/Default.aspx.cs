@@ -68,7 +68,7 @@ namespace WebApplication.Installer
                 /*System.Configuration.Configuration config = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("~/");
                 var connectionStringSettings = new SqlConnectionStringBuilder(config.ConnectionStrings.ConnectionStrings[isRunningOnDev.ToString()].ConnectionString);*/
 
-                var connectionStringSettings = new SqlConnectionStringBuilder(GetConnection().ConnectionString);
+                var connectionStringSettings = new SqlConnectionStringBuilder(GetConnectionString());
 
                 DataSource.Text = connectionStringSettings.DataSource;
                 DatabaseName.Text = connectionStringSettings.InitialCatalog;
@@ -131,10 +131,15 @@ namespace WebApplication.Installer
             return new FileInfo(Server.MapPath("~/Web.config"));
         }
 
-        private SqlConnection GetConnection()
+        private string GetConnectionString()
         {
             var connectionString = AppSettings.GetConnectionSettingsByIsRunningOnDev(bool.Parse(IsRunningOnDev.SelectedValue)).ConnectionString;
-            return new SqlConnection(connectionString);
+            return connectionString;
+        }
+
+        private SqlConnection GetConnection()
+        {
+            return new SqlConnection(GetConnectionString());
         }
 
         private void ExecuteSQL(string sql)
@@ -236,28 +241,28 @@ namespace WebApplication.Installer
             {
                 SetWebconfigReadWrite();
 
-                var connectionString = GetConnection().ConnectionString;
+                var connectionString = GetConnectionString();
 
                 var webConfig = GetWebConfig();
                 var webConfigContent = File.ReadAllText(webConfig.FullName);
 
-                var connectionStringBuilder = new SqlConnectionStringBuilder(connectionString);
+                var connectionStringBuilder = new SqlConnectionStringBuilder();
                 connectionStringBuilder.DataSource = DataSource.Text;
 
-                if(!string.IsNullOrEmpty(DatabaseName.Text))
+                if (!string.IsNullOrEmpty(DatabaseName.Text))
                     connectionStringBuilder.InitialCatalog = DatabaseName.Text;
 
-                if(!string.IsNullOrEmpty(UserID.Text))
+                if (!string.IsNullOrEmpty(UserID.Text))
                     connectionStringBuilder.UserID = UserID.Text;
 
-                if(!string.IsNullOrEmpty(Password.Text))
+                if (!string.IsNullOrEmpty(Password.Text))
                     connectionStringBuilder.Password = Password.Text;
 
                 if (!string.IsNullOrEmpty(AttachDBFilename.Text))
                     connectionStringBuilder.AttachDBFilename = AttachDBFilename.Text;
 
                 connectionStringBuilder.PersistSecurityInfo = true;
-                connectionStringBuilder.IntegratedSecurity = IntegratedSecurity.Checked;                
+                connectionStringBuilder.IntegratedSecurity = IntegratedSecurity.Checked;
 
                 var newConnectionString = connectionStringBuilder.ConnectionString;
 

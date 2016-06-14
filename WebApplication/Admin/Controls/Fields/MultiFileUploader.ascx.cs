@@ -27,7 +27,7 @@ namespace WebApplication.Admin.Controls.Fields
         {
             var field = GetField();
 
-            return field.FieldFiles.OrderBy(i => i.OrderIndex);
+            return field.FieldAssociations.OrderBy(i => i.OrderIndex);
         }
 
         public DirectoryInfo GetFolderPath()
@@ -66,9 +66,14 @@ namespace WebApplication.Admin.Controls.Fields
 
                         var filePath = URIHelper.ConvertAbsUrlToTilda(URIHelper.ConvertAbsPathToAbsUrl(fileInfo.FullName));
 
-                        if (!field.FieldFiles.Any(i => i.PathToFile == filePath))
+                        if (!field.FieldAssociations.Any(i => i.MediaDetail.PathToFile == filePath))
                         {
-                            field.FieldFiles.Add(new FieldFile { Name = file.FileName, Link = "", Description = "", PathToFile = filePath, DateCreated = DateTime.Now, DateLastModified = DateTime.Now, OrderIndex = index });
+                            var fieldAssociation = new FieldAssociation();
+                            fieldAssociation.MediaDetail = (MediaDetail)PagesMapper.CreateObject(MediaTypesMapper.GetByEnum(MediaTypeEnum.Page).ID, MediasMapper.CreateObject(), AdminBasePage.SelectedMedia);
+                            fieldAssociation.MediaDetail.PathToFile = filePath;
+                            fieldAssociation.MediaDetail.CreatedByUser = fieldAssociation.MediaDetail.LastUpdatedByUser = FrameworkSettings.CurrentUser;
+
+                            field.FieldAssociations.Add(fieldAssociation);
 
                             index++;
                         }
@@ -82,9 +87,9 @@ namespace WebApplication.Admin.Controls.Fields
 
                 foreach (var id in deleteIds)
                 {
-                    var fieldFile = field.FieldFiles.SingleOrDefault(i => i.ID == id);
+                    var fieldAssociation = field.FieldAssociations.SingleOrDefault(i => i.ID == id);
 
-                    if (fieldFile != null)
+                    if (fieldAssociation != null)
                     {
                         /*var absPathToFile = URIHelper.ConvertToAbsPath(fieldFile.PathToFile);
 
@@ -93,7 +98,11 @@ namespace WebApplication.Admin.Controls.Fields
                             File.Delete(absPathToFile);
                         }*/
 
-                        BaseMapper.DeleteObjectFromContext(fieldFile);
+                        var returnObj = MediaDetailsMapper.DeletePermanently(fieldAssociation.MediaDetail);
+
+                        if (!returnObj.IsError)
+                            BaseMapper.DeleteObjectFromContext(fieldAssociation);
+
                         //field.FieldFiles.Remove(fieldFile);
 
                         hasDeleted = true;
@@ -111,11 +120,11 @@ namespace WebApplication.Admin.Controls.Fields
                     if (id == null)
                         return;
 
-                    var fieldFile = field.FieldFiles.SingleOrDefault(i => i.ID == id);
+                    var fieldAssociation = field.FieldAssociations.SingleOrDefault(i => i.ID == id);
 
-                    if (fieldFile != null)
+                    if (fieldAssociation != null)
                     {
-                        fieldFile.OrderIndex = index;
+                        fieldAssociation.OrderIndex = index;
                         hasReordered = true;
 
                         index++;
@@ -146,8 +155,13 @@ namespace WebApplication.Admin.Controls.Fields
         {
             var field = GetField();
 
-            field.FieldFiles.Add(new FieldFile() { Name = "New Item", Link = "", Description = "New Item", PathToFile = "/media/images/icons/File.jpg", DateCreated = DateTime.Now, DateLastModified = DateTime.Now });
-            BaseMapper.SaveDataModel();
+            var fieldAssociation = new FieldAssociation();
+            fieldAssociation.MediaDetail = (MediaDetail)PagesMapper.CreateObject(MediaTypesMapper.GetByEnum(MediaTypeEnum.Page).ID, MediasMapper.CreateObject(), AdminBasePage.SelectedMedia);
+            fieldAssociation.MediaDetail.PathToFile = "/media/images/icons/File.jpg";
+            fieldAssociation.MediaDetail.CreatedByUser = fieldAssociation.MediaDetail.LastUpdatedByUser = FrameworkSettings.CurrentUser;
+
+            field.FieldAssociations.Add(fieldAssociation);
+            var returnObj = BaseMapper.SaveDataModel();
 
             BindValues();
         }

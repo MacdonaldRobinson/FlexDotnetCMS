@@ -39,7 +39,7 @@ namespace WebApplication.Admin.Controls.Fields
             base.RenderControlInAdmin();
         }
 
-        private string _dirPath;
+        private string _dirPath = "";
         public string DirPath
         {
             get

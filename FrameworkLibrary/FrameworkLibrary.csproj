@@ -209,6 +209,7 @@
     <Compile Include="Entities\EmailLog.cs" />
     <Compile Include="Entities\Entities.cs" />
     <Compile Include="Entities\Field.cs" />
+    <Compile Include="Entities\FieldAssociation.cs" />
     <Compile Include="Entities\FieldFile.cs" />
     <Compile Include="Entities\GlossaryTerm.cs" />
     <Compile Include="Entities\IMediaDetail.cs" />

@@ -2,3 +2,22 @@
 {
     overflow: auto;
 }
+
+#left-component {
+    width: 100em;
+}
+
+#my-divider {
+    left: 100em; /* Same as left component width */
+    width: 5px;
+}
+
+#right-component {
+    left: 100em; /* Same as left component width */
+    margin-left: 5px; /* Same as divider width */
+    /*overflow:hidden;*/
+}
+
+.SavePanel {
+    top:0;
+}

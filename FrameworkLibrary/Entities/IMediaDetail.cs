@@ -22,8 +22,8 @@ namespace FrameworkLibrary
         bool EnableCaching { get; set; }
         DateTime? ExpiryDate { get; set; }
         string FeaturedLayout { get; set; }
-        ICollection<FieldAssociation> FieldAssociations { get; set; }
         ICollection<MediaDetailField> Fields { get; set; }
+        ICollection<FieldAssociation> FieldAssociations { get; set; }
         bool ForceSSL { get; set; }
         string Handler { get; set; }
         ICollection<MediaDetail> History { get; set; }
@@ -59,6 +59,7 @@ namespace FrameworkLibrary
         bool OpenInNewWindow { get; set; }
         IMediaDetail ParentMediaDetail { get; }
         long? ParentMediaID { get; }
+        string PathToFile { get; set; }
         IMediaDetail PreviousPage { get; }
         decimal Price { get; set; }
         DateTime? PublishDate { get; set; }
@@ -102,6 +103,7 @@ namespace FrameworkLibrary
         bool HasUser(User user);
         Field LoadField(string fieldCode);
         void RemoveFromCache();
+        string RenderShortCode(string shortCode);
         void SaveToFileCache(RenderVersion renderVersion, string html, string queryString = "");
         void SaveToMemoryCache(RenderVersion renderVersion, string html, string queryString = "");
         Return Validate();

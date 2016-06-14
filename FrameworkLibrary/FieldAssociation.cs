@@ -14,6 +14,7 @@ namespace FrameworkLibrary
     
     public partial class FieldAssociation
     {
+        public long ID { get; set; }
         public long MediaDetailFieldID { get; set; }
         public long AssociatedMediaDetailID { get; set; }
         public int OrderIndex { get; set; }

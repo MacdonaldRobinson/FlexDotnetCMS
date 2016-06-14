@@ -1,5 +1,6 @@
 ﻿using FrameworkLibrary;
 using System;
+using System.IO;
 using System.Web.Security;
 
 namespace WebApplication.Admin
@@ -29,6 +30,14 @@ namespace WebApplication.Admin
 
             if (!this.CurrentUser.HasPermission(PermissionsEnum.AccessCMS))
                 Response.Redirect("~/");
+
+            if (this.MasterPageFile != null)
+            {
+                var masterFilePath = GetMasterPageFilePath();
+
+                if (File.Exists(URIHelper.ConvertToAbsPath(masterFilePath)))
+                    MasterPageFile = masterFilePath;
+            }
         }
 
         public new static Language CurrentLanguage

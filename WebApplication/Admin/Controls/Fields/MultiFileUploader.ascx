@@ -11,7 +11,7 @@
                 <asp:FileUpload ID="MultiFileUpload" runat="server" AllowMultiple="true" CssClass="MultiFileUpload" />
                 <div class="dvPreview" runat="server"></div>
                 <div class="UploadedItems" id="UploadedItems" runat="server">
-                    <asp:ListView runat="server" ID="Values" ItemType="FrameworkLibrary.FieldFile">
+                    <asp:ListView runat="server" ID="Values" ItemType="FrameworkLibrary.FieldAssociation">
                         <LayoutTemplate>
                             <fieldset>
                                 <h3>Items</h3>
@@ -24,13 +24,13 @@
                         <ItemTemplate>
                             <li class="item" data-fieldfileid="<%# Item.ID %>">
                                 <div>
-                                    <a href="/Admin/Views/PageHandlers/FieldFiles/Detail.aspx?id=<%# Item.ID %>" target="_blank" class="colorbox iframe EditImage" data-id="<%# Item.ID %>" data-OnColorboxClose="RefreshAdminUpdatePanel('<%= AdminUpdatePanel.ClientID %>')">Edit</a> |
+                                    <a href="<%# WebApplication.BasePage.GetRedirectToMediaDetailUrl(Item.MediaDetail.MediaTypeID, Item.MediaDetail.MediaID, Item.MediaDetail.ParentMediaID, Item.MediaDetail.HistoryVersionNumber) + "&masterFilePath=~/Admin/Views/MasterPages/Popup.Master" %>" target="_blank" class="colorbox iframe EditImage" data-id="<%# Item.ID %>" data-OnColorboxClose="RefreshAdminUpdatePanel('<%= AdminUpdatePanel.ClientID %>')">Edit</a> |
                                     <a href="javascript:void(0)" class="DeleteImage" data-id="<%# Item.ID %>">Delete</a>
                                 </div>
                                 <a>
-                                    <img src="<%# URIHelper.ConvertToAbsUrl(Item.PathToFile) %>?width=200&mode=max" alt="<%# Item.Name %>" />
+                                    <img src="<%# URIHelper.ConvertToAbsUrl(Item.MediaDetail.PathToFile) %>?width=200&mode=max" alt="<%# Item.MediaDetail.SectionTitle %>" />
                                     <div style="max-width:100px;">
-                                        <%# Item.Name %>
+                                        <%# Item.MediaDetail.SectionTitle %>
                                     </div>
                                 </a>
                             </li>

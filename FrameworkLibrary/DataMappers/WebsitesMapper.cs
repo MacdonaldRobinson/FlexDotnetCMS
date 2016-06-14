@@ -40,6 +40,7 @@ namespace FrameworkLibrary
             if (WebsiteVirtualPaths == null || !WebsiteVirtualPaths.Any())
             {
                 WebsiteVirtualPaths = WebsitesMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.Name == enumName && i.HistoryVersionNumber == 0 && i.Language.IsActive).Select(i => i.CachedVirtualPath).Distinct().ToList();
+                //var test = WebsitesMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.Name == enumName).ToList();
                 ContextHelper.SetToRequestContext("WebsiteVirtualPaths", WebsiteVirtualPaths);
             }
 

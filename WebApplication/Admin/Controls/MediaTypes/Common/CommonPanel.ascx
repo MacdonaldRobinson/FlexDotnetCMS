@@ -141,11 +141,18 @@
                 <asp:TextBox ID="LinkTitle" runat="server" CssClass="LinkTitle"></asp:TextBox>
             </div>
 
+            <div id="PathToFileHolder">
+                <label for="<%= PathToFile.ClientID %>">
+                    Path To File</label>
+                <Admin:FileSelector runat="server" id="PathToFile" CssClass="PathToFile" />
+            </div>
+
             <div id="SectionTitleHolder">
                 <label for="<%= SectionTitle.ClientID %>">
                     Section Title</label>
                 <asp:TextBox ID="SectionTitle" runat="server" CssClass="SectionTitle"></asp:TextBox>
             </div>
+
             <div id="ShortDescriptionHolder">
                 <label for="<%= ShortDescription.ClientID %>">
                     Short Description</label>

@@ -382,11 +382,14 @@ namespace WebApplication.Admin.MediaArticle
 
         private IMediaDetail CreateHistory(MediaDetail fromItem, bool isDraft)
         {
+            if (fromItem == null)
+                return null;
+
             IMediaDetail history = null;
 
             if ((selectedItem.ID != 0) && (historyVersion == 0))
             {
-                history = MediaDetailsMapper.CreateObject(mediaTypeId, selectedMediaItem, parentMediaItem);
+                history = MediaDetailsMapper.CreateObject(fromItem.MediaTypeID, fromItem.Media, fromItem.Media.ParentMedia);
                 history.CopyFrom(BaseMapper.GetObjectFromContext(fromItem));
                 history.IsDraft = isDraft;
 
@@ -395,12 +398,23 @@ namespace WebApplication.Admin.MediaArticle
                     var newField = new MediaDetailField();
                     newField.CopyFrom(field);
 
-                    foreach (var file in field.FieldFiles)
+                    foreach (var fieldAssociation in field.FieldAssociations)
                     {
-                        var newFile = new FieldFile();
-                        newFile.CopyFrom(file);
+                        var newFieldAssociation = new FieldAssociation();
+                        newFieldAssociation.CopyFrom(fieldAssociation);
 
-                        newField.FieldFiles.Add(newFile);
+                        var associatedMediaDetail = (MediaDetail)MediaDetailsMapper.GetByID(newFieldAssociation.AssociatedMediaDetailID);
+
+                        newFieldAssociation.MediaDetail = (MediaDetail)CreateHistory(associatedMediaDetail, false);
+
+                        if (newFieldAssociation.MediaDetail != null)
+                        {
+                            newFieldAssociation.MediaDetail.HistoryForMediaDetailID = fieldAssociation.AssociatedMediaDetailID;
+                            newFieldAssociation.MediaDetail.HistoryVersionNumber = newFieldAssociation.MediaDetail.HistoryVersionNumber + 1;
+                        }
+
+
+                        newField.FieldAssociations.Add(newFieldAssociation);
                     }
 
 
@@ -482,6 +496,41 @@ namespace WebApplication.Admin.MediaArticle
             selectedItem.PublishDate = DateTime.Now;
             //selectedItem.ShowInMenu = true;
 
+            foreach (var fieldAssociations in selectedItem.FieldAssociations)
+            {
+                var index = 1;
+                foreach (var history in fieldAssociations.MediaDetail.History)
+                {
+                    history.HistoryForMediaDetail = fieldAssociations.MediaDetail;
+                    history.HistoryVersionNumber = 1;
+
+                    index++;
+                }
+
+                fieldAssociations.MediaDetail.HistoryForMediaDetail = null;
+                fieldAssociations.MediaDetail.HistoryVersionNumber = 0;
+            }
+
+            foreach (var field in selectedItem.Fields)
+            {
+                foreach (var fieldAssociations in field.FieldAssociations)
+                {
+                    var index = 1;
+
+                    foreach (var mediaDetail in fieldAssociations.MediaDetail.Media.MediaDetails)
+                    {
+                        mediaDetail.HistoryForMediaDetail = fieldAssociations.MediaDetail;
+                        mediaDetail.HistoryVersionNumber = 1;
+
+                        index++;
+                    }
+
+                    fieldAssociations.MediaDetail.HistoryForMediaDetail = null;
+                    fieldAssociations.MediaDetail.HistoryVersionNumber = 0;
+                }
+            }
+
+
             liveVersion.HistoryVersionNumber = items.OrderByDescending(i => i.HistoryVersionNumber).FirstOrDefault().HistoryVersionNumber + 1;
             liveVersion.HistoryForMediaDetail = (MediaDetail)selectedItem;
 
@@ -497,8 +546,8 @@ namespace WebApplication.Admin.MediaArticle
                     ContextHelper.Clear(ContextType.Cache);
                     FileCacheHelper.ClearAllCache();
 
-                    if (selectedItem.AbsoluteUrl != liveVersion.AbsoluteUrl)
-                        ChangeLinksForAllMediaDetails(liveVersion.AbsoluteUrl, selectedItem.AbsoluteUrl);
+                    //if (selectedItem.AbsoluteUrl != liveVersion.AbsoluteUrl)
+                    //    ChangeLinksForAllMediaDetails(liveVersion.AbsoluteUrl, selectedItem.AbsoluteUrl);
 
                     RedirectToMediaDetail(selectedItem);
                 }
@@ -513,27 +562,27 @@ namespace WebApplication.Admin.MediaArticle
             }
         }
 
-        private void ChangeLinksForAllMediaDetails(string oldAbsoluteUrl, string newAbsoluteUrl)
-        {
-            if (string.IsNullOrEmpty(oldAbsoluteUrl) || oldAbsoluteUrl == newAbsoluteUrl)
-                return;
+        //private void ChangeLinksForAllMediaDetails(string oldAbsoluteUrl, string newAbsoluteUrl)
+        //{
+        //    if (string.IsNullOrEmpty(oldAbsoluteUrl) || oldAbsoluteUrl == newAbsoluteUrl)
+        //        return;
 
-            var oldTemplateVarUrl = ParserHelper.ParseData(oldAbsoluteUrl, this.TemplateVars, true);
-            var newTemplateVarUrl = ParserHelper.ParseData(newAbsoluteUrl, this.TemplateVars, true);
+        //    var oldTemplateVarUrl = ParserHelper.ParseData(oldAbsoluteUrl, this.TemplateVars, true);
+        //    var newTemplateVarUrl = ParserHelper.ParseData(newAbsoluteUrl, this.TemplateVars, true);
 
-            var foundItems = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MainContent.Contains(oldTemplateVarUrl) || i.ShortDescription.Contains(oldTemplateVarUrl));
+        //    var foundItems = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MainContent.Contains(oldTemplateVarUrl) || i.ShortDescription.Contains(oldTemplateVarUrl));
 
-            if (foundItems.Any())
-            {
-                foreach (var item in foundItems)
-                {
-                    item.ShortDescription = item.ShortDescription.Replace(oldTemplateVarUrl, newTemplateVarUrl);
-                    item.MainContent = item.MainContent.Replace(oldTemplateVarUrl, newTemplateVarUrl);
-                }
+        //    if (foundItems.Any())
+        //    {
+        //        foreach (var item in foundItems)
+        //        {
+        //            item.ShortDescription = item.ShortDescription.Replace(oldTemplateVarUrl, newTemplateVarUrl);
+        //            item.MainContent = item.MainContent.Replace(oldTemplateVarUrl, newTemplateVarUrl);
+        //        }
 
-                var numberOfItemsEffected = MediaDetailsMapper.GetDataModel().SaveChanges();
-            }
-        }
+        //        var numberOfItemsEffected = MediaDetailsMapper.GetDataModel().SaveChanges();
+        //    }
+        //}
 
         protected void Save_OnClick(object sender, EventArgs e)
         {
@@ -670,7 +719,7 @@ namespace WebApplication.Admin.MediaArticle
                     ContextHelper.Clear(ContextType.Cache);
                     FileCacheHelper.ClearAllCache();
 
-                    ChangeLinksForAllMediaDetails(oldAbsoluteUrl, selectedItem.AbsoluteUrl);
+                    //ChangeLinksForAllMediaDetails(oldAbsoluteUrl, selectedItem.AbsoluteUrl);
                 }
 
                 DisplaySuccessMessage("Successfully Saved Item");

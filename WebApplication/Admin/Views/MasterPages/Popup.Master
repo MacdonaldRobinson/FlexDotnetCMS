@@ -8,8 +8,6 @@
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
-
-    <link href="/Admin/Styles/popup.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -17,22 +15,18 @@
         <asp:ScriptManager runat="server" />
 
         <Admin:CommonIncludes runat="server" ID="CommonIncludes" />
-        <style type="text/css">
-            html, body {
-                overflow: auto;
-            }
-        </style>
 
         <fieldset style="width: 98%; height: 100%">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </fieldset>
         <script type="text/javascript">
-            $(window).load(function () {
-                if (typeof hidePreviewPanel == 'function')
-                    hidePreviewPanel();
-            });
+            //$(window).load(function () {
+            //    if (typeof hidePreviewPanel == 'function')
+            //        hidePreviewPanel();
+            //});
         </script>
     </form>
+    <link href="/Admin/Styles/popup.css" rel="stylesheet" />
 </body>
 </html>

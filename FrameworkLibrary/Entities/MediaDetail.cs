@@ -8,7 +8,6 @@ namespace FrameworkLibrary
     public partial class MediaDetail : IMustContainID, IMediaDetail
     {
         private List<ValidationError> _validationErrors = new List<ValidationError>();
-        private List<string> websiteVirtualPaths = WebsitesMapper.GetAllWebsiteVirtualPaths();
 
         public bool CanRender
         {
@@ -348,6 +347,7 @@ namespace FrameworkLibrary
         {
             get
             {
+                var websiteVirtualPaths = WebsitesMapper.GetAllWebsiteVirtualPaths();
 
                 if (!string.IsNullOrEmpty(_autoCalculatedVirtualPath))
                 {

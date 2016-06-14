@@ -71,9 +71,9 @@
         </EntityType>
         <EntityType Name="FieldsAssociations">
           <Key>
-            <PropertyRef Name="MediaDetailFieldID" />
-            <PropertyRef Name="AssociatedMediaDetailID" />
+            <PropertyRef Name="ID" />
           </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MediaDetailFieldID" Type="bigint" Nullable="false" />
           <Property Name="AssociatedMediaDetailID" Type="bigint" Nullable="false" />
           <Property Name="OrderIndex" Type="int" Nullable="false" />
@@ -182,6 +182,7 @@
           <Property Name="SummaryLayout" Type="nvarchar(max)" Nullable="false" />
           <Property Name="FeaturedLayout" Type="nvarchar(max)" Nullable="false" />
           <Property Name="UseMediaTypeLayouts" Type="bit" Nullable="false" />
+          <Property Name="PathToFile" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="MediaDetailsComments">
           <Key>
@@ -1309,15 +1310,6 @@
             <End Role="MediaTypeField" EntitySet="Fields" />
             <End Role="MediaDetailField" EntitySet="Fields" />
           </AssociationSet>
-          <EntitySet Name="FieldAssociations" EntityType="FrameworkModel.FieldAssociation" />
-          <AssociationSet Name="FK_FieldAssociations_MediaDetails" Association="FrameworkModel.FK_FieldAssociations_MediaDetails">
-            <End Role="MediaDetail" EntitySet="MediaDetails" />
-            <End Role="FieldsAssociation" EntitySet="FieldAssociations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FieldsAssociations_MediaDetailsFields" Association="FrameworkModel.FK_FieldsAssociations_MediaDetailsFields">
-            <End Role="MediaDetailField" EntitySet="Fields" />
-            <End Role="FieldsAssociation" EntitySet="FieldAssociations" />
-          </AssociationSet>
           <EntitySet Name="FieldFiles" EntityType="FrameworkModel.FieldFile" />
           <AssociationSet Name="FK_FieldFiles_MediaDetailsFields" Association="FrameworkModel.FK_FieldFiles_MediaDetailsFields">
             <End Role="MediaDetailField" EntitySet="Fields" />
@@ -1344,6 +1336,15 @@
           <AssociationSet Name="FK_RolesMediaDetails_RoleID" Association="FrameworkModel.FK_RolesMediaDetails_RoleID">
             <End Role="Role" EntitySet="Roles" />
             <End Role="RolesMediaDetail" EntitySet="RolesMediaDetails" />
+          </AssociationSet>
+          <EntitySet Name="FieldAssociations" EntityType="FrameworkModel.FieldAssociation" />
+          <AssociationSet Name="FK_FieldAssociations_MediaDetails" Association="FrameworkModel.FK_FieldAssociations_MediaDetails">
+            <End Role="MediaDetail" EntitySet="MediaDetails" />
+            <End Role="FieldsAssociation" EntitySet="FieldAssociations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FieldsAssociations_MediaDetailsFields" Association="FrameworkModel.FK_FieldsAssociations_MediaDetailsFields">
+            <End Role="MediaDetailField" EntitySet="Fields" />
+            <End Role="FieldsAssociation" EntitySet="FieldAssociations" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Comment">
@@ -1470,12 +1471,13 @@
           <Property Name="FeaturedLayout" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="UseMediaTypeLayouts" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Fields" Relationship="FrameworkModel.FK_MediaDetailFields_MediaDetails" FromRole="MediaDetail" ToRole="MediaDetailsField" />
-          <NavigationProperty Name="FieldAssociations" Relationship="FrameworkModel.FK_FieldAssociations_MediaDetails" FromRole="MediaDetail" ToRole="FieldsAssociation" />
           <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
           <Property Name="PublishDate" Type="DateTime" Precision="3" />
           <Property Name="MainContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Comments" Relationship="FrameworkModel.MediaDetailsComments" FromRole="MediaDetail" ToRole="Comment" />
           <NavigationProperty Name="RolesMediaDetails" Relationship="FrameworkModel.FK_RolesMediaDetails_MediaDetailID" FromRole="MediaDetail" ToRole="RolesMediaDetail" />
+          <Property Name="PathToFile" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FieldAssociations" Relationship="FrameworkModel.FK_FieldAssociations_MediaDetails" FromRole="MediaDetail" ToRole="FieldsAssociation" />
           </EntityType>
         <EntityType Name="Page" BaseType="FrameworkModel.MediaDetail">
         </EntityType>
@@ -1982,9 +1984,9 @@
           <Property Name="MediaTypeFieldID" Type="Int64" />
           <NavigationProperty Name="MediaDetail" Relationship="FrameworkModel.FK_MediaDetailFields_MediaDetails" FromRole="MediaDetailsField" ToRole="MediaDetail" />
           <NavigationProperty Name="MediaTypeField" Relationship="FrameworkModel.FK_MediaDetailsFields_MediaTypesFields" FromRole="MediaDetailField" ToRole="MediaTypeField" />
-          <NavigationProperty Name="FieldAssociations" Relationship="FrameworkModel.FK_FieldsAssociations_MediaDetailsFields" FromRole="MediaDetailField" ToRole="FieldsAssociation" />
           <NavigationProperty Name="FieldFiles" Relationship="FrameworkModel.FK_FieldFiles_MediaDetailsFields" FromRole="MediaDetailField" ToRole="FieldFile" />
           <Property Name="UseMediaTypeFieldFrontEndLayout" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="FieldAssociations" Relationship="FrameworkModel.FK_FieldsAssociations_MediaDetailsFields" FromRole="MediaDetailField" ToRole="FieldsAssociation" />
         </EntityType>
         <Association Name="FK_MediaDetailFields_MediaDetails">
           <End Type="FrameworkModel.MediaDetail" Multiplicity="1" Role="MediaDetail" />
@@ -2025,41 +2027,6 @@
             </Principal>
             <Dependent Role="MediaDetailField">
               <PropertyRef Name="MediaTypeFieldID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="FieldAssociation">
-          <Key>
-            <PropertyRef Name="MediaDetailFieldID" />
-            <PropertyRef Name="AssociatedMediaDetailID" />
-          </Key>
-          <Property Name="MediaDetailFieldID" Type="Int64" Nullable="false" />
-          <Property Name="AssociatedMediaDetailID" Type="Int64" Nullable="false" />
-          <Property Name="OrderIndex" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="MediaDetail" Relationship="FrameworkModel.FK_FieldAssociations_MediaDetails" FromRole="FieldsAssociation" ToRole="MediaDetail" />
-          <NavigationProperty Name="MediaDetailField" Relationship="FrameworkModel.FK_FieldsAssociations_MediaDetailsFields" FromRole="FieldsAssociation" ToRole="MediaDetailField" />
-        </EntityType>
-        <Association Name="FK_FieldAssociations_MediaDetails">
-          <End Type="FrameworkModel.MediaDetail" Role="MediaDetail" Multiplicity="1" />
-          <End Type="FrameworkModel.FieldAssociation" Role="FieldsAssociation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MediaDetail">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FieldsAssociation">
-              <PropertyRef Name="AssociatedMediaDetailID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FieldsAssociations_MediaDetailsFields">
-          <End Type="FrameworkModel.MediaDetailField" Role="MediaDetailField" Multiplicity="1" />
-          <End Type="FrameworkModel.FieldAssociation" Role="FieldsAssociation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MediaDetailField">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FieldsAssociation">
-              <PropertyRef Name="MediaDetailFieldID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2164,6 +2131,41 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="FieldAssociation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="MediaDetailFieldID" Type="Int64" Nullable="false" />
+          <Property Name="AssociatedMediaDetailID" Type="Int64" Nullable="false" />
+          <Property Name="OrderIndex" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MediaDetail" Relationship="FrameworkModel.FK_FieldAssociations_MediaDetails" FromRole="FieldsAssociation" ToRole="MediaDetail" />
+          <NavigationProperty Name="MediaDetailField" Relationship="FrameworkModel.FK_FieldsAssociations_MediaDetailsFields" FromRole="FieldsAssociation" ToRole="MediaDetailField" />
+        </EntityType>
+        <Association Name="FK_FieldAssociations_MediaDetails">
+          <End Type="FrameworkModel.MediaDetail" Role="MediaDetail" Multiplicity="1" />
+          <End Type="FrameworkModel.FieldAssociation" Role="FieldsAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FieldsAssociation">
+              <PropertyRef Name="AssociatedMediaDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FieldsAssociations_MediaDetailsFields">
+          <End Type="FrameworkModel.MediaDetailField" Role="MediaDetailField" Multiplicity="1" />
+          <End Type="FrameworkModel.FieldAssociation" Role="FieldsAssociation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaDetailField">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FieldsAssociation">
+              <PropertyRef Name="MediaDetailFieldID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2231,6 +2233,7 @@
           <EntitySetMapping Name="MediaDetails">
             <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.MediaDetail)">
               <MappingFragment StoreEntitySet="MediaDetails">
+                <ScalarProperty Name="PathToFile" ColumnName="PathToFile" />
                 <ScalarProperty Name="MainContent" ColumnName="MainContent" />
                 <ScalarProperty Name="PublishDate" ColumnName="PublishDate" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
@@ -2548,15 +2551,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FieldAssociations">
-            <EntityTypeMapping TypeName="FrameworkModel.FieldAssociation">
-              <MappingFragment StoreEntitySet="FieldsAssociations">
-                <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
-                <ScalarProperty Name="AssociatedMediaDetailID" ColumnName="AssociatedMediaDetailID" />
-                <ScalarProperty Name="MediaDetailFieldID" ColumnName="MediaDetailFieldID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="FieldFiles">
             <EntityTypeMapping TypeName="FrameworkModel.FieldFile">
               <MappingFragment StoreEntitySet="FieldFiles">
@@ -2598,6 +2592,16 @@
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="MediaDetailID" ColumnName="MediaDetailID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FieldAssociations">
+            <EntityTypeMapping TypeName="FrameworkModel.FieldAssociation">
+              <MappingFragment StoreEntitySet="FieldsAssociations">
+                <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
+                <ScalarProperty Name="AssociatedMediaDetailID" ColumnName="AssociatedMediaDetailID" />
+                <ScalarProperty Name="MediaDetailFieldID" ColumnName="MediaDetailFieldID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2874,9 +2878,6 @@
         <AssociationConnector Association="FrameworkModel.FK_MediaTypesFields_MediaTypes" />
         <InheritanceConnector EntityType="FrameworkModel.MediaTypeField" />
         <AssociationConnector Association="FrameworkModel.FK_MediaDetailsFields_MediaTypesFields" />
-        <EntityTypeShape EntityType="FrameworkModel.FieldAssociation" Width="1.5" PointX="7.375" PointY="8.625" />
-        <AssociationConnector Association="FrameworkModel.FK_FieldAssociations_MediaDetails" />
-        <AssociationConnector Association="FrameworkModel.FK_FieldsAssociations_MediaDetailsFields" />
         <EntityTypeShape EntityType="FrameworkModel.FieldFile" Width="1.5" PointX="12.25" PointY="8" />
         <AssociationConnector Association="FrameworkModel.FK_FieldFiles_MediaDetailsFields" />
         <EntityTypeShape EntityType="FrameworkModel.IPLocationTrackerEntry" Width="1.5" PointX="7.375" PointY="0.75" />
@@ -2886,6 +2887,9 @@
         <EntityTypeShape EntityType="FrameworkModel.RoleMediaDetail" Width="1.5" PointX="7" PointY="19.5" />
         <AssociationConnector Association="FrameworkModel.FK_RolesMediaDetails_MediaDetailID" />
         <AssociationConnector Association="FrameworkModel.FK_RolesMediaDetails_RoleID" />
+        <EntityTypeShape EntityType="FrameworkModel.FieldAssociation" Width="1.5" PointX="7.5" PointY="9.375" />
+        <AssociationConnector Association="FrameworkModel.FK_FieldAssociations_MediaDetails" />
+        <AssociationConnector Association="FrameworkModel.FK_FieldsAssociations_MediaDetailsFields" />
         </Diagram>
     </Diagrams>
   </Designer>

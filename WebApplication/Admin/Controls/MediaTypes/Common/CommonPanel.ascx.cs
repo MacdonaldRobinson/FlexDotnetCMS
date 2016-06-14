@@ -187,6 +187,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
             //item.LongDescriptionMobileVersion = ParserHelper.ParseData(LongDescriptionMobileVersion.GetSiteEditor.Text.Replace("%7B", "{").Replace("%7D", "}"), keyValuePair, true);
             item.SectionTitle = SectionTitle.Text;
             item.ShortDescription = ParserHelper.ParseData(ShortDescription.GetValue().ToString().Replace("%7B", "{").Replace("%7D", "}"), keyValuePair, true);
+            item.PathToFile = PathToFile.GetValue().ToString();
 
             //TagsSelector.SetDefaultTag(item.LinkTitle);
 
@@ -393,6 +394,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
             //LongDescriptionMobileVersion.GetSiteEditor.Text = ParserHelper.ParseData(item.LongDescriptionMobileVersion, BasePage.TemplateVars);
             SectionTitle.Text = item.SectionTitle;
             ShortDescription.SetValue(ParserHelper.ParseData(item.ShortDescription, BasePage.TemplateVars));
+            PathToFile.SetValue(item.PathToFile);
 
             var virtualPath = item.AutoCalculatedVirtualPath;
 

@@ -441,7 +441,7 @@ namespace FrameworkLibrary
 
             var currentLanguage = FrameworkSettings.GetCurrentLanguage();
 
-            var virtualPathByCurrentHost = virtualPath.Replace("~/", websiteByCurrentHost.VirtualPath);
+            var virtualPathByCurrentHost = virtualPath.Replace("~/", websiteByCurrentHost?.VirtualPath);
 
             if (virtualPathByCurrentHost.Contains(".aspx"))
                 return null;
@@ -613,6 +613,15 @@ namespace FrameworkLibrary
                     detail = GetDataModel().MediaDetails.Create<Page>();
                     break;
             }
+
+            var updatableProperties = detail.GetType().GetProperties().Where(i => i.CanWrite && i.PropertyType == typeof(System.String));
+
+            foreach (var property in updatableProperties)
+            {
+                ParserHelper.SetValue(detail, property.Name, "New Item");
+            }
+
+            detail.DateCreated = detail.DateLastModified = DateTime.Now;
 
             return detail;
         }

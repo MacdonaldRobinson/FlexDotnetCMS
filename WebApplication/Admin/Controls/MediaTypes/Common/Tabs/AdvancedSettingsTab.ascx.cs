@@ -21,7 +21,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
                     MediaTypeEnum mediaTypeEnum = MediaTypeEnum.Page;
                     Enum.TryParse(mediaType.Name, out mediaTypeEnum);
 
-                    var tmpMediaDetail = MediaDetailsMapper.CreateByMediaTypeEnum(mediaTypeEnum);
+                    var tmpMediaDetail = MediaDetailsMapper.CreateObject(mediaTypeEnum);
                     if (tmpMediaDetail.GetType() == selectedItem.GetType())
                     {
                         allowedMediaTypes.Add(mediaType);

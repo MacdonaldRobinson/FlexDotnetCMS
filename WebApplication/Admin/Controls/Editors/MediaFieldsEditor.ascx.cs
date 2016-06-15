@@ -210,13 +210,7 @@ namespace WebApplication.Admin.Controls.Editors
 
                     foreach (MediaDetailField mediaDetailField in mediaDetailFields)
                     {
-                        var fieldFiles = mediaDetailField.FieldFiles.ToList();
                         var fieldAssociations = mediaDetailField.FieldAssociations.ToList();
-
-                        foreach (var fieldFile in fieldFiles)
-                        {
-                            BaseMapper.DeleteObjectFromContext(fieldFile);
-                        }
 
                         foreach (var fieldAssociation in fieldAssociations)
                         {

@@ -17,7 +17,6 @@ namespace FrameworkLibrary
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public MediaDetailField()
         {
-            this.FieldFiles = new HashSet<FieldFile>();
             this.FieldAssociations = new HashSet<FieldAssociation>();
         }
     
@@ -27,8 +26,6 @@ namespace FrameworkLibrary
     
         public virtual MediaDetail MediaDetail { get; set; }
         public virtual MediaTypeField MediaTypeField { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FieldFile> FieldFiles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FieldAssociation> FieldAssociations { get; set; }
     }

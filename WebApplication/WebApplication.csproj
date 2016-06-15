@@ -165,9 +165,6 @@
     <Content Include="Admin\media\images\css\leftArrow.png" />
     <Content Include="Admin\media\images\css\logo.png" />
     <Content Include="Admin\Views\MasterPages\WebService.asmx" />
-    <Content Include="Admin\Views\PageHandlers\FieldFiles\Default.aspx" />
-    <Content Include="Admin\Views\PageHandlers\FieldFiles\Detail.aspx" />
-    <Content Include="Admin\Views\PageHandlers\FieldFiles\ItemServices.asmx" />
     <Content Include="Admin\Views\PageHandlers\GlossaryTerms\Default.aspx" />
     <Content Include="Admin\Views\PageHandlers\GlossaryTerms\Detail.aspx" />
     <Content Include="Admin\Views\PageHandlers\GlossaryTerms\ItemServices.asmx" />
@@ -869,24 +866,6 @@
     </Compile>
     <Compile Include="Admin\Views\MasterPages\WebService.asmx.cs">
       <DependentUpon>WebService.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Admin\Views\PageHandlers\FieldFiles\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Admin\Views\PageHandlers\FieldFiles\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Admin\Views\PageHandlers\FieldFiles\Detail.aspx.cs">
-      <DependentUpon>Detail.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Admin\Views\PageHandlers\FieldFiles\Detail.aspx.designer.cs">
-      <DependentUpon>Detail.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Admin\Views\PageHandlers\FieldFiles\ItemServices.asmx.cs">
-      <DependentUpon>ItemServices.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Admin\Views\PageHandlers\GlossaryTerms\Default.aspx.cs">

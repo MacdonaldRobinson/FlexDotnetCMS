@@ -587,7 +587,7 @@ namespace FrameworkLibrary
             return detail;
         }
 
-        public static IMediaDetail CreateByMediaTypeEnum(MediaTypeEnum mediaTypeEnum)
+        public static IMediaDetail CreateObject(MediaTypeEnum mediaTypeEnum)
         {
             IMediaDetail detail;
 
@@ -613,6 +613,13 @@ namespace FrameworkLibrary
                     detail = GetDataModel().MediaDetails.Create<Page>();
                     break;
             }
+
+            return detail;
+        }
+
+        public static IMediaDetail CreateByMediaTypeEnum(MediaTypeEnum mediaTypeEnum)
+        {
+            var detail = CreateObject(mediaTypeEnum);
 
             var updatableProperties = detail.GetType().GetProperties().Where(i => i.CanWrite && i.PropertyType == typeof(System.String));
 
@@ -776,12 +783,6 @@ namespace FrameworkLibrary
             var fields = obj.Fields.ToList();
             foreach (var item in fields)
             {
-                var fieldFiles = item.FieldFiles.ToList();
-                foreach (var fieldFile in fieldFiles)
-                {
-                    GetDataModel().FieldFiles.Remove(fieldFile);
-                }
-
                 var associations = item.FieldAssociations.ToList();
                 foreach (var association in associations)
                 {

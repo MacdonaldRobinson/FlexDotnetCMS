@@ -172,7 +172,6 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="DataMappers\CommentsMapper.cs" />
-    <Compile Include="DataMappers\FieldFilesMapper.cs" />
     <Compile Include="DataMappers\FieldsMapper.cs" />
     <Compile Include="DataMappers\GlossaryTermsMapper.cs" />
     <Compile Include="DataMappers\IPLocationTrackerHelper.cs" />
@@ -210,7 +209,6 @@
     <Compile Include="Entities\Entities.cs" />
     <Compile Include="Entities\Field.cs" />
     <Compile Include="Entities\FieldAssociation.cs" />
-    <Compile Include="Entities\FieldFile.cs" />
     <Compile Include="Entities\GlossaryTerm.cs" />
     <Compile Include="Entities\IMediaDetail.cs" />
     <Compile Include="Entities\IPLocationTrackerEntry.cs" />
@@ -256,9 +254,6 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="FieldAssociation.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FieldFile.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="FrameworkBaseMedia.cs" />

@@ -37,20 +37,6 @@
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateLastModified" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="FieldFiles">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MediaDetailFieldID" Type="bigint" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="PathToFile" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="Link" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="OrderIndex" Type="int" Nullable="false" />
-          <Property Name="DateCreated" Type="datetime" Nullable="false" />
-          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
-        </EntityType>
         <EntityType Name="Fields">
           <Key>
             <PropertyRef Name="ID" />
@@ -468,18 +454,6 @@
             </Principal>
             <Dependent Role="FieldsAssociations">
               <PropertyRef Name="AssociatedMediaDetailID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FieldFiles_MediaDetailsFields">
-          <End Role="MediaDetailsFields" Type="Self.MediaDetailsFields" Multiplicity="1" />
-          <End Role="FieldFiles" Type="Self.FieldFiles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MediaDetailsFields">
-              <PropertyRef Name="FieldID" />
-            </Principal>
-            <Dependent Role="FieldFiles">
-              <PropertyRef Name="MediaDetailFieldID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -966,7 +940,6 @@
         <EntityContainer Name="FrameworkModelStoreContainer">
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmailLog" EntityType="Self.EmailLog" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FieldFiles" EntityType="Self.FieldFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fields" EntityType="Self.Fields" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FieldsAssociations" EntityType="Self.FieldsAssociations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GlossaryTerms" EntityType="Self.GlossaryTerms" Schema="dbo" store:Type="Tables" />
@@ -1012,10 +985,6 @@
           <AssociationSet Name="FK_FieldAssociations_MediaDetails" Association="Self.FK_FieldAssociations_MediaDetails">
             <End Role="MediaDetails" EntitySet="MediaDetails" />
             <End Role="FieldsAssociations" EntitySet="FieldsAssociations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FieldFiles_MediaDetailsFields" Association="Self.FK_FieldFiles_MediaDetailsFields">
-            <End Role="MediaDetailsFields" EntitySet="MediaDetailsFields" />
-            <End Role="FieldFiles" EntitySet="FieldFiles" />
           </AssociationSet>
           <AssociationSet Name="FK_FieldsAssociations_MediaDetailsFields" Association="Self.FK_FieldsAssociations_MediaDetailsFields">
             <End Role="MediaDetailsFields" EntitySet="MediaDetailsFields" />
@@ -1309,11 +1278,6 @@
           <AssociationSet Name="FK_MediaDetailsFields_MediaTypesFields" Association="FrameworkModel.FK_MediaDetailsFields_MediaTypesFields">
             <End Role="MediaTypeField" EntitySet="Fields" />
             <End Role="MediaDetailField" EntitySet="Fields" />
-          </AssociationSet>
-          <EntitySet Name="FieldFiles" EntityType="FrameworkModel.FieldFile" />
-          <AssociationSet Name="FK_FieldFiles_MediaDetailsFields" Association="FrameworkModel.FK_FieldFiles_MediaDetailsFields">
-            <End Role="MediaDetailField" EntitySet="Fields" />
-            <End Role="FieldFile" EntitySet="FieldFiles" />
           </AssociationSet>
           <EntitySet Name="IPLocationTrackerEntries" EntityType="FrameworkModel.IPLocationTrackerEntry" />
           <AssociationSet Name="FK_Settings_Languages" Association="FrameworkModel.FK_Settings_Languages">
@@ -1984,7 +1948,6 @@
           <Property Name="MediaTypeFieldID" Type="Int64" />
           <NavigationProperty Name="MediaDetail" Relationship="FrameworkModel.FK_MediaDetailFields_MediaDetails" FromRole="MediaDetailsField" ToRole="MediaDetail" />
           <NavigationProperty Name="MediaTypeField" Relationship="FrameworkModel.FK_MediaDetailsFields_MediaTypesFields" FromRole="MediaDetailField" ToRole="MediaTypeField" />
-          <NavigationProperty Name="FieldFiles" Relationship="FrameworkModel.FK_FieldFiles_MediaDetailsFields" FromRole="MediaDetailField" ToRole="FieldFile" />
           <Property Name="UseMediaTypeFieldFrontEndLayout" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="FieldAssociations" Relationship="FrameworkModel.FK_FieldsAssociations_MediaDetailsFields" FromRole="MediaDetailField" ToRole="FieldsAssociation" />
         </EntityType>
@@ -2027,33 +1990,6 @@
             </Principal>
             <Dependent Role="MediaDetailField">
               <PropertyRef Name="MediaTypeFieldID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="FieldFile">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Name="MediaDetailFieldID" Type="Int64" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PathToFile" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DateLastModified" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="MediaDetailsField" Relationship="FrameworkModel.FK_FieldFiles_MediaDetailsFields" FromRole="FieldFile" ToRole="MediaDetailField" />
-          <Property Name="OrderIndex" Type="Int32" Nullable="false" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Link" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <Association Name="FK_FieldFiles_MediaDetailsFields">
-          <End Type="FrameworkModel.MediaDetailField" Role="MediaDetailField" Multiplicity="1" />
-          <End Type="FrameworkModel.FieldFile" Role="FieldFile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MediaDetailField">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="FieldFile">
-              <PropertyRef Name="MediaDetailFieldID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2551,21 +2487,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FieldFiles">
-            <EntityTypeMapping TypeName="FrameworkModel.FieldFile">
-              <MappingFragment StoreEntitySet="FieldFiles">
-                <ScalarProperty Name="Link" ColumnName="Link" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
-                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="PathToFile" ColumnName="PathToFile" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="MediaDetailFieldID" ColumnName="MediaDetailFieldID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="IPLocationTrackerEntries">
             <EntityTypeMapping TypeName="FrameworkModel.IPLocationTrackerEntry">
               <MappingFragment StoreEntitySet="IPLocationTracker">
@@ -2878,8 +2799,6 @@
         <AssociationConnector Association="FrameworkModel.FK_MediaTypesFields_MediaTypes" />
         <InheritanceConnector EntityType="FrameworkModel.MediaTypeField" />
         <AssociationConnector Association="FrameworkModel.FK_MediaDetailsFields_MediaTypesFields" />
-        <EntityTypeShape EntityType="FrameworkModel.FieldFile" Width="1.5" PointX="12.25" PointY="8" />
-        <AssociationConnector Association="FrameworkModel.FK_FieldFiles_MediaDetailsFields" />
         <EntityTypeShape EntityType="FrameworkModel.IPLocationTrackerEntry" Width="1.5" PointX="7.375" PointY="0.75" />
         <AssociationConnector Association="FrameworkModel.FK_Settings_Languages" />
         <AssociationConnector Association="FrameworkModel.FK_Settings_MasterPages" />

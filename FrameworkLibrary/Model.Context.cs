@@ -44,7 +44,6 @@ namespace FrameworkLibrary
         public virtual DbSet<MediaTag> MediaTags { get; set; }
         public virtual DbSet<GlossaryTerm> GlossaryTerms { get; set; }
         public virtual DbSet<Field> Fields { get; set; }
-        public virtual DbSet<FieldFile> FieldFiles { get; set; }
         public virtual DbSet<IPLocationTrackerEntry> IPLocationTrackerEntries { get; set; }
         public virtual DbSet<RoleMediaDetail> RolesMediaDetails { get; set; }
         public virtual DbSet<FieldAssociation> FieldAssociations { get; set; }

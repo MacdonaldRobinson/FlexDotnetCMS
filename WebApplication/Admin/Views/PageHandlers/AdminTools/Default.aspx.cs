@@ -108,17 +108,10 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
                     var fields = item.Fields.ToList();
                     foreach (var field in fields)
                     {
-                        var files = field.FieldFiles.ToList();
-
-                        foreach (var file in files)
-                        {
-                            BaseMapper.DeleteObjectFromContext(file);
-                        }
-
                         field.FieldAssociations.Clear();
 
                         BaseMapper.DeleteObjectFromContext(field);
-                    }                    
+                    }
 
                     BaseMapper.DeleteObjectFromContext(BaseMapper.GetObjectFromContext((MediaDetail)item));
                 }

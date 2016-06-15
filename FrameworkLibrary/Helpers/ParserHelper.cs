@@ -213,14 +213,6 @@ namespace FrameworkLibrary
                 if (tagValue.StartsWith("~/"))
                     tagValue = URIHelper.ConvertToAbsUrl(tagValue);
 
-                //foreach (var type in Assembly.GetExecutingAssembly().GetTypes())
-                //{
-                //    Template.RegisterSafeType(type, type.GetMembers().Select(i => i.Name).ToArray());
-                //}
-
-                //var template = Template.Parse(tagValue);
-                //tagValue = template.Render(Hash.FromAnonymousObject(obj));
-
                 if (!string.IsNullOrEmpty(tagValue) && tagValue.Contains("@") && compileRazor)
                 {
                     var razorTagValue = "@using FrameworkLibrary\n@using System\n@using System.Linq\n@using System.Web\n" + tagValue;

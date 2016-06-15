@@ -159,6 +159,10 @@ namespace FrameworkLibrary
             return MediaDetailsMapper.ParseSpecialTags(this, shortCode);
         }
 
+        public string RenderMainLayout()
+        {
+            return RenderShortCode("{UseMainLayout}");
+        }
         public MasterPage GetMasterPage()
         {
             if (this.MasterPage != null)

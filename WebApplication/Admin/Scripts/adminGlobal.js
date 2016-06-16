@@ -718,15 +718,15 @@ function pageLoad() {
 }
 
 function BindDataTable() {
-    $('.DataTable').DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'csvHtml5',
-                title: 'Data export'
-            }
-        ]
-    });
+    //$('.DataTable').DataTable({
+    //    dom: 'Bfrtip',
+    //    buttons: [
+    //        {
+    //            extend: 'csvHtml5',
+    //            title: 'Data export'
+    //        }
+    //    ]
+    //});
 }
 
 function RefreshAdminUpdatePanel(elem) {

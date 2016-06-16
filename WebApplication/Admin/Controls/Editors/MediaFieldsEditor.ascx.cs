@@ -116,6 +116,8 @@ namespace WebApplication.Admin.Controls.Editors
                 FieldID.Value = mediaField.ID.ToString();
                 BindVisibility(mediaField);
                 Bind();
+
+                mediaField.MediaDetail.RemoveFromCache();
             }
             else
             {

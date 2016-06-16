@@ -7,6 +7,7 @@ using System.Web.Compilation;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
+using WebApplication.Admin;
 using WebApplication.Services;
 
 namespace WebApplication.Handlers
@@ -68,7 +69,8 @@ namespace WebApplication.Handlers
 
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
-            AttemptToLoadFromCache();
+            if(FrameworkSettings.CurrentUser == null)
+                AttemptToLoadFromCache();
 
             virtualPath = URIHelper.GetCurrentVirtualPath().ToLower();
 

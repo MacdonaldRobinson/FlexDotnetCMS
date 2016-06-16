@@ -115,6 +115,12 @@ namespace WebApplication.Admin.Controls.Editors
             if (!returnObj.IsError)
             {
                 Bind();
+
+                foreach (var item in mediaType.MediaDetails)
+                {
+                    item.RemoveFromCache();
+                }
+
             }
             else
             {

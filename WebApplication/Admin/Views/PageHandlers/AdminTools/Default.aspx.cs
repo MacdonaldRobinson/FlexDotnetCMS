@@ -105,18 +105,8 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
 
                 foreach (var item in historyMediaDetails)
                 {
-                    var fields = item.Fields.ToList();
-                    foreach (var field in fields)
-                    {
-                        field.FieldAssociations.Clear();
-
-                        BaseMapper.DeleteObjectFromContext(field);
-                    }
-
-                    BaseMapper.DeleteObjectFromContext(BaseMapper.GetObjectFromContext((MediaDetail)item));
-                }
-
-                BaseMapper.SaveDataModel();
+                    var returnObj = MediaDetailsMapper.DeletePermanently((MediaDetail)item);
+                }                
 
                 ClearAllCache_OnClick(sender, e);
             }

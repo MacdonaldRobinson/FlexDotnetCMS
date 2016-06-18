@@ -28,7 +28,7 @@
                                     <a href="javascript:void(0)" class="DeleteImage" data-id="<%# Item.ID %>">Delete</a>
                                 </div>
                                 <a>
-                                    <img src="<%# URIHelper.ConvertToAbsUrl(Item.MediaDetail.PathToFile) %>?width=200&mode=max" alt="<%# Item.MediaDetail.SectionTitle %>" />
+                                    <img src="<%# URIHelper.ConvertToAbsUrl(Item.MediaDetail.PathToFile) %>" alt="<%# Item.MediaDetail.SectionTitle %>" />
                                     <div style="max-width:100px;">
                                         <%# Item.MediaDetail.SectionTitle %>
                                     </div>

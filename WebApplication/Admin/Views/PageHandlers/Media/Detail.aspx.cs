@@ -407,7 +407,7 @@ namespace WebApplication.Admin.MediaArticle
 
                         var associatedMediaDetail = (MediaDetail)MediaDetailsMapper.GetByID(newFieldAssociation.AssociatedMediaDetailID);
 
-                        newFieldAssociation.MediaDetail = (MediaDetail)MediaDetailsMapper.CreateObject(associatedMediaDetail.MediaType.ID, MediasMapper.CreateObject(), associatedMediaDetail.Media);
+                        newFieldAssociation.MediaDetail = (MediaDetail)MediaDetailsMapper.CreateObject(associatedMediaDetail.MediaType.ID, MediasMapper.CreateObject(), associatedMediaDetail.Media.ParentMedia);
                         newFieldAssociation.MediaDetail.DateCreated = newFieldAssociation.MediaDetail.DateLastModified = DateTime.Now;
                         newFieldAssociation.MediaDetail.CreatedByUser = newFieldAssociation.MediaDetail.LastUpdatedByUser = FrameworkSettings.CurrentUser;
 
@@ -537,6 +537,13 @@ namespace WebApplication.Admin.MediaArticle
 
             liveVersion.HistoryVersionNumber = items.OrderByDescending(i => i.HistoryVersionNumber).FirstOrDefault().HistoryVersionNumber + 1;
             liveVersion.HistoryForMediaDetail = (MediaDetail)selectedItem;
+
+            var associations = BaseMapper.GetDataModel().FieldAssociations.Where(i => i.AssociatedMediaDetailID == liveVersion.ID);
+
+            foreach (var association in associations)
+            {
+                association.MediaDetail = (MediaDetail)selectedItem;
+            }
 
             Return returnObj = MediaDetailsMapper.Update(selectedItem);
 

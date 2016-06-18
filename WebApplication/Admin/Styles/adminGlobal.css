@@ -15,6 +15,11 @@ div.clear {
     float: right;
 }
 
+.size-200{
+    max-width:200px;
+    max-height:200px
+}
+
 .comments .comments {
     padding-left: 30px;
 }

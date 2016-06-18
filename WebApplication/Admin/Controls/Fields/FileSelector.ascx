@@ -6,7 +6,7 @@
         $(document).ready(function () {
             $(document).on("keyup", "#<%=SelectedFile.ClientID%>", function () {
                 var src = $(this).val().replace("~/", "/");
-                $("#<%=SelectedImage.ClientID%>").attr("src", src + "?height=200&mode=min");
+                $("#<%=SelectedImage.ClientID%>").attr("src", src);
             });
 
             $("#<%=SelectedImage.ClientID%>").load(function () {
@@ -14,7 +14,7 @@
 
                 if (src.indexOf("?height") == -1)
                 {
-                    $(this).attr("src", src + "?height=200&mode=min");
+                    $(this).attr("src", src);
                 }
             });
         });
@@ -27,7 +27,7 @@
                 <asp:TextBox ID="SelectedFile" runat="server" CssClass="Control"></asp:TextBox>
             </div>
             <div>
-                <asp:Image ID="SelectedImage" runat="server" />
+                <asp:Image ID="SelectedImage" runat="server" CssClass="size-200"/>
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>

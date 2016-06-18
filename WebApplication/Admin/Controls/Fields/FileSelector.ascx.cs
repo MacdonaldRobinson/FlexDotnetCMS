@@ -100,7 +100,7 @@ namespace WebApplication.Admin.Controls.Fields
                 }
 
                 if (CanSetSelectedImage(SelectedFile.Text))
-                    SelectedImage.ImageUrl = SelectedFile.Text + "?height=200&mode=min";
+                    SelectedImage.ImageUrl = SelectedFile.Text;
                 else
                     return;
             }

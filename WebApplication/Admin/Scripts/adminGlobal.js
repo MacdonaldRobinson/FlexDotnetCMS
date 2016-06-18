@@ -368,14 +368,16 @@ function initAceEditors() {
     $(document).on("change", "#AttachEditorToBrowserPanel", function () {
         if(!$(this).is(":checked"))
         {
-            $("#PreviewPanel")[0].src = $("#PreviewPanel")[0].src;
+            if ($("#PreviewPanel").length > 0)
+                $("#PreviewPanel")[0].src = $("#PreviewPanel")[0].src;
         }
         else
         {
             var textarea = $(this).parent().find("textarea");
             var value = textarea.val();
 
-            $("#PreviewPanel")[0].contentWindow.document.getElementById("MainContentPlaceHolder").innerHTML = value;
+            if ($("#PreviewPanel").length > 0)
+                $("#PreviewPanel")[0].contentWindow.document.getElementById("MainContentPlaceHolder").innerHTML = value;
         }
     });
 

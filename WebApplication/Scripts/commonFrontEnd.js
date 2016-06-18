@@ -1,29 +1,30 @@
 ﻿$(document).ready(function () {
 
-    $("input:submit").click(function (event) {
-        var mainForm = $("form")[0];
-        var dataForm = $(this).parents("div[data-form]")[0];
+    if ($("form").length > 0)
+    {
+        $("input:submit").click(function (event) {
 
-        var hasTarget = false;
+            var mainForm = $("form")[0];
+            var dataForm = $(this).parents("div[data-form]")[0];
 
-        if (dataForm != null)
-        {
-            for (var i = 0; i < dataForm.attributes.length; i++) {
-                var attrib = dataForm.attributes[i];
+            var hasTarget = false;
 
-                if (attrib.name == "target")
-                    hasTarget = true;
+            if (dataForm != null) {
+                for (var i = 0; i < dataForm.attributes.length; i++) {
+                    var attrib = dataForm.attributes[i];
 
-                $(mainForm).attr(attrib.name, attrib.value);
+                    if (attrib.name == "target")
+                        hasTarget = true;
+
+                    $(mainForm).attr(attrib.name, attrib.value);
+                }
             }
-        }
 
-        mainForm.submit();
+            mainForm.submit();
 
-        if (hasTarget)
-        {
-            window.reload();
-        }
-
-    });
+            if (hasTarget) {
+                window.reload();
+            }        
+        });
+    }
 });

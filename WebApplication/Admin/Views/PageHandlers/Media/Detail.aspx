@@ -22,7 +22,7 @@
 
             function UpdatePreviewUrl(url)
             {
-                if(url.indexOf(baseUrl) != -1){
+                if(url != undefined && url.indexOf(baseUrl) != -1){
                     $("#PreviewPanel").attr("src", url);
                 }
                 return false;

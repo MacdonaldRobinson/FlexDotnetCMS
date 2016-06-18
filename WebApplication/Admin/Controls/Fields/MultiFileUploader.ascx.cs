@@ -95,19 +95,10 @@ namespace WebApplication.Admin.Controls.Fields
 
                     if (fieldAssociation != null)
                     {
-                        /*var absPathToFile = URIHelper.ConvertToAbsPath(fieldFile.PathToFile);
-
-                        if (File.Exists(absPathToFile))
-                        {
-                            File.Delete(absPathToFile);
-                        }*/
-
                         var returnObj = MediaDetailsMapper.DeletePermanently(fieldAssociation.MediaDetail);
 
                         if (!returnObj.IsError)
                             BaseMapper.DeleteObjectFromContext(fieldAssociation);
-
-                        //field.FieldFiles.Remove(fieldFile);
 
                         hasDeleted = true;
                     }

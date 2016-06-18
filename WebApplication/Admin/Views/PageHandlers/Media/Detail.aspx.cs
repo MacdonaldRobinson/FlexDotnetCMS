@@ -361,6 +361,7 @@ namespace WebApplication.Admin.MediaArticle
             selectedItem.ShowInMenu = mediaType.ShowInMenu;
             selectedItem.ShowInSearchResults = mediaType.ShowInSearchResults;
             selectedItem.EnableCaching = mediaType.EnableCaching;
+            selectedItem.ShowInSiteTree = mediaType.ShowInSiteTree;
 
             Return returnObj = MediaDetailsMapper.Update(selectedItem);
 
@@ -392,6 +393,7 @@ namespace WebApplication.Admin.MediaArticle
                 history = MediaDetailsMapper.CreateObject(fromItem.MediaTypeID, fromItem.Media, fromItem.Media.ParentMedia);
                 history.CopyFrom(BaseMapper.GetObjectFromContext(fromItem));
                 history.IsDraft = isDraft;
+                //history.HistoryForMediaDetail = fromItem;
 
                 foreach (var field in fromItem.Fields)
                 {
@@ -405,13 +407,15 @@ namespace WebApplication.Admin.MediaArticle
 
                         var associatedMediaDetail = (MediaDetail)MediaDetailsMapper.GetByID(newFieldAssociation.AssociatedMediaDetailID);
 
-                        newFieldAssociation.MediaDetail = (MediaDetail)CreateHistory(associatedMediaDetail, false);
+                        newFieldAssociation.MediaDetail = (MediaDetail)MediaDetailsMapper.CreateObject(associatedMediaDetail.MediaType.ID, MediasMapper.CreateObject(), associatedMediaDetail.Media);
+                        newFieldAssociation.MediaDetail.DateCreated = newFieldAssociation.MediaDetail.DateLastModified = DateTime.Now;
+                        newFieldAssociation.MediaDetail.CreatedByUser = newFieldAssociation.MediaDetail.LastUpdatedByUser = FrameworkSettings.CurrentUser;
 
-                        if (newFieldAssociation.MediaDetail != null)
+                        /*if (newFieldAssociation.MediaDetail != null)
                         {
                             newFieldAssociation.MediaDetail.HistoryForMediaDetailID = fieldAssociation.AssociatedMediaDetailID;
                             newFieldAssociation.MediaDetail.HistoryVersionNumber = newFieldAssociation.MediaDetail.HistoryVersionNumber + 1;
-                        }
+                        }*/
 
 
                         newField.FieldAssociations.Add(newFieldAssociation);
@@ -450,7 +454,7 @@ namespace WebApplication.Admin.MediaArticle
                     if (!item.IsDraft)
                         MediaDetailsMapper.DeletePermanently(item);
                 }
-            }
+            }            
 
             if (history.MainContent.Trim() == "")
                 history.MainContent = "TBD";
@@ -674,6 +678,7 @@ namespace WebApplication.Admin.MediaArticle
                 if ((parentMediaItem != null) && (selectedItem.Media.ID == 0))
                     selectedItem.Media.OrderIndex = parentMediaItem.ChildMedias.Count(i => i.ID != 0);
 
+                
                 returnObj = MediaDetailsMapper.Insert(selectedItem);
 
                 if (!returnObj.IsError)

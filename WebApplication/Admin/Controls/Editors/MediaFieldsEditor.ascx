@@ -64,7 +64,8 @@
     }
 
     function ReloadPreviewPanel() {
-        $("#PreviewPanel")[0].src = $("#PreviewPanel")[0].src;
+        if ($("#PreviewPanel").length > 0)
+            $("#PreviewPanel")[0].src = $("#PreviewPanel")[0].src;
     }
 </script>
 

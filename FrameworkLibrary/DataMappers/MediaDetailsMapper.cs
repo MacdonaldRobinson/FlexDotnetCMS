@@ -777,7 +777,7 @@ namespace FrameworkLibrary
             var history = obj.History.ToList();
             foreach (MediaDetail item in history)
             {
-                ClearObjectRelations(item);
+                ClearObjectRelations(item);                
                 GetDataModel().MediaDetails.Remove(item);
             }
 
@@ -787,7 +787,13 @@ namespace FrameworkLibrary
                 var associations = item.FieldAssociations.ToList();
                 foreach (var association in associations)
                 {
-                    GetDataModel().FieldAssociations.Remove(association);
+                    if(association.MediaDetail != null)
+                    {
+                        var returnObj = DeletePermanently(association.MediaDetail);                        
+                    }                        
+
+                    if(association.MediaDetail != null)
+                        GetDataModel().FieldAssociations.Remove(association);
                 }
 
                 GetDataModel().Fields.Remove(item);
@@ -823,10 +829,7 @@ namespace FrameworkLibrary
             }
 
             var media = obj.Media;
-
-            if (obj.Media.ParentMediaID != null)
-                MediasMapper.GetByID((long)obj.Media.ParentMediaID);
-
+            
             ClearObjectRelations(obj);
 
             obj.Comments.Clear();

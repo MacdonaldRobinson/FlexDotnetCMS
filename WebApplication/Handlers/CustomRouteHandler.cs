@@ -58,20 +58,11 @@ namespace WebApplication.Handlers
                         BaseService.WriteHtml(cacheData + "<!-- Loaded from level 2 - File Cache -->");
 
                 }
-
-                if (BaseMapper.CanConnectToDB != null && !(bool)BaseMapper.CanConnectToDB)
-                {
-                    BaseService.WriteHtml("<h1>Cannot connect to DB and no cached version for this page exists</h1>");
-                }
-
             }
         }
 
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
-            if(FrameworkSettings.CurrentUser == null)
-                AttemptToLoadFromCache();
-
             virtualPath = URIHelper.GetCurrentVirtualPath().ToLower();
 
             if ((virtualPath != "~/") && (!virtualPath.EndsWith("/")))
@@ -86,13 +77,32 @@ namespace WebApplication.Handlers
                 HttpContext.Current.Response.RedirectPermanent(path);
             }
 
-            var segments = URIHelper.GetUriSegments(virtualPath).ToList();
+            Settings cmsSettings = null;
 
-            /*if (segments.Count > 0)
+            if ((virtualPath != "~/login/") && (virtualPath != "~/admin/"))
             {
-                var languageSegment = segments.FirstOrDefault();
-                var language = LanguagesMapper.GetDataModel().Languages.FirstOrDefault(i => i.UriSegment == languageSegment);
-            }*/
+                cmsSettings = SettingsMapper.GetSettings();
+
+                if (cmsSettings != null)
+                {
+                    var isSiteOnline = cmsSettings.IsSiteOnline();
+
+                    if (isSiteOnline)
+                    {
+                        if (virtualPath.Contains(cmsSettings.SiteOfflineUrl))
+                            Response.Redirect("~/");
+
+                        AttemptToLoadFromCache(); 
+                    }
+                    else
+                    {
+                        if(!virtualPath.Contains(cmsSettings.SiteOfflineUrl))
+                            Response.Redirect(cmsSettings.SiteOfflineUrl);
+                    }                        
+                }
+            }
+
+            var segments = URIHelper.GetUriSegments(virtualPath).ToList();
 
             string firstSegment = "";
 
@@ -125,18 +135,6 @@ namespace WebApplication.Handlers
 
             if (!File.Exists(HttpContext.Current.Server.MapPath(virtualPath)) && !virtualPath.Contains(ParserHelper.OpenToken) && !virtualPath.Contains(ParserHelper.CloseToken))
             {
-
-                if ((virtualPath != "~/login/") && (virtualPath != "~/admin/"))
-                {
-                    var settings = SettingsMapper.GetSettings();
-
-                    if (settings != null)
-                    {
-                        if (!virtualPath.Contains(settings.SiteOfflineUrl) && (!settings.IsSiteOnline()) && (virtualPath != settings.SiteOfflineUrl))
-                            Response.Redirect(settings.SiteOfflineUrl);
-                    }
-                }
-
                 string viewPath = "";
 
                 long mediaDetailId = 0;
@@ -185,14 +183,15 @@ namespace WebApplication.Handlers
                 else
                     URIHelper.ForceNonSSL();
 
-                if ((detail == null) || (!IsValidRequest(detail)))
+                if (cmsSettings != null)
                 {
-                    var cmsSettings = SettingsMapper.GetSettings();
-
-                    if (!string.IsNullOrEmpty(cmsSettings.PageNotFoundUrl))
+                    if ((detail == null) || (!IsValidRequest(detail)))
                     {
-                        Response.Redirect(cmsSettings.PageNotFoundUrl + "?requestVirtualPath=" + virtualPath);
-                        Response.End();
+                        if (!string.IsNullOrEmpty(cmsSettings.PageNotFoundUrl))
+                        {
+                            Response.Redirect(cmsSettings.PageNotFoundUrl + "?requestVirtualPath=" + virtualPath);
+                            Response.End();
+                        }
                     }
                 }
 

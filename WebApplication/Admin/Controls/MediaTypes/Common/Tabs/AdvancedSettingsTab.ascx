@@ -31,6 +31,12 @@
     </div>
     <div>
         <p>
+            <asp:CheckBox ID="ShowInSiteTree" runat="server" /><label for="<%= ShowInSiteTree.ClientID %>">
+                Show In Site Tree</label>
+        </p>
+    </div>
+    <div>
+        <p>
             <label class="exception" for="<%= MediaID.ClientID %>">
                 Media  ID:</label>
             <asp:Literal ID="MediaID" runat="server"></asp:Literal>

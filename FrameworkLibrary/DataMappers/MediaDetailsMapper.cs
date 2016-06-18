@@ -628,6 +628,7 @@ namespace FrameworkLibrary
                 ParserHelper.SetValue(detail, property.Name, "New Item");
             }
 
+            detail.Handler = detail.DirectLink = "";
             detail.DateCreated = detail.DateLastModified = DateTime.Now;
 
             return detail;
@@ -806,6 +807,7 @@ namespace FrameworkLibrary
             }
 
             var comments = obj.Comments.ToList();
+
             foreach (var item in comments)
                 GetDataModel().Comments.Remove(item);
         }

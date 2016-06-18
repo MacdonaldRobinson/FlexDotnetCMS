@@ -71,7 +71,11 @@ namespace WebApplication.Admin.Controls.Fields
                             var fieldAssociation = new FieldAssociation();
                             fieldAssociation.MediaDetail = (MediaDetail)PagesMapper.CreateObject(MediaTypesMapper.GetByEnum(MediaTypeEnum.Page).ID, MediasMapper.CreateObject(), AdminBasePage.SelectedMedia);
                             fieldAssociation.MediaDetail.PathToFile = filePath;
+                            fieldAssociation.MediaDetail.PublishDate = DateTime.Now;
                             fieldAssociation.MediaDetail.CreatedByUser = fieldAssociation.MediaDetail.LastUpdatedByUser = FrameworkSettings.CurrentUser;
+                            fieldAssociation.MediaDetail.CachedVirtualPath = fieldAssociation.MediaDetail.CalculatedVirtualPath();
+                            fieldAssociation.MediaDetail.Language = SettingsMapper.GetSettings().DefaultLanguage;
+                            fieldAssociation.MediaDetail.ShowInSiteTree = false;
 
                             field.FieldAssociations.Add(fieldAssociation);
 
@@ -158,7 +162,11 @@ namespace WebApplication.Admin.Controls.Fields
             var fieldAssociation = new FieldAssociation();
             fieldAssociation.MediaDetail = (MediaDetail)PagesMapper.CreateObject(MediaTypesMapper.GetByEnum(MediaTypeEnum.Page).ID, MediasMapper.CreateObject(), AdminBasePage.SelectedMedia);
             fieldAssociation.MediaDetail.PathToFile = "/media/images/icons/File.jpg";
+            fieldAssociation.MediaDetail.PublishDate = DateTime.Now;
             fieldAssociation.MediaDetail.CreatedByUser = fieldAssociation.MediaDetail.LastUpdatedByUser = FrameworkSettings.CurrentUser;
+            fieldAssociation.MediaDetail.CachedVirtualPath = fieldAssociation.MediaDetail.CalculatedVirtualPath();
+            fieldAssociation.MediaDetail.Language = SettingsMapper.GetSettings().DefaultLanguage;
+            fieldAssociation.MediaDetail.ShowInSiteTree = false;
 
             field.FieldAssociations.Add(fieldAssociation);
             var returnObj = BaseMapper.SaveDataModel();

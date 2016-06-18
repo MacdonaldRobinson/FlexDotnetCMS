@@ -68,11 +68,12 @@ namespace WebApplication.Admin
                 item = MediaDetailsMapper.GetByID(long.Parse(parentNode.Value));
 
             var nodes = list.Where(x => parentNode == null || item == null ? x.ParentMediaID == null : x.ParentMediaID == item.MediaID);
+
             foreach (var node in nodes)
             {
                 var mediaDetail = MediaDetailsMapper.GetAtleastOneByMedia(node, AdminBasePage.CurrentLanguage);
 
-                if (mediaDetail != null && mediaDetail.ID != 0 && mediaDetail.MediaType.ShowInSiteTree)
+                if (mediaDetail != null && mediaDetail.ID != 0 && mediaDetail.MediaType.ShowInSiteTree && mediaDetail.ShowInSiteTree)
                 {
                     CustomTreeNode newNode = new CustomTreeNode(mediaDetail.SectionTitle, mediaDetail.ID.ToString());
 

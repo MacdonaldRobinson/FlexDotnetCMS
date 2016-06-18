@@ -102,7 +102,10 @@ namespace WebApplication.Admin.Views.PageHandlers.Settings
                 DisplayErrorMessage("Error saving settings", returnObj.Error);
             }
             else
-            {
+            {                
+                ContextHelper.ClearAllMemoryCache();
+                FileCacheHelper.ClearAllCache();
+
                 DisplaySuccessMessage("Successfully saved settings");
             }
         }

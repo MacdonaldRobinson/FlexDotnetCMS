@@ -142,6 +142,7 @@
           <Property Name="PublishDate" Type="datetime" />
           <Property Name="ShowInMenu" Type="bit" Nullable="false" />
           <Property Name="ShowInSearchResults" Type="bit" Nullable="false" />
+          <Property Name="ShowInSiteTree" Type="bit" Nullable="false" />
           <Property Name="EnableCaching" Type="bit" Nullable="false" />
           <Property Name="SefTitle" Type="nvarchar" MaxLength="255" />
           <Property Name="Handler" Type="nvarchar" MaxLength="255" />
@@ -1442,6 +1443,7 @@
           <NavigationProperty Name="RolesMediaDetails" Relationship="FrameworkModel.FK_RolesMediaDetails_MediaDetailID" FromRole="MediaDetail" ToRole="RolesMediaDetail" />
           <Property Name="PathToFile" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="FieldAssociations" Relationship="FrameworkModel.FK_FieldAssociations_MediaDetails" FromRole="MediaDetail" ToRole="FieldsAssociation" />
+          <Property Name="ShowInSiteTree" Type="Boolean" Nullable="false" />
           </EntityType>
         <EntityType Name="Page" BaseType="FrameworkModel.MediaDetail">
         </EntityType>
@@ -2169,6 +2171,7 @@
           <EntitySetMapping Name="MediaDetails">
             <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.MediaDetail)">
               <MappingFragment StoreEntitySet="MediaDetails">
+                <ScalarProperty Name="ShowInSiteTree" ColumnName="ShowInSiteTree" />
                 <ScalarProperty Name="PathToFile" ColumnName="PathToFile" />
                 <ScalarProperty Name="MainContent" ColumnName="MainContent" />
                 <ScalarProperty Name="PublishDate" ColumnName="PublishDate" />

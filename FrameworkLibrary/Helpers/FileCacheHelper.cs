@@ -86,31 +86,36 @@ namespace FrameworkLibrary
 
         public static Return ClearAllCache()
         {
-            try
+            var directoryInfo = new DirectoryInfo(URIHelper.ConvertToAbsPath(baseDir));
+
+            var subDirectories = directoryInfo.GetDirectories();
+            var allFiles = directoryInfo.GetFiles();
+
+            foreach (var file in allFiles)
             {
-                var directoryInfo = new DirectoryInfo(URIHelper.ConvertToAbsPath(baseDir));
-
-                var subDirectories = directoryInfo.GetDirectories();
-                var allFiles = directoryInfo.GetFiles();
-
-                foreach (var directory in subDirectories)
-                {
-                    Directory.Delete(directory.FullName, true);
-                }
-
-                foreach (var file in allFiles)
+                try
                 {
                     File.Delete(file.FullName);
+                }                    
+                catch(Exception ex)
+                {
+                    ErrorHelper.LogException(ex);                        
                 }
-
-                return new Return();
             }
-            catch (Exception ex)
+
+            foreach (var directory in subDirectories)
             {
-                ErrorHelper.LogException(ex);
-
-                return new Return(ex, ErrorHelper.CreateError(ex));
+                try
+                {
+                    Directory.Delete(directory.FullName, true);
+                }                    
+                catch(Exception ex)
+                {
+                    ErrorHelper.LogException(ex);
+                }
             }
+
+            return new Return();
         }
 
         public static string GetFromCache(string url)

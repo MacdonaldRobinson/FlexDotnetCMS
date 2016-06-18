@@ -6,7 +6,16 @@ namespace FrameworkLibrary
     {
         public bool IsSiteOnline()
         {
-            if ((DateTime.Now >= SiteOnlineAtDateTime) && ((DateTime.Now < SiteOfflineAtDateTime) || (SiteOfflineAtDateTime == null)))
+            if (SiteOnlineAtDateTime == null)
+                return true;
+
+            if (DateTime.Now >= SiteOnlineAtDateTime && SiteOfflineAtDateTime == null)
+                return true;
+
+            if (DateTime.Now >= SiteOfflineAtDateTime)
+                return false;
+
+            if (SiteOfflineAtDateTime != null)
                 return true;
 
             return false;

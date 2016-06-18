@@ -45,6 +45,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
             Handler.SetValue(selectedItem.Handler);
             MediaType.Text = MediaTypesMapper.GetByID(selectedItem.MediaTypeID).Name.ToString();
             EnableCaching.Checked = selectedItem.EnableCaching;
+            ShowInSiteTree.Checked = selectedItem.ShowInSiteTree;
 
             if (selectedItem.LastUpdatedByUserID != 0)
                 LastModifiedByUser.Text = UsersMapper.GetByID(selectedItem.LastUpdatedByUserID).UserName;
@@ -62,6 +63,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
         {
             selectedItem.Handler = Handler.GetValue().ToString();
             selectedItem.EnableCaching = EnableCaching.Checked;
+            selectedItem.ShowInSiteTree = ShowInSiteTree.Checked;
 
             if (MasterPageSelector.SelectedValue != "")
                 selectedItem.MasterPageID = long.Parse(MasterPageSelector.SelectedValue);

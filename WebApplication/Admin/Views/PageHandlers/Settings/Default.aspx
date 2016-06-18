@@ -99,6 +99,9 @@
                 <asp:TextBox runat="server" ID="PageNotFoundUrl"></asp:TextBox>
             </div>
         </div>
+        <div>
+            Current time on the server is: <%= DateTime.Now.ToString() %>
+        </div>
         <div class="buttons">
             <asp:LinkButton ID="Save" runat="server" OnClick="Save_OnClick">Save</asp:LinkButton>
         </div>

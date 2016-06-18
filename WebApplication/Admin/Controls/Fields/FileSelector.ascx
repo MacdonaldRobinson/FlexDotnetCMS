@@ -6,15 +6,15 @@
         $(document).ready(function () {
             $(document).on("keyup", "#<%=SelectedFile.ClientID%>", function () {
                 var src = $(this).val().replace("~/", "/");
-                $("#<%=SelectedImage.ClientID%>").attr("src", src + "?width=300&mode=max");
+                $("#<%=SelectedImage.ClientID%>").attr("src", src + "?height=200&mode=min");
             });
 
             $("#<%=SelectedImage.ClientID%>").load(function () {
                 var src = $(this).attr("src");
 
-                if (src.indexOf("?width") == -1)
+                if (src.indexOf("?height") == -1)
                 {
-                    $(this).attr("src", src + "?width=300&mode=max");
+                    $(this).attr("src", src + "?height=200&mode=min");
                 }
             });
         });

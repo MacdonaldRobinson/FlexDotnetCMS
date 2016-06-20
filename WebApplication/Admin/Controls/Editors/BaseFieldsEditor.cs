@@ -92,7 +92,7 @@ namespace WebApplication.Admin.Controls.Editors
     @Raw(StringHelper.ObjectToJson(selectedItems.Select(i => i.Value).ToList()));
 }",
                 SetAdminControlValue = @"@{
-    var newValues = StringHelper.JsonToObject(Model.NewValue);
+    var newValues = StringHelper.JsonToObject<List<string>>(Model.NewValue);
 
     foreach(var controlItem in Model.Control.Items)
     {
@@ -103,7 +103,7 @@ namespace WebApplication.Admin.Controls.Editors
     }
 }",
                 FrontEndLayout = @"@{
-    var fieldValues = StringHelper.JsonToObject(Model.Field.FieldValue);
+    var fieldValues = StringHelper.JsonToObject<List<string>>(Model.Field.FieldValue);
 
     foreach(var item in fieldValues)
     {
@@ -129,7 +129,7 @@ namespace WebApplication.Admin.Controls.Editors
     @Raw(StringHelper.ObjectToJson(selectedItems.Select(i => i.Value).ToList()));
 }",
                 SetAdminControlValue = @"@{
-    var newValues = StringHelper.JsonToObject(Model.NewValue);
+    var newValues = StringHelper.JsonToObject<List<string>>(Model.NewValue);
 
     foreach(var controlItem in Model.Control.Items)
     {
@@ -140,7 +140,7 @@ namespace WebApplication.Admin.Controls.Editors
     }
 }",
                 FrontEndLayout = @"@{
-    var fieldValues = StringHelper.JsonToObject(Model.Field.FieldValue);
+    var fieldValues = StringHelper.JsonToObject<List<string>>(Model.Field.FieldValue);
 
     foreach(var item in fieldValues)
     {

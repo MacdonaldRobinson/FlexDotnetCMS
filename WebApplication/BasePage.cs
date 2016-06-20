@@ -217,7 +217,12 @@ namespace WebApplication
             if (language != null)
                 FrameworkSettings.SetCurrentLanguage(language);
 
-            HttpContext.Current.Response.Redirect(GetRedirectToMediaDetailUrl(mediaTypeId, selectedMediaId, parentMediaId, historyVersion), true);
+            var url = GetRedirectToMediaDetailUrl(mediaTypeId, selectedMediaId, parentMediaId, historyVersion);
+
+            if (!string.IsNullOrEmpty(HttpContext.Current.Request["masterFilePath"]))
+                url = url + "&masterFilePath=" + HttpContext.Current.Request["masterFilePath"];
+
+            HttpContext.Current.Response.Redirect(url, true);
         }
 
 

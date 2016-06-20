@@ -10,7 +10,7 @@
             check($("#<%= UseMediaTypeFieldFrontEndLayout.ClientID %>"));
         });
 
-        OnUpdatePanelRefreshComplete(function (event) {            
+        OnUpdatePanelRefreshComplete(function (event) {
             check($("#<%= UseMediaTypeFieldFrontEndLayout.ClientID %>"));
 
             $("#<%= UseMediaTypeFieldFrontEndLayout.ClientID %>").click(function () {
@@ -24,7 +24,8 @@
 
             if (event._postBackSettings.asyncTarget.indexOf("$Update") != -1 || event._postBackSettings.asyncTarget.indexOf("$Delete") != -1)
             {
-                ReloadPreviewPanel();
+                //ReloadPreviewPanel();
+                window.location.reload();
             }
         });
 
@@ -56,7 +57,7 @@
                         .addTo(controller);
     }
 
-   function BindReOrder()
+    function BindReOrder()
     {
         BindGridViewSortable("#<%=ItemList.ClientID%>", "/Admin/Views/MasterPages/Webservice.asmx/ReOrderMediaFields", "<%= MediaFieldsUpdatePanel.ClientID%>", function () {
             window.location.href = window.location.href;

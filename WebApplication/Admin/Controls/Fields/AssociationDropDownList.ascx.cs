@@ -17,7 +17,7 @@ namespace WebApplication.Admin.Controls.Fields
 
         private void BindItems()
         {
-            ItemsList.DataSource = MediaDetailsMapper.GetByID(ParentMediaDetailID).ChildMediaDetails;
+            ItemsList.DataSource = MediaDetailsMapper.GetByID(ParentMediaDetailID).ChildMediaDetails.Where(i => i.CanRender && i.ShowInSiteTree);
             ItemsList.DataTextField = "SectionTitle";
             ItemsList.DataValueField = "ID";
             ItemsList.DataBind();
@@ -25,13 +25,16 @@ namespace WebApplication.Admin.Controls.Fields
 
         private void SetSelectedIds(string values)
         {
-            var selectedIds = StringHelper.JsonToObject<object[]>(values);
+            var selectedIds = StringHelper.JsonToObject<List<int>>(values);
 
-            foreach (ListItem item in ItemsList.Items)
+            if (selectedIds != null)
             {
-                if (selectedIds.Contains(int.Parse(item.Value)))
+                foreach (ListItem item in ItemsList.Items)
                 {
-                    item.Selected = true;
+                    if (selectedIds.Contains(int.Parse(item.Value)))
+                    {
+                        item.Selected = true;
+                    }
                 }
             }
         }
@@ -53,7 +56,12 @@ namespace WebApplication.Admin.Controls.Fields
             var obj = StringHelper.JsonToObject<List<long>>(values);
             var field = GetField();
 
-            field.FieldAssociations.Clear();
+            var fieldAssociations = field.FieldAssociations.ToList();
+
+            foreach (var item in fieldAssociations)
+            {
+                BaseMapper.DeleteObjectFromContext(item);
+            }
 
             var orderIndex = 0;
             foreach (var item in obj)

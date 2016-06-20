@@ -94,20 +94,26 @@ namespace WebApplication.Admin.Controls.Editors
                 SetAdminControlValue = @"@{
     var newValues = StringHelper.JsonToObject<List<string>>(Model.NewValue);
 
-    foreach(var controlItem in Model.Control.Items)
+    if(newValues != null)
     {
-        if(Enumerable.Contains(newValues, controlItem.Value))
+        foreach(var controlItem in Model.Control.Items)
         {
-            controlItem.Selected=true;
+            if(Enumerable.Contains(newValues, controlItem.Value))
+            {
+                controlItem.Selected=true;
+            }
         }
     }
 }",
                 FrontEndLayout = @"@{
     var fieldValues = StringHelper.JsonToObject<List<string>>(Model.Field.FieldValue);
 
-    foreach(var item in fieldValues)
+    if(fieldValues != null)
     {
-        <li>@item</li>
+        foreach(var item in fieldValues)
+        {
+            <li>@item</li>
+        }
     }
 }",
             });
@@ -131,20 +137,26 @@ namespace WebApplication.Admin.Controls.Editors
                 SetAdminControlValue = @"@{
     var newValues = StringHelper.JsonToObject<List<string>>(Model.NewValue);
 
-    foreach(var controlItem in Model.Control.Items)
+    if(newValues != null)
     {
-        if(Enumerable.Contains(newValues, controlItem.Value))
+        foreach(var controlItem in Model.Control.Items)
         {
-            controlItem.Selected=true;
+            if(Enumerable.Contains(newValues, controlItem.Value))
+            {
+                controlItem.Selected=true;
+            }
         }
     }
 }",
                 FrontEndLayout = @"@{
     var fieldValues = StringHelper.JsonToObject<List<string>>(Model.Field.FieldValue);
 
-    foreach(var item in fieldValues)
+    if(fieldValues != null)
     {
-        <li>@item</li>
+        foreach(var item in fieldValues)
+        {
+            <li>@item</li>
+        }
     }
 }",
             });

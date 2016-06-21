@@ -362,7 +362,7 @@ function getFieldsAutoComplete()
     return wordsArray;
 }
 
-function initAceEditors() {    
+function initAceEditors() {
     var wordList = getFieldsAutoComplete();
 
     $(document).on("change", "#AttachEditorToBrowserPanel", function () {
@@ -720,15 +720,15 @@ function pageLoad() {
 }
 
 function BindDataTable() {
-    //$('.DataTable').DataTable({
-    //    dom: 'Bfrtip',
-    //    buttons: [
-    //        {
-    //            extend: 'csvHtml5',
-    //            title: 'Data export'
-    //        }
-    //    ]
-    //});
+    $('.DataTable').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'csvHtml5',
+                title: 'Data export'
+            }
+        ]
+    });
 }
 
 function RefreshAdminUpdatePanel(elem) {

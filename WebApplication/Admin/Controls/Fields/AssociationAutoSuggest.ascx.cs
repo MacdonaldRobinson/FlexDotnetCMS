@@ -63,6 +63,12 @@ namespace WebApplication.Admin.Controls.Fields
             var ids = StringHelper.JsonToObject<List<long>>(values);
             var field = GetField();
 
+            var newIds = ids.ToList().ToJSON(2);
+            var oldIds = field.FieldAssociations.Select(i => i.AssociatedMediaDetailID).ToList().ToJSON(2);
+
+            if (newIds == oldIds)
+                return;
+
             field.FieldAssociations.Clear();
 
             var orderIndex = 0;
@@ -85,7 +91,7 @@ namespace WebApplication.Admin.Controls.Fields
             if ((values == "") || (!values.ToString().StartsWith("[")))
                 return;
 
-            if (IsPostBack)
+            if (IsPostBack && !BasePage.IsAjaxRequest)
             {
                 SaveToDB(values.ToString());
             }

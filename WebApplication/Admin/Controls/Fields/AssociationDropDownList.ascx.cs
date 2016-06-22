@@ -56,6 +56,12 @@ namespace WebApplication.Admin.Controls.Fields
             var obj = StringHelper.JsonToObject<List<long>>(values);
             var field = GetField();
 
+            var newIds = obj.ToList().ToJSON(2);
+            var oldIds = field.FieldAssociations.Select(i => i.AssociatedMediaDetailID).ToList().ToJSON(2);
+
+            if (newIds == oldIds)
+                return;
+
             var fieldAssociations = field.FieldAssociations.ToList();
 
             foreach (var item in fieldAssociations)
@@ -85,7 +91,11 @@ namespace WebApplication.Admin.Controls.Fields
             var field = GetField();
 
             SetSelectedIds(values.ToString());
-            SaveToDB(values.ToString());
+
+            if (IsPostBack && !BasePage.IsAjaxRequest)
+            {
+                SaveToDB(values.ToString());
+            }
 
             Values.Value = StringHelper.ObjectToJson(field.FieldAssociations.Select(i => i.AssociatedMediaDetailID));
         }

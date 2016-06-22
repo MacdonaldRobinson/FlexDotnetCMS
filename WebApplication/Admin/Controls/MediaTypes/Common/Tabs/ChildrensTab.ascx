@@ -1,13 +1,13 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ChildrensTab.ascx.cs" Inherits="WebApplication.Admin.Controls.MediaTypes.Common.Tabs.ChildrensTab" %>
 
-<script type="text/javascript" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js "></script>
+<%--<script type="text/javascript" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js "></script>
 <script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js "></script>
 <script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.1/js/buttons.flash.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
 <script type="text/javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
 <script type="text/javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js "></script>
-<script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.1/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.1/js/buttons.print.min.js"></script>--%>
 
 <asp:UpdatePanel runat="server" ID="ChildrenUpdatePanel">
     <ContentTemplate>

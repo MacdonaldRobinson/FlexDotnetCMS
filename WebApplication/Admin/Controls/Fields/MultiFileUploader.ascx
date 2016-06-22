@@ -24,7 +24,7 @@
                         <ItemTemplate>
                             <li class="item" data-fieldfileid="<%# Item.ID %>">
                                 <div>
-                                    <a href="<%# WebApplication.BasePage.GetRedirectToMediaDetailUrl(Item.MediaDetail.MediaTypeID, Item.MediaDetail.MediaID, Item.MediaDetail.ParentMediaID, Item.MediaDetail.HistoryVersionNumber) + "&masterFilePath=~/Admin/Views/MasterPages/Popup.Master" %>" target="_blank" class="colorbox iframe EditImage" data-id="<%# Item.ID %>" data-OnColorboxClose="RefreshAdminUpdatePanel('<%= AdminUpdatePanel.ClientID %>')">Edit</a> |
+                                    <a href="<%# (Item.MediaDetail != null) ? WebApplication.BasePage.GetRedirectToMediaDetailUrl(Item.MediaDetail.MediaTypeID, Item.MediaDetail.MediaID, Item.MediaDetail.ParentMediaID, Item.MediaDetail.HistoryVersionNumber) + "&masterFilePath=~/Admin/Views/MasterPages/Popup.Master" : "#" %>" target="_blank" class="colorbox iframe EditImage" data-id="<%# Item.ID %>" data-OnColorboxClose="RefreshAdminUpdatePanel('<%= AdminUpdatePanel.ClientID %>')">Edit</a> |
                                     <a href="javascript:void(0)" class="DeleteImage" data-id="<%# Item.ID %>">Delete</a>
                                 </div>
                                 <a>
@@ -36,6 +36,7 @@
                             </li>
                         </ItemTemplate>
                     </asp:ListView>
+                    <Site:Pager runat="server" PagedControlID="Values" PageSize="12" />
                     <asp:TextBox runat="server" CssClass="FilesToDelete" ID="FilesToDelete" Text="[]" Style="display: none;" />
                     <asp:TextBox runat="server" CssClass="ReorderFiles" ID="ReorderFiles" Text="[]" Style="display: none;"/>
                 </div>

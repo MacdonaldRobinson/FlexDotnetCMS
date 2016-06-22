@@ -454,7 +454,7 @@ namespace WebApplication.Admin.MediaArticle
                     if (!item.IsDraft)
                         MediaDetailsMapper.DeletePermanently(item);
                 }
-            }            
+            }
 
             if (history.MainContent.Trim() == "")
                 history.MainContent = "TBD";
@@ -651,7 +651,7 @@ namespace WebApplication.Admin.MediaArticle
                 parentMediaItem = BaseMapper.GetObjectFromContext(parentMediaItem);
             else
             {
-                parentMediaItem = selectedItem.Media.ParentMedia;
+                parentMediaItem = selectedItem?.Media?.ParentMedia;
             }
 
             if (selectedItem == null)
@@ -685,7 +685,7 @@ namespace WebApplication.Admin.MediaArticle
                 if ((parentMediaItem != null) && (selectedItem.Media.ID == 0))
                     selectedItem.Media.OrderIndex = parentMediaItem.ChildMedias.Count(i => i.ID != 0);
 
-                
+
                 returnObj = MediaDetailsMapper.Insert(selectedItem);
 
                 if (!returnObj.IsError)

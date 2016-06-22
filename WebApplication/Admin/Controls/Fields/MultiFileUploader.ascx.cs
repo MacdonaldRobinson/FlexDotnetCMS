@@ -27,7 +27,7 @@ namespace WebApplication.Admin.Controls.Fields
         {
             var field = GetField();
 
-            return field.FieldAssociations.OrderBy(i => i.OrderIndex);
+            return field.FieldAssociations.OrderBy(i => i.OrderIndex).ToList();
         }
 
         public DirectoryInfo GetFolderPath()

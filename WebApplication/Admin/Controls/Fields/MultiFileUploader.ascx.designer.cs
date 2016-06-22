@@ -31,13 +31,13 @@ namespace WebApplication.Admin.Controls.Fields {
         protected global::System.Web.UI.UpdatePanel AdminUpdatePanel;
         
         /// <summary>
-        /// AddFieldFile control.
+        /// AddItem control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton AddFieldFile;
+        protected global::System.Web.UI.WebControls.LinkButton AddItem;
         
         /// <summary>
         /// MultiFileUpload control.
@@ -67,22 +67,22 @@ namespace WebApplication.Admin.Controls.Fields {
         protected global::System.Web.UI.WebControls.ListView Values;
         
         /// <summary>
-        /// FilesToDelete control.
+        /// ItemsToDelete control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox FilesToDelete;
+        protected global::System.Web.UI.WebControls.TextBox ItemsToDelete;
         
         /// <summary>
-        /// ReorderFiles control.
+        /// ReorderItems control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ReorderFiles;
+        protected global::System.Web.UI.WebControls.TextBox ReorderItems;
         
         /// <summary>
         /// FrontEndPanel control.

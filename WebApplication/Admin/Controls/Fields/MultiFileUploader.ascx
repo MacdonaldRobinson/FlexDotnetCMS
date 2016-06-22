@@ -6,7 +6,7 @@
         <ContentTemplate>
             <fieldset>
                 <div>
-                    <asp:LinkButton Text="Add New Item" runat="server" ID="AddFieldFile" OnClick="AddFieldFile_Click"/>
+                    <asp:LinkButton Text="Add New Item" runat="server" ID="AddItem" OnClick="AddItem_Click"/>
                 </div>
                 <asp:FileUpload ID="MultiFileUpload" runat="server" AllowMultiple="true" CssClass="MultiFileUpload" />
                 <div class="dvPreview" runat="server"></div>
@@ -22,9 +22,9 @@
                             </fieldset>
                         </LayoutTemplate>
                         <ItemTemplate>
-                            <li class="item" data-fieldfileid="<%# Item.ID %>">
+                            <li class="item" data-id="<%# Item.ID %>">
                                 <div>
-                                    <a href="<%# (Item.MediaDetail != null) ? WebApplication.BasePage.GetRedirectToMediaDetailUrl(Item.MediaDetail.MediaTypeID, Item.MediaDetail.MediaID, Item.MediaDetail.ParentMediaID, Item.MediaDetail.HistoryVersionNumber) + "&masterFilePath=~/Admin/Views/MasterPages/Popup.Master" : "#" %>" target="_blank" class="colorbox iframe EditImage" data-id="<%# Item.ID %>" data-OnColorboxClose="RefreshAdminUpdatePanel('<%= AdminUpdatePanel.ClientID %>')">Edit</a> |
+                                    <a href="<%# (Item.MediaDetail != null) ? WebApplication.BasePage.GetRedirectToMediaDetailUrl(Item.MediaDetail.MediaTypeID, Item.MediaDetail.MediaID, Item.MediaDetail.ParentMediaID, Item.MediaDetail.HistoryVersionNumber) + "&masterFilePath=~/Admin/Views/MasterPages/Popup.Master" : "#" %>" class="colorbox iframe EditImage" data-id="<%# Item.ID %>" data-OnColorboxClose="RefreshAdminUpdatePanel('<%= AdminUpdatePanel.ClientID %>')">Edit</a> |
                                     <a href="javascript:void(0)" class="DeleteImage" data-id="<%# Item.ID %>">Delete</a>
                                 </div>
                                 <a>
@@ -37,8 +37,8 @@
                         </ItemTemplate>
                     </asp:ListView>
                     <Site:Pager runat="server" PagedControlID="Values" PageSize="12" />
-                    <asp:TextBox runat="server" CssClass="FilesToDelete" ID="FilesToDelete" Text="[]" Style="display: none;" />
-                    <asp:TextBox runat="server" CssClass="ReorderFiles" ID="ReorderFiles" Text="[]" Style="display: none;"/>
+                    <asp:TextBox runat="server" CssClass="ItemsToDelete" ID="ItemsToDelete" Text="[]" Style="display: none;" />
+                    <asp:TextBox runat="server" CssClass="ReorderItems" ID="ReorderItems" Text="[]" Style="display: none;"/>
                 </div>
             </fieldset>
         </ContentTemplate>

@@ -753,13 +753,13 @@ function BindSortable() {
         update: function (event, ui) {
             var arr = new Array();
             $(this).children("li").each(function () {
-                var id = $(this).attr("data-fieldfileid");
+                var id = $(this).attr("data-id");
                 arr.push(id);
             });
 
             var root = $(this).parents(".MultiFileUploader");
 
-            root.find(".ReorderFiles").val(JSON.stringify(arr));
+            root.find(".ReorderItems").val(JSON.stringify(arr));
         }
     });
 }
@@ -773,35 +773,35 @@ function init() {
         var root = $(this).parents(".MultiFileUploader");
 
         var parentItem = $(this).parents(".item");
-        var ImagesToDelete = root.find(".FilesToDelete");
+        var itemsToDelete = root.find(".ItemsToDelete");
         var image = parentItem.find("img");
-        var fieldFileId = $(this).attr('data-id');
+        var itemId = $(this).attr('data-id');
 
-        var ImagesToDeleteJson = JSON.parse(ImagesToDelete.val());
+        var itemsToDeleteJson = JSON.parse(itemsToDelete.val());
         var src = image.attr("src");
 
         if (!image.hasClass("MarkedAsDeleted")) {
             image.addClass("MarkedAsDeleted");
 
-            if (ImagesToDeleteJson.indexOf(fieldFileId) == -1) {
-                ImagesToDeleteJson.push(fieldFileId);
+            if (itemsToDeleteJson.indexOf(itemId) == -1) {
+                itemsToDeleteJson.push(itemId);
             }
 
-            ImagesToDelete.val(JSON.stringify(ImagesToDeleteJson));
+            itemsToDelete.val(JSON.stringify(itemsToDeleteJson));
 
             $(this).text("UnDelete");
         }
         else {
             image.removeClass("MarkedAsDeleted");
 
-            var index = ImagesToDeleteJson.indexOf(fieldFileId)
+            var index = itemsToDeleteJson.indexOf(itemId)
 
             if (index != -1) {
-                ImagesToDeleteJson.splice(index, 1);
-                //ImagesToDeleteJson.push(fieldFileId);
+                itemsToDeleteJson.splice(index, 1);
+                //itemsToDeleteJson.push(itemId);
             }
 
-            ImagesToDelete.val(JSON.stringify(ImagesToDeleteJson));
+            itemsToDelete.val(JSON.stringify(itemsToDeleteJson));
 
             $(this).text("Delete");
         }

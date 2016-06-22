@@ -251,7 +251,7 @@ namespace WebApplication.Admin.Controls.Editors
             {
                 OptionText = "Multi File Uploader",
                 OptionValue = "MultiFileUploader",
-                AdminControl = @"<Admin:MultiFileUploader runat='server' SaveToFolder='' />",
+                AdminControl = @"<Admin:MultiFileUploader runat='server' SaveToFolder='' MediaTypeID='1' />",
                 GetAdminControlValue = "SelectedValue",
                 SetAdminControlValue = "SelectedValue",
                 FrontEndLayout = @"@{

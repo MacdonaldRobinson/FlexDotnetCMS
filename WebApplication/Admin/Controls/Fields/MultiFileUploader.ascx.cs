@@ -85,9 +85,9 @@ namespace WebApplication.Admin.Controls.Fields
                 }
             }
 
-            if (FilesToDelete.Text != "" && FilesToDelete.Text != "[]")
+            if (ItemsToDelete.Text != "" && ItemsToDelete.Text != "[]")
             {
-                var deleteIds = StringHelper.JsonToObject<List<long>>(FilesToDelete.Text);
+                var deleteIds = StringHelper.JsonToObject<List<long>>(ItemsToDelete.Text);
 
                 foreach (var id in deleteIds)
                 {
@@ -105,9 +105,9 @@ namespace WebApplication.Admin.Controls.Fields
                 }
             }
 
-            if (ReorderFiles.Text != "" && ReorderFiles.Text != "[]")
+            if (ReorderItems.Text != "" && ReorderItems.Text != "[]")
             {
-                var reorderedIds = StringHelper.JsonToObject<List<long>>(ReorderFiles.Text);
+                var reorderedIds = StringHelper.JsonToObject<List<long>>(ReorderItems.Text);
 
                 var index = 0;
                 foreach (var id in reorderedIds)
@@ -139,19 +139,20 @@ namespace WebApplication.Admin.Controls.Fields
             Values.DataSource = GetValue();
             Values.DataBind();
 
-            FilesToDelete.Text = "[]";
-            ReorderFiles.Text = "[]";
+            ItemsToDelete.Text = "[]";
+            ReorderItems.Text = "[]";
         }
 
         public string SaveToFolder { get; set; }
+        public long MediaTypeID { get; set; }
 
 
-        protected void AddFieldFile_Click(object sender, EventArgs e)
+        protected void AddItem_Click(object sender, EventArgs e)
         {
             var field = GetField();
 
             var fieldAssociation = new FieldAssociation();
-            fieldAssociation.MediaDetail = (MediaDetail)PagesMapper.CreateObject(MediaTypesMapper.GetByEnum(MediaTypeEnum.Page).ID, MediasMapper.CreateObject(), AdminBasePage.SelectedMedia);
+            fieldAssociation.MediaDetail = (MediaDetail)PagesMapper.CreateObject(MediaTypeID, MediasMapper.CreateObject(), AdminBasePage.SelectedMedia);
             fieldAssociation.MediaDetail.PathToFile = "/media/images/icons/File.jpg";
             fieldAssociation.MediaDetail.PublishDate = DateTime.Now;
             fieldAssociation.MediaDetail.CreatedByUser = fieldAssociation.MediaDetail.LastUpdatedByUser = FrameworkSettings.CurrentUser;

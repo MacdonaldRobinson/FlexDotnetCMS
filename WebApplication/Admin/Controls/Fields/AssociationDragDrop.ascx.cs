@@ -31,9 +31,21 @@ namespace WebApplication.Admin.Controls.Fields
         private void SaveToDB(string value)
         {
             var obj = StringHelper.JsonToObject<List<JsonObj>>(value);
+
             var field = GetField();
 
-            field.FieldAssociations.Clear();
+            var newIds = obj.Select(i => i.id).ToList().ToJSON(2);
+            var oldIds = field.FieldAssociations.Select(i => i.AssociatedMediaDetailID).ToList().ToJSON(2);
+
+            if (newIds == oldIds)
+                return;
+
+            var fieldAssociations = field.FieldAssociations.ToList();
+
+            foreach (var item in fieldAssociations)
+            {
+                BaseMapper.DeleteObjectFromContext(item);
+            }
 
             var orderIndex = 0;
             foreach (var item in obj)
@@ -55,10 +67,10 @@ namespace WebApplication.Admin.Controls.Fields
             if (value == "")
                 return;
 
-            if (IsPostBack)
+            if (IsPostBack && !BasePage.IsAjaxRequest)
             {
                 SaveToDB(value.ToString());
-            }            
+            }
 
             Values.Value = value.ToString();
         }

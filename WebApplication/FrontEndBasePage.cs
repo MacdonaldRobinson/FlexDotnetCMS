@@ -242,9 +242,7 @@ namespace WebApplication
             base.Render(wrt); //CAPTURE THE CURRENT PAGE HTML SOURCE AS STRING
             //wrt.Close();
 
-            string html = str.ToString();
-
-            html = ParserHelper.ParseData(html, TemplateVars);
+            string html = str.ToString();            
 
             /*if (!IsInAdminSection)
             {
@@ -320,6 +318,8 @@ namespace WebApplication
 
                 html = document.DocumentNode.WriteContentTo();
             }
+
+            html = ParserHelper.ParseData(html, TemplateVars);
 
             if (CurrentMediaDetail != null)
             {

@@ -621,11 +621,12 @@ namespace FrameworkLibrary
         {
             var detail = CreateObject(mediaTypeEnum);
 
-            var updatableProperties = detail.GetType().GetProperties().Where(i => i.CanWrite && i.PropertyType == typeof(System.String));
+            var updatableProperties = detail.GetType().GetProperties().Where(i => i.CanWrite && i.PropertyType == typeof(string));
 
             foreach (var property in updatableProperties)
             {
-                ParserHelper.SetValue(detail, property.Name, "");
+                property.SetValue(detail, "");
+                //ParserHelper.SetValue(detail, property.Name, "");
             }
 
             detail.LinkTitle = detail.SectionTitle = detail.Title = detail.ShortDescription = detail.MainContent = "New Item";                        

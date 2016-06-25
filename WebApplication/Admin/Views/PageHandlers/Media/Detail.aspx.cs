@@ -407,6 +407,9 @@ namespace WebApplication.Admin.MediaArticle
 
                         var associatedMediaDetail = (MediaDetail)MediaDetailsMapper.GetByID(newFieldAssociation.AssociatedMediaDetailID);
 
+                        if (associatedMediaDetail == null)
+                            continue;
+                        
                         newFieldAssociation.MediaDetail = (MediaDetail)MediaDetailsMapper.CreateObject(associatedMediaDetail.MediaType.ID, MediasMapper.CreateObject(), associatedMediaDetail.Media.ParentMedia);
                         newFieldAssociation.MediaDetail.DateCreated = newFieldAssociation.MediaDetail.DateLastModified = DateTime.Now;
                         newFieldAssociation.MediaDetail.CreatedByUser = newFieldAssociation.MediaDetail.LastUpdatedByUser = FrameworkSettings.CurrentUser;

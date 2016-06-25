@@ -128,7 +128,9 @@ namespace WebApplication.Admin.Controls.Fields
             }
 
             if (hasDeleted || hasReordered)
-                BaseMapper.SaveDataModel();
+            {
+                var returnObj = BaseMapper.SaveDataModel();
+            }                
 
 
             BindValues();

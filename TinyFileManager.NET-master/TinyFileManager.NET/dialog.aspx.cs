@@ -47,10 +47,10 @@ namespace TinyFileManager.NET
                 var protocal = (Request.IsSecureConnection) ? "https://" : "http://";
 
                 baseUrl = protocal + Request.Url.Authority;
-            }
+            }            
 
-            if (strCurrPath == "")
-                strCurrPath = defaultRootPath;
+            if ((strCurrPath == "") || (!Directory.Exists(Server.MapPath(strCurrPath))))
+                strCurrPath = defaultRootPath;            
 
             if (strCurrPath.Contains(baseUrl))
             {

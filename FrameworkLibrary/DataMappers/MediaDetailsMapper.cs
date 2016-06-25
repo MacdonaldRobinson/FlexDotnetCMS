@@ -625,10 +625,10 @@ namespace FrameworkLibrary
 
             foreach (var property in updatableProperties)
             {
-                ParserHelper.SetValue(detail, property.Name, "New Item");
+                ParserHelper.SetValue(detail, property.Name, "");
             }
 
-            detail.Handler = detail.DirectLink = "";
+            detail.LinkTitle = detail.SectionTitle = detail.Title = detail.ShortDescription = detail.MainContent = "New Item";                        
             detail.DateCreated = detail.DateLastModified = DateTime.Now;
 
             return detail;

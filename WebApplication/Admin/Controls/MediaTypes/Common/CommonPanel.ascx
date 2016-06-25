@@ -65,9 +65,7 @@
 
             $("#<%= SelectedTabIndexs.ClientID %>").val(json);
 
-        });
-
-        $(".LinkTitle").focus();
+        });        
 
     });
 

@@ -28,7 +28,7 @@ namespace FrameworkLibrary
             if (virtualPath.StartsWith("~"))
                 virtualPath = virtualPath.Replace("~","");
 
-            var rule = GetAllActive().FirstOrDefault(i => i.MediaType.Name == MediaTypeEnum.UrlRedirectRule.ToString() && ((UrlRedirectRule)i).VirtualPathToRedirect.Trim() == virtualPath);
+            var rule = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.Name == MediaTypeEnum.UrlRedirectRule.ToString() && ((UrlRedirectRule)i).VirtualPathToRedirect.Trim() == virtualPath).ToList().FirstOrDefault(i=>i.CanRender);
            
             return (UrlRedirectRule)rule;
         }

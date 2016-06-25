@@ -21,22 +21,15 @@ namespace FrameworkLibrary
             return GetAllActive().Where(i => i.VirtualPath.StartsWith(parent.VirtualPath));
         }
 
-        public static UrlRedirectRule GetRuleForUrl(string url)
+        public static UrlRedirectRule GetRuleForUrl(string virtualPath)
         {
             var slug = StringHelper.CreateSlug(HttpContext.Current.Request.Url.Host);
 
-            if (url.StartsWith("~/" + slug))
-                url = url.Replace("~/" + slug, "~");
+            if (virtualPath.StartsWith("~"))
+                virtualPath = virtualPath.Replace("~","");
 
-            var currentWebsiteVirtualPath = "/";
-            var currentWebsite = WebsitesMapper.GetWebsite();
-
-            if (currentWebsite != null)
-                currentWebsiteVirtualPath = currentWebsite.VirtualPath;
-
-            url = URIHelper.ConvertToAbsUrl(url);
-            var rule = GetAllActiveByParent(currentWebsite).Where(i => URIHelper.ConvertToAbsUrl(((UrlRedirectRule)i).VirtualPathToRedirect) == url).FirstOrDefault();
-
+            var rule = GetAllActive().FirstOrDefault(i => i.MediaType.Name == MediaTypeEnum.UrlRedirectRule.ToString() && ((UrlRedirectRule)i).VirtualPathToRedirect.Trim() == virtualPath);
+           
             return (UrlRedirectRule)rule;
         }
     }

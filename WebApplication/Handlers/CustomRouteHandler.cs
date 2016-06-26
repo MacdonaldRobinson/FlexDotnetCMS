@@ -78,9 +78,11 @@ namespace WebApplication.Handlers
             }
 
             Settings cmsSettings = null;
+            bool isAttemptingAdminLogin = false;
 
             if ((virtualPath != "~/login/") && (virtualPath != "~/admin/"))
             {
+                isAttemptingAdminLogin = true;
                 cmsSettings = SettingsMapper.GetSettings();
 
                 if (cmsSettings != null)
@@ -92,13 +94,13 @@ namespace WebApplication.Handlers
                         if (virtualPath.Contains(cmsSettings.SiteOfflineUrl))
                             Response.Redirect("~/");
 
-                        AttemptToLoadFromCache(); 
+                        AttemptToLoadFromCache();
                     }
                     else
                     {
-                        if(!virtualPath.Contains(cmsSettings.SiteOfflineUrl))
+                        if (!virtualPath.Contains(cmsSettings.SiteOfflineUrl))
                             Response.Redirect(cmsSettings.SiteOfflineUrl);
-                    }                        
+                    }
                 }
             }
 
@@ -115,7 +117,7 @@ namespace WebApplication.Handlers
                 FrameworkSettings.SetCurrentLanguage(language);
             }
 
-            if (AppSettings.EnableUrlRedirectRules)
+            if (!isAttemptingAdminLogin && AppSettings.EnableUrlRedirectRules)
             {
                 var redirectRule = UrlRedirectRulesMapper.GetRuleForUrl(virtualPath);
 

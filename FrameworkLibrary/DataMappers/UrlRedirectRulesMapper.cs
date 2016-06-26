@@ -28,8 +28,10 @@ namespace FrameworkLibrary
             if (virtualPath.StartsWith("~"))
                 virtualPath = virtualPath.Replace("~","");
 
-            var rule = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.Name == MediaTypeEnum.UrlRedirectRule.ToString() && ((UrlRedirectRule)i).VirtualPathToRedirect.Trim() == virtualPath).ToList().FirstOrDefault(i=>i.CanRender);
-           
+            //var rule = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.Name == MediaTypeEnum.UrlRedirectRule.ToString() && ((UrlRedirectRule)i).VirtualPathToRedirect.Trim() == virtualPath).ToList().FirstOrDefault(i=>i.CanRender);
+
+            var rule = GetAll().Cast<UrlRedirectRule>().FirstOrDefault(i=> !i.IsHistory && i.CanRender && i.VirtualPathToRedirect == virtualPath);
+
             return (UrlRedirectRule)rule;
         }
     }

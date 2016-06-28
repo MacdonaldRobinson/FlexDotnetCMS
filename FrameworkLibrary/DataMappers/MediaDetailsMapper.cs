@@ -549,7 +549,7 @@ namespace FrameworkLibrary
             if (language == null)
                 language = LanguagesMapper.GetDefaultLanguage();
 
-            return media.ChildMedias.Select(i => i.MediaDetails.FirstOrDefault(j => j.Media.ParentMediaID == media.ID && j.LanguageID == language.ID && j.HistoryForMediaDetailID == null)).Where(i => i != null).OrderBy(i => i.Media.OrderIndex);
+            return media.ChildMedias.Select(i => i.MediaDetails.FirstOrDefault(j => j.Media.ParentMediaID == media.ID && j.LanguageID == language.ID && j.HistoryForMediaDetailID == null)).Where(i => i != null && i.ShowInSiteTree).OrderBy(i => i.Media.OrderIndex);
 
             /*var allItems = MediasMapper.GetAllChildMedias(media);
 

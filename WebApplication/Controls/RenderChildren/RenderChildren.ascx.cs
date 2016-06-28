@@ -51,7 +51,12 @@ namespace WebApplication.Controls.RenderChildren
                 PageSize = Take;
 
             if (!ShowPager)
+            {
                 PageSize = Take;
+                Pager.Visible = false;
+                Pager.ShowDataPager = false;
+                Children.DataBind();
+            }
 
             if (PageSize is int)
                 Pager.PageSize = int.Parse(PageSize.ToString());

@@ -249,9 +249,28 @@ namespace WebApplication.Admin.Controls.Editors
 
             SelectorFieldOptions.Add(new SelectorFieldOption()
             {
-                OptionText = "Multi File Uploader",
-                OptionValue = "MultiFileUploader",
-                AdminControl = @"<Admin:MultiFileUploader runat='server' SaveToFolder='' MediaTypeID='1' />",
+                OptionText = "Multi Item - Uploader",
+                OptionValue = "Multi Item - Uploader",
+                AdminControl = @"<Admin:MultiFileUploader runat='server' SaveToFolder='' MediaTypeID='1' Model='Uploader' />",
+                GetAdminControlValue = "SelectedValue",
+                SetAdminControlValue = "SelectedValue",
+                FrontEndLayout = @"@{
+    var field = (MediaDetailField)Model.Field;
+
+    <ul>
+    @foreach(var item in field.FieldAssociations.OrderBy(i=>i.OrderIndex))
+    {
+        <li><a href='@URIHelper.ConvertToAbsUrl(item.MediaDetail.PathToFile)'><img src='@URIHelper.ConvertToAbsUrl(item.MediaDetail.PathToFile)?width=300&height=300&mode=max' alt='@item.MediaDetail.SectionTitle'></a></li>
+    }
+    </ul>
+}"
+            });
+
+            SelectorFieldOptions.Add(new SelectorFieldOption()
+            {
+                OptionText = "Multi Item - GridView",
+                OptionValue = "Multi Item - GridView",
+                AdminControl = @"<Admin:MultiFileUploader runat='server' SaveToFolder='' MediaTypeID='1' Model='GridView' />",
                 GetAdminControlValue = "SelectedValue",
                 SetAdminControlValue = "SelectedValue",
                 FrontEndLayout = @"@{

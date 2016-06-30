@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -138,16 +139,38 @@ namespace WebApplication.Admin.Controls.Fields
 
         private void BindValues()
         {
-            Values.DataSource = GetValue();
-            Values.DataBind();
+            switch(Mode)
+            {
+                case ViewMode.GridView:
+                    {
+                        MultiItemUploaderPanel.Visible = false;
+                        FieldItems.Visible = true;
+
+                        FieldItems.DataSource = GetValue();
+                        FieldItems.DataBind();
+                        break;
+                    }                                
+                default:
+                    {
+                        MultiItemUploaderPanel.Visible = true;
+                        FieldItems.Visible = false;
+
+                        Values.DataSource = GetValue();
+                        Values.DataBind();
+                        break;
+                    }
+            }
+
 
             ItemsToDelete.Text = "[]";
             ReorderItems.Text = "[]";
         }
 
+        public enum ViewMode { Uploader, GridView }
+
         public string SaveToFolder { get; set; }
         public long MediaTypeID { get; set; }
-
+        public ViewMode Mode { get; set; }
 
         protected void AddItem_Click(object sender, EventArgs e)
         {
@@ -166,6 +189,12 @@ namespace WebApplication.Admin.Controls.Fields
             var returnObj = BaseMapper.SaveDataModel();
 
             BindValues();
+        }
+
+        protected void ItemList_PageIndexChanging(object sender, System.Web.UI.WebControls.GridViewPageEventArgs e)
+        {
+            FieldItems.PageIndex = e.NewPageIndex;
+            FieldItems.DataBind();
         }
     }
 }

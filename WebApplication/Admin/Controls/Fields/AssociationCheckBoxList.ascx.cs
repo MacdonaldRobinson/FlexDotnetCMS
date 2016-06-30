@@ -30,7 +30,7 @@ namespace WebApplication.Admin.Controls.Fields
 
         private void SetSelectedIds(string values)
         {
-            var selectedIds = StringHelper.JsonToObject<object[]>(values);
+            var selectedIds = StringHelper.JsonToObject<List<long>>(values);
 
             foreach (ListItem item in ItemsList.Items)
             {

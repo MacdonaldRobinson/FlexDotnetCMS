@@ -69,7 +69,12 @@ namespace WebApplication.Admin.Controls.Fields
             if (newIds == oldIds)
                 return;
 
-            field.FieldAssociations.Clear();
+            var fieldAssociations = field.FieldAssociations.ToList();
+
+            foreach (var item in fieldAssociations)
+            {
+                BaseMapper.DeleteObjectFromContext(item);
+            }            
 
             var orderIndex = 0;
             foreach (var id in ids)

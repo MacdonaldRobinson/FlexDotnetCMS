@@ -774,8 +774,11 @@ function init() {
     });
 
     $(document).on("click", ".dropZone li a.delete", function () {
+        
+        var elem = $(this).closest(".dropZone")[0];        
         $(this).closest("li").remove();
-        UpdateValuesFromUL($(this).closest("ul")[0]);
+
+        UpdateValuesFromUL(elem);
     });
 
     $("ul.dropZone").bind("DOMSubtreeModified", function () {
@@ -789,7 +792,7 @@ function init() {
     });
 
     function UpdateULFromValues(elem) {
-        
+                
         var values = $(elem).find("input[type='hidden']");
 
         //console.log(values);
@@ -808,9 +811,9 @@ function init() {
         });
     }
 
-    function UpdateValuesFromUL(elem) {
-        //console.log(elem);
+    function UpdateValuesFromUL(elem) {        
         var values = $(elem).find("input[type='hidden']");
+
         var arr = new Array();
 
         $(elem).children("li:not(.hidden)").each(function () {

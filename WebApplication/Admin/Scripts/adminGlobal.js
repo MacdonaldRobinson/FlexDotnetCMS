@@ -770,15 +770,25 @@ function init() {
 
     $(document).on("click", ".DeleteImage", function () {
 
-        var root = $(this).parents(".MultiFileUploader");
+        var root = $(this).closest(".MultiFileUploader");
 
-        var parentItem = $(this).parents(".item");
+        var parentItem = $(this).closest(".item");
         var itemsToDelete = root.find(".ItemsToDelete");
         var image = parentItem.find("img");
+        
+        if (image.length == 0)
+        {
+            image = $(this);
+        }            
+
+        console.log(image);
+
         var itemId = $(this).attr('data-id');
 
         var itemsToDeleteJson = JSON.parse(itemsToDelete.val());
         var src = image.attr("src");
+
+        //console.log(itemsToDeleteJson);
 
         if (!image.hasClass("MarkedAsDeleted")) {
             image.addClass("MarkedAsDeleted");

@@ -382,3 +382,26 @@ html, body {
     margin-left: 5px; /* Same as divider width */
     /*overflow:hidden;*/
 }
+
+.dropZone {
+    background-color: #bfbfbf;
+    padding: 5px;
+}
+
+    .dropZone li {
+        background-color: #808080;
+        padding: 3px;
+        margin: 3px;
+    }
+
+    .dropZone .delete {
+        color: #e62626;
+        cursor: pointer;
+        font-size: 20px;
+        font-weight: bold;
+        margin: 10px;
+    }
+
+.hidden {
+    display: none;
+}

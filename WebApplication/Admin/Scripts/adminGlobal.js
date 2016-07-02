@@ -750,6 +750,7 @@ $(document).ready(function () {
 
 function BindSortable() {
     $(".sortable").sortable({
+        connectWith: '.dropZone.sortable',
         update: function (event, ui) {
             var arr = new Array();
             $(this).children("li").each(function () {
@@ -768,6 +769,69 @@ function init() {
 
     BindSortable();
 
+    $("ul.dropZone").each(function () {
+        UpdateULFromValues(this);
+    });
+
+    $(document).on("click", ".dropZone li a.delete", function () {
+        $(this).closest("li").remove();
+        UpdateValuesFromUL($(this).closest("ul")[0]);
+    });
+
+    $("ul.dropZone").bind("DOMSubtreeModified", function () {
+        UpdateValuesFromUL(this);
+    });
+
+    $("ul.dropZone").sortable({
+        update: function (event, ui) {
+            UpdateValuesFromUL(this);
+        }
+    });
+
+    function UpdateULFromValues(elem) {
+        
+        var values = $(elem).find("input[type='hidden']");
+
+        //console.log(values);
+        var json = eval(values.val());
+        /*var valsArray = vals.split(",");
+
+        for (item of valsArray) {
+            console.log(item);
+        }*/
+
+        $(json).each(function () {
+            //console.log(this);
+
+            $(elem).append("<li data-mediadetailid='" + this.id + "'><a class='delete'>x</a><span class='text'>" + this.name + "</span></li>");
+
+        });
+    }
+
+    function UpdateValuesFromUL(elem) {
+        //console.log(elem);
+        var values = $(elem).find("input[type='hidden']");
+        var arr = new Array();
+
+        $(elem).children("li:not(.hidden)").each(function () {
+            var mediadetailid = $(this).attr("data-mediadetailid");
+            var name = $(this).children("span.text").text();
+
+            if (name != "") {
+                var obj = new Object();
+                obj.name = name;
+                obj.id = mediadetailid;
+
+                arr.push(obj);
+            }
+
+        });
+
+        var jsonString = JSON.stringify(arr);
+
+        values.val(jsonString);
+    }
+
     $(document).on("click", ".DeleteImage", function () {
 
         var root = $(this).closest(".MultiFileUploader");
@@ -780,8 +844,6 @@ function init() {
         {
             image = $(this);
         }            
-
-        console.log(image);
 
         var itemId = $(this).attr('data-id');
 

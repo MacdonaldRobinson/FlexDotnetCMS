@@ -70,7 +70,7 @@ namespace WebApplication.Admin.Controls.Fields
                         if (!field.FieldAssociations.Any(i => i.MediaDetail.PathToFile == filePath))
                         {
                             var fieldAssociation = new FieldAssociation();
-                            fieldAssociation.MediaDetail = (MediaDetail)PagesMapper.CreateObject(MediaTypesMapper.GetByEnum(MediaTypeEnum.Page).ID, MediasMapper.CreateObject(), AdminBasePage.SelectedMedia);
+                            fieldAssociation.MediaDetail = (MediaDetail)PagesMapper.CreateObject(MediaTypeID, MediasMapper.CreateObject(), AdminBasePage.SelectedMedia);
                             fieldAssociation.MediaDetail.PathToFile = filePath;
                             fieldAssociation.MediaDetail.PublishDate = DateTime.Now;
                             fieldAssociation.MediaDetail.CreatedByUser = fieldAssociation.MediaDetail.LastUpdatedByUser = FrameworkSettings.CurrentUser;

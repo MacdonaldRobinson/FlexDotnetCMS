@@ -44,9 +44,12 @@
                 <asp:TextBox runat="server" CssClass="ItemsToDelete" ID="ItemsToDelete" Text="[]" Style="display: none;" />
                 <asp:TextBox runat="server" CssClass="ReorderItems" ID="ReorderItems" Text="[]" Style="display: none;"/>
 
-                <asp:GridView runat="server" ID="FieldItems" AutoGenerateColumns="false" AllowPaging="true" OnPageIndexChanging="ItemList_PageIndexChanging" ItemType="FrameworkLibrary.FieldAssociation" Visible="false">
+                <asp:GridView runat="server" ID="FieldItems" AutoGenerateColumns="false" AllowPaging="true" OnPageIndexChanging="ItemList_PageIndexChanging" ItemType="FrameworkLibrary.FieldAssociation" Visible="false" Width="100%">
                     <Columns>
                         <asp:BoundField DataField="MediaDetail.SectionTitle" HeaderText="SectionTitle" SortExpression="MediaDetail.SectionTitle" />
+                        <asp:BoundField DataField="MediaDetail.CreatedByUser.Username" HeaderText="CreatedByUser" SortExpression="MediaDetail.CreatedByUser.Username" />
+                        <asp:BoundField DataField="MediaDetail.LastUpdatedByUser.Username" HeaderText="LastUpdatedByUser" SortExpression="MediaDetail.LastUpdatedByUser.Username" />
+                        <asp:BoundField DataField="MediaDetail.DateLastModified" HeaderText="DateLastModified" SortExpression="MediaDetail.DateLastModified" />
                         <asp:TemplateField HeaderText="">
                             <ItemTemplate>
                                 <div class="item">

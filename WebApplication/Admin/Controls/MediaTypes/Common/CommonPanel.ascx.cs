@@ -340,7 +340,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
                     if (adminPanel != null)
                         control = adminPanel.Parent;
 
-                    var fieldValue = mediaDetailField.FieldValue.Replace(URIHelper.BaseUrl, "{BaseUrl}");
+                    var fieldValue = mediaDetailField.FieldValue.Replace("{BaseUrl}", URIHelper.BaseUrl);
 
                     if (control is WebApplication.Admin.Controls.Fields.IFieldControl)
                     {

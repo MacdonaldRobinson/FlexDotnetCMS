@@ -166,6 +166,7 @@ namespace FrameworkLibrary
             }
             catch (Exception ex)
             {
+                throw ex;
                 CanConnectToDB = false;
                 return false;
             }

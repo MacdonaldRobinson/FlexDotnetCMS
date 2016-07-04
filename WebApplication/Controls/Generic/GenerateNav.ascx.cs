@@ -40,6 +40,9 @@ namespace WebApplication.Controls
 
         private void BindRootMedia(Media rootMedia)
         {
+            if (rootMedia.LiveMediaDetail.MediaType.Name == MediaTypeEnum.RootPage.ToString())
+                rootMedia = WebsitesMapper.GetWebsite().Media;
+
             var items = MediaDetailsMapper.GetDataModel().MediaDetails.AsNoTracking().Where(i => i.Media.ParentMediaID == rootMedia.ID && i.HistoryVersionNumber == 0 && i.LanguageID == currentLanguage.ID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex); //rootMedia.ChildMedias.SelectMany(m => m.MediaDetails.Where(i => i.HistoryVersionNumber == 0 && (i.ShowInMenu || i.RenderInFooter) && !i.IsDeleted && i.PostPublishDate <= DateTime.Now && (i.PostExpiryDate == null || i.PostExpiryDate > DateTime.Now))).OrderBy(i => i.Media.OrderIndex);
             Bind(items);
         }

@@ -788,12 +788,9 @@ namespace FrameworkLibrary
                 var associations = item.FieldAssociations.ToList();
                 foreach (var association in associations)
                 {
-                    if(!association.MediaDetail.MediaType.ShowInSiteTree)
+                    if (association.MediaDetail != null && association.MediaDetail.FieldAssociations.Count < 2 && !association.MediaDetail.MediaType.ShowInSiteTree)
                     {
-                        if (association.MediaDetail != null)
-                        {
-                            var returnObj = DeletePermanently(association.MediaDetail);
-                        }
+                        var returnObj = DeletePermanently(association.MediaDetail);
                     }
 
                     if (association.MediaDetail != null)

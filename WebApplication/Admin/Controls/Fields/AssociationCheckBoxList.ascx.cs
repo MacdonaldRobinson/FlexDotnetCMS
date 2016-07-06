@@ -21,7 +21,7 @@ namespace WebApplication.Admin.Controls.Fields
 
             if (parentMediaDetailId != null)
             {
-                ItemsList.DataSource = MediaDetailsMapper.GetByID(ParentMediaDetailID).ChildMediaDetails.Where(i => i.CanRender && i.ShowInSiteTree);
+                ItemsList.DataSource = MediaDetailsMapper.GetByID(ParentMediaDetailID).ChildMediaDetails.Where(i => i.CanRender && i.MediaType.ShowInSiteTree);
                 ItemsList.DataTextField = "SectionTitle";
                 ItemsList.DataValueField = "ID";
                 ItemsList.DataBind();

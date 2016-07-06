@@ -25,7 +25,12 @@
             if (event._postBackSettings.asyncTarget.indexOf("$Update") != -1 || event._postBackSettings.asyncTarget.indexOf("$Delete") != -1)
             {
                 //ReloadPreviewPanel();
-                window.location.reload();
+                if(confirm("Successfully Updated, would you like to reload the page?"))
+                    window.location.reload();
+            }
+            else
+            {
+                ReloadPreviewPanel();
             }
         });
 
@@ -48,15 +53,6 @@
         initAccordians();
     });
 
-    function BindScrollMagic()
-    {
-        var controller = new ScrollMagic.Controller();
-
-        var scene = new ScrollMagic.Scene({ offset: -45, triggerElement: "#SaveFields", triggerHook: 0 })
-                        .setPin("#SaveFields")
-                        .addTo(controller);
-    }
-
     function BindReOrder()
     {
         BindGridViewSortable("#<%=ItemList.ClientID%>", "/Admin/Views/MasterPages/Webservice.asmx/ReOrderMediaFields", "<%= MediaFieldsUpdatePanel.ClientID%>", function () {
@@ -64,10 +60,6 @@
         });
     }
 
-    function ReloadPreviewPanel() {
-        if ($("#PreviewPanel").length > 0)
-            $("#PreviewPanel")[0].src = $("#PreviewPanel")[0].src;
-    }
 </script>
 
 <style type="text/css">

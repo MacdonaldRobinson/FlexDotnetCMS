@@ -76,7 +76,6 @@ namespace WebApplication.Admin.Controls.Fields
                             fieldAssociation.MediaDetail.CreatedByUser = fieldAssociation.MediaDetail.LastUpdatedByUser = FrameworkSettings.CurrentUser;
                             fieldAssociation.MediaDetail.CachedVirtualPath = fieldAssociation.MediaDetail.CalculatedVirtualPath();
                             fieldAssociation.MediaDetail.Language = SettingsMapper.GetSettings().DefaultLanguage;
-                            fieldAssociation.MediaDetail.ShowInSiteTree = false;
 
                             field.FieldAssociations.Add(fieldAssociation);
 
@@ -182,8 +181,7 @@ namespace WebApplication.Admin.Controls.Fields
             fieldAssociation.MediaDetail.PublishDate = DateTime.Now;
             fieldAssociation.MediaDetail.CreatedByUser = fieldAssociation.MediaDetail.LastUpdatedByUser = FrameworkSettings.CurrentUser;
             fieldAssociation.MediaDetail.CachedVirtualPath = fieldAssociation.MediaDetail.CalculatedVirtualPath();
-            fieldAssociation.MediaDetail.Language = SettingsMapper.GetSettings().DefaultLanguage;
-            fieldAssociation.MediaDetail.ShowInSiteTree = false;
+            fieldAssociation.MediaDetail.Language = SettingsMapper.GetSettings().DefaultLanguage;            
 
             field.FieldAssociations.Add(fieldAssociation);
             var returnObj = BaseMapper.SaveDataModel();

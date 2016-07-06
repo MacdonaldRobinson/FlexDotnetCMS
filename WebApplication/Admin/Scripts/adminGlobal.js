@@ -477,7 +477,7 @@ $(document).ready(function () {
     tfm_path = "/Scripts/tinyfilemanager.net";
     tinymce.init({
         selector: ".editor",
-        content_css: "/Views/MasterPages/SiteTemplates/css/style.min.css",
+        content_css: "/Views/MasterPages/SiteTemplates/css/style.min.css, /Admin/Styles/editor.css",
         plugins: [
           'advlist autolink lists link image charmap print preview hr anchor pagebreak',
           'searchreplace wordcount visualblocks visualchars code fullscreen',
@@ -763,6 +763,23 @@ function BindSortable() {
             root.find(".ReorderItems").val(JSON.stringify(arr));
         }
     });
+}
+
+function BindScrollMagic() {
+    var controller = new ScrollMagic.Controller();
+
+    var scene = new ScrollMagic.Scene({ offset: -45, triggerElement: "#SaveFields", triggerHook: 0 })
+                    .setPin("#SaveFields")
+                    .addTo(controller);
+
+    var scene = new ScrollMagic.Scene({ offset: -45, triggerElement: ".SavePanel", triggerHook: 0 })
+                    .setPin(".SavePanel")
+                    .addTo(controller);
+}
+
+function ReloadPreviewPanel() {
+    if ($("#PreviewPanel").length > 0)
+        $("#PreviewPanel")[0].src = $("#PreviewPanel")[0].src;
 }
 
 function init() {

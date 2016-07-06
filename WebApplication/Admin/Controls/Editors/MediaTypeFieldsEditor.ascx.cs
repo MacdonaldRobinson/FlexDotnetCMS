@@ -69,7 +69,8 @@ namespace WebApplication.Admin.Controls.Editors
                     mediaDetailField.AdminControl = mediaTypeField.AdminControl;
                     mediaDetailField.FrontEndLayout = mediaTypeField.FrontEndLayout;
                     mediaDetailField.GroupName = mediaTypeField.GroupName;
-                    RenderLabelAfterControl.Checked = mediaTypeField.RenderLabelAfterControl;
+                    mediaDetailField.RenderLabelAfterControl = mediaTypeField.RenderLabelAfterControl;
+                    mediaDetailField.UseMediaTypeFieldFrontEndLayout = true;
 
                     mediaDetailField.GetAdminControlValue = mediaTypeField.GetAdminControlValue;
                     mediaDetailField.SetAdminControlValue = mediaTypeField.SetAdminControlValue;

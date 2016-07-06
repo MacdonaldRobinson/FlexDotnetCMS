@@ -24,7 +24,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
 
         private void Bind()
         {
-            ItemList.DataSource = selectedItem.ChildMediaDetails.Where(i=>i.ShowInSiteTree).ToList();
+            ItemList.DataSource = selectedItem.ChildMediaDetails.Where(i=>i.MediaType.ShowInSiteTree).ToList();
             ItemList.DataBind();
         }
 

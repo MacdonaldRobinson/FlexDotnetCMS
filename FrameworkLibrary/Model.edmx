@@ -142,7 +142,6 @@
           <Property Name="PublishDate" Type="datetime" />
           <Property Name="ShowInMenu" Type="bit" Nullable="false" />
           <Property Name="ShowInSearchResults" Type="bit" Nullable="false" />
-          <Property Name="ShowInSiteTree" Type="bit" Nullable="false" />
           <Property Name="EnableCaching" Type="bit" Nullable="false" />
           <Property Name="SefTitle" Type="nvarchar" MaxLength="255" />
           <Property Name="Handler" Type="nvarchar" MaxLength="255" />
@@ -1443,7 +1442,6 @@
           <NavigationProperty Name="RolesMediaDetails" Relationship="FrameworkModel.FK_RolesMediaDetails_MediaDetailID" FromRole="MediaDetail" ToRole="RolesMediaDetail" />
           <Property Name="PathToFile" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="FieldAssociations" Relationship="FrameworkModel.FK_FieldAssociations_MediaDetails" FromRole="MediaDetail" ToRole="FieldsAssociation" />
-          <Property Name="ShowInSiteTree" Type="Boolean" Nullable="false" />
           </EntityType>
         <EntityType Name="Page" BaseType="FrameworkModel.MediaDetail">
         </EntityType>
@@ -2171,7 +2169,6 @@
           <EntitySetMapping Name="MediaDetails">
             <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.MediaDetail)">
               <MappingFragment StoreEntitySet="MediaDetails">
-                <ScalarProperty Name="ShowInSiteTree" ColumnName="ShowInSiteTree" />
                 <ScalarProperty Name="PathToFile" ColumnName="PathToFile" />
                 <ScalarProperty Name="MainContent" ColumnName="MainContent" />
                 <ScalarProperty Name="PublishDate" ColumnName="PublishDate" />
@@ -2552,7 +2549,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model" ZoomLevel="81">
+      <Diagram Name="Model" ZoomLevel="78">
         <EntityTypeShape EntityType="FrameworkModel.Comment" Width="1.5" PointX="3" PointY="7.875" Height="3.9033007812499996" />
         <EntityTypeShape EntityType="FrameworkModel.EmailLog" Width="1.5" PointX="10.25" PointY="11.5" Height="3.1340950520833282" />
         <EntityTypeShape EntityType="FrameworkModel.Language" Width="1.5" PointX="0.75" PointY="7.375" Height="2.9417936197916674" />

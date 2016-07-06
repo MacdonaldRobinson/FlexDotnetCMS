@@ -49,15 +49,6 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs {
         protected global::System.Web.UI.WebControls.CheckBox EnableCaching;
         
         /// <summary>
-        /// ShowInSiteTree control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox ShowInSiteTree;
-        
-        /// <summary>
         /// MediaID control.
         /// </summary>
         /// <remarks>

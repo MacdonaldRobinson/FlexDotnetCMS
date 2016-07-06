@@ -360,8 +360,7 @@ namespace WebApplication.Admin.MediaArticle
 
             selectedItem.ShowInMenu = mediaType.ShowInMenu;
             selectedItem.ShowInSearchResults = mediaType.ShowInSearchResults;
-            selectedItem.EnableCaching = mediaType.EnableCaching;
-            selectedItem.ShowInSiteTree = mediaType.ShowInSiteTree;
+            selectedItem.EnableCaching = mediaType.EnableCaching;            
 
             Return returnObj = MediaDetailsMapper.Update(selectedItem);
 
@@ -410,7 +409,7 @@ namespace WebApplication.Admin.MediaArticle
                         if (associatedMediaDetail == null)
                             continue;
                         
-                        if(!associatedMediaDetail.ShowInSiteTree)
+                        if(!associatedMediaDetail.MediaType.ShowInSiteTree)
                         {
                             newFieldAssociation.MediaDetail = (MediaDetail)MediaDetailsMapper.CreateObject(associatedMediaDetail.MediaType.ID, MediasMapper.CreateObject(), associatedMediaDetail.Media.ParentMedia);
                             newFieldAssociation.MediaDetail.CopyFrom(associatedMediaDetail);

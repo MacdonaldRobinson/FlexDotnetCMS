@@ -82,10 +82,10 @@
 }
 
 .SavePanel{
-    position: fixed;
-    z-index:10;
+    position: absolute;
+    z-index:100;
     right:0;
-    top: 35px;
+    top: 0;
     background-color: #fff;
 }
 

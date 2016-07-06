@@ -19,8 +19,7 @@ namespace FrameworkLibrary
         DateTime DateCreated { get; set; }
         DateTime DateLastModified { get; set; }
         string DirectLink { get; set; }
-        bool EnableCaching { get; set; }
-        bool ShowInSiteTree { get; set; }
+        bool EnableCaching { get; set; }        
         DateTime? ExpiryDate { get; set; }
         string FeaturedLayout { get; set; }
         ICollection<MediaDetailField> Fields { get; set; }

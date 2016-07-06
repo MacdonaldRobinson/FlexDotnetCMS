@@ -74,7 +74,6 @@ namespace FrameworkLibrary
         public Nullable<System.DateTime> PublishDate { get; set; }
         public string MainContent { get; set; }
         public string PathToFile { get; set; }
-        public bool ShowInSiteTree { get; set; }
     
         public virtual Language Language { get; set; }
         public virtual Media Media { get; set; }

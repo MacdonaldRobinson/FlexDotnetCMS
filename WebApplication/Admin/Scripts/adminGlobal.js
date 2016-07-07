@@ -464,6 +464,13 @@ $(window).load(function () {
 });
 
 $(document).ready(function () {
+
+    var controller = new ScrollMagic.Controller();
+
+    var scene = new ScrollMagic.Scene({ offset: -45, triggerElement: ".SavePanel", triggerHook: 0 })
+                    .setPin(".SavePanel")
+                    .addTo(controller);
+
     $('ul.sf-menu').superfish();
     $('.tabs').tabs();
 
@@ -770,10 +777,6 @@ function BindScrollMagic() {
 
     var scene = new ScrollMagic.Scene({ offset: -45, triggerElement: "#SaveFields", triggerHook: 0 })
                     .setPin("#SaveFields")
-                    .addTo(controller);
-
-    var scene = new ScrollMagic.Scene({ offset: -45, triggerElement: ".SavePanel", triggerHook: 0 })
-                    .setPin(".SavePanel")
                     .addTo(controller);
 }
 

@@ -10,7 +10,7 @@
 
 <asp:UpdatePanel runat="server">
     <ContentTemplate>
-        <fieldset>
+        <fieldset>           
             <legend>Currently Created Fields</legend>
             <asp:GridView runat="server" ID="ItemList" AutoGenerateColumns="false" AllowPaging="true" OnPageIndexChanging="ItemList_PageIndexChanging">
                 <Columns>

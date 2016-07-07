@@ -8,6 +8,10 @@
                 <div>
                     <asp:LinkButton Text="Add New Item" runat="server" ID="AddItem" OnClick="AddItem_Click"/>
                 </div>
+                <asp:Panel runat="server" DefaultButton="SearchItems">
+                    <asp:TextBox runat="server" ID="SearchText" style="display:inline; width: 200px;" placeholder="Search ..." />
+                    <asp:LinkButton ID="SearchItems" Text="Search" runat="server" OnClick="SearchItems_Click"/>
+                </asp:Panel> 
                 <asp:Panel runat="server" ID="MultiItemUploaderPanel">
                     <asp:FileUpload ID="MultiFileUpload" runat="server" AllowMultiple="true" CssClass="MultiFileUpload" />
                     <div class="dvPreview" runat="server"></div>

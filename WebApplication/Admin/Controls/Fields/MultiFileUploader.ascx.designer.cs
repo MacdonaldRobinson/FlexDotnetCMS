@@ -40,6 +40,24 @@ namespace WebApplication.Admin.Controls.Fields {
         protected global::System.Web.UI.WebControls.LinkButton AddItem;
         
         /// <summary>
+        /// SearchText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox SearchText;
+        
+        /// <summary>
+        /// SearchItems control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton SearchItems;
+        
+        /// <summary>
         /// MultiItemUploaderPanel control.
         /// </summary>
         /// <remarks>

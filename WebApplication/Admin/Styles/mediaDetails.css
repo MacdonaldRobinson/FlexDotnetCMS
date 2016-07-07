@@ -105,7 +105,6 @@
 #mainArea #right-component {
     left: 75em; /* Same as left component width */
     margin-left: 5px; /* Same as divider width */
-    margin-top: 40px;
 }
 
 img.MarkedAsDeleted {

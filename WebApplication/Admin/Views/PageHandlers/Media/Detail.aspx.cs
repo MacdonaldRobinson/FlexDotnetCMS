@@ -143,7 +143,7 @@ namespace WebApplication.Admin.MediaArticle
             }
             else
             {
-                Save.Text = "Save";
+                Save.Text = "Save Page";
                 SaveAndPublish.Text = "Save And Publish";
             }
 

@@ -381,6 +381,10 @@ html, body {
     left: 30em; /* Same as left component width */
     margin-left: 5px; /* Same as divider width */
     /*overflow:hidden;*/
+
+    z-index: 200;
+    background-color:#fff;    
+
 }
 
 .dropZone {

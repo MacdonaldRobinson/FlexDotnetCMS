@@ -16,5 +16,4 @@
 /WebApplication/Properties/PublishProfiles/*.PublishSettings
 /WebApplication/Admin/Controls/Fields/*.bak
 *.bak
-/WebApplication/Web.config
 /WebApplication/Admin/node_modules

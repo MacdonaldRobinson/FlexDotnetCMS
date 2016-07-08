@@ -698,6 +698,7 @@ function BindTree() {
 }
 $(document)
     .on('dnd_move.vakata', function (e, data) {
+
     })
     .on('dnd_stop.vakata', function (e, data) {
         var elem = $(data.element);
@@ -711,7 +712,8 @@ $(document)
 
         var isDropZone = target.hasClass("dropZone")
 
-        if (isDropZone) {
+        if (isDropZone) {            
+
             var li = "<li data-mediadetailid='" + elem.parent().attr("data-mediadetailid") + "'><a class='delete'>x</a><span class='text'>" + elem.text() + "</span></li>";
 
             if (target.find("li[data-mediadetailid='" + elem.parent().attr("data-mediadetailid") + "']").length == 0) {

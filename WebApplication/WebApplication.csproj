@@ -160,10 +160,15 @@
     <Content Include="Admin\Controls\Selectors\FlickerPhotoSetSelector.ascx" />
     <Content Include="Admin\Controls\Selectors\Generic\PermissionsSelector.ascx" />
     <Content Include="Admin\Controls\Selectors\WebService.asmx" />
+    <Content Include="Admin\gruntfile.js" />
     <Content Include="Admin\media\images\css\ajax-loading.gif" />
     <Content Include="Admin\media\images\css\background.jpg" />
     <Content Include="Admin\media\images\css\leftArrow.png" />
     <Content Include="Admin\media\images\css\logo.png" />
+    <Content Include="Admin\Styles\admin.css" />
+    <Content Include="Admin\Styles\admin.min.css">
+      <DependentUpon>admin.css</DependentUpon>
+    </Content>
     <Content Include="Admin\Views\MasterPages\WebService.asmx" />
     <Content Include="Admin\Views\PageHandlers\GlossaryTerms\Default.aspx" />
     <Content Include="Admin\Views\PageHandlers\GlossaryTerms\Detail.aspx" />
@@ -1783,6 +1788,42 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Styles\admin.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\package.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Styles\scss\partials\_popup.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Styles\scss\modules\_nav.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Styles\scss\partials\_siteTree.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Styles\scss\modules\_buttons.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Styles\scss\modules\_tabs.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Styles\scss\modules\_variables.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Styles\scss\modules\_mixins.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Styles\scss\partials\_page.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Styles\scss\modules\_typography.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Styles\scss\partials\_header.scss" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

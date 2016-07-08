@@ -1,0 +1,13 @@
+﻿@import "variables";
+@import "mixins";
+
+.buttons {
+    a {
+        background: $color-1;
+        color: white;
+
+        &:hover, &:active {
+            background-color: darken($color-1,10%);
+        }
+    }
+}

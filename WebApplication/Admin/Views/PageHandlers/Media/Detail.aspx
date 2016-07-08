@@ -33,6 +33,7 @@
     <div class="split-pane fixed-left">
         <div class="split-pane-component" id="left-component">
             <link href="/Admin/Styles/mediaDetails.css" rel="stylesheet" />
+            <link href="/Admin/Styles/admin.css" rel="stylesheet" />
             <script type="text/javascript">
                 var selectedMediaId = <%=(SelectedMedia != null) ? SelectedMedia.ID : 0 %>;
                 var selectedMediaDetailId = <%=(SelectedMediaDetail != null) ? SelectedMediaDetail.ID : 0 %>;
@@ -61,7 +62,6 @@
                 <asp:LinkButton runat="server" ID="PublishLive" OnClick="PublishLive_OnClick" Text="Publish LIVE" Visible="false" />
                 <asp:HyperLink ID="EditMediaType" runat="server" Text="Edit Media Type" Visible="false" CssClass="colorbox iframe" />
             </asp:Panel>
-
         </div>
         <div class="split-pane-divider" id="my-divider"></div>
         <div class="split-pane-component" id="right-component">
@@ -79,5 +79,4 @@
             </script>
         </asp:Panel>
     </div>
-
 </asp:Content>

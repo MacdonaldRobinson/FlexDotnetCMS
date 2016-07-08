@@ -1,0 +1,47 @@
+﻿#SiteTree {
+    .jstree-default .jstree-node {
+        margin-left: 10px;
+    }
+
+    .jstree-node {
+        margin-left: 10px;
+    }
+
+    ul {
+        padding-left: 0;
+
+        li {
+            .jstree-file {
+                display: none;
+            }
+        }
+    }
+}
+
+#left-component {
+    width: 20em;
+}
+
+#my-divider {
+    left: 20em;
+}
+
+#right-component {
+    left: 20em;
+    min-width: 20em; /* Same as left component width */
+    margin-left: 5px; /* Same as divider width */
+}
+
+#mainArea #left-component {
+    width: 60em;
+}
+
+#mainArea #my-divider {
+    left: 60em;
+}
+
+#mainArea #right-component {
+    left: 30em;
+    min-width: 20em; /* Same as left component width */
+    margin-left: 5px; /* Same as divider width */
+}

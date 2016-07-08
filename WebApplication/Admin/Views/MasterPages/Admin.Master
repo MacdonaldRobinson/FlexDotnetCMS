@@ -28,10 +28,18 @@
             <div id="header">
                 <div id="topNavWrapper">
                     <div id="loggedInUser" class="floatRight">
-                        Welcome, <span class="loginName">
-                            <asp:LoginName ID="LoginName1" runat="Server" />
-                        </span>
-                        <asp:LoginStatus ID="LoginStatus" runat="Server" OnLoggedOut="LoginStatus_OnLoggedOut" />
+                        <div class="profile__container">
+                            <div class="profile__image">
+                                <img src="<%= BasePage.CurrentUser.ProfilePhoto %>">
+                            </div>
+                            <div class="profile__content">
+
+                                <span class="loginName">
+                                    <asp:LoginName ID="LoginName1" runat="Server" />
+                                </span>
+                                <asp:LoginStatus ID="LoginStatus" runat="Server" OnLoggedOut="LoginStatus_OnLoggedOut" />
+                            </div>
+                        </div>
                     </div>
                     <div id="topMenu" class="floatLeft">
                         <ul class="sf-menu">
@@ -40,20 +48,18 @@
                             <li id="GlossaryTermsNavItem" runat="server" visible="false"><a href="/Admin/Views/PageHandlers/GlossaryTerms/Default.aspx">Manage Glossary Terms</a></li>
                             <%  if (BasePage.CurrentUser.IsInRole(RoleEnum.Administrator))
                                 { %>
-                            <li><a href="#">Advance Options</a>
-                                <ul>
-                                    <li><a href="/Admin/Views/PageHandlers/Tags/Default.aspx">Manage Tags</a></li>
-                                    <%--<li><a href="/Admin/Views/PageHandlers/FieldFiles/Default.aspx">Manage Field Files</a></li>--%>
-                                    <li><a href="/Admin/Views/PageHandlers/Settings/Default.aspx">Manage Settings</a></li>
-                                    <li><a href="/Admin/Views/PageHandlers/Users/Default.aspx">Manage Users</a></li>
-                                    <li><a href="/Admin/Views/PageHandlers/Roles/Default.aspx">Manage Roles</a></li>
-                                    <li><a href="/Admin/Views/PageHandlers/Permissions/Default.aspx">Manage Permissions</a></li>
-                                    <li><a href="/Admin/Views/PageHandlers/Languages/Default.aspx">Manage Languages</a></li>
-                                    <li><a href="/Admin/Views/PageHandlers/MediaTypes/Default.aspx">Manage MediaTypes</a></li>
-                                    <li><a href="/Admin/Views/PageHandlers/MasterPages/Default.aspx">Manage MasterPages</a></li>
-                                    <li><a href="/Admin/Views/PageHandlers/AdminTools/Default.aspx">Admin Tools</a></li>
-                                </ul>
-                            </li>
+
+                            <li><a href="/Admin/Views/PageHandlers/Tags/Default.aspx">Tags</a></li>
+                            <%--<li><a href="/Admin/Views/PageHandlers/FieldFiles/Default.aspx">Manage Field Files</a></li>--%>
+                            <li><a href="/Admin/Views/PageHandlers/Settings/Default.aspx">Settings</a></li>
+                            <li><a href="/Admin/Views/PageHandlers/Users/Default.aspx">Users</a></li>
+                            <li><a href="/Admin/Views/PageHandlers/Roles/Default.aspx">Roles</a></li>
+                            <li><a href="/Admin/Views/PageHandlers/Permissions/Default.aspx">Permissions</a></li>
+                            <li><a href="/Admin/Views/PageHandlers/Languages/Default.aspx">Languages</a></li>
+                            <li><a href="/Admin/Views/PageHandlers/MediaTypes/Default.aspx">MediaTypes</a></li>
+                            <li><a href="/Admin/Views/PageHandlers/MasterPages/Default.aspx">MasterPages</a></li>
+                            <li><a href="/Admin/Views/PageHandlers/AdminTools/Default.aspx">Admin Tools</a></li>
+
                             <% } %>
                         </ul>
                     </div>

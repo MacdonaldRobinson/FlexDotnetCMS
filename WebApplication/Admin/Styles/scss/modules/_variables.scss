@@ -1,0 +1,22 @@
+﻿//brand colors
+$color-1: #00b9e4;
+$color-2: #f9321d;
+$color-3: #bed600;
+$black: #000000;
+$white: #ffffff;
+$grey-light: #e1e1e1;
+$grey: #9da4a6;
+$grey-dark: #333333;
+
+$blue-dark: #0e5d8e;
+$blue-light: #8eaed2;
+$yellow: #caba4b;
+
+$orange: #c99b62;
+$brown: #7a634e;
+
+//fonts
+//use mixin @include brand-font for black uppercase text
+$main-font: 'Montserrat', arial, sans-serif;
+//font-weight
+$strong: 900;

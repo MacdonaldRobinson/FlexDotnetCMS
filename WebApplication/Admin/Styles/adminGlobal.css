@@ -1,4 +1,4 @@
-﻿* {
+* {
     margin: 0;
     padding: 0;
 }
@@ -15,9 +15,9 @@ div.clear {
     float: right;
 }
 
-.size-200{
-    max-width:200px;
-    max-height:200px
+.size-200 {
+    max-width: 200px;
+    max-height: 200px;
 }
 
 .comments .comments {
@@ -72,24 +72,24 @@ h1 span, h2 {
 }
 
     .buttons a {
-        padding: 0.4em 1.5em 0.4em 1.5em !important;
-        background-color: #99ccff !important;
-        color: #000000 !important;
-        text-decoration: none !important;
+        padding: 0.4em 1.5em 0.4em 1.5em;
+        background-color: #99ccff;
+        color: #000000;
+        text-decoration: none;
         text-transform: uppercase;
-        border: 0px !important;
-        cursor: hand !important;
+        border: 0px;
+        cursor: pointer;
         float: left;
         margin-right: 10px;
         font-weight: bold;
     }
 
         .buttons a:hover {
-            background-color: lightblue !important;
+            background-color: lightblue;
         }
 
 #ContentPlaceHolder1_Main {
-    background-color: white !important;
+    background-color: white;
 }
 
 #loggedInUser {
@@ -292,7 +292,7 @@ ul li {
 }
 
     #treeView ul {
-        font-size: 0.8rem !important;
+        font-size: 0.8rem;
         padding-left: 10px;
     }
 
@@ -307,11 +307,11 @@ ul li {
 }
 
 .RadTreeView_Metro {
-    color: #ffffff !important;
+    color: #ffffff;
 }
 
 .EditorPanel {
-    overflow-x: hidden !important;
+    overflow-x: hidden;
 }
 
 #PreviewIFrame {
@@ -381,10 +381,8 @@ html, body {
     left: 30em; /* Same as left component width */
     margin-left: 5px; /* Same as divider width */
     /*overflow:hidden;*/
-
     z-index: 200;
-    background-color:#fff;    
-
+    background-color: #fff;
 }
 
 .dropZone {

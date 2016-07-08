@@ -1,0 +1,12 @@
+﻿@import "../modules/variables";
+@import "../modules/mixins";
+
+#page {
+    height: 100vh;
+}
+
+#mainWrapper {
+    width: 80%;
+    display: inline-block;
+    float: left;
+}

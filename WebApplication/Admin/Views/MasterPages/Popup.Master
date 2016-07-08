@@ -28,5 +28,6 @@
         </script>
     </form>
     <link href="/Admin/Styles/popup.css" rel="stylesheet" />
+    <link href="/Admin/Styles/admin.css" rel="stylesheet" />
 </body>
 </html>

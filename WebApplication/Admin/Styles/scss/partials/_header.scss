@@ -1,0 +1,88 @@
+﻿@import "../modules/variables";
+@import "../modules/mixins";
+
+#header {
+    width: 15%;
+    min-width: 200px;
+    height: 100%;
+    display: inline-block;
+    float: left;
+
+    #topNavWrapper {
+        background: $grey-dark;
+        height: 100%;
+        color: white;
+
+        @include mobile {
+            background: white;
+        }
+
+        #loggedInUser {
+            min-height: 80px;
+            width: 100%;
+            padding: 0;
+
+            .profile__container {
+                .profile__image {
+                    padding: 1em;
+                    float: left;
+                }
+
+                .profile__content {
+                    padding: 1em;
+                    color: white;
+
+                    .loginName {
+                        float: left;
+                        height: 100%;
+                    }
+
+                    #LoginStatus {
+                        float: right;
+                        height: 100%;
+                    }
+                }
+            }
+        }
+
+        #topMenu {
+            background: none;
+
+            .sf-menu {
+                margin-right: 1px;
+                margin-bottom: 0;
+                width: 100%;
+                display: block;
+                background-color: $grey-dark;
+
+                li {
+                    width: 100%;
+                    background: $grey-dark;
+                    display: block;
+
+                    a {
+                        background: lighten($grey-dark,10%);
+                        border: none;
+                        padding: 15px 25px;
+                        margin-bottom: 1px;
+                        transition: 0.33s all ease-in-out !important;
+
+                        &:hover, &:active {
+                            background-color: darken($grey-dark,10%);
+                        }
+                    }
+
+                    ul {
+                        width: 100%;
+                        display: block;
+
+                        li {
+                            width: 100%;
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,216 @@
+﻿// Border radius
+// Usage:
+// @include border-radius(5px);
+
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    border-radius: $radius;
+}
+
+// Set a rem font size with pixel fallback (prevents compounding font sizes)
+// Usage:
+// @include font-size(14px);
+
+@function calculateRem($size) {
+    $remSize: $size / 16px;
+    @return $remSize * 1rem;
+}
+
+@mixin font-size($size) {
+    font-size: $size;
+    font-size: calculateRem($size);
+}
+
+// Breakpoints for Desktop/Tablet/Mobile
+// Usage:
+// @include mobile {width: 100%; float: none; margin: 0;}
+
+@mixin desktop {
+    @media only screen and (max-width: 60em) {
+        @content;
+    }
+}
+
+@mixin tablet-landscape {
+    @media only screen and (max-width: 1280px) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media only screen and (max-width: 1025px) {
+        @content;
+    }
+}
+
+@mixin mobile-landscape {
+    @media only screen and (max-width: 40em) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media only screen and (max-width: 30em) {
+        @content;
+    }
+}
+
+@mixin animation($str) {
+    -webkit-animation: #{$str};
+    -moz-animation: #{$str};
+    -ms-animation: #{$str};
+    -o-animation: #{$str};
+    animation: #{$str};
+}
+
+// Transitions
+// Usage:
+// .element { @include transition(color .3s ease);
+// &:hover { color: black;}}
+
+@mixin transition($args...) {
+    -webkit-transition: $args;
+    -moz-transition: $args;
+    -ms-transition: $args;
+    -o-transition: $args;
+    transition: $args;
+}
+
+// Cross browser opacity back to IE5!!!
+// Usage:
+// @include opacity(0.8);
+
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    $opacity-ie: $opacity * 100;
+    filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+// Clearfix
+// Usage:
+// .element-with-floated-children { @extend %clearfix;}
+%clearfix {
+    *zoom: 1;
+
+    &:before, &:after {
+        content: " ";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+}
+
+// Size
+// Usage:
+// .element {@include size(100%);}
+// .other-element {  @include size(100%, 1px);}
+
+@mixin size($width, $height: $width) {
+    width: $width;
+    height: $height;
+}
+
+// web brand font: Gotham Black
+
+@mixin brand-font {
+    font-family: "Gotham SSm A", "Gotham SSm B";
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+// Flexbox mixins
+
+@mixin flexbox {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+@mixin flex($values) {
+    -webkit-box-flex: $values;
+    -moz-box-flex: $values;
+    -webkit-flex: $values;
+    -ms-flex: $values;
+    flex: $values;
+}
+
+@mixin justify-content($justify) {
+    -webkit-box-pack: $justify;
+    -moz-box-pack: $justify;
+    -ms-flex-pack: $justify;
+    -webkit-justify-content: $justify;
+    justify-content: $justify;
+}
+
+@mixin flex-flow($flow) {
+    -ms-flex-flow: $flow;
+    -webkit-flex-flow: $flow;
+    flex-flow: $flow;
+}
+
+@mixin align-items($align-items) {
+    -webkit-box-align: $align-items;
+    -moz-box-align: $align-items;
+    -ms-flex-align: $align-items;
+    -webkit-align-items: $align-items;
+    align-items: $align-items;
+}
+
+@mixin align-content($align-content) {
+    -webkit-align-content: $align-content;
+    align-content: $align-content;
+}
+
+@mixin flex-direction($flex-direction) {
+    -webkit-flex-direction: $flex-direction;
+    flex-direction: $flex-direction;
+}
+
+@mixin bg-diagonal-stripes-darkgrey {
+    background: repeating-linear-gradient( 45deg, #232323, #232323 1px, #464646 1px, #464646 3px );
+}
+
+// transition / transform mixins
+
+// generic transform
+@mixin transform($transforms) {
+    -moz-transform: $transforms;
+    -o-transform: $transforms;
+    -ms-transform: $transforms;
+    -webkit-transform: $transforms;
+    transform: $transforms;
+}
+// rotate
+@mixin rotate ($deg) {
+    @include transform(rotate(#{$deg}deg));
+}
+
+// scale
+@mixin scale($scale) {
+    @include transform(scale($scale));
+}
+// translate
+@mixin translate ($x, $y) {
+    @include transform(translate($x, $y));
+}
+// skew
+@mixin skew ($x, $y) {
+    @include transform(skew(#{$x}deg, #{$y}deg));
+}
+
+@mixin transition ($transition...) {
+    -webkit-transition: $transition;
+    -moz-transition: $transition;
+    -ms-transition: $transition;
+    -o-transition: $transition;
+    transition: $transition;
+}

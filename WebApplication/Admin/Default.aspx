@@ -4,7 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1>Welcome to your site editor: <span>Lets get started</span></h1>
+    <h1>Welcome to your site editor: <span>Let's get started</span></h1>
     <div class="box">
         <div class="leftArrow">
             <h2>Edit a page in your site</h2>

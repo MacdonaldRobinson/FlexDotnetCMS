@@ -153,7 +153,7 @@
             <div id="LongDescriptionHolder">
                 <label for="<%= MainContent.ClientID %>">
                     MainContent</label>
-                <Admin:Editor ID="MainContent" runat="server" Height="300px" />
+                <Admin:Editor ID="MainContent" runat="server" Height="400px" />
             </div>
             <div id="TagsHolder">
                 <label>Tags</label>

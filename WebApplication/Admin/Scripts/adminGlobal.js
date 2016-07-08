@@ -464,6 +464,13 @@ $(window).load(function () {
 });
 
 $(document).ready(function () {
+
+    var controller = new ScrollMagic.Controller();
+
+    var scene = new ScrollMagic.Scene({ offset: -45, triggerElement: ".SavePanel", triggerHook: 0 })
+                    .setPin(".SavePanel")
+                    .addTo(controller);
+
     $('ul.sf-menu').superfish();
     $('.tabs').tabs();
 
@@ -481,10 +488,10 @@ $(document).ready(function () {
         plugins: [
           'advlist autolink lists link image charmap print preview hr anchor pagebreak',
           'searchreplace wordcount visualblocks visualchars code fullscreen',
-          'insertdatetime media nonbreaking save table contextmenu directionality',
+          'insertdatetime media youtube nonbreaking save table contextmenu directionality',
           'emoticons template paste textcolor colorpicker textpattern imagetools ace'
         ],
-        toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media ace',
+        toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media youtube ace',
         templates: [
         ],
         image_advtab: true,
@@ -691,6 +698,7 @@ function BindTree() {
 }
 $(document)
     .on('dnd_move.vakata', function (e, data) {
+
     })
     .on('dnd_stop.vakata', function (e, data) {
         var elem = $(data.element);
@@ -704,7 +712,8 @@ $(document)
 
         var isDropZone = target.hasClass("dropZone")
 
-        if (isDropZone) {
+        if (isDropZone) {            
+
             var li = "<li data-mediadetailid='" + elem.parent().attr("data-mediadetailid") + "'><a class='delete'>x</a><span class='text'>" + elem.text() + "</span></li>";
 
             if (target.find("li[data-mediadetailid='" + elem.parent().attr("data-mediadetailid") + "']").length == 0) {
@@ -770,10 +779,6 @@ function BindScrollMagic() {
 
     var scene = new ScrollMagic.Scene({ offset: -45, triggerElement: "#SaveFields", triggerHook: 0 })
                     .setPin("#SaveFields")
-                    .addTo(controller);
-
-    var scene = new ScrollMagic.Scene({ offset: -45, triggerElement: ".SavePanel", triggerHook: 0 })
-                    .setPin(".SavePanel")
                     .addTo(controller);
 }
 

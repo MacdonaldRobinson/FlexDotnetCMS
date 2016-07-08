@@ -194,5 +194,35 @@ namespace WebApplication.Admin.Controls.Fields
             FieldItems.PageIndex = e.NewPageIndex;
             FieldItems.DataBind();
         }
+
+        protected void SearchItems_Click(object sender, EventArgs e)
+        {
+            switch (Mode)
+            {
+                case ViewMode.GridView:
+                    {
+                        if (FieldItems.DataSource != null)
+                        {
+                            var items = ((List<FieldAssociation>)FieldItems.DataSource).Where(i => i.MediaDetail.SectionTitle.Contains(SearchText.Text)).ToList();
+
+                            FieldItems.DataSource = items;
+                            FieldItems.DataBind();
+                        }
+
+                        break;
+                    }
+                default:
+                    {
+                        if (Values.DataSource != null)
+                        {
+                            var items = ((List<FieldAssociation>)Values.DataSource).Where(i => i.MediaDetail.SectionTitle.Contains(SearchText.Text)).ToList();
+
+                            Values.DataSource = items;
+                            Values.DataBind();
+                        }
+                        break;
+                    }
+            }
+        }
     }
 }

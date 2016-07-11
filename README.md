@@ -7,7 +7,7 @@ For More Details Please visit the project wiki at: https://github.com/MacdonaldR
 - Ability to change the Page title, Meta Description, Meta Keywords, Link title ( Url Segment for the page )
 - Search engine friendly URLs
 - All pages automatically get Open Graph Meta Tags
-- Every time you save a page in the CMS it will automatically create a history version ( I have it set to a max of 10 history versions ) 
+- Every time you save a page in the CMS it will automatically create a history version
 - Ability to save as draft
 - Ability to create custom fields with their own unique layouts
 - Ability to modify the layout of all pages with a specific page type or unlink from a page type and create a unique layout for every page

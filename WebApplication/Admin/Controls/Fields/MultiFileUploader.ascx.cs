@@ -147,6 +147,16 @@ namespace WebApplication.Admin.Controls.Fields
 
                         FieldItems.DataSource = GetValue();
                         FieldItems.DataBind();
+
+                        if(((dynamic)FieldItems.DataSource).Count > 0)
+                        {
+                            SearchPanel.Visible = true;
+                        }
+                        else
+                        {
+                            SearchPanel.Visible = false;
+                        }
+
                         break;
                     }                                
                 default:
@@ -156,6 +166,16 @@ namespace WebApplication.Admin.Controls.Fields
 
                         Values.DataSource = GetValue();
                         Values.DataBind();
+
+                        if (((dynamic)Values.DataSource).Count > 0)
+                        {
+                            SearchPanel.Visible = true;
+                        }
+                        else
+                        {
+                            SearchPanel.Visible = false;
+                        }
+
                         break;
                     }
             }

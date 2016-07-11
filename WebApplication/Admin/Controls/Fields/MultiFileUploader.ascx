@@ -8,7 +8,7 @@
                 <div>
                     <asp:LinkButton Text="Add New Item" runat="server" ID="AddItem" OnClick="AddItem_Click"/>
                 </div>
-                <asp:Panel runat="server" DefaultButton="SearchItems">
+                <asp:Panel runat="server" DefaultButton="SearchItems" id="SearchPanel" Visible="false">
                     <asp:TextBox runat="server" ID="SearchText" style="display:inline; width: 200px;" placeholder="Search ..." />
                     <asp:LinkButton ID="SearchItems" Text="Search" runat="server" OnClick="SearchItems_Click"/>
                 </asp:Panel> 

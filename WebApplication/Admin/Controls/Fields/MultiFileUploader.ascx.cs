@@ -47,7 +47,7 @@ namespace WebApplication.Admin.Controls.Fields
         {
             var field = GetField();
             var hasDeleted = false;
-            var hasReordered = false;
+            var hasReordered = false;            
 
             if (IsPostBack && MultiFileUpload.HasFiles && !hasRun)
             {
@@ -80,6 +80,8 @@ namespace WebApplication.Admin.Controls.Fields
                             field.FieldAssociations.Add(fieldAssociation);
 
                             index++;
+
+                            var returnObj = BaseMapper.SaveDataModel();
                         }
                     }
                 }

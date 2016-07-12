@@ -251,7 +251,7 @@ namespace WebApplication.Admin.Controls.Editors
             {
                 OptionText = "Multi Item - Uploader",
                 OptionValue = "Multi Item - Uploader",
-                AdminControl = @"<Admin:MultiFileUploader runat='server' SaveToFolder='' MediaTypeID='25' Mode='Uploader' />",
+                AdminControl = @"<Admin:MultiFileUploader runat='server' SaveToFolder='' MediaTypeID='25' PageSize='12' Mode='Uploader' />",
                 GetAdminControlValue = "SelectedValue",
                 SetAdminControlValue = "SelectedValue",
                 FrontEndLayout = @"@{
@@ -270,7 +270,7 @@ namespace WebApplication.Admin.Controls.Editors
             {
                 OptionText = "Multi Item - GridView",
                 OptionValue = "Multi Item - GridView",
-                AdminControl = @"<Admin:MultiFileUploader runat='server' SaveToFolder='' MediaTypeID='25' Mode='GridView' />",
+                AdminControl = @"<Admin:MultiFileUploader runat='server' SaveToFolder='' MediaTypeID='25' PageSize='15' Mode='GridView' />",
                 GetAdminControlValue = "SelectedValue",
                 SetAdminControlValue = "SelectedValue",
                 FrontEndLayout = @"@{

@@ -140,7 +140,9 @@ namespace WebApplication.Admin.Controls.Fields
 
         private void BindValues()
         {
-            switch(Mode)
+            UpdatePagerSize();
+
+            switch (Mode)
             {
                 case ViewMode.GridView:
                     {
@@ -167,7 +169,7 @@ namespace WebApplication.Admin.Controls.Fields
                         FieldItems.Visible = false;
 
                         Values.DataSource = GetValue();
-                        Values.DataBind();
+                        //Values.DataBind();
 
                         if (((dynamic)Values.DataSource).Count > 0)
                         {
@@ -184,13 +186,14 @@ namespace WebApplication.Admin.Controls.Fields
 
 
             ItemsToDelete.Text = "[]";
-            ReorderItems.Text = "[]";
+            ReorderItems.Text = "[]";            
         }
 
         public enum ViewMode { Uploader, GridView }
 
         public string SaveToFolder { get; set; }
         public long MediaTypeID { get; set; }
+        public int PageSize { get; set; }
         public ViewMode Mode { get; set; }
 
         protected void AddItem_Click(object sender, EventArgs e)
@@ -219,6 +222,8 @@ namespace WebApplication.Admin.Controls.Fields
 
         protected void SearchItems_Click(object sender, EventArgs e)
         {
+            UpdatePagerSize();
+
             switch (Mode)
             {
                 case ViewMode.GridView:
@@ -244,6 +249,15 @@ namespace WebApplication.Admin.Controls.Fields
                         }
                         break;
                     }
+            }
+        }
+
+        private void UpdatePagerSize()
+        {
+            if (PageSize > 0)
+            {
+                Pager.PageSize = PageSize;
+                FieldItems.PageSize = PageSize;
             }
         }
     }

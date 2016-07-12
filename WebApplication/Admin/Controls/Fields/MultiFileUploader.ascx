@@ -41,7 +41,7 @@
                                 </li>
                             </ItemTemplate>
                         </asp:ListView>
-                        <Site:Pager runat="server" PagedControlID="Values" PageSize="12" />
+                        <Site:Pager runat="server" id="Pager" PagedControlID="Values" PageSize="12" />
                     </div>
                 </asp:Panel>
 

@@ -6,7 +6,107 @@
 }
 
 #mainWrapper {
-    width: 80%;
+    width: calc(100% - 230px);
+    height: calc(100% - 75px);
     display: inline-block;
     float: left;
+    margin-top: 75px;
+
+    @include tablet {
+    }
+
+    .split-pane {
+        height: 100%;
+    }
+}
+
+#mainArea {
+    height: 100%;
+    margin-left: 0;
+}
+
+.editing__top__bar {
+    position: fixed;
+    top: 0;
+    width: 88vw;
+    height: 75px;
+    background: $grey-dark;
+    color: white;
+    left: 229px;
+    right: 0;
+    display: block;
+    z-index: 400;
+    border-left: 1px solid darken($grey-dark, 10%);
+
+    @include tablet {
+        left: 139px;
+    }
+
+    h1 {
+        color: white;
+        margin-top: 0 !important;
+        padding-top: 1em;
+        padding-left: 1em;
+        display: inline-block;
+
+        span {
+            color: white;
+        }
+    }
+
+    .SavePanel {
+        position: relative;
+        display: inline-block;
+        z-index: 100;
+        float: right;
+        padding-top: 1.5em;
+        background-color: transparent;
+    }
+
+    .buttons {
+        margin: 0;
+
+        a {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+            transition: 0.25s all ease-in;
+
+            &:hover, &:active {
+                background-color: white;
+                color: $grey-dark;
+
+                &:first-child {
+                    background-color: $color-1;
+                    color: white;
+                }
+            }
+        }
+    }
+}
+
+.lower {
+    z-index: 1;
+}
+
+#right-component {
+    left: 20em;
+    min-width: 20em; /* Same as left component width */
+    margin-left: 5px; /* Same as divider width */
+    height: 100%;
+    background-color: lighten($grey-light,5%);
+}
+
+#mainArea #left-component {
+    width: 60em;
+}
+
+#mainArea #my-divider {
+    left: 60em;
+}
+
+#mainArea #right-component {
+    left: 60em;
+    min-width: 20em; /* Same as left component width */
+    margin-left: 5px; /* Same as divider width */
 }

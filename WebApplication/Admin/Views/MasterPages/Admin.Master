@@ -37,28 +37,32 @@
                                 <span class="loginName">
                                     <asp:LoginName ID="LoginName1" runat="Server" />
                                 </span>
-                                <asp:LoginStatus ID="LoginStatus" runat="Server" OnLoggedOut="LoginStatus_OnLoggedOut" />
+
+                                <asp:LoginStatus ID="LoginStatus" runat="Server" OnLoggedOut="LoginStatus_OnLoggedOut" LogoutText="" LoginText="" />
                             </div>
                         </div>
                     </div>
                     <div id="topMenu" class="floatLeft">
                         <ul class="sf-menu">
-                            <li><a href="/Admin/Default.aspx">Dashboard</a></li>
-                            <li><a href="/Scripts/tinyfilemanager.net/dialog.aspx" class="colorbox iframe">FileManager</a></li>
-                            <li id="GlossaryTermsNavItem" runat="server" visible="false"><a href="/Admin/Views/PageHandlers/GlossaryTerms/Default.aspx">Manage Glossary Terms</a></li>
+                            <li><a href="/Admin/Default.aspx"><i class="fa fa-tachometer" aria-hidden="true"></i>Dashboard</a></li>
+                            <li><a href="/Scripts/tinyfilemanager.net/dialog.aspx" class="colorbox iframe"><i class="fa fa-files-o" aria-hidden="true"></i>File Manager</a></li>
+                            <li id="GlossaryTermsNavItem" runat="server" visible="true"><a href="/Admin/Views/PageHandlers/GlossaryTerms/Default.aspx"><i class="fa fa-book" aria-hidden="true"></i>Glossary Terms</a></li>
                             <%  if (BasePage.CurrentUser.IsInRole(RoleEnum.Administrator))
                                 { %>
 
-                            <li><a href="/Admin/Views/PageHandlers/Tags/Default.aspx">Tags</a></li>
                             <%--<li><a href="/Admin/Views/PageHandlers/FieldFiles/Default.aspx">Manage Field Files</a></li>--%>
-                            <li><a href="/Admin/Views/PageHandlers/Settings/Default.aspx">Settings</a></li>
-                            <li><a href="/Admin/Views/PageHandlers/Users/Default.aspx">Users</a></li>
-                            <li><a href="/Admin/Views/PageHandlers/Roles/Default.aspx">Roles</a></li>
-                            <li><a href="/Admin/Views/PageHandlers/Permissions/Default.aspx">Permissions</a></li>
-                            <li><a href="/Admin/Views/PageHandlers/Languages/Default.aspx">Languages</a></li>
-                            <li><a href="/Admin/Views/PageHandlers/MediaTypes/Default.aspx">MediaTypes</a></li>
-                            <li><a href="/Admin/Views/PageHandlers/MasterPages/Default.aspx">MasterPages</a></li>
-                            <li><a href="/Admin/Views/PageHandlers/AdminTools/Default.aspx">Admin Tools</a></li>
+
+                            <li><a href="/Admin/Views/PageHandlers/Users/Default.aspx"><i class="fa fa-users" aria-hidden="true"></i>Users</a></li>
+                            <li><a href="/Admin/Views/PageHandlers/Roles/Default.aspx"><i class="fa fa-list-ul" aria-hidden="true"></i>Roles</a></li>
+                            <li><a href="/Admin/Views/PageHandlers/Permissions/Default.aspx"><i class="fa fa-key" aria-hidden="true"></i>Permissions</a></li>
+
+                            <li><a href="/Admin/Views/PageHandlers/Tags/Default.aspx"><i class="fa fa-tags" aria-hidden="true"></i>Tags</a></li>
+                            <li><a href="/Admin/Views/PageHandlers/MediaTypes/Default.aspx"><i class="fa fa-code" aria-hidden="true"></i>Media Types</a></li>
+
+                            <li><a href="/Admin/Views/PageHandlers/MasterPages/Default.aspx"><i class="fa fa-file-code-o" aria-hidden="true"></i>Master Pages</a></li>
+                            <li><a href="/Admin/Views/PageHandlers/Languages/Default.aspx"><i class="fa fa-globe" aria-hidden="true"></i>Languages</a></li>
+                            <li><a href="/Admin/Views/PageHandlers/AdminTools/Default.aspx"><i class="fa fa-wrench" aria-hidden="true"></i>Admin Tools</a></li>
+                            <li><a href="/Admin/Views/PageHandlers/Settings/Default.aspx"><i class="fa fa-sliders" aria-hidden="true"></i>Settings</a></li>
 
                             <% } %>
                         </ul>
@@ -68,7 +72,7 @@
                 </div>
             </div>
             <div id="mainWrapper">
-
+                <div class="editing__top__bar lower"></div>
                 <div class="split-pane fixed-left">
                     <div class="split-pane-component" id="left-component">
                         <div id="treeView">

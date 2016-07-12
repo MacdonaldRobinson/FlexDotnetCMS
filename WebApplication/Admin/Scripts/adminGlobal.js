@@ -345,12 +345,11 @@ function HandleContextMenuClick(action, target) {
     }
 }
 
-function getFieldsAutoComplete()
-{
+function getFieldsAutoComplete() {
     var wordsArray = [];
 
     $("#Main label:first-child").each(function () {
-        var text = $(this).text().replace(/\s/g, '').replace(":","");
+        var text = $(this).text().replace(/\s/g, '').replace(":", "");
         wordsArray.push("{" + text + "}");
     });
 
@@ -366,13 +365,11 @@ function initAceEditors() {
     var wordList = getFieldsAutoComplete();
 
     $(document).on("change", "#AttachEditorToBrowserPanel", function () {
-        if(!$(this).is(":checked"))
-        {
+        if (!$(this).is(":checked")) {
             if ($("#PreviewPanel").length > 0)
                 $("#PreviewPanel")[0].src = $("#PreviewPanel")[0].src;
         }
-        else
-        {
+        else {
             var textarea = $(this).parent().find("textarea");
             var value = textarea.val();
 
@@ -381,16 +378,13 @@ function initAceEditors() {
         }
     });
 
-
     $(".AceEditor").each(function () {
         var id = $(this).attr("id");
         var editorId = $(this).attr("name") + "-editor";
 
         if ($("#PreviewPanel").length > 0) {
-            if ($(this).hasClass("CanAttachToBrowserPanel"))
-            {
-                if ($("#" + id).parent().find("#AttachEditorToBrowserPanel").length == 0)
-                {
+            if ($(this).hasClass("CanAttachToBrowserPanel")) {
+                if ($("#" + id).parent().find("#AttachEditorToBrowserPanel").length == 0) {
                     $("#" + id).parent().prepend("<input type='checkbox' id='AttachEditorToBrowserPanel' /> Attach editor to browser panel");
                 }
             }
@@ -427,7 +421,6 @@ function initAceEditors() {
                         meta: "static"
                     };
                 }));
-
             }
         }
         editor.completers = [langTools.snippetCompleter, langTools.textCompleter, customCompleter]
@@ -464,12 +457,11 @@ $(window).load(function () {
 });
 
 $(document).ready(function () {
+    //var controller = new ScrollMagic.Controller();
 
-    var controller = new ScrollMagic.Controller();
-
-    var scene = new ScrollMagic.Scene({ offset: -45, triggerElement: ".SavePanel", triggerHook: 0 })
-                    .setPin(".SavePanel")
-                    .addTo(controller);
+    //var scene = new ScrollMagic.Scene({ offset: -45, triggerElement: ".SavePanel", triggerHook: 0 })
+    //                .setPin(".SavePanel")
+    //                .addTo(controller);
 
     $('ul.sf-menu').superfish();
     $('.tabs').tabs();
@@ -576,7 +568,6 @@ function BindGridViewSortable(CssSelector, WebserviceUrl, UpdatePanelClientId, O
 }
 
 $(function () {
-
     $('div.split-pane').splitPane();
     //$("#SiteTree ul").sortable({ connectWith: "ul" });
     BindTree();
@@ -584,7 +575,6 @@ $(function () {
     $(document).on('click', '#SiteTree a', function () {
         window.location.href = $(this).attr("href");
     });
-
 });
 
 function BindTree() {
@@ -692,13 +682,10 @@ function BindTree() {
             error: function (xhr, status, error) {
             }
         });
-
     });
-
 }
 $(document)
     .on('dnd_move.vakata', function (e, data) {
-
     })
     .on('dnd_stop.vakata', function (e, data) {
         var elem = $(data.element);
@@ -712,15 +699,13 @@ $(document)
 
         var isDropZone = target.hasClass("dropZone")
 
-        if (isDropZone) {            
-
+        if (isDropZone) {
             var li = "<li data-mediadetailid='" + elem.parent().attr("data-mediadetailid") + "'><a class='delete'>x</a><span class='text'>" + elem.text() + "</span></li>";
 
             if (target.find("li[data-mediadetailid='" + elem.parent().attr("data-mediadetailid") + "']").length == 0) {
                 target.append("<li data-mediadetailid='" + elem.parent().attr("data-mediadetailid") + "'><a class='delete'>x</a><span class='text'>" + elem.text() + "</span></li>");
             }
         }
-
     });
 
 function pageLoad() {
@@ -741,7 +726,6 @@ function BindDataTable() {
 }
 
 function RefreshAdminUpdatePanel(elem) {
-
     RefreshUpdatePanel(elem, function () {
         BindSortable();
     });
@@ -753,8 +737,6 @@ $(document).ready(function () {
     $(".MultiFileUploader img").error(function () {
         $(this).attr("src", "/media/images/icons/File.jpg");
     });
-
-
 });
 
 function BindSortable() {
@@ -788,7 +770,6 @@ function ReloadPreviewPanel() {
 }
 
 function init() {
-
     BindSortable();
 
     $("ul.dropZone").each(function () {
@@ -796,8 +777,7 @@ function init() {
     });
 
     $(document).on("click", ".dropZone li a.delete", function () {
-        
-        var elem = $(this).closest(".dropZone")[0];        
+        var elem = $(this).closest(".dropZone")[0];
         $(this).closest("li").remove();
 
         UpdateValuesFromUL(elem);
@@ -814,7 +794,6 @@ function init() {
     });
 
     function UpdateULFromValues(elem) {
-                
         var values = $(elem).find("input[type='hidden']");
 
         //console.log(values);
@@ -829,11 +808,10 @@ function init() {
             //console.log(this);
 
             $(elem).append("<li data-mediadetailid='" + this.id + "'><a class='delete'>x</a><span class='text'>" + this.name + "</span></li>");
-
         });
     }
 
-    function UpdateValuesFromUL(elem) {        
+    function UpdateValuesFromUL(elem) {
         var values = $(elem).find("input[type='hidden']");
 
         var arr = new Array();
@@ -849,7 +827,6 @@ function init() {
 
                 arr.push(obj);
             }
-
         });
 
         var jsonString = JSON.stringify(arr);
@@ -858,17 +835,15 @@ function init() {
     }
 
     $(document).on("click", ".DeleteImage", function () {
-
         var root = $(this).closest(".MultiFileUploader");
 
         var parentItem = $(this).closest(".item");
         var itemsToDelete = root.find(".ItemsToDelete");
         var image = parentItem.find("img");
-        
-        if (image.length == 0)
-        {
+
+        if (image.length == 0) {
             image = $(this);
-        }            
+        }
 
         var itemId = $(this).attr('data-id');
 
@@ -916,7 +891,6 @@ function init() {
                 if (regex.test(file[0].name.toLowerCase())) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
-
                         if (file[0].type.indexOf("image") != -1) {
                             var img = $("<img />");
                             img.attr("style", "width: 100px; height: 100px;");

@@ -49,15 +49,6 @@ namespace WebApplication.Admin.MediaArticle {
         protected global::System.Web.UI.WebControls.Literal SectionTitle;
         
         /// <summary>
-        /// PanelsPlaceHolder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder PanelsPlaceHolder;
-        
-        /// <summary>
         /// SavePanel control.
         /// </summary>
         /// <remarks>
@@ -128,6 +119,15 @@ namespace WebApplication.Admin.MediaArticle {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink EditMediaType;
+        
+        /// <summary>
+        /// PanelsPlaceHolder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder PanelsPlaceHolder;
         
         /// <summary>
         /// PreviewPanel control.

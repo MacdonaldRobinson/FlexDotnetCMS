@@ -2,15 +2,20 @@
 @import "../modules/mixins";
 
 #header {
-    width: 15%;
-    min-width: 200px;
+    width: 230px;
     height: 100%;
     display: inline-block;
     float: left;
 
+    @include tablet {
+        width: 140px;
+    }
+
     #topNavWrapper {
         background: $grey-dark;
         height: 100%;
+        width: 100%;
+        display: block;
         color: white;
 
         @include mobile {
@@ -18,28 +23,70 @@
         }
 
         #loggedInUser {
-            min-height: 80px;
+            height: 75px;
             width: 100%;
             padding: 0;
 
             .profile__container {
+                height: 100%;
+
                 .profile__image {
                     padding: 1em;
                     float: left;
+
+                    img {
+                        width: 50px;
+                    }
                 }
 
                 .profile__content {
-                    padding: 1em;
+                    height: 100%;
                     color: white;
+                    position: relative;
 
                     .loginName {
                         float: left;
-                        height: 100%;
+                        padding: 1.5em 0.5em;
+                        font-size: 18px;
+
+                        @include tablet {
+                            display: none;
+                        }
+
+                        &:first-letter {
+                            text-transform: uppercase;
+                        }
                     }
 
                     #LoginStatus {
                         float: right;
-                        height: 100%;
+                        padding: 1.5em 0.5em;
+                        text-decoration: none;
+                        content: "";
+
+                        @include tablet {
+                            padding: 1.75em 1em;
+                        }
+
+                        &:hover {
+                            &:after {
+                                color: $color-2;
+                            }
+                        }
+
+                        &:after {
+                            display: block;
+                            min-width: 26px;
+                            color: white;
+                            text-align: center;
+                            font-size: 30px;
+                            content: "\f08b";
+                            font-family: FontAwesome;
+                            font-style: normal;
+                            font-weight: normal;
+                            text-decoration: inherit;
+                            transition: 0.25s all ease-in;
+                        }
                     }
                 }
             }
@@ -63,12 +110,34 @@
                     a {
                         background: lighten($grey-dark,10%);
                         border: none;
+                        font-size: 16px;
                         padding: 15px 25px;
                         margin-bottom: 1px;
+                        vertical-align: middle;
                         transition: 0.33s all ease-in-out !important;
+
+                        @include tablet {
+                            text-align: center;
+                            padding: 0.75em;
+                            font-size: 14px;
+                        }
 
                         &:hover, &:active {
                             background-color: darken($grey-dark,10%);
+                        }
+
+                        i {
+                            min-width: 26px;
+                            text-align: center;
+                            font-size: 26px;
+                            margin-right: 1em;
+
+                            @include tablet {
+                                font-size: 18px;
+                                width: 100%;
+                                margin-bottom: 0.25em;
+                                display: block;
+                            }
                         }
                     }
 

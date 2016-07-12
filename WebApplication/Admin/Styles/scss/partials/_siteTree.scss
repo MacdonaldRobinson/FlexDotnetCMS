@@ -1,4 +1,6 @@
-﻿#SiteTree {
+﻿@import "../modules/variables";
+
+#SiteTree {
     .jstree-default .jstree-node {
         margin-left: 10px;
     }
@@ -20,28 +22,14 @@
 
 #left-component {
     width: 20em;
+    height: 100%;
+    background-color: lighten($grey-light,5%);
 }
 
 #my-divider {
     left: 20em;
-}
 
-#right-component {
-    left: 20em;
-    min-width: 20em; /* Same as left component width */
-    margin-left: 5px; /* Same as divider width */
-}
-
-#mainArea #left-component {
-    width: 60em;
-}
-
-#mainArea #my-divider {
-    left: 60em;
-}
-
-#mainArea #right-component {
-    left: 30em;
-    min-width: 20em; /* Same as left component width */
-    margin-left: 5px; /* Same as divider width */
+    .split-pane-divider-inner {
+        display: none;
+    }
 }

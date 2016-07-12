@@ -165,6 +165,16 @@
     <Content Include="Admin\media\images\css\background.jpg" />
     <Content Include="Admin\media\images\css\leftArrow.png" />
     <Content Include="Admin\media\images\css\logo.png" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\css\font-awesome.css" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\css\font-awesome.min.css" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\fonts\fontawesome-webfont.svg" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\HELP-US-OUT.txt" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\scss\font-awesome.css">
+      <DependentUpon>font-awesome.scss</DependentUpon>
+    </Content>
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\scss\font-awesome.min.css">
+      <DependentUpon>font-awesome.css</DependentUpon>
+    </Content>
     <Content Include="Admin\Styles\admin.css" />
     <Content Include="Admin\Styles\admin.min.css">
       <DependentUpon>admin.css</DependentUpon>
@@ -1821,6 +1831,44 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin\Styles\scss\modules\_typography.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\fonts\fontawesome-webfont.eot" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\fonts\fontawesome-webfont.woff" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\fonts\FontAwesome.otf" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\less\animated.less" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\less\bordered-pulled.less" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\less\core.less" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\less\fixed-width.less" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\less\font-awesome.less" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\less\icons.less" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\less\larger.less" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\less\list.less" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\less\mixins.less" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\less\path.less" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\less\rotated-flipped.less" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\less\screen-reader.less" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\less\stacked.less" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\less\variables.less" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\scss\font-awesome.scss" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\scss\_animated.scss" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\scss\_bordered-pulled.scss" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\scss\_core.scss" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\scss\_fixed-width.scss" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\scss\_icons.scss" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\scss\_larger.scss" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\scss\_list.scss" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\scss\_mixins.scss" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\scss\_path.scss" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\scss\_rotated-flipped.scss" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\scss\_screen-reader.scss" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\scss\_stacked.scss" />
+    <Content Include="Admin\Scripts\font-awesome-4.6.3\scss\_variables.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Styles\scss\partials\_header.scss" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

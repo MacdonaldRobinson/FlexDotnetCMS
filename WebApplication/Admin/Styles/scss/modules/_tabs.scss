@@ -1,6 +1,12 @@
 ﻿@import "variables";
 
 .ui-widget-header {
-    background: none;
+    background: white;
     border: none;
+    margin-top: 0.5em;
+    border-radius: 0;
+}
+
+.ui-corner-all {
+    border-radius: 0 !important;
 }

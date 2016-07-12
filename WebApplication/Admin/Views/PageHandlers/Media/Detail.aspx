@@ -46,22 +46,23 @@
                 <asp:LinkButton ID="ViewCurrentVersion" runat="server" OnClick="ViewCurrentVersion_OnClick">Click Here</asp:LinkButton>
                 to view the current LIVE version<br />
             </asp:Panel>
-            <h1>
-                <asp:Literal ID="SectionTitle" runat="server"></asp:Literal></h1>
+            <div class="editing__top__bar">
 
+                <h1>
+                    <asp:Literal ID="SectionTitle" runat="server"></asp:Literal></h1>
+                <asp:Panel ID="SavePanel" runat="server" Visible="false" CssClass="SavePanel buttons">
+                    <asp:LinkButton ID="Save" runat="server" OnClick="Save_OnClick" Text="Save" />
+                    <asp:LinkButton ID="SaveAsDraft" runat="server" OnClick="Save_OnClick" Text="Save As Draft" CommandArgument="SaveAsDraft" />
+                    <asp:LinkButton ID="LoadLatestDraft" runat="server" OnClick="LoadLatestDraft_OnClick" Text="Load Latest Draft" Visible="false" />
+                    <asp:LinkButton ID="SaveAndPublish" runat="server" OnClick="SaveAndPublish_OnClick" Text="Save And Publish" CommandArgument="SaveAndPublish" Visible="false" />
+                    <asp:LinkButton ID="PublishNow" runat="server" OnClick="PublishNow_OnClick" Visible="false" Text="Publish Now" />
+                    <asp:LinkButton runat="server" ID="PublishLive" OnClick="PublishLive_OnClick" Text="Publish LIVE" Visible="false" />
+                    <asp:HyperLink ID="EditMediaType" runat="server" Text="Edit Media Type" Visible="false" CssClass="colorbox iframe" />
+                </asp:Panel>
+            </div>
             <asp:PlaceHolder runat="server" ID="PanelsPlaceHolder" />
 
             <div class="clear"></div>
-
-            <asp:Panel ID="SavePanel" runat="server" Visible="false" CssClass="SavePanel buttons">
-                <asp:LinkButton ID="Save" runat="server" OnClick="Save_OnClick" Text="Save" />
-                <asp:LinkButton ID="SaveAsDraft" runat="server" OnClick="Save_OnClick" Text="Save As Draft" CommandArgument="SaveAsDraft" />
-                <asp:LinkButton ID="LoadLatestDraft" runat="server" OnClick="LoadLatestDraft_OnClick" Text="Load Latest Draft" Visible="false" />
-                <asp:LinkButton ID="SaveAndPublish" runat="server" OnClick="SaveAndPublish_OnClick" Text="Save And Publish" CommandArgument="SaveAndPublish" Visible="false" />
-                <asp:LinkButton ID="PublishNow" runat="server" OnClick="PublishNow_OnClick" Visible="false" Text="Publish Now" />
-                <asp:LinkButton runat="server" ID="PublishLive" OnClick="PublishLive_OnClick" Text="Publish LIVE" Visible="false" />
-                <asp:HyperLink ID="EditMediaType" runat="server" Text="Edit Media Type" Visible="false" CssClass="colorbox iframe" />
-            </asp:Panel>
         </div>
         <div class="split-pane-divider" id="my-divider"></div>
         <div class="split-pane-component" id="right-component">

@@ -1006,6 +1006,10 @@ namespace FrameworkLibrary
                         {
                             customCode = customCode.Replace(linkShortCode.ToString(), media.LiveMediaDetail.AbsoluteUrl);
                         }
+                        else
+                        {
+                            customCode = customCode.Replace(linkShortCode.ToString(), "#");
+                        }
                     }
                 }
 

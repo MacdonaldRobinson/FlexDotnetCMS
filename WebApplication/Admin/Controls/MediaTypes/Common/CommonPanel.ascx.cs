@@ -417,7 +417,6 @@ namespace WebApplication.Admin.Controls.MediaTypes
                 }
 
             }
-
         }
 
         public void UpdateFieldsFromObject()

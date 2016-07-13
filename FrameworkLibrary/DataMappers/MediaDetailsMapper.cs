@@ -989,6 +989,28 @@ namespace FrameworkLibrary
                 }
             }
 
+            if (customCode.Contains("{Link:"))
+            {
+                var linkShortCodes = Regex.Matches(customCode, "{Link:[a-zA-Z0-9:=\"\". ]+}");
+
+                foreach (var linkShortCode in linkShortCodes)
+                {
+                    var mediaId = linkShortCode.ToString().Replace("{Link:", "").Replace("}", "");
+                    long id = 0;
+
+                    if (long.TryParse(mediaId, out id))
+                    {
+                        var media = MediasMapper.GetByID(id);
+
+                        if (media != null)
+                        {
+                            customCode = customCode.Replace(linkShortCode.ToString(), media.LiveMediaDetail.AbsoluteUrl);
+                        }
+                    }
+                }
+
+            }
+
             if (passToParser == null)
             {
                 passToParser = mediaDetail;

@@ -496,6 +496,7 @@ $(document).ready(function () {
         ],
         image_advtab: true,
         relative_urls: false,
+        convert_urls: false,
         remove_script_host: false,
         setup: function (editor) {
             editor.on('change', function () {

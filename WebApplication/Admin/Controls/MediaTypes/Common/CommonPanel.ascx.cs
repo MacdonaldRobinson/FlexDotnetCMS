@@ -183,10 +183,13 @@ namespace WebApplication.Admin.Controls.MediaTypes
             keyValuePair.Add("TemplateBaseUrl", BasePage.TemplateVars["TemplateBaseUrl"]);
             keyValuePair.Add("BaseUrl", BasePage.TemplateVars["BaseUrl"]);
 
-            item.MainContent = ParserHelper.ParseData(MainContent.GetValue().ToString().Replace("%7B", "{").Replace("%7D", "}"), keyValuePair, true);
+            var mainContent = ConvertATagsToShortCodes(MainContent.GetValue().ToString());
+            var shortDescription = ConvertATagsToShortCodes(ShortDescription.GetValue().ToString());
+
+            item.MainContent = ParserHelper.ParseData(mainContent, keyValuePair, true);
             //item.LongDescriptionMobileVersion = ParserHelper.ParseData(LongDescriptionMobileVersion.GetSiteEditor.Text.Replace("%7B", "{").Replace("%7D", "}"), keyValuePair, true);
             item.SectionTitle = SectionTitle.Text;
-            item.ShortDescription = ParserHelper.ParseData(ShortDescription.GetValue().ToString().Replace("%7B", "{").Replace("%7D", "}"), keyValuePair, true);
+            item.ShortDescription = ParserHelper.ParseData(shortDescription, keyValuePair, true);
             item.PathToFile = PathToFile.GetValue().ToString();
 
             //TagsSelector.SetDefaultTag(item.LinkTitle);
@@ -240,6 +243,42 @@ namespace WebApplication.Admin.Controls.MediaTypes
             PublishSettingsTab.UpdateObjectFromFields();
         }
 
+        private string ConvertATagsToShortCodes(string content)
+        {
+            if (!content.Contains("<a"))
+                return content;
+
+            var document = new HtmlAgilityPack.HtmlDocument();
+            document.LoadHtml(content);
+
+            var aTags = document.DocumentNode.SelectNodes("//a");
+
+            if (aTags == null)
+                return content;
+
+            foreach (var aTag in aTags)
+            {
+                var href = aTag.Attributes["href"]?.Value;
+
+                if (!string.IsNullOrEmpty(href))
+                {
+                    if (href.StartsWith("{"))
+                        continue;
+
+                    var tildaHref = URIHelper.ConvertAbsUrlToTilda(href);
+
+                    var mediaDetail = BaseMapper.GetDataModel().MediaDetails.Where(i => i.CachedVirtualPath == tildaHref && i.HistoryVersionNumber == 0)?.FirstOrDefault();
+
+                    if (mediaDetail != null)
+                    {
+                        aTag.Attributes["href"].Value = "{Link:" + mediaDetail.MediaID + "}";
+                    }
+                }
+            }
+
+            return document.DocumentNode.WriteContentTo();
+        }
+
         private void UpdateObjectFromMediaFields()
         {
             foreach (var FieldGroupTabContent in FieldGroupTabContents.Items)
@@ -277,9 +316,12 @@ namespace WebApplication.Admin.Controls.MediaTypes
                     {
                         var valAsString = ((WebApplication.Admin.Controls.Fields.IFieldControl)control).GetValue().ToString();
 
-                        if (!string.IsNullOrEmpty(valAsString) && valAsString.Contains(URIHelper.BaseUrl))
+                        if (!string.IsNullOrEmpty(valAsString))
                         {
-                            valAsString = valAsString.Replace(URIHelper.BaseUrl, "{BaseUrl}");
+                            valAsString = ConvertATagsToShortCodes(valAsString);
+
+                            if(valAsString.Contains(URIHelper.BaseUrl))
+                                valAsString = valAsString.Replace(URIHelper.BaseUrl, "{BaseUrl}");
                         }
 
                         dataItem.FieldValue = valAsString;
@@ -298,7 +340,10 @@ namespace WebApplication.Admin.Controls.MediaTypes
                         }
 
                         if (fieldValue != "{" + dataItem.GetAdminControlValue + "}")
+                        {
+                            fieldValue = ConvertATagsToShortCodes(fieldValue);
                             dataItem.FieldValue = fieldValue.Replace(URIHelper.BaseUrl, "{BaseUrl}");
+                        }                            
                     }
                 }
             }

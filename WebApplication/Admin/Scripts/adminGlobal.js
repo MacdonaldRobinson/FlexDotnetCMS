@@ -487,7 +487,7 @@ $(document).ready(function () {
         content_css: "/Views/MasterPages/SiteTemplates/css/style.min.css, /Admin/Styles/editor.css",
         plugins: [
           'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-          'searchreplace wordcount visualblocks visualchars code fullscreen',
+          'searchreplace wordcount visualblocks visualchars fullscreen',
           'insertdatetime media youtube nonbreaking save table contextmenu directionality',
           'emoticons template paste textcolor colorpicker textpattern imagetools ace'
         ],

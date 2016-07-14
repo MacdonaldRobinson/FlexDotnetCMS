@@ -175,7 +175,7 @@ namespace WebApplication.Admin.Controls.Editors
             {
                 OptionText = "Association Auto Suggest",
                 OptionValue = "AssociationAutoSuggest",
-                AdminControl = "<Admin:AssociationAutoSuggest runat='server' ParentMediaDetailID='@Model.MediaDetail.ID' />",
+                AdminControl = "<Admin:AssociationAutoSuggest runat='server' ParentMediaDetailID='0' MediaTypeID='1' />",
                 GetAdminControlValue = "Value",
                 SetAdminControlValue = "Value",
                 FrontEndLayout = @"<ul>
@@ -217,7 +217,7 @@ namespace WebApplication.Admin.Controls.Editors
             {
                 OptionText = "Association Drop Down List",
                 OptionValue = "Association Drop Down List",
-                AdminControl = @"<Admin:AssociationDropDownList runat='server' ParentMediaDetailID='@Model.MediaDetail.ID' />",
+                AdminControl = @"<Admin:AssociationDropDownList runat='server' ParentMediaDetailID='0' MediaTypeID='1' />",
                 GetAdminControlValue = "SelectedValue",
                 SetAdminControlValue = "SelectedValue",
                 FrontEndLayout = @"<ul>
@@ -234,7 +234,24 @@ namespace WebApplication.Admin.Controls.Editors
             {
                 OptionText = "Association Check Box List",
                 OptionValue = "Association Check Box List",
-                AdminControl = @"<Admin:AssociationCheckBoxList runat='server' ParentMediaDetailID='@Model.MediaDetail.ID' />",
+                AdminControl = @"<Admin:AssociationCheckBoxList runat='server' ParentMediaDetailID='0' MediaTypeID='1' />",
+                GetAdminControlValue = "SelectedValue",
+                SetAdminControlValue = "SelectedValue",
+                FrontEndLayout = @"<ul>
+@foreach(var item in Model.Field.FieldAssociations)
+{
+    <li>
+        <a href=""@item.MediaDetail.AbsoluteUrl"">@item.MediaDetail.SectionTitle</a>
+    </li>
+}
+</ul>"
+            });
+
+            SelectorFieldOptions.Add(new SelectorFieldOption()
+            {
+                OptionText = "Association Radio Box List",
+                OptionValue = "Association Radio Box List",
+                AdminControl = @"<Admin:AssociationCheckBoxList runat='server' IsRadioButtonList='True' ParentMediaDetailID='0' MediaTypeID='1' />",
                 GetAdminControlValue = "SelectedValue",
                 SetAdminControlValue = "SelectedValue",
                 FrontEndLayout = @"<ul>

@@ -18,15 +18,15 @@
     </div>
     <div>
         <p>
-            <label class="exception" for="<%= MediaDetailID.ClientID %>">
-                Media Detail ID:</label>
-            <asp:Literal ID="MediaDetailID" runat="server"></asp:Literal>
+            <asp:CheckBox ID="EnableCaching" runat="server" /><label for="<%= EnableCaching.ClientID %>">
+                Enable Caching</label>
         </p>
     </div>
     <div>
         <p>
-            <asp:CheckBox ID="EnableCaching" runat="server" /><label for="<%= EnableCaching.ClientID %>">
-                Enable Caching</label>
+            <label class="exception" for="<%= MediaDetailID.ClientID %>">
+                Media Detail ID:</label>
+            <asp:Literal ID="MediaDetailID" runat="server"></asp:Literal>
         </p>
     </div>
     <div>
@@ -36,6 +36,14 @@
             <asp:Literal ID="MediaID" runat="server"></asp:Literal>
         </p>
     </div>
+    <div>
+        <p>
+            <label class="exception" for="<%= MediaTypeID.ClientID %>">
+                Media Type ID:</label>
+            <asp:Literal ID="MediaTypeID" runat="server"></asp:Literal>
+        </p>
+    </div>
+
     <div>
         <p>
             <label class="exception" for="<%= MediaType.ClientID %>">

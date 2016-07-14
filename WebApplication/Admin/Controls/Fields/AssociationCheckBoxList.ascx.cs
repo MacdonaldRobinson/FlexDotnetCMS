@@ -12,20 +12,43 @@ namespace WebApplication.Admin.Controls.Fields
     {
         public void Page_Init(object sender, EventArgs e)
         {
+            if(IsRadioButtonList)
+            {
+                ItemsList.CssClass = "RadioButtonList";
+            }
+
             BindItems();
         }
 
         private void BindItems()
         {
-            var parentMediaDetailId = MediaDetailsMapper.GetByID(ParentMediaDetailID);
+            var parentMediaDetail = MediaDetailsMapper.GetByID(ParentMediaDetailID);
+            IEnumerable<IMediaDetail> mediaDetailItems = new List<IMediaDetail>();
 
-            if (parentMediaDetailId != null)
+            if (parentMediaDetail != null)
             {
-                ItemsList.DataSource = MediaDetailsMapper.GetByID(ParentMediaDetailID).ChildMediaDetails.Where(i => i.CanRender && i.MediaType.ShowInSiteTree);
-                ItemsList.DataTextField = "SectionTitle";
-                ItemsList.DataValueField = "ID";
-                ItemsList.DataBind();
+                if (MediaTypeID > 0)
+                {
+                    mediaDetailItems = parentMediaDetail.ChildMediaDetails.Where(i => i.MediaTypeID == MediaTypeID &&  i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
+                }
+                else
+                {
+                    mediaDetailItems = parentMediaDetail.ChildMediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
+                }
             }
+
+            else
+            {
+                if (MediaTypeID > 0)
+                {
+                    mediaDetailItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaTypeID == MediaTypeID && i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);                    
+                }
+            }
+
+            ItemsList.DataSource = mediaDetailItems.ToList();
+            ItemsList.DataTextField = "SectionTitle";
+            ItemsList.DataValueField = "ID";
+            ItemsList.DataBind();
         }
 
         private void SetSelectedIds(string values)
@@ -42,6 +65,8 @@ namespace WebApplication.Admin.Controls.Fields
         }
 
         public long ParentMediaDetailID { get; set; }
+        public long MediaTypeID { get; set; }
+        public bool IsRadioButtonList { get; set; }
 
         public override void RenderControlInFrontEnd()
         {

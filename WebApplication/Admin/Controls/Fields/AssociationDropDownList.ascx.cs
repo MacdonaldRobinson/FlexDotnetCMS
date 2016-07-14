@@ -17,7 +17,30 @@ namespace WebApplication.Admin.Controls.Fields
 
         private void BindItems()
         {
-            ItemsList.DataSource = MediaDetailsMapper.GetByID(ParentMediaDetailID).ChildMediaDetails.Where(i => i.CanRender && i.MediaType.ShowInSiteTree);
+            var parentMediaDetail = MediaDetailsMapper.GetByID(ParentMediaDetailID);
+            IEnumerable<IMediaDetail> mediaDetailItems = new List<IMediaDetail>();
+
+            if (parentMediaDetail != null)
+            {
+                if (MediaTypeID > 0)
+                {
+                    mediaDetailItems = parentMediaDetail.ChildMediaDetails.Where(i => i.MediaTypeID == MediaTypeID && i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
+                }
+                else
+                {
+                    mediaDetailItems = parentMediaDetail.ChildMediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
+                }
+            }
+
+            else
+            {
+                if (MediaTypeID > 0)
+                {
+                    mediaDetailItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaTypeID == MediaTypeID && i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
+                }
+            }
+
+            ItemsList.DataSource = mediaDetailItems.ToList();
             ItemsList.DataTextField = "SectionTitle";
             ItemsList.DataValueField = "ID";
             ItemsList.DataBind();
@@ -31,7 +54,7 @@ namespace WebApplication.Admin.Controls.Fields
             {
                 foreach (ListItem item in ItemsList.Items)
                 {
-                    if (selectedIds.Contains(int.Parse(item.Value)))
+                    if (!string.IsNullOrEmpty(item.Value) && selectedIds.Contains(int.Parse(item.Value)))
                     {
                         item.Selected = true;
                     }
@@ -40,6 +63,7 @@ namespace WebApplication.Admin.Controls.Fields
         }
 
         public long ParentMediaDetailID { get; set; }
+        public long MediaTypeID { get; set; }
 
         public override void RenderControlInFrontEnd()
         {
@@ -106,7 +130,7 @@ namespace WebApplication.Admin.Controls.Fields
 
             foreach (ListItem item in ItemsList.Items)
             {
-                if (item.Selected)
+                if (item.Selected && !string.IsNullOrEmpty(item.Value))
                     listIds.Add(long.Parse(item.Value));
             }
 

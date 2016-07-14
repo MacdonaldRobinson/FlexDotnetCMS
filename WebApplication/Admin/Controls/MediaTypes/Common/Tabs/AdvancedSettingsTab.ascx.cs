@@ -43,6 +43,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
             MediaID.Text = selectedItem.MediaID.ToString();
 
             Handler.SetValue(selectedItem.Handler);
+            MediaTypeID.Text = selectedItem.MediaTypeID.ToString();
             MediaType.Text = MediaTypesMapper.GetByID(selectedItem.MediaTypeID).Name.ToString();
             EnableCaching.Checked = selectedItem.EnableCaching;            
 

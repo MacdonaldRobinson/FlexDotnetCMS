@@ -69,6 +69,10 @@
                             <h1>Edit Sections</h1>
                             <Admin:LanguageSwitcher ID="LanguageSwitcher" runat="server" />
                             <div id="SiteTreeWrapper">
+                                <div>
+                                    <asp:HyperLink ID="CreateItem" Text="Create Item" runat="server"  NavigateUrl="/Admin/Views/PageHandlers/Media/Create.aspx" Visible="false"/>
+                                </div>                                
+
                                 <asp:TextBox runat="server" ID="Filter" AutoPostBack="True" placeholder="Search ..." Width="90%"></asp:TextBox>
 
                                 <div id="SiteTree">

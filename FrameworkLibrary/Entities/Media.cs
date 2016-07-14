@@ -78,7 +78,12 @@ namespace FrameworkLibrary
 
         public List<Media> GetSiblings()
         {
-            return this.ParentMedia.ChildMedias.OrderBy(i => i.OrderIndex).ToList();
+            var siblings = this.ParentMedia?.ChildMedias?.OrderBy(i => i.OrderIndex).ToList();
+
+            if (siblings == null)
+                return new List<Media>();
+
+            return siblings;
         }
 
         public int GetIndex()

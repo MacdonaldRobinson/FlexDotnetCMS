@@ -81,8 +81,7 @@ namespace WebApplication.Handlers
             bool isAttemptingAdminLogin = false;
 
             if ((virtualPath != "~/login/") && (virtualPath != "~/admin/"))
-            {
-                isAttemptingAdminLogin = true;
+            {                
                 cmsSettings = SettingsMapper.GetSettings();
 
                 if (cmsSettings != null)
@@ -102,6 +101,10 @@ namespace WebApplication.Handlers
                             Response.Redirect(cmsSettings.SiteOfflineUrl);
                     }
                 }
+            }
+            else
+            {
+                isAttemptingAdminLogin = true;
             }
 
             var segments = URIHelper.GetUriSegments(virtualPath).ToList();

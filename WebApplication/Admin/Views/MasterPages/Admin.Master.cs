@@ -19,6 +19,13 @@ namespace WebApplication.Admin
 
         protected void Page_PreRender(object sender, EventArgs e)
         {
+            var rootMediaDetail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.MediaType.Name == MediaTypeEnum.RootPage.ToString());
+
+            if(rootMediaDetail == null)
+            {
+                CreateItem.Visible = true;
+            }
+
             var settings = SettingsMapper.GetSettings();
 
             if (settings.EnableGlossaryTerms)
@@ -32,14 +39,17 @@ namespace WebApplication.Admin
 
             allNodes.ForEach(i =>
             {
-                if (i.Value == currentWebsite.ID.ToString() || i.Value == currentWebsite.ParentMediaID.ToString())
+                if (currentWebsite != null)
                 {
-                    i.ExpandParents();
-                    i.Expand();
-                }
-                else
-                {
-                    i.Collapse();
+                    if (i.Value == currentWebsite.ID.ToString() || i.Value == currentWebsite.ParentMediaID.ToString())
+                    {
+                        i.ExpandParents();
+                        i.Expand();
+                    }
+                    else
+                    {
+                        i.Collapse();
+                    }
                 }
             });
 

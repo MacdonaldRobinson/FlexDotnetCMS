@@ -28,10 +28,18 @@ namespace WebApplication.Admin.Views.PageHandlers.MediaArticle
                 return;
             }
 
-            if ((MediaTypeSelector.MediaTypesDropDownList.SelectedValue == "") || (SelectedMedia == null))
+            if (MediaTypeSelector.MediaTypesDropDownList.SelectedValue == "")
                 return;
 
-            WebApplication.BasePage.RedirectToMediaDetail(long.Parse(MediaTypeSelector.MediaTypesDropDownList.SelectedValue), 0, SelectedMedia.ID);
+
+            if (SelectedMedia != null)
+            {
+                WebApplication.BasePage.RedirectToMediaDetail(long.Parse(MediaTypeSelector.MediaTypesDropDownList.SelectedValue), 0, SelectedMedia.ID);
+            }
+            else
+            {
+                WebApplication.BasePage.RedirectToMediaDetail(long.Parse(MediaTypeSelector.MediaTypesDropDownList.SelectedValue), 0);
+            }
         }
     }
 }

@@ -171,10 +171,9 @@
     <Content Include="Admin\Views\PageHandlers\MasterPages\Default.aspx" />
     <Content Include="Admin\Views\PageHandlers\MasterPages\Detail.aspx" />
     <Content Include="Admin\Views\PageHandlers\MasterPages\ItemServices.asmx" />
-    <Content Include="App_Data\FlexDotNetCMS.mdf" />
-    <Content Include="App_Data\FlexDotNetCMS_log.ldf">
-      <DependentUpon>FlexDotNetCMS.mdf</DependentUpon>
-    </Content>
+    <Content Include="App_Data\Cache\index.html" />
+    <Content Include="App_Data\DBBackups\index.html" />
+    <Content Include="App_Data\ElmahErrorLogs\index.html" />
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\EcmaScript.NET.dll" />
@@ -310,6 +309,21 @@
     <Content Include="Installer\Default.aspx" />
     <Content Include="Installer\Images\loading-gear.gif" />
     <Content Include="Installer\SqlFiles\CreateAndDelete_FlexDotnetCMS.sql" />
+    <Content Include="media\images\icons\File.jpg" />
+    <Content Include="media\images\icons\index.html" />
+    <Content Include="media\images\index.html" />
+    <Content Include="media\uploads\documents\index.html" />
+    <Content Include="media\uploads\documents\pdfs\index.html" />
+    <Content Include="media\uploads\documents\word\index.html" />
+    <Content Include="media\uploads\flash\index.html" />
+    <Content Include="media\uploads\images\banners\index.html" />
+    <Content Include="media\uploads\images\index.html" />
+    <Content Include="media\uploads\images\profile-photos\index.html" />
+    <Content Include="media\uploads\images\thumbnails\index.html" />
+    <Content Include="media\uploads\index.html" />
+    <Content Include="media\uploads\media\index.html" />
+    <Content Include="media\uploads\movies\index.html" />
+    <Content Include="media\uploads\templates\index.html" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\colorbox-master\content\ajax.html" />
     <Content Include="Scripts\colorbox-master\content\daisy%402x.jpg" />
@@ -1728,20 +1742,6 @@
     <Content Include="Views\MasterPages\SiteTemplates\Template1.Master" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\Cache\" />
-    <Folder Include="App_Data\DBBackups\" />
-    <Folder Include="App_Data\ElmahErrorLogs\" />
-    <Folder Include="media\images\" />
-    <Folder Include="media\uploads\documents\pdfs\" />
-    <Folder Include="media\uploads\documents\word\" />
-    <Folder Include="media\uploads\flash\" />
-    <Folder Include="media\uploads\images\banners\" />
-    <Folder Include="media\uploads\images\profile-photos\" />
-    <Folder Include="media\uploads\images\speaker-images\" />
-    <Folder Include="media\uploads\images\thumbnails\" />
-    <Folder Include="media\uploads\media\" />
-    <Folder Include="media\uploads\movies\" />
-    <Folder Include="media\uploads\templates\" />
     <Folder Include="Properties\" />
     <Folder Include="Views\MasterPages\SiteTemplates\images\" />
     <Folder Include="Views\MasterPages\SiteTemplates\js\" />

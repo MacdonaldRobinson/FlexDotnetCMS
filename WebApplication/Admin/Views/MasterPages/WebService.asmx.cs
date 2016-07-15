@@ -138,7 +138,7 @@ namespace WebApplication.Admin.Views.MasterPages
             }
         }
 
-        private IMediaDetail HandleDuplicate(IMediaDetail detail, Media parentMedia)
+        public IMediaDetail HandleDuplicate(IMediaDetail detail, Media parentMedia)
         {
             var duplicatedItem = MediaDetailsMapper.CreateObject(detail.MediaTypeID, null, parentMedia);
             duplicatedItem.CopyFrom(detail, new List<string> { "MediaID", "Media" });

@@ -9,7 +9,8 @@ namespace FrameworkLibrary
         {
             get
             {
-                return this.MediaDetails.SingleOrDefault(i => i.HistoryForMediaDetail == null);
+                var currentLanguage = FrameworkSettings.GetCurrentLanguage();
+                return this.MediaDetails.SingleOrDefault(i => i.HistoryForMediaDetail == null && i.LanguageID == currentLanguage.ID);
             }
         }
 

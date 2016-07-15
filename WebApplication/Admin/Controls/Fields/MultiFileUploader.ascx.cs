@@ -28,6 +28,9 @@ namespace WebApplication.Admin.Controls.Fields
         {
             var field = GetField();
 
+            if (field == null)
+                return new List<FieldAssociation>();
+
             return field.FieldAssociations.OrderBy(i => i.OrderIndex).ToList();
         }
 

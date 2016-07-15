@@ -100,6 +100,9 @@ namespace FrameworkLibrary
 
         public static void CopyFrom<T>(this T to, T from, IEnumerable<string> omitPoperties = null) where T : class
         {
+            if (from == null)
+                return;
+
             if (omitPoperties == null)
                 omitPoperties = new List<string>();
 

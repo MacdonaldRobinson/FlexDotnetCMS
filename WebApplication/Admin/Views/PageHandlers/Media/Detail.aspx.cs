@@ -111,7 +111,7 @@ namespace WebApplication.Admin.MediaArticle
 
                 LoadLatestDraft.Visible = false;
                 SaveAsDraft.Visible = false;
-
+                
                 var mediaType = MediaTypesMapper.GetByID(selectedItem.MediaTypeID);
 
                 selectedItem.MainLayout = mediaType.MainLayout;
@@ -120,26 +120,58 @@ namespace WebApplication.Admin.MediaArticle
 
                 selectedItem.UseMediaTypeLayouts = mediaType.UseMediaTypeLayouts;
 
-                foreach (var field in mediaType.Fields)
+                if (selectedItem.Media.MediaDetails.Count == 0)
                 {
-                    var newField = new MediaDetailField();
-                    newField.FieldCode = field.FieldCode;
-                    newField.FieldLabel = field.FieldLabel;
-                    newField.AdminControl = field.AdminControl;
-                    newField.GroupName = field.GroupName;
-                    newField.RenderLabelAfterControl = field.RenderLabelAfterControl;
-                    newField.GetAdminControlValue = field.GetAdminControlValue;
-                    newField.SetAdminControlValue = field.SetAdminControlValue;
-                    newField.FieldValue = field.FieldValue;
-                    newField.FrontEndLayout = field.FrontEndLayout;
-                    newField.MediaTypeField = field;
-                    newField.UseMediaTypeFieldFrontEndLayout = true;
+                    foreach (var field in mediaType.Fields)
+                    {
+                        var newField = new MediaDetailField();
+                        newField.FieldCode = field.FieldCode;
+                        newField.FieldLabel = field.FieldLabel;
+                        newField.AdminControl = field.AdminControl;
+                        newField.GroupName = field.GroupName;
+                        newField.RenderLabelAfterControl = field.RenderLabelAfterControl;
+                        newField.GetAdminControlValue = field.GetAdminControlValue;
+                        newField.SetAdminControlValue = field.SetAdminControlValue;
+                        newField.FieldValue = field.FieldValue;
+                        newField.FrontEndLayout = field.FrontEndLayout;
+                        newField.MediaTypeField = field;                        
+                        newField.UseMediaTypeFieldFrontEndLayout = true;
 
-                    newField.DateCreated = DateTime.Now;
-                    newField.DateLastModified = DateTime.Now;
+                        newField.DateCreated = DateTime.Now;
+                        newField.DateLastModified = DateTime.Now;
 
-                    selectedItem.Fields.Add(newField);
+                        selectedItem.Fields.Add(newField);
+                    }
                 }
+
+                var fields = selectedItem.Media.LiveMediaDetail?.Fields;
+
+                if (fields != null)
+                {
+                    foreach (var field in fields)
+                    {
+                        var newField = new MediaDetailField();
+                        newField.FieldCode = field.FieldCode;
+                        newField.FieldLabel = field.FieldLabel;
+                        newField.AdminControl = field.AdminControl;
+                        newField.GroupName = field.GroupName;
+                        newField.RenderLabelAfterControl = field.RenderLabelAfterControl;
+                        newField.GetAdminControlValue = field.GetAdminControlValue;
+                        newField.SetAdminControlValue = field.SetAdminControlValue;
+                        newField.FieldValue = field.FieldValue;
+                        newField.FrontEndLayout = field.FrontEndLayout;
+                        newField.MediaTypeFieldID = field.MediaTypeFieldID;
+                        newField.OrderIndex = field.OrderIndex;
+                        newField.UseMediaTypeFieldFrontEndLayout = true;
+
+                        newField.DateCreated = DateTime.Now;
+                        newField.DateLastModified = DateTime.Now;
+
+                        selectedItem.Fields.Add(newField);
+                    }
+                }
+
+                selectedItem.CopyFrom(selectedItem.Media?.LiveMediaDetail);
             }
             else
             {

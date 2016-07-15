@@ -189,7 +189,7 @@ namespace WebApplication.Admin.Controls.Editors
         {
             var id = ((LinkButton)sender).CommandArgument;
 
-            if (!string.IsNullOrEmpty(id))
+            if (!string.IsNullOrEmpty(id) && id != "0")
             {
                 var field = mediaDetail.Fields.SingleOrDefault(i => i.ID == long.Parse(id));
 
@@ -202,7 +202,7 @@ namespace WebApplication.Admin.Controls.Editors
         {
             var id = ((LinkButton)sender).CommandArgument;
 
-            if (!string.IsNullOrEmpty(id))
+            if (!string.IsNullOrEmpty(id) && id !="0")
             {
                 var field = mediaDetail.Fields.SingleOrDefault(i => i.ID == long.Parse(id));
 

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -10,9 +11,13 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
 {
     public partial class ChildrensTab : BaseTab, ITab
     {
+        private List<IMediaDetail> listItems { get; set; }
+
         public void SetObject(IMediaDetail selectedItem)
         {
             this.selectedItem = selectedItem;
+
+            listItems = selectedItem.ChildMediaDetails.Where(i => i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0).OrderByDescending(i=>i.DateLastModified).ToList();
 
             Bind();
         }        
@@ -24,7 +29,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
 
         private void Bind()
         {
-            ItemList.DataSource = selectedItem.ChildMediaDetails.Where(i=>i.MediaType.ShowInSiteTree).ToList();
+            ItemList.DataSource = listItems;
             ItemList.DataBind();
         }
 
@@ -92,6 +97,21 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
             {
                 ItemList.HeaderRow.TableSection = TableRowSection.TableHeader;                
             }
+        }
+
+        protected void ItemList_Sorting(object sender, System.Web.UI.WebControls.GridViewSortEventArgs e)
+        {
+            var sortDirection = ((e.SortDirection == System.Web.UI.WebControls.SortDirection.Ascending) ? "ASC" : "DESC");
+            listItems = listItems.OrderBy(e.SortExpression + " " + sortDirection).ToList();
+            Bind();
+        }
+
+        protected void SearchItems_Click(object sender, EventArgs e)
+        {
+            if(selectedItem != null)
+            {
+                listItems = selectedItem.ChildMediaDetails.Where(i => i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0 && i.SectionTitle.Contains(SearchText.Text)).OrderByDescending(i => i.DateLastModified).ToList<IMediaDetail>();
+            }            
         }
     }
 }

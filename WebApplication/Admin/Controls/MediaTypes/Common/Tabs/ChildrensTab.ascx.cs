@@ -29,6 +29,11 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
 
         private void Bind()
         {
+            if(listItems.Count > 0)
+            {
+                SearchPanel.Visible = true;
+            }
+
             ItemList.DataSource = listItems;
             ItemList.DataBind();
         }

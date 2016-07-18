@@ -112,16 +112,17 @@ namespace WebApplication.Controls
                 switch (ReturnObj.IsError)
                 {
                     case false:
-                        BasePage.DisplaySuccessMessage("Thank you for your feedback. This is a moderated post. Your comment had been submitted for approval");
                         BasePage.SendMediaCommentApprovalRequest(CurrentMediaDetail);
 
                         if (this.ReplyToComment != null)
                             BasePage.SendMediaReplyToComment(newComment, this.ReplyToComment);
 
+                        ServerMessage.Text = "Thank you for your feedback. This is a moderated post. Your comment has been submitted for approval";
+
                         break;
 
                     case true:
-                        BasePage.DisplayErrorMessage("Error adding comment", ReturnObj.Error);
+                        ServerMessage.Text = $"Error adding comment: {ReturnObj.Error}";
                         Bind();
                         break;
                 }

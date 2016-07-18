@@ -17,8 +17,6 @@ namespace FrameworkLibrary
 
     public class MediaDetailsMapper : BaseMapper
     {
-        private static Language defaultLanguage = LanguagesMapper.GetDefaultLanguage();
-
         static MediaDetailsMapper()
         {
             MaxHistory = 10;
@@ -534,7 +532,10 @@ namespace FrameworkLibrary
             var detail = media.MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.LanguageID == language.ID);
 
             if (detail == null)
+            {
+                var defaultLanguage = LanguagesMapper.GetDefaultLanguage();
                 detail = media.MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.LanguageID == defaultLanguage.ID);
+            }                
 
             return detail;
         }

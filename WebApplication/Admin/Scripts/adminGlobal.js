@@ -463,6 +463,11 @@ $(window).load(function () {
     });
 });
 
+function BindTabs()
+{
+    $('.tabs').tabs();
+}
+
 $(document).ready(function () {
 
     var controller = new ScrollMagic.Controller();
@@ -472,7 +477,7 @@ $(document).ready(function () {
                     .addTo(controller);
 
     $('ul.sf-menu').superfish();
-    $('.tabs').tabs();
+    BindTabs();
 
     $('input.datetimepicker').datetimepicker({
         controlType: 'select',
@@ -727,6 +732,8 @@ $(document)
 function pageLoad() {
     BindDataTable();
     BindSortable();
+    BindTabs();
+    BindActiveTabs();
 }
 
 function BindDataTable() {

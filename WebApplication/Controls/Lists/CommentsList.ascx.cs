@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
@@ -26,6 +27,19 @@ namespace WebApplication.Controls.Lists
             }
         }
 
+        private void UpdateCommentsListTabs()
+        {
+            if (Admin.AdminBasePage.IsInAdminSection)
+            {
+                var CommentsListTabs = (UpdatePanel)WebFormHelper.FindControlRecursive(Page.Master, "CommentsListTabs");
+
+                if (CommentsListTabs == null)
+                {
+                    CommentsListTabs.DataBind();                    
+                }
+            }
+        }
+
         protected void Approve_OnClick(object sender, EventArgs e)
         {
             Comment comment = CommentsMapper.GetByID(long.Parse(((Button)sender).CommandArgument));
@@ -36,6 +50,8 @@ namespace WebApplication.Controls.Lists
 
             if (obj.IsError)
                 this.BasePage.DisplayErrorMessage("Error", obj.Error);
+
+            UpdateCommentsListTabs();
         }
 
         protected void Reject_OnClick(object sender, EventArgs e)
@@ -48,6 +64,8 @@ namespace WebApplication.Controls.Lists
 
             if (obj.IsError)
                 this.BasePage.DisplayErrorMessage("Error", obj.Error);
+
+            UpdateCommentsListTabs();
         }
 
         protected void DeletePermanently_OnClick(object sender, EventArgs e)
@@ -60,6 +78,8 @@ namespace WebApplication.Controls.Lists
 
             if (obj.IsError)
                 this.BasePage.DisplayErrorMessage("Error", obj.Error);
+
+            UpdateCommentsListTabs();
         }
 
         protected void ItemsList_OnItemDataBound(object sender, ListViewItemEventArgs e)

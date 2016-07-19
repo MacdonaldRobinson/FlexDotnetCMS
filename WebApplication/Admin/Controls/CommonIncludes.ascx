@@ -38,6 +38,6 @@
     <ProgressTemplate>
         <div class='loading-panel'>
             <div class='copy'>Loading ...</div>
-        </div>
+        </div>        
     </ProgressTemplate>
 </asp:UpdateProgress>

@@ -612,11 +612,11 @@ namespace WebApplication
             EmailHelper.Send(address, "There was a reply made to your comment", CommentReplyToMessage(newComment), AppSettings.SystemName, AppSettings.SystemEmailAddress);
         }
 
-        public void SendMediaCommentApprovalRequest(IMediaDetail obj)
+        public void SendMediaCommentApprovalRequest(Media obj)
         {
             string message = "";
-            message = "There was a comment made on a news article with the title '" + obj.Title + "', click on the following link to approve or reject this comment: " + URIHelper.BaseUrl + "admin/" + MediaTypesMapper.GetByID(obj.MediaTypeID).Name + "/Edit.aspx?id=" + obj.ID;
-            SendEmailToUser(UsersMapper.GetByID(obj.CreatedByUserID), message, "Comment Approval Request");
+            message = "There was a comment made on a news article with the title '" + obj.LiveMediaDetail.Title + "', click on the following link to approve or reject this comment: " + URIHelper.BaseUrl + "admin/" + obj.LiveMediaDetail.MediaType.Name + "/Edit.aspx?id=" + obj.ID;
+            SendEmailToUser(obj.LiveMediaDetail.CreatedByUser, message, "Comment Approval Request");
         }
     }
 }

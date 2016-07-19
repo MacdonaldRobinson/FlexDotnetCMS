@@ -1,4 +1,10 @@
-﻿function DisplayJsonException(xhr) {
+﻿window.onerror = function (e) {
+    if(e.indexOf("UpdatePanel") !=-1)
+    {
+        window.location.reload();
+    }
+}
+function DisplayJsonException(xhr) {
     try {
         var jsonError = JSON.parse(xhr.responseText);
 

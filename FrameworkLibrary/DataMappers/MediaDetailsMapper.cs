@@ -814,7 +814,7 @@ namespace FrameworkLibrary
                 GetDataModel().FieldAssociations.Remove(item);
             }
 
-            var comments = obj.Comments.ToList();
+            var comments = obj.Media.Comments.ToList();
 
             foreach (var item in comments)
                 GetDataModel().Comments.Remove(item);
@@ -834,7 +834,7 @@ namespace FrameworkLibrary
             
             ClearObjectRelations(obj);
 
-            obj.Comments.Clear();
+            obj.Media.Comments.Clear();
 
             returnObj = Delete(MapperKey, obj);
 

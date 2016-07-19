@@ -21,8 +21,8 @@
             BindReOrder();
             BindScrollMagic();
             initAceEditors();
-
-            if (event._postBackSettings.asyncTarget.indexOf("$Update") != -1 || event._postBackSettings.asyncTarget.indexOf("$Delete") != -1)
+            
+            if ((event._postBackSettings.asyncTarget.indexOf("$MediaFieldsEditor") !=-1) && (event._postBackSettings.asyncTarget.indexOf("$Update") != -1 || event._postBackSettings.asyncTarget.indexOf("$Delete") != -1))
             {
                 //ReloadPreviewPanel();
                 if(confirm("Successfully Updated, would you like to reload the page?"))

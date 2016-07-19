@@ -56,7 +56,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
 
             //AddShoppingCartSettingsTab();
 
-            if (SelectedItem.Comments.Any())
+            if (SelectedItem.Media.Comments.Any())
                 AddCommentsTab();
 
             if ((this.SelectedItem != null) && ((this.SelectedItem.ID != 0)))
@@ -106,7 +106,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
 
         public void AddCommentsTab()
         {
-            var pendingComments = SelectedItem.Comments.Where(i => i.Status == StatusEnum.Pending.ToString()).Count();
+            var pendingComments = SelectedItem.Media.Comments.Where(i => i.Status == StatusEnum.Pending.ToString()).Count();
             AddTab("Comments(" + pendingComments + ")", "~/Admin/Controls/MediaTypes/Common/Tabs/CommentsTab.ascx");
         }
 

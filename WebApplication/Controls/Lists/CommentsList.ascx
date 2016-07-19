@@ -1,6 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CommentsList.ascx.cs"
     Inherits="WebApplication.Controls.Lists.CommentsList" %>
-<asp:UpdatePanel runat="server" UpdateMode="Conditional">
+
+<asp:UpdatePanel runat="server">
     <ContentTemplate>
         <asp:ListView ID="ItemsList" runat="server" OnItemDataBound="ItemsList_OnItemDataBound">
             <LayoutTemplate>

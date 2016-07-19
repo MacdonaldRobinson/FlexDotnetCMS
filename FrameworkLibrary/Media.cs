@@ -20,6 +20,7 @@ namespace FrameworkLibrary
             this.ChildMedias = new HashSet<Media>();
             this.MediaDetails = new HashSet<MediaDetail>();
             this.MediaTags = new HashSet<MediaTag>();
+            this.Comments = new HashSet<Comment>();
         }
     
         public long ID { get; set; }
@@ -33,5 +34,7 @@ namespace FrameworkLibrary
         public virtual ICollection<MediaDetail> MediaDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MediaTag> MediaTags { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

@@ -8,8 +8,8 @@ namespace WebApplication.Controls
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (CurrentMediaDetail == null)
-                CurrentMediaDetail = BaseMapper.GetObjectFromContext((MediaDetail)BasePage.CurrentMediaDetail);
+            if (CurrentMedia == null)
+                CurrentMedia = BaseMapper.GetObjectFromContext((Media)BasePage.CurrentMedia);
 
             //Bind();
         }
@@ -20,9 +20,9 @@ namespace WebApplication.Controls
             //CommentsList.DisplayMode = WebApplication.Controls.Lists.CommentsList.Mode.None;
         }
 
-        public void SetMediaDetail(IMediaDetail mediaDetail)
+        public void SetMedia(Media media)
         {
-            this.CurrentMediaDetail = mediaDetail;
+            this.CurrentMedia = media;
 
             if (this.BasePage.CurrentUser != null)
             {
@@ -39,15 +39,15 @@ namespace WebApplication.Controls
             this.ReplyToComment = replyToComment;
         }
 
-        private IMediaDetail CurrentMediaDetail
+        private Media CurrentMedia
         {
             get
             {
-                return (IMediaDetail)ViewState["CurrentMediaDetail"];
+                return (Media)ViewState["CurrentMedia"];
             }
             set
             {
-                ViewState["CurrentMediaDetail"] = value;
+                ViewState["CurrentMedia"] = value;
             }
         }
 
@@ -86,11 +86,10 @@ namespace WebApplication.Controls
             comment.Name = Name.Text;
             comment.Email = Email.Text;
             comment.Message = Message.Text;
-
-            comment.Language = LanguagesMapper.GetFromContext(FrameworkSettings.GetCurrentLanguage());
+                        
             comment.Status = StatusEnum.Pending.ToString();
 
-            comment.MediaDetails.Add(BaseMapper.GetObjectFromContext((MediaDetail)CurrentMediaDetail));
+            comment.Media = CurrentMedia;
 
             return comment;
         }
@@ -102,9 +101,6 @@ namespace WebApplication.Controls
             if (this.ReplyToComment != null)
                 newComment.ReplyToCommentID = this.ReplyToComment.ID;
 
-            if (this.BasePage.CurrentUser != null)
-                newComment.UserID = this.BasePage.CurrentUser.ID;
-
             Return ReturnObj = CommentsMapper.Insert(newComment);
 
             if (ReturnObj != null)
@@ -112,7 +108,7 @@ namespace WebApplication.Controls
                 switch (ReturnObj.IsError)
                 {
                     case false:
-                        BasePage.SendMediaCommentApprovalRequest(CurrentMediaDetail);
+                        BasePage.SendMediaCommentApprovalRequest(CurrentMedia);
 
                         if (this.ReplyToComment != null)
                             BasePage.SendMediaReplyToComment(newComment, this.ReplyToComment);

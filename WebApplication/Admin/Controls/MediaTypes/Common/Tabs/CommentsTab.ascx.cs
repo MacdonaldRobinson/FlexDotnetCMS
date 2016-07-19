@@ -10,7 +10,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
         public void SetObject(IMediaDetail selectedItem)
         {
             this.selectedItem = selectedItem;
-            UpdateFieldsFromObject();
+            //UpdateFieldsFromObject();
         }
 
         public void Page_PreRender(object sender, EventArgs e)
@@ -20,9 +20,11 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
 
         public void UpdateFieldsFromObject()
         {
-            ApprovedCommentsCount.Text = selectedItem.Comments.Where(c => c.Status == StatusEnum.Approved.ToString()).Count().ToString();
-            RejectedCommentsCount.Text = selectedItem.Comments.Where(c => c.Status == StatusEnum.Rejected.ToString()).Count().ToString();
-            PendingCommentsCount.Text = selectedItem.Comments.Where(c => c.Status == StatusEnum.Pending.ToString()).Count().ToString();
+            var media = selectedItem.Media;
+
+            ApprovedCommentsCount.Text = media.Comments.Where(c => c.Status == StatusEnum.Approved.ToString()).Count().ToString();
+            RejectedCommentsCount.Text = media.Comments.Where(c => c.Status == StatusEnum.Rejected.ToString()).Count().ToString();
+            PendingCommentsCount.Text = media.Comments.Where(c => c.Status == StatusEnum.Pending.ToString()).Count().ToString();
 
             if ((selectedItem == null) || (selectedItem.ID == 0))
                 return;
@@ -33,25 +35,14 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
             if (selectedItem == null)
                 return;
 
-            IEnumerable<Comment> itemComments = CommentsMapper.GetByMediaDetail(selectedItem);
+            PendingCommentsList.SetComments(StatusEnum.Pending, WebApplication.Controls.Lists.CommentsList.Mode.ApproveReject, media);
+            PendingCommentsCount.Text = PendingCommentsList.Comments.Count().ToString();
 
-            PendingCommentsList.Comments = itemComments.Where(c => c.Status == StatusEnum.Pending.ToString());
-            PendingCommentsList.DisplayMode = WebApplication.Controls.Lists.CommentsList.Mode.ApproveReject;
-            PendingCommentsList.List.DataBind();
+            ApprovedCommentsList.SetComments(StatusEnum.Approved, WebApplication.Controls.Lists.CommentsList.Mode.ApproveReject, media);
+            ApprovedCommentsCount.Text = ApprovedCommentsList.Comments.Count().ToString();
 
-            BasePage.TemplateVars["PendingCommentsCount"] = PendingCommentsList.Comments.Count().ToString();
-
-            ApprovedCommentsList.Comments = itemComments.Where(c => c.Status == StatusEnum.Approved.ToString());
-            ApprovedCommentsList.DisplayMode = WebApplication.Controls.Lists.CommentsList.Mode.ApproveReject;
-            ApprovedCommentsList.List.DataBind();
-
-            BasePage.TemplateVars["ApprovedCommentsCount"] = ApprovedCommentsList.Comments.Count().ToString();
-
-            RejectedCommentsList.Comments = itemComments.Where(c => c.Status == StatusEnum.Rejected.ToString());
-            RejectedCommentsList.DisplayMode = WebApplication.Controls.Lists.CommentsList.Mode.ApproveReject;
-            RejectedCommentsList.List.DataBind();
-
-            BasePage.TemplateVars["RejectedCommentsCount"] = RejectedCommentsList.Comments.Count().ToString();
+            RejectedCommentsList.SetComments(StatusEnum.Rejected, WebApplication.Controls.Lists.CommentsList.Mode.ApproveReject, media);
+            RejectedCommentsCount.Text = RejectedCommentsList.Comments.Count().ToString();
         }
 
         public void UpdateObjectFromFields()

@@ -11,6 +11,9 @@ namespace WebApplication.Controls.Lists
     public partial class CommentsList : System.Web.UI.UserControl
     {
         private Mode mode = Mode.None;
+        private StatusEnum statusEnum = StatusEnum.Approved;
+        private Media media = null;
+
         private long replyCommentId = -1;
 
         public enum Mode
@@ -19,31 +22,18 @@ namespace WebApplication.Controls.Lists
             ApproveReject
         }
 
-        protected void Page_Init(object sender, EventArgs e)
+        /*protected void Page_Init(object sender, EventArgs e)
         {
             if (!BasePage.IsInAdminSection)
             {
-                Comments = BasePage.CurrentMediaDetail.Comments.OrderByDescending(i => i.DateCreated).Where(i => i.Status == StatusEnum.Approved.ToString());
+                Comments = BasePage.CurrentMediaDetail.Media.Comments.OrderByDescending(i => i.DateCreated).Where(i => i.Status == StatusEnum.Approved.ToString());
             }
-        }
-
-        private void UpdateCommentsListTabs()
-        {
-            if (Admin.AdminBasePage.IsInAdminSection)
-            {
-                var CommentsListTabs = (UpdatePanel)WebFormHelper.FindControlRecursive(Page.Master, "CommentsListTabs");
-
-                if (CommentsListTabs == null)
-                {
-                    CommentsListTabs.DataBind();                    
-                }
-            }
-        }
+        }*/
 
         protected void Approve_OnClick(object sender, EventArgs e)
-        {
-            Comment comment = CommentsMapper.GetByID(long.Parse(((Button)sender).CommandArgument));
-            comment = BaseMapper.GetObjectFromContext<Comment>(comment);
+        {            
+            Comment comment = CommentsMapper.GetByID(long.Parse(((Button)sender).CommandArgument));            
+            comment = BaseMapper.GetObjectFromContext<Comment>(comment);            
 
             comment.Status = StatusEnum.Approved.ToString();
             Return obj = CommentsMapper.Update(comment);
@@ -51,7 +41,8 @@ namespace WebApplication.Controls.Lists
             if (obj.IsError)
                 this.BasePage.DisplayErrorMessage("Error", obj.Error);
 
-            UpdateCommentsListTabs();
+            SetComments(statusEnum, mode, media);
+
         }
 
         protected void Reject_OnClick(object sender, EventArgs e)
@@ -65,7 +56,7 @@ namespace WebApplication.Controls.Lists
             if (obj.IsError)
                 this.BasePage.DisplayErrorMessage("Error", obj.Error);
 
-            UpdateCommentsListTabs();
+            SetComments(statusEnum, mode, media);
         }
 
         protected void DeletePermanently_OnClick(object sender, EventArgs e)
@@ -73,13 +64,13 @@ namespace WebApplication.Controls.Lists
             Comment comment = CommentsMapper.GetByID(long.Parse(((Button)sender).CommandArgument));
             comment = BaseMapper.GetObjectFromContext<Comment>(comment);
 
-            comment.MediaDetails.Clear();
+            //comment.MediaDetails.Clear();
             Return obj = CommentsMapper.DeletePermanently(comment);
 
             if (obj.IsError)
                 this.BasePage.DisplayErrorMessage("Error", obj.Error);
 
-            UpdateCommentsListTabs();
+            SetComments(statusEnum, mode, media);
         }
 
         protected void ItemsList_OnItemDataBound(object sender, ListViewItemEventArgs e)
@@ -118,7 +109,7 @@ namespace WebApplication.Controls.Lists
                     Panel ReplyPanel = (Panel)e.Item.FindControl("ReplyPanel");
                     CommentsForm ReplyForm = (CommentsForm)ReplyPanel.FindControl("ReplyForm");
                     ReplyForm.SetReplyToComment(dataItem);
-                    ReplyForm.SetMediaDetail(dataItem.MediaDetails.Where(i => i.LanguageID == FrameworkSettings.GetCurrentLanguage().ID).SingleOrDefault());
+                    ReplyForm.SetMedia(dataItem.Media);
 
                     ReplyPanel.Visible = true;
                 }
@@ -192,6 +183,16 @@ namespace WebApplication.Controls.Lists
             {
                 return this.dataPager.DataPager;
             }
+        }                
+
+        public void SetComments(StatusEnum statusEnum, Mode mode, Media media)
+        {
+            this.mode = mode;
+            this.statusEnum = statusEnum;
+            this.media = media;
+
+            ItemsList.DataSource = media.Comments.Where(i=>i.Status == statusEnum.ToString()).OrderByDescending(i=>i.DateLastModified).ToList();
+            ItemsList.DataBind();
         }
 
         public IEnumerable<Comment> Comments
@@ -199,10 +200,6 @@ namespace WebApplication.Controls.Lists
             get
             {
                 return (IEnumerable<Comment>)ItemsList.DataSource;
-            }
-            set
-            {
-                ItemsList.DataSource = value.ToList();
             }
         }
     }

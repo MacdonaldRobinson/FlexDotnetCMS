@@ -21,7 +21,6 @@ namespace FrameworkLibrary
             this.UsersMediaDetails = new HashSet<UserMediaDetail>();
             this.History = new HashSet<MediaDetail>();
             this.Fields = new HashSet<MediaDetailField>();
-            this.Comments = new HashSet<Comment>();
             this.RolesMediaDetails = new HashSet<RoleMediaDetail>();
             this.FieldAssociations = new HashSet<FieldAssociation>();
         }
@@ -88,8 +87,6 @@ namespace FrameworkLibrary
         public virtual MasterPage MasterPage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MediaDetailField> Fields { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comment> Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RoleMediaDetail> RolesMediaDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

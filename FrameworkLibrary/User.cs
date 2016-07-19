@@ -21,7 +21,6 @@ namespace FrameworkLibrary
             this.LastUpdatedMediaDetails = new HashSet<MediaDetail>();
             this.UsersMediaDetails = new HashSet<UserMediaDetail>();
             this.Roles = new HashSet<Role>();
-            this.Comments = new HashSet<Comment>();
         }
     
         public long ID { get; set; }
@@ -46,7 +45,5 @@ namespace FrameworkLibrary
         public virtual ICollection<UserMediaDetail> UsersMediaDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Role> Roles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

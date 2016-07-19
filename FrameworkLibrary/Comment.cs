@@ -18,26 +18,21 @@ namespace FrameworkLibrary
         public Comment()
         {
             this.ReplyToComments = new HashSet<Comment>();
-            this.MediaDetails = new HashSet<MediaDetail>();
         }
     
         public long ID { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Message { get; set; }
-        public long LanguageID { get; set; }
         public string Status { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.DateTime DateLastModified { get; set; }
         public Nullable<long> ReplyToCommentID { get; set; }
-        public Nullable<long> UserID { get; set; }
+        public long MediaID { get; set; }
     
-        public virtual Language Language { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> ReplyToComments { get; set; }
         public virtual Comment ReplyToComment { get; set; }
-        public virtual User User { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MediaDetail> MediaDetails { get; set; }
+        public virtual Media Media { get; set; }
     }
 }

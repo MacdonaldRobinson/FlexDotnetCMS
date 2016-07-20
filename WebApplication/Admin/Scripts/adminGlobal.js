@@ -774,8 +774,13 @@ $(document).ready(function () {
 });
 
 function BindSortable() {
-    $(".sortable").sortable({
+    $(".dropZone.sortable").sortable({
         connectWith: '.dropZone.sortable',
+        update: function (event, ui) {
+        }
+    });
+
+    $(".MultiFileUploader .sortable").sortable({
         update: function (event, ui) {
             var arr = new Array();
             $(this).children("li").each(function () {

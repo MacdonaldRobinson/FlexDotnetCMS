@@ -33,7 +33,12 @@ namespace WebApplication.Admin.Controls.Fields
 
         public MediaDetailField GetField()
         {
-            return (MediaDetailField)BaseMapper.GetDataModel().Fields.Find(FieldID);
+            var field = (MediaDetailField)BaseMapper.GetDataModel().Fields.Find(FieldID);
+
+            if (field == null)
+                field = new MediaDetailField();
+
+            return field;
         }
 
         public abstract void SetValue(object value);

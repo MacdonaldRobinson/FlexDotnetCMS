@@ -559,6 +559,9 @@ namespace FrameworkLibrary
 
         public static IMediaDetail CreateObject(long mediaTypeId, Media mediaItem, Media parentMedia)
         {
+            if (mediaTypeId == 0)
+                return new Page();
+
             IMediaDetail detail;
             IMediaDetail atleastOne = null;
             MediaTypeEnum mediaTypeEnum = MediaTypeEnum.Page;
@@ -965,6 +968,10 @@ namespace FrameworkLibrary
                                 if (mediaDetailField.UseMediaTypeFieldFrontEndLayout)
                                 {
                                     frontEndLayout = mediaDetailField.MediaTypeField?.FrontEndLayout;
+                                }
+                                else
+                                {
+                                    frontEndLayout = mediaDetailField.FrontEndLayout;
                                 }
                             }
 

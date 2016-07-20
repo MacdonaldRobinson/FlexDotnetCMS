@@ -739,7 +739,9 @@ function pageLoad() {
     BindDataTable();
     BindSortable();
     BindTabs();
-    BindActiveTabs();
+
+    if (typeof (BindActiveTabs) == 'function')
+        BindActiveTabs();
 }
 
 function BindDataTable() {

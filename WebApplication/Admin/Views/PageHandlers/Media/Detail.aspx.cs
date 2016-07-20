@@ -114,6 +114,9 @@ namespace WebApplication.Admin.MediaArticle
                 
                 var mediaType = MediaTypesMapper.GetByID(selectedItem.MediaTypeID);
 
+                if (mediaType == null)
+                    return;
+
                 selectedItem.MainLayout = mediaType.MainLayout;
                 selectedItem.SummaryLayout = mediaType.SummaryLayout;
                 selectedItem.FeaturedLayout = mediaType.FeaturedLayout;
@@ -158,11 +161,16 @@ namespace WebApplication.Admin.MediaArticle
                         newField.RenderLabelAfterControl = field.RenderLabelAfterControl;
                         newField.GetAdminControlValue = field.GetAdminControlValue;
                         newField.SetAdminControlValue = field.SetAdminControlValue;
-                        newField.FieldValue = field.FieldValue;
+
+                        if(field.FieldAssociations.Count > 0)
+                            newField.FieldValue = "";
+                        else
+                            newField.FieldValue = field.FieldValue;
+
                         newField.FrontEndLayout = field.FrontEndLayout;
                         newField.MediaTypeFieldID = field.MediaTypeFieldID;
                         newField.OrderIndex = field.OrderIndex;
-                        newField.UseMediaTypeFieldFrontEndLayout = true;
+                        newField.UseMediaTypeFieldFrontEndLayout = field.UseMediaTypeFieldFrontEndLayout;
 
                         newField.DateCreated = DateTime.Now;
                         newField.DateLastModified = DateTime.Now;

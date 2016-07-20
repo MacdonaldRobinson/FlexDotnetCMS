@@ -409,3 +409,7 @@ html, body {
 .hidden {
     display: none;
 }
+
+.sortable {
+    cursor:move;
+}

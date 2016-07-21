@@ -549,22 +549,13 @@ function BindGridViewSortable(CssSelector, WebserviceUrl, UpdatePanelClientId, O
                 tds.each(function () {
                     var col = cols[propIndex];
                     if (col != undefined) {
-                        var text = $.trim($(this).text());
-
-                        if (text.indexOf("AM") != -1 || text.indexOf("PM") != -1)
-                        {
-                            text = "";
-                        }
-
-                        properties += "\"" + col + "\":\"" + text + "\"";
+                        properties += "\"" + col + "\":\"" + $.trim($(this).text()) + "\"";
                         propIndex++;
 
                         if (cols[propIndex] != undefined)
                             properties += ",";
                     }
                 });
-
-                return;
 
                 trsIndex++;
 

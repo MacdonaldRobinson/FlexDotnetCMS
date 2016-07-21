@@ -21,6 +21,8 @@
             BindReOrder();
             BindScrollMagic();
             initAceEditors();
+
+            console.log(event._postBackSettings.asyncTarget)
             
             if ((event._postBackSettings.asyncTarget.indexOf("$MediaFieldsEditor") !=-1) && (event._postBackSettings.asyncTarget.indexOf("$Update") != -1 || event._postBackSettings.asyncTarget.indexOf("$Delete") != -1))
             {

@@ -751,7 +751,7 @@ namespace WebApplication.Admin.MediaArticle
                     if (history != null)
                         returnObj = SaveHistory(history);
 
-                    selectedItem.Media.ReorderChildren();
+                    //selectedItem.Media.ReorderChildren();
 
                     if (!returnObj.IsError)
                     {

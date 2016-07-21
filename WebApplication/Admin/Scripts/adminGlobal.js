@@ -465,9 +465,16 @@ $(window).load(function () {
     initAceEditors();
 
     $(document).ajaxComplete(function () {
-        initAceEditors();
+        initAceEditors();        
     });
 });
+
+function BindMultiFileUploaderImageLoadError()
+{
+    $(".MultiFileUploader img").error(function () {
+        $(this).attr("src", "/media/images/icons/File.jpg");
+    });
+}
 
 function BindTabs()
 {
@@ -739,6 +746,7 @@ function pageLoad() {
     BindDataTable();
     BindSortable();
     BindTabs();
+    BindMultiFileUploaderImageLoadError();
 
     if (typeof (BindActiveTabs) == 'function')
         BindActiveTabs();
@@ -765,12 +773,7 @@ function RefreshAdminUpdatePanel(elem) {
 
 $(document).ready(function () {
     init();
-
-    $(".MultiFileUploader img").error(function () {
-        $(this).attr("src", "/media/images/icons/File.jpg");
-    });
-
-
+    BindMultiFileUploaderImageLoadError();
 });
 
 function BindSortable() {

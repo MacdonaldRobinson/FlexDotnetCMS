@@ -19,7 +19,7 @@ namespace FrameworkLibrary
     {
         static MediaDetailsMapper()
         {
-            MaxHistory = 10;
+            MaxHistory = 50;
         }
 
         private const string MapperKey = "MediaDetailsMapperKey";

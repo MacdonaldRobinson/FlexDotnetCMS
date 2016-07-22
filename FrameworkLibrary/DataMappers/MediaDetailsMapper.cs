@@ -794,7 +794,9 @@ namespace FrameworkLibrary
                 {
                     if (association.MediaDetail != null && association.MediaDetail.FieldAssociations.Count < 2 && !association.MediaDetail.MediaType.ShowInSiteTree)
                     {
-                        var returnObj = DeletePermanently(association.MediaDetail);
+                        ClearObjectRelations(association.MediaDetail);
+                        MediaDetailsMapper.DeleteObjectFromContext(association.MediaDetail);
+                        //var returnObj = DeletePermanently(association.MediaDetail);
                     }
 
                     if (association.MediaDetail != null)

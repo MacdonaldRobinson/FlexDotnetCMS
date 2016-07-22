@@ -498,7 +498,10 @@ namespace WebApplication.Admin.MediaArticle
                 foreach (MediaDetail item in items)
                 {
                     if (!item.IsDraft)
-                        MediaDetailsMapper.DeletePermanently(item);
+                    {
+                        MediaDetailsMapper.ClearObjectRelations(item);
+                        MediaDetailsMapper.DeleteObjectFromContext(item);
+                    }                        
                 }
             }
 

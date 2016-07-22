@@ -335,8 +335,8 @@ function HandleContextMenuClick(action, target) {
                     dataType: "text",
                     success:
                     function (msg) {
-                        window.location.reload();
-                        //RefreshSiteTreeViewAjaxPanel();
+                        //window.location.reload();
+                        RefreshSiteTreeViewAjaxPanel();
                     },
                     error: function (xhr, status, error) {
                         DisplayJsonException(xhr);
@@ -598,7 +598,7 @@ $(function () {
 
     $('div.split-pane').splitPane();
     //$("#SiteTree ul").sortable({ connectWith: "ul" });
-    BindTree();
+    //BindTree();
 
     $(document).on('click', '#SiteTree a', function () {
         window.location.href = $(this).attr("href");
@@ -747,6 +747,7 @@ function pageLoad() {
     BindSortable();
     BindTabs();
     BindMultiFileUploaderImageLoadError();
+    BindTree();
 
     if (typeof (BindActiveTabs) == 'function')
         BindActiveTabs();

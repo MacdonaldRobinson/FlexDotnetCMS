@@ -8,6 +8,10 @@
 
             $(document).click(function () {
                 var values = jQuery("#<%= TagSelectorPanel.ClientID %> .as-original .as-values").val();
+
+                if(typeof(values) == 'undefined')
+                    return
+
                 var valSplit = values.split(",");
 
                 var ids = new Array();

@@ -43,7 +43,7 @@ function RefreshUpdatePanel(UpdatePanelClientId, OnAfterRefreshFunction) {
     __doPostBack(UpdatePanelClientId, '');
 }
 
-function OnUpdatePanelRefreshComplete(OnUpdatePanelRefreshCompleteFunction) {
+function OnUpdatePanelRefreshComplete(OnUpdatePanelRefreshCompleteFunction) {    
     Sys.WebForms.PageRequestManager.getInstance().add_endRequest(OnUpdatePanelRefreshCompleteFunction);
 }
 

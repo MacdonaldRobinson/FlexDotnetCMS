@@ -17,9 +17,14 @@ namespace WebApplication.Admin
             base.OnInit(e);
         }*/
 
-        protected void Page_PreRender(object sender, EventArgs e)
+        protected void Page_Init(object sender, EventArgs e)
         {
             InitPage();
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            BindSiteTreeView();
         }
 
         private void InitPage()
@@ -38,7 +43,7 @@ namespace WebApplication.Admin
                 GlossaryTermsNavItem.Visible = true;
             }
 
-            BindSiteTreeView();
+            //BindSiteTreeView();
 
             var allNodes = SiteTree.GetAllNodes();
 

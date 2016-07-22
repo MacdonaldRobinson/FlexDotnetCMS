@@ -53,13 +53,17 @@
             <div class="clear"></div>
 
             <asp:Panel ID="SavePanel" runat="server" Visible="false" CssClass="SavePanel buttons">
-                <asp:LinkButton ID="Save" runat="server" OnClick="Save_OnClick" Text="Save" />
-                <asp:LinkButton ID="SaveAsDraft" runat="server" OnClick="Save_OnClick" Text="Save As Draft" CommandArgument="SaveAsDraft" />
-                <asp:LinkButton ID="LoadLatestDraft" runat="server" OnClick="LoadLatestDraft_OnClick" Text="Load Latest Draft" Visible="false" />
-                <asp:LinkButton ID="SaveAndPublish" runat="server" OnClick="SaveAndPublish_OnClick" Text="Save And Publish" CommandArgument="SaveAndPublish" Visible="false" />
-                <asp:LinkButton ID="PublishNow" runat="server" OnClick="PublishNow_OnClick" Visible="false" Text="Publish Now" />
-                <asp:LinkButton runat="server" ID="PublishLive" OnClick="PublishLive_OnClick" Text="Publish LIVE" Visible="false" />
-                <asp:HyperLink ID="EditMediaType" runat="server" Text="Edit Media Type" Visible="false" CssClass="colorbox iframe" />
+                <asp:UpdatePanel runat="server">
+                    <ContentTemplate>
+                        <asp:LinkButton ID="Save" runat="server" OnClick="Save_OnClick" Text="Save" />
+                        <asp:LinkButton ID="SaveAsDraft" runat="server" OnClick="Save_OnClick" Text="Save As Draft" CommandArgument="SaveAsDraft" />
+                        <asp:LinkButton ID="LoadLatestDraft" runat="server" OnClick="LoadLatestDraft_OnClick" Text="Load Latest Draft" Visible="false" />
+                        <asp:LinkButton ID="SaveAndPublish" runat="server" OnClick="SaveAndPublish_OnClick" Text="Save And Publish" CommandArgument="SaveAndPublish" Visible="false" />
+                        <asp:LinkButton ID="PublishNow" runat="server" OnClick="PublishNow_OnClick" Visible="false" Text="Publish Now" />
+                        <asp:LinkButton runat="server" ID="PublishLive" OnClick="PublishLive_OnClick" Text="Publish LIVE" Visible="false" />
+                        <asp:HyperLink ID="EditMediaType" runat="server" Text="Edit Media Type" Visible="false" CssClass="colorbox iframe" />
+                    </ContentTemplate>
+                </asp:UpdatePanel>
             </asp:Panel>
 
         </div>

@@ -16,19 +16,27 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
         public void SetObject(IMediaDetail selectedItem)
         {
             this.selectedItem = selectedItem;
-
-            listItems = selectedItem.ChildMediaDetails.Where(i => i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0).OrderByDescending(i=>i.DateLastModified).ToList();
-
             Bind();
         }        
 
         protected void Page_PreRender(object sender, EventArgs e)
         {
-            Bind();
+            //Bind();
         }
 
-        private void Bind()
+        private void Bind(string searchText = "")
         {
+            var mediaId = selectedItem.Media.ID;
+
+            if (string.IsNullOrEmpty(searchText))
+            {                
+                listItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == mediaId && i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0).OrderByDescending(i => i.DateLastModified).ToList<IMediaDetail>();
+            }
+            else
+            {
+                listItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == mediaId && i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0 && i.SectionTitle.Contains(searchText)).OrderByDescending(i => i.DateLastModified).ToList<IMediaDetail>();
+            }
+
             if(listItems.Count > 0)
             {
                 SearchPanel.Visible = true;
@@ -115,7 +123,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
         {
             if(selectedItem != null)
             {
-                listItems = selectedItem.ChildMediaDetails.Where(i => i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0 && i.SectionTitle.Contains(SearchText.Text)).OrderByDescending(i => i.DateLastModified).ToList<IMediaDetail>();
+                Bind(SearchText.Text.Trim());
             }            
         }
     }

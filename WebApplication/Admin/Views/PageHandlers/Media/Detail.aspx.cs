@@ -758,7 +758,7 @@ namespace WebApplication.Admin.MediaArticle
 
                     if (!returnObj.IsError)
                     {
-                        returnObj = MediaDetailsMapper.Update(selectedItem);
+                        returnObj = MediaDetailsMapper.Update(selectedItem);                        
                     }
                 }
             }
@@ -779,6 +779,10 @@ namespace WebApplication.Admin.MediaArticle
                 {
                     ContextHelper.Clear(ContextType.Cache);
                     FileCacheHelper.ClearAllCache();
+
+                    selectedItem.ClearAutoCalculatedVirtualPathCache();
+
+                    RedirectToMediaDetail(selectedItem.MediaTypeID, selectedItem.MediaID, selectedItem.Media.ParentMediaID);
 
                     //ChangeLinksForAllMediaDetails(oldAbsoluteUrl, selectedItem.AbsoluteUrl);
                 }

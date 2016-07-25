@@ -7,8 +7,7 @@ namespace FrameworkLibrary
     {
         string AbsoluteUrl { get; }
         bool AllowCommenting { get; set; }
-        string AutoCalculatedVirtualPath { get; }
-        string CachedVirtualPath { get; set; }
+        string AutoCalculatedVirtualPath { get; }        string CachedVirtualPath { get; set; }
         bool CanAddToCart { get; set; }
         bool CanRender { get; }
         IEnumerable<IMediaDetail> ChildMediaDetails { get; }        
@@ -86,6 +85,7 @@ namespace FrameworkLibrary
         List<ValidationError> ValidationErrors { get; }
         string VirtualPath { get; }
 
+        void ClearAutoCalculatedVirtualPathCache();
         string CalculatedVirtualPath();
         bool CanUserAccessSection(User user);
         Return GenerateValidationReturn();

@@ -347,6 +347,10 @@ namespace FrameworkLibrary
         }
 
         private string _autoCalculatedVirtualPath = "";
+        public void ClearAutoCalculatedVirtualPathCache()
+        {
+            _autoCalculatedVirtualPath = "";
+        }
         public string AutoCalculatedVirtualPath
         {
             get

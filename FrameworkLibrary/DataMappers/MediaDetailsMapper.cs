@@ -749,7 +749,9 @@ namespace FrameworkLibrary
 
             if (calculatedVirtualPath != mediaDetail.CachedVirtualPath)
             {
-                foreach (var item in obj.Media.ChildMedias)
+                var childMedias = obj.Media.ChildMedias.Where(i => i.LiveMediaDetail.HistoryVersionNumber == 0 && i.LiveMediaDetail.MediaType.ShowInSiteTree);
+
+                foreach (var item in childMedias)
                 {
                     var childMediaDetails = item.MediaDetails.Where(i => i.LanguageID == obj.LanguageID);
 

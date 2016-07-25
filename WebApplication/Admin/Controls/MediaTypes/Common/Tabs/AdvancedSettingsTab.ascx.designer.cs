@@ -31,15 +31,6 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs {
         protected global::WebApplication.Admin.Controls.Selectors.MasterPageSelector MasterPageSelector;
         
         /// <summary>
-        /// MediaDetailID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal MediaDetailID;
-        
-        /// <summary>
         /// EnableCaching control.
         /// </summary>
         /// <remarks>
@@ -49,6 +40,15 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs {
         protected global::System.Web.UI.WebControls.CheckBox EnableCaching;
         
         /// <summary>
+        /// MediaDetailID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal MediaDetailID;
+        
+        /// <summary>
         /// MediaID control.
         /// </summary>
         /// <remarks>
@@ -56,6 +56,15 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal MediaID;
+        
+        /// <summary>
+        /// MediaTypeID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal MediaTypeID;
         
         /// <summary>
         /// MediaType control.

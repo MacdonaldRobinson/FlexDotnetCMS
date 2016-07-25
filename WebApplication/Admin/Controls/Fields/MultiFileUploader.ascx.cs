@@ -28,6 +28,9 @@ namespace WebApplication.Admin.Controls.Fields
         {
             var field = GetField();
 
+            if (field == null)
+                return new List<FieldAssociation>();
+
             return field.FieldAssociations.OrderBy(i => i.OrderIndex).ToList();
         }
 
@@ -47,7 +50,7 @@ namespace WebApplication.Admin.Controls.Fields
         {
             var field = GetField();
             var hasDeleted = false;
-            var hasReordered = false;
+            var hasReordered = false;            
 
             if (IsPostBack && MultiFileUpload.HasFiles && !hasRun)
             {
@@ -80,6 +83,8 @@ namespace WebApplication.Admin.Controls.Fields
                             field.FieldAssociations.Add(fieldAssociation);
 
                             index++;
+
+                            var returnObj = BaseMapper.SaveDataModel();
                         }
                     }
                 }
@@ -138,7 +143,9 @@ namespace WebApplication.Admin.Controls.Fields
 
         private void BindValues()
         {
-            switch(Mode)
+            UpdatePagerSize();
+
+            switch (Mode)
             {
                 case ViewMode.GridView:
                     {
@@ -147,6 +154,16 @@ namespace WebApplication.Admin.Controls.Fields
 
                         FieldItems.DataSource = GetValue();
                         FieldItems.DataBind();
+
+                        if(((dynamic)FieldItems.DataSource).Count > 0)
+                        {
+                            SearchPanel.Visible = true;
+                        }
+                        else
+                        {
+                            SearchPanel.Visible = false;
+                        }
+
                         break;
                     }                                
                 default:
@@ -155,20 +172,31 @@ namespace WebApplication.Admin.Controls.Fields
                         FieldItems.Visible = false;
 
                         Values.DataSource = GetValue();
-                        Values.DataBind();
+                        //Values.DataBind();
+
+                        if (((dynamic)Values.DataSource).Count > 0)
+                        {
+                            SearchPanel.Visible = true;
+                        }
+                        else
+                        {
+                            SearchPanel.Visible = false;
+                        }
+
                         break;
                     }
             }
 
 
             ItemsToDelete.Text = "[]";
-            ReorderItems.Text = "[]";
+            ReorderItems.Text = "[]";            
         }
 
         public enum ViewMode { Uploader, GridView }
 
         public string SaveToFolder { get; set; }
         public long MediaTypeID { get; set; }
+        public int PageSize { get; set; }
         public ViewMode Mode { get; set; }
 
         protected void AddItem_Click(object sender, EventArgs e)
@@ -197,6 +225,8 @@ namespace WebApplication.Admin.Controls.Fields
 
         protected void SearchItems_Click(object sender, EventArgs e)
         {
+            UpdatePagerSize();
+
             switch (Mode)
             {
                 case ViewMode.GridView:
@@ -223,6 +253,20 @@ namespace WebApplication.Admin.Controls.Fields
                         break;
                     }
             }
+        }
+
+        private void UpdatePagerSize()
+        {
+            if (PageSize > 0)
+            {
+                Pager.PageSize = PageSize;
+                FieldItems.PageSize = PageSize;
+            }
+        }
+
+        protected void UploadFilesNow_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

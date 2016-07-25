@@ -353,6 +353,9 @@ namespace FrameworkLibrary
             {
                 var websiteVirtualPaths = WebsitesMapper.GetAllWebsiteVirtualPaths();
 
+                if (websiteVirtualPaths.Count == 0)
+                    return "";
+
                 if (!string.IsNullOrEmpty(_autoCalculatedVirtualPath))
                 {
                     return _autoCalculatedVirtualPath;
@@ -367,11 +370,13 @@ namespace FrameworkLibrary
                 {
                     var virtualPath = this.VirtualPath;
 
+                    var language = LanguagesMapper.GetByID(this.LanguageID);
+
                     if (websiteVirtualPaths.Count > 1)
                     {
                         foreach (var websiteVirtualPath in websiteVirtualPaths)
                         {
-                            virtualPath = virtualPath.Replace(websiteVirtualPath, URIHelper.ConvertAbsUrlToTilda(URIHelper.LanguageBaseUrl(this.Language)));
+                            virtualPath = virtualPath.Replace(websiteVirtualPath, URIHelper.ConvertAbsUrlToTilda(URIHelper.LanguageBaseUrl(language)));
                         }
 
                         return virtualPath;
@@ -380,7 +385,7 @@ namespace FrameworkLibrary
                     if (LanguagesMapper.GetAllActive().Count() == 1)
                         virtualPath = virtualPath.Replace(websiteVirtualPaths.ElementAt(0), URIHelper.ConvertAbsUrlToTilda(URIHelper.BaseUrl.ToLower()));
                     else
-                        virtualPath = virtualPath.Replace(websiteVirtualPaths.ElementAt(0), URIHelper.ConvertAbsUrlToTilda(URIHelper.LanguageBaseUrl(this.Language).ToLower()));
+                        virtualPath = virtualPath.Replace(websiteVirtualPaths.ElementAt(0), URIHelper.ConvertAbsUrlToTilda(URIHelper.LanguageBaseUrl(language).ToLower()));
 
                     _autoCalculatedVirtualPath = virtualPath;
 

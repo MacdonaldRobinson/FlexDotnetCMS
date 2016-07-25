@@ -8,13 +8,17 @@
                 <div>
                     <asp:LinkButton Text="Add New Item" runat="server" ID="AddItem" OnClick="AddItem_Click"/>
                 </div>
-                <asp:Panel runat="server" DefaultButton="SearchItems">
+                <asp:Panel runat="server" DefaultButton="SearchItems" id="SearchPanel" Visible="false">
                     <asp:TextBox runat="server" ID="SearchText" style="display:inline; width: 200px;" placeholder="Search ..." />
                     <asp:LinkButton ID="SearchItems" Text="Search" runat="server" OnClick="SearchItems_Click"/>
                 </asp:Panel> 
                 <asp:Panel runat="server" ID="MultiItemUploaderPanel">
                     <asp:FileUpload ID="MultiFileUpload" runat="server" AllowMultiple="true" CssClass="MultiFileUpload" />
                     <div class="dvPreview" runat="server"></div>
+                    <div class="buttons" id="UploadFilesNowButtons" style="display:none;">
+                        <asp:LinkButton runat="server" ID="UploadFilesNow" OnClick="UploadFilesNow_Click" CssClass="button">Upload Now</asp:LinkButton>
+                        <div class="clear"></div>
+                    </div>
                     <div class="UploadedItems" id="UploadedItems" runat="server">
                         <asp:ListView runat="server" ID="Values" ItemType="FrameworkLibrary.FieldAssociation">
                             <LayoutTemplate>
@@ -41,7 +45,7 @@
                                 </li>
                             </ItemTemplate>
                         </asp:ListView>
-                        <Site:Pager runat="server" PagedControlID="Values" PageSize="12" />
+                        <Site:Pager runat="server" id="Pager" PagedControlID="Values" PageSize="12" />
                     </div>
                 </asp:Panel>
 
@@ -66,8 +70,10 @@
                 </asp:GridView>
 
             </fieldset>
-
         </ContentTemplate>
+        <Triggers>
+            <asp:PostBackTrigger ControlID="UploadFilesNow" />
+        </Triggers>
     </asp:UpdatePanel>
 </asp:Panel>
 <asp:Panel runat="server" ID="FrontEndPanel">

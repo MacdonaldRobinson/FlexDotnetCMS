@@ -19,8 +19,8 @@
         <script type="text/javascript">
 
             function RefreshSiteTreeViewAjaxPanel() {
-                window.location.reload();
-                <%--__doPostBack('<%= SiteTreeViewAjaxPanel.ClientID %>', '');--%>
+                //window.location.reload();
+                __doPostBack('<%= SiteTree.ClientID %>', '');
             }
         </script>
 
@@ -79,12 +79,20 @@
                             <h1>Edit Sections</h1>
                             <Admin:LanguageSwitcher ID="LanguageSwitcher" runat="server" />
                             <div id="SiteTreeWrapper">
-                                <asp:TextBox runat="server" ID="Filter" AutoPostBack="True" placeholder="Search ..." Width="90%"></asp:TextBox>
+                                <div>
+                                    <asp:HyperLink ID="CreateItem" Text="Create Item" runat="server"  NavigateUrl="/Admin/Views/PageHandlers/Media/Create.aspx" Visible="false"/>
+                                </div>                                
+                                <asp:UpdatePanel runat="server">
+                                    <ContentTemplate>
+                                        <asp:TextBox runat="server" ID="Filter" AutoPostBack="True" placeholder="Search ..." Width="90%"></asp:TextBox>
 
-                                <div id="SiteTree">
-                                    <Site:CustomTreeView runat="server" ID="SiteTree">
-                                    </Site:CustomTreeView>
-                                </div>
+                                        <div id="SiteTree">
+                                            <Site:CustomTreeView runat="server" ID="SiteTree">
+                                            </Site:CustomTreeView>
+                                        </div>
+
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
                             </div>
                         </div>
                     </div>

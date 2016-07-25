@@ -9,7 +9,8 @@ namespace FrameworkLibrary
         {
             get
             {
-                return this.MediaDetails.SingleOrDefault(i => i.HistoryForMediaDetail == null);
+                var currentLanguage = FrameworkSettings.GetCurrentLanguage();
+                return this.MediaDetails.SingleOrDefault(i => i.HistoryForMediaDetail == null && i.LanguageID == currentLanguage.ID);
             }
         }
 
@@ -78,7 +79,12 @@ namespace FrameworkLibrary
 
         public List<Media> GetSiblings()
         {
-            return this.ParentMedia.ChildMedias.OrderBy(i => i.OrderIndex).ToList();
+            var siblings = this.ParentMedia?.ChildMedias?.OrderBy(i => i.OrderIndex).ToList();
+
+            if (siblings == null)
+                return new List<Media>();
+
+            return siblings;
         }
 
         public int GetIndex()

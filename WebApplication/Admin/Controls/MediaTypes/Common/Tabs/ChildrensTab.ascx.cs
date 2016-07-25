@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -10,21 +11,38 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
 {
     public partial class ChildrensTab : BaseTab, ITab
     {
+        private List<IMediaDetail> listItems { get; set; }
+
         public void SetObject(IMediaDetail selectedItem)
         {
             this.selectedItem = selectedItem;
-
             Bind();
         }        
 
         protected void Page_PreRender(object sender, EventArgs e)
         {
-            Bind();
+            //Bind();
         }
 
-        private void Bind()
+        private void Bind(string searchText = "")
         {
-            ItemList.DataSource = selectedItem.ChildMediaDetails.Where(i=>i.MediaType.ShowInSiteTree).ToList();
+            var mediaId = selectedItem.Media.ID;
+
+            if (string.IsNullOrEmpty(searchText))
+            {                
+                listItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == mediaId && i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0).OrderByDescending(i => i.DateLastModified).ToList<IMediaDetail>();
+            }
+            else
+            {
+                listItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == mediaId && i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0 && i.SectionTitle.Contains(searchText)).OrderByDescending(i => i.DateLastModified).ToList<IMediaDetail>();
+            }
+
+            if(listItems.Count > 0)
+            {
+                SearchPanel.Visible = true;
+            }
+
+            ItemList.DataSource = listItems;
             ItemList.DataBind();
         }
 
@@ -92,6 +110,21 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
             {
                 ItemList.HeaderRow.TableSection = TableRowSection.TableHeader;                
             }
+        }
+
+        protected void ItemList_Sorting(object sender, System.Web.UI.WebControls.GridViewSortEventArgs e)
+        {
+            var sortDirection = ((e.SortDirection == System.Web.UI.WebControls.SortDirection.Ascending) ? "ASC" : "DESC");
+            listItems = listItems.OrderBy(e.SortExpression + " " + sortDirection).ToList();
+            Bind();
+        }
+
+        protected void SearchItems_Click(object sender, EventArgs e)
+        {
+            if(selectedItem != null)
+            {
+                Bind(SearchText.Text.Trim());
+            }            
         }
     }
 }

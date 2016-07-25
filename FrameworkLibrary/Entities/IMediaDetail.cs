@@ -11,8 +11,7 @@ namespace FrameworkLibrary
         string CachedVirtualPath { get; set; }
         bool CanAddToCart { get; set; }
         bool CanRender { get; }
-        IEnumerable<IMediaDetail> ChildMediaDetails { get; }
-        ICollection<Comment> Comments { get; set; }
+        IEnumerable<IMediaDetail> ChildMediaDetails { get; }        
         User CreatedByUser { get; set; }
         long CreatedByUserID { get; set; }
         string CssClasses { get; set; }

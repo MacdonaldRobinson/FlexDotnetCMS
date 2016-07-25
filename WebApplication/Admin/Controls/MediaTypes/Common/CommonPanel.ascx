@@ -5,16 +5,8 @@
 
 <script type="text/javascript">
 
-    $(document).ready(function () {
-
-        $(".LinkTitle").on("blur", function () {
-            CopyToOtherFields($(this).val(), this);
-        });
-
-        $(".LinkTitle").on("focus", function () {
-            ClearFieldsIfSameAs($(this).val(), this);
-        });
-
+    function BindActiveTabs()
+    {
         var TabIndexsJson = $("#<%= SelectedTabIndexs.ClientID %>").val();
 
         if (TabIndexsJson != "") {
@@ -28,7 +20,20 @@
 
         }
 
-        $(".tabs li a").click(function () {
+        //console.log(TabIndexsJson);
+    }
+
+    $(document).ready(function () {
+
+        $(".LinkTitle").on("blur", function () {
+            CopyToOtherFields($(this).val(), this);
+        });
+
+        $(".LinkTitle").on("focus", function () {
+            ClearFieldsIfSameAs($(this).val(), this);
+        });
+
+        $(document).on("click", ".tabs li a", function () {
             var tabUl = $(this).parents("ul");
             var tabUlIndex = $(".tabs > ul").index(tabUl);
 

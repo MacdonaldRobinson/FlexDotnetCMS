@@ -140,11 +140,6 @@
             Extension of a source file without dot ("cs" for C# files or "vb" for VB.NET files).
             </summary>
         </member>
-        <member name="F:RazorEngine.Compilation.CompilerServiceBase.references">
-            <summary>
-            All references we used until now.
-            </summary>
-        </member>
         <member name="M:RazorEngine.Compilation.CompilerServiceBase.GetDefaultTemporaryDirectory">
             <summary>
             Tries to create and return a unique temporary directory.
@@ -255,6 +250,17 @@
             Inspects the generated code compile unit.
             </summary>
             <param name="unit">The code compile unit.</param>
+        </member>
+        <member name="M:RazorEngine.Compilation.CompilerServiceBase.Dispose">
+            <summary>
+            Disposes the current instance.
+            </summary>
+        </member>
+        <member name="M:RazorEngine.Compilation.CompilerServiceBase.Dispose(System.Boolean)">
+            <summary>
+            Disposes the current instance via the disposable pattern.
+            </summary>
+            <param name="disposing">true when Dispose() was called manually.</param>
         </member>
         <member name="T:RazorEngine.Compilation.CompilerServiceBuilder">
             <summary>
@@ -711,16 +717,11 @@
             <param name="context">The type context which defines the type to compile.</param>
             <returns>The compiled type.</returns>
         </member>
-        <member name="M:RazorEngine.Compilation.DirectCompilerServiceBase.Dispose">
-            <summary>
-            Releases managed resourced used by this instance.
-            </summary>
-        </member>
         <member name="M:RazorEngine.Compilation.DirectCompilerServiceBase.Dispose(System.Boolean)">
             <summary>
             Releases managed resources used by this instance.
             </summary>
-            <param name="disposing">Are we explicily disposing of this instance?</param>
+            <param name="disposing"></param>
         </member>
         <member name="T:RazorEngine.Compilation.ImpromptuInterface.ActLikeCaster">
             <summary>
@@ -3334,6 +3335,14 @@
             <param name="byteArray"></param>
             <returns></returns>
         </member>
+        <member name="M:RazorEngine.Compilation.ReferenceResolver.CompilerReference.Resolve(System.String,System.Collections.Generic.IEnumerable{RazorEngine.Compilation.ReferenceResolver.CompilerReference})">
+            <summary>
+            Default implementation for resolving an assembly name.
+            </summary>
+            <param name="assemblyName">name of the assembly to resolve</param>
+            <param name="references">references to check</param>
+            <returns>the resolved assembly or null</returns>
+        </member>
         <member name="M:RazorEngine.Compilation.ReferenceResolver.CompilerReference.GetFile(System.Func{System.String,System.Exception})">
             <summary>
             Try to resolve the reference to a file (throws when this is not possible).
@@ -3515,10 +3524,11 @@
             Defines a type context that describes a template to compile.
             </summary>
         </member>
-        <member name="M:RazorEngine.Compilation.TypeContext.#ctor">
+        <member name="M:RazorEngine.Compilation.TypeContext.#ctor(System.Action{System.Collections.Generic.IEnumerable{RazorEngine.Compilation.ReferenceResolver.CompilerReference}})">
             <summary>
             Initialises a new instance of <see cref="T:RazorEngine.Compilation.TypeContext"/>.
             </summary>
+            <param name="addReferences"></param>
         </member>
         <member name="M:RazorEngine.Compilation.TypeContext.#ctor(System.String,System.Collections.Generic.ISet{System.String})">
             <summary>
@@ -3551,6 +3561,12 @@
             <summary>
             Gets or sets the base template type.
             </summary>
+        </member>
+        <member name="M:RazorEngine.Compilation.TypeContext.AddReferences(System.Collections.Generic.IEnumerable{RazorEngine.Compilation.ReferenceResolver.CompilerReference})">
+            <summary>
+            Adds compiler references to the current dynamic assembly resolve list.
+            </summary>
+            <param name="references">the references to add to the dynamic resolve list.</param>
         </member>
         <member name="T:RazorEngine.Compilation.VisualBasic.VBCodeParser">
             <summary>
@@ -5116,6 +5132,35 @@
             Returns a hashcode for the current instance.
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:RazorEngine.Templating.ReferencesListForDynamicAssemblyResolution">
+            <summary>
+            Manages the current list of assemblies, used for dynamic assembly resolution.
+            When we compile assemblies we might have any <see cref="T:RazorEngine.Compilation.ReferenceResolver.CompilerReference"/>, but once we load
+            the template the runtime will search for it and trigger an <see cref="E:System.AppDomain.AssemblyLoad"/> event.
+            We can handle the event by searching in the already used list of references, which is managed by this class.
+            </summary>
+        </member>
+        <member name="F:RazorEngine.Templating.ReferencesListForDynamicAssemblyResolution._references">
+            <summary>
+            All references we used until now.
+            </summary>
+        </member>
+        <member name="M:RazorEngine.Templating.ReferencesListForDynamicAssemblyResolution.AddReferences(System.Collections.Generic.IEnumerable{RazorEngine.Compilation.ReferenceResolver.CompilerReference})">
+            <summary>
+            Add references to the current list of compiler references.
+            This member is threadsafe.
+            </summary>
+            <param name="refs">The compiler references to add.</param>
+        </member>
+        <member name="M:RazorEngine.Templating.ReferencesListForDynamicAssemblyResolution.GetCurrentReferences">
+            <summary>
+            Get the current set of <see cref="T:RazorEngine.Compilation.ReferenceResolver.CompilerReference"/> instances.
+            Note that this method returnes a copied snapshot and is therefore threadsafe.
+            An other thread might add additional <see cref="T:RazorEngine.Compilation.ReferenceResolver.CompilerReference"/> objects while we enumerate the list.
+            But that should not matter as the <see cref="E:System.AppDomain.AssemblyLoad"/> event was triggered earlier.
+            </summary>
+            <returns>the current list of compiler references.</returns>
         </member>
         <member name="T:RazorEngine.Templating.ResolvePathCheckModifiedTimeTemplateManager">
             <summary>
@@ -7789,6 +7834,11 @@
             </summary>
             <param name="templateType">The template type.</param>
             <returns>An instance of <see cref="T:RazorEngine.Templating.InstanceContext"/>.</returns>
+        </member>
+        <member name="M:RazorEngine.Templating.RazorEngineCore.Dispose">
+            <summary>
+            Disposes the current instance.
+            </summary>
         </member>
         <member name="T:RazorEngine.Templating.TemplateWriter">
             <summary>

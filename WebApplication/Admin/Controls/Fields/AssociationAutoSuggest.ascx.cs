@@ -20,16 +20,43 @@ namespace WebApplication.Admin.Controls.Fields
         {
             var mediaDetail = MediaDetailsMapper.GetByID(ParentMediaDetailID);
             var autoSuggestList = new List<AutoSuggest>();
+            IEnumerable<IMediaDetail> mediaDetailItems = new List<IMediaDetail>();
 
             if (mediaDetail != null)
-            {
-                foreach (var item in mediaDetail.ChildMediaDetails)
+            {                
+                if (MediaTypeID > 0)
                 {
-                    autoSuggestList.Add(new AutoSuggest() { name = item.SectionTitle, value = item.ID.ToString() });
+                    mediaDetailItems = mediaDetail.ChildMediaDetails.Where(i => i.MediaTypeID == MediaTypeID && i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
                 }
+                else
+                {
+                    mediaDetailItems = mediaDetail.ChildMediaDetails.Where(i=>i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
+                }
+
+                autoSuggestList = GetAutoSuggestList(mediaDetailItems);
+            }
+            else
+            {
+                if (MediaTypeID > 0)
+                {
+                    mediaDetailItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaTypeID == MediaTypeID && i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
+                    autoSuggestList = GetAutoSuggestList(mediaDetailItems);
+                }                
             }
 
             return StringHelper.ObjectToJson(autoSuggestList);
+        }
+
+        private List<AutoSuggest> GetAutoSuggestList(IEnumerable<IMediaDetail> mediaDetailItems)
+        {
+            var autoSuggestList = new List<AutoSuggest>();
+
+            foreach (var item in mediaDetailItems)
+            {
+                autoSuggestList.Add(new AutoSuggest() { name = item.SectionTitle, value = item.ID.ToString() });
+            }
+
+            return autoSuggestList;
         }
 
         public string GetCurrentAutoSuggestItems()
@@ -47,6 +74,7 @@ namespace WebApplication.Admin.Controls.Fields
         }
 
         public long ParentMediaDetailID { get; set; }
+        public long MediaTypeID { get; set; }
 
         public override void RenderControlInFrontEnd()
         {

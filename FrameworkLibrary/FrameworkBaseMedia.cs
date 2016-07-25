@@ -20,7 +20,7 @@ public class FrameworkBaseMedia
     private Language currentLanguage;
     private Language currentAdminLanguage;
     private static ConnectionStringSettings connectionSettings = null;
-    private static Language defaultLanguage;
+    private Language defaultLanguage;
     private string currentVirtualPath = "";
 
     public static FrameworkBaseMedia GetInstanceByVirtualPath(string virtualPath, bool selectParentIfPossible = false)

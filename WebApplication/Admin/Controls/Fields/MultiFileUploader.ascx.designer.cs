@@ -40,6 +40,15 @@ namespace WebApplication.Admin.Controls.Fields {
         protected global::System.Web.UI.WebControls.LinkButton AddItem;
         
         /// <summary>
+        /// SearchPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel SearchPanel;
+        
+        /// <summary>
         /// SearchText control.
         /// </summary>
         /// <remarks>
@@ -76,6 +85,15 @@ namespace WebApplication.Admin.Controls.Fields {
         protected global::System.Web.UI.WebControls.FileUpload MultiFileUpload;
         
         /// <summary>
+        /// UploadFilesNow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton UploadFilesNow;
+        
+        /// <summary>
         /// UploadedItems control.
         /// </summary>
         /// <remarks>
@@ -92,6 +110,15 @@ namespace WebApplication.Admin.Controls.Fields {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListView Values;
+        
+        /// <summary>
+        /// Pager control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::WebApplication.Controls.Generic.Pager Pager;
         
         /// <summary>
         /// ItemsToDelete control.

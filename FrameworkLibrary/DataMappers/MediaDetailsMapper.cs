@@ -17,11 +17,9 @@ namespace FrameworkLibrary
 
     public class MediaDetailsMapper : BaseMapper
     {
-        private static Language defaultLanguage = LanguagesMapper.GetDefaultLanguage();
-
         static MediaDetailsMapper()
         {
-            MaxHistory = 10;
+            MaxHistory = 30;
         }
 
         private const string MapperKey = "MediaDetailsMapperKey";
@@ -534,7 +532,10 @@ namespace FrameworkLibrary
             var detail = media.MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.LanguageID == language.ID);
 
             if (detail == null)
+            {
+                var defaultLanguage = LanguagesMapper.GetDefaultLanguage();
                 detail = media.MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.LanguageID == defaultLanguage.ID);
+            }                
 
             return detail;
         }
@@ -558,6 +559,9 @@ namespace FrameworkLibrary
 
         public static IMediaDetail CreateObject(long mediaTypeId, Media mediaItem, Media parentMedia)
         {
+            if (mediaTypeId == 0)
+                return new Page();
+
             IMediaDetail detail;
             IMediaDetail atleastOne = null;
             MediaTypeEnum mediaTypeEnum = MediaTypeEnum.Page;
@@ -790,7 +794,9 @@ namespace FrameworkLibrary
                 {
                     if (association.MediaDetail != null && association.MediaDetail.FieldAssociations.Count < 2 && !association.MediaDetail.MediaType.ShowInSiteTree)
                     {
-                        var returnObj = DeletePermanently(association.MediaDetail);
+                        ClearObjectRelations(association.MediaDetail);
+                        MediaDetailsMapper.DeleteObjectFromContext(association.MediaDetail);
+                        //var returnObj = DeletePermanently(association.MediaDetail);
                     }
 
                     if (association.MediaDetail != null)
@@ -813,7 +819,7 @@ namespace FrameworkLibrary
                 GetDataModel().FieldAssociations.Remove(item);
             }
 
-            var comments = obj.Comments.ToList();
+            var comments = obj.Media.Comments.ToList();
 
             foreach (var item in comments)
                 GetDataModel().Comments.Remove(item);
@@ -833,7 +839,7 @@ namespace FrameworkLibrary
             
             ClearObjectRelations(obj);
 
-            obj.Comments.Clear();
+            obj.Media.Comments.Clear();
 
             returnObj = Delete(MapperKey, obj);
 
@@ -965,6 +971,10 @@ namespace FrameworkLibrary
                                 {
                                     frontEndLayout = mediaDetailField.MediaTypeField?.FrontEndLayout;
                                 }
+                                else
+                                {
+                                    frontEndLayout = mediaDetailField.FrontEndLayout;
+                                }
                             }
 
                             if (!string.IsNullOrEmpty(frontEndLayout))
@@ -987,6 +997,32 @@ namespace FrameworkLibrary
                         }
                     }
                 }
+            }
+
+            if (customCode.Contains("{Link:"))
+            {
+                var linkShortCodes = Regex.Matches(customCode, "{Link:[a-zA-Z0-9:=\"\". ]+}");
+
+                foreach (var linkShortCode in linkShortCodes)
+                {
+                    var mediaId = linkShortCode.ToString().Replace("{Link:", "").Replace("}", "");
+                    long id = 0;
+
+                    if (long.TryParse(mediaId, out id))
+                    {
+                        var media = MediasMapper.GetByID(id);
+
+                        if (media != null)
+                        {
+                            customCode = customCode.Replace(linkShortCode.ToString(), media.LiveMediaDetail.AbsoluteUrl);
+                        }
+                        else
+                        {
+                            customCode = customCode.Replace(linkShortCode.ToString(), "#");
+                        }
+                    }
+                }
+
             }
 
             if (passToParser == null)

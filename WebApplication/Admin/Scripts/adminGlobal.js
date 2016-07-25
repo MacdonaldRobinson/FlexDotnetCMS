@@ -1,4 +1,10 @@
-﻿function DisplayJsonException(xhr) {
+﻿window.onerror = function (e) {
+    if(e.indexOf("UpdatePanel") !=-1)
+    {
+        window.location.reload();
+    }
+}
+function DisplayJsonException(xhr) {
     try {
         var jsonError = JSON.parse(xhr.responseText);
 
@@ -329,8 +335,8 @@ function HandleContextMenuClick(action, target) {
                     dataType: "text",
                     success:
                     function (msg) {
-                        window.location.reload();
-                        //RefreshSiteTreeViewAjaxPanel();
+                        //window.location.reload();
+                        RefreshSiteTreeViewAjaxPanel();
                     },
                     error: function (xhr, status, error) {
                         DisplayJsonException(xhr);
@@ -452,9 +458,21 @@ $(window).load(function () {
     initAceEditors();
 
     $(document).ajaxComplete(function () {
-        initAceEditors();
+        initAceEditors();        
     });
 });
+
+function BindMultiFileUploaderImageLoadError()
+{
+    $(".MultiFileUploader img").error(function () {
+        $(this).attr("src", "/media/images/icons/File.jpg");
+    });
+}
+
+function BindTabs()
+{
+    $('.tabs').tabs();
+}
 
 $(document).ready(function () {
     //var controller = new ScrollMagic.Controller();
@@ -464,7 +482,7 @@ $(document).ready(function () {
     //                .addTo(controller);
 
     $('ul.sf-menu').superfish();
-    $('.tabs').tabs();
+    BindTabs();
 
     $('input.datetimepicker').datetimepicker({
         controlType: 'select',
@@ -479,7 +497,7 @@ $(document).ready(function () {
         content_css: "/Views/MasterPages/SiteTemplates/css/style.min.css, /Admin/Styles/editor.css",
         plugins: [
           'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-          'searchreplace wordcount visualblocks visualchars code fullscreen',
+          'searchreplace wordcount visualblocks visualchars fullscreen',
           'insertdatetime media youtube nonbreaking save table contextmenu directionality',
           'emoticons template paste textcolor colorpicker textpattern imagetools ace'
         ],
@@ -488,6 +506,7 @@ $(document).ready(function () {
         ],
         image_advtab: true,
         relative_urls: false,
+        convert_urls: false,
         remove_script_host: false,
         setup: function (editor) {
             editor.on('change', function () {
@@ -570,7 +589,7 @@ function BindGridViewSortable(CssSelector, WebserviceUrl, UpdatePanelClientId, O
 $(function () {
     $('div.split-pane').splitPane();
     //$("#SiteTree ul").sortable({ connectWith: "ul" });
-    BindTree();
+    //BindTree();
 
     $(document).on('click', '#SiteTree a', function () {
         window.location.href = $(this).attr("href");
@@ -711,6 +730,12 @@ $(document)
 function pageLoad() {
     BindDataTable();
     BindSortable();
+    BindTabs();
+    BindMultiFileUploaderImageLoadError();
+    BindTree();
+
+    if (typeof (BindActiveTabs) == 'function')
+        BindActiveTabs();
 }
 
 function BindDataTable() {
@@ -733,15 +758,24 @@ function RefreshAdminUpdatePanel(elem) {
 
 $(document).ready(function () {
     init();
+<<<<<<< HEAD
 
     $(".MultiFileUploader img").error(function () {
         $(this).attr("src", "/media/images/icons/File.jpg");
     });
+=======
+    BindMultiFileUploaderImageLoadError();
+>>>>>>> master
 });
 
 function BindSortable() {
-    $(".sortable").sortable({
+    $(".dropZone.sortable").sortable({
         connectWith: '.dropZone.sortable',
+        update: function (event, ui) {
+        }
+    });
+
+    $(".MultiFileUploader .sortable").sortable({
         update: function (event, ui) {
             var arr = new Array();
             $(this).children("li").each(function () {
@@ -909,6 +943,8 @@ function init() {
                     dvPreview.html("");
                     return false;
                 }
+
+                $("#UploadFilesNowButtons").show();
             });
         } else {
             alert("This browser does not support HTML5 FileReader.");

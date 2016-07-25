@@ -4,11 +4,11 @@ namespace WebApplication.Admin
 {
     public class BaseMasterPage : System.Web.UI.MasterPage
     {
-        protected override void OnPreRender(EventArgs e)
+        /*protected override void OnPreRender(EventArgs e)
         {
             base.OnPreRender(e);
             //BasePage.AddCommonIncludes();
-        }
+        }*/
 
         public AdminBasePage BasePage
         {

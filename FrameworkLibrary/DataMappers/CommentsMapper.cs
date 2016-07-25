@@ -19,12 +19,12 @@ namespace FrameworkLibrary
             return allItems.FirstOrDefault(item => item.ID == id);
         }
 
-        public static IEnumerable<Comment> GetByMediaDetail(IMediaDetail detail)
+        /*public static IEnumerable<Comment> GetByMediaDetail(IMediaDetail detail)
         {
             var allItems = GetAll();
 
             return allItems.Where(item => item.MediaDetails.Where(i => i.ID == detail.ID).Any());
-        }
+        }*/
 
         public static Return Validate(Comment comment)
         {
@@ -84,7 +84,7 @@ namespace FrameworkLibrary
             foreach (var item in subItems)
                 DeletePermanently(item);
 
-            obj.MediaDetails.Clear();
+            //obj.MediaDetails.Clear();
 
             return Delete(MapperKey, obj);
         }

@@ -68,7 +68,7 @@ namespace WebApplication.Admin.Controls.Editors
 
             SelectorFieldOptions.Add(new SelectorFieldOption()
             {
-                OptionText = "CheckBox",
+                OptionText = "Check Box",
                 OptionValue = "CheckBox",
                 AdminControl = "<asp:CheckBox runat='server' />",
                 GetAdminControlValue = "Checked",
@@ -77,7 +77,7 @@ namespace WebApplication.Admin.Controls.Editors
 
             SelectorFieldOptions.Add(new SelectorFieldOption()
             {
-                OptionText = "CheckBoxList",
+                OptionText = "Check Box List",
                 OptionValue = "CheckBoxList",
                 AdminControl = @"<asp:CheckBoxList runat='server'>
     <asp:ListItem Text='Item1' Value='Item1'></asp:ListItem>
@@ -120,7 +120,7 @@ namespace WebApplication.Admin.Controls.Editors
 
             SelectorFieldOptions.Add(new SelectorFieldOption()
             {
-                OptionText = "RadioButtonList",
+                OptionText = "Radio Button List",
                 OptionValue = "RadioButtonList",
                 AdminControl = @"<asp:RadioButtonList runat='server'>
     <asp:ListItem Text='Item1' Value='Item1'></asp:ListItem>
@@ -173,9 +173,9 @@ namespace WebApplication.Admin.Controls.Editors
 
             SelectorFieldOptions.Add(new SelectorFieldOption()
             {
-                OptionText = "Association Auto Suggest",
+                OptionText = "Association - Auto Suggest",
                 OptionValue = "AssociationAutoSuggest",
-                AdminControl = "<Admin:AssociationAutoSuggest runat='server' ParentMediaDetailID='@Model.MediaDetail.ID' />",
+                AdminControl = "<Admin:AssociationAutoSuggest runat='server' ParentMediaDetailID='0' MediaTypeID='1' />",
                 GetAdminControlValue = "Value",
                 SetAdminControlValue = "Value",
                 FrontEndLayout = @"<ul>
@@ -190,8 +190,8 @@ namespace WebApplication.Admin.Controls.Editors
 
             SelectorFieldOptions.Add(new SelectorFieldOption()
             {
-                OptionText = "Association Drag Drop",
-                OptionValue = "AssociationDragDrop",
+                OptionText = "Association - Drag Drop List",
+                OptionValue = "DragDrop",
                 AdminControl = "<Admin:AssociationDragDrop runat='server' />",
                 GetAdminControlValue = "Value",
                 SetAdminControlValue = "Value",
@@ -215,9 +215,9 @@ namespace WebApplication.Admin.Controls.Editors
 
             SelectorFieldOptions.Add(new SelectorFieldOption()
             {
-                OptionText = "Association Drop Down List",
-                OptionValue = "Association Drop Down List",
-                AdminControl = @"<Admin:AssociationDropDownList runat='server' ParentMediaDetailID='@Model.MediaDetail.ID' />",
+                OptionText = "Association - Drop Down List",
+                OptionValue = "AssociationDroDownList",
+                AdminControl = @"<Admin:AssociationDropDownList runat='server' ParentMediaDetailID='0' MediaTypeID='1' />",
                 GetAdminControlValue = "SelectedValue",
                 SetAdminControlValue = "SelectedValue",
                 FrontEndLayout = @"<ul>
@@ -232,9 +232,26 @@ namespace WebApplication.Admin.Controls.Editors
 
             SelectorFieldOptions.Add(new SelectorFieldOption()
             {
-                OptionText = "Association Check Box List",
-                OptionValue = "Association Check Box List",
-                AdminControl = @"<Admin:AssociationCheckBoxList runat='server' ParentMediaDetailID='@Model.MediaDetail.ID' />",
+                OptionText = "Association - Check Box List",
+                OptionValue = "AssociationCheckBoxList",
+                AdminControl = @"<Admin:AssociationCheckBoxList runat='server' ParentMediaDetailID='0' MediaTypeID='1' />",
+                GetAdminControlValue = "SelectedValue",
+                SetAdminControlValue = "SelectedValue",
+                FrontEndLayout = @"<ul>
+@foreach(var item in Model.Field.FieldAssociations)
+{
+    <li>
+        <a href=""@item.MediaDetail.AbsoluteUrl"">@item.MediaDetail.SectionTitle</a>
+    </li>
+}
+</ul>"
+            });
+
+            SelectorFieldOptions.Add(new SelectorFieldOption()
+            {
+                OptionText = "Association - Radio Box List",
+                OptionValue = "AssociationRadioBoxList",
+                AdminControl = @"<Admin:AssociationCheckBoxList runat='server' IsRadioButtonList='True' ParentMediaDetailID='0' MediaTypeID='1' />",
                 GetAdminControlValue = "SelectedValue",
                 SetAdminControlValue = "SelectedValue",
                 FrontEndLayout = @"<ul>
@@ -250,8 +267,8 @@ namespace WebApplication.Admin.Controls.Editors
             SelectorFieldOptions.Add(new SelectorFieldOption()
             {
                 OptionText = "Multi Item - Uploader",
-                OptionValue = "Multi Item - Uploader",
-                AdminControl = @"<Admin:MultiFileUploader runat='server' SaveToFolder='' MediaTypeID='25' Mode='Uploader' />",
+                OptionValue = "MultiItemUploader",
+                AdminControl = @"<Admin:MultiFileUploader runat='server' SaveToFolder='' MediaTypeID='25' PageSize='12' Mode='Uploader' />",
                 GetAdminControlValue = "SelectedValue",
                 SetAdminControlValue = "SelectedValue",
                 FrontEndLayout = @"@{
@@ -269,8 +286,8 @@ namespace WebApplication.Admin.Controls.Editors
             SelectorFieldOptions.Add(new SelectorFieldOption()
             {
                 OptionText = "Multi Item - GridView",
-                OptionValue = "Multi Item - GridView",
-                AdminControl = @"<Admin:MultiFileUploader runat='server' SaveToFolder='' MediaTypeID='25' Mode='GridView' />",
+                OptionValue = "MultiItemGridView",
+                AdminControl = @"<Admin:MultiFileUploader runat='server' SaveToFolder='' MediaTypeID='25' PageSize='15' Mode='GridView' />",
                 GetAdminControlValue = "SelectedValue",
                 SetAdminControlValue = "SelectedValue",
                 FrontEndLayout = @"@{

@@ -12,13 +12,30 @@ namespace WebApplication.Admin
         private Website currentWebsite = WebsitesMapper.GetWebsite();
         private long numberOfActiveLanguages = LanguagesMapper.GetAllActive().Count();
 
-        protected override void OnInit(EventArgs e)
+        /*protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
+        }*/
+
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            InitPage();
         }
 
-        protected void Page_PreRender(object sender, EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
+            BindSiteTreeView();
+        }
+
+        private void InitPage()
+        {
+            var rootMediaDetail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.MediaType.Name == MediaTypeEnum.RootPage.ToString());
+
+            if (rootMediaDetail == null)
+            {
+                CreateItem.Visible = true;
+            }
+
             var settings = SettingsMapper.GetSettings();
 
             if (settings.EnableGlossaryTerms)
@@ -26,20 +43,23 @@ namespace WebApplication.Admin
                 GlossaryTermsNavItem.Visible = true;
             }
 
-            BindSiteTreeView();
+            //BindSiteTreeView();
 
             var allNodes = SiteTree.GetAllNodes();
 
             allNodes.ForEach(i =>
             {
-                if (i.Value == currentWebsite.ID.ToString() || i.Value == currentWebsite.ParentMediaID.ToString())
+                if (currentWebsite != null)
                 {
-                    i.ExpandParents();
-                    i.Expand();
-                }
-                else
-                {
-                    i.Collapse();
+                    if (i.Value == currentWebsite.ID.ToString() || i.Value == currentWebsite.ParentMediaID.ToString())
+                    {
+                        i.ExpandParents();
+                        i.Expand();
+                    }
+                    else
+                    {
+                        i.Collapse();
+                    }
                 }
             });
 
@@ -93,17 +113,22 @@ namespace WebApplication.Admin
             }
         }
 
+        private IEnumerable<Media> GetAllMedias()
+        {
+            return MediasMapper.GetDataModel().AllMedia.Where(i => i.MediaDetails.Any(j => j.MediaType.ShowInSiteTree && j.HistoryVersionNumber == 0));
+        }
+
         public void BindSiteTreeView()
         {
             if (Filter.Text == "")
             {
-                var items = MediasMapper.GetDataModel().AllMedia.OrderBy(i => i.OrderIndex);
+                var items = GetAllMedias().OrderBy(i => i.OrderIndex);
                 BindTree(items, null);
             }
             else
             {
                 var filterText = Filter.Text.ToLower().Trim();
-                var foundItems = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.LinkTitle.ToLower().Trim().Contains(filterText));
+                var foundItems = GetAllMedias().Select(i=>i.LiveMediaDetail).Where(i => i.HistoryVersionNumber == 0 && i.LinkTitle.ToLower().Trim().Contains(filterText));
 
                 SiteTree.Nodes.Clear();
 

@@ -69,7 +69,7 @@ namespace WebApplication.Controls
                             tags += item.Name + ",";
 
                         Tags.Text = tags;
-                        NumberOfComments.Text = refObject.Comments.Count.ToString();
+                        NumberOfComments.Text = refObject.Media.Comments.Count.ToString();
                     }
                 }
             }

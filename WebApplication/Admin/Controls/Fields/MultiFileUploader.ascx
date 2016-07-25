@@ -15,7 +15,7 @@
                 <asp:Panel runat="server" ID="MultiItemUploaderPanel">
                     <asp:FileUpload ID="MultiFileUpload" runat="server" AllowMultiple="true" CssClass="MultiFileUpload" />
                     <div class="dvPreview" runat="server"></div>
-                    <div class="buttons" id="UploadFilesNowButtons" style="display:none;">
+                    <div class="buttons UploadFilesNowButtons" style="display:none;">
                         <asp:LinkButton runat="server" ID="UploadFilesNow" OnClick="UploadFilesNow_Click" CssClass="button">Upload Now</asp:LinkButton>
                         <div class="clear"></div>
                     </div>

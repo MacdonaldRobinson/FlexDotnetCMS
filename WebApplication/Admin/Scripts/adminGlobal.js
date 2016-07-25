@@ -933,6 +933,7 @@ function init() {
         if (typeof (FileReader) != "undefined") {
             var root = $(this).parents(".MultiFileUploader");
             var dvPreview = root.find(".dvPreview");
+            var uploadFilesNowButtons = root.find(".UploadFilesNowButtons");
 
             dvPreview.html("");
             var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp|.pdf|.csv|.docx|.doc)$/;
@@ -961,7 +962,7 @@ function init() {
                     return false;
                 }
 
-                $("#UploadFilesNowButtons").show();
+                uploadFilesNowButtons.show();
             });
         } else {
             alert("This browser does not support HTML5 FileReader.");

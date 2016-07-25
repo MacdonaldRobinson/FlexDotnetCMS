@@ -33,7 +33,6 @@
     <div class="split-pane fixed-left">
         <div class="split-pane-component" id="left-component">
             <link href="/Admin/Styles/mediaDetails.css" rel="stylesheet" />
-            <link href="/Admin/Styles/admin.css" rel="stylesheet" />
             <script type="text/javascript">
                 var selectedMediaId = <%=(SelectedMedia != null) ? SelectedMedia.ID : 0 %>;
                 var selectedMediaDetailId = <%=(SelectedMediaDetail != null) ? SelectedMediaDetail.ID : 0 %>;
@@ -46,25 +45,12 @@
                 <asp:LinkButton ID="ViewCurrentVersion" runat="server" OnClick="ViewCurrentVersion_OnClick">Click Here</asp:LinkButton>
                 to view the current LIVE version<br />
             </asp:Panel>
-            <div class="editing__top__bar">
+            <h1>
+                <asp:Literal ID="SectionTitle" runat="server"></asp:Literal></h1>
 
-                <h1>
-                    <asp:Literal ID="SectionTitle" runat="server"></asp:Literal></h1>
-                <asp:Panel ID="SavePanel" runat="server" Visible="false" CssClass="SavePanel buttons">
-                    <asp:LinkButton ID="Save" runat="server" OnClick="Save_OnClick" Text="Save" />
-                    <asp:LinkButton ID="SaveAsDraft" runat="server" OnClick="Save_OnClick" Text="Save As Draft" CommandArgument="SaveAsDraft" />
-                    <asp:LinkButton ID="LoadLatestDraft" runat="server" OnClick="LoadLatestDraft_OnClick" Text="Load Latest Draft" Visible="false" />
-                    <asp:LinkButton ID="SaveAndPublish" runat="server" OnClick="SaveAndPublish_OnClick" Text="Save And Publish" CommandArgument="SaveAndPublish" Visible="false" />
-                    <asp:LinkButton ID="PublishNow" runat="server" OnClick="PublishNow_OnClick" Visible="false" Text="Publish Now" />
-                    <asp:LinkButton runat="server" ID="PublishLive" OnClick="PublishLive_OnClick" Text="Publish LIVE" Visible="false" />
-                    <asp:HyperLink ID="EditMediaType" runat="server" Text="Edit Media Type" Visible="false" CssClass="colorbox iframe" />
-                </asp:Panel>
-            </div>
             <asp:PlaceHolder runat="server" ID="PanelsPlaceHolder" />
 
             <div class="clear"></div>
-<<<<<<< HEAD
-=======
 
             <asp:Panel ID="SavePanel" runat="server" Visible="false" CssClass="SavePanel buttons">
                 <asp:UpdatePanel runat="server">
@@ -80,7 +66,6 @@
                 </asp:UpdatePanel>
             </asp:Panel>
 
->>>>>>> master
         </div>
         <div class="split-pane-divider" id="my-divider"></div>
         <div class="split-pane-component" id="right-component">
@@ -98,4 +83,5 @@
             </script>
         </asp:Panel>
     </div>
+
 </asp:Content>

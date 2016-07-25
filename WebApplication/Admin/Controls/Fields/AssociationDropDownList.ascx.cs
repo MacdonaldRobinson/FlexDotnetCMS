@@ -116,7 +116,7 @@ namespace WebApplication.Admin.Controls.Fields
 
             SetSelectedIds(values.ToString());
 
-            if (IsPostBack && !BasePage.IsAjaxRequest)
+            if (IsPostBack)
             {
                 SaveToDB(values.ToString());
             }

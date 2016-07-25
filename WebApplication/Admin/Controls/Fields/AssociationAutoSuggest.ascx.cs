@@ -124,7 +124,7 @@ namespace WebApplication.Admin.Controls.Fields
             if ((values == "") || (!values.ToString().StartsWith("[")))
                 return;
 
-            if (IsPostBack && !BasePage.IsAjaxRequest)
+            if (IsPostBack)
             {
                 SaveToDB(values.ToString());
             }

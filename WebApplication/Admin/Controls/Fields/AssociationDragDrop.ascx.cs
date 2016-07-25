@@ -67,7 +67,7 @@ namespace WebApplication.Admin.Controls.Fields
             if (value == "")
                 return;
 
-            if (IsPostBack && !BasePage.IsAjaxRequest)
+            if (IsPostBack)
             {
                 SaveToDB(value.ToString());
             }

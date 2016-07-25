@@ -33,7 +33,7 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.1/jquery-ui-timepicker-addon.css" />
 <link rel="stylesheet" href="/Scripts/split-pane-master/split-pane.css" />
 <link rel="stylesheet" href="/Admin/Styles/adminGlobal.css" />
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" />
 <link rel="stylesheet" href="/Admin/Styles/admin.css" />
 
 <asp:UpdateProgress ID="UpdateProgress1" runat="server">

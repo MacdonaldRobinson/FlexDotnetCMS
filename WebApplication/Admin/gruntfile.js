@@ -16,7 +16,7 @@
                 processors: require('autoprefixer')({ browsers: 'last 2 versions' })
             },
             dist: {
-                src: 'css/*.css'
+                src: 'Styles/*.css'
             }
         },
         watch: {

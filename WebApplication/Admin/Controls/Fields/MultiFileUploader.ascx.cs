@@ -263,5 +263,10 @@ namespace WebApplication.Admin.Controls.Fields
                 FieldItems.PageSize = PageSize;
             }
         }
+
+        protected void UploadFilesNow_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

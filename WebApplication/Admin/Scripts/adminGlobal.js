@@ -960,6 +960,8 @@ function init() {
                     dvPreview.html("");
                     return false;
                 }
+
+                $("#UploadFilesNowButtons").show();
             });
         } else {
             alert("This browser does not support HTML5 FileReader.");

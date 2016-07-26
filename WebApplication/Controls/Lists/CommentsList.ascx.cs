@@ -20,15 +20,18 @@ namespace WebApplication.Controls.Lists
         {
             None,
             ApproveReject
-        }
+        }        
 
-        /*protected void Page_Init(object sender, EventArgs e)
+        protected void Page_Init(object sender, EventArgs e)
         {
             if (!BasePage.IsInAdminSection)
             {
-                Comments = BasePage.CurrentMediaDetail.Media.Comments.OrderByDescending(i => i.DateCreated).Where(i => i.Status == StatusEnum.Approved.ToString());
+                if(media == null && BasePage.CurrentMedia != null)
+                {                          
+                    SetComments(this.statusEnum, this.mode, BasePage.CurrentMedia);
+                }                
             }
-        }*/
+        }
 
         protected void Approve_OnClick(object sender, EventArgs e)
         {            

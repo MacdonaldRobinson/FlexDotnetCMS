@@ -13,7 +13,7 @@
 %><meta property="og:url" content="<%= BasePage.CurrentMediaDetail.AbsoluteUrl %>" />
 <meta property="og:title" content="<%= BasePage.CurrentMediaDetail.Title %>" />
 <meta property="og:site_name" content="<%= BasePage.CurrentWebsite.Title %>" />
-<meta property="og:description" content="<%= StringHelper.StripExtraSpaces(StringHelper.StripHtmlTags(BasePage.CurrentMediaDetail.GetMetaDescription())) %>" /><%
+<meta property="og:description" content="<%= BasePage.CurrentMediaDetail.GetMetaDescription() %>" /><%
     }
 %>
 

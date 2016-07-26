@@ -411,12 +411,12 @@ namespace FrameworkLibrary
 
             if (string.IsNullOrEmpty(description))
             {
-                description = ShortDescription;
+                description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(StringHelper.StripHtmlTags(MediaDetailsMapper.ParseSpecialTags(this, "{ShortDescription}"))));
             }
 
             if ((description == "") || (description == LinkTitle))
             {
-                description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(StringHelper.StripHtmlTags(MainContent)));
+                description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(StringHelper.StripHtmlTags(MediaDetailsMapper.ParseSpecialTags(this))));
 
                 if (description.Length > 255)
                     description = description.Substring(0, 255) + " ...";

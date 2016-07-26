@@ -1,9 +1,10 @@
 ﻿@import "scss/modules/buttons";
-
-@import "scss/modules/typography";
+@import "scss/modules/mixins";
 @import "scss/modules/nav";
+@import "scss/modules/tabs";
+@import "scss/modules/typography";
+@import "scss/modules/variables";
+@import "scss/partials/header";
+@import "scss/partials/page";
 @import "scss/partials/popup";
 @import "scss/partials/siteTree";
-@import "scss/modules/tabs";
-@import "scss/partials/page";
-@import "scss/partials/header";

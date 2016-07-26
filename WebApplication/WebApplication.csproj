@@ -1852,7 +1852,7 @@
     <Content Include="Admin\Scripts\font-awesome-4.6.3\less\stacked.less" />
     <Content Include="Admin\Scripts\font-awesome-4.6.3\less\variables.less" />
     <Content Include="Admin\Styles\scss\lib\font-awesome\font-awesome.css.map" />
-    <Content Include="Admin\Styles\scss\lib\font-awesome\font-awesome.scss" />
+    <Content Include="Admin\Styles\scss\lib\font-awesome\_font-awesome.scss" />
     <Content Include="Admin\Styles\scss\lib\font-awesome\_animated.scss" />
     <Content Include="Admin\Styles\scss\lib\font-awesome\_bordered-pulled.scss" />
     <Content Include="Admin\Styles\scss\lib\font-awesome\_core.scss" />

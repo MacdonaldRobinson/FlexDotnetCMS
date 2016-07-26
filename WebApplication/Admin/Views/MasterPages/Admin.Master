@@ -67,10 +67,11 @@
                             <% } %>
                         </ul>
                     </div>
-                    <div class="clear">
-                    </div>
-                </div>
+                   
+                
+                <a href="#" id="headerToggle" class="menu__toggle">Toggle Icon</a>
             </div>
+                </div>
             <div id="mainWrapper">
                 <div class="editing__top__bar lower"></div>
                 <div class="split-pane fixed-left">

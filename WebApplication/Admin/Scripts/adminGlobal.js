@@ -968,3 +968,8 @@ function init() {
         }
     });
 }
+$(document).ready(function () {
+    $('#headerToggle').on('click', function () {
+        $('#header').toggleClass("toggled");
+    })
+});

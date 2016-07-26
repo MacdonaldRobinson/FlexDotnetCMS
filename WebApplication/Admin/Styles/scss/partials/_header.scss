@@ -6,6 +6,7 @@
     height: 100%;
     display: inline-block;
     float: left;
+                        transition: 0.33s all ease-in-out !important;
 
     @include tablet {
         width: 140px;
@@ -153,5 +154,21 @@
                 }
             }
         }
+    }
+   .menu__toggle {
+       color: white;
+       padding: 15px;
+       position:absolute;
+       bottom:0;
+   }
+} 
+.toggled {
+    width: 75px!important;
+    height: 100%;
+    display: inline-block;
+    float: left;
+
+    @include tablet {
+        width: 75px!important;
     }
 }

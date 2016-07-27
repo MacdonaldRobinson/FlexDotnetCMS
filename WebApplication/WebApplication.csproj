@@ -1784,6 +1784,15 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="config\imageprocessor\security.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="config\imageprocessor\processing.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="config\imageprocessor\cache.config" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

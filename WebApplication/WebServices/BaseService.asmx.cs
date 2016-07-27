@@ -21,22 +21,6 @@ namespace WebApplication.Services
     [System.Web.Script.Services.ScriptService]
     public class BaseService : System.Web.Services.WebService
     {
-        private static HttpRequest Request
-        {
-            get
-            {
-                return HttpContext.Current.Request;
-            }
-        }
-
-        private static HttpResponse Response
-        {
-            get
-            {
-                return HttpContext.Current.Response;
-            }
-        }
-
         public string GetIP()
         {
             var ip = HttpContext.Current.Request.ServerVariables["HTTP_X_CLUSTER_CLIENT_IP"];
@@ -51,6 +35,8 @@ namespace WebApplication.Services
 
         public static bool CanAddGZIP()
         {
+            var Request = HttpContext.Current.Request;
+
             string virtualPath = Request.AppRelativeCurrentExecutionFilePath.ToLower();
 
             if (virtualPath.EndsWith("/"))
@@ -66,12 +52,17 @@ namespace WebApplication.Services
         [WebMethod]
         public void MakeWebRequest(string url)
         {
+            var Response = HttpContext.Current.Response;
+
             var WebRequestHelper = new WebRequestHelper();
-            WriteRaw(WebRequestHelper.MakeWebRequest(url));
+            WriteRaw(WebRequestHelper.MakeWebRequest(url), Response);
         }
 
         public static void AddResponseHeaders(bool enableCaching = true, bool enableGzip = true)
         {
+            var Request = HttpContext.Current.Request;
+            var Response = HttpContext.Current.Response;
+
             var absPath = Request.Url.AbsolutePath.ToLower();
 
             if ((enableCaching) && (!BasePage.IsInAdminSection))
@@ -110,39 +101,47 @@ namespace WebApplication.Services
 
         public static void WriteJSON(string json)
         {
+            var Response = HttpContext.Current.Response;
+
             Response.ContentType = "application/json";
-            WriteRaw(json);
+            WriteRaw(json, Response);
         }
 
         public static void WriteCsv<T>(List<T> Obj, string filename) where T : class
         {
+            var Response = HttpContext.Current.Response;
+
             Response.Clear();
             Response.ContentType = "text/csv";
             Response.AddHeader("Content-Disposition", $"attachment; filename={filename}.csv");
 
             var csv = Obj.ToCsv();
-            WriteRaw(csv);
+            WriteRaw(csv, Response);
         }
 
         public static void WriteXML(string xmlString)
         {
+            var Response = HttpContext.Current.Response;
+
             Response.ContentType = "application/xml";
-            WriteRaw(xmlString);
+            WriteRaw(xmlString, Response);
         }
 
         public static void WriteHtml(string htmlString)
         {
+            var Response = HttpContext.Current.Response;
+
             Response.ContentType = "text/html";
-            WriteRaw(htmlString);
+            WriteRaw(htmlString, Response);
         }
 
-        public static void WriteRaw(byte[] bytes)
+        public static void WriteRaw(byte[] bytes, HttpResponse Response)
         {
             Response.Write(bytes);
             Response.End();
         }
 
-        public static void WriteRaw(string str)
+        public static void WriteRaw(string str, HttpResponse Response)
         {
             Response.Write(str);
             Response.End();
@@ -150,6 +149,8 @@ namespace WebApplication.Services
 
         public static void WriteImage(Bitmap bitmap)
         {
+            var Response = HttpContext.Current.Response;
+
             Response.ContentType = "image/png";
 
             Graphics graph = Graphics.FromImage(bitmap);

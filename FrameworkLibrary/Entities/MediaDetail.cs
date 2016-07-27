@@ -168,7 +168,7 @@ namespace FrameworkLibrary
             if (this.MasterPage != null)
                 return MasterPage;
 
-            MediaDetail currentMediaDetail = (MediaDetail)this.ParentMediaDetail;
+            MediaDetail currentMediaDetail = (MediaDetail)this.Media.ParentMedia.MediaDetails.FirstOrDefault(i=>i.HistoryVersionNumber == 0 && i.LanguageID == this.LanguageID);
 
             while (currentMediaDetail != null)
             {
@@ -180,7 +180,7 @@ namespace FrameworkLibrary
                     return currentMediaDetail.MasterPage;
                 }
 
-                currentMediaDetail = (MediaDetail)currentMediaDetail.ParentMediaDetail;
+                currentMediaDetail = (MediaDetail)currentMediaDetail.Media.ParentMedia?.MediaDetails.FirstOrDefault(i => i.HistoryVersionNumber == 0 && i.LanguageID == this.LanguageID);
             }
 
             return MasterPage;
@@ -199,7 +199,7 @@ namespace FrameworkLibrary
                     break;
                 }
 
-                currentItem = (MediaDetail)currentItem.ParentMediaDetail;
+                currentItem = (MediaDetail)currentItem.Media.ParentMedia.MediaDetails.FirstOrDefault(i => i.HistoryVersionNumber == 0 && i.LanguageID == this.LanguageID);
             }
 
             return website;
@@ -275,21 +275,21 @@ namespace FrameworkLibrary
             }
         }
 
-        public IMediaDetail ParentMediaDetail
+        /*public IMediaDetail ParentMediaDetail
         {
             get
             {
                 return Media.ParentMedia == null ? null : MediaDetailsMapper.GetAtleastOneByMedia(Media.ParentMedia, LanguagesMapper.GetByID(LanguageID));
             }
-        }
+        }*/
 
-        public long? ParentMediaID
+        /*public long? ParentMediaID
         {
             get
             {
                 return Media.ParentMediaID;
             }
-        }
+        }*/
 
         public Return Validate()
         {
@@ -493,7 +493,7 @@ namespace FrameworkLibrary
             }
         }
 
-        public IMediaDetail NextPage
+        /*public IMediaDetail NextPage
         {
             get
             {
@@ -510,7 +510,7 @@ namespace FrameworkLibrary
 
                 return parentChildren[index + 1];
             }
-        }
+        }*/
 
         private IEnumerable<IMediaDetail> AllParentChildren
         {
@@ -523,7 +523,7 @@ namespace FrameworkLibrary
             }
         }
 
-        public IMediaDetail PreviousPage
+        /*public IMediaDetail PreviousPage
         {
             get
             {
@@ -540,7 +540,7 @@ namespace FrameworkLibrary
 
                 return parentChildren[index - 1];
             }
-        }
+        }*/
 
         public string JsonVirtualPath
         {

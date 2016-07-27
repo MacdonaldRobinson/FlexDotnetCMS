@@ -49,15 +49,18 @@ namespace WebApplication.Services
             if (path == null)
                 return;
 
+            var Request = HttpContext.Current.Request;
+            var Response = HttpContext.Current.Response;
+
             var cacheData = (string)ContextHelper.GetFromCache(path);
 
             bool isCss = path.EndsWith(".css");
             bool isJs = path.EndsWith(".js");
 
             if (isCss)
-                HttpContext.Current.Response.ContentType = "text/css";
+                Response.ContentType = "text/css";
             else if (isJs)
-                HttpContext.Current.Response.ContentType = "application/x-javascript";
+                Response.ContentType = "application/x-javascript";
 
             string data = "";
             data = LoaderHelper.ReadUrl(path, AppSettings.EnableWebRequestCaching, AppSettings.WebRequestCacheDurationInSeconds);
@@ -94,9 +97,9 @@ namespace WebApplication.Services
                 data = Regex.Replace(data, "url[(][\'|\"]{0,1}(?!.*http)", "${0}" + fileBaseUrl);
             }
 
-            ContextHelper.SetToCache(HttpContext.Current.Request.Url.AbsoluteUri, data, DateTime.Now.AddSeconds(AppSettings.WebRequestCacheDurationInSeconds));
+            ContextHelper.SetToCache(Request.Url.AbsoluteUri, data, DateTime.Now.AddSeconds(AppSettings.WebRequestCacheDurationInSeconds));
 
-            BaseService.WriteRaw(data);
+            BaseService.WriteRaw(data, Response);
         }
 
         /*public void LoadJsIncludes(string pageId, string templateBaseUrl)

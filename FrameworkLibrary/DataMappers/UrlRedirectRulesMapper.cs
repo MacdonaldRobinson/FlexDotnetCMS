@@ -8,7 +8,8 @@ namespace FrameworkLibrary
     {
         public new static IEnumerable<IMediaDetail> GetAll()
         {
-            return MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.Name == MediaTypeEnum.UrlRedirectRule.ToString()); //return FilterByMediaType(MediaDetailsMapper.GetAll(), MediaTypeEnum.UrlRedirectRule);
+            var name = MediaTypeEnum.UrlRedirectRule.ToString();
+            return MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.Name == name); //return FilterByMediaType(MediaDetailsMapper.GetAll(), MediaTypeEnum.UrlRedirectRule);
         }
 
         public static IEnumerable<IMediaDetail> GetAllActive()
@@ -23,14 +24,14 @@ namespace FrameworkLibrary
 
         public static UrlRedirectRule GetRuleForUrl(string virtualPath)
         {
-            var slug = StringHelper.CreateSlug(HttpContext.Current.Request.Url.Host);
+            //var slug = StringHelper.CreateSlug(HttpContext.Current.Request.Url.Host);
 
             if (virtualPath.StartsWith("~"))
                 virtualPath = virtualPath.Replace("~","");
 
             //var rule = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.Name == MediaTypeEnum.UrlRedirectRule.ToString() && ((UrlRedirectRule)i).VirtualPathToRedirect.Trim() == virtualPath).ToList().FirstOrDefault(i=>i.CanRender);
 
-            var rule = GetAll().Cast<UrlRedirectRule>().FirstOrDefault(i=> !i.IsHistory && i.CanRender && i.VirtualPathToRedirect == virtualPath);
+            var rule = GetAll().FirstOrDefault(i=> !i.IsHistory && i.CanRender && ((UrlRedirectRule)i).VirtualPathToRedirect == virtualPath);
 
             return (UrlRedirectRule)rule;
         }

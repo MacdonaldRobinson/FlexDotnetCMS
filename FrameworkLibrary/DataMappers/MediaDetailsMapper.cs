@@ -883,7 +883,7 @@ namespace FrameworkLibrary
 
                         var property = item.ToString().Replace(loadMediaDetailSegment.ToString() + ".", "");
 
-                        if (mediaDetail.ParentMediaDetail.ID != id)
+                        if (mediaDetail.Media.ParentMediaID != id)
                         {
                             var selectMediaDetail = MediaDetailsMapper.GetByID(id);
                             var returnValue = ParseSpecialTags(selectMediaDetail, property);

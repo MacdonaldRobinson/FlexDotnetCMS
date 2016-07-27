@@ -426,7 +426,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
             if ((item.ID == 0) && (item.LinkTitle == null || item.LinkTitle == ""))
             {
                 var mediaType = MediaTypesMapper.GetByID(item.MediaTypeID);
-                var createdItems = mediaType.MediaDetails.Where(i => !i.IsHistory && i.ParentMediaID == item.ParentMediaID && i.LanguageID == AdminBasePage.CurrentLanguage.ID).Select(i => i);
+                var createdItems = mediaType.MediaDetails.Where(i => !i.IsHistory && i.Media.ParentMediaID == item.Media.ParentMediaID && i.LanguageID == AdminBasePage.CurrentLanguage.ID).Select(i => i);
 
                 var newIndex = createdItems.Count() + 1;
 

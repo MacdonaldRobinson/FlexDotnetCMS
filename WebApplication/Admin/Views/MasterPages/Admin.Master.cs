@@ -51,7 +51,7 @@ namespace WebApplication.Admin
             {
                 if (currentWebsite != null)
                 {
-                    if (i.Value == currentWebsite.ID.ToString() || i.Value == currentWebsite.ParentMediaID.ToString())
+                    if (i.Value == currentWebsite.ID.ToString() || i.Value == currentWebsite.Media.ParentMediaID.ToString())
                     {
                         i.ExpandParents();
                         i.Expand();

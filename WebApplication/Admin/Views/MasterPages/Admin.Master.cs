@@ -129,7 +129,7 @@ namespace WebApplication.Admin
             {
                 var filterText = Filter.Text.ToLower().Trim();
                 var languageId = AdminBasePage.CurrentLanguage.ID;
-                var foundItems = GetAllMedias().Select(i=>i.LiveMediaDetail).Where(i => i.HistoryVersionNumber == 0 && i.LanguageID == languageId && (i.LinkTitle.ToLower().Trim().Contains(filterText) || i.MainContent.ToLower().Contains(filterText) || i.ShortDescription.ToLower().Contains(filterText) || i.MainLayout.Contains(filterText) || i.MetaDescription.Contains(filterText) || i.MetaKeywords.Contains(filterText) || i.Media.GetTagsAsString().ToLower().Contains(filterText) || i.Fields.Any(j=>j.FieldValue.ToLower().Contains(filterText) || i.FieldAssociations.Any(k => k.MediaDetail.SectionTitle.ToLower().Contains(filterText)))));
+                var foundItems = GetAllMedias().Select(i=>i.LiveMediaDetail).Where(i => i.HistoryVersionNumber == 0 && i.LanguageID == languageId  && (i.LinkTitle.ToLower().Trim().Contains(filterText) || i.MainContent.ToLower().Contains(filterText) || i.ShortDescription.ToLower().Contains(filterText) || i.MainLayout.Contains(filterText) || i.MetaDescription.Contains(filterText) || i.MetaKeywords.Contains(filterText) || i.Media.GetTagsAsString().ToLower().Contains(filterText) || i.Fields.Any(j=>j.FieldValue.ToLower().Contains(filterText) || j.FrontEndLayout.ToLower().Contains(filterText) || j.FieldAssociations.Any(k => k.MediaDetail.SectionTitle.ToLower().Contains(filterText) || k.MediaDetail.MainContent.ToLower().Contains(filterText) || k.MediaDetail.ShortDescription.ToLower().Contains(filterText))) || i.FieldAssociations.Any(j => j.MediaDetail.SectionTitle.ToLower().Contains(filterText))));
 
                 SiteTree.Nodes.Clear();
 

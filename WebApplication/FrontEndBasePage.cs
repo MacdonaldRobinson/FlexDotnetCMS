@@ -198,8 +198,8 @@ namespace WebApplication
         {
             if ((FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail != null) && (Page.Master != null))
             {
-                Page.MetaDescription = StringHelper.StripExtraSpaces(StringHelper.StripHtmlTags(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.GetMetaDescription()));
-                Page.MetaKeywords = StringHelper.StripExtraSpaces(StringHelper.StripHtmlTags(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.GetMetaKeywords()));
+                Page.MetaDescription = FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.GetMetaDescription();
+                Page.MetaKeywords = FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.GetMetaKeywords();
                 Page.Title = FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.GetPageTitle();
             }
         }

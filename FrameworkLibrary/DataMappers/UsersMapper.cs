@@ -96,9 +96,7 @@ namespace FrameworkLibrary
 
         public static bool IsUserInRole(User user, Role role)
         {
-            var roles = user.Roles;
-
-            return roles.Where(i => i.ID == role.ID).Any();
+            return user.Roles.Where(i => i.ID == role.ID).Any();
         }
 
         public static bool HasPermission(PermissionsEnum permissionsEnum, User user)

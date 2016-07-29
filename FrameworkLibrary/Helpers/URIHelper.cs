@@ -225,7 +225,7 @@ namespace FrameworkLibrary
         {
             var url = BaseUrl;
 
-            if (LanguagesMapper.GetAllActive().Count() > 1)
+            if (LanguagesMapper.CountAllActive() > 1)
                 url += language.UriSegment + "/".ToLower();
 
             return url;

@@ -96,7 +96,7 @@ namespace FrameworkLibrary
                     }
                 }
 
-                user = BaseMapper.GetObjectFromContext(user);
+                //user = BaseMapper.GetObjectFromContext(user);
 
                 if (System.Web.HttpContext.Current.User == null)
                     user = null;

@@ -64,8 +64,11 @@ namespace FrameworkLibrary
 
         public static Role GetByEnum(RoleEnum roleEnum)
         {
-            var allItems = GetAll();
-            return allItems.FirstOrDefault(item => item.Name == roleEnum.ToString());
+            var strRoleEnum = roleEnum.ToString();
+
+            return BaseMapper.GetDataModel().Roles.FirstOrDefault(i => i.Name == strRoleEnum);
+            //var allItems = GetAll();
+            //return allItems.FirstOrDefault(item => item.Name == roleEnum.ToString());
         }
 
         public static string[] GetUserRolesAsArray(User user)

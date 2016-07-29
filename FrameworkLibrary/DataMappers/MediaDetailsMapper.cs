@@ -927,16 +927,17 @@ namespace FrameworkLibrary
                     var fieldCode = field.ToString().Replace("{Field:", "").Replace("}", "");
 
                     var segments = fieldCode.Split('=');
+                    var firstSegment = segments[0];
                     var tmpIntSegment0 = 0;
                     Field mediaField = null;
 
-                    if (int.TryParse(segments[0], out tmpIntSegment0))
+                    if (int.TryParse(firstSegment, out tmpIntSegment0))
                     {
                         mediaField = BaseMapper.GetDataModel().Fields.FirstOrDefault(i => i.ID == tmpIntSegment0);
                     }
                     else
                     {
-                        mediaField = mediaDetail.Fields.FirstOrDefault(i => i.FieldCode.Replace(" ", "") == segments[0]);
+                        mediaField = mediaDetail.Fields.FirstOrDefault(i => i.FieldCode == firstSegment);
                     }
 
                     if (mediaField == null)

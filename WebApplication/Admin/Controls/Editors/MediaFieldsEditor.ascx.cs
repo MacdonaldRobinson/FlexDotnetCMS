@@ -22,7 +22,8 @@ namespace WebApplication.Admin.Controls.Editors
 
             BindFieldTypeDropDown(FieldTypeDropDown);
 
-            var field = (MediaDetailField)BaseMapper.GetDataModel().Fields.Find(long.Parse(FieldID.Value));
+            var id = long.Parse(FieldID.Value);
+            var field = (MediaDetailField)BaseMapper.GetDataModel().Fields.Find(id);
 
             if (field != null)
             {

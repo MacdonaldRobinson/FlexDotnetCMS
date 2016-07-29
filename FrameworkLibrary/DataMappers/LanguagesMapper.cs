@@ -23,6 +23,17 @@ namespace FrameworkLibrary
             return GetDataModel().Languages.Where(item => item.IsActive);
         }
 
+        private static int? _callAllActive = null;
+        public static int CountAllActive()
+        {
+            if (_callAllActive != null)
+                return (int)_callAllActive;
+
+            _callAllActive = GetDataModel().Languages.Count(item => item.IsActive);
+
+            return (int)_callAllActive;
+        }
+
         public static Language GetByName(string language)
         {
             return GetDataModel().Languages.FirstOrDefault(item => item.Name == language);

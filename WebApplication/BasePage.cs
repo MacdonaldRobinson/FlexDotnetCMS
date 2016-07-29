@@ -250,8 +250,6 @@ namespace WebApplication
 
             if (string.IsNullOrEmpty(masterFilePath) && FrameworkSettings.CurrentFrameworkBaseMedia?.CurrentMediaDetail != null)
             {
-                var mediaType = MediaTypesMapper.GetByID(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.MediaTypeID);
-
                 var masterPage = ((MediaDetail)FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail).GetMasterPage();
 
                 if (masterPage != null)
@@ -265,6 +263,8 @@ namespace WebApplication
                 {
                     if ((FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.Handler == null) || (FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.Handler == ""))
                     {
+                        var mediaType = FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.MediaType;
+
                         if (mediaType.MasterPage == null)
                         {
                             var defaultMaster = MasterPagesMapper.GetDefaultMasterPage();

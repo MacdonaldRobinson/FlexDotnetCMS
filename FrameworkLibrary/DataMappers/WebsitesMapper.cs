@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FrameworkLibrary
@@ -32,19 +33,22 @@ namespace FrameworkLibrary
             return (Website)website;
         }
 
+        public static List<string> allWebVirtualPaths = new List<string>();
         public static List<string> GetAllWebsiteVirtualPaths()
         {
-            var WebsiteVirtualPaths = new List<string>();
-            WebsiteVirtualPaths = (List<string>)ContextHelper.GetFromRequestContext("WebsiteVirtualPaths");
+            if (allWebVirtualPaths.Count > 0)
+                return allWebVirtualPaths;
 
-            if (WebsiteVirtualPaths == null || !WebsiteVirtualPaths.Any())
+            allWebVirtualPaths = (List<string>)ContextHelper.GetFromRequestContext("WebsiteVirtualPaths");
+
+            if (allWebVirtualPaths == null || !allWebVirtualPaths.Any())
             {
-                WebsiteVirtualPaths = WebsitesMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.Name == enumName && i.HistoryVersionNumber == 0 && i.Language.IsActive).Select(i => i.CachedVirtualPath).Distinct().ToList();
+                allWebVirtualPaths = WebsitesMapper.GetDataModel().MediaDetails.Where(i => !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now) && i.MediaType.Name == enumName && i.HistoryVersionNumber == 0 && i.Language.IsActive).Select(i => i.CachedVirtualPath).Distinct().ToList();
                 //var test = WebsitesMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.Name == enumName).ToList();
-                ContextHelper.SetToRequestContext("WebsiteVirtualPaths", WebsiteVirtualPaths);
+                ContextHelper.SetToRequestContext("WebsiteVirtualPaths", allWebVirtualPaths);
             }
 
-            return WebsiteVirtualPaths;
+            return allWebVirtualPaths;
         }
     }
 }

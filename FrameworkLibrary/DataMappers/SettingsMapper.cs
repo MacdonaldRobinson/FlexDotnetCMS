@@ -7,9 +7,13 @@ namespace FrameworkLibrary
     {
         private static string mapperKey = "SettingsMapperKey";
 
+        private static Settings settings = null;
         public static Settings GetSettings()
         {
-            var settings = GetDataModel()?.AllSettings.FirstOrDefault();
+            if (settings != null)
+                return settings;
+
+            settings = GetDataModel()?.AllSettings.FirstOrDefault();
 
             return settings;
         }

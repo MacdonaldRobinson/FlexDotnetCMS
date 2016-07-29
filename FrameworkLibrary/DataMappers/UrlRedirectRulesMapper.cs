@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
@@ -24,14 +25,12 @@ namespace FrameworkLibrary
 
         public static UrlRedirectRule GetRuleForUrl(string virtualPath)
         {
-            //var slug = StringHelper.CreateSlug(HttpContext.Current.Request.Url.Host);
-
             if (virtualPath.StartsWith("~"))
                 virtualPath = virtualPath.Replace("~","");
 
-            //var rule = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.Name == MediaTypeEnum.UrlRedirectRule.ToString() && ((UrlRedirectRule)i).VirtualPathToRedirect.Trim() == virtualPath).ToList().FirstOrDefault(i=>i.CanRender);
+            var enumName = MediaTypeEnum.UrlRedirectRule.ToString();
 
-            var rule = GetAll().FirstOrDefault(i=> !i.IsHistory && i.CanRender && ((UrlRedirectRule)i).VirtualPathToRedirect == virtualPath);
+            var rule = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate >= DateTime.Now) && i.MediaType.Name == enumName && (i as UrlRedirectRule).VirtualPathToRedirect == virtualPath);
 
             return (UrlRedirectRule)rule;
         }

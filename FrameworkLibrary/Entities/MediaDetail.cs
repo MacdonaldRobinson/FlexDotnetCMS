@@ -168,27 +168,26 @@ namespace FrameworkLibrary
             if (this.MasterPage != null)
                 return MasterPage;
 
-            MediaDetail currentMediaDetail = (MediaDetail)this.Media.ParentMedia.MediaDetails.FirstOrDefault(i=>i.HistoryVersionNumber == 0 && i.LanguageID == this.LanguageID);
+            return SettingsMapper.GetSettings().DefaultMasterPage;
+
+            /*MediaDetail currentMediaDetail = (MediaDetail)this.Media.ParentMedia?.MediaDetails.FirstOrDefault(i=>i.HistoryVersionNumber == 0 && i.LanguageID == this.LanguageID);
 
             while (currentMediaDetail != null)
             {
                 if (currentMediaDetail.MasterPage != null)
-                {
-                    if (currentMediaDetail is FrameworkLibrary.Website)
-                        return this.MediaType.MasterPage;
-
                     return currentMediaDetail.MasterPage;
-                }
 
                 currentMediaDetail = (MediaDetail)currentMediaDetail.Media.ParentMedia?.MediaDetails.FirstOrDefault(i => i.HistoryVersionNumber == 0 && i.LanguageID == this.LanguageID);
             }
 
-            return MasterPage;
+            return MasterPage;*/
         }
 
         public FrameworkLibrary.Website GetWebsite()
         {
-            var currentItem = this;
+            return WebsitesMapper.GetWebsite(0, this.Language);
+
+            /*var currentItem = this;
             FrameworkLibrary.Website website = null;
 
             while (currentItem.Media.ParentMediaID != null)
@@ -202,7 +201,7 @@ namespace FrameworkLibrary
                 currentItem = (MediaDetail)currentItem.Media.ParentMedia.MediaDetails.FirstOrDefault(i => i.HistoryVersionNumber == 0 && i.LanguageID == this.LanguageID);
             }
 
-            return website;
+            return website;*/
         }
 
         public IEnumerable<IMediaDetail> ChildMediaDetails
@@ -274,22 +273,6 @@ namespace FrameworkLibrary
                 return _validationErrors;
             }
         }
-
-        /*public IMediaDetail ParentMediaDetail
-        {
-            get
-            {
-                return Media.ParentMedia == null ? null : MediaDetailsMapper.GetAtleastOneByMedia(Media.ParentMedia, LanguagesMapper.GetByID(LanguageID));
-            }
-        }*/
-
-        /*public long? ParentMediaID
-        {
-            get
-            {
-                return Media.ParentMediaID;
-            }
-        }*/
 
         public Return Validate()
         {
@@ -374,22 +357,20 @@ namespace FrameworkLibrary
                 {
                     var virtualPath = this.VirtualPath;
 
-                    var language = LanguagesMapper.GetByID(this.LanguageID);
-
                     if (websiteVirtualPaths.Count > 1)
                     {
                         foreach (var websiteVirtualPath in websiteVirtualPaths)
                         {
-                            virtualPath = virtualPath.Replace(websiteVirtualPath, URIHelper.ConvertAbsUrlToTilda(URIHelper.LanguageBaseUrl(language)));
+                            virtualPath = virtualPath.Replace(websiteVirtualPath, URIHelper.ConvertAbsUrlToTilda(URIHelper.LanguageBaseUrl(this.Language)));
                         }
 
                         return virtualPath;
                     }
 
-                    if (LanguagesMapper.GetAllActive().Count() == 1)
+                    if (LanguagesMapper.CountAllActive() == 1)
                         virtualPath = virtualPath.Replace(websiteVirtualPaths.ElementAt(0), URIHelper.ConvertAbsUrlToTilda(URIHelper.BaseUrl.ToLower()));
                     else
-                        virtualPath = virtualPath.Replace(websiteVirtualPaths.ElementAt(0), URIHelper.ConvertAbsUrlToTilda(URIHelper.LanguageBaseUrl(language).ToLower()));
+                        virtualPath = virtualPath.Replace(websiteVirtualPaths.ElementAt(0), URIHelper.ConvertAbsUrlToTilda(URIHelper.LanguageBaseUrl(this.Language).ToLower()));
 
                     _autoCalculatedVirtualPath = virtualPath;
 
@@ -405,38 +386,56 @@ namespace FrameworkLibrary
             return PublishDate != null ? new RssItem(Title, GetMetaDescription(), AutoCalculatedVirtualPath, CreatedByUser.UserName, (DateTime)PublishDate, this) : null;
         }
 
+        private string contextMetaDescription { get; set; } = "";
         public string GetMetaDescription()
         {
+            if (!string.IsNullOrEmpty(contextMetaDescription))
+                return contextMetaDescription;
+
             var description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(MetaDescription));
 
             if (string.IsNullOrEmpty(description))
             {
-                description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(StringHelper.StripHtmlTags(MediaDetailsMapper.ParseSpecialTags(this, "{ShortDescription}"))));
+                description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(ParserHelper.ParseData(this.ShortDescription, new object { })));
             }
 
             if ((description == "") || (description == LinkTitle))
             {
-                description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(StringHelper.StripHtmlTags(MediaDetailsMapper.ParseSpecialTags(this))));
+                description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(ParserHelper.ParseData(this.MainContent, new object { })));                
 
                 if (description.Length > 255)
                     description = description.Substring(0, 255) + " ...";
             }
 
-            return description;
+            contextMetaDescription = StringHelper.StripHtmlTags(description);
+
+            return contextMetaDescription;
         }
 
+        private string contextMetaKeywords { get; set; } = "";
         public string GetMetaKeywords()
         {
+            if (!string.IsNullOrEmpty(contextMetaKeywords))
+                return contextMetaKeywords;
+
+            var metaKeywords = MetaKeywords.Trim();
+
             if (MetaKeywords.Trim() == "")
-                return GetMetaDescription();
+                contextMetaKeywords = GetMetaDescription();
             else
-                return MetaKeywords;
+                contextMetaKeywords = metaKeywords;
+
+            return contextMetaKeywords;
         }
 
+        private string contextPageTitle { get; set; } = "";
         public string GetPageTitle()
         {
             if (FrameworkSettings.CurrentFrameworkBaseMedia == null)
                 return "";
+
+            if (!string.IsNullOrEmpty(contextPageTitle))
+                return contextPageTitle;
 
             var pageTitle = "";
 
@@ -462,7 +461,9 @@ namespace FrameworkLibrary
                     pageTitle += " - ";
             }
 
-            return pageTitle;
+            contextPageTitle = pageTitle;
+
+            return contextPageTitle;
         }
 
         public bool HasAnyRoles()
@@ -492,55 +493,6 @@ namespace FrameworkLibrary
                 return AutoCalculatedVirtualPath + "rss/";
             }
         }
-
-        /*public IMediaDetail NextPage
-        {
-            get
-            {
-                var parentChildren = AllParentChildren.ToList();
-                var index = parentChildren.FindIndex(delegate (IMediaDetail m) { return m.ID == this.ID; });
-
-                if ((index < 0) || (index >= parentChildren.Count - 1))
-                {
-                    if (ParentMediaDetail == null)
-                        return null;
-
-                    return this.ParentMediaDetail.NextPage;
-                }
-
-                return parentChildren[index + 1];
-            }
-        }*/
-
-        private IEnumerable<IMediaDetail> AllParentChildren
-        {
-            get
-            {
-                if (this.Media.ParentMedia == null)
-                    return new List<IMediaDetail>();
-
-                return MediaDetailsMapper.FilterByShowInMenuStatus(MediaDetailsMapper.FilterByCanRenderStatus(MediaDetailsMapper.GetAllChildMediaDetails(this.Media.ParentMedia, this.Language), true), true).OrderBy(i => i.Media.OrderIndex);
-            }
-        }
-
-        /*public IMediaDetail PreviousPage
-        {
-            get
-            {
-                var parentChildren = AllParentChildren.ToList();
-                var index = parentChildren.FindIndex(delegate (IMediaDetail m) { return m.ID == this.ID; });
-
-                if ((index <= 0) || parentChildren.Count == 1)
-                {
-                    if (ParentMediaDetail == null)
-                        return null;
-
-                    return this.ParentMediaDetail.PreviousPage;
-                }
-
-                return parentChildren[index - 1];
-            }
-        }*/
 
         public string JsonVirtualPath
         {

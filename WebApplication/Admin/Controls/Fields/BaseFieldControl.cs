@@ -30,15 +30,19 @@ namespace WebApplication.Admin.Controls.Fields
         }
 
         public long FieldID { get; set; }
+        private MediaDetailField _field = null;
 
         public MediaDetailField GetField()
         {
-            var field = (MediaDetailField)BaseMapper.GetDataModel().Fields.Find(FieldID);
+            if (_field != null)
+                return _field;
 
-            if (field == null)
-                field = new MediaDetailField();
+            _field = (MediaDetailField)BaseMapper.GetDataModel().Fields.Find(FieldID);
 
-            return field;
+            if (_field == null)
+                _field = new MediaDetailField();
+
+            return _field;
         }
 
         public abstract void SetValue(object value);

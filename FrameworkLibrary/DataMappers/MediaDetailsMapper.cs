@@ -563,28 +563,21 @@ namespace FrameworkLibrary
                 return new Page();
 
             IMediaDetail detail;
-            IMediaDetail atleastOne = null;
             MediaTypeEnum mediaTypeEnum = MediaTypeEnum.Page;
             var mediaType = MediaTypesMapper.GetByID(mediaTypeId);
 
             Enum.TryParse(mediaType.Name, out mediaTypeEnum);
 
-            if (mediaItem != null)
-                atleastOne = GetAtleastOneByMedia(mediaItem, FrameworkSettings.GetCurrentLanguage());
+            var language = FrameworkSettings.GetCurrentLanguage();
 
             detail = CreateByMediaTypeEnum(mediaTypeEnum);
 
-            detail.Media = mediaItem != null ? (GetObjectFromContext(mediaItem) ?? MediasMapper.CreateObject()) : MediasMapper.CreateObject();
+            detail.Media = mediaItem;
 
             if (parentMedia != null)
                 detail.Media.ParentMediaID = parentMedia.ID;
 
-            detail.LanguageID = FrameworkSettings.GetCurrentLanguage().ID;
-
-            if (atleastOne != null)
-            {
-                //detail.CopyFrom(atleastOne);
-            }
+            detail.LanguageID = language.ID;
 
             detail.MediaTypeID = mediaTypeId;
 

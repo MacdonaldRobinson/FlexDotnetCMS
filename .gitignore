@@ -16,3 +16,5 @@
 /WebApplication/Properties/PublishProfiles/*.PublishSettings
 /WebApplication/Admin/Controls/Fields/*.bak
 *.bak
+/WebApplication/App_Data/*.mdf
+/WebApplication/App_Data/*.ldf

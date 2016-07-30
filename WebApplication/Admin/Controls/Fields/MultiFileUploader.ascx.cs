@@ -78,7 +78,7 @@ namespace WebApplication.Admin.Controls.Fields
                             fieldAssociation.MediaDetail.PublishDate = DateTime.Now;
                             fieldAssociation.MediaDetail.CreatedByUser = fieldAssociation.MediaDetail.LastUpdatedByUser = FrameworkSettings.CurrentUser;
                             fieldAssociation.MediaDetail.CachedVirtualPath = fieldAssociation.MediaDetail.CalculatedVirtualPath();
-                            fieldAssociation.MediaDetail.Language = SettingsMapper.GetSettings().DefaultLanguage;
+                            fieldAssociation.MediaDetail.LanguageID = SettingsMapper.GetSettings().DefaultLanguage.ID;
 
                             field.FieldAssociations.Add(fieldAssociation);
 

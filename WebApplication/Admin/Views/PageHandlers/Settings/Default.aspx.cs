@@ -106,6 +106,8 @@ namespace WebApplication.Admin.Views.PageHandlers.Settings
                 ContextHelper.ClearAllMemoryCache();
                 FileCacheHelper.ClearAllCache();
 
+                SettingsMapper.SetSettings(settings);
+
                 DisplaySuccessMessage("Successfully saved settings");
             }
         }

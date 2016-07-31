@@ -33,6 +33,7 @@ namespace WebApplication.Admin.Views.Languages
         private void UpdateObjectFromFields()
         {
             selectedItem.Name = Name.Text;
+            selectedItem.DisplayName = Name.Text;
             selectedItem.CultureCode = CultureCode.Text;
             selectedItem.UriSegment = UriSegment.Text;
             selectedItem.Description = Description.Text;

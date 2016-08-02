@@ -175,10 +175,6 @@
     <Content Include="App_Data\Cache\index.html" />
     <Content Include="App_Data\DBBackups\index.html" />
     <Content Include="App_Data\ElmahErrorLogs\index.html" />
-    <Content Include="App_Data\FlexDotNetCMS.mdf" />
-    <Content Include="App_Data\FlexDotNetCMS_log.ldf">
-      <DependentUpon>FlexDotNetCMS.mdf</DependentUpon>
-    </Content>
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\EcmaScript.NET.dll" />

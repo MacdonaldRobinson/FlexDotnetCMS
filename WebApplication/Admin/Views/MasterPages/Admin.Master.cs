@@ -80,22 +80,24 @@ namespace WebApplication.Admin
                 LanguageSwitcher.Visible = true;
         }
 
-        private void BindTree(IEnumerable<IMediaDetail> list, CustomTreeNode parentNode)
+        private void BindTree(IEnumerable<Media> list, CustomTreeNode parentNode)
         {
             IMediaDetail item = null;
 
             if (parentNode != null)
                 item = MediaDetailsMapper.GetByID(long.Parse(parentNode.Value));
 
-            var nodes = list.Where(x => parentNode == null || item == null ? x.Media.ParentMediaID == null : x.Media.ParentMediaID == item.MediaID);
+            var nodes = list.Where(x => parentNode == null || item == null ? x.ParentMediaID == null : x.ParentMediaID == item.MediaID);
 
             foreach (var node in nodes)
             {
-                if (node != null && node.ID != 0 && node.MediaType.ShowInSiteTree && node.MediaType.ShowInSiteTree)
-                {
-                    CustomTreeNode newNode = new CustomTreeNode(node.SectionTitle, node.ID.ToString());
+                var mediaDetail = MediaDetailsMapper.GetAtleastOneByMedia(node, AdminBasePage.CurrentLanguage);
 
-                    UpdateTreeNode(newNode, node);
+                if (mediaDetail != null && mediaDetail.ID != 0 && mediaDetail.MediaType.ShowInSiteTree && mediaDetail.MediaType.ShowInSiteTree)
+                {
+                    CustomTreeNode newNode = new CustomTreeNode(mediaDetail.SectionTitle, mediaDetail.ID.ToString());
+
+                    UpdateTreeNode(newNode, mediaDetail);
 
                     if (parentNode == null)
                     {
@@ -111,23 +113,22 @@ namespace WebApplication.Admin
             }
         }
 
-        private IEnumerable<IMediaDetail> GetAllMediaDetails()
+        private IEnumerable<Media> GetAllMedias()
         {
-            return BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0).OrderBy(i => i.Media.OrderIndex);
+            return MediasMapper.GetDataModel().AllMedia.Where(i => i.MediaDetails.Any(j => j.MediaType.ShowInSiteTree && j.HistoryVersionNumber == 0));
         }
 
         public void BindSiteTreeView()
         {
             if (Filter.Text == "")
             {
-                var items = GetAllMediaDetails();
+                var items = GetAllMedias().OrderBy(i => i.OrderIndex);
                 BindTree(items, null);
             }
             else
             {
                 var filterText = Filter.Text.ToLower().Trim();
-                var languageId = AdminBasePage.CurrentLanguage.ID;
-                var foundItems = GetAllMediaDetails().Where(i => i.HistoryVersionNumber == 0 && i.LanguageID == languageId  && (i.LinkTitle.ToLower().Trim().Contains(filterText) || i.MainContent.ToLower().Contains(filterText) || i.ShortDescription.ToLower().Contains(filterText) || i.MainLayout.Contains(filterText) || i.MetaDescription.Contains(filterText) || i.MetaKeywords.Contains(filterText) || i.Media.GetTagsAsString().ToLower().Contains(filterText) || i.Fields.Any(j=>j.FieldValue.ToLower().Contains(filterText) || j.FrontEndLayout.ToLower().Contains(filterText) || j.FieldAssociations.Any(k => k.MediaDetail.SectionTitle.ToLower().Contains(filterText) || k.MediaDetail.MainContent.ToLower().Contains(filterText) || k.MediaDetail.ShortDescription.ToLower().Contains(filterText))) || i.FieldAssociations.Any(j => j.MediaDetail.SectionTitle.ToLower().Contains(filterText))));
+                var foundItems = GetAllMedias().Select(i => i.LiveMediaDetail).Where(i => i.HistoryVersionNumber == 0 && i.LinkTitle.ToLower().Trim().Contains(filterText));
 
                 SiteTree.Nodes.Clear();
 

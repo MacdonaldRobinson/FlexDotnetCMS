@@ -33,7 +33,7 @@ namespace WebApplication.Handlers
                 URIHelper.ForceSSL();
             }
 
-            if (FrameworkSettings.CurrentUserInSession == null && Request.HttpMethod == "GET" && AppSettings.EnableOutputCaching)
+            if (FrameworkSettings.CurrentUserInSession == null && Request.HttpMethod == "GET" && (!(bool)BaseMapper.CanConnectToDB || AppSettings.EnableOutputCaching))
             {
                 var userSelectedVersion = RenderVersion.HTML;
 
@@ -58,6 +58,10 @@ namespace WebApplication.Handlers
                         BaseService.WriteHtml(cacheData + "<!-- Loaded from level 2 - File Cache -->");
 
                 }
+
+                if(!(bool)BaseMapper.CanConnectToDB)
+                    BaseService.WriteHtml("Cannot connect to the database");
+
             }
         }
 
@@ -100,6 +104,10 @@ namespace WebApplication.Handlers
                         if (!virtualPath.Contains(cmsSettings.SiteOfflineUrl))
                             Response.Redirect(cmsSettings.SiteOfflineUrl);
                     }
+                }
+                else
+                {                    
+                    AttemptToLoadFromCache();
                 }
             }
             else

@@ -572,7 +572,7 @@ namespace FrameworkLibrary
 
             detail = CreateByMediaTypeEnum(mediaTypeEnum);
 
-            detail.Media = mediaItem;
+            detail.Media = mediaItem != null ? (GetObjectFromContext(mediaItem) ?? MediasMapper.CreateObject()) : MediasMapper.CreateObject();
 
             if (parentMedia != null)
                 detail.Media.ParentMediaID = parentMedia.ID;

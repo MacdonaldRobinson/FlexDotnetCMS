@@ -19,9 +19,11 @@ namespace FrameworkLibrary.Classes
         {
         }
 
-        public CustomTreeNode(string text, string value, string EditUrl = "")
+        public CustomTreeNode(string text, string value, long mediaId, string EditUrl = "")
             : base(text, value)
         {
+            this.MediaID = mediaId;
+
             if (!string.IsNullOrEmpty(EditUrl))
                 this.NavigateUrl = EditUrl;
         }
@@ -57,6 +59,8 @@ namespace FrameworkLibrary.Classes
                 return _LinkClasses;
             }
         }
+
+        public long MediaID { get; set; }
 
         public string GetLinkAttributesAsString()
         {

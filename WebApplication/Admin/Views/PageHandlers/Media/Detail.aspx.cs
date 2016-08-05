@@ -782,7 +782,7 @@ namespace WebApplication.Admin.MediaArticle
 
                     selectedItem.ClearAutoCalculatedVirtualPathCache();
 
-                    RedirectToMediaDetail(selectedItem.MediaTypeID, selectedItem.MediaID, selectedItem.Media.ParentMediaID);
+                    //RedirectToMediaDetail(selectedItem.MediaTypeID, selectedItem.MediaID, selectedItem.Media.ParentMediaID);
 
                     //ChangeLinksForAllMediaDetails(oldAbsoluteUrl, selectedItem.AbsoluteUrl);
                 }

@@ -165,9 +165,9 @@ namespace FrameworkLibrary
                 return true;
             }
             catch (Exception ex)
-            {
-                throw ex;
+            {                
                 CanConnectToDB = false;
+                ErrorHelper.LogException(ex);
                 return false;
             }
         }

@@ -82,12 +82,7 @@ namespace WebApplication.Admin
 
         private void BindTree(IEnumerable<Media> list, CustomTreeNode parentNode)
         {
-            IMediaDetail item = null;
-
-            if (parentNode != null)
-                item = MediaDetailsMapper.GetByID(long.Parse(parentNode.Value));
-
-            var nodes = list.Where(x => parentNode == null || item == null ? x.ParentMediaID == null : x.ParentMediaID == item.MediaID);
+            var nodes = list.Where(x => parentNode == null  ? x.ParentMediaID == null : x.ParentMediaID == parentNode.MediaID);
 
             foreach (var node in nodes)
             {
@@ -95,7 +90,7 @@ namespace WebApplication.Admin
 
                 if (mediaDetail != null && mediaDetail.ID != 0 && mediaDetail.MediaType.ShowInSiteTree && mediaDetail.MediaType.ShowInSiteTree)
                 {
-                    CustomTreeNode newNode = new CustomTreeNode(mediaDetail.SectionTitle, mediaDetail.ID.ToString());
+                    CustomTreeNode newNode = new CustomTreeNode(mediaDetail.SectionTitle, mediaDetail.ID.ToString(), mediaDetail.MediaID);
 
                     UpdateTreeNode(newNode, mediaDetail);
 
@@ -134,7 +129,7 @@ namespace WebApplication.Admin
 
                 foreach (var item in foundItems)
                 {
-                    SiteTree.Nodes.Add(new CustomTreeNode(item.LinkTitle, item.ID.ToString(), URIHelper.ConvertToAbsUrl(WebApplication.BasePage.GetRedirectToMediaDetailUrl(item.MediaTypeID, item.Media.ID))));
+                    SiteTree.Nodes.Add(new CustomTreeNode(item.LinkTitle, item.ID.ToString(), item.MediaID, URIHelper.ConvertToAbsUrl(WebApplication.BasePage.GetRedirectToMediaDetailUrl(item.MediaTypeID, item.Media.ID))));
                 }
             }
         }

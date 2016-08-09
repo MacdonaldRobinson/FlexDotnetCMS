@@ -13,6 +13,9 @@ For More Details Please visit the project wiki at: https://github.com/MacdonaldR
 - Ability to save as draft, you can come back and make changes to the draft page later, you can even send links to the draft version of the page inorder to get approval, and then push the page LIVE once you are done.
 - Ability to create custom fields with their own unique layouts. You can create new Fields in the CMS directly, no need to hardcode anything in the code behind. The CMS comes with several field types already prebuilt, so you do not even need to know programming inorder to add new fields, however if you do know programming ( Razor Engine Code ) you can program it to do anything you like, you have complete freedome over the HTML that is generated.
 - Ability to modify the layout of all pages with a specific page type or unlink from a page type and create a unique layout for every page. Every page in the CMS has a type, so you can either have it so that it would use the style of the page type, or have it so that it has its own unique layout.
+- Ability to add new languages to each page with ease. You have the ability to define as many languages as you like, you can then simply browse to a page and then switch the language and save and publish and your done, you have now created a new language version of the page.
+- You have control over caching of pages. If you have set all pages to cache, the first time a visitor visits the page, it will generate a file system cache for that page and the next time the request will load from cache, drasticly speeding up performance. 
+- Attempts to Load from cache if there is an error connecting to the database. If you have the page cached and there is an error connecting to the database, the system will attempt to load that page from cache if it exists.
 - Ability to automatically publish a page live at a specified date time
 - Ability to automatically take down a page at a specified date time
 - Ability to create 301 or 302 redirects. You can create your own url redirect rules, you can have it so that /oldpage is redirected to /about/contact/
@@ -20,9 +23,6 @@ For More Details Please visit the project wiki at: https://github.com/MacdonaldR
 - Ability to Add / Edit / Delete Glossary terms.
 - Ability to Create, Edit, Delete/Recover, Permanently Delete, Hide/Show, Duplicate and Publish/unpublish pages 
 - Ability to create Protected Pages ( Only logged in users, in the frontend can access these pages )
-- Ability to add new languages to each page with ease. You have the ability to define as many languages as you like, you can then simply browse to a page and then switch the language and save and publish and your done, you have now created a new language version of the page.
-- You have control over caching of pages. If you have set all pages to cache, the first time a visitor visits the page, it will generate a file system cache for that page and the next time the request will load from cache, drasticly speeding up performance. 
-- Attempts to Load from cache if there is an error connecting to the database. If you have the page cached and there is an error connecting to the database, the system will attempt to load that page from cache if it exists.
 - Ability to clear all cache
 - Ability to search for a page based on any field value in the backend for quick access
 - You can view the email logs from the CMS ( provided the emails were sent using the system its self )

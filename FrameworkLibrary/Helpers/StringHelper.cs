@@ -16,6 +16,11 @@ namespace FrameworkLibrary
             return Regex.Replace(text, @"<(.|\n)*?>", string.Empty);
         }
 
+        public static string StripTags(string text)
+        {
+            return Regex.Replace(text, @"<(.|\n)*?>", string.Empty);
+        }
+
         public static T JsonToObject<T>(string to)
         {
             if (to.StartsWith("{") || to.StartsWith("["))

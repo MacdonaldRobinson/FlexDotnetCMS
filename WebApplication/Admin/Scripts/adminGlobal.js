@@ -361,7 +361,7 @@ function getFieldsAutoComplete()
     });
 
     $(".field > label").each(function () {
-        var text = $(this).text().replace(/\s/g, '');
+        var text = $(this).attr('data-fieldcode').replace(/\s/g, '');
         wordsArray.push("{Field:" + text + "}");
     });
 

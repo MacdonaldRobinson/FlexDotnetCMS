@@ -192,9 +192,9 @@
                                 <ItemTemplate>
                                     <asp:Panel runat="server" CssClass="field" ID="FieldWrapper">
                                         <asp:HiddenField ID="FieldID" Value="0" runat="server" />
-                                        <%# (!Item.RenderLabelAfterControl) ? "<label>"+Item.FieldLabel+"</label>" : "" %>
+                                        <%# (!Item.RenderLabelAfterControl) ? "<label data-fieldcode='"+Item.FieldCode+"'>"+Item.FieldLabel+"</label>" : "" %>
                                             <asp:PlaceHolder runat="server" ID="DynamicField" />
-                                        <%# (Item.RenderLabelAfterControl) ? "<label>"+Item.FieldLabel+"</label>" : "" %>
+                                        <%# (Item.RenderLabelAfterControl) ? "<label data-fieldcode='"+Item.FieldCode+"'>"+Item.FieldLabel+"</label>" : "" %>
                                     </asp:Panel>
                                 </ItemTemplate>
                             </asp:ListView>

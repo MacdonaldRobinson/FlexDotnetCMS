@@ -17,6 +17,7 @@ For More Details Please visit the project wiki at: https://github.com/MacdonaldR
 - Ability to automatically take down a page at a specified date time
 - Ability to create 301 or 302 redirects. You can create your own url redirect rules, you can have it so that /oldpage is redirected to /about/contact/
 - Ability to Manage Users and Roles
+- Ability to Add / Edit / Delete Glossary terms.
 - Ability to Create, Edit, Delete/Recover, Permanently Delete, Hide/Show, Duplicate and Publish/unpublish pages 
 - Ability to create Protected Pages ( Only logged in users, in the frontend can access these pages )
 - Ability to add new languages to each page with ease. You have the ability to define as many languages as you like, you can then simply browse to a page and then switch the language and save and publish and your done, you have now created a new language version of the page.

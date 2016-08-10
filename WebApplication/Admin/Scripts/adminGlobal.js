@@ -324,7 +324,7 @@ function HandleContextMenuClick(action, target) {
             });
             break;
         case "DeletePermanently":
-            var areYouSure = confirm('Are you sure you want to permanently delete the item "' + targetText + '" and all its associations and history if any? NOTE: This action is irreversible');
+            var areYouSure = confirm('Are you sure you want to permanently delete the item "' + targetText + '" and all its associations, including ALL its child items and history if any? NOTE: This action is irreversible');
 
             if (areYouSure) {
                 jQuery.ajax({

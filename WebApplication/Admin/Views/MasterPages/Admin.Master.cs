@@ -190,7 +190,8 @@ namespace WebApplication.Admin
 
             node.Text = nodeText;
 
-            node.LinkAttributes.Add("data-frontendurl", detail.AbsoluteUrl);
+            node.LinkAttributes.Add("data-frontendurl", detail.Media.PermaLink);
+            //node.LinkAttributes.Add("data-frontendurl", detail.AbsoluteUrl);
             node.LIAttributes.Add("data-mediaDetailId", detail.ID.ToString());
 
             node.NavigateUrl = URIHelper.ConvertToAbsUrl(WebApplication.BasePage.GetRedirectToMediaDetailUrl(detail.MediaTypeID, detail.MediaID));

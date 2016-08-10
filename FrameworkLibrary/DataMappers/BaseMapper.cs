@@ -184,7 +184,7 @@ namespace FrameworkLibrary
                     return null;
 
                 context.Configuration.LazyLoadingEnabled = true;
-                context.Configuration.ProxyCreationEnabled = true;
+                context.Configuration.ProxyCreationEnabled = true;                
 
                 ContextHelper.Set(DataModelKey, context, dataContextStorageContext);
 

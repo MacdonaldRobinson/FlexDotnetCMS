@@ -529,12 +529,12 @@ namespace FrameworkLibrary
 
         public static IMediaDetail GetAtleastOneByMedia(Media media, Language language)
         {
-            var detail = media.MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.LanguageID == language.ID);
+            var detail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.LanguageID == language.ID && i.MediaID == media.ID);
 
             if (detail == null)
             {
                 var defaultLanguage = LanguagesMapper.GetDefaultLanguage();
-                detail = media.MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.LanguageID == defaultLanguage.ID);
+                detail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.MediaID == media.ID && i.LanguageID == defaultLanguage.ID);
             }                
 
             return detail;

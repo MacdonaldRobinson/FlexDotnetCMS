@@ -15,7 +15,7 @@ namespace FrameworkLibrary
 
         public static Language GetByID(long id)
         {
-            return GetDataModel().Languages.FirstOrDefault(item => item.ID == id);
+            return GetDataModel().Languages.AsNoTracking().FirstOrDefault(item => item.ID == id);
         }
 
         public static IEnumerable<Language> GetAllActive()

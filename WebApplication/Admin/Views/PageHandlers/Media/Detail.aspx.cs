@@ -782,12 +782,12 @@ namespace WebApplication.Admin.MediaArticle
 
                     selectedItem.ClearAutoCalculatedVirtualPathCache();
 
-                    //RedirectToMediaDetail(selectedItem.MediaTypeID, selectedItem.MediaID, selectedItem.Media.ParentMediaID);
+                    RedirectToMediaDetail(selectedItem.MediaTypeID, selectedItem.MediaID, selectedItem.Media.ParentMediaID);
 
                     //ChangeLinksForAllMediaDetails(oldAbsoluteUrl, selectedItem.AbsoluteUrl);
                 }
 
-                DisplaySuccessMessage("Successfully Saved Item");
+                DisplaySuccessMessage("Successfully Saved Item");                
 
                 if (!selectedItem.IsHistory)
                 {

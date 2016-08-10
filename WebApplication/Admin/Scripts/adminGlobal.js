@@ -170,7 +170,7 @@ function getParameterByName(name) {
 
 function HandleContextMenuClick(action, target) {
     var mediaDetailId = target.parent().attr("data-mediadetailid");
-    var targetText = target.val();
+    var targetText = target.text();
 
     switch (action) {
         case "CreateChild":

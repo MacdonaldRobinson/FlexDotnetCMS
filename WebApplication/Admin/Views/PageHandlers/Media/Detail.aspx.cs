@@ -787,7 +787,7 @@ namespace WebApplication.Admin.MediaArticle
                     //ChangeLinksForAllMediaDetails(oldAbsoluteUrl, selectedItem.AbsoluteUrl);
                 }
 
-                DisplaySuccessMessage("Successfully Saved Item");                
+                DisplaySuccessMessage("Successfully Saved Item");
 
                 if (!selectedItem.IsHistory)
                 {

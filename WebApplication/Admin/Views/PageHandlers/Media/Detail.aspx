@@ -27,6 +27,13 @@
                 }
                 return false;
             }
+
+            function ReloadPreviewPanel()
+            {
+                var src = $("#PreviewPanel").attr("src");
+
+                $("#PreviewPanel").attr("src", src);
+            }
         });
     </script>
 

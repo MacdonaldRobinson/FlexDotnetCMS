@@ -782,12 +782,22 @@ namespace WebApplication.Admin.MediaArticle
 
                     selectedItem.ClearAutoCalculatedVirtualPathCache();
 
-                    RedirectToMediaDetail(selectedItem.MediaTypeID, selectedItem.MediaID, selectedItem.Media.ParentMediaID);
+                    if (commandArgument == "SaveAndPublish")
+                    {
+                        PublishNow_OnClick(sender, e);
+                        //RedirectToMediaDetail(mediaTypeEnum, selectedItem.MediaID, selectedItem.Media.ParentMediaID);
+                    }
+                    else
+                    {
+                        RedirectToMediaDetail(selectedItem.MediaTypeID, selectedItem.MediaID, selectedItem.Media.ParentMediaID);
+                    }
 
                     //ChangeLinksForAllMediaDetails(oldAbsoluteUrl, selectedItem.AbsoluteUrl);
                 }
 
                 DisplaySuccessMessage("Successfully Saved Item");
+
+                ExecuteRawJS("ReloadPreviewPanel()");
 
                 if (!selectedItem.IsHistory)
                 {

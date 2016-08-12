@@ -488,7 +488,7 @@ namespace WebApplication.Admin.MediaArticle
             if (selectedItem.History.Count == 0)
                 history.HistoryVersionNumber = 1;
             else
-                history.HistoryVersionNumber = selectedItem.History.OrderByDescending(i => i.HistoryVersionNumber).Take(1).SingleOrDefault().HistoryVersionNumber + 1;
+                history.HistoryVersionNumber = selectedItem.History.OrderByDescending(i => i.HistoryVersionNumber).Take(1).FirstOrDefault().HistoryVersionNumber + 1;
 
             if (selectedItem.History.Count >= MediaDetailsMapper.MaxHistory)
             {

@@ -386,7 +386,7 @@ namespace WebApplication
 
         public void CheckedIn(IMediaDetail detail)
         {
-            KeyValuePair<IMediaDetail, User> item = CheckedOutItems.Where(i => i.Key.ID == detail.ID).SingleOrDefault();
+            KeyValuePair<IMediaDetail, User> item = CheckedOutItems.Where(i => i.Key.ID == detail.ID).FirstOrDefault();
 
             detail = item.Key;
             User checkoutUser = item.Value;

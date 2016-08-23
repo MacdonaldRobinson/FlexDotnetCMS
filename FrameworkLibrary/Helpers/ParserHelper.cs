@@ -213,7 +213,7 @@ namespace FrameworkLibrary
                 if (tagValue.StartsWith("~/"))
                     tagValue = URIHelper.ConvertToAbsUrl(tagValue);
 
-                if (!string.IsNullOrEmpty(tagValue) && (data.Contains("@{") || data.Contains("@using") || data.Contains("@for")) && compileRazor)
+                if (!string.IsNullOrEmpty(tagValue) && (data.Contains("@{") || data.Contains("@using") || data.Contains("@for") || data.Contains("@Model")) && compileRazor)
                 {
                     var razorTagValue = "@using FrameworkLibrary\n@using System\n@using System.Linq\n@using System.Web\n" + tagValue;
                     var tagKey = "templateKey:" + tagValue;
@@ -243,7 +243,7 @@ namespace FrameworkLibrary
                 }
             }
 
-            if (!string.IsNullOrEmpty(data) && (data.Contains("@{") || data.Contains("@using") || data.Contains("@for")) && compileRazor)
+            if (!string.IsNullOrEmpty(data) && (data.Contains("@{") || data.Contains("@using") || data.Contains("@for") || data.Contains("@Model")) && compileRazor)
             {
                 data = "@using FrameworkLibrary\n@using System\n@using System.Linq\n@using System.Web\n" + data;
                 var topTagKey = "templateKey:" + data;

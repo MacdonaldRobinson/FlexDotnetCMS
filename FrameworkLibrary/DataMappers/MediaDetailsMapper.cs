@@ -861,27 +861,39 @@ namespace FrameworkLibrary
 
             //customCode = ParserHelper.ParseData(propertyName, mediaDetail);
 
-            if (customCode.Contains("{{LoadByMediaDetailID"))
+            if (customCode.Contains("{{Load"))
             {
-                var loadMediaDetailsProperty = Regex.Matches(customCode, "{{LoadByMediaDetailID:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:). }]+");
+                var loadMediaDetailsProperty = Regex.Matches(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:).?& }]+");
 
                 foreach (var item in loadMediaDetailsProperty)
                 {
-                    var loadMediaDetailSegments = Regex.Matches(item.ToString(), "{LoadByMediaDetailID:[0-9]+}");
+                    var itemAsString = item.ToString();
 
-                    foreach (var loadMediaDetailSegment in loadMediaDetailSegments)
+                    var loadMediaSegments = Regex.Matches(itemAsString, "{Load:[0-9]+}");
+
+                    foreach (var loadMediaSegment in loadMediaSegments)
                     {
-                        var prop = loadMediaDetailSegment.ToString().Replace("{", "").Replace("}", "");
+                        var prop = loadMediaSegment.ToString().Replace("{", "").Replace("}", "");
                         var id = long.Parse(prop.Split(':')[1]);
 
-                        var property = item.ToString().Replace(loadMediaDetailSegment.ToString() + ".", "");
+                        var property = itemAsString.Replace(loadMediaSegment.ToString() + ".", "");
 
                         if (mediaDetail.Media.ParentMediaID != id)
                         {
-                            var selectMediaDetail = MediaDetailsMapper.GetByID(id);
-                            var returnValue = ParseSpecialTags(selectMediaDetail, property);
+                            var selectMedia = MediasMapper.GetByID(id);
 
-                            customCode = customCode.Replace(item.ToString(), returnValue);
+                            if (selectMedia != null)
+                            {
+                                var returnValue = property;
+
+                                if (returnValue.Contains("?"))
+                                {
+                                    returnValue = ParseSpecialTags(mediaDetail, returnValue);
+                                }
+
+                                returnValue = ParseSpecialTags(selectMedia.LiveMediaDetail, returnValue);
+                                customCode = customCode.Replace(itemAsString, returnValue);
+                            }
                         }
                     }
                 }

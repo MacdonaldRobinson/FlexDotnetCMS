@@ -43,25 +43,14 @@ namespace WebApplication.Admin
                 GlossaryTermsNavItem.Visible = true;
             }
 
-            //BindSiteTreeView();
-
             var allNodes = SiteTree.GetAllNodes();
+            var nodes = allNodes.Where(i => (i.Value == currentWebsite.ID.ToString() || i.Value == currentWebsite.Media.ParentMediaID.ToString()));
 
-            allNodes.ForEach(i =>
+            foreach (var node in nodes)
             {
-                if (currentWebsite != null)
-                {
-                    if (i.Value == currentWebsite.ID.ToString() || i.Value == currentWebsite.Media.ParentMediaID.ToString())
-                    {
-                        i.ExpandParents();
-                        i.Expand();
-                    }
-                    else
-                    {
-                        i.Collapse();
-                    }
-                }
-            });
+                node.ExpandParents();
+                node.Expand();
+            }
 
             if (AdminBasePage.SelectedMediaDetail != null)
             {
@@ -113,6 +102,26 @@ namespace WebApplication.Admin
             return MediasMapper.GetDataModel().AllMedia.Where(i => i.MediaDetails.Any(j => j.MediaType.ShowInSiteTree && j.HistoryVersionNumber == 0));
         }
 
+
+        private bool SearchWithinMediaDetail(IMediaDetail mediaDetail, string filterText)
+        {
+            if (mediaDetail.HistoryVersionNumber == 0 && mediaDetail.LinkTitle.ToLower().Trim().Contains(filterText) || mediaDetail.SectionTitle.ToLower().Trim().Contains(filterText) || mediaDetail.MainContent.ToLower().Trim().Contains(filterText) || mediaDetail.MainLayout.ToLower().Trim().Contains(filterText) || mediaDetail.Fields.Any(j => j.FieldValue.Contains(filterText)))
+                return true;
+
+            foreach (var fieldAssociation in mediaDetail.Fields.SelectMany(i=>i.FieldAssociations))
+            {
+                if (fieldAssociation.MediaDetail.ID == mediaDetail.ID)
+                    continue;
+
+                if(SearchWithinMediaDetail(fieldAssociation.MediaDetail, filterText))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public void BindSiteTreeView()
         {
             if (Filter.Text == "")
@@ -123,7 +132,7 @@ namespace WebApplication.Admin
             else
             {
                 var filterText = Filter.Text.ToLower().Trim();
-                var foundItems = GetAllMedias().Select(i => i.LiveMediaDetail).Where(i => i.HistoryVersionNumber == 0 && i.LinkTitle.ToLower().Trim().Contains(filterText));
+                var foundItems = GetAllMedias().Select(i => i.LiveMediaDetail).Where(i => SearchWithinMediaDetail(i, filterText));
 
                 SiteTree.Nodes.Clear();
 

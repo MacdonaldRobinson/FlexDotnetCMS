@@ -184,7 +184,7 @@ fieldset {
 #topNavWrapper {
     padding: 0;
     position:relative;
-    z-index: 99999;
+    z-index: 1000;
 }
 
 #logoWrapper {

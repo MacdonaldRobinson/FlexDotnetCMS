@@ -29,14 +29,13 @@ namespace WebApplication.Admin
 
         private void InitPage()
         {
-            var rootMediaDetail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.MediaType.Name == MediaTypeEnum.RootPage.ToString());
+            var settings = SettingsMapper.GetSettings();
+            var rootMediaDetail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.MediaType.Name == MediaTypeEnum.RootPage.ToString() && i.LanguageID == AdminBasePage.CurrentLanguage.ID);
 
             if (rootMediaDetail == null)
             {
                 CreateItem.Visible = true;
-            }
-
-            var settings = SettingsMapper.GetSettings();
+            }            
 
             if (settings.EnableGlossaryTerms)
             {

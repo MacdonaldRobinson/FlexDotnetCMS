@@ -123,3 +123,8 @@ img.MarkedAsDeleted {
         max-height: 100px;
         max-width: 100px;
     }
+
+
+.dvPreview img {
+    margin-right:5px;
+}

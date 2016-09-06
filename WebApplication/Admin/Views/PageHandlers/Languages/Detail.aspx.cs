@@ -73,6 +73,8 @@ namespace WebApplication.Admin.Views.Languages
             else
             {
                 DisplaySuccessMessage("Successfully Saved Item");
+                LanguagesMapper.ClearAllActiveCache();                
+
 
                 /*var rootDetails = BaseMapper.GetObjectFromContext((MediaDetail)FrameworkBaseMedia.RootMediaDetail);
                 rootDetails.VirtualPath = URIHelper.GetBaseUrlWithLanguage(selectedItem);*/

@@ -168,7 +168,10 @@ namespace FrameworkLibrary
             if (this.MasterPage != null)
                 return MasterPage;
 
-            return SettingsMapper.GetSettings().DefaultMasterPage;
+            if(this.MediaType.MasterPage == null)
+                return SettingsMapper.GetSettings().DefaultMasterPage;
+
+            return this.MediaType.MasterPage;
 
             /*MediaDetail currentMediaDetail = (MediaDetail)this.Media.ParentMedia?.MediaDetails.FirstOrDefault(i=>i.HistoryVersionNumber == 0 && i.LanguageID == this.LanguageID);
 

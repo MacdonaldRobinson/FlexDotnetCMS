@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="GenerateMainNav.ascx.cs" Inherits="WebApplication.Controls.GenerateMainNav" %>
 
-<script>
+<!--<script>
     var isMobile = false;
 
     $(document).ready(function () {
@@ -47,8 +47,8 @@
         });
 
     });
-</script>
+</script>-->
 
 <div id="mainNav">
-    <Site:GenerateNav ID="GenerateNav" runat="server" RenderRootMedia="false" RootUlClasses="nav navbar-nav" RenderDepth="2" DisplayProtectedSections="false" />
+    <Site:GenerateNav ID="GenerateNav" runat="server" RenderRootMedia="false" RenderDepth="2" DisplayProtectedSections="false" TopLevelAnchorClasses="main-nav__link" SubAnchorClasses="main-nav__sublink" SubULClasses="main-nav__submenu" />
 </div>

@@ -34,6 +34,12 @@ namespace FrameworkLibrary
             return (int)_callAllActive;
         }
 
+        public static void ClearAllActiveCache()
+        {
+            _callAllActive = null;
+        }
+
+
         public static Language GetByName(string language)
         {
             return GetDataModel().Languages.FirstOrDefault(item => item.Name == language);

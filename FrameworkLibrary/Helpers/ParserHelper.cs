@@ -50,6 +50,9 @@ namespace FrameworkLibrary
 
                 if (nestedProperties.Length > 0)
                 {
+                    if (obj == null)
+                        continue;
+
                     object tempNestedProperty = obj;
                     var propertyloopIndex = 0;
 
@@ -96,63 +99,66 @@ namespace FrameworkLibrary
                                 tempNestedProperty = tempMethodInfo.Invoke(tempNestedProperty, objParams.Where(i => i != null).ToArray());
                             }
 
-                            var hasEnumerable = tempNestedProperty.GetType().ToString().Contains("Enumerable") || tempNestedProperty.GetType().ToString().Contains("Collection");
-                            long tmpIndex = 0;
-
-                            if (nestedProperties.Count() > propertyloopIndex + 1)
+                            if (tempNestedProperty != null)
                             {
-                                if (hasEnumerable)
+                                var hasEnumerable = tempNestedProperty.GetType().ToString().Contains("Enumerable") || tempNestedProperty.GetType().ToString().Contains("Collection");
+                                long tmpIndex = 0;
+
+                                if (nestedProperties.Count() > propertyloopIndex + 1)
                                 {
-                                    if (long.TryParse(nestedProperties[propertyloopIndex + 1], out tmpIndex))
+                                    if (hasEnumerable)
                                     {
-                                        var count = 0;
-                                        foreach (var nestedItem in tempNestedProperty as IEnumerable<object>)
+                                        if (long.TryParse(nestedProperties[propertyloopIndex + 1], out tmpIndex))
                                         {
-                                            if (count == tmpIndex)
+                                            var count = 0;
+                                            foreach (var nestedItem in tempNestedProperty as IEnumerable<object>)
                                             {
-                                                tempNestedProperty = nestedItem;
-                                                break;
+                                                if (count == tmpIndex)
+                                                {
+                                                    tempNestedProperty = nestedItem;
+                                                    break;
+                                                }
+
+                                                count++;
                                             }
 
-                                            count++;
+                                            continue;
                                         }
-
-                                        continue;
-                                    }
-                                    else
-                                    {
-                                        var count = 0;
-                                        var returnValue = "";
-                                        var tempPropertiesString = "";
-
-                                        var tmp = nestedProperties.ToList();
-                                        tmp.RemoveAt(propertyloopIndex);
-
-                                        var newPropertyString = string.Join(".", tmp);
-
-                                        foreach (var nestedItem in (dynamic)tempNestedProperty)
+                                        else
                                         {
-                                            var tmpReturn = ParseData("{" + newPropertyString + "}", nestedItem);
-                                            returnValue += ParseData(tmpReturn, nestedItem);
+                                            var count = 0;
+                                            var returnValue = "";
+                                            var tempPropertiesString = "";
 
-                                            /*var tmpReturn = ParseData("{" + nestedProperties[propertyloopIndex + 1] + "}", nestedItem);
-                                            returnValue += ParseData(tmpReturn, nestedItem);
-                                            count++;*/
+                                            var tmp = nestedProperties.ToList();
+                                            tmp.RemoveAt(propertyloopIndex);
+
+                                            var newPropertyString = string.Join(".", tmp);
+
+                                            foreach (var nestedItem in (dynamic)tempNestedProperty)
+                                            {
+                                                var tmpReturn = ParseData("{" + newPropertyString + "}", nestedItem);
+                                                returnValue += ParseData(tmpReturn, nestedItem);
+
+                                                /*var tmpReturn = ParseData("{" + nestedProperties[propertyloopIndex + 1] + "}", nestedItem);
+                                                returnValue += ParseData(tmpReturn, nestedItem);
+                                                count++;*/
+                                            }
+
+                                            tagValue = returnValue;
                                         }
-
-                                        tagValue = returnValue;
                                     }
                                 }
-                            }
-                            else
-                            {
-                                if (nestedProperties.Length < propertyloopIndex + 1)
+                                else
                                 {
-                                    return ParseData("{" + nestedProperties[propertyloopIndex + 1] + "}", tempNestedProperty);
-                                }
-                                else if (tempNestedProperty is object)
-                                {
-                                    //ParseData("{" + nestedProperties[propertyloopIndex + 1] + "}", tempNestedProperty);
+                                    if (nestedProperties.Length < propertyloopIndex + 1)
+                                    {
+                                        return ParseData("{" + nestedProperties[propertyloopIndex + 1] + "}", tempNestedProperty);
+                                    }
+                                    else if (tempNestedProperty is object)
+                                    {
+                                        //ParseData("{" + nestedProperties[propertyloopIndex + 1] + "}", tempNestedProperty);
+                                    }
                                 }
                             }
                         }

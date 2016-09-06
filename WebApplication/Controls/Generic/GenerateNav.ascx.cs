@@ -94,7 +94,13 @@ namespace WebApplication.Controls
             ul.Attributes["class"] += " level" + currentDepth.ToString();
 
             if (currentDepth == 0)
-                ul.Attributes["class"] += " " + RootUlClasses;
+            {
+                ul.Attributes["class"] += " " + RootUlClasses;                
+            }         
+            else
+            {
+                ul.Attributes["class"] += " " + SubULClasses;
+            }       
 
             ul.Attributes["class"] = ul.Attributes["class"].Trim();
 
@@ -105,9 +111,7 @@ namespace WebApplication.Controls
         {
             if (e.Item.ItemType == ListViewItemType.DataItem)
             {
-                HyperLink Link = (HyperLink)e.Item.FindControl("Link");
-                var divider = (Literal)e.Item.FindControl("Divider");
-                divider.Text = DividerString;
+                HyperLink Link = (HyperLink)e.Item.FindControl("Link");                
                 ListView ChildList = (ListView)e.Item.FindControl("ChildList");
 
                 IMediaDetail details = (IMediaDetail)e.Item.DataItem;
@@ -132,6 +136,22 @@ namespace WebApplication.Controls
                     {
                         virtualPath = details.DirectLink;
                     }
+                }
+
+                if(currentDepth == 1)
+                {
+                    if (Link.CssClass == "")
+                        Link.CssClass = TopLevelAnchorClasses;
+                    else
+                        Link.CssClass = Link.CssClass + " "+TopLevelAnchorClasses;
+                }         
+                else
+                {
+                    if (Link.CssClass == "")
+                        Link.CssClass = SubAnchorClasses;
+                    else
+                        Link.CssClass = Link.CssClass + " " + SubAnchorClasses;
+
                 }
 
                 if (details.OpenInNewWindow)
@@ -286,6 +306,10 @@ namespace WebApplication.Controls
                 rootUlClasses = value;
             }
         }
+
+        public string TopLevelAnchorClasses { get; set; }
+        public string SubAnchorClasses { get; set; }
+        public string SubULClasses { get; set; }
 
         public bool DisplayProtectedSections
         {

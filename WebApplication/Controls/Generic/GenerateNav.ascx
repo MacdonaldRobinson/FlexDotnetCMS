@@ -8,8 +8,6 @@
     <ItemTemplate>
         <li id="li" runat="server">
             <asp:HyperLink ID="Link" runat="server"></asp:HyperLink>
-            <span class="divider">
-                <asp:Literal runat="server" ID="Divider"></asp:Literal></span>
             <asp:ListView ID="ChildList" runat="server">
                 <ItemTemplate>
                 </ItemTemplate>

@@ -1743,7 +1743,6 @@
     <Content Include="Views\MasterPages\SiteTemplates\Template1.Master" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Properties\" />
     <Folder Include="Views\MasterPages\SiteTemplates\images\" />
     <Folder Include="Views\MasterPages\SiteTemplates\js\" />
   </ItemGroup>
@@ -1784,6 +1783,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\WebDeploymentPackage.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

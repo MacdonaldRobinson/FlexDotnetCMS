@@ -70,7 +70,7 @@
 
             $("#<%= SelectedTabIndexs.ClientID %>").val(json);
 
-        });        
+        });
 
     });
 
@@ -107,7 +107,7 @@
             var content = editor.getContent();
 
             if (content == "")
-                editor.setContent(value);
+                editor.setContent("<p>" + value + "</p>");
         }
 
 
@@ -167,7 +167,7 @@
 
             <div id="PathToFileHolder">
                 <label for="<%= PathToFile.ClientID %>">
-                    Path To File</label>
+                    URL / Path To File</label>
                 <Admin:FileSelector runat="server" id="PathToFile" CssClass="PathToFile" />
             </div>
 

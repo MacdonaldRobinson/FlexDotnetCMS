@@ -9,13 +9,14 @@
     <asp:UpdatePanel runat="server" UpdateMode="Conditional" ID="UpdatePanel">
         <ContentTemplate>
             <a href="javascript:void(0);" onclick="executeAction('Create','', '<%= UpdatePanel.ClientID %>');">Create New</a>
-            <asp:GridView runat="server" ID="ItemList" AutoGenerateColumns="false" AllowPaging="true" OnPageIndexChanging="ItemList_PageIndexChanging" OnSorting="ItemList_Sorting">
+            <asp:GridView runat="server" ID="ItemList" AutoGenerateColumns="false" AllowPaging="true" OnPageIndexChanging="ItemList_PageIndexChanging" OnSorting="ItemList_Sorting" PageSize="50" Width="100%">
                 <Columns>
                     <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
                     <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
                     <asp:BoundField DataField="Label" HeaderText="Label" SortExpression="Label" />
                     <asp:BoundField DataField="MediaTypeHandler" HeaderText="MediaTypeHandler" SortExpression="MediaTypeHandler" />
                     <asp:BoundField DataField="MasterPage.Name" HeaderText="MasterPage" SortExpression="MasterPage" />
+                    <asp:BoundField DataField="UseMediaTypeLayouts" HeaderText="UseMediaTypeLayouts" SortExpression="UseMediaTypeLayouts" />
                     <asp:BoundField DataField="IsActive" HeaderText="IsActive" SortExpression="IsActive" />
                     <asp:BoundField DataField="ShowInMenu" HeaderText="ShowInMenu" SortExpression="ShowInMenu" />
                     <asp:BoundField DataField="DateCreated" HeaderText="DateCreated" SortExpression="DateCreated" />

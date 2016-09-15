@@ -98,7 +98,7 @@ namespace FrameworkLibrary
             return result;
         }
 
-        public static void CopyFrom<T>(this T to, T from, IEnumerable<string> omitPoperties = null) where T : class
+        public static void CopyFrom<T>(this T to, object from, IEnumerable<string> omitPoperties = null) where T : class
         {
             if (from == null)
                 return;

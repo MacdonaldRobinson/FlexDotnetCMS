@@ -535,7 +535,7 @@ namespace FrameworkLibrary
             {
                 var defaultLanguage = LanguagesMapper.GetDefaultLanguage();
                 detail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.MediaID == media.ID && i.LanguageID == defaultLanguage.ID);
-            }                
+            }
 
             return detail;
         }
@@ -626,7 +626,7 @@ namespace FrameworkLibrary
                 //ParserHelper.SetValue(detail, property.Name, "");
             }
 
-            detail.LinkTitle = detail.SectionTitle = detail.Title = detail.ShortDescription = detail.MainContent = "New Item";                        
+            detail.LinkTitle = detail.SectionTitle = detail.Title = detail.ShortDescription = detail.MainContent = "New Item";
             detail.DateCreated = detail.DateLastModified = DateTime.Now;
 
             return detail;
@@ -777,7 +777,7 @@ namespace FrameworkLibrary
             var history = obj.History.ToList();
             foreach (MediaDetail item in history)
             {
-                ClearObjectRelations(item);                
+                ClearObjectRelations(item);
                 GetDataModel().MediaDetails.Remove(item);
             }
 
@@ -831,7 +831,7 @@ namespace FrameworkLibrary
             }
 
             var media = obj.Media;
-            
+
             ClearObjectRelations(obj);
 
             obj.Media.Comments.Clear();
@@ -885,13 +885,19 @@ namespace FrameworkLibrary
                             if (selectMedia != null)
                             {
                                 var returnValue = property;
+                                var replaceShortCodes = returnValue.Contains("?ReplaceShortCodes");
 
-                                if (returnValue.Contains("?"))
+                                returnValue = ParseSpecialTags(selectMedia.LiveMediaDetail, returnValue);
+
+                                if (replaceShortCodes)
                                 {
                                     returnValue = ParseSpecialTags(mediaDetail, returnValue);
                                 }
+                                else
+                                {
+                                    returnValue = ParseSpecialTags(selectMedia.LiveMediaDetail, returnValue);
+                                }
 
-                                returnValue = ParseSpecialTags(selectMedia.LiveMediaDetail, returnValue);
                                 customCode = customCode.Replace(itemAsString, returnValue);
                             }
                         }
@@ -1033,22 +1039,27 @@ namespace FrameworkLibrary
 
             }
 
+            //var replaced = false;
             if (passToParser == null)
             {
                 passToParser = mediaDetail;
+                //replaced = true;
             }
 
             customCode = ParserHelper.ParseData(customCode, passToParser);
 
-            var matches = Regex.Matches(customCode, "{[a-zA-Z0-9:=\"\".(),\' ]+}");
+            //if(!replaced)
+            //{
+                var matches = Regex.Matches(customCode, "{[a-zA-Z0-9:=\"\".(),\' ]+}");
 
-            if (matches.Count > 0 && matches.Count != previousCount)
-            {
-                customCode = ParseSpecialTags(mediaDetail, customCode, matches.Count);
+                if (matches.Count > 0 && matches.Count != previousCount)
+                {
+                    customCode = ParseSpecialTags(mediaDetail, customCode, matches.Count);
 
-                if (customCode == "{UseMainLayout}")
-                    customCode = "";
-            }
+                    if (customCode == "{UseMainLayout}")
+                        customCode = "";
+                }
+            //}
 
             return customCode;
         }

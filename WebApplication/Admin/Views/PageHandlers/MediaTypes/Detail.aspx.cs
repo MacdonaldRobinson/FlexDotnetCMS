@@ -20,9 +20,9 @@ namespace WebApplication.Admin.Views.PageHandlers.MediaTypes
 
                 if (!IsPostBack)
                     UpdateFieldsFromObject();
-
-                MediaTypeFieldsEditor.SetItems(selectedItem);
             }
+
+            MediaTypeFieldsEditor.SetItems(selectedItem);
 
             this.Page.Title = this.SectionTitle.Text = GetSectionTitle();
         }

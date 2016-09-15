@@ -38,13 +38,22 @@ namespace FrameworkLibrary
             if (obj == null)
                 return "";
 
-            var matches = Regex.Matches(data, openToken + "[a-zA-Z0-9.\\[\\]\\(\\=><\"\"\\(),\'?&/) ]+" + closeToken);
+            var matches = Regex.Matches(data, openToken + "[a-zA-Z0-9-.&=<> /\\;(\n|\r|\r\n)\"#?']+" + closeToken);
 
             foreach (var item in matches)
             {
                 var tag = item.ToString();
                 var tagValue = "";
                 var propertyName = tag.Replace("{", "").Replace("}", "");
+                var queryStringParams = "";
+
+                if (propertyName.Contains("?"))
+                {
+                    var segments = propertyName.Split('?').ToList();
+                    propertyName = segments[0];
+                    segments.RemoveAt(0);
+                    queryStringParams = string.Join("", segments);
+                }
 
                 var nestedProperties = StringHelper.SplitByString(propertyName, ".");
 

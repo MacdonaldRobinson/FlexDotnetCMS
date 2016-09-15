@@ -11,7 +11,7 @@
                 <asp:Panel runat="server" DefaultButton="SearchItems" id="SearchPanel" Visible="false">
                     <asp:TextBox runat="server" ID="SearchText" style="display:inline; width: 200px;" placeholder="Search ..." />
                     <asp:LinkButton ID="SearchItems" Text="Search" runat="server" OnClick="SearchItems_Click"/>
-                </asp:Panel> 
+                </asp:Panel>
                 <asp:Panel runat="server" ID="MultiItemUploaderPanel">
                     <asp:FileUpload ID="MultiFileUpload" runat="server" AllowMultiple="true" CssClass="MultiFileUpload" />
                     <div class="dvPreview" runat="server"></div>
@@ -33,7 +33,7 @@
                             <ItemTemplate>
                                 <li class="item" data-id="<%# Item.ID %>">
                                     <div>
-                                        <a href="<%# (Item.MediaDetail != null) ? WebApplication.BasePage.GetRedirectToMediaDetailUrl(Item.MediaDetail.MediaTypeID, Item.MediaDetail.MediaID, Item.MediaDetail.Media.ParentMediaID, Item.MediaDetail.HistoryVersionNumber): "#" %>" class="colorbox iframe EditImage" data-id="<%# Item.ID %>" data-OnColorboxClose="RefreshAdminUpdatePanel('<%= AdminUpdatePanel.ClientID %>')">Edit</a> |
+                                        <a href="<%# (Item.MediaDetail != null) ? WebApplication.BasePage.GetRedirectToMediaDetailUrl(Item.MediaDetail.MediaTypeID, Item.MediaDetail.MediaID, Item.MediaDetail.Media.ParentMediaID, Item.MediaDetail.HistoryVersionNumber)+"&masterFilePath=/Admin/Views/MasterPages/Popup.Master" : "#" %>" class="colorbox iframe EditImage" data-id="<%# Item.ID %>" data-OnColorboxClose="RefreshAdminUpdatePanel('<%= AdminUpdatePanel.ClientID %>')">Edit</a> |
                                         <a href="javascript:void(0)" class="DeleteImage" data-id="<%# Item.ID %>">Delete</a>
                                     </div>
                                     <a>
@@ -61,7 +61,7 @@
                         <asp:TemplateField HeaderText="">
                             <ItemTemplate>
                                 <div class="item">
-                                    <a href="<%# (Item.MediaDetail != null) ? WebApplication.BasePage.GetRedirectToMediaDetailUrl(Item.MediaDetail.MediaTypeID, Item.MediaDetail.MediaID, Item.MediaDetail.Media.ParentMediaID, Item.MediaDetail.HistoryVersionNumber) : "#" %>" class="colorbox iframe EditImage" data-id="<%# Item.ID %>" data-OnColorboxClose="RefreshAdminUpdatePanel('<%= AdminUpdatePanel.ClientID %>')">Edit</a> |
+                                    <a href="<%# (Item.MediaDetail != null) ? WebApplication.BasePage.GetRedirectToMediaDetailUrl(Item.MediaDetail.MediaTypeID, Item.MediaDetail.MediaID, Item.MediaDetail.Media.ParentMediaID, Item.MediaDetail.HistoryVersionNumber)+"&masterFilePath=/Admin/Views/MasterPages/Popup.Master" : "#" %>" class="colorbox iframe EditImage" data-id="<%# Item.ID %>" data-OnColorboxClose="RefreshAdminUpdatePanel('<%= AdminUpdatePanel.ClientID %>')">Edit</a> |
                                     <a href="javascript:void(0)" class="DeleteImage" data-id="<%# Item.ID %>">Delete</a>
                                 </div>
                             </ItemTemplate>

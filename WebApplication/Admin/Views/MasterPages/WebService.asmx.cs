@@ -110,9 +110,19 @@ namespace WebApplication.Admin.Views.MasterPages
             var sourceMedia = BaseMapper.GetObjectFromContext(MediaDetailsMapper.GetByID(sourceMediaDetailId).Media);
             var parentMedia = BaseMapper.GetObjectFromContext(MediaDetailsMapper.GetByID(parentMediaDetailId).Media);
 
+            var oldParentId = sourceMedia.ParentMediaID;
+
             sourceMedia.MoveToIndex(newPosition);
 
             sourceMedia.ParentMedia = parentMedia;
+
+            if(oldParentId != parentMedia.ID)
+            {
+                foreach (var item in sourceMedia.MediaDetails)
+                {
+                    item.CachedVirtualPath = item.CalculatedVirtualPath();
+                }
+            }
 
             var returnObj = MediasMapper.Update(sourceMedia);
 
@@ -161,9 +171,12 @@ namespace WebApplication.Admin.Views.MasterPages
                 var mediaDetailField = new MediaDetailField();
                 mediaDetailField.FieldCode = item.FieldCode;
                 mediaDetailField.FieldLabel = item.FieldLabel;
+                mediaDetailField.UseMediaTypeFieldFrontEndLayout = item.UseMediaTypeFieldFrontEndLayout;
+                mediaDetailField.FrontEndLayout = item.FrontEndLayout;
+                mediaDetailField.RenderLabelAfterControl = item.RenderLabelAfterControl;
                 mediaDetailField.AdminControl = item.AdminControl;
                 mediaDetailField.FieldValue = item.FieldValue;
-                mediaDetailField.GroupName = "";
+                mediaDetailField.GroupName = item.GroupName;
                 mediaDetailField.GetAdminControlValue = item.GetAdminControlValue;
                 mediaDetailField.SetAdminControlValue = item.SetAdminControlValue;
                 mediaDetailField.DateCreated = mediaDetailField.DateLastModified = DateTime.Now;

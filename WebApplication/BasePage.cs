@@ -268,10 +268,14 @@ namespace WebApplication
                         if (mediaType.MasterPage == null)
                         {
                             var defaultMaster = MasterPagesMapper.GetDefaultMasterPage();
-                            masterFilePath = MasterPagesMapper.GetDefaultMasterPage().PathToFile;
 
-                            if (useMobile)
-                                masterFilePath = defaultMaster.GetMobileTemplate();
+                            if (defaultMaster != null)
+                            {
+                                masterFilePath = defaultMaster.PathToFile;
+
+                                if (useMobile)
+                                    masterFilePath = defaultMaster.GetMobileTemplate();
+                            }
                         }
                         else
                         {

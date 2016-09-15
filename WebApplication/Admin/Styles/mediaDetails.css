@@ -111,10 +111,13 @@ img.MarkedAsDeleted {
     opacity: 0.5;
 }
 
+.UploadedItems {
+
+}
 
 .UploadedItems .item {
     float: left;
-    margin-left: 5px;
+    margin-left: 25px;
     text-align: center;
     padding-top: 10px;
 }

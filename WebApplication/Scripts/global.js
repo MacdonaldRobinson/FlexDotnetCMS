@@ -2,8 +2,8 @@
 	jQuery(".tagged").attr('value', '');
 }
 
-var colorBoxWidth = "100%";
-var colorBoxHeight = "100%";
+var colorBoxWidth = "80%";
+var colorBoxHeight = "80%";
 
 function GetQueryStringParams(url) {
 	var vars = [], hash;
@@ -43,7 +43,7 @@ function RefreshUpdatePanel(UpdatePanelClientId, OnAfterRefreshFunction) {
     __doPostBack(UpdatePanelClientId, '');
 }
 
-function OnUpdatePanelRefreshComplete(OnUpdatePanelRefreshCompleteFunction) {    
+function OnUpdatePanelRefreshComplete(OnUpdatePanelRefreshCompleteFunction) {
     Sys.WebForms.PageRequestManager.getInstance().add_endRequest(OnUpdatePanelRefreshCompleteFunction);
 }
 

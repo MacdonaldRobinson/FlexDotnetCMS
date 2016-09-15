@@ -35,7 +35,7 @@ namespace WebApplication.Admin
             if (rootMediaDetail == null)
             {
                 CreateItem.Visible = true;
-            }            
+            }
 
             if (settings.EnableGlossaryTerms)
             {
@@ -68,30 +68,28 @@ namespace WebApplication.Admin
                 LanguageSwitcher.Visible = true;
         }
 
-        private void BindTree(IEnumerable<Media> list, CustomTreeNode parentNode)
+        private void BindTree(IMediaDetail item, CustomTreeNode parentNode, bool renderChildren = true)
         {
-            var nodes = list.Where(x => parentNode == null  ? x.ParentMediaID == null : x.ParentMediaID == parentNode.MediaID);
+            CustomTreeNode rootNode = new CustomTreeNode(item.SectionTitle, item.ID.ToString(), item.MediaID);
+            UpdateTreeNode(rootNode, item);
 
-            foreach (var node in nodes)
+            if (parentNode == null)
             {
-                var mediaDetail = MediaDetailsMapper.GetAtleastOneByMedia(node, AdminBasePage.CurrentLanguage);
+                SiteTree.Nodes.Add(rootNode);
+            }
+            else
+            {
+                parentNode.ChildNodes.Add(rootNode);
+            }
 
-                if (mediaDetail != null && mediaDetail.ID != 0 && mediaDetail.MediaType.ShowInSiteTree && mediaDetail.MediaType.ShowInSiteTree)
+            if(renderChildren)
+            {
+                foreach (var mediaDetail in item.ChildMediaDetails)
                 {
-                    CustomTreeNode newNode = new CustomTreeNode(mediaDetail.SectionTitle, mediaDetail.ID.ToString(), mediaDetail.MediaID);
-
-                    UpdateTreeNode(newNode, mediaDetail);
-
-                    if (parentNode == null)
+                    if (mediaDetail != null && mediaDetail.ID != 0 && mediaDetail.MediaType.ShowInSiteTree && mediaDetail.MediaType.ShowInSiteTree)
                     {
-                        SiteTree.Nodes.Add(newNode);
+                        BindTree(mediaDetail, rootNode);
                     }
-                    else
-                    {
-                        parentNode.ChildNodes.Add(newNode);
-                    }
-                    newNode.Selected = false;
-                    BindTree(list, newNode);
                 }
             }
         }
@@ -104,7 +102,10 @@ namespace WebApplication.Admin
 
         private bool SearchWithinMediaDetail(IMediaDetail mediaDetail, string filterText)
         {
-            if (mediaDetail.HistoryVersionNumber == 0 && mediaDetail.LinkTitle.ToLower().Trim().Contains(filterText) || mediaDetail.SectionTitle.ToLower().Trim().Contains(filterText) || mediaDetail.MainContent.ToLower().Trim().Contains(filterText) || mediaDetail.MainLayout.ToLower().Trim().Contains(filterText) || mediaDetail.Fields.Any(j => j.FieldValue.Contains(filterText)))
+            if (mediaDetail == null)
+                return false;
+
+            if (mediaDetail.HistoryVersionNumber == 0 && mediaDetail.MediaID.ToString() == filterText || mediaDetail.LinkTitle.ToLower().Trim().Contains(filterText) || mediaDetail.SectionTitle.ToLower().Trim().Contains(filterText) || mediaDetail.MainContent.ToLower().Trim().Contains(filterText) || mediaDetail.MainLayout.ToLower().Trim().Contains(filterText) || mediaDetail.Fields.Any(j => j.FieldValue.Contains(filterText)))
                 return true;
 
             foreach (var fieldAssociation in mediaDetail.Fields.SelectMany(i=>i.FieldAssociations))
@@ -125,8 +126,8 @@ namespace WebApplication.Admin
         {
             if (Filter.Text == "")
             {
-                var items = GetAllMedias().OrderBy(i => i.OrderIndex);
-                BindTree(items, null);
+                var root = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.Media.ParentMedia == null && i.HistoryVersionNumber == 0);
+                BindTree(root, null);
             }
             else
             {
@@ -137,7 +138,8 @@ namespace WebApplication.Admin
 
                 foreach (var item in foundItems)
                 {
-                    SiteTree.Nodes.Add(new CustomTreeNode(item.LinkTitle, item.ID.ToString(), item.MediaID, URIHelper.ConvertToAbsUrl(WebApplication.BasePage.GetRedirectToMediaDetailUrl(item.MediaTypeID, item.Media.ID))));
+                    BindTree(item, null, false);
+                    //SiteTree.Nodes.Add(new CustomTreeNode(item.LinkTitle, item.ID.ToString(), item.MediaID, URIHelper.ConvertToAbsUrl(WebApplication.BasePage.GetRedirectToMediaDetailUrl(item.MediaTypeID, item.Media.ID))));
                 }
             }
         }
@@ -164,15 +166,13 @@ namespace WebApplication.Admin
             }
             else
             {
-                nodeText = detail.LinkTitle;
+                nodeText = $"{detail.LinkTitle} <small>({detail.MediaID})</small>";
             }
 
             if (detail.IsDeleted)
             {
                 node.LIClasses.Add("isDeleted");
             }
-
-            //RadContextMenu contextMenu = (RadContextMenu)node.FindControl(node.ContextMenuID.ToString());
 
             if ((!detail.ShowInMenu) && (!detail.RenderInFooter))
                 node.LIClasses.Add("isHidden");

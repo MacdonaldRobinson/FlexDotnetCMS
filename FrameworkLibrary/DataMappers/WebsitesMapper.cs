@@ -36,6 +36,9 @@ namespace FrameworkLibrary
         public static List<string> allWebVirtualPaths = new List<string>();
         public static List<string> GetAllWebsiteVirtualPaths()
         {
+            if (allWebVirtualPaths == null)
+                allWebVirtualPaths = new List<string>();
+
             if (allWebVirtualPaths.Count > 0)
                 return allWebVirtualPaths;
 

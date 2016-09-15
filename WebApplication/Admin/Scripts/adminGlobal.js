@@ -465,7 +465,7 @@ $(window).load(function () {
     initAceEditors();
 
     $(document).ajaxComplete(function () {
-        initAceEditors();        
+        initAceEditors();
     });
 });
 
@@ -502,7 +502,7 @@ $(document).ready(function () {
     tfm_path = "/Scripts/tinyfilemanager.net";
     tinymce.init({
         selector: ".editor",
-        content_css: "/Views/MasterPages/SiteTemplates/css/style.min.css, /Admin/Styles/editor.css",
+        content_css: "/FrontEnd/stylesheets/style-min.css, /Admin/Styles/editor.css",
         plugins: [
           'advlist autolink lists link image charmap print preview hr anchor pagebreak',
           'searchreplace wordcount visualblocks visualchars fullscreen',
@@ -516,6 +516,7 @@ $(document).ready(function () {
         relative_urls: false,
         convert_urls: false,
         remove_script_host: false,
+        extended_valid_elements: 'span',
         setup: function (editor) {
             editor.on('change', function () {
                 editor.save();
@@ -731,7 +732,7 @@ $(document)
 
         var isDropZone = target.hasClass("dropZone")
 
-        if (isDropZone) {            
+        if (isDropZone) {
 
             var li = "<li data-mediadetailid='" + elem.parent().attr("data-mediadetailid") + "'><a class='delete'>x</a><span class='text'>" + elem.text() + "</span></li>";
 
@@ -821,8 +822,8 @@ function init() {
     });
 
     $(document).on("click", ".dropZone li a.delete", function () {
-        
-        var elem = $(this).closest(".dropZone")[0];        
+
+        var elem = $(this).closest(".dropZone")[0];
         $(this).closest("li").remove();
 
         UpdateValuesFromUL(elem);
@@ -839,7 +840,7 @@ function init() {
     });
 
     function UpdateULFromValues(elem) {
-                
+
         var values = $(elem).find("input[type='hidden']");
 
         //console.log(values);
@@ -858,7 +859,7 @@ function init() {
         });
     }
 
-    function UpdateValuesFromUL(elem) {        
+    function UpdateValuesFromUL(elem) {
         var values = $(elem).find("input[type='hidden']");
 
         var arr = new Array();
@@ -889,11 +890,11 @@ function init() {
         var parentItem = $(this).closest(".item");
         var itemsToDelete = root.find(".ItemsToDelete");
         var image = parentItem.find("img");
-        
+
         if (image.length == 0)
         {
             image = $(this);
-        }            
+        }
 
         var itemId = $(this).attr('data-id');
 

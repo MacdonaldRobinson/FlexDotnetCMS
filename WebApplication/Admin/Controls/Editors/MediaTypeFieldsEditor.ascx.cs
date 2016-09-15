@@ -17,8 +17,11 @@ namespace WebApplication.Admin.Controls.Editors
 
         private void Bind()
         {
-            ItemList.DataSource = mediaType.Fields.ToList();
-            ItemList.DataBind();
+            if(mediaType != null)
+            {
+                ItemList.DataSource = mediaType.Fields.ToList();
+                ItemList.DataBind();
+            }
 
             BindFieldTypeDropDown(FieldTypeDropDown);
         }

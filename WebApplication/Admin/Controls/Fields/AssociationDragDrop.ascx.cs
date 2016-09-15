@@ -32,6 +32,9 @@ namespace WebApplication.Admin.Controls.Fields
         {
             var obj = StringHelper.JsonToObject<List<JsonObj>>(value);
 
+            if (obj == null)
+                return;
+
             var field = GetField();
 
             var newIds = obj.Select(i => i.id).ToList().ToJSON(2);

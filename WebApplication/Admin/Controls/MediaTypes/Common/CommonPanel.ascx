@@ -87,8 +87,11 @@
             var editor = tinymce.editors[edId];
             var content = editor.getContent();
 
-            if (content == value || content == "<p>"+value+"</p>")
+            if (content == value || content == "<p>" + value + "</p>")
+            {
                 editor.setContent("");
+                editor.save();
+            }
         }
 
         //console.log(tinymce.getInstanceById('title'));
@@ -107,7 +110,10 @@
             var content = editor.getContent();
 
             if (content == "")
+            {
                 editor.setContent("<p>" + value + "</p>");
+                editor.save();
+            }
         }
 
 

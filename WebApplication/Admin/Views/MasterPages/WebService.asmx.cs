@@ -169,17 +169,17 @@ namespace WebApplication.Admin.Views.MasterPages
             foreach (var item in detail.Fields)
             {
                 var mediaDetailField = new MediaDetailField();
-                mediaDetailField.FieldCode = item.FieldCode;
-                mediaDetailField.FieldLabel = item.FieldLabel;
-                mediaDetailField.UseMediaTypeFieldFrontEndLayout = item.UseMediaTypeFieldFrontEndLayout;
-                mediaDetailField.FrontEndLayout = item.FrontEndLayout;
-                mediaDetailField.RenderLabelAfterControl = item.RenderLabelAfterControl;
-                mediaDetailField.AdminControl = item.AdminControl;
-                mediaDetailField.FieldValue = item.FieldValue;
-                mediaDetailField.GroupName = item.GroupName;
-                mediaDetailField.GetAdminControlValue = item.GetAdminControlValue;
-                mediaDetailField.SetAdminControlValue = item.SetAdminControlValue;
+                mediaDetailField.CopyFrom(item);
+
                 mediaDetailField.DateCreated = mediaDetailField.DateLastModified = DateTime.Now;
+
+                foreach (var association in item.FieldAssociations)
+                {
+                    var fieldAssociation = new FieldAssociation();
+                    fieldAssociation.CopyFrom(association);
+
+                    mediaDetailField.FieldAssociations.Add(fieldAssociation);
+                }
 
                 duplicatedItem.Fields.Add(mediaDetailField);
             }

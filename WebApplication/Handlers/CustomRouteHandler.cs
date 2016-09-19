@@ -85,7 +85,7 @@ namespace WebApplication.Handlers
             bool isAttemptingAdminLogin = false;
 
             if ((virtualPath != "~/login/") && (virtualPath != "~/admin/"))
-            {                
+            {
                 cmsSettings = SettingsMapper.GetSettings();
 
                 if (cmsSettings != null)
@@ -106,7 +106,7 @@ namespace WebApplication.Handlers
                     }
                 }
                 else
-                {                    
+                {
                     AttemptToLoadFromCache();
                 }
             }
@@ -191,10 +191,13 @@ namespace WebApplication.Handlers
                     }
                 }
 
-                if ((detail != null) && (detail.ForceSSL || AppSettings.ForceSSL))
-                    URIHelper.ForceSSL();
-                else
-                    URIHelper.ForceNonSSL();
+                if (detail != null)
+                {
+                    if (detail.ForceSSL || AppSettings.ForceSSL)
+                        URIHelper.ForceSSL();
+                    else
+                        URIHelper.ForceNonSSL();
+                }
 
                 if (cmsSettings != null)
                 {
@@ -202,8 +205,14 @@ namespace WebApplication.Handlers
                     {
                         if (!string.IsNullOrEmpty(cmsSettings.PageNotFoundUrl))
                         {
-                            Response.Redirect(cmsSettings.PageNotFoundUrl + "?requestVirtualPath=" + virtualPath);
-                            Response.End();
+                            FrameworkSettings.CurrentFrameworkBaseMedia = null;
+
+                            FrameworkSettings.CurrentFrameworkBaseMedia = FrameworkBaseMedia.GetInstanceByVirtualPath(cmsSettings.PageNotFoundUrl, true);
+                            detail = (MediaDetail)FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail;
+
+                            ErrorHelper.LogException(new Exception($"Page Not Found: {virtualPath}"));
+
+                            Response.StatusCode = 404;
                         }
                     }
                 }

@@ -108,7 +108,7 @@
 
         <div id="Fields">
             <fieldset>
-                <Admin:MediaTypeFieldsEditor ID="MediaTypeFieldsEditor" runat="server" />
+                <Admin:MediaTypeFieldsEditor runat="server" id="MediaTypeFieldsEditor" />
             </fieldset>
         </div>
     </div>

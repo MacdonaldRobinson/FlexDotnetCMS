@@ -376,6 +376,10 @@ namespace FrameworkLibrary
 
         public static IMediaDetail GetByVirtualPath(string virtualPath, bool selectParentIfPossible = false, bool saveLanguage = true)
         {
+            if(virtualPath.StartsWith("/"))
+            {
+                virtualPath = $"~{virtualPath}";
+            }
             var forceSelectParent = false;
 
             var activeLanguages = LanguagesMapper.GetAllActive();

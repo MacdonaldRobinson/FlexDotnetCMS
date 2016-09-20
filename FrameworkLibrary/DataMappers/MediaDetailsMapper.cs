@@ -554,7 +554,7 @@ namespace FrameworkLibrary
             if (language == null)
                 language = LanguagesMapper.GetDefaultLanguage();
 
-            return media.ChildMedias.Select(i => i.MediaDetails.FirstOrDefault(j => j.Media.ParentMediaID == media.ID && j.LanguageID == language.ID && j.HistoryForMediaDetailID == null)).Where(i => i != null && i.MediaType.ShowInSiteTree).OrderBy(i => i.Media.OrderIndex);
+            return BaseMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == media.ID && i.LanguageID == language.ID && i.HistoryForMediaDetailID == null && i.MediaType.ShowInSiteTree).OrderBy(i => i.Media.OrderIndex);
 
             /*var allItems = MediasMapper.GetAllChildMedias(media);
 
@@ -867,7 +867,7 @@ namespace FrameworkLibrary
 
             if (customCode.Contains("{{Load"))
             {
-                var loadMediaDetailsProperty = Regex.Matches(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:).?& }]+");
+                var loadMediaDetailsProperty = Regex.Matches(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:).?&}]+");
 
                 foreach (var item in loadMediaDetailsProperty)
                 {
@@ -935,7 +935,7 @@ namespace FrameworkLibrary
 
             if (customCode.Contains("{Field:"))
             {
-                var fields = Regex.Matches(customCode, "{Field:[a-zA-Z0-9:=\"\". ]+}");
+                var fields = Regex.Matches(customCode, "{Field:[a-zA-Z0-9:=\"\".]+}");
 
                 foreach (var field in fields)
                 {
@@ -1019,7 +1019,7 @@ namespace FrameworkLibrary
 
             if (customCode.Contains("{Link:"))
             {
-                var linkShortCodes = Regex.Matches(customCode, "{Link:[a-zA-Z0-9:=\"\". ]+}");
+                var linkShortCodes = Regex.Matches(customCode, "{Link:[a-zA-Z0-9:=\"\".]+}");
 
                 foreach (var linkShortCode in linkShortCodes)
                 {
@@ -1054,7 +1054,7 @@ namespace FrameworkLibrary
 
             //if(!replaced)
             //{
-                var matches = Regex.Matches(customCode, "{[a-zA-Z0-9:=\"\".(),\' ]+}");
+                var matches = Regex.Matches(customCode, "{[a-zA-Z0-9:=\"\".(),\']+}");
 
                 if (matches.Count > 0 && matches.Count != previousCount)
                 {

@@ -1,5 +1,7 @@
 ﻿using RazorEngine;
+using RazorEngine.Configuration;
 using RazorEngine.Templating;
+using RazorEngine.Text;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +40,7 @@ namespace FrameworkLibrary
             if (obj == null)
                 return "";
 
-            var matches = Regex.Matches(data, openToken + "[a-zA-Z0-9-.&=<> /\\;(\n|\r|\r\n)\"#?']+" + closeToken);
+            var matches = Regex.Matches(data, openToken + "[a-zA-Z0-9-.&=<>/\\;(\n|\r|\r\n)\"#?']+" + closeToken);
 
             foreach (var item in matches)
             {
@@ -279,6 +281,14 @@ namespace FrameworkLibrary
 
         public static string RunOrCompileRazorCode(string code, string key, object obj)
         {
+            /*var config = new TemplateServiceConfiguration();
+            config.Debug = true;
+
+            config.EncodedStringFactory = new RawStringFactory();
+            var service = RazorEngineService.Create(config);
+
+            Engine.Razor = service;*/
+
             if (Engine.Razor.IsTemplateCached(key, null))
             {
                 return Engine.Razor.Run(key, null, obj);

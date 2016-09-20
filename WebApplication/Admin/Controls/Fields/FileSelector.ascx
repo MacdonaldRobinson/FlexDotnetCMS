@@ -8,15 +8,6 @@
                 var src = $(this).val().replace("~/", "/");
                 $("#<%=SelectedImage.ClientID%>").attr("src", src);
             });
-
-            $("#<%=SelectedImage.ClientID%>").load(function () {
-                var src = $(this).attr("src");
-
-                if (src.indexOf("?height") == -1)
-                {
-                    $(this).attr("src", src);
-                }
-            });
         });
     </script>
 

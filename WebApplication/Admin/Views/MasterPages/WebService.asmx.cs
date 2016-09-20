@@ -178,6 +178,14 @@ namespace WebApplication.Admin.Views.MasterPages
                     var fieldAssociation = new FieldAssociation();
                     fieldAssociation.CopyFrom(association);
 
+                    if (item.AdminControl.Contains("MultiFile"))
+                    {
+                        var associatedMediaDetail = MediaDetailsMapper.GetByID(fieldAssociation.AssociatedMediaDetailID);
+                        fieldAssociation.AssociatedMediaDetailID = 0;
+
+                        fieldAssociation.MediaDetail = (MediaDetail)HandleDuplicate(associatedMediaDetail, associatedMediaDetail.Media.ParentMedia);
+                    }
+
                     mediaDetailField.FieldAssociations.Add(fieldAssociation);
                 }
 

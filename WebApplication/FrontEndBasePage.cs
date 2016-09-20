@@ -242,7 +242,7 @@ namespace WebApplication
             base.Render(wrt); //CAPTURE THE CURRENT PAGE HTML SOURCE AS STRING
             //wrt.Close();
 
-            string html = str.ToString();            
+            string html = str.ToString();
 
             /*if (!IsInAdminSection)
             {

@@ -34,10 +34,20 @@
 <link rel="stylesheet" href="/Scripts/split-pane-master/split-pane.css" />
 <link rel="stylesheet" href="/Admin/Styles/adminGlobal.css" />
 
+<script>
+    $(document).ajaxStop(function () {
+        $('#<%= UpdateProgress1.ClientID%>').hide();
+    });
+
+    $(document).ajaxStart(function () {
+        $('#<%= UpdateProgress1.ClientID%>').show();
+    });
+</script>
+
 <asp:UpdateProgress ID="UpdateProgress1" runat="server">
     <ProgressTemplate>
         <div class='loading-panel'>
             <div class='copy'>Loading ...</div>
-        </div>        
+        </div>
     </ProgressTemplate>
 </asp:UpdateProgress>

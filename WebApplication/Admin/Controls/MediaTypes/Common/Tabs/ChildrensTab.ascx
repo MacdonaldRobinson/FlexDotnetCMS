@@ -13,10 +13,18 @@
     <ContentTemplate>
         <fieldset>
             <legend>Current Children</legend>
-            <asp:Panel runat="server" DefaultButton="SearchItems" id="SearchPanel" Visible="false">
-                <asp:TextBox runat="server" ID="SearchText" style="display:inline; width: 200px;" placeholder="Search ..." />
-                <asp:LinkButton ID="SearchItems" Text="Search" runat="server" OnClick="SearchItems_Click"/>
-            </asp:Panel> 
+            <div>
+                <div class="floatLeft">
+                    <asp:Panel runat="server" DefaultButton="SearchItems" id="SearchPanel" Visible="false">
+                        <asp:TextBox runat="server" ID="SearchText" style="display:inline; width: 200px;" placeholder="Search ..." />
+                        <asp:LinkButton ID="SearchItems" Text="Search" runat="server" OnClick="SearchItems_Click"/>
+                    </asp:Panel>
+                </div>
+                <div class="buttons floatRight">
+                    <a href="/Admin/Views/PageHandlers/Media/Create.aspx" id="CreateNewChildItemButton">Create a new child item</a>
+                </div>
+                <div class="clear"></div>
+            </div>
             <asp:GridView runat="server" ID="ItemList" AllowSorting="false" AutoGenerateColumns="false" AllowPaging="true" CssClass="DragDropGrid DataTable" OnPageIndexChanging="ItemList_PageIndexChanging" OnDataBound="ItemList_DataBound" Width="100%" PageSize="20" OnSorting="ItemList_Sorting">
                 <Columns>
                     <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
@@ -26,7 +34,7 @@
                     <asp:TemplateField HeaderText="">
                         <ItemTemplate>
                             <asp:LinkButton ID="Edit" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="Edit_Click">Edit</asp:LinkButton>|
-                            <asp:LinkButton ID="Delete" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="Delete_Click" OnClientClick="return confirm('Are you sure you want to perminently delete this field? you will loose all data that has been assigned to this field.')">Delete</asp:LinkButton>
+                            <asp:LinkButton ID="Delete" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="Delete_Click" OnClientClick="return confirm('Are you sure you want to perminently delete this item? you will loose all data that has been assigned to this this.')">Delete</asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

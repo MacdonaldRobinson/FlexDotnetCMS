@@ -22,7 +22,7 @@ namespace WebApplication.Controls
                 if (parentMedia == null)
                     return;
 
-                var children = MediaDetailsMapper.FilterByMediaTypeShowInMenuStatus(MediaDetailsMapper.FilterByShowInMenuStatus(MediaDetailsMapper.FilterByCanRenderStatus(MediaDetailsMapper.GetAllChildMediaDetails(parentMedia, this.BasePage.CurrentLanguage), true), true), true);
+                var children = MediaDetailsMapper.FilterByMediaTypeShowInMenuStatus(MediaDetailsMapper.FilterByShowInMenuStatus(MediaDetailsMapper.FilterByCanRenderStatus(MediaDetailsMapper.GetAllChildMediaDetails(parentMedia.ID, this.BasePage.CurrentLanguage.ID), true), true), true);
 
                 if (children.Count() > 0)
                     GenerateNav.RootMedia = parentMedia;

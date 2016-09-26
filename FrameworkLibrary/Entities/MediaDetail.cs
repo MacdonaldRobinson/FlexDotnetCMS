@@ -211,7 +211,7 @@ namespace FrameworkLibrary
         {
             get
             {
-                return MediaDetailsMapper.FilterOutDeletedAndArchived(MediaDetailsMapper.GetAllChildMediaDetails(Media, Language));
+                return MediaDetailsMapper.GetAllChildMediaDetails(MediaID, LanguageID);
             }
         }
 
@@ -248,17 +248,18 @@ namespace FrameworkLibrary
             return virtualPath;
         }
 
-        public IEnumerable<IMediaDetail> RelatedItems
+        public IEnumerable<IMediaDetail> GetRelatedItems(long mediaTypeId = 0)
         {
-            get
+            MediaType mediaType = null;
+
+            if (mediaTypeId > 0)
             {
-                /*if (this.VirtualPath == FrameworkSettings.RootMediaDetail.VirtualPath)
-                    return new List<IMediaDetail>();*/
-
-                var relatedItems = MediaDetailsMapper.GetRelatedItems(this);
-
-                return relatedItems;
+                mediaType = MediaTypesMapper.GetByID(mediaTypeId);
             }
+
+            var relatedItems = MediaDetailsMapper.GetRelatedItems(this, mediaType);
+
+            return relatedItems;
         }
 
         public bool IsArchive
@@ -395,7 +396,7 @@ namespace FrameworkLibrary
             if (!string.IsNullOrEmpty(contextMetaDescription))
                 return contextMetaDescription;
 
-            var description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(MetaDescription));
+            var description =  StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(MetaDescription));
 
             if (string.IsNullOrEmpty(description))
             {
@@ -404,7 +405,7 @@ namespace FrameworkLibrary
 
             if ((description == "") || (description == LinkTitle))
             {
-                description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(MediaDetailsMapper.ParseSpecialTags(this, "{MainContent}")));                
+                description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(MediaDetailsMapper.ParseSpecialTags(this, "{MainContent}")));
 
                 if (description.Length > 255)
                     description = description.Substring(0, 255) + " ...";

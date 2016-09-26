@@ -221,7 +221,7 @@ namespace WebApplication.Handlers
                 {
                     if (detail.RedirectToFirstChild)
                     {
-                        var items = MediaDetailsMapper.GetAllChildMediaDetails(detail.Media, detail.Language).ToList();
+                        var items = MediaDetailsMapper.GetAllChildMediaDetails(detail.MediaID, detail.LanguageID).ToList();
 
                         if (items.Count > 0)
                             HttpContext.Current.Response.Redirect(items[0].AutoCalculatedVirtualPath);

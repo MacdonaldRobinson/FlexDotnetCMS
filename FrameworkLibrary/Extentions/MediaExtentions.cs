@@ -10,7 +10,7 @@ namespace FrameworkLibrary
     {
         public static IEnumerable<IMediaDetail> GetLiveMediaDetails(this IEnumerable<Media> items)
         {
-            return items.Select(i => i.MediaDetails.SingleOrDefault(j => j.HistoryForMediaDetail == null));
+            return items.Select(i => i.MediaDetails.FirstOrDefault(j => j.HistoryForMediaDetail == null));
         }
     }
 }

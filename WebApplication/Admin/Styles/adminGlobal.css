@@ -68,8 +68,9 @@ h1 span, h2 {
 }
 
 .buttons {
-    margin: 10px 0;
+    margin: 0;
 }
+
 
     .buttons a {
         padding: 0.4em 1.5em 0.4em 1.5em !important;
@@ -385,7 +386,7 @@ html, body {
     /*overflow:hidden;*/
 
     z-index: 200;
-    background-color:#fff;    
+    background-color:#fff;
 
 }
 

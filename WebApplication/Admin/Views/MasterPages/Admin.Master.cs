@@ -68,10 +68,10 @@ namespace WebApplication.Admin
                 LanguageSwitcher.Visible = true;
         }
 
-        private void BindTree(IMediaDetail item, CustomTreeNode parentNode, bool renderChildren = true)
+        private void BindTree(IMediaDetail mediaDetail, CustomTreeNode parentNode, bool renderChildren = true)
         {
-            CustomTreeNode rootNode = new CustomTreeNode(item.SectionTitle, item.ID.ToString(), item.MediaID);
-            UpdateTreeNode(rootNode, item);
+            CustomTreeNode rootNode = new CustomTreeNode(mediaDetail.SectionTitle, mediaDetail.ID.ToString(), mediaDetail.MediaID);
+            UpdateTreeNode(rootNode, mediaDetail);
 
             if (parentNode == null)
             {
@@ -82,13 +82,13 @@ namespace WebApplication.Admin
                 parentNode.ChildNodes.Add(rootNode);
             }
 
-            if(renderChildren)
+            if (renderChildren)
             {
-                foreach (var mediaDetail in item.ChildMediaDetails)
+                if (mediaDetail != null && mediaDetail.ID != 0)
                 {
-                    if (mediaDetail != null && mediaDetail.ID != 0 && mediaDetail.MediaType.ShowInSiteTree && mediaDetail.MediaType.ShowInSiteTree)
+                    foreach (var child in mediaDetail.ChildMediaDetails)
                     {
-                        BindTree(mediaDetail, rootNode);
+                        BindTree(child, rootNode);
                     }
                 }
             }
@@ -128,6 +128,17 @@ namespace WebApplication.Admin
             {
                 var root = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.Media.ParentMedia == null && i.HistoryVersionNumber == 0);
                 BindTree(root, null);
+
+                if (SiteTree.Nodes.Count > 0)
+                {
+                    var rootNode = (CustomTreeNode)SiteTree.Nodes?[0];
+                    rootNode?.LIClasses.Add("jstree-open");
+
+                    if(rootNode.ChildNodes.Count > 0)
+                    {
+                        ((CustomTreeNode)rootNode.ChildNodes?[0])?.LIClasses.Add("jstree-open");
+                    }
+                }
             }
             else
             {
@@ -136,10 +147,9 @@ namespace WebApplication.Admin
 
                 SiteTree.Nodes.Clear();
 
-                foreach (var item in foundItems)
+                foreach (var foundItem in foundItems)
                 {
-                    BindTree(item, null, false);
-                    //SiteTree.Nodes.Add(new CustomTreeNode(item.LinkTitle, item.ID.ToString(), item.MediaID, URIHelper.ConvertToAbsUrl(WebApplication.BasePage.GetRedirectToMediaDetailUrl(item.MediaTypeID, item.Media.ID))));
+                    BindTree(foundItem, null, false);
                 }
             }
         }
@@ -191,15 +201,10 @@ namespace WebApplication.Admin
                 }
             }
 
-            if (detail.MediaType.Name == MediaTypeEnum.RootPage.ToString() || detail.MediaType.Name == MediaTypeEnum.Website.ToString())
-            {
-                node.LIClasses.Add("jstree-open");
-            }
-
             node.Text = nodeText;
 
-            node.LinkAttributes.Add("data-frontendurl", detail.Media.PermaLink);
-            //node.LinkAttributes.Add("data-frontendurl", detail.AbsoluteUrl);
+            //node.LinkAttributes.Add("data-frontendurl", detail.Media.PermaLink);
+            node.LinkAttributes.Add("data-frontendurl", detail.AbsoluteUrl);
             node.LIAttributes.Add("data-mediaDetailId", detail.ID.ToString());
 
             node.NavigateUrl = URIHelper.ConvertToAbsUrl(WebApplication.BasePage.GetRedirectToMediaDetailUrl(detail.MediaTypeID, detail.MediaID));

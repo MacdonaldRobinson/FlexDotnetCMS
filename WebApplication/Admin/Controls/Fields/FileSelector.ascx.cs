@@ -18,7 +18,7 @@ namespace WebApplication.Admin.Controls.Fields
 
             value = URIHelper.ConvertAbsUrlToTilda(value.ToLower());
 
-            if (value.EndsWith(".jpeg") || value.EndsWith(".jpg") || value.EndsWith(".png") || value.EndsWith(".gif"))
+            if (value.EndsWith(".jpeg") || value.EndsWith(".jpg") || value.EndsWith(".png") || value.EndsWith(".gif") || value.EndsWith(".svg"))
             {
                 if (File.Exists(URIHelper.ConvertToAbsPath(value)))
                 {

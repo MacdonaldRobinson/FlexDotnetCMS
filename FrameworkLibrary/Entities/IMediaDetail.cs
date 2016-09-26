@@ -10,14 +10,14 @@ namespace FrameworkLibrary
         string AutoCalculatedVirtualPath { get; }        string CachedVirtualPath { get; set; }
         bool CanAddToCart { get; set; }
         bool CanRender { get; }
-        IEnumerable<IMediaDetail> ChildMediaDetails { get; }        
+        IEnumerable<IMediaDetail> ChildMediaDetails { get; }
         User CreatedByUser { get; set; }
         long CreatedByUserID { get; set; }
         string CssClasses { get; set; }
         DateTime DateCreated { get; set; }
         DateTime DateLastModified { get; set; }
         string DirectLink { get; set; }
-        bool EnableCaching { get; set; }        
+        bool EnableCaching { get; set; }
         DateTime? ExpiryDate { get; set; }
         string FeaturedLayout { get; set; }
         ICollection<MediaDetailField> Fields { get; set; }
@@ -65,7 +65,6 @@ namespace FrameworkLibrary
         long QuantityInStock { get; set; }
         string RecurringTimePeriod { get; set; }
         bool RedirectToFirstChild { get; set; }
-        IEnumerable<IMediaDetail> RelatedItems { get; }
         bool RenderInFooter { get; set; }
         ICollection<RoleMediaDetail> RolesMediaDetails { get; set; }
         string RssVirtualPath { get; }
@@ -85,6 +84,7 @@ namespace FrameworkLibrary
         List<ValidationError> ValidationErrors { get; }
         string VirtualPath { get; }
 
+        IEnumerable<IMediaDetail> GetRelatedItems(long mediaTypeId = 0);
         void ClearAutoCalculatedVirtualPathCache();
         string CalculatedVirtualPath();
         bool CanUserAccessSection(User user);

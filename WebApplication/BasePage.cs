@@ -204,7 +204,7 @@ namespace WebApplication
 
         public static string GetRedirectToMediaDetailUrl(long mediaTypeId, long selectedMediaId, long? parentMediaId = null, long historyVersion = 0)
         {
-            return "/Admin/Views/PageHandlers/Media/Detail.aspx?mediaTypeId=" + mediaTypeId.ToString() + "&selectedMediaId=" + selectedMediaId + "&parentMediaId=" + parentMediaId + "&historyVersion=" + historyVersion.ToString();
+            return $"/Admin/Views/PageHandlers/Media/Detail.aspx?mediaTypeId={mediaTypeId}&selectedMediaId={selectedMediaId}&parentMediaId={parentMediaId}&historyVersion={historyVersion}";
         }
 
         public static void RedirectToMediaDetail(IMediaDetail detail, long historyVersion = 0)

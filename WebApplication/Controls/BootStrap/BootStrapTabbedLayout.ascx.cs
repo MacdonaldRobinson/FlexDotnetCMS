@@ -29,7 +29,7 @@ namespace WebApplication.Controls.BootStrap
 
         public void SetParentItem(IMediaDetail mediaDetail)
         {
-            SetItems(MediaDetailsMapper.GetAllChildMediaDetails(mediaDetail.Media, BasePage.CurrentLanguage));
+            SetItems(MediaDetailsMapper.GetAllChildMediaDetails(mediaDetail.MediaID, BasePage.CurrentLanguage.ID));
         }
 
         public Mode RenderMode
@@ -38,7 +38,7 @@ namespace WebApplication.Controls.BootStrap
             {
                 if (value == Mode.CurrentChildItems)
                 {
-                    SetItems(MediaDetailsMapper.GetAllChildMediaDetails(BasePage.CurrentMedia, BasePage.CurrentLanguage));
+                    SetItems(MediaDetailsMapper.GetAllChildMediaDetails(BasePage.CurrentMedia.ID, BasePage.CurrentLanguage.ID));
                 }
             }
         }

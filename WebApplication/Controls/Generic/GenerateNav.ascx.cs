@@ -40,6 +40,9 @@ namespace WebApplication.Controls
 
         private void BindRootMedia(Media rootMedia)
         {
+            /*var items = MediaDetailsMapper.GetDataModel().MediaDetails.AsNoTracking().Where(i => i.Media.ParentMediaID == rootMedia.ID && i.HistoryVersionNumber == 0 && i.LanguageID == currentLanguage.ID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex); //rootMedia.ChildMedias.SelectMany(m => m.MediaDetails.Where(i => i.HistoryVersionNumber == 0 && (i.ShowInMenu || i.RenderInFooter) && !i.IsDeleted && i.PostPublishDate <= DateTime.Now && (i.PostExpiryDate == null || i.PostExpiryDate > DateTime.Now))).OrderBy(i => i.Media.OrderIndex);
+            Bind(items);*/
+
             var mediaDetail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.MediaID == rootMedia.ID && i.LanguageID == BasePage.CurrentLanguage.ID);
 
             if (mediaDetail.MediaType.Name == MediaTypeEnum.RootPage.ToString())
@@ -95,12 +98,12 @@ namespace WebApplication.Controls
 
             if (currentDepth == 0)
             {
-                ul.Attributes["class"] += " " + RootUlClasses;                
-            }         
+                ul.Attributes["class"] += " " + RootUlClasses;
+            }
             else
             {
                 ul.Attributes["class"] += " " + SubULClasses;
-            }       
+            }
 
             ul.Attributes["class"] = ul.Attributes["class"].Trim();
 
@@ -111,7 +114,7 @@ namespace WebApplication.Controls
         {
             if (e.Item.ItemType == ListViewItemType.DataItem)
             {
-                HyperLink Link = (HyperLink)e.Item.FindControl("Link");                
+                HyperLink Link = (HyperLink)e.Item.FindControl("Link");
                 ListView ChildList = (ListView)e.Item.FindControl("ChildList");
 
                 IMediaDetail details = (IMediaDetail)e.Item.DataItem;
@@ -144,7 +147,7 @@ namespace WebApplication.Controls
                         Link.CssClass = TopLevelAnchorClasses;
                     else
                         Link.CssClass = Link.CssClass + " "+TopLevelAnchorClasses;
-                }         
+                }
                 else
                 {
                     if (Link.CssClass == "")

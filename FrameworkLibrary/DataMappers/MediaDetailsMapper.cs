@@ -49,7 +49,7 @@ namespace FrameworkLibrary
 
         public static IEnumerable<Tag> GetUniqueTagsInChildren(IMediaDetail item)
         {
-            var childItems = GetAllChildMediaDetails(item.Media, item.Language);
+            var childItems = GetAllChildMediaDetails(item.MediaID, item.LanguageID);
             var tags = new List<Tag>();
 
             foreach (var childItem in childItems)
@@ -58,21 +58,33 @@ namespace FrameworkLibrary
             return tags.Distinct();
         }
 
-        public static IEnumerable<IMediaDetail> GetRelatedItems(IMediaDetail item)
+        public static IEnumerable<IMediaDetail> GetRelatedItems(IMediaDetail item, MediaType mediaType = null)
         {
-            var dictionary = new Dictionary<IMediaDetail, int>();
-
             if (item == null)
                 return new List<IMediaDetail>();
 
-            var tags = item.Media.MediaTags.Select(i => i.Tag);
-            var allActive = GetAllActiveMediaDetails();
+            var tagIds = item.Media.MediaTags.Select(k => k.TagID).ToList();
 
-            foreach (var mediaDetail in allActive)
+            IEnumerable<IMediaDetail> mediaDetails = new List<IMediaDetail>();
+
+            if (mediaType == null)
             {
-                foreach (var tag in mediaDetail.Media.MediaTags.Select(i => i.Tag))
+                mediaDetails = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryForMediaDetail == null && !i.IsDeleted && i.ShowInMenu && i.Media.MediaTags.Select(j => j.TagID).Any(j => tagIds.Contains(j))).OrderByDescending(i => i.DateCreated);
+            }
+            else
+            {
+                mediaDetails = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryForMediaDetail == null && i.MediaType.ID == mediaType.ID && !i.IsDeleted && i.ShowInMenu && i.Media.MediaTags.Select(j => j.TagID).Any(j => tagIds.Contains(j))).OrderByDescending(i => i.DateCreated);
+            }
+
+            return mediaDetails;
+
+            /*var dictionary = new Dictionary<IMediaDetail, int>();
+
+            foreach (var mediaDetail in mediaDetails)
+            {
+                foreach (var mediaDetailTag in mediaDetail.Media.MediaTags.Select(i => i.Tag))
                 {
-                    if (tags.Any(i => i.ID == tag.ID))
+                    if (tagIds.Any(i => i == mediaDetailTag.ID))
                     {
                         if (!dictionary.ContainsKey(mediaDetail))
                         {
@@ -88,7 +100,8 @@ namespace FrameworkLibrary
 
             var ordered = dictionary.OrderByDescending(i => i.Value);
 
-            return ordered.Select(i => i.Key);
+            return ordered.Select(i => i.Key);*/
+
         }
 
         /*private static IQueryable<MediaDetail> GetFromDB()
@@ -549,17 +562,37 @@ namespace FrameworkLibrary
             return GetAtleastOneByMedia(MediasMapper.GetByID(mediaId), language);
         }
 
-        public static IEnumerable<IMediaDetail> GetAllChildMediaDetails(Media media, Language language)
+       /* public static IEnumerable<IMediaDetail> GetAllChildMediaDetails(Media media, Language language)
         {
             if (language == null)
                 language = LanguagesMapper.GetDefaultLanguage();
 
+
             return BaseMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == media.ID && i.LanguageID == language.ID && i.HistoryForMediaDetailID == null && i.MediaType.ShowInSiteTree).OrderBy(i => i.Media.OrderIndex);
+        }*/
 
-            /*var allItems = MediasMapper.GetAllChildMedias(media);
+        public static IEnumerable<IMediaDetail> GetAllChildMediaDetails(long mediaId, long languageId)
+        {
+            if (languageId == 0)
+                languageId = LanguagesMapper.GetDefaultLanguage().ID;
 
-            return allItems.Where(item => item.ParentMediaID == media.ID).Select(item => GetByMedia(item, language)).Where(detail => detail != null);*/
+            var children = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryForMediaDetailID == null && i.Media.ParentMediaID == mediaId && i.LanguageID == languageId && i.MediaType.ShowInSiteTree);
+
+            if (children.Count() > 0)
+            {
+                return children.OrderBy(i => i.Media.OrderIndex);
+            }
+            else
+            {
+                return new List<IMediaDetail>();
+            }
         }
+
+
+        /*public static IEnumerable<IMediaDetail> GetAllChildMediaDetails(long mediaId, long languageId)
+        {
+            return BaseMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == mediaId && i.LanguageID == languageId && i.HistoryForMediaDetailID == null && i.MediaType.ShowInSiteTree).OrderBy(i => i.Media.OrderIndex);
+        }*/
 
         public static IMediaDetail CreateObject(long mediaTypeId, Media mediaItem, Media parentMedia)
         {

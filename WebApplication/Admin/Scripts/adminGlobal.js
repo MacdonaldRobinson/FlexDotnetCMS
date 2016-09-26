@@ -631,13 +631,13 @@ function BindTree() {
                         }
                     },
                     "Delete": {
-                        "label": "Delete",
+                        "label": "Mark As Deleted",
                         "action": function (obj) {
                             HandleContextMenuClick("Delete", obj.reference);
                         }
                     },
                     "UnDelete": {
-                        "label": "Un Delete",
+                        "label": "Restore",
                         "action": function (obj) {
                             HandleContextMenuClick("UnDelete", obj.reference);
                         }
@@ -718,7 +718,21 @@ function BindTree() {
 }
 $(document)
     .on('dnd_move.vakata', function (e, data) {
+        var target = $(data.event.target);
 
+        var dropZone = null;
+        var parentDropZone = target.parents("ul.dropZone");
+
+        if (target.hasClass("ul.dropZone"))
+        {
+            dropZone = target;
+        }
+        else if (parentDropZone.length > 0)
+        {
+            dropZone = parentDropZone;
+        }
+
+        return true;
     })
     .on('dnd_stop.vakata', function (e, data) {
         var elem = $(data.element);

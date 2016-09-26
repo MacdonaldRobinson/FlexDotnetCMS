@@ -14,6 +14,8 @@ namespace FrameworkLibrary
 
         static GeoLocationHelper()
         {
+            /* Database is updated monthly and can be downloaded from: http://dev.maxmind.com/geoip/geoip2/geolite2/ */
+
             var databasePath = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/"), "GeoLite2-City.mmdb");
             MaxMindDatabaseReader = new DatabaseReader(databasePath);
         }

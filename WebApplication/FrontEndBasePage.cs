@@ -198,8 +198,8 @@ namespace WebApplication
         {
             if ((FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail != null) && (Page.Master != null))
             {
-                Page.MetaDescription = FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.GetMetaDescription();
-                Page.MetaKeywords = FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.GetMetaKeywords();
+                Page.MetaDescription = StringHelper.StripExtraSpaces(StringHelper.StripHtmlTags(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.GetMetaDescription()));
+                Page.MetaKeywords = StringHelper.StripExtraSpaces(StringHelper.StripHtmlTags(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.GetMetaKeywords()));
                 Page.Title = FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.GetPageTitle();
             }
         }
@@ -369,7 +369,7 @@ namespace WebApplication
         {
             if (rssItems == null)
             {
-                rssItems = MediaDetailsMapper.GetRssItems(MediaDetailsMapper.FilterByCanRenderStatus(MediaDetailsMapper.FilterOutHiddenAndDeleted(MediaDetailsMapper.GetAllChildMediaDetails(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMedia, FrameworkSettings.CurrentFrameworkBaseMedia.CurrentLanguage)), true));
+                rssItems = MediaDetailsMapper.GetRssItems(MediaDetailsMapper.FilterByCanRenderStatus(MediaDetailsMapper.FilterOutHiddenAndDeleted(MediaDetailsMapper.GetAllChildMediaDetails(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMedia.ID, FrameworkSettings.CurrentFrameworkBaseMedia.CurrentLanguage.ID)), true));
             }
 
             if (rssLink == "")
@@ -387,7 +387,7 @@ namespace WebApplication
 
             if (rssDescription == "")
             {
-                rssDescription = FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.ShortDescription;
+                rssDescription = FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.GetMetaDescription();
             }
 
             Rss rss = new Rss(rssTitle, rssLink, rssDescription);

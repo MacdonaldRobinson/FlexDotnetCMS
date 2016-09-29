@@ -211,7 +211,7 @@ namespace FrameworkLibrary
         {
             get
             {
-                return MediaDetailsMapper.GetAllChildMediaDetails(MediaID, LanguageID);
+                return MediaDetailsMapper.GetAllChildMediaDetails(MediaID, LanguageID).Where(i=>!i.IsDeleted && i.IsPublished);
             }
         }
 

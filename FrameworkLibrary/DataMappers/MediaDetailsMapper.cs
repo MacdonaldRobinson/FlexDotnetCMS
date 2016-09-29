@@ -541,17 +541,17 @@ namespace FrameworkLibrary
         {
             //var details = FilterByLanguage(GetByMedia(media), language);
 
-            return media.MediaDetails.FirstOrDefault(i => i.HistoryVersionNumber == historyVersion && i.LanguageID == language.ID);
+            return media.MediaDetails.FirstOrDefault(i => i.HistoryVersionNumber == historyVersion && i.LanguageID == language.ID && i.MediaType.ShowInSiteTree);
         }
 
         public static IMediaDetail GetAtleastOneByMedia(Media media, Language language)
         {
-            var detail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.LanguageID == language.ID && i.MediaID == media.ID);
+            var detail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.LanguageID == language.ID && i.MediaID == media.ID && i.MediaType.ShowInSiteTree);
 
             if (detail == null)
             {
                 var defaultLanguage = LanguagesMapper.GetDefaultLanguage();
-                detail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.MediaID == media.ID && i.LanguageID == defaultLanguage.ID);
+                detail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.MediaID == media.ID && i.LanguageID == defaultLanguage.ID && i.MediaType.ShowInSiteTree);
             }
 
             return detail;
@@ -559,7 +559,7 @@ namespace FrameworkLibrary
 
         public static IEnumerable<IMediaDetail> GetAtleastOneChildByMedia(Media media, Language language)
         {
-            return media.ChildMedias.Select(i => GetAtleastOneByMedia(i, language));
+            return media.ChildMedias.Select(i => GetAtleastOneByMedia(i, language)).Where(i=>i != null);
         }
 
         public static IMediaDetail GetAtleastOneByMediaID(long mediaId, Language language)

@@ -59,15 +59,17 @@ namespace FrameworkLibrary
 
             var index = 0;
 
+            var multipleZeros = (siblings.Where(i => i.OrderIndex == 0).Count() > 1);
+
             foreach (var media in siblings)
             {
                 index++;
 
-                if (media.OrderIndex == index - 1)
+                if (media.OrderIndex == index && !multipleZeros)
                     continue;
 
                 var inContext = BaseMapper.GetObjectFromContext(media);
-                media.OrderIndex = index - 1;
+                media.OrderIndex = index-1;
                 returnObj = MediasMapper.Update(media);
             }
 
@@ -79,7 +81,7 @@ namespace FrameworkLibrary
 
         public List<Media> GetSiblings()
         {
-            var siblings = this.ParentMedia?.ChildMedias?.OrderBy(i => i.OrderIndex).ToList();
+            var siblings = this.ParentMedia?.ChildMedias?.Where(i=>i.LiveMediaDetail != null).OrderBy(i => i.OrderIndex).ToList();
 
             if (siblings == null)
                 return new List<Media>();

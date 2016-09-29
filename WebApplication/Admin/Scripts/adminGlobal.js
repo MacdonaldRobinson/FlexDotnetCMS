@@ -1,4 +1,6 @@
-﻿window.onerror = function (e) {
+﻿/// <reference path="../Views/MasterPages/WebService.asmx" />
+/// <reference path="../Views/MasterPages/WebService.asmx" />
+window.onerror = function (e) {
     if(e.indexOf("UpdatePanel") !=-1)
     {
         window.location.reload();
@@ -168,8 +170,8 @@ function getParameterByName(name) {
         return decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-function HandleContextMenuClick(action, target) {
-    var mediaDetailId = target.parent().attr("data-mediadetailid");
+function HandleContextMenuClick(action, target, node) {
+    var mediaDetailId = target.parent().attr("mediadetailid");
     var targetText = target.text();
 
     switch (action) {
@@ -198,8 +200,9 @@ function HandleContextMenuClick(action, target) {
                 dataType: "text",
                 success:
                 function (msg) {
+                    RefreshSiteTreeNodeById(node.parent);
                     //window.location.reload();
-                    RefreshSiteTreeViewAjaxPanel();
+                    //RefreshSiteTreeViewAjaxPanel();
                 },
                 error: function (xhr, status, error) {
                     //console.log(xhr);
@@ -215,7 +218,8 @@ function HandleContextMenuClick(action, target) {
                 dataType: "text",
                 success:
                 function (msg) {
-                    RefreshSiteTreeViewAjaxPanel();
+                    RefreshSiteTreeNodeById(node.parent);
+                    //RefreshSiteTreeViewAjaxPanel();
                     //window.location.reload();
                 },
                 error: function (xhr, status, error) {
@@ -232,7 +236,8 @@ function HandleContextMenuClick(action, target) {
                 success:
                 function (msg) {
                     //window.location.href = parentNode.get_navigateUrl();
-                    RefreshSiteTreeViewAjaxPanel();
+                    //RefreshSiteTreeViewAjaxPanel();
+                    RefreshSiteTreeNodeById(node.parent);
                 },
                 error: function (xhr, status, error) {
                     //console.log(xhr);
@@ -247,7 +252,8 @@ function HandleContextMenuClick(action, target) {
                 contentType: "application/json; charset=utf-8",
                 success:
                 function (msg) {
-                    RefreshSiteTreeViewAjaxPanel();
+                    //RefreshSiteTreeViewAjaxPanel();
+                    RefreshSiteTreeNodeById(node.parent);
                     window.location.href = msg.d.replace("~", "");
                 },
                 error: function (xhr, status, error) {
@@ -265,7 +271,8 @@ function HandleContextMenuClick(action, target) {
                 success:
                 function (msg) {
                     //window.location.reload();
-                    RefreshSiteTreeViewAjaxPanel();
+                    //RefreshSiteTreeViewAjaxPanel();
+                    RefreshSiteTreeNodeById(node.parent);
                 },
                 error: function (xhr, status, error) {
                     //console.log(xhr);
@@ -282,7 +289,8 @@ function HandleContextMenuClick(action, target) {
                 success:
                 function (msg) {
                     //window.location.reload();
-                    RefreshSiteTreeViewAjaxPanel();
+                    //RefreshSiteTreeViewAjaxPanel();
+                    RefreshSiteTreeNodeById(node.parent);
                 },
                 error: function (xhr, status, error) {
                     //console.log(xhr);
@@ -299,7 +307,8 @@ function HandleContextMenuClick(action, target) {
                 success:
                 function (msg) {
                     //window.location.reload();
-                    RefreshSiteTreeViewAjaxPanel();
+                    //RefreshSiteTreeViewAjaxPanel();
+                    RefreshSiteTreeNodeById(node.parent);
                 },
                 error: function (xhr, status, error) {
                     //console.log(xhr);
@@ -316,7 +325,8 @@ function HandleContextMenuClick(action, target) {
                 success:
                 function (msg) {
                     //window.location.reload();
-                    RefreshSiteTreeViewAjaxPanel();
+                    //RefreshSiteTreeViewAjaxPanel();
+                    RefreshSiteTreeNodeById(node.parent);
                 },
                 error: function (xhr, status, error) {
                     //console.log(xhr);
@@ -336,7 +346,8 @@ function HandleContextMenuClick(action, target) {
                     success:
                     function (msg) {
                         //window.location.reload();
-                        RefreshSiteTreeViewAjaxPanel();
+                        //RefreshSiteTreeViewAjaxPanel();
+                        RefreshSiteTreeNodeById(node.parent);
                     },
                     error: function (xhr, status, error) {
                         DisplayJsonException(xhr);
@@ -346,7 +357,7 @@ function HandleContextMenuClick(action, target) {
             break;
         case "ViewFrontEnd":
             //console.log(target.attr("data-frontendurl"));
-            window.open(target.attr("data-frontendurl"));
+            window.open(target.attr("frontendurl"));
             break;
     }
 }
@@ -607,7 +618,47 @@ $(function () {
 
 });
 
-function BindTree() {
+function RefreshSiteTreeParentNode()
+{
+    var selected = $("#SiteTree").jstree("get_selected");
+
+    if (selected.length > 0)
+    {
+        var selectedId = selected[0];
+        var parentId = $("#SiteTree").jstree(true).get_parent(selectedId);
+
+        RefreshSiteTreeNodeById(parentId);
+    }
+}
+
+function RefreshSiteTreeSelectedNode()
+{
+    var selected = $("#SiteTree").jstree("get_selected");
+
+    if (selected.length > 0) {
+        var selectedId = selected[0];
+
+        RefreshSiteTreeNodeById(selectedId);
+    }
+}
+
+function RefreshSiteTreeNodeById(nodeId)
+{
+    var jsTree = $('#SiteTree').jstree(true);
+
+    if (jsTree != false)
+        jsTree.refresh_node(nodeId);
+}
+
+function BindTree(filterText) {
+
+    var jsTree = $('#SiteTree').jstree(true);
+
+    if (jsTree != false)
+    {
+        jsTree.destroy();
+    }
+
     $('#SiteTree').jstree({
         'types': {
             'default': {
@@ -618,96 +669,109 @@ function BindTree() {
             // so that create works
             "check_callback": true,
             "multiple": false,
+            'data': {
+                'url': function (node) {
+                    if (filterText == "" || filterText == undefined || filterText == null)
+                        return node.id === '#' ? '/Admin/Views/MasterPages/WebService.asmx/GetRootNodes' : '/Admin/Views/MasterPages/WebService.asmx/GetChildNodes';
+                    else
+                        return '/Admin/Views/MasterPages/WebService.asmx/SearchForNodes?filterText=' + filterText;
+
+                },
+                'data': function (node) {
+                    return { 'id': node.id };
+                }
+            }
         },
         "plugins": ["contextmenu", "dnd", "types"],
         "contextmenu": {
-            "items": function ($node) {
+            "items": function (node) {
                 return {
                     "Create": {
                         "label": "Create Child",
                         "action": function (obj) {
                             //this.create(obj);
-                            HandleContextMenuClick("CreateChild", obj.reference);
+                            HandleContextMenuClick("CreateChild", obj.reference, node);
                         }
                     },
                     "Delete": {
                         "label": "Mark As Deleted",
                         "action": function (obj) {
-                            HandleContextMenuClick("Delete", obj.reference);
+                            HandleContextMenuClick("Delete", obj.reference, node);
                         }
                     },
                     "UnDelete": {
                         "label": "Restore",
                         "action": function (obj) {
-                            HandleContextMenuClick("UnDelete", obj.reference);
+                            HandleContextMenuClick("UnDelete", obj.reference, node);
                         }
                     },
                     "DeletePermanently": {
                         "label": "Delete Permanently",
                         "action": function (obj) {
-                            HandleContextMenuClick("DeletePermanently", obj.reference);
+                            HandleContextMenuClick("DeletePermanently", obj.reference, node);
                         }
                     },
                     "ShowInMenu": {
                         "label": "Show In Menu",
                         "action": function (obj) {
-                            HandleContextMenuClick("ShowInMenu", obj.reference);
+                            HandleContextMenuClick("ShowInMenu", obj.reference, node);
                         }
                     },
                     "HideFromMenu": {
                         "label": "Hide From Menu",
                         "action": function (obj) {
-                            HandleContextMenuClick("HideFromMenu", obj.reference);
+                            HandleContextMenuClick("HideFromMenu", obj.reference, node);
                         }
                     },
                     "MoveUp": {
                         "label": "Move Up",
                         "action": function (obj) {
-                            HandleContextMenuClick("MoveUp", obj.reference);
+                            HandleContextMenuClick("MoveUp", obj.reference, node);
                         }
                     },
                     "MoveDown": {
                         "label": "Move Down",
                         "action": function (obj) {
-                            HandleContextMenuClick("MoveDown", obj.reference);
+                            HandleContextMenuClick("MoveDown", obj.reference, node);
                         }
                     },
                     "ViewFrontEnd": {
                         "label": "View Front End",
                         "action": function (obj) {
-                            HandleContextMenuClick("ViewFrontEnd", obj.reference);
+                            HandleContextMenuClick("ViewFrontEnd", obj.reference, node);
                         }
                     },
                     "Duplicate": {
                         "label": "Duplicate",
                         "action": function (obj) {
-                            HandleContextMenuClick("Duplicate", obj.reference);
+                            HandleContextMenuClick("Duplicate", obj.reference, node);
                         }
                     },
                     "DuplicateAndEdit": {
                         "label": "Duplicate And Edit",
                         "action": function (obj) {
-                            HandleContextMenuClick("DuplicateAndEdit", obj.reference);
+                            HandleContextMenuClick("DuplicateAndEdit", obj.reference, node);
                         }
                     }
                 };
             }
         }
     }).on('move_node.jstree', function (e, data) {
-        var sourceMediaDetailId = data.node.data.mediadetailid;
+        var sourceMediaId = data.node.id;
         var parentNode = $("#" + data.parent);
-        var parentMediaDetailId = parentNode.attr("data-mediadetailid");
+        var parentMediaId = parentNode.attr("id");
         var newPosition = data.position;
 
         jQuery.ajax({
             type: "POST",
             url: "/Admin/Views/MasterPages/Webservice.asmx/HandleNodeDragDrop",
-            data: "{'sourceMediaDetailId':'" + sourceMediaDetailId + "', 'parentMediaDetailId':'" + parentMediaDetailId + "', 'newPosition':'" + newPosition + "'}",
+            data: "{'sourceMediaId':'" + sourceMediaId + "', 'parentMediaId':'" + parentMediaId + "', 'newPosition':'" + newPosition + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: "text",
             success:
             function (msg) {
-                RefreshSiteTreeViewAjaxPanel();
+                //RefreshSiteTreeViewAjaxPanel();
+                RefreshSiteTreeNodeById(parentMediaId);
             },
             error: function (xhr, status, error) {
             }
@@ -748,21 +812,23 @@ $(document)
 
         if (isDropZone) {
 
-            var li = "<li data-mediadetailid='" + elem.parent().attr("data-mediadetailid") + "'><a class='delete'>x</a><span class='text'>" + elem.text() + "</span></li>";
+            var li = "<li mediadetailid='" + elem.parent().attr("mediadetailid") + "'><a class='delete'>x</a><span class='text'>" + elem.text() + "</span></li>";
 
-            if (target.find("li[data-mediadetailid='" + elem.parent().attr("data-mediadetailid") + "']").length == 0) {
-                target.append("<li data-mediadetailid='" + elem.parent().attr("data-mediadetailid") + "'><a class='delete'>x</a><span class='text'>" + elem.text() + "</span></li>");
+            if (target.find("li[mediadetailid='" + elem.parent().attr("mediadetailid") + "']").length == 0) {
+                target.append("<li mediadetailid='" + elem.parent().attr("mediadetailid") + "'><a class='delete'>x</a><span class='text'>" + elem.text() + "</span></li>");
             }
         }
 
     });
 
 function pageLoad() {
+
+    RefreshSiteTreeNodeById($("#SiteTree").jstree("get_selected")[0]);
+
     BindDataTable();
     BindSortable();
     BindTabs();
     BindMultiFileUploaderImageLoadError();
-    BindTree();
 
     if (typeof (BindActiveTabs) == 'function')
         BindActiveTabs();
@@ -814,10 +880,18 @@ function BindSortable() {
     });
 }
 
+var controller = null, scene = null;
 function BindScrollMagic() {
-    var controller = new ScrollMagic.Controller();
 
-    var scene = new ScrollMagic.Scene({ offset: -45, triggerElement: "#SaveFields", triggerHook: 0 })
+    if (controller != null)
+        controller.destroy();
+
+    if (scene != null)
+        scene.destroy();
+
+    controller = new ScrollMagic.Controller();
+
+    scene = new ScrollMagic.Scene({ offset: -45, triggerElement: "#SaveFields", triggerHook: 0 })
                     .setPin("#SaveFields")
                     .addTo(controller);
 }
@@ -828,8 +902,19 @@ function ReloadPreviewPanel() {
 }
 
 function init() {
-
+    BindTree();
     BindSortable();
+    BindScrollMagic();
+
+    $("#Filter").on("keyup", function (e) {
+        var code = e.keyCode || e.which;
+
+        if (code == 13)
+        {
+            var text = $(this).val();
+            BindTree(text);
+        }
+    });
 
     $("ul.dropZone").each(function () {
         UpdateULFromValues(this);
@@ -868,7 +953,7 @@ function init() {
         $(json).each(function () {
             //console.log(this);
 
-            $(elem).append("<li data-mediadetailid='" + this.id + "'><a class='delete'>x</a><span class='text'>" + this.name + "</span></li>");
+            $(elem).append("<li mediadetailid='" + this.id + "'><a class='delete'>x</a><span class='text'>" + this.name + "</span></li>");
 
         });
     }
@@ -879,7 +964,7 @@ function init() {
         var arr = new Array();
 
         $(elem).children("li:not(.hidden)").each(function () {
-            var mediadetailid = $(this).attr("data-mediadetailid");
+            var mediadetailid = $(this).attr("mediadetailid");
             var name = $(this).children("span.text").text();
 
             if (name != "") {

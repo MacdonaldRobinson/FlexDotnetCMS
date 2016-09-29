@@ -881,7 +881,6 @@
     </Compile>
     <Compile Include="Admin\Views\MasterPages\WebService.asmx.cs">
       <DependentUpon>WebService.asmx</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Admin\Views\PageHandlers\GlossaryTerms\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

@@ -168,7 +168,7 @@ namespace FrameworkLibrary
             if (this.MasterPage != null)
                 return MasterPage;
 
-            if(this.MediaType.MasterPage == null)
+            if (this.MediaType.MasterPage == null)
                 return SettingsMapper.GetSettings().DefaultMasterPage;
 
             return this.MediaType.MasterPage;
@@ -396,7 +396,7 @@ namespace FrameworkLibrary
             if (!string.IsNullOrEmpty(contextMetaDescription))
                 return contextMetaDescription;
 
-            var description =  StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(MetaDescription));
+            var description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(MetaDescription));
 
             if (string.IsNullOrEmpty(description))
             {

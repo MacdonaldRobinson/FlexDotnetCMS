@@ -1,4 +1,5 @@
 ﻿using FrameworkLibrary;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +16,183 @@ namespace WebApplication.Admin.Views.MasterPages
 
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line.
     [System.Web.Script.Services.ScriptService]
-    public class WebService : System.Web.Services.WebService
+
+
+    public class JsTreeNode
     {
+        public string id { get; set; }
+        public string parent { get; set; }
+        public string text { get; set; }
+        public A_Attr a_attr { get; set; } = new A_Attr();
+        public Li_Attr li_attr { get; set; } = new Li_Attr();
+        public State state { get; set; } = new State();
+        public bool children { get; set; }
+    }
+
+    public class State
+    {
+        public bool opened { get; set; } = false;
+        public bool disabled { get; set; } = false;
+        public bool selected { get; set; } = false;
+    }
+
+    public class A_Attr
+    {
+        public string href { get; set; }
+
+        [JsonProperty(PropertyName = "class")]
+        public string _class { get; set; } = "";
+        public string frontendurl { get; set; }
+    }
+
+    public class Li_Attr
+    {
+        [JsonProperty(PropertyName = "class")]
+        public string _class { get; set; } = "";
+        public string mediaDetailId { get; set; }
+    }
+
+    public class WebService : WebApplication.Services.BaseService
+    {
+        private void UpdateTreeNode(JsTreeNode node, IMediaDetail detail)
+        {
+            if (detail == null)
+                return;
+
+            node.id = detail.MediaID.ToString();
+            node.parent = (detail.Media.ParentMediaID == null) ? "#" : detail.Media.ParentMediaID.ToString();
+            node.text = detail.SectionTitle;
+
+            var childMediaDetails = MediaDetailsMapper.GetAtleastOneChildByMedia(detail.Media, AdminBasePage.CurrentLanguage);
+            node.children = (childMediaDetails.Count() > 0);
+
+            node.text = detail.SectionTitle.ToString();
+            //node.Attributes.Add("FrontEndUrl", detail.AbsoluteUrl);
+
+            var nodeText = "";
+
+            if (detail.LanguageID != AdminBasePage.CurrentLanguage.ID)
+            {
+                nodeText = detail.LinkTitle + " - " + LanguagesMapper.GetByID(detail.Language.ID).Name;
+                node.li_attr._class = "doesNotExistInLanguage";
+            }
+            else
+            {
+                nodeText = $"{detail.LinkTitle} <small>({detail.MediaID})</small>";
+            }
+
+            if (detail.IsDeleted)
+            {
+                node.li_attr._class += " isDeleted";
+            }
+
+            if ((!detail.ShowInMenu) && (!detail.RenderInFooter))
+                node.li_attr._class += " isHidden";
+
+            if ((!detail.CanRender) || (!detail.IsPublished))
+                node.li_attr._class += " unPublished";
+
+            node.text = nodeText;
+
+            //node.LinkAttributes.Add("data-frontendurl", detail.Media.PermaLink);
+            node.a_attr.frontendurl = detail.AbsoluteUrl;
+            node.li_attr.mediaDetailId = detail.ID.ToString();
+
+            node.a_attr.href = URIHelper.ConvertToAbsUrl(WebApplication.BasePage.GetRedirectToMediaDetailUrl(detail.MediaTypeID, detail.MediaID));
+
+            if (detail?.MediaType?.Name == "Website" || detail?.MediaType?.Name == "RootPage")
+            {
+                node.state.opened = true;
+            }
+
+            IEnumerable<Media> parentItems = new List<Media>();
+
+            if (AdminBasePage.SelectedMedia != null)
+            {
+                parentItems = MediaDetailsMapper.GetAllParentMedias(AdminBasePage.SelectedMedia);
+
+                if (parentItems.Any(i => i.ID == detail.MediaID))
+                {
+                    node.state.opened = true;
+                }
+            }
+
+            if (detail.MediaID == AdminBasePage.SelectedMedia?.ID)
+            {
+                node.state.opened = true;
+                node.state.selected = true;
+            }
+        }
+        private JsTreeNode GetJsTreeNode(IMediaDetail mediaDetail)
+        {
+            var jsTreeNode = new JsTreeNode();
+            UpdateTreeNode(jsTreeNode, mediaDetail);
+
+            return jsTreeNode;
+        }
+
+        [WebMethod(EnableSession = true)]
+        public void GetRootNodes()
+        {
+            var rootNode = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetail == null && i.Media.ParentMedia == null);
+            WriteJSON(StringHelper.ObjectToJson(GetJsTreeNode(rootNode)));
+        }
+
+        private bool SearchWithinMediaDetail(IMediaDetail mediaDetail, string filterText)
+        {
+            if (mediaDetail == null)
+                return false;
+
+            if (mediaDetail.HistoryVersionNumber == 0 && mediaDetail.MediaID.ToString() == filterText || mediaDetail.LinkTitle.ToLower().Trim().Contains(filterText) || mediaDetail.SectionTitle.ToLower().Trim().Contains(filterText) || mediaDetail.MainContent.ToLower().Trim().Contains(filterText) || mediaDetail.MainLayout.ToLower().Trim().Contains(filterText) || mediaDetail.Fields.Any(j => j.FieldValue.Contains(filterText)))
+                return true;
+
+            foreach (var fieldAssociation in mediaDetail.Fields.SelectMany(i => i.FieldAssociations))
+            {
+                if (fieldAssociation.MediaDetail.ID == mediaDetail.ID)
+                    continue;
+
+                if (SearchWithinMediaDetail(fieldAssociation.MediaDetail, filterText))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        [WebMethod(EnableSession = true)]
+        public void SearchForNodes(string filterText)
+        {
+            filterText = filterText.ToLower().Trim();
+            var foundItems = MediasMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0 && i.LanguageID == AdminBasePage.CurrentLanguage.ID).ToList().Where(i=> SearchWithinMediaDetail(i, filterText));
+
+            var jsTreeNodes = foundItems.Select(i => GetJsTreeNode(i));
+
+            var newJsTreeNodes = new List<JsTreeNode>();
+            foreach (var node in jsTreeNodes)
+            {
+                node.parent = "#";
+                node.state.opened = false;
+                node.state.selected = false;
+                node.children = false;
+
+                newJsTreeNodes.Add(node);
+
+            }
+
+            WriteJSON(StringHelper.ObjectToJson(newJsTreeNodes));
+        }
+
+        [WebMethod(EnableSession = true)]
+        public void GetChildNodes(long id)
+        {
+            var rootNode = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetail == null && i.MediaID == id);
+            var childMediaDetails = MediaDetailsMapper.GetAtleastOneChildByMedia(rootNode.Media, AdminBasePage.CurrentLanguage);
+
+            var jsTreeNodes = childMediaDetails.Select(i => GetJsTreeNode(i));
+            WriteJSON(StringHelper.ObjectToJson(jsTreeNodes));
+        }
+
         [WebMethod(EnableSession = true)]
         public void CreateChild(long id)
         {
@@ -105,10 +281,10 @@ namespace WebApplication.Admin.Views.MasterPages
         }
 
         [WebMethod(EnableSession = true)]
-        public string HandleNodeDragDrop(long sourceMediaDetailId, long parentMediaDetailId, int newPosition)
+        public string HandleNodeDragDrop(long sourceMediaId, long parentMediaId, int newPosition)
         {
-            var sourceMedia = BaseMapper.GetObjectFromContext(MediaDetailsMapper.GetByID(sourceMediaDetailId).Media);
-            var parentMedia = BaseMapper.GetObjectFromContext(MediaDetailsMapper.GetByID(parentMediaDetailId).Media);
+            var sourceMedia = BaseMapper.GetObjectFromContext(MediasMapper.GetByID(sourceMediaId));
+            var parentMedia = BaseMapper.GetObjectFromContext(MediasMapper.GetByID(parentMediaId));
 
             var oldParentId = sourceMedia.ParentMediaID;
 

@@ -20,7 +20,6 @@
 
             function RefreshSiteTreeViewAjaxPanel() {
                 //window.location.reload();
-                __doPostBack('<%= SiteTree.ClientID %>', '');
             }
         </script>
 
@@ -71,18 +70,9 @@
                             <div id="SiteTreeWrapper">
                                 <div>
                                     <asp:HyperLink ID="CreateItem" Text="Create Item" runat="server"  NavigateUrl="/Admin/Views/PageHandlers/Media/Create.aspx" Visible="false"/>
-                                </div>                                
-                                <asp:UpdatePanel runat="server">
-                                    <ContentTemplate>
-                                        <asp:TextBox runat="server" ID="Filter" AutoPostBack="True" placeholder="Search ..." Width="90%"></asp:TextBox>
-
-                                        <div id="SiteTree">
-                                            <Site:CustomTreeView runat="server" ID="SiteTree">
-                                            </Site:CustomTreeView>
-                                        </div>
-
-                                    </ContentTemplate>
-                                </asp:UpdatePanel>
+                                </div>
+                                <asp:TextBox runat="server" ID="Filter" placeholder="Search ..." Width="90%" ClientIDMode="Static"></asp:TextBox>
+                                <div id="SiteTree"></div>
                             </div>
                         </div>
                     </div>

@@ -342,6 +342,11 @@ namespace WebApplication
                 }
             }
 
+            /*if(AppSettings.ForceSSL)
+            {
+                html = html.Replace("http:", "https:");
+            }*/
+
             writer.Write(html);
         }
 

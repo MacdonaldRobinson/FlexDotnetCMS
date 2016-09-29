@@ -39,8 +39,19 @@
         $('#<%= UpdateProgress1.ClientID%>').hide();
     });
 
-    $(document).ajaxStart(function () {
-        $('#<%= UpdateProgress1.ClientID%>').show();
+    var hasRun = false;
+
+    $(document).click(function () {
+        hasRun = false
+    });
+
+    $(document).ajaxStart(function (e) {
+        if (!hasRun)
+        {
+            $('#<%= UpdateProgress1.ClientID%>').show();
+        }
+
+        hasRun = true;
     });
 </script>
 

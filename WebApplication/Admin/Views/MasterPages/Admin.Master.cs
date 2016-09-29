@@ -24,7 +24,7 @@ namespace WebApplication.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            BindSiteTreeView();
+            //BindSiteTreeView();
         }
 
         private void InitPage()
@@ -42,7 +42,7 @@ namespace WebApplication.Admin
                 GlossaryTermsNavItem.Visible = true;
             }
 
-            var allNodes = SiteTree.GetAllNodes();
+            /*var allNodes = SiteTree.GetAllNodes();
             var nodes = allNodes.Where(i => (i.Value == currentWebsite.ID.ToString() || i.Value == currentWebsite.Media.ParentMediaID.ToString()));
 
             foreach (var node in nodes)
@@ -60,7 +60,7 @@ namespace WebApplication.Admin
                     node.ExpandParents();
                     node.Select();
                 }
-            }
+            }*/
 
             if (numberOfActiveLanguages < 2)
                 LanguageSwitcher.Visible = false;
@@ -68,7 +68,7 @@ namespace WebApplication.Admin
                 LanguageSwitcher.Visible = true;
         }
 
-        private void BindTree(IMediaDetail mediaDetail, CustomTreeNode parentNode, bool renderChildren = true)
+        /*private void BindTree(IMediaDetail mediaDetail, CustomTreeNode parentNode, bool renderChildren = true)
         {
             CustomTreeNode rootNode = new CustomTreeNode(mediaDetail.SectionTitle, mediaDetail.ID.ToString(), mediaDetail.MediaID);
             UpdateTreeNode(rootNode, mediaDetail);
@@ -92,7 +92,7 @@ namespace WebApplication.Admin
                     }
                 }
             }
-        }
+        }*/
 
         private IEnumerable<Media> GetAllMedias()
         {
@@ -122,7 +122,7 @@ namespace WebApplication.Admin
             return false;
         }
 
-        public void BindSiteTreeView()
+        /*public void BindSiteTreeView()
         {
             if (Filter.Text == "")
             {
@@ -152,14 +152,14 @@ namespace WebApplication.Admin
                     BindTree(foundItem, null, false);
                 }
             }
-        }
+        }*/
 
         protected void LoginStatus_OnLoggedOut(object sender, EventArgs e)
         {
             this.BasePage.CheckInAll();
         }
 
-        private void UpdateTreeNode(CustomTreeNode node, IMediaDetail detail)
+        /*private void UpdateTreeNode(CustomTreeNode node, IMediaDetail detail)
         {
             if (detail == null)
                 return;
@@ -208,6 +208,6 @@ namespace WebApplication.Admin
             node.LIAttributes.Add("data-mediaDetailId", detail.ID.ToString());
 
             node.NavigateUrl = URIHelper.ConvertToAbsUrl(WebApplication.BasePage.GetRedirectToMediaDetailUrl(detail.MediaTypeID, detail.MediaID));
-        }
+        }*/
     }
 }

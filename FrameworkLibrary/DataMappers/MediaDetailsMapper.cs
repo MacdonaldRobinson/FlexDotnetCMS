@@ -557,6 +557,11 @@ namespace FrameworkLibrary
             return detail;
         }
 
+        public static IEnumerable<IMediaDetail> GetAtleastOneChildByMedia(Media media, Language language)
+        {
+            return media.ChildMedias.Select(i => GetAtleastOneByMedia(i, language));
+        }
+
         public static IMediaDetail GetAtleastOneByMediaID(long mediaId, Language language)
         {
             return GetAtleastOneByMedia(MediasMapper.GetByID(mediaId), language);
@@ -708,6 +713,7 @@ namespace FrameworkLibrary
 
         public static IEnumerable<IMediaDetail> GetAllParentMediaDetails(IMediaDetail item, Language language)
         {
+            //return GetAllParentMedias(item.Media).Select(i => i.LiveMediaDetail);
             var items = new List<IMediaDetail>();
             var absoluteRoot = MediasMapper.GetAbsoluteRoot();
 
@@ -738,6 +744,42 @@ namespace FrameworkLibrary
 
                 if (item.Media.ID != absoluteRoot.ID)
                     items.Add(item);
+            }
+
+            items.Reverse();
+
+            return items;
+        }
+
+        public static IEnumerable<Media> GetAllParentMedias(Media item)
+        {
+            var items = new List<Media>();
+            var absoluteRoot = MediasMapper.GetAbsoluteRoot();
+
+            if ((item.ParentMediaID != null) && (item.ParentMediaID != absoluteRoot.ID))
+                items.Add(item);
+
+            var parentMedia = item.ParentMedia;
+
+            while (parentMedia != null)
+            {
+                if (item == null)
+                    break;
+
+                if (item.ParentMediaID == null)
+                    break;
+
+                if (parentMedia == null)
+                    parentMedia = BaseMapper.GetDataModel().AllMedia.FirstOrDefault(i => i.ID == (long)item.ParentMediaID);
+                //parentMedia = MediasMapper.GetByID((long)item.Media.ParentMediaID);
+
+                if (parentMedia == null)
+                    break;
+
+                if (item.ID != absoluteRoot.ID)
+                    items.Add(parentMedia);
+
+                parentMedia = parentMedia.ParentMedia;
             }
 
             items.Reverse();

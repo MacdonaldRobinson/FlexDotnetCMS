@@ -83,7 +83,6 @@ namespace FrameworkLibrary
         string UseSummaryLayout { get; }
         List<ValidationError> ValidationErrors { get; }
         string VirtualPath { get; }
-
         IEnumerable<IMediaDetail> GetRelatedItems(long mediaTypeId = 0);
         void ClearAutoCalculatedVirtualPathCache();
         string CalculatedVirtualPath();

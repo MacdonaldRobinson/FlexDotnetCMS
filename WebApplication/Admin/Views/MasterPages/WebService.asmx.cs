@@ -187,7 +187,7 @@ namespace WebApplication.Admin.Views.MasterPages
         public void GetChildNodes(long id)
         {
             var rootNode = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetail == null && i.MediaID == id);
-            var childMediaDetails = MediaDetailsMapper.GetAtleastOneChildByMedia(rootNode.Media, AdminBasePage.CurrentLanguage);
+            var childMediaDetails = MediaDetailsMapper.GetAtleastOneChildByMedia(rootNode.Media, AdminBasePage.CurrentLanguage).Where(i=>i.MediaType.ShowInSiteTree).OrderBy(i=>i.Media.OrderIndex);
 
             var jsTreeNodes = childMediaDetails.Select(i => GetJsTreeNode(i));
             WriteJSON(StringHelper.ObjectToJson(jsTreeNodes));

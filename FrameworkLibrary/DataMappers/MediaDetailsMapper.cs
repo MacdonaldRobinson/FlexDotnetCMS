@@ -541,17 +541,17 @@ namespace FrameworkLibrary
         {
             //var details = FilterByLanguage(GetByMedia(media), language);
 
-            return media.MediaDetails.FirstOrDefault(i => i.HistoryVersionNumber == historyVersion && i.LanguageID == language.ID && i.MediaType.ShowInSiteTree);
+            return media.MediaDetails.FirstOrDefault(i => i.HistoryVersionNumber == historyVersion && i.LanguageID == language.ID);
         }
 
         public static IMediaDetail GetAtleastOneByMedia(Media media, Language language)
         {
-            var detail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.LanguageID == language.ID && i.MediaID == media.ID && i.MediaType.ShowInSiteTree);
+            var detail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.LanguageID == language.ID && i.MediaID == media.ID);
 
             if (detail == null)
             {
                 var defaultLanguage = LanguagesMapper.GetDefaultLanguage();
-                detail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.MediaID == media.ID && i.LanguageID == defaultLanguage.ID && i.MediaType.ShowInSiteTree);
+                detail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.MediaID == media.ID && i.LanguageID == defaultLanguage.ID);
             }
 
             return detail;

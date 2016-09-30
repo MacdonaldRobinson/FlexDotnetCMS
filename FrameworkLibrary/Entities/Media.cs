@@ -10,7 +10,7 @@ namespace FrameworkLibrary
             get
             {
                 var currentLanguage = FrameworkSettings.GetCurrentLanguage();
-                return this.MediaDetails.SingleOrDefault(i => i.HistoryForMediaDetail == null && i.LanguageID == currentLanguage.ID);
+                return this.MediaDetails.SingleOrDefault(i => i.HistoryForMediaDetail == null && i.LanguageID == currentLanguage.ID && i.MediaType.ShowInSiteTree);
             }
         }
 
@@ -59,18 +59,19 @@ namespace FrameworkLibrary
 
             var index = 0;
 
-            var multipleZeros = (siblings.Where(i => i.OrderIndex == 0).Count() > 1);
-
             foreach (var media in siblings)
             {
-                index++;
-
-                if (media.OrderIndex == index && !multipleZeros)
+                if (media.OrderIndex == index)
+                {
+                    index++;
                     continue;
+                }
 
                 var inContext = BaseMapper.GetObjectFromContext(media);
-                media.OrderIndex = index-1;
+                media.OrderIndex = index;
                 returnObj = MediasMapper.Update(media);
+
+                index++;
             }
 
             MediasMapper.ClearCache();

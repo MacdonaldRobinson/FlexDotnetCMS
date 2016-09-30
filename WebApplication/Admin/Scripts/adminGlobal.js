@@ -494,11 +494,7 @@ function BindTabs()
 
 $(document).ready(function () {
 
-    var controller = new ScrollMagic.Controller();
-
-    var scene = new ScrollMagic.Scene({ offset: -45, triggerElement: ".SavePanel", triggerHook: 0 })
-                    .setPin(".SavePanel")
-                    .addTo(controller);
+    BindScrollMagic();
 
     $('ul.sf-menu').superfish();
     BindTabs();
@@ -527,7 +523,7 @@ $(document).ready(function () {
         relative_urls: false,
         convert_urls: false,
         remove_script_host: false,
-        extended_valid_elements: 'span',
+        extended_valid_elements: 'span[*]',
         setup: function (editor) {
             editor.on('change', function () {
                 editor.save();
@@ -880,20 +876,30 @@ function BindSortable() {
     });
 }
 
-var controller = null, scene = null;
+var controller = null, scenes = new Array();
 function BindScrollMagic() {
 
     if (controller != null)
         controller.destroy();
 
-    if (scene != null)
-        scene.destroy();
+    if (scenes != null)
+    {
+        $(scenes).each(function () {
+            this.destroy();
+        });
+
+        scenes = new Array();
+    }
 
     controller = new ScrollMagic.Controller();
 
-    scene = new ScrollMagic.Scene({ offset: -45, triggerElement: "#SaveFields", triggerHook: 0 })
+    scenes.push(new ScrollMagic.Scene({ offset: -45, triggerElement: "#SaveFields", triggerHook: 0 })
                     .setPin("#SaveFields")
-                    .addTo(controller);
+                    .addTo(controller));
+
+    scenes.push(new ScrollMagic.Scene({ offset: -45, triggerElement: ".SavePanel", triggerHook: 0 })
+                    .setPin(".SavePanel")
+                    .addTo(controller));
 }
 
 function ReloadPreviewPanel() {

@@ -63,7 +63,7 @@ namespace WebApplication.Admin.Views.MasterPages
             node.parent = (detail.Media.ParentMediaID == null) ? "#" : detail.Media.ParentMediaID.ToString();
             node.text = detail.SectionTitle;
 
-            var childMediaDetails = MediaDetailsMapper.GetAtleastOneChildByMedia(detail.Media, AdminBasePage.CurrentLanguage);
+            var childMediaDetails = MediaDetailsMapper.GetAtleastOneChildByMedia(detail.Media, AdminBasePage.CurrentLanguage).Where(i => i.MediaType.ShowInSiteTree);
             node.children = (childMediaDetails.Count() > 0);
 
             node.text = detail.SectionTitle.ToString();

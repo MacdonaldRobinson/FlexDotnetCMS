@@ -8,6 +8,41 @@
         var baseUrl = '<%= URIHelper.BaseUrl %>';
 
         $(document).ready(function(){
+
+            $(window).bind('keydown', function(event) {
+                if (event.ctrlKey || event.metaKey) {
+                    switch (String.fromCharCode(event.which).toLowerCase()) {
+                        case 's':
+                            $('.SavePageButton')[0].click();
+                            event.preventDefault();
+
+                        break;
+                    }
+                }
+            });
+
+            /*$(window).keypress(function(event) {
+
+                if (!(event.which == 115 && event.ctrlKey) && !(event.which == 19)) return true;
+
+                $('.SavePageButton')[0].click();
+
+                event.preventDefault();
+                return false;
+            });*/
+
+            $(document).on('click', '.SavePageButton', function(event){
+                var saveFieldButton = $(".SaveFieldButton");
+                var text = saveFieldButton.text();
+
+                if(text.indexOf("Save") != -1)
+                {
+                    saveFieldButton[0].click();
+                }
+
+                return true;
+            });
+
             $(document).on('click', 'a.preview', function(event){
                 return UpdatePreview(event);
             });
@@ -60,16 +95,16 @@
             <div class="clear"></div>
 
             <asp:Panel ID="SavePanel" runat="server" Visible="false" CssClass="SavePanel buttons">
-                <asp:UpdatePanel runat="server">
+                <asp:UpdatePanel runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
-                        <asp:LinkButton ID="Save" runat="server" OnClick="Save_OnClick" Text="Save" />
+                        <asp:LinkButton ID="Save" runat="server" OnClick="Save_OnClick" Text="Save" CssClass="SavePageButton"/>
                         <asp:LinkButton ID="SaveAsDraft" runat="server" OnClick="Save_OnClick" Text="Save As Draft" CommandArgument="SaveAsDraft" />
                         <asp:LinkButton ID="LoadLatestDraft" runat="server" OnClick="LoadLatestDraft_OnClick" Text="Load Latest Draft" Visible="false" />
                         <asp:LinkButton ID="SaveAndPublish" runat="server" OnClick="SaveAndPublish_OnClick" Text="Save And Publish" CommandArgument="SaveAndPublish" Visible="false" />
                         <asp:LinkButton ID="PublishNow" runat="server" OnClick="PublishNow_OnClick" Visible="false" Text="Publish Now" />
                         <asp:LinkButton runat="server" ID="PublishLive" OnClick="PublishLive_OnClick" Text="Publish LIVE" Visible="false" />
                         <asp:HyperLink ID="EditMediaType" runat="server" Text="Edit Media Type" Visible="false" CssClass="colorbox iframe" />
-                    </ContentTemplate>                
+                    </ContentTemplate>
                 </asp:UpdatePanel>
             </asp:Panel>
 

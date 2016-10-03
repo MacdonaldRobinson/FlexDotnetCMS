@@ -21,7 +21,7 @@
             BindReOrder();
             BindScrollMagic();
             initAceEditors();
-            
+
             if (event._postBackSettings.asyncTarget.indexOf("$MediaFieldsEditor") !=-1)
             {
                 ReloadPreviewPanel();
@@ -68,23 +68,11 @@
         });
     }
 
-    function SaveFieldButtonClick()
-    {
-        console.log($("<%= Update.ClientID %>").click());
-    }
-
 </script>
 
 <style type="text/css">
     fieldset {
         position: relative;
-    }
-
-    #SaveFields {
-        right: 0;
-        position: relative;
-        z-index:100;
-        background-color:#fff;
     }
 </style>
 
@@ -113,11 +101,13 @@
         </fieldset>
         <asp:Panel runat="server">
             <fieldset>
-                <div id="SaveFields" class="buttons">
-                    <asp:LinkButton Text="Save" runat="server" ID="Update" OnClick="Update_Click" />
-                    <asp:LinkButton Text="Cancel" runat="server" ID="Cancel" OnClick="Cancel_Click" />
+                <div style="margin-bottom:40px;">
+                    <div id="SaveFields" class="buttons">
+                        <asp:LinkButton Text="Save" runat="server" ID="Update" OnClick="Update_Click" CssClass="SaveFieldButton" />
+                        <asp:LinkButton Text="Cancel" runat="server" ID="Cancel" OnClick="Cancel_Click" />
+                    </div>
+                    <div class="clear"></div>
                 </div>
-                <div class="clear"></div>
                 <h2>
                     <asp:Literal ID="FieldDetailsTitle" runat="server" /></h2>
                 <asp:HiddenField ID="FieldID" runat="server" Value="0" />

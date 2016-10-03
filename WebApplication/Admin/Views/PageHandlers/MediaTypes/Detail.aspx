@@ -4,7 +4,31 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <script>
+        $(document).ready(function () {
+            $(window).bind('keydown', function (event) {
+                if (event.ctrlKey || event.metaKey) {
+                    switch (String.fromCharCode(event.which).toLowerCase()) {
+                        case 's':
+                            $('.SavePageButton')[0].click();
+                            event.preventDefault();
+                            break;
+                    }
+                }
+            });
 
+            $(document).on('click', '.SavePageButton', function (event) {
+                var saveFieldButton = $(".SaveFieldButton");
+                var text = saveFieldButton.text();
+
+                if (text.indexOf("Save") != -1) {
+                    saveFieldButton[0].click();
+                }
+
+                return true;
+            });
+        });
+    </script>
     <h1>
         <asp:Literal ID="SectionTitle" runat="server"></asp:Literal></h1>
 
@@ -113,6 +137,6 @@
         </div>
     </div>
     <div class="buttons">
-        <asp:LinkButton ID="Save" runat="server" OnClick="Save_OnClick">Save</asp:LinkButton>
+        <asp:LinkButton ID="Save" runat="server" OnClick="Save_OnClick" CssClass="SavePageButton">Save</asp:LinkButton>
     </div>
 </asp:Content>

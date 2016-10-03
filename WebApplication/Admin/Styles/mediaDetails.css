@@ -89,6 +89,13 @@
     background-color: #fff;
 }
 
+#SaveFields {
+    width:240px;
+    left:0;
+    position: absolute;
+    background-color: #fff;
+}
+
 #mainArea {
     overflow:hidden;
 }

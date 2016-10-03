@@ -494,7 +494,7 @@ function BindTabs()
 
 $(document).ready(function () {
 
-    BindScrollMagic();
+    //BindScrollMagic();
 
     $('ul.sf-menu').superfish();
     BindTabs();
@@ -524,10 +524,24 @@ $(document).ready(function () {
         convert_urls: false,
         remove_script_host: false,
         extended_valid_elements: 'span[*]',
+        custom_shortcuts: false,
         setup: function (editor) {
             editor.on('change', function () {
                 editor.save();
             });
+
+            editor.on('keydown', function (event) {
+                if (event.ctrlKey || event.metaKey) {
+                    switch (String.fromCharCode(event.which).toLowerCase()) {
+                        case 's':
+                            $('.SavePageButton')[0].click();
+                            event.preventDefault();
+
+                            break;
+                    }
+                }
+            });
+
         }
     });
 });
@@ -820,7 +834,7 @@ $(document)
 function pageLoad() {
 
     RefreshSiteTreeNodeById($("#SiteTree").jstree("get_selected")[0]);
-
+    BindScrollMagic();
     BindDataTable();
     BindSortable();
     BindTabs();
@@ -876,30 +890,45 @@ function BindSortable() {
     });
 }
 
-var controller = null, scenes = new Array();
-function BindScrollMagic() {
+function BindScrollMagic()
+{
+    ScrollMagicSetup(".SavePanel");
+    ScrollMagicSetup("#SaveFields");
+}
 
-    if (controller != null)
-        controller.destroy();
+var controllerScenesArray = [];
+function ScrollMagicSetup(selector)
+{
+    var controller = null;
+    var scene = null;
+    var myObject = {};
+    var newEntry = true;
 
-    if (scenes != null)
+    $(controllerScenesArray).each(function () {
+        if (this.selector == selector)
+        {
+            myObject = this;
+
+            myObject.controller.destroy();
+            myObject.scene.destroy();
+
+            newEntry = false;
+
+            return;
+        }
+    });
+
+    myObject.selector = selector;
+    myObject.controller = controller = new ScrollMagic.Controller();
+    myObject.scene = new ScrollMagic.Scene({ offset: -45, triggerElement: selector, triggerHook: 0 })
+                        .setPin(selector)
+                        .addTo(controller);
+
+
+    if (newEntry)
     {
-        $(scenes).each(function () {
-            this.destroy();
-        });
-
-        scenes = new Array();
+        controllerScenesArray.push(myObject);
     }
-
-    controller = new ScrollMagic.Controller();
-
-    scenes.push(new ScrollMagic.Scene({ offset: -45, triggerElement: "#SaveFields", triggerHook: 0 })
-                    .setPin("#SaveFields")
-                    .addTo(controller));
-
-    scenes.push(new ScrollMagic.Scene({ offset: -45, triggerElement: ".SavePanel", triggerHook: 0 })
-                    .setPin(".SavePanel")
-                    .addTo(controller));
 }
 
 function ReloadPreviewPanel() {
@@ -910,7 +939,7 @@ function ReloadPreviewPanel() {
 function init() {
     BindTree();
     BindSortable();
-    BindScrollMagic();
+    //BindScrollMagic();
 
     $("#Filter").on("keyup", function (e) {
         var code = e.keyCode || e.which;

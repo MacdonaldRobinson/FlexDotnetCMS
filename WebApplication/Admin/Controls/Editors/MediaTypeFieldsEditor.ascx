@@ -10,7 +10,7 @@
 
 <asp:UpdatePanel runat="server">
     <ContentTemplate>
-        <fieldset>           
+        <fieldset>
             <legend>Currently Created Fields</legend>
             <asp:GridView runat="server" ID="ItemList" AutoGenerateColumns="false" AllowPaging="true" OnPageIndexChanging="ItemList_PageIndexChanging">
                 <Columns>
@@ -78,7 +78,7 @@
                     </div>
                 </div>
                 <div class="buttons">
-                    <asp:LinkButton Text="Save" runat="server" ID="Update" OnClick="Update_Click" />
+                    <asp:LinkButton Text="Save" runat="server" ID="Update" OnClick="Update_Click" CssClass="SaveFieldButton"/>
                     <asp:LinkButton Text="Cancel" runat="server" ID="Cancel" OnClick="Cancel_Click" />
                 </div>
             </fieldset>

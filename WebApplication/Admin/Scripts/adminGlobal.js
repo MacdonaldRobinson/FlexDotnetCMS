@@ -509,7 +509,7 @@ $(document).ready(function () {
     tfm_path = "/Scripts/tinyfilemanager.net";
     tinymce.init({
         selector: ".editor",
-        content_css: "/FrontEnd/stylesheets/style-min.css, /Admin/Styles/editor.css",
+        content_css: "/Views/MasterPages/SiteTemplates/css/style.css, /Admin/Styles/editor.css",
         plugins: [
           'advlist autolink lists link image charmap print preview hr anchor pagebreak',
           'searchreplace wordcount visualblocks visualchars fullscreen',

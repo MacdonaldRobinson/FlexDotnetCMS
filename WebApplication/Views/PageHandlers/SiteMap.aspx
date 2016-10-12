@@ -6,5 +6,5 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContentPlaceHolder" runat="server">
     <asp:PlaceHolder runat="server" ID="DynamicContent" />
     <Site:GenerateNav ID="SiteMapTree" runat="server" RootVirtualPath="~/" RenderDepth="-1"
-        RenderRootMedia="true" RenderFooterMenuItems="true" />
+        RenderRootMedia="false" RenderFooterMenuItems="true" />
 </asp:Content>

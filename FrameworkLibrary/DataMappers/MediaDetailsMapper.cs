@@ -58,7 +58,7 @@ namespace FrameworkLibrary
             return tags.Distinct();
         }
 
-        public static IEnumerable<IMediaDetail> GetRelatedItems(IMediaDetail item, MediaType mediaType = null)
+        public static IEnumerable<IMediaDetail> GetRelatedItems(IMediaDetail item, long mediaTypeId = 0)
         {
             if (item == null)
                 return new List<IMediaDetail>();
@@ -67,72 +67,17 @@ namespace FrameworkLibrary
 
             IEnumerable<IMediaDetail> mediaDetails = new List<IMediaDetail>();
 
-            if (mediaType == null)
+            if (mediaTypeId == 0)
             {
-                mediaDetails = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryForMediaDetail == null && !i.IsDeleted && i.ShowInMenu && i.Media.MediaTags.Select(j => j.TagID).Any(j => tagIds.Contains(j))).OrderByDescending(i => i.DateCreated);
+                mediaDetails = BaseMapper.GetDataModel().MediaDetails.Where(i =>i.ID != item.ID && i.HistoryForMediaDetail == null && !i.IsDeleted && i.Media.MediaTags.Select(j => j.TagID).Any(j => tagIds.Contains(j))).OrderByDescending(i => (i.PublishDate == null)? i.DateCreated : i.PublishDate);
             }
             else
             {
-                mediaDetails = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryForMediaDetail == null && i.MediaType.ID == mediaType.ID && !i.IsDeleted && i.ShowInMenu && i.Media.MediaTags.Select(j => j.TagID).Any(j => tagIds.Contains(j))).OrderByDescending(i => i.DateCreated);
+                mediaDetails = BaseMapper.GetDataModel().MediaDetails.Where(i => i.ID != item.ID && i.HistoryForMediaDetail == null && i.MediaType.ID == mediaTypeId && !i.IsDeleted && i.Media.MediaTags.Select(j => j.TagID).Any(j => tagIds.Contains(j))).OrderByDescending(i => (i.PublishDate == null) ? i.DateCreated : i.PublishDate);
             }
 
             return mediaDetails;
-
-            /*var dictionary = new Dictionary<IMediaDetail, int>();
-
-            foreach (var mediaDetail in mediaDetails)
-            {
-                foreach (var mediaDetailTag in mediaDetail.Media.MediaTags.Select(i => i.Tag))
-                {
-                    if (tagIds.Any(i => i == mediaDetailTag.ID))
-                    {
-                        if (!dictionary.ContainsKey(mediaDetail))
-                        {
-                            dictionary.Add(mediaDetail, 1);
-                        }
-                        else
-                        {
-                            dictionary[mediaDetail] = dictionary[mediaDetail] + 1;
-                        }
-                    }
-                }
-            }
-
-            var ordered = dictionary.OrderByDescending(i => i.Value);
-
-            return ordered.Select(i => i.Key);*/
-
         }
-
-        /*private static IQueryable<MediaDetail> GetFromDB()
-        {
-            using (var context = new Entities(FrameworkBaseMedia.ConnectionSettings.ConnectionString))
-            {
-                context.ContextOptions.LazyLoadingEnabled = true;
-                context.ContextOptions.ProxyCreationEnabled = false;
-
-                var items = context.MediaDetails.Where(i => i.Media != null).OrderBy(i => i.Media.OrderIndex);
-                var itemsWithEmptyCachedVirtualPaths = context.MediaDetails.Where(i => i.CachedVirtualPath == "");
-
-                if (itemsWithEmptyCachedVirtualPaths.Any())
-                {
-                    foreach (var item in itemsWithEmptyCachedVirtualPaths)
-                    {
-                        item.CachedVirtualPath = item.CalculatedVirtualPath();
-                    }
-                    try
-                    {
-                        context.SaveChanges();
-                    }
-                    catch (Exception ex)
-                    {
-                        ErrorHelper.LogException(ex);
-                    }
-                }
-
-                return items;
-            }
-        }*/
 
         public static IEnumerable<IMediaDetail> GetAllActiveFooterItems()
         {
@@ -142,7 +87,6 @@ namespace FrameworkLibrary
         public static IEnumerable<IMediaDetail> GetAllActiveMediaDetails()
         {
             return MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && !i.IsDeleted);
-            //return FilterByCanRenderStatus(FilterByIsHistoryStatus(GetAll(), false), true);
         }
 
         public static IEnumerable<IMediaDetail> GetOnlyActiveAndVisibleMediaDetails(IEnumerable<IMediaDetail> items, IMediaDetail childOfMediaDetail = null)
@@ -382,6 +326,14 @@ namespace FrameworkLibrary
             return GetByMediaType(MediaTypesMapper.GetByEnum(mediaTypeEnum));
         }
 
+        public static IEnumerable<IMediaDetail> GetAllActiveByMediaType(long mediaTypeId, int take = -1)
+        {
+            if(take > 0)
+                return MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ID == mediaTypeId && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate >= DateTime.Now)).Take(take).OrderByDescending(i=>i.Media.OrderIndex);
+            else
+                return MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ID == mediaTypeId && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate >= DateTime.Now)).OrderByDescending(i => i.Media.OrderIndex);
+        }
+
         public static IMediaDetail GetByID(long id)
         {
             return MediaDetailsMapper.GetDataModel().MediaDetails.FirstOrDefault(item => item.ID == id);
@@ -406,29 +358,6 @@ namespace FrameworkLibrary
                 {
                     if (saveLanguage)
                         FrameworkSettings.SetCurrentLanguage(activeLanguage);
-
-                    /*websiteByCurrentHost = WebsitesMapper.GetWebsite(activeLanguage);
-
-                    virtualPath = virtualPath.Replace(activeLaunguageBase, URIHelper.ConvertAbsUrlToTilda(URIHelper.BaseUrl));
-
-                    if (!virtualPath.EndsWith("/"))
-                        virtualPath = virtualPath + "/";
-
-                    var urlSegments = URIHelper.GetUriSegments(virtualPath);*/
-
-                    /*object requestWebsite = null;
-
-                    if (urlSegments.Any())
-                    {
-                        var firstSegment = urlSegments.ElementAt(0);
-                        requestWebsite = MediaDetailsMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.MediaType.Name == MediaTypeEnum.Website.ToString() && i.LanguageID == activeLanguage.ID && i.HistoryVersionNumber == 0);
-                    }
-
-                    if (requestWebsite == null)
-                    {
-                        if (!virtualPath.StartsWith(websiteByCurrentHost.VirtualPath))
-                            virtualPath = virtualPath.Replace("~/", websiteByCurrentHost.VirtualPath);
-                    }*/
 
                     var website = WebsitesMapper.GetWebsite(0, activeLanguage);
                     virtualPath = virtualPath.Replace(URIHelper.ConvertAbsUrlToTilda(URIHelper.BaseUrlWithLanguage), website.CachedVirtualPath);
@@ -521,9 +450,6 @@ namespace FrameworkLibrary
         public static IEnumerable<IMediaDetail> GetByMedia(Media media)
         {
             return MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaID == media.ID);
-
-            //var allItems = GetAll();
-            //return allItems.Where(item => item.MediaID == media.ID);
         }
 
         public static IMediaDetail GetBySefTitle(string sefTitle)
@@ -539,8 +465,6 @@ namespace FrameworkLibrary
 
         public static IMediaDetail GetByMedia(Media media, Language language, long historyVersion = 0)
         {
-            //var details = FilterByLanguage(GetByMedia(media), language);
-
             return media.MediaDetails.FirstOrDefault(i => i.HistoryVersionNumber == historyVersion && i.LanguageID == language.ID);
         }
 
@@ -567,15 +491,6 @@ namespace FrameworkLibrary
             return GetAtleastOneByMedia(MediasMapper.GetByID(mediaId), language);
         }
 
-       /* public static IEnumerable<IMediaDetail> GetAllChildMediaDetails(Media media, Language language)
-        {
-            if (language == null)
-                language = LanguagesMapper.GetDefaultLanguage();
-
-
-            return BaseMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == media.ID && i.LanguageID == language.ID && i.HistoryForMediaDetailID == null && i.MediaType.ShowInSiteTree).OrderBy(i => i.Media.OrderIndex);
-        }*/
-
         public static IEnumerable<IMediaDetail> GetAllChildMediaDetails(long mediaId, long languageId)
         {
             if (languageId == 0)
@@ -592,12 +507,6 @@ namespace FrameworkLibrary
                 return new List<IMediaDetail>();
             }
         }
-
-
-        /*public static IEnumerable<IMediaDetail> GetAllChildMediaDetails(long mediaId, long languageId)
-        {
-            return BaseMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == mediaId && i.LanguageID == languageId && i.HistoryForMediaDetailID == null && i.MediaType.ShowInSiteTree).OrderBy(i => i.Media.OrderIndex);
-        }*/
 
         public static IMediaDetail CreateObject(long mediaTypeId, Media mediaItem, Media parentMedia)
         {
@@ -665,7 +574,6 @@ namespace FrameworkLibrary
             foreach (var property in updatableProperties)
             {
                 property.SetValue(detail, "");
-                //ParserHelper.SetValue(detail, property.Name, "");
             }
 
             detail.LinkTitle = detail.SectionTitle = detail.Title = detail.ShortDescription = detail.MainContent = "New Item";
@@ -701,7 +609,6 @@ namespace FrameworkLibrary
             if (LanguagesMapper.GetAllActive().Count() > 1)
                 uriSegment = LanguagesMapper.GetByID(obj.LanguageID).UriSegment + "/";
 
-            //virtualPath = "~/" + uriSegment + virtualPath;
 
             virtualPath = "~/" + virtualPath;
 
@@ -713,7 +620,6 @@ namespace FrameworkLibrary
 
         public static IEnumerable<IMediaDetail> GetAllParentMediaDetails(IMediaDetail item, Language language)
         {
-            //return GetAllParentMedias(item.Media).Select(i => i.LiveMediaDetail);
             var items = new List<IMediaDetail>();
             var absoluteRoot = MediasMapper.GetAbsoluteRoot();
 
@@ -732,7 +638,6 @@ namespace FrameworkLibrary
 
                 if (parentMedia == null)
                     parentMedia = BaseMapper.GetDataModel().AllMedia.FirstOrDefault(i => i.ID == (long)item.Media.ParentMediaID);
-                //parentMedia = MediasMapper.GetByID((long)item.Media.ParentMediaID);
 
                 if (parentMedia == null)
                     break;
@@ -771,7 +676,6 @@ namespace FrameworkLibrary
 
                 if (parentMedia == null)
                     parentMedia = BaseMapper.GetDataModel().AllMedia.FirstOrDefault(i => i.ID == (long)item.ParentMediaID);
-                //parentMedia = MediasMapper.GetByID((long)item.Media.ParentMediaID);
 
                 if (parentMedia == null)
                     break;
@@ -870,7 +774,6 @@ namespace FrameworkLibrary
                     {
                         ClearObjectRelations(association.MediaDetail);
                         MediaDetailsMapper.DeleteObjectFromContext(association.MediaDetail);
-                        //var returnObj = DeletePermanently(association.MediaDetail);
                     }
 
                     if (association.MediaDetail != null)
@@ -937,8 +840,6 @@ namespace FrameworkLibrary
                 return "";
 
             var customCode = propertyName;
-
-            //customCode = ParserHelper.ParseData(propertyName, mediaDetail);
 
             if (customCode.Contains("{{Load"))
             {
@@ -1118,27 +1019,22 @@ namespace FrameworkLibrary
 
             }
 
-            //var replaced = false;
             if (passToParser == null)
             {
                 passToParser = mediaDetail;
-                //replaced = true;
             }
 
             customCode = ParserHelper.ParseData(customCode, passToParser);
 
-            //if(!replaced)
-            //{
-                var matches = Regex.Matches(customCode, "{[a-zA-Z0-9:=\"\".(),\']+}");
+            var matches = Regex.Matches(customCode, "{[a-zA-Z0-9:=\"\".(),\']+}");
 
-                if (matches.Count > 0 && matches.Count != previousCount)
-                {
-                    customCode = ParseSpecialTags(mediaDetail, customCode, matches.Count);
+            if (matches.Count > 0 && matches.Count != previousCount)
+            {
+                customCode = ParseSpecialTags(mediaDetail, customCode, matches.Count);
 
-                    if (customCode == "{UseMainLayout}")
-                        customCode = "";
-                }
-            //}
+                if (customCode == "{UseMainLayout}")
+                    customCode = "";
+            }
 
             return customCode;
         }

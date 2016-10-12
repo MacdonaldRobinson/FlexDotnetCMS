@@ -110,8 +110,8 @@ namespace WebApplication.Admin.MediaArticle
                 SaveAndPublish.Text = "Create And Publish";
 
                 LoadLatestDraft.Visible = false;
-                SaveAsDraft.Visible = false;
-                
+                CreateDraft.Visible = false;
+
                 var mediaType = MediaTypesMapper.GetByID(selectedItem.MediaTypeID);
 
                 if (mediaType == null)
@@ -137,7 +137,7 @@ namespace WebApplication.Admin.MediaArticle
                         newField.SetAdminControlValue = field.SetAdminControlValue;
                         newField.FieldValue = field.FieldValue;
                         newField.FrontEndLayout = field.FrontEndLayout;
-                        newField.MediaTypeField = field;                        
+                        newField.MediaTypeField = field;
                         newField.UseMediaTypeFieldFrontEndLayout = true;
 
                         newField.DateCreated = DateTime.Now;
@@ -198,7 +198,7 @@ namespace WebApplication.Admin.MediaArticle
                 if (draftItems.Count() > 0)
                 {
                     LoadLatestDraft.Visible = true;
-                    SaveAsDraft.Visible = false;
+                    CreateDraft.Visible = false;
                 }
 
                 SaveAndPublish.Visible = true;
@@ -214,7 +214,7 @@ namespace WebApplication.Admin.MediaArticle
                 if (!selectedItem.IsDraft)
                     Save.Visible = false;
 
-                SaveAsDraft.Visible = false;
+                CreateDraft.Visible = false;
                 PublishNow.Visible = false;
                 PublishLive.Visible = true;
 
@@ -400,7 +400,7 @@ namespace WebApplication.Admin.MediaArticle
 
             selectedItem.ShowInMenu = mediaType.ShowInMenu;
             selectedItem.ShowInSearchResults = mediaType.ShowInSearchResults;
-            selectedItem.EnableCaching = mediaType.EnableCaching;            
+            selectedItem.EnableCaching = mediaType.EnableCaching;
 
             Return returnObj = MediaDetailsMapper.Update(selectedItem);
 
@@ -448,7 +448,7 @@ namespace WebApplication.Admin.MediaArticle
 
                         if (associatedMediaDetail == null)
                             continue;
-                        
+
                         if(!associatedMediaDetail.MediaType.ShowInSiteTree)
                         {
                             newFieldAssociation.MediaDetail = (MediaDetail)MediaDetailsMapper.CreateObject(associatedMediaDetail.MediaType.ID, MediasMapper.CreateObject(), associatedMediaDetail.Media.ParentMedia);
@@ -501,7 +501,7 @@ namespace WebApplication.Admin.MediaArticle
                     {
                         MediaDetailsMapper.ClearObjectRelations(item);
                         MediaDetailsMapper.DeleteObjectFromContext(item);
-                    }                        
+                    }
                 }
             }
 
@@ -662,7 +662,7 @@ namespace WebApplication.Admin.MediaArticle
 
             bool isDraft = false;
 
-            if (commandArgument == "SaveAsDraft")
+            if (commandArgument == "CreateDraft")
                 isDraft = true;
 
             IMediaDetail history = CreateHistory(isDraft);
@@ -758,7 +758,7 @@ namespace WebApplication.Admin.MediaArticle
 
                     if (!returnObj.IsError)
                     {
-                        returnObj = MediaDetailsMapper.Update(selectedItem);                        
+                        returnObj = MediaDetailsMapper.Update(selectedItem);
                     }
                 }
             }

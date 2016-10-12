@@ -98,7 +98,7 @@
                 <asp:UpdatePanel runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
                         <asp:LinkButton ID="Save" runat="server" OnClick="Save_OnClick" Text="Save" CssClass="SavePageButton"/>
-                        <asp:LinkButton ID="SaveAsDraft" runat="server" OnClick="Save_OnClick" Text="Save As Draft" CommandArgument="SaveAsDraft" />
+                        <asp:LinkButton ID="CreateDraft" runat="server" OnClick="Save_OnClick" Text="Create Draft" CommandArgument="CreateDraft" />
                         <asp:LinkButton ID="LoadLatestDraft" runat="server" OnClick="LoadLatestDraft_OnClick" Text="Load Latest Draft" Visible="false" />
                         <asp:LinkButton ID="SaveAndPublish" runat="server" OnClick="SaveAndPublish_OnClick" Text="Save And Publish" CommandArgument="SaveAndPublish" Visible="false" />
                         <asp:LinkButton ID="PublishNow" runat="server" OnClick="PublishNow_OnClick" Visible="false" Text="Publish Now" />

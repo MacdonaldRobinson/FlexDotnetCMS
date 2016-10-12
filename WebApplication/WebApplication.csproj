@@ -607,6 +607,8 @@
     </Content>
     <Content Include="Scripts\commonFrontEnd.js" />
     <Content Include="Scripts\global.js" />
+    <Content Include="Views\MediaTypeHandlers\Blog.aspx" />
+    <Content Include="Views\MediaTypeHandlers\LandingPage.aspx" />
     <Content Include="Views\MediaTypeHandlers\NoTemplatePage.aspx" />
     <Content Include="Views\MediaTypeHandlers\RootPage.aspx" />
     <Content Include="Views\MediaTypeHandlers\UrlRedirectRule.aspx" />
@@ -1604,6 +1606,20 @@
     </Compile>
     <Compile Include="Views\MasterPages\SiteTemplates\Template2.Master.designer.cs">
       <DependentUpon>Template2.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MediaTypeHandlers\Blog.aspx.cs">
+      <DependentUpon>Blog.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\MediaTypeHandlers\Blog.aspx.designer.cs">
+      <DependentUpon>Blog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MediaTypeHandlers\LandingPage.aspx.cs">
+      <DependentUpon>LandingPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\MediaTypeHandlers\LandingPage.aspx.designer.cs">
+      <DependentUpon>LandingPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\MediaTypeHandlers\NoTemplatePage.aspx.cs">
       <DependentUpon>NoTemplatePage.aspx</DependentUpon>

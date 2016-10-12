@@ -13,7 +13,7 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
 
         protected void Page_PreRender(object sender, EventArgs e)
         {
-            emailLogEntries = EmailsMapper.GetAll().OrderByDescending(i => i.DateCreated).ToList();
+            //emailLogEntries = EmailsMapper.GetAll().OrderByDescending(i => i.DateCreated).ToList();
 
             var errors = new List<Elmah.ErrorLogEntry>();
             var newErrors = new List<Elmah.ErrorLogEntry>();
@@ -32,8 +32,8 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
 
         private void Bind()
         {
-            EmailLog.DataSource = emailLogEntries;
-            EmailLog.DataBind();
+            /*EmailLog.DataSource = emailLogEntries;
+            EmailLog.DataBind();*/
 
             ErrorLog.DataSource = errorLogEntries;
             ErrorLog.DataBind();
@@ -106,7 +106,7 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
                 foreach (var item in historyMediaDetails)
                 {
                     var returnObj = MediaDetailsMapper.DeletePermanently((MediaDetail)item);
-                }                
+                }
 
                 ClearAllCache_OnClick(sender, e);
             }
@@ -118,7 +118,7 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
             }
         }
 
-        protected void EmailLog_PageIndexChanging(object sender, System.Web.UI.WebControls.GridViewPageEventArgs e)
+        /*protected void EmailLog_PageIndexChanging(object sender, System.Web.UI.WebControls.GridViewPageEventArgs e)
         {
             EmailLog.PageIndex = e.NewPageIndex;
             EmailLog.DataBind();
@@ -129,7 +129,7 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
             var sortDirection = ((e.SortDirection == System.Web.UI.WebControls.SortDirection.Ascending) ? "ASC" : "DESC");
             EmailLog.DataSource = emailLogEntries.OrderBy(e.SortExpression + " " + sortDirection).ToList();
             Bind();
-        }
+        }*/
 
         protected void ErrorLog_PageIndexChanging(object sender, System.Web.UI.WebControls.GridViewPageEventArgs e)
         {

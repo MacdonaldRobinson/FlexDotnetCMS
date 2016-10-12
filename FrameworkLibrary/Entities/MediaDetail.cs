@@ -250,14 +250,7 @@ namespace FrameworkLibrary
 
         public IEnumerable<IMediaDetail> GetRelatedItems(long mediaTypeId = 0)
         {
-            MediaType mediaType = null;
-
-            if (mediaTypeId > 0)
-            {
-                mediaType = MediaTypesMapper.GetByID(mediaTypeId);
-            }
-
-            var relatedItems = MediaDetailsMapper.GetRelatedItems(this, mediaType);
+            var relatedItems = MediaDetailsMapper.GetRelatedItems(this, mediaTypeId);
 
             return relatedItems;
         }
@@ -400,12 +393,14 @@ namespace FrameworkLibrary
 
             if (string.IsNullOrEmpty(description))
             {
-                description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(MediaDetailsMapper.ParseSpecialTags(this, "{ShortDescription}")));
+                description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(this.ShortDescription));
             }
+
+            description = StringHelper.StripHtmlTags(description);
 
             if ((description == "") || (description == LinkTitle))
             {
-                description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(MediaDetailsMapper.ParseSpecialTags(this, "{MainContent}")));
+                description = StringHelper.StripHtmlTags(StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(this.MainContent)));
 
                 if (description.Length > 255)
                     description = description.Substring(0, 255) + " ...";
@@ -441,15 +436,13 @@ namespace FrameworkLibrary
             if (!string.IsNullOrEmpty(contextPageTitle))
                 return contextPageTitle;
 
+            if (this.Title != this.LinkTitle)
+                return this.Title;
+
             var pageTitle = "";
 
             var details = MediaDetailsMapper.GetAllParentMediaDetails(this, Language).Reverse().ToList();
 
-            /*if (FrameworkLibrary.FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail == FrameworkLibrary.FrameworkSettings.RootMediaDetail)
-            {
-                if (FrameworkSettings.RootMediaDetail != null)
-                    details.Add(FrameworkSettings.RootMediaDetail);
-            }*/
 
             if (details.Count == 0)
                 details.Add(WebsitesMapper.GetWebsite());

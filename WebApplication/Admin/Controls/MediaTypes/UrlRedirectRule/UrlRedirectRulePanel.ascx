@@ -2,26 +2,28 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#VirtualPathHolder,#SectionTitleHolder,#LongDescriptionHolder,#ThumbnailPathHolder, #MasterPageSelectorHolder,#TagsHolder").hide();
+        $("#VirtualPathHolder,#SectionTitleHolder,#LongDescriptionHolder,#ThumbnailPathHolder, #MasterPageSelectorHolder,#TagsHolder, #PathToFileHolder, #ShortDescriptionHolder").hide();
     });
 </script>
 
 <Admin:CommonPanel ID="CommonPanel" runat="server" />
 
 <asp:Panel runat="server" ID="PanelFields">
-    <div>
-        <label for="<%= VirtualPathToRedirect.ClientID %>">
-            Virtual Path To Redirect</label>
-        <asp:TextBox runat="server" ID="VirtualPathToRedirect" ClientIDMode="Static"></asp:TextBox>
-    </div>
-    <div>
-        <label for="<%= RedirectToUrl.ClientID %>">
-            Redirect To Url</label>
-        <asp:TextBox runat="server" ID="RedirectToUrl" ClientIDMode="Static"></asp:TextBox>
-    </div>
-    <div>
-        <label for="<%= Is301Redirect.ClientID %>">
-            <asp:CheckBox runat="server" ID="Is301Redirect" ClientIDMode="Static" />
-            Is 301 Redirect</label>
-    </div>
+    <fieldset>
+        <div>
+            <label for="<%= VirtualPathToRedirect.ClientID %>">
+                Virtual Path To Redirect</label>
+            <asp:TextBox runat="server" ID="VirtualPathToRedirect" ClientIDMode="Static"></asp:TextBox>
+        </div>
+        <div>
+            <label for="<%= RedirectToUrl.ClientID %>">
+                Redirect To Url</label>
+            <asp:TextBox runat="server" ID="RedirectToUrl" ClientIDMode="Static"></asp:TextBox>
+        </div>
+        <div>
+            <label for="<%= Is301Redirect.ClientID %>">
+                <asp:CheckBox runat="server" ID="Is301Redirect" ClientIDMode="Static" />
+                Is 301 Redirect</label>
+        </div>
+    </fieldset>
 </asp:Panel>

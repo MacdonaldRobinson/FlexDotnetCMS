@@ -39,20 +39,6 @@
         $('#<%= UpdateProgress1.ClientID%>').hide();
     });
 
-    var hasRun = false;
-
-    $(document).click(function () {
-        hasRun = false
-    });
-
-    $(document).ajaxStart(function (e) {
-        if (!hasRun)
-        {
-            $('#<%= UpdateProgress1.ClientID%>').show();
-        }
-
-        hasRun = true;
-    });
 </script>
 
 <asp:UpdateProgress ID="UpdateProgress1" runat="server">

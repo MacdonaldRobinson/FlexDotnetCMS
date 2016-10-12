@@ -6,11 +6,11 @@
         <asp:nextpreviouspagerfield FirstPageText="First" LastPageText="Last" NextPageText="Next" PreviousPageText="Previous" />
     </Fields>--%>
         <Fields>
-            <asp:NextPreviousPagerField ButtonCssClass="btn btn-small customBtnSmall" ButtonType="Link" FirstPageImageUrl=""
+            <asp:NextPreviousPagerField ButtonCssClass="pager-link" ButtonType="Link" FirstPageImageUrl=""
                 ShowFirstPageButton="true" PreviousPageImageUrl=""
                 ShowLastPageButton="false" ShowNextPageButton="false" />
-            <asp:NumericPagerField NumericButtonCssClass="btn btn-small customBtnSmall" ButtonCount="2" />
-            <asp:NextPreviousPagerField ButtonCssClass="btn btn-small customBtnSmall" ButtonType="Link" ShowLastPageButton="true" ShowNextPageButton="true"
+            <asp:NumericPagerField NumericButtonCssClass="pager-link" />
+            <asp:NextPreviousPagerField ButtonCssClass="pager-link" ButtonType="Link" ShowLastPageButton="true" ShowNextPageButton="true"
                 ShowPreviousPageButton="false" LastPageImageUrl=""
                 NextPageImageUrl="" />
         </Fields>

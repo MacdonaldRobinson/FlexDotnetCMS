@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using WebApplication.Services;
@@ -206,20 +207,6 @@ namespace WebApplication
 
         public void Page_PreRender(object sender, EventArgs e)
         {
-            switch (Request.QueryString["format"])
-            {
-                case "json":
-                    {
-                        var depth = (Request.QueryString["depth"] != null) ? long.Parse(Request.QueryString["depth"]) : 1;
-
-                        RenderJSON(depth);
-                    }
-                    break;
-                case "rss":
-                    RenderRss();
-                    break;
-            }
-
             WebFormHelper.GetJSIncludes(this.Page);
 
             if (AppSettings.CombineCssAndJsIncludes)
@@ -356,13 +343,33 @@ namespace WebApplication
             //barcode.GenerateQRCode(URIHelper.ConvertToAbsUrl(this.CurrentMediaDetail.VirtualPath));
         }
 
-        public void RenderJSON(long depth)
+        public static void HandleFormatQueryString(IMediaDetail mediaDetail, string formatQueryString, string depthQueryString)
         {
+            var Request = HttpContext.Current.Request;
+            switch (formatQueryString.ToLower().Trim())
+            {
+                case "json":
+                    {
+                        var depth = (!string.IsNullOrEmpty(depthQueryString)) ? long.Parse(depthQueryString) : 1;
+
+                        RenderJSON(mediaDetail, depth);
+                    }
+                    break;
+                case "rss":
+                    RenderRss();
+                    break;
+            }
+        }
+
+        public static void RenderJSON(IMediaDetail mediaDetail, long depth)
+        {
+            var Response = HttpContext.Current.Response;
+
             Response.ContentEncoding = System.Text.Encoding.UTF8;
             Response.ContentType = "application/json";
             Response.StatusCode = 200;
 
-            var json = ParserHelper.ParseData(this.CurrentMediaDetail.ToJSON(depth), TemplateVars);
+            var json = mediaDetail.ToJSON(depth);
 
             Response.Write(json);
 
@@ -370,11 +377,11 @@ namespace WebApplication
             Response.End();
         }
 
-        public void RenderRss(IEnumerable<RssItem> rssItems = null, string rssTitle = "", string rssDescription = "", string rssLink = "")
+        public static void RenderRss(IEnumerable<RssItem> rssItems = null, string rssTitle = "", string rssDescription = "", string rssLink = "")
         {
             if (rssItems == null)
             {
-                rssItems = MediaDetailsMapper.GetRssItems(MediaDetailsMapper.FilterByCanRenderStatus(MediaDetailsMapper.FilterOutHiddenAndDeleted(MediaDetailsMapper.GetAllChildMediaDetails(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMedia.ID, FrameworkSettings.CurrentFrameworkBaseMedia.CurrentLanguage.ID)), true));
+                rssItems = MediaDetailsMapper.GetRssItems(MediaDetailsMapper.GetAllChildMediaDetails(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMedia.ID, FrameworkSettings.CurrentFrameworkBaseMedia.CurrentLanguage.ID).Where(i=>i.CanRender));
             }
 
             if (rssLink == "")
@@ -397,6 +404,8 @@ namespace WebApplication
 
             Rss rss = new Rss(rssTitle, rssLink, rssDescription);
             rss.Items = rssItems;
+
+            var Response = HttpContext.Current.Response;
 
             Response.ContentEncoding = System.Text.Encoding.UTF8;
             Response.ContentType = "text/xml";

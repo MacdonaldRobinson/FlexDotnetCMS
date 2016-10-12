@@ -84,7 +84,7 @@ namespace WebApplication.Handlers
             Settings cmsSettings = null;
             bool isAttemptingAdminLogin = false;
 
-            if ((virtualPath != "~/login/") && (virtualPath != "~/admin/"))
+            if ((virtualPath != "~/login/") && (virtualPath != "~/admin/") && string.IsNullOrEmpty(Request.QueryString["format"]))
             {
                 cmsSettings = SettingsMapper.GetSettings();
 
@@ -233,6 +233,11 @@ namespace WebApplication.Handlers
                         viewPath = MediaTypesMapper.GetByID(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.MediaTypeID).MediaTypeHandler;
 
                     viewPath = URIHelper.ConvertAbsUrlToTilda(viewPath);
+
+                    if (!string.IsNullOrEmpty(Request.QueryString["format"]))
+                    {
+                        FrontEndBasePage.HandleFormatQueryString(detail, Request.QueryString["format"], Request.QueryString["depth"]);
+                    }
 
                     return CreateInstanceFromVirtualPath(viewPath, typeof(BasePage));
                 }

@@ -215,6 +215,13 @@ namespace WebApplication.Admin.Views.MasterPages
         }
 
         [WebMethod(EnableSession = true)]
+        public void ClearCache(long id)
+        {
+            var detail = MediaDetailsMapper.GetByID(id);
+            detail.RemoveFromCache();
+        }
+
+        [WebMethod(EnableSession = true)]
         public void UnDelete(long id)
         {
             var detail = MediaDetailsMapper.GetByID(id);

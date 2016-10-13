@@ -241,6 +241,6 @@ namespace WebApplication.Admin.Controls.Editors
         protected void Cancel_Click(object sender, EventArgs e)
         {
             UpdatedFieldsFromObject(new MediaDetailField());
-        }        
+        }
     }
 }

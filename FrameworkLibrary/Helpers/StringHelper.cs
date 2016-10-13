@@ -31,7 +31,7 @@ namespace FrameworkLibrary
 
         public static string ObjectToJson(object to, long depth=1)
         {
-            return JsonConvert.SerializeObject(to);            
+            return JsonConvert.SerializeObject(to);
         }
 
         public static bool ContainsWord(string inputString, string term)

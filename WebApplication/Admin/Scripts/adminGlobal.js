@@ -355,6 +355,22 @@ function HandleContextMenuClick(action, target, node) {
                 });
             }
             break;
+        case "ClearCache":
+            jQuery.ajax({
+                type: "POST",
+                url: "/Admin/Views/MasterPages/Webservice.asmx/ClearCache",
+                data: "{'id':'" + mediaDetailId + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "text",
+                success:
+                function (msg) {
+                    RefreshSiteTreeNodeById(node.parent);
+                },
+                error: function (xhr, status, error) {
+                    //console.log(xhr);
+                }
+            });
+            break;
         case "ViewFrontEnd":
             //console.log(target.attr("data-frontendurl"));
             window.open(target.attr("frontendurl"));
@@ -509,7 +525,7 @@ $(document).ready(function () {
     tfm_path = "/Scripts/tinyfilemanager.net";
     tinymce.init({
         selector: ".editor",
-        content_css: "/Views/MasterPages/SiteTemplates/css/style.css, /Admin/Styles/editor.css",
+        content_css: "/FrontEnd/stylesheets/style-min.css, /Admin/Styles/editor.css",
         plugins: [
           'advlist autolink lists link image charmap print preview hr anchor pagebreak',
           'searchreplace wordcount visualblocks visualchars fullscreen',
@@ -523,7 +539,7 @@ $(document).ready(function () {
         relative_urls: false,
         convert_urls: false,
         remove_script_host: false,
-        extended_valid_elements: 'span[*]',
+        extended_valid_elements: 'span[*],a[*]',
         custom_shortcuts: false,
         setup: function (editor) {
             editor.on('change', function () {
@@ -745,6 +761,12 @@ function BindTree(filterText) {
                             HandleContextMenuClick("MoveDown", obj.reference, node);
                         }
                     },
+                    "ClearCache": {
+                        "label": "Clear Cache",
+                        "action": function (obj) {
+                            HandleContextMenuClick("ClearCache", obj.reference, node);
+                        }
+                    },
                     "ViewFrontEnd": {
                         "label": "View Front End",
                         "action": function (obj) {
@@ -839,6 +861,7 @@ function pageLoad() {
     BindSortable();
     BindTabs();
     BindMultiFileUploaderImageLoadError();
+    initAceEditors();
 
     if (typeof (BindActiveTabs) == 'function')
         BindActiveTabs();

@@ -18,6 +18,7 @@
                     <asp:BoundField DataField="MasterPage.Name" HeaderText="MasterPage" SortExpression="MasterPage" />
                     <asp:BoundField DataField="UseMediaTypeLayouts" HeaderText="UseMediaTypeLayouts" SortExpression="UseMediaTypeLayouts" />
                     <asp:BoundField DataField="IsActive" HeaderText="IsActive" SortExpression="IsActive" />
+                    <asp:BoundField DataField="EnableCaching" HeaderText="EnableCaching" SortExpression="EnableCaching" />
                     <asp:BoundField DataField="ShowInMenu" HeaderText="ShowInMenu" SortExpression="ShowInMenu" />
                     <asp:BoundField DataField="DateCreated" HeaderText="DateCreated" SortExpression="DateCreated" />
                     <asp:BoundField DataField="DateLastModified" HeaderText="DateLastModified" SortExpression="DateLastModified" />

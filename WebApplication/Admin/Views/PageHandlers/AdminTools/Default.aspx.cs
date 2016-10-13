@@ -92,7 +92,7 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
             FileCacheHelper.ClearAllCache();
         }
 
-        protected void DeleteAllHistoryAndClearAllCache_Click(object sender, EventArgs e)
+        /*protected void DeleteAllHistoryAndClearAllCache_Click(object sender, EventArgs e)
         {
             try
             {
@@ -116,7 +116,7 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
 
                 DisplayErrorMessage("Error Clearing All Cache", ErrorHelper.CreateError(ex));
             }
-        }
+        }*/
 
         /*protected void EmailLog_PageIndexChanging(object sender, System.Web.UI.WebControls.GridViewPageEventArgs e)
         {

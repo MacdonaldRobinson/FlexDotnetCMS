@@ -41,7 +41,7 @@ namespace FrameworkLibrary
             get
             {
                 if (this.UseMediaTypeLayouts)
-                    return this.MediaType.MainLayout;
+                    return this.MediaType?.MainLayout;
                 else
                     return this.MainLayout;
             }
@@ -52,7 +52,7 @@ namespace FrameworkLibrary
             get
             {
                 if (this.UseMediaTypeLayouts)
-                    return this.MediaType.SummaryLayout;
+                    return this.MediaType?.SummaryLayout;
                 else
                     return this.SummaryLayout;
             }
@@ -63,7 +63,7 @@ namespace FrameworkLibrary
             get
             {
                 if (this.UseMediaTypeLayouts)
-                    return this.MediaType.FeaturedLayout;
+                    return this.MediaType?.FeaturedLayout;
                 else
                     return this.FeaturedLayout;
             }
@@ -104,6 +104,14 @@ namespace FrameworkLibrary
 
             FileCacheHelper.ClearCache(mobileCacheKey + "?version=0");
             ContextHelper.RemoveFromCache(mobileCacheKey + "?version=0");
+
+            var parents = MediaDetailsMapper.GetAllParentMediaDetails(this, this.Language).Where(i=>i.ID != this.ID);
+
+            foreach (var item in parents)
+            {
+                item.RemoveFromCache();
+            }
+
         }
 
         public void SaveToMemoryCache(RenderVersion renderVersion, string html, string queryString = "")

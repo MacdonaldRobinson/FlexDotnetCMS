@@ -165,14 +165,14 @@ namespace FrameworkLibrary
                 return true;
             }
             catch (Exception ex)
-            {                
+            {
                 CanConnectToDB = false;
                 ErrorHelper.LogException(ex);
                 return false;
             }
         }
 
-        public static Entities GetDataModel(bool forceNew = false)
+        public static Entities GetDataModel(bool forceNew = false, bool generateProxies = true)
         {
             Entities context;
 
@@ -183,8 +183,16 @@ namespace FrameworkLibrary
                 if (!CanConnectToDBUsingEntities(context))
                     return null;
 
-                context.Configuration.LazyLoadingEnabled = true;
-                context.Configuration.ProxyCreationEnabled = true;                
+                if (generateProxies)
+                {
+                    context.Configuration.LazyLoadingEnabled = true;
+                    context.Configuration.ProxyCreationEnabled = true;
+                }
+                else
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+                    context.Configuration.ProxyCreationEnabled = false;
+                }
 
                 ContextHelper.Set(DataModelKey, context, dataContextStorageContext);
 

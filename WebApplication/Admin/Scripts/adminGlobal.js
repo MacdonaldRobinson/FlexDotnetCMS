@@ -959,6 +959,22 @@ function ReloadPreviewPanel() {
         $("#PreviewPanel")[0].src = $("#PreviewPanel")[0].src;
 }
 
+$(function () {
+       $(':text').bind('keydown', function (e) {
+    //on keydown for all textboxes
+       if(e.target.className != "searchtextbox") {
+           if (e.keyCode == 13) { //if this is enter key
+               e.preventDefault();
+               return false;
+               }
+               else
+                  return true;
+               }
+           else
+               return true;
+      });
+});
+
 function init() {
     BindTree();
     BindSortable();

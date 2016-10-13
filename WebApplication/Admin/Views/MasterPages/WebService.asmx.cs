@@ -143,7 +143,7 @@ namespace WebApplication.Admin.Views.MasterPages
             if (mediaDetail == null)
                 return false;
 
-            if (mediaDetail.HistoryVersionNumber == 0 && mediaDetail.MediaID.ToString() == filterText || mediaDetail.LinkTitle.ToLower().Trim().Contains(filterText) || mediaDetail.SectionTitle.ToLower().Trim().Contains(filterText) || mediaDetail.MainContent.ToLower().Trim().Contains(filterText) || mediaDetail.MainLayout.ToLower().Trim().Contains(filterText) || mediaDetail.Fields.Any(j => j.FieldValue.Contains(filterText)))
+            if (mediaDetail.HistoryVersionNumber == 0 && mediaDetail.MediaID.ToString() == filterText || mediaDetail.SearchForTerm(filterText) || mediaDetail.Fields.Any(j => j.FieldValue.Contains(filterText)))
                 return true;
 
             foreach (var fieldAssociation in mediaDetail.Fields.SelectMany(i => i.FieldAssociations))
@@ -164,7 +164,7 @@ namespace WebApplication.Admin.Views.MasterPages
         public void SearchForNodes(string filterText)
         {
             filterText = filterText.ToLower().Trim();
-            var foundItems = MediasMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0 && i.LanguageID == AdminBasePage.CurrentLanguage.ID).ToList().Where(i=> SearchWithinMediaDetail(i, filterText));
+            var foundItems = MediasMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0 && i.LanguageID == AdminBasePage.CurrentLanguage.ID && (i.MediaID.ToString() == filterText || i.MainContent.ToLower().Contains(filterText) || i.ShortDescription.ToLower().Contains(filterText) || i.SectionTitle.ToLower().Contains(filterText) || i.Fields.Any(j=>j.FieldValue.ToLower().Contains(filterText)))).ToList();
 
             var jsTreeNodes = foundItems.Select(i => GetJsTreeNode(i));
 

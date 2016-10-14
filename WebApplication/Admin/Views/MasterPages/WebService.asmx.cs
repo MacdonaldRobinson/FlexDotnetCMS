@@ -63,8 +63,8 @@ namespace WebApplication.Admin.Views.MasterPages
             node.parent = (detail.Media.ParentMediaID == null) ? "#" : detail.Media.ParentMediaID.ToString();
             node.text = detail.SectionTitle;
 
-            var childMediaDetails = MediaDetailsMapper.GetAtleastOneChildByMedia(detail.Media, AdminBasePage.CurrentLanguage).Where(i => i.MediaType.ShowInSiteTree);
-            node.children = (childMediaDetails.Count() > 0);
+            //node.children =( MediaDetailsMapper.GetAtleastOneChildByMedia(detail.Media, AdminBasePage.CurrentLanguage).Where(i => i.MediaType.ShowInSiteTree).Count() > 0);
+            node.children = (BaseMapper.GetDataModel().MediaDetails.Count(i => i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0 && i.Media.ParentMediaID == detail.MediaID) > 0);
 
             node.text = detail.SectionTitle.ToString();
             //node.Attributes.Add("FrontEndUrl", detail.AbsoluteUrl);
@@ -188,10 +188,31 @@ namespace WebApplication.Admin.Views.MasterPages
         {
             var rootNode = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetail == null && i.MediaID == id);
             var childMediaDetails = MediaDetailsMapper.GetAtleastOneChildByMedia(rootNode.Media, AdminBasePage.CurrentLanguage).Where(i=>i.MediaType.ShowInSiteTree).OrderBy(i=>i.Media.OrderIndex);
+            //var childMediaDetails = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.Media.ParentMediaID == rootNode.MediaID && i.ID != rootNode.ID && i.MediaType.ShowInSiteTree && i.LanguageID == AdminBasePage.CurrentLanguage.ID).OrderBy(i => i.Media.OrderIndex).ToList();
 
             var jsTreeNodes = childMediaDetails.Select(i => GetJsTreeNode(i));
             WriteJSON(StringHelper.ObjectToJson(jsTreeNodes));
         }
+
+        /*private string JsTreeNodesToJson(IEnumerable<JsTreeNode> nodes)
+        {
+            var json = "[";
+            foreach (var node in nodes)
+            {
+                json += JsTreeNodesToJson(node) + ",";
+            }
+            json += "]";
+
+            json = json.Replace(",]", "]");
+
+            return json;
+        }
+
+        private string JsTreeNodesToJson(JsTreeNode node)
+        {
+            var json = "{\"id\":\"" + node.id + "\",\"text\":\"" + node.text + "\",\"parent\":\"" + node.parent + "\",\"status\": {\"opened\":" + node.state.opened.ToString().ToLower() + ", \"disabled\":" + node.state.disabled.ToString().ToLower() + ",\"selected\":" + node.state.selected.ToString().ToLower() + "},\"children\":true, \"li_attr\":{\"mediaDetailId\":\"" + node.li_attr.mediaDetailId + "\",\"class\":\"" + node.li_attr._class + "\"}, \"a_attr\":{\"frontendurl\":\"" + node.a_attr.frontendurl + "\",\"href\":\"" + node.a_attr.href + "\",\"class\":\"" + node.a_attr._class + "\"}}";
+            return json;
+        }*/
 
         [WebMethod(EnableSession = true)]
         public void CreateChild(long id)

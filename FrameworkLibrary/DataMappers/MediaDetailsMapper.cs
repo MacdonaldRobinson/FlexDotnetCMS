@@ -470,12 +470,12 @@ namespace FrameworkLibrary
 
         public static IMediaDetail GetAtleastOneByMedia(Media media, Language language)
         {
-            var detail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.LanguageID == language.ID && i.MediaID == media.ID);
+            var detail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.LanguageID == language.ID && i.MediaID == media.ID && i.MediaType.ShowInSiteTree);
 
             if (detail == null)
             {
                 var defaultLanguage = LanguagesMapper.GetDefaultLanguage();
-                detail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.MediaID == media.ID && i.LanguageID == defaultLanguage.ID);
+                detail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetailID == null && i.MediaID == media.ID && i.LanguageID == defaultLanguage.ID && i.MediaType.ShowInSiteTree);
             }
 
             return detail;

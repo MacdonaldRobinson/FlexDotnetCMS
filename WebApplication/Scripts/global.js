@@ -44,7 +44,10 @@ function RefreshUpdatePanel(UpdatePanelClientId, OnAfterRefreshFunction) {
 }
 
 function OnUpdatePanelRefreshComplete(OnUpdatePanelRefreshCompleteFunction) {
-    Sys.WebForms.PageRequestManager.getInstance().add_endRequest(OnUpdatePanelRefreshCompleteFunction);
+    if (Sys.WebForms.PageRequestManager != null && Sys.WebForms.PageRequestManager != undefined)
+    {
+        Sys.WebForms.PageRequestManager.getInstance().add_endRequest(OnUpdatePanelRefreshCompleteFunction);
+    }
 }
 
 $(document).ready(function () {

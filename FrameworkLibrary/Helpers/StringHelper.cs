@@ -31,7 +31,22 @@ namespace FrameworkLibrary
 
         public static string ObjectToJson(object to, long depth=1)
         {
-            return JsonConvert.SerializeObject(to);
+            if (to is IMediaDetail)
+            {
+                var mediaDetail = BaseMapper.GetDataModel(true, false).MediaDetails.FirstOrDefault(i => i.ID == ((IMediaDetail)to).ID);
+
+                return JsonConvert.SerializeObject(mediaDetail, Formatting.None,
+                                                    new JsonSerializerSettings()
+                                                    {
+                                                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                                                    });
+
+            }
+            else
+            {
+
+                return JsonConvert.SerializeObject(to);
+            }
         }
 
         public static bool ContainsWord(string inputString, string term)

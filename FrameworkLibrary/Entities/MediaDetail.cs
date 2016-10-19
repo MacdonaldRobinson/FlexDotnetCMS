@@ -92,7 +92,11 @@ namespace FrameworkLibrary
         {
             get
             {
-                var children = this.Media.ParentMedia.LiveMediaDetail.ChildMediaDetails.ToList();
+                var children = this.Media?.ParentMedia?.LiveMediaDetail?.ChildMediaDetails?.ToList();
+
+                if (children == null)
+                    return null;
+
                 var currentIndex = children.FindIndex(i => i.ID == this.ID);
                 var previousIndex = currentIndex - 1;
 
@@ -112,7 +116,11 @@ namespace FrameworkLibrary
         {
             get
             {
-                var children = this.Media.ParentMedia.LiveMediaDetail.ChildMediaDetails.ToList();
+                var children = this.Media?.ParentMedia?.LiveMediaDetail?.ChildMediaDetails?.ToList();
+
+                if (children == null)
+                    return null;
+
                 var currentIndex = children.FindIndex(i => i.ID == this.ID);
                 var nextIndex = currentIndex + 1;
 

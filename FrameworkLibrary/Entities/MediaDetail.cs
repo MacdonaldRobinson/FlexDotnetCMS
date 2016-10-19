@@ -99,9 +99,15 @@ namespace FrameworkLibrary
                 if (previousIndex < 0)
                     previousIndex = 0;
 
-                return children[previousIndex];
+                var previousMediaDetail = children[previousIndex];
+
+                if (previousMediaDetail.ID == this.ID)
+                    return null;
+
+                return previousMediaDetail;
             }
         }
+
         public IMediaDetail NextMediaDetail
         {
             get
@@ -113,8 +119,12 @@ namespace FrameworkLibrary
                 if (nextIndex >= children.Count)
                     nextIndex = 0;
 
+                var nextMediaDetail = children[nextIndex];
 
-                return children[nextIndex];
+                if (nextMediaDetail.ID == this.ID)
+                    return null;
+
+                return nextMediaDetail;
             }
         }
 

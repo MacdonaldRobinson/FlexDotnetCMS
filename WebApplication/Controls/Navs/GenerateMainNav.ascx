@@ -8,7 +8,7 @@
 
         $(".nav li ul").parents("li").addClass("dropdown");
 
-        $('.dropdown').mouseover(function () {            
+        $('.dropdown').mouseover(function () {
             if (!isMobile) {
                 $(this).find(".dropdown-menu").show();
             }
@@ -49,6 +49,4 @@
     });
 </script>-->
 
-<div id="mainNav">
-    <Site:GenerateNav ID="GenerateNav" runat="server" RenderRootMedia="false" RenderDepth="2" DisplayProtectedSections="false" TopLevelAnchorClasses="main-nav__link" SubAnchorClasses="main-nav__sublink" SubULClasses="main-nav__submenu" />
-</div>
+<Site:GenerateNav ID="GenerateNav" runat="server" RenderRootMedia="false" RenderDepth="2" DisplayProtectedSections="false" TopLevelAnchorClasses="main-nav__link" SubAnchorClasses="main-nav__sublink" SubULClasses="main-nav__submenu" />

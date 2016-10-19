@@ -197,7 +197,7 @@ namespace WebApplication
 
         public void Page_PreLoad(object sender, EventArgs e)
         {
-            if ((FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail != null) && (Page.Master != null))
+            if ((FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail != null) && (Page != null))
             {
                 Page.MetaDescription = StringHelper.StripExtraSpaces(StringHelper.StripHtmlTags(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.GetMetaDescription()));
                 Page.MetaKeywords = StringHelper.StripExtraSpaces(StringHelper.StripHtmlTags(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.GetMetaKeywords()));

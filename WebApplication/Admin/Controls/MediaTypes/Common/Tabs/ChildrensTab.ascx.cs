@@ -17,7 +17,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
         {
             this.selectedItem = selectedItem;
             Bind();
-        }        
+        }
 
         protected void Page_PreRender(object sender, EventArgs e)
         {
@@ -29,7 +29,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
             var mediaId = selectedItem.Media.ID;
 
             if (string.IsNullOrEmpty(searchText))
-            {                
+            {
                 listItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == mediaId && i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0).OrderByDescending(i => i.DateLastModified).ToList<IMediaDetail>();
             }
             else
@@ -108,7 +108,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
             ItemList.UseAccessibleHeader = true;
             if (ItemList.HeaderRow != null)
             {
-                ItemList.HeaderRow.TableSection = TableRowSection.TableHeader;                
+                ItemList.HeaderRow.TableSection = TableRowSection.TableHeader;
             }
         }
 
@@ -124,7 +124,25 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
             if(selectedItem != null)
             {
                 Bind(SearchText.Text.Trim());
-            }            
+            }
+        }
+
+        protected void ItemList_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.DataItem == null)
+                return;
+
+            var dataItem = (IMediaDetail)e.Row.DataItem;
+
+            if (dataItem != null)
+            {
+                var editLink = (HyperLink)e.Row.FindControl("Edit");
+
+                if (editLink != null)
+                {
+                    editLink.NavigateUrl = AdminBasePage.GetRedirectToMediaDetailUrl(dataItem.MediaTypeID, dataItem.MediaID);
+                }
+            }
         }
     }
 }

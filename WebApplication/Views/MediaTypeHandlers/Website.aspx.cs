@@ -14,5 +14,10 @@ namespace WebApplication.Views.MediaTypeHandlers
         {
             DynamicContent.Controls.Add(this.ParseControl(MediaDetailsMapper.ParseSpecialTags(CurrentMediaDetail)));
         }
+
+        public new FrameworkLibrary.Website CurrentMediaDetail
+        {
+            get { return (FrameworkLibrary.Website)base.CurrentMediaDetail; }
+        }
     }
 }

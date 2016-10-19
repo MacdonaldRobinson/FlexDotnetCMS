@@ -25,7 +25,7 @@
                 </div>
                 <div class="clear"></div>
             </div>
-            <asp:GridView runat="server" ID="ItemList" AllowSorting="false" AutoGenerateColumns="false" AllowPaging="true" CssClass="DragDropGrid DataTable" OnPageIndexChanging="ItemList_PageIndexChanging" OnDataBound="ItemList_DataBound" Width="100%" PageSize="20" OnSorting="ItemList_Sorting">
+            <asp:GridView runat="server" ID="ItemList" AllowSorting="false" AutoGenerateColumns="false" AllowPaging="true" CssClass="DragDropGrid DataTable" OnPageIndexChanging="ItemList_PageIndexChanging" OnDataBound="ItemList_DataBound" OnRowDataBound="ItemList_RowDataBound" Width="100%" PageSize="20" OnSorting="ItemList_Sorting">
                 <Columns>
                     <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
                     <asp:BoundField DataField="SectionTitle" HeaderText="SectionTitle" SortExpression="SectionTitle" />
@@ -33,7 +33,8 @@
                     <asp:BoundField DataField="DateLastModified" HeaderText="DateLastModified" SortExpression="DateLastModified" />
                     <asp:TemplateField HeaderText="">
                         <ItemTemplate>
-                            <asp:LinkButton ID="Edit" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="Edit_Click">Edit</asp:LinkButton>
+                            <asp:HyperLink ID="Edit" runat="server">Edit</asp:HyperLink>
+                            <%--<asp:LinkButton ID="Edit" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="Edit_Click">Edit</asp:LinkButton>--%>
                             <%--| <asp:LinkButton ID="Delete" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="Delete_Click" OnClientClick="return confirm('Are you sure you want to perminently delete this item? you will loose all data that has been assigned to this this.')">Delete</asp:LinkButton>--%>
                         </ItemTemplate>
                     </asp:TemplateField>

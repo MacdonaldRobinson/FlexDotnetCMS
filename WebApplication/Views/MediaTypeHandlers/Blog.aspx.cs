@@ -14,21 +14,21 @@ namespace WebApplication.Views.MediaTypeHandlers
         {
             //DynamicContent.Controls.Add(this.ParseControl(MediaDetailsMapper.ParseSpecialTags(CurrentMediaDetail)));
 
-            var blogCategoriesMediaTypeId = 26;
+            var blogCategoriesMediaTypeId = 50;
             var blogPostMediaTypeId = 24;
 
-            BlogCategories.DataSource = MediaDetailsMapper.GetAllActiveByMediaType(blogCategoriesMediaTypeId).ToList();
+            BlogCategories.DataSource = MediaDetailsMapper.GetAllActiveByMediaType(blogCategoriesMediaTypeId).OrderBy(i=>i.Media.OrderIndex).ToList();
             BlogCategories.DataBind();
 
             IEnumerable<IMediaDetail> blogPosts = new List<IMediaDetail>();
 
             if(CurrentMediaDetail.MediaType.ID == blogCategoriesMediaTypeId)
             {
-                blogPosts = CurrentMediaDetail.ChildMediaDetails.OrderByDescending(i=>i.DateCreated).ToList();
+                blogPosts = CurrentMediaDetail.ChildMediaDetails.OrderByDescending(i=>(i.PublishDate == null)? DateTime.Parse(i.Fields.FirstOrDefault(j=>j.FieldCode == "ArticlePublishDate").FieldValue) : i.PublishDate).ToList();
             }
             else
             {
-                blogPosts = MediaDetailsMapper.GetAllActiveByMediaType(blogPostMediaTypeId).OrderByDescending(i=>i.DateCreated).ToList();
+                blogPosts = MediaDetailsMapper.GetAllActiveByMediaType(blogPostMediaTypeId).OrderByDescending(i=> (i.PublishDate == null) ? DateTime.Parse(i.Fields.FirstOrDefault(j => j.FieldCode == "ArticlePublishDate").FieldValue) : i.PublishDate).ToList();
             }
 
             BlogPosts.DataSource = blogPosts;

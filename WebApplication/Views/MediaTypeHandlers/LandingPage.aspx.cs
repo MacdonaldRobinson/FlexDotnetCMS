@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 namespace WebApplication.Views.MediaTypeHandlers
 {
-    public partial class LandingPage : BasePage
+    public partial class LandingPage : FrontEndBasePage
     {
         protected void Page_Init(object sender, EventArgs e)
         {

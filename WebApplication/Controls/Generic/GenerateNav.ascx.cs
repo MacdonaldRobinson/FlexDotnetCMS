@@ -45,6 +45,9 @@ namespace WebApplication.Controls
 
             var mediaDetail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.MediaID == rootMedia.ID && i.LanguageID == BasePage.CurrentLanguage.ID);
 
+            if (mediaDetail == null)
+                return;
+
             if (mediaDetail.MediaType.Name == MediaTypeEnum.RootPage.ToString())
                 rootMedia = WebsitesMapper.GetWebsite().Media;
 
@@ -117,27 +120,27 @@ namespace WebApplication.Controls
                 HyperLink Link = (HyperLink)e.Item.FindControl("Link");
                 ListView ChildList = (ListView)e.Item.FindControl("ChildList");
 
-                IMediaDetail details = (IMediaDetail)e.Item.DataItem;
+                IMediaDetail detail = (IMediaDetail)e.Item.DataItem;
 
-                if (!displayProtectedSections && details.IsProtected)
+                if (!displayProtectedSections && detail.IsProtected)
                 {
                     if (BasePage.CurrentUser == null)
                         e.Item.Visible = false;
                 }
 
-                Link.Text = details.LinkTitle;
+                Link.Text = detail.LinkTitle;
 
-                string virtualPath = details.AutoCalculatedVirtualPath;
+                string virtualPath = detail.AutoCalculatedVirtualPath;
 
-                if (details.UseDirectLink)
+                if (detail.UseDirectLink)
                 {
-                    if (details.DirectLink.Contains("#footer"))
+                    if (detail.DirectLink.Contains("#footer"))
                     {
                         virtualPath = HttpContext.Current.Request.Url + "#footer";
                     }
                     else
                     {
-                        virtualPath = details.DirectLink;
+                        virtualPath = detail.DirectLink;
                     }
                 }
 
@@ -157,7 +160,7 @@ namespace WebApplication.Controls
 
                 }
 
-                if (details.OpenInNewWindow)
+                if (detail.OpenInNewWindow)
                     Link.Target = "_blank";
 
                 if (!virtualPath.EndsWith("/"))
@@ -186,33 +189,33 @@ namespace WebApplication.Controls
                 if (li.Attributes["class"] == null)
                     li.Attributes.Add("class", "index-" + e.Item.DataItemIndex.ToString());
 
-                if (virtualPath == currentVirtualPath || details.VirtualPath == currentVirtualPath)
+                if (virtualPath == currentVirtualPath || detail.VirtualPath == currentVirtualPath)
                 {
                     li.Attributes["class"] += " current";
                 }
-                else if (currentVirtualPath.Contains(virtualPath) || currentVirtualPath.Contains(details.VirtualPath))
+                else if (currentVirtualPath.Contains(virtualPath) || currentVirtualPath.Contains(detail.VirtualPath))
                 {
                     li.Attributes["class"] += " currentParent";
 
-                    if ((rootMedia != null) && (details.MediaID == rootMedia.ID))
+                    if ((rootMedia != null) && (detail.MediaID == rootMedia.ID))
                         li.Attributes["class"] += " rootParent";
                 }
 
-                li.Attributes["class"] += " " + details.VirtualPath.Replace("/", "-").Replace("~", "home");
+                li.Attributes["class"] += " " + detail.VirtualPath.Replace("/", "-").Replace("~", "home");
 
                 if (li.Attributes["class"].EndsWith("-"))
                     li.Attributes["class"] = li.Attributes["class"].Substring(0, li.Attributes["class"].Length - 1);
 
-                if (!string.IsNullOrEmpty(details.CssClasses))
-                    li.Attributes["class"] += " " + details.CssClasses;
+                if (!string.IsNullOrEmpty(detail.CssClasses))
+                    li.Attributes["class"] += " " + detail.CssClasses;
 
                 li.Attributes["class"] = li.Attributes["class"].Trim();
 
                 IEnumerable<IMediaDetail> childItems = new List<IMediaDetail>();
 
-                if ((rootMedia != null) && (details.MediaID != rootMedia.ID))
+                if ((rootMedia != null) && (detail.MediaID != rootMedia.ID))
                 {
-                    childItems = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == details.Media.ID && i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex);
+                    childItems = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == detail.Media.ID && i.HistoryVersionNumber == 0 && i.LanguageID == detail.LanguageID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex);
                     //childItems = details.Media.ChildMedias.SelectMany(i => i.MediaDetails.Where(j => j.HistoryVersionNumber == 0 && !j.IsDeleted && j.PostPublishDate <= DateTime.Now && j.LanguageID == details.LanguageID));
                     //childItems = MediaDetailsMapper.FilterOutDeletedAndArchived(MediaDetailsMapper.GetAllChildMediaDetails(details.Media, details.Language));
 
@@ -239,7 +242,7 @@ namespace WebApplication.Controls
                         if (RenderParentItemInChildNav)
                         {
                             var parentDetails = new List<IMediaDetail>();
-                            parentDetails.Add(details);
+                            parentDetails.Add(detail);
 
                             list = list.Concat(parentDetails);
                         }

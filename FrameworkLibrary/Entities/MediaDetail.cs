@@ -88,6 +88,20 @@ namespace FrameworkLibrary
             return renderVersion.ToString() + "_" + this.AutoCalculatedVirtualPath.Replace("~", "");
         }
 
+        public IMediaDetail PreviousMediaDetail
+        {
+            get
+            {
+                var children = this.Media.ParentMedia.LiveMediaDetail.ChildMediaDetails.ToList();
+                var currentIndex = children.FindIndex(i => i.ID == this.ID);
+                var previousIndex = currentIndex - 1;
+
+                if (previousIndex < 0)
+                    previousIndex = 0;
+
+                return children[previousIndex];
+            }
+        }
         public IMediaDetail NextMediaDetail
         {
             get

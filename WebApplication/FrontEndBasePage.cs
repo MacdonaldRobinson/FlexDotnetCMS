@@ -245,13 +245,13 @@ namespace WebApplication
                     html = StringHelper.StripExtraSpacesBetweenMarkup(html);
             }
 
-            /*if (CurrentMediaDetail != null)
+            if (CurrentMediaDetail != null)
             {
                 if (!IsAjaxRequest && !IsInAdminSection)
                 {
                     html = MediaDetailsMapper.ParseSpecialTags(CurrentMediaDetail, html);
                 }
-            }*/
+            }
 
             HtmlAgilityPack.HtmlDocument document = null;
 

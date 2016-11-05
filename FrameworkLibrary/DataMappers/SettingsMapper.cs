@@ -26,6 +26,7 @@ namespace FrameworkLibrary
         public static void ClearCache()
         {
             ContextHelper.Remove(mapperKey, mapperStorageContext);
+            _settings = null;
         }
 
         public static Return Update(Settings obj)

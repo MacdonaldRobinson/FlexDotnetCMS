@@ -19,6 +19,12 @@ namespace FrameworkLibrary
             return allItems.FirstOrDefault(item => item.ID == id);
         }
 
+        public static IEnumerable<Comment> GetByStatus(StatusEnum statusEnum)
+        {
+            var allItems = GetAll();
+            return allItems.Where(item => item.Status == statusEnum.ToString());
+        }
+
         /*public static IEnumerable<Comment> GetByMediaDetail(IMediaDetail detail)
         {
             var allItems = GetAll();

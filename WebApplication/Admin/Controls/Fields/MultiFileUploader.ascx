@@ -39,7 +39,7 @@
                                     <a>
                                         <img src="<%# (Item.MediaDetail != null) ? URIHelper.ConvertToAbsUrl(Item.MediaDetail.PathToFile) : "#" %>" alt="<%# (Item.MediaDetail != null) ? Item.MediaDetail.SectionTitle : "" %>" />
                                         <div style="max-width:100px;">
-                                            <%# Item.MediaDetail.SectionTitle %>
+                                            <%# (Item.MediaDetail != null) ? Item.MediaDetail.SectionTitle : ""; %>
                                         </div>
                                     </a>
                                 </li>

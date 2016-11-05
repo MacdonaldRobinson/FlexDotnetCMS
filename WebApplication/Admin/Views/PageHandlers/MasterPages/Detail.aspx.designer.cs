@@ -40,13 +40,22 @@ namespace WebApplication.Admin.Views.PageHandlers.MasterPages {
         protected global::WebApplication.Admin.Controls.Fields.FileSelector PathToFile;
         
         /// <summary>
-        /// IsDefault control.
+        /// UseLayout control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox IsDefault;
+        protected global::System.Web.UI.WebControls.CheckBox UseLayout;
+        
+        /// <summary>
+        /// Layout control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Layout;
         
         /// <summary>
         /// MobileTemplate control.

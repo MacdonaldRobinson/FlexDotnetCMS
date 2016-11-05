@@ -55,7 +55,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::WebApplication.Controls.Lists.CommentsList ApprovedCommentsList;
+        protected global::WebApplication.Admin.Controls.Generic.MediaComments ApprovedCommentsList;
         
         /// <summary>
         /// RejectedCommentsList control.
@@ -64,7 +64,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::WebApplication.Controls.Lists.CommentsList RejectedCommentsList;
+        protected global::WebApplication.Admin.Controls.Generic.MediaComments RejectedCommentsList;
         
         /// <summary>
         /// PendingCommentsList control.
@@ -73,6 +73,6 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::WebApplication.Controls.Lists.CommentsList PendingCommentsList;
+        protected global::WebApplication.Admin.Controls.Generic.MediaComments PendingCommentsList;
     }
 }

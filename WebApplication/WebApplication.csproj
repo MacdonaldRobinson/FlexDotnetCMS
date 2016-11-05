@@ -136,6 +136,7 @@
     <Content Include="Admin\Controls\Fields\AssociationCheckBoxList.ascx" />
     <Content Include="Admin\Controls\Fields\AssociationDropDownList.ascx" />
     <Content Include="Admin\Controls\Fields\MultiFileUploader.ascx" />
+    <Content Include="Admin\Controls\Generic\MediaComments.ascx" />
     <Content Include="Admin\Controls\MediaTypes\Common\CommonPanel.ascx" />
     <Content Include="Admin\Controls\MediaTypes\Common\Tabs\AdvancedSettingsTab.ascx" />
     <Content Include="Admin\Controls\MediaTypes\Common\Tabs\ChildrensTab.ascx" />
@@ -706,6 +707,13 @@
     </Compile>
     <Compile Include="Admin\Controls\Fields\MultiFileUploader.ascx.designer.cs">
       <DependentUpon>MultiFileUploader.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Generic\MediaComments.ascx.cs">
+      <DependentUpon>MediaComments.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Generic\MediaComments.ascx.designer.cs">
+      <DependentUpon>MediaComments.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Controls\MediaTypes\BaseTab.cs">
       <SubType>ASPXCodeBehind</SubType>

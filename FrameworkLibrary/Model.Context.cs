@@ -25,7 +25,6 @@ namespace FrameworkLibrary
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<EmailLog> EmailLogs { get; set; }
         public virtual DbSet<Language> Languages { get; set; }
         public virtual DbSet<Media> AllMedia { get; set; }
@@ -47,5 +46,6 @@ namespace FrameworkLibrary
         public virtual DbSet<IPLocationTrackerEntry> IPLocationTrackerEntries { get; set; }
         public virtual DbSet<RoleMediaDetail> RolesMediaDetails { get; set; }
         public virtual DbSet<FieldAssociation> FieldAssociations { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
     }
 }

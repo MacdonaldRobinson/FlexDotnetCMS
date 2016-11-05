@@ -1016,7 +1016,19 @@ namespace FrameworkLibrary
                         }
                     }
                 }
+            }
 
+            if (customCode.Contains("{Settings:"))
+            {
+                var settingsShortCodes = Regex.Matches(customCode, "{Settings:[a-zA-Z0-9:=\"\".]+}");
+
+                foreach (var settingsShortCode in settingsShortCodes)
+                {
+                    var setting = settingsShortCode.ToString().Replace("Settings:", "");
+                    var returnString =  ParserHelper.ParseData(setting, SettingsMapper.GetSettings());
+
+                    customCode = customCode.Replace(settingsShortCode.ToString(), returnString);
+                }
             }
 
             if (passToParser == null)

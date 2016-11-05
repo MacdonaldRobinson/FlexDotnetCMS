@@ -5,20 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="FrameworkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Comments">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Status" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="DateCreated" Type="datetime" Nullable="false" />
-          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
-          <Property Name="ReplyToCommentID" Type="bigint" />
-          <Property Name="MediaID" Type="bigint" Nullable="false" />
-        </EntityType>
         <EntityType Name="EmailLog">
           <Key>
             <PropertyRef Name="ID" />
@@ -105,6 +91,8 @@
           <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="PathToFile" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="MobileTemplate" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UseLayout" Type="bit" Nullable="false" />
+          <Property Name="Layout" Type="nvarchar(max)" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateLastModified" Type="datetime" Nullable="false" />
         </EntityType>
@@ -115,6 +103,21 @@
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ParentMediaID" Type="bigint" />
           <Property Name="OrderIndex" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MediaComments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+          <Property Name="ReplyToCommentID" Type="bigint" />
+          <Property Name="MediaID" Type="bigint" Nullable="false" />
+          <Property Name="LanguageID" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="MediaDetails">
           <Key>
@@ -400,26 +403,14 @@
           <Property Name="CodeInHead" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CodeInBody" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Comments_Media">
-          <End Role="Media" Type="Self.Media" Multiplicity="1" />
-          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Media">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Comments">
-              <PropertyRef Name="MediaID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Comments_ReplyToCommentID">
-          <End Role="Comments" Type="Self.Comments" Multiplicity="0..1" />
-          <End Role="Comments1" Type="Self.Comments" Multiplicity="*" />
+          <End Role="MediaComments" Type="Self.MediaComments" Multiplicity="0..1" />
+          <End Role="MediaComments1" Type="Self.MediaComments" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Comments">
+            <Principal Role="MediaComments">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Comments1">
+            <Dependent Role="MediaComments1">
               <PropertyRef Name="ReplyToCommentID" />
             </Dependent>
           </ReferentialConstraint>
@@ -457,6 +448,30 @@
             </Principal>
             <Dependent Role="Media1">
               <PropertyRef Name="ParentMediaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaComments_Languages">
+          <End Role="Languages" Type="Self.Languages" Multiplicity="1" />
+          <End Role="MediaComments" Type="Self.MediaComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Languages">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaComments">
+              <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaComments_Media">
+          <End Role="Media" Type="Self.Media" Multiplicity="1" />
+          <End Role="MediaComments" Type="Self.MediaComments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Media">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaComments">
+              <PropertyRef Name="MediaID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -893,7 +908,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="FrameworkModelStoreContainer">
-          <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmailLog" EntityType="Self.EmailLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fields" EntityType="Self.Fields" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FieldsAssociations" EntityType="Self.FieldsAssociations" Schema="dbo" store:Type="Tables" />
@@ -902,6 +916,7 @@
           <EntitySet Name="Languages" EntityType="Self.Languages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MasterPages" EntityType="Self.MasterPages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Media" EntityType="Self.Media" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MediaComments" EntityType="Self.MediaComments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MediaDetails" EntityType="Self.MediaDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MediaDetailsFields" EntityType="Self.MediaDetailsFields" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MediaTags" EntityType="Self.MediaTags" Schema="dbo" store:Type="Tables" />
@@ -924,13 +939,9 @@
           <EntitySet Name="UsersRoles" EntityType="Self.UsersRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebserviceRequests" EntityType="Self.WebserviceRequests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Website" EntityType="Self.Website" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Comments_Media" Association="Self.FK_Comments_Media">
-            <End Role="Media" EntitySet="Media" />
-            <End Role="Comments" EntitySet="Comments" />
-          </AssociationSet>
           <AssociationSet Name="FK_Comments_ReplyToCommentID" Association="Self.FK_Comments_ReplyToCommentID">
-            <End Role="Comments" EntitySet="Comments" />
-            <End Role="Comments1" EntitySet="Comments" />
+            <End Role="MediaComments" EntitySet="MediaComments" />
+            <End Role="MediaComments1" EntitySet="MediaComments" />
           </AssociationSet>
           <AssociationSet Name="FK_FieldAssociations_MediaDetails" Association="Self.FK_FieldAssociations_MediaDetails">
             <End Role="MediaDetails" EntitySet="MediaDetails" />
@@ -943,6 +954,14 @@
           <AssociationSet Name="FK_Media_ParentMediaID" Association="Self.FK_Media_ParentMediaID">
             <End Role="Media" EntitySet="Media" />
             <End Role="Media1" EntitySet="Media" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaComments_Languages" Association="Self.FK_MediaComments_Languages">
+            <End Role="Languages" EntitySet="Languages" />
+            <End Role="MediaComments" EntitySet="MediaComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaComments_Media" Association="Self.FK_MediaComments_Media">
+            <End Role="Media" EntitySet="Media" />
+            <End Role="MediaComments" EntitySet="MediaComments" />
           </AssociationSet>
           <AssociationSet Name="FK_MediaDetailFields_MediaDetails" Association="Self.FK_MediaDetailFields_MediaDetails">
             <End Role="MediaDetails" EntitySet="MediaDetails" />
@@ -1094,7 +1113,6 @@
     <edmx:ConceptualModels>
       <Schema Namespace="FrameworkModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
-          <EntitySet Name="Comments" EntityType="FrameworkModel.Comment" />
           <EntitySet Name="EmailLogs" EntityType="FrameworkModel.EmailLog" />
           <EntitySet Name="Languages" EntityType="FrameworkModel.Language" />
           <EntitySet Name="AllMedia" EntityType="FrameworkModel.Media" />
@@ -1125,10 +1143,6 @@
           <AssociationSet Name="RolesPermissions" Association="FrameworkModel.RolesPermissions">
             <End Role="Permission" EntitySet="Permissions" />
             <End Role="Role" EntitySet="Roles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comments_ReplyToCommentID" Association="FrameworkModel.FK_Comments_ReplyToCommentID">
-            <End Role="Comment" EntitySet="Comments" />
-            <End Role="Comment1" EntitySet="Comments" />
           </AssociationSet>
           <EntitySet Name="Tags" EntityType="FrameworkModel.Tag" />
           <EntitySet Name="MediaTypes" EntityType="FrameworkModel.MediaType" />
@@ -1240,28 +1254,20 @@
             <End Role="MediaDetailField" EntitySet="Fields" />
             <End Role="FieldsAssociation" EntitySet="FieldAssociations" />
           </AssociationSet>
-          <AssociationSet Name="FK_Comments_Media" Association="FrameworkModel.FK_Comments_Media">
+          <EntitySet Name="Comments" EntityType="FrameworkModel.Comment" />
+          <AssociationSet Name="FK_MediaComments_Languages" Association="FrameworkModel.FK_MediaComments_Languages">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="MediaComment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MediaComments_Media" Association="FrameworkModel.FK_MediaComments_Media">
             <End Role="Media" EntitySet="AllMedia" />
-            <End Role="Comment" EntitySet="Comments" />
+            <End Role="MediaComment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_ReplyToCommentID" Association="FrameworkModel.FK_Comments_ReplyToCommentID">
+            <End Role="MediaComment" EntitySet="Comments" />
+            <End Role="MediaComment1" EntitySet="Comments" />
           </AssociationSet>
           </EntityContainer>
-        <EntityType Name="Comment">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Email" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Message" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Status" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
-          <Property Type="DateTime" Name="DateLastModified" Nullable="false" Precision="3" />
-          <Property Type="Int64" Name="ReplyToCommentID" />
-          <NavigationProperty Name="ReplyToComments" Relationship="FrameworkModel.FK_Comments_ReplyToCommentID" FromRole="Comment" ToRole="Comment1" />
-          <NavigationProperty Name="ReplyToComment" Relationship="FrameworkModel.FK_Comments_ReplyToCommentID" FromRole="Comment1" ToRole="Comment" />
-          <Property Name="MediaID" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Media" Relationship="FrameworkModel.FK_Comments_Media" FromRole="Comment" ToRole="Media" />
-        </EntityType>
         <EntityType Name="EmailLog">
           <Key>
             <PropertyRef Name="ID" />
@@ -1294,6 +1300,7 @@
           <Property Type="String" Name="UriSegment" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Settings" Relationship="FrameworkModel.FK_Settings_Languages" FromRole="Language" ToRole="Settings" />
+          <NavigationProperty Name="MediaComments" Relationship="FrameworkModel.FK_MediaComments_Languages" FromRole="Language" ToRole="MediaComment" />
         </EntityType>
         <EntityType Name="Media">
           <Key>
@@ -1306,7 +1313,7 @@
           <NavigationProperty Name="MediaDetails" Relationship="FrameworkModel.FK_MediaDetails_MediaID_Media_ID" FromRole="Medium" ToRole="MediaDetail" />
           <Property Type="Int32" Name="OrderIndex" Nullable="false" />
           <NavigationProperty Name="MediaTags" Relationship="FrameworkModel.FK_MediaTags_MediaID_Media_ID" FromRole="Media" ToRole="MediaTag" />
-          <NavigationProperty Name="Comments" Relationship="FrameworkModel.FK_Comments_Media" FromRole="Media" ToRole="Comment" />
+          <NavigationProperty Name="Comments" Relationship="FrameworkModel.FK_MediaComments_Media" FromRole="Media" ToRole="MediaComment" />
           </EntityType>
         <EntityType Name="MediaDetail" Abstract="true">
           <Key>
@@ -1483,18 +1490,6 @@
         <Association Name="RolesPermissions">
           <End Type="FrameworkModel.Permission" Role="Permission" Multiplicity="*" />
           <End Type="FrameworkModel.Role" Role="Role" Multiplicity="*" />
-        </Association>
-        <Association Name="FK_Comments_ReplyToCommentID">
-          <End Type="FrameworkModel.Comment" Role="Comment" Multiplicity="0..1" />
-          <End Type="FrameworkModel.Comment" Role="Comment1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Comment">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Comment1">
-              <PropertyRef Name="ReplyToCommentID" />
-            </Dependent>
-          </ReferentialConstraint>
         </Association>
         <EntityType Name="Tag">
           <Key>
@@ -1713,6 +1708,8 @@
           <NavigationProperty Name="MediaDetails" Relationship="FrameworkModel.FK_MediaDetails_MasterPage" FromRole="MasterPage" ToRole="MediaDetail" />
           <Property Type="String" Name="MobileTemplate" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Settings" Relationship="FrameworkModel.FK_Settings_MasterPages" FromRole="MasterPage" ToRole="Settings" />
+          <Property Name="Layout" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UseLayout" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_MediaTypes_MasterPages">
           <End Type="FrameworkModel.MasterPage" Role="MasterPage" Multiplicity="0..1" />
@@ -2003,15 +2000,58 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Comments_Media">
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateLastModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ReplyToCommentID" Type="Int64" />
+          <Property Name="MediaID" Type="Int64" Nullable="false" />
+          <Property Name="LanguageID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Language" Relationship="FrameworkModel.FK_MediaComments_Languages" FromRole="MediaComment" ToRole="Language" />
+          <NavigationProperty Name="Media" Relationship="FrameworkModel.FK_MediaComments_Media" FromRole="MediaComment" ToRole="Media" />
+          <NavigationProperty Name="ReplyToComments" Relationship="FrameworkModel.FK_Comments_ReplyToCommentID" FromRole="MediaComment" ToRole="MediaComment1" />
+          <NavigationProperty Name="ReplyToComment" Relationship="FrameworkModel.FK_Comments_ReplyToCommentID" FromRole="MediaComment1" ToRole="MediaComment" />
+        </EntityType>
+        <Association Name="FK_MediaComments_Languages">
+          <End Type="FrameworkModel.Language" Role="Language" Multiplicity="1" />
+          <End Type="FrameworkModel.Comment" Role="MediaComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaComment">
+              <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MediaComments_Media">
           <End Type="FrameworkModel.Media" Role="Media" Multiplicity="1" />
-          <End Type="FrameworkModel.Comment" Role="Comment" Multiplicity="*" />
+          <End Type="FrameworkModel.Comment" Role="MediaComment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Media">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Comment">
+            <Dependent Role="MediaComment">
               <PropertyRef Name="MediaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_ReplyToCommentID">
+          <End Type="FrameworkModel.Comment" Role="MediaComment" Multiplicity="0..1" />
+          <End Type="FrameworkModel.Comment" Role="MediaComment1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MediaComment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MediaComment1">
+              <PropertyRef Name="ReplyToCommentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2021,21 +2061,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="FrameworkModelStoreContainer" CdmEntityContainer="Entities">
-          <EntitySetMapping Name="Comments">
-            <EntityTypeMapping TypeName="FrameworkModel.Comment">
-              <MappingFragment StoreEntitySet="Comments">
-                <ScalarProperty Name="MediaID" ColumnName="MediaID" />
-                <ScalarProperty Name="ReplyToCommentID" ColumnName="ReplyToCommentID" />
-                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="EmailLogs">
             <EntityTypeMapping TypeName="FrameworkModel.EmailLog">
               <MappingFragment StoreEntitySet="EmailLog">
@@ -2300,6 +2325,8 @@
           <EntitySetMapping Name="MasterPages">
             <EntityTypeMapping TypeName="FrameworkModel.MasterPage">
               <MappingFragment StoreEntitySet="MasterPages">
+                <ScalarProperty Name="UseLayout" ColumnName="UseLayout" />
+                <ScalarProperty Name="Layout" ColumnName="Layout" />
                 <ScalarProperty Name="MobileTemplate" ColumnName="MobileTemplate" />
                 <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
@@ -2431,6 +2458,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="FrameworkModel.Comment">
+              <MappingFragment StoreEntitySet="MediaComments">
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="MediaID" ColumnName="MediaID" />
+                <ScalarProperty Name="ReplyToCommentID" ColumnName="ReplyToCommentID" />
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2454,10 +2497,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="Model" ZoomLevel="83">
-        <EntityTypeShape EntityType="FrameworkModel.Comment" Width="1.5" PointX="3.125" PointY="7.75" Height="3.9033007812499996" />
         <EntityTypeShape EntityType="FrameworkModel.EmailLog" Width="1.5" PointX="10.25" PointY="11.5" Height="3.1340950520833282" />
-        <EntityTypeShape EntityType="FrameworkModel.Language" Width="1.5" PointX="0.75" PointY="7.375" Height="2.9417936197916674" />
-        <EntityTypeShape EntityType="FrameworkModel.Media" Width="1.5" PointX="3" PointY="3.375" Height="2.3648893229166665" />
+        <EntityTypeShape EntityType="FrameworkModel.Language" Width="1.5" PointX="1.375" PointY="7.375" Height="2.9417936197916674" />
+        <EntityTypeShape EntityType="FrameworkModel.Media" Width="1.5" PointX="2.75" PointY="3.375" Height="2.3648893229166665" />
         <EntityTypeShape EntityType="FrameworkModel.MediaDetail" PointX="5.25" PointY="4.125" Width="1.5" Height="9.8646451822916656" />
         <EntityTypeShape EntityType="FrameworkModel.Page" Width="1.5" PointX="7" PointY="12.5" Height="1.0187792968749996" />
         <AssociationConnector Association="FrameworkModel.FK_MediaDetails_LanguageID_Languages_ID">
@@ -2518,12 +2560,6 @@
           <ConnectorPoint PointX="3.6529956666666661" PointY="19.595602213541667" />
           <ConnectorPoint PointX="3.1962919999999997" PointY="19.595602213541667" />
           <ConnectorPoint PointX="3.1962919999999997" PointY="17.384095052083335" />
-        </AssociationConnector>
-        <AssociationConnector Association="FrameworkModel.FK_Comments_ReplyToCommentID">
-          <ConnectorPoint PointX="3.5319230769230767" PointY="11.77830078125" />
-          <ConnectorPoint PointX="3.5319230769230767" PointY="12.02830078125" />
-          <ConnectorPoint PointX="3.9784615384615383" PointY="12.02830078125" />
-          <ConnectorPoint PointX="3.9784615384615383" PointY="11.77830078125" />
         </AssociationConnector>
         <EntityTypeShape EntityType="FrameworkModel.Tag" Width="1.5" PointX="5.25" PointY="0.75" Height="2.5571907552083246" />
         <EntityTypeShape EntityType="FrameworkModel.MediaType" PointX="14.875" PointY="7.625" Width="1.5" Height="3.5186979166666656" />
@@ -2684,8 +2720,8 @@
           <ConnectorPoint PointX="3.7363289999999996" PointY="20" />
         </InheritanceConnector>
         <EntityTypeShape EntityType="FrameworkModel.GlossaryTerm" Width="1.5" PointX="16" PointY="1.875" />
-        <EntityTypeShape EntityType="FrameworkModel.Field" Width="1.5" PointX="7.375" PointY="4" />
-        <EntityTypeShape EntityType="FrameworkModel.MediaDetailField" Width="1.5" PointX="9.75" PointY="8.875" />
+        <EntityTypeShape EntityType="FrameworkModel.Field" Width="1.5" PointX="9.375" PointY="6" />
+        <EntityTypeShape EntityType="FrameworkModel.MediaDetailField" Width="1.5" PointX="7.25" PointY="4.5" />
         <AssociationConnector Association="FrameworkModel.FK_MediaDetailFields_MediaDetails" />
         <InheritanceConnector EntityType="FrameworkModel.MediaDetailField" />
         <EntityTypeShape EntityType="FrameworkModel.MediaTypeField" Width="1.5" PointX="13" PointY="5.75" />
@@ -2698,10 +2734,13 @@
         <EntityTypeShape EntityType="FrameworkModel.RoleMediaDetail" Width="1.5" PointX="7" PointY="19.5" />
         <AssociationConnector Association="FrameworkModel.FK_RolesMediaDetails_MediaDetailID" />
         <AssociationConnector Association="FrameworkModel.FK_RolesMediaDetails_RoleID" />
-        <EntityTypeShape EntityType="FrameworkModel.FieldAssociation" Width="1.5" PointX="7.5" PointY="9.375" />
+        <EntityTypeShape EntityType="FrameworkModel.FieldAssociation" Width="1.5" PointX="7.125" PointY="10.125" />
         <AssociationConnector Association="FrameworkModel.FK_FieldAssociations_MediaDetails" />
         <AssociationConnector Association="FrameworkModel.FK_FieldsAssociations_MediaDetailsFields" />
-        <AssociationConnector Association="FrameworkModel.FK_Comments_Media" />
+        <EntityTypeShape EntityType="FrameworkModel.Comment" Width="1.5" PointX="0.625" PointY="2.625" />
+        <AssociationConnector Association="FrameworkModel.FK_MediaComments_Languages" />
+        <AssociationConnector Association="FrameworkModel.FK_MediaComments_Media" />
+        <AssociationConnector Association="FrameworkModel.FK_Comments_ReplyToCommentID" />
         </Diagram>
     </Diagrams>
   </Designer>

@@ -28,6 +28,8 @@ namespace FrameworkLibrary
         public System.DateTime DateCreated { get; set; }
         public System.DateTime DateLastModified { get; set; }
         public string MobileTemplate { get; set; }
+        public string Layout { get; set; }
+        public bool UseLayout { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MediaType> MediaTypes { get; set; }

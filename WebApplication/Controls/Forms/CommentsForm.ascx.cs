@@ -86,10 +86,11 @@ namespace WebApplication.Controls
             comment.Name = Name.Text;
             comment.Email = Email.Text;
             comment.Message = Message.Text;
-                        
+
             comment.Status = StatusEnum.Pending.ToString();
 
             comment.Media = CurrentMedia;
+            comment.Language = BasePage.CurrentLanguage;
 
             return comment;
         }

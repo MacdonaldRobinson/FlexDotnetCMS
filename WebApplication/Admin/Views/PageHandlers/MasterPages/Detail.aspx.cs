@@ -36,6 +36,8 @@ namespace WebApplication.Admin.Views.PageHandlers.MasterPages
             selectedItem.Name = Name.Text;
             selectedItem.PathToFile = PathToFile.GetValue().ToString();
             selectedItem.MobileTemplate = MobileTemplate.GetValue().ToString();
+            selectedItem.Layout = Layout.Text;
+            selectedItem.UseLayout = UseLayout.Checked;
         }
 
         private void UpdateFieldsFromObject()
@@ -43,6 +45,8 @@ namespace WebApplication.Admin.Views.PageHandlers.MasterPages
             Name.Text = selectedItem.Name;
             PathToFile.SetValue(selectedItem.PathToFile);
             MobileTemplate.SetValue(selectedItem.MobileTemplate);
+            Layout.Text = selectedItem.Layout;
+            UseLayout.Checked = selectedItem.UseLayout;
         }
 
         protected void Save_OnClick(object sender, EventArgs e)
@@ -68,6 +72,7 @@ namespace WebApplication.Admin.Views.PageHandlers.MasterPages
                 DisplayErrorMessage("Error Saving Item", returnObj.Error);
             else
             {
+                SettingsMapper.ClearCache();
                 DisplaySuccessMessage("Successfully Saved Item");
             }
         }

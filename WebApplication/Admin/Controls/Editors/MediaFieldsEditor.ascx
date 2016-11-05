@@ -22,23 +22,27 @@
             BindScrollMagic();
             initAceEditors();
 
-            if (event._postBackSettings.asyncTarget.indexOf("$MediaFieldsEditor") !=-1)
+            if (event != undefined && event._postBackSettings != undefined && event._postBackSettings.asyncTarget != undefined)
             {
-                ReloadPreviewPanel();
+                if (event._postBackSettings.asyncTarget.indexOf("$MediaFieldsEditor") !=-1)
+                {
+                    ReloadPreviewPanel();
 
-                if (event._postBackSettings.asyncTarget.indexOf("$Delete") != -1)
-                {
-                    if (confirm("Successfully Updated, would you like to reload the page?")) {
-                        window.location.reload();
-                    }
-                }
-                else if(event._postBackSettings.asyncTarget.indexOf("$Update") != -1)
-                {
-                    if($("#<%= Update.ClientID%>").text().indexOf("Add") != -1)
+                    if (event._postBackSettings.asyncTarget.indexOf("$Delete") != -1)
                     {
-                        window.location.reload();
+                        if (confirm("Successfully Updated, would you like to reload the page?")) {
+                            window.location.reload();
+                        }
+                    }
+                    else if(event._postBackSettings.asyncTarget.indexOf("$Update") != -1)
+                    {
+                        if($("#<%= Update.ClientID%>").text().indexOf("Add") != -1)
+                        {
+                            window.location.reload();
+                        }
                     }
                 }
+
             }
         });
 

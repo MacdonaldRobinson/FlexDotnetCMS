@@ -19,6 +19,7 @@ namespace FrameworkLibrary
         {
             this.MediaDetails = new HashSet<MediaDetail>();
             this.Settings = new HashSet<Settings>();
+            this.MediaComments = new HashSet<Comment>();
         }
     
         public long ID { get; set; }
@@ -35,5 +36,7 @@ namespace FrameworkLibrary
         public virtual ICollection<MediaDetail> MediaDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Settings> Settings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> MediaComments { get; set; }
     }
 }

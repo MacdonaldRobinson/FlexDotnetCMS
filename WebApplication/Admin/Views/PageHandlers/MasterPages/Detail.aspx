@@ -14,8 +14,12 @@
         <Admin:FileSelector ID="PathToFile" runat="server" DirPath="~/Views/MasterPages/" />
     </div>
     <div>
-        <asp:CheckBox ID="IsDefault" runat="server" />
-        <label for="<%= IsDefault.ClientID %>">Is Default</label>
+        <asp:CheckBox ID="UseLayout" runat="server" />
+        <label for="<%= UseLayout.ClientID %>">Use Layout</label>
+    </div>
+    <div>
+        <label for="<%= Layout.ClientID %>">Layout</label>
+        <asp:TextBox runat="server" ID="Layout" CssClass="AceEditor" TextMode="MultiLine"></asp:TextBox>
     </div>
     <div>
         <label for="<%= MobileTemplate.ClientID %>">Path To Mobile Template</label>

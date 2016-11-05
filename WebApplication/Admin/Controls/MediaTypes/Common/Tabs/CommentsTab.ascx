@@ -1,7 +1,15 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CommentsTab.ascx.cs"
     Inherits="WebApplication.Admin.Controls.MediaTypes.Common.Tabs.CommentsTab" %>
 
-<asp:UpdatePanel runat="server" ID="CommentsListTabs">
+
+<script>
+    function UpdateCommentsTab()
+    {
+        RefreshUpdatePanel("CommentsListTabs");
+    }
+</script>
+
+<asp:UpdatePanel runat="server" ID="CommentsListTabs" ClientIDMode="Static">
     <ContentTemplate>
         <div id="tabs" class="tabs">
             <ul>
@@ -12,21 +20,21 @@
             <div id="ApprovedComments">
                 <fieldset>
                     <div class="CommentContainer">
-                        <Site:CommentsList ID="ApprovedCommentsList" runat="server" />
+                        <Admin:MediaComments ID="ApprovedCommentsList" runat="server" Status="Approved" />
                     </div>
                 </fieldset>
             </div>
             <div id="RejectedComments">
                 <fieldset>
                     <div class="CommentContainer">
-                        <Site:CommentsList ID="RejectedCommentsList" runat="server" />
+                        <Admin:MediaComments ID="RejectedCommentsList" runat="server" Status="Rejected" />
                     </div>
                 </fieldset>
             </div>
             <div id="PendingComments">
                 <fieldset>
                     <div class="CommentContainer">
-                        <Site:CommentsList ID="PendingCommentsList" runat="server" />
+                        <Admin:MediaComments ID="PendingCommentsList" runat="server" Status="Pending" />
                     </div>
                 </fieldset>
             </div>

@@ -34,11 +34,13 @@ function initAccordians() {
 
 function RefreshUpdatePanel(UpdatePanelClientId, OnAfterRefreshFunction) {
 
-    var OnCompleteFunction = function () {
-        OnAfterRefreshFunction();
-    }
+    if (OnAfterRefreshFunction != undefined) {
+        var OnCompleteFunction = function () {
+            OnAfterRefreshFunction();
+        }
 
-    OnUpdatePanelRefreshComplete(OnCompleteFunction);
+        OnUpdatePanelRefreshComplete(OnCompleteFunction);
+    }
 
     __doPostBack(UpdatePanelClientId, '');
 }

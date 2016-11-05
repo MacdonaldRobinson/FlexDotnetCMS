@@ -258,6 +258,11 @@ namespace WebApplication
 
                     if (useMobile)
                         masterFilePath = masterPage.GetMobileTemplate();
+
+                    if(masterPage.UseLayout)
+                    {
+                        masterFilePath = "";
+                    }
                 }
                 else
                 {

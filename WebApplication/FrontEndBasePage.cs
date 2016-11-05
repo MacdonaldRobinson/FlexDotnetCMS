@@ -138,6 +138,8 @@ namespace WebApplication
 
                 if (File.Exists(URIHelper.ConvertToAbsPath(masterFilePath)))
                     MasterPageFile = masterFilePath;
+                else
+                    MasterPageFile = "";
             }
 
             if (currentPageVirtualPath == "")
@@ -199,9 +201,11 @@ namespace WebApplication
         {
             if ((FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail != null) && (Page != null))
             {
-                Page.MetaDescription = StringHelper.StripExtraSpaces(StringHelper.StripHtmlTags(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.GetMetaDescription()));
+                /*
+                 * TODO: Reimplement
+                 * Page.MetaDescription = StringHelper.StripExtraSpaces(StringHelper.StripHtmlTags(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.GetMetaDescription()));
                 Page.MetaKeywords = StringHelper.StripExtraSpaces(StringHelper.StripHtmlTags(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.GetMetaKeywords()));
-                Page.Title = FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.GetPageTitle();
+                Page.Title = FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.GetPageTitle();*/
             }
         }
 
@@ -230,6 +234,16 @@ namespace WebApplication
             //wrt.Close();
 
             string html = str.ToString();
+
+            var masterPage = CurrentMediaDetail.GetMasterPage();
+
+            if (masterPage != null)
+            {
+                if (masterPage.UseLayout)
+                {
+                    html = masterPage.Layout.Replace("{PageContent}", html);
+                }
+            }
 
             /*if (!IsInAdminSection)
             {

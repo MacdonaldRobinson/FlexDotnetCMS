@@ -83,9 +83,9 @@ namespace FrameworkLibrary
                             var prop = nestedProperty;
 
                             var queryParamsSplit = nestedProperty.Split('?');
-
                             if (queryParamsSplit.Count() > 1)
                                 prop = queryParamsSplit.ElementAt(0);
+
 
                             tempPropertyInfo = tempNestedProperty.GetType().GetProperty(prop);
                         }
@@ -107,7 +107,7 @@ namespace FrameworkLibrary
                                         objParams[i] = Convert.ChangeType(methodParamsMatches[i + 1].Value, parametersInfo[i].ParameterType);
                                 }
 
-                                tempNestedProperty = tempMethodInfo.Invoke(tempNestedProperty, objParams.Where(i => i != null).ToArray());
+                                tempNestedProperty = tempMethodInfo.Invoke(tempNestedProperty, objParams.Where(i => i != null)?.ToArray());
                             }
 
                             if (tempNestedProperty != null)
@@ -166,9 +166,13 @@ namespace FrameworkLibrary
                                     {
                                         return ParseData("{" + nestedProperties[propertyloopIndex + 1] + "}", tempNestedProperty);
                                     }
-                                    else if (tempNestedProperty is object)
+                                    else if (tempNestedProperty is string)
                                     {
-                                        //ParseData("{" + nestedProperties[propertyloopIndex + 1] + "}", tempNestedProperty);
+                                        if(tempMethodInfo != null)
+                                        {
+                                            tagValue = tempNestedProperty.ToString();
+                                        }
+                                        //return ParseData("{" + nestedProperties[propertyloopIndex + 1] + "}", tempNestedProperty);
                                     }
                                 }
                             }
@@ -239,14 +243,16 @@ namespace FrameworkLibrary
                     {
                         var result = RunOrCompileRazorCode(razorTagValue, tagKey, obj);
 
-                        if (tagValue != result)
+                        /*if (tagValue != result)
                         {
                             data = data.Replace(tag, result);
                         }
                         else
                         {
                             data = tagValue;
-                        }
+                        }*/
+                        data = result;
+
                     }
                     catch (Exception ex)
                     {

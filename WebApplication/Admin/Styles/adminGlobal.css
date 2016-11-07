@@ -113,8 +113,30 @@ html {
 
 #SiteTree a {
     color: black;
-    font-weight: bold;
+    font-size: 12px;
 }
+
+#SiteTree .hasPendingComments a, #SiteTree .draftIsNewer a{
+    font-weight:bolder;
+    font-size: 14px;
+}
+
+#SiteTree .hasDraftWrapper {
+    background-color: orange;
+    color: #fff;
+    padding: 2px;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+
+#SiteTree .hasPendingCommentsWrapper {
+    background-color: green;
+    color: #fff;
+    padding: 2px;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+
 
 #SiteTree .isHidden > a, #SiteTree .unPublished > a {
     font-style: italic;

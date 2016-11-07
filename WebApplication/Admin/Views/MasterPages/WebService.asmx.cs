@@ -78,7 +78,7 @@ namespace WebApplication.Admin.Views.MasterPages
             }
             else
             {
-                nodeText = $"{detail.LinkTitle} <small>({detail.MediaID})</small>";
+                nodeText = $"{detail.LinkTitle}";
             }
 
             if (detail.IsDeleted)
@@ -91,6 +91,27 @@ namespace WebApplication.Admin.Views.MasterPages
 
             if ((!detail.CanRender) || (!detail.IsPublished))
                 node.li_attr._class += " unPublished";
+
+            var draft = detail.History.FirstOrDefault(i => i.IsDraft);
+
+            if (draft != null)
+            {
+                node.li_attr._class += " hasDraft";
+                nodeText += $"<small class='hasDraftWrapper'>Has Draft</small>";
+
+                if (draft.DateLastModified > detail.DateLastModified)
+                {
+                    node.li_attr._class += " draftIsNewer";
+                }
+            }
+
+            var pendingComments = detail.Media.Comments.Count(i => i.Status == StatusEnum.Pending.ToString());
+
+            if (pendingComments > 0)
+            {
+                node.li_attr._class += " hasPendingComments";
+                nodeText += $"<small class='hasPendingCommentsWrapper'>Comments(" + pendingComments + ")</small>";
+            }
 
             node.text = nodeText;
 

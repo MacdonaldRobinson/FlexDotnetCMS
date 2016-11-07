@@ -13,51 +13,6 @@ namespace WebApplication.Views.MediaTypeHandlers {
     public partial class LandingPage {
         
         /// <summary>
-        /// CommonIncludes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::WebApplication.Controls.Header CommonIncludes;
-        
-        /// <summary>
-        /// CssIncludes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder CssIncludes;
-        
-        /// <summary>
-        /// JsIncludes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder JsIncludes;
-        
-        /// <summary>
-        /// MetaIncludes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder MetaIncludes;
-        
-        /// <summary>
-        /// form2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form2;
-        
-        /// <summary>
         /// DynamicContent control.
         /// </summary>
         /// <remarks>

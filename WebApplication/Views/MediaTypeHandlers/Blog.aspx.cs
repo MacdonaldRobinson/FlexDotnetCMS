@@ -24,11 +24,11 @@ namespace WebApplication.Views.MediaTypeHandlers
 
             if(CurrentMediaDetail.MediaType.ID == blogCategoriesMediaTypeId)
             {
-                blogPosts = CurrentMediaDetail.ChildMediaDetails.OrderByDescending(i=>(i.PublishDate == null)? DateTime.Parse(i.Fields.FirstOrDefault(j=>j.FieldCode == "ArticlePublishDate").FieldValue) : i.PublishDate).ToList();
+                blogPosts = CurrentMediaDetail.ChildMediaDetails.Where(i=>i.HistoryVersionNumber == 0 && i.LanguageID == CurrentLanguage.ID).OrderByDescending(i => (i.PublishDate == null)? DateTime.Parse(i.Fields.FirstOrDefault(j=>j.FieldCode == "ArticlePublishDate").FieldValue) : i.PublishDate).ToList();
             }
             else
             {
-                blogPosts = MediaDetailsMapper.GetAllActiveByMediaType(blogPostMediaTypeId).OrderByDescending(i=> (i.PublishDate == null) ? DateTime.Parse(i.Fields.FirstOrDefault(j => j.FieldCode == "ArticlePublishDate").FieldValue) : i.PublishDate).ToList();
+                blogPosts = MediaDetailsMapper.GetAllActiveByMediaType(blogPostMediaTypeId).Where(i => i.HistoryVersionNumber == 0 && i.LanguageID == CurrentLanguage.ID).OrderByDescending(i=> (i.PublishDate == null) ? DateTime.Parse(i.Fields.FirstOrDefault(j => j.FieldCode == "ArticlePublishDate").FieldValue) : i.PublishDate).ToList();
             }
 
             BlogPosts.DataSource = blogPosts;

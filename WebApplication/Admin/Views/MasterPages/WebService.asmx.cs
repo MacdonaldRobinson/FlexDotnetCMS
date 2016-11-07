@@ -92,7 +92,7 @@ namespace WebApplication.Admin.Views.MasterPages
             if ((!detail.CanRender) || (!detail.IsPublished))
                 node.li_attr._class += " unPublished";
 
-            var draft = detail.History.FirstOrDefault(i => i.IsDraft);
+            var draft = detail.History.FirstOrDefault(i => i.IsDraft && i.LanguageID == detail.LanguageID);
 
             if (draft != null)
             {
@@ -105,12 +105,12 @@ namespace WebApplication.Admin.Views.MasterPages
                 }
             }
 
-            var pendingComments = detail.Media.Comments.Count(i => i.Status == StatusEnum.Pending.ToString());
+            var pendingComments = detail.Media.Comments.Count(i => i.Status == StatusEnum.Pending.ToString() && i.LanguageID == detail.LanguageID);
 
             if (pendingComments > 0)
             {
                 node.li_attr._class += " hasPendingComments";
-                nodeText += $"<small class='hasPendingCommentsWrapper'>Comments(" + pendingComments + ")</small>";
+                nodeText += $"<small class='hasPendingCommentsWrapper'>Pending(" + pendingComments + ")</small>";
             }
 
             node.text = nodeText;

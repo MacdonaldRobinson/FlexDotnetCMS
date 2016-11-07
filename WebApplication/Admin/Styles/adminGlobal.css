@@ -113,12 +113,12 @@ html {
 
 #SiteTree a {
     color: black;
-    font-size: 12px;
+    font-size: 13px;
+    font-weight: bold;
 }
 
 #SiteTree .hasPendingComments a, #SiteTree .draftIsNewer a{
-    font-weight:bolder;
-    font-size: 14px;
+
 }
 
 #SiteTree .hasDraftWrapper {
@@ -192,8 +192,16 @@ fieldset {
 }
 
 .HistoryPanel {
-    padding: 10px 10px 20px 0px;
+    background: orange none repeat scroll 0 0;
+    border: 1px solid;
+    font-weight: bold;
+    margin-top: 50px;
+    padding: 10px;
 }
+
+    .HistoryPanel a, .HistoryPanel a:active, .HistoryPanel a:link, .HistoryPanel a:visited{
+        color:blue;
+    }
 
 .loadingPanel {
     width: 100%;

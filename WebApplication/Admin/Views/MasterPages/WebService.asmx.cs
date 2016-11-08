@@ -78,7 +78,7 @@ namespace WebApplication.Admin.Views.MasterPages
             }
             else
             {
-                nodeText = $"{detail.LinkTitle}";
+                nodeText = $"{detail.LinkTitle} <small>({detail.MediaID})</small>";
             }
 
             if (detail.IsDeleted)

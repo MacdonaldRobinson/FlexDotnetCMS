@@ -46,7 +46,7 @@ function RefreshUpdatePanel(UpdatePanelClientId, OnAfterRefreshFunction) {
 }
 
 function OnUpdatePanelRefreshComplete(OnUpdatePanelRefreshCompleteFunction) {
-    if (Sys.WebForms.PageRequestManager != null && Sys.WebForms.PageRequestManager != undefined)
+    if (typeof (Sys) != "undefined" && Sys.WebForms.PageRequestManager != null && Sys.WebForms.PageRequestManager != undefined)
     {
         Sys.WebForms.PageRequestManager.getInstance().add_endRequest(OnUpdatePanelRefreshCompleteFunction);
     }

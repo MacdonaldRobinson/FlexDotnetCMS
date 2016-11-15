@@ -915,7 +915,9 @@ function BindSortable() {
 
 function BindScrollMagic()
 {
-    ScrollMagicSetup(".SavePanel");
+    if(window.navigator.appVersion.indexOf("Trident") == -1)
+        ScrollMagicSetup(".SavePanel");
+
     ScrollMagicSetup("#SaveFields");
 }
 

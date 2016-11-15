@@ -5162,6 +5162,11 @@
             </summary>
             <returns>the current list of compiler references.</returns>
         </member>
+        <member name="M:RazorEngine.Templating.ReferencesListForDynamicAssemblyResolution.Dispose">
+            <summary>
+            Disposes the current instance.
+            </summary>
+        </member>
         <member name="T:RazorEngine.Templating.ResolvePathCheckModifiedTimeTemplateManager">
             <summary>
             A TemplateManager resolving remplates by path, given a list of folders to look into.

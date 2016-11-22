@@ -49,4 +49,4 @@
     });
 </script>-->
 
-<Site:GenerateNav ID="GenerateNav" runat="server" RenderRootMedia="false" RenderDepth="2" DisplayProtectedSections="false" TopLevelAnchorClasses="main-nav__link" SubAnchorClasses="main-nav__sublink" SubULClasses="main-nav__submenu" />
+<Site:GenerateNav ID="GenerateNav" runat="server" RenderRootMedia="false" RenderDepth="4" DisplayProtectedSections="false" />

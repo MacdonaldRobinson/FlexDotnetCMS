@@ -12,7 +12,7 @@ namespace WebApplication.Views.MediaTypeHandlers
     {
         protected void Page_Init(object sender, EventArgs e)
         {
-            DynamicContent.Controls.Add(this.ParseControl(MediaDetailsMapper.ParseSpecialTags(CurrentMediaDetail)));
+            DynamicContent.Controls.Add(this.ParseControl(MediaDetailsMapper.ParseWithTemplate(CurrentMediaDetail)));
         }
     }
 }

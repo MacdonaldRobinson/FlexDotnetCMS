@@ -834,6 +834,22 @@ namespace FrameworkLibrary
             return (from item in items where (item.CanRender) && (item.IsPublished) select item.GetRssItem());
         }
 
+        public static string ParseWithTemplate(IMediaDetail mediaDetail)
+        {
+            var html = ParseSpecialTags(mediaDetail);
+            var masterPage = mediaDetail.GetMasterPage();
+
+            if (masterPage != null)
+            {
+                if (masterPage.UseLayout)
+                {
+                    html = masterPage.Layout.Replace("{PageContent}", html);
+                }
+            }
+
+            return html;
+        }
+
         public static string ParseSpecialTags(IMediaDetail mediaDetail, string propertyName = "{UseMainLayout}", int previousCount = 0, object passToParser = null)
         {
             if (mediaDetail == null)

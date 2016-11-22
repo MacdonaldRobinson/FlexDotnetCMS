@@ -235,7 +235,7 @@ namespace WebApplication
 
             string html = str.ToString();
 
-            var masterPage = CurrentMediaDetail.GetMasterPage();
+            /*var masterPage = CurrentMediaDetail.GetMasterPage();
 
             if (masterPage != null)
             {
@@ -243,7 +243,7 @@ namespace WebApplication
                 {
                     html = masterPage.Layout.Replace("{PageContent}", html);
                 }
-            }
+            }*/
 
             /*if (!IsInAdminSection)
             {

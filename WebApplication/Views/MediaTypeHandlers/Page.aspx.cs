@@ -13,7 +13,7 @@ namespace WebApplication.Views.PageTypes
     {
         protected void Page_Init(object sender, EventArgs e)
         {
-            DynamicContent.Controls.Add(this.ParseControl(MediaDetailsMapper.ParseSpecialTags(CurrentMediaDetail)));
+            DynamicContent.Controls.Add(this.ParseControl(MediaDetailsMapper.ParseWithTemplate(CurrentMediaDetail)));
         }
 
         public new FrameworkLibrary.Page CurrentMediaDetail

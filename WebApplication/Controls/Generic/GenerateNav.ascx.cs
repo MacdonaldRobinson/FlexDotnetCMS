@@ -201,7 +201,7 @@ namespace WebApplication.Controls
                         li.Attributes["class"] += " rootParent";
                 }
 
-                li.Attributes["class"] += " " + detail.VirtualPath.Replace("/", "-").Replace("~", "home");
+                li.Attributes["class"] += $" MediaID-{detail.MediaID}";
 
                 if (li.Attributes["class"].EndsWith("-"))
                     li.Attributes["class"] = li.Attributes["class"].Substring(0, li.Attributes["class"].Length - 1);

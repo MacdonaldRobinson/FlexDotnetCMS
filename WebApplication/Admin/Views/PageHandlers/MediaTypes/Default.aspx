@@ -15,7 +15,7 @@
                     <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
                     <asp:BoundField DataField="Label" HeaderText="Label" SortExpression="Label" />
                     <asp:BoundField DataField="MediaTypeHandler" HeaderText="MediaTypeHandler" SortExpression="MediaTypeHandler" />
-                    <asp:BoundField DataField="MasterPage.Name" HeaderText="MasterPage" SortExpression="MasterPage" />
+                    <asp:BoundField DataField="MasterPage.Name" HeaderText="Template" SortExpression="Template" />
                     <asp:BoundField DataField="UseMediaTypeLayouts" HeaderText="UseMediaTypeLayouts" SortExpression="UseMediaTypeLayouts" />
                     <asp:BoundField DataField="IsActive" HeaderText="IsActive" SortExpression="IsActive" />
                     <asp:BoundField DataField="EnableCaching" HeaderText="EnableCaching" SortExpression="EnableCaching" />

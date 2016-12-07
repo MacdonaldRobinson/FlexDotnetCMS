@@ -22,8 +22,6 @@ namespace WebApplication.Admin.Views.PageHandlers.MasterPages
 
         protected void Page_Init(object sender, EventArgs e)
         {
-            this.Section.Text = this.Page.Title = "Manage MasterPages";
-
             if (Items == null)
                 Items = BaseMapper.GetDataModel().MasterPages.OrderBy(i => i.Name).ToList();
 

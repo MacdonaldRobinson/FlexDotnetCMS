@@ -26,9 +26,9 @@ namespace WebApplication.Admin.Views.PageHandlers.MasterPages
         private string GetSectionTitle()
         {
             if (selectedItem == null)
-                return "New MasterPage";
+                return "New Template";
             else
-                return "Editing MasterPage: " + selectedItem.Name;
+                return "Editing Template: " + selectedItem.Name;
         }
 
         private void UpdateObjectFromFields()

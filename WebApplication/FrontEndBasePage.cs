@@ -269,7 +269,7 @@ namespace WebApplication
 
             HtmlAgilityPack.HtmlDocument document = null;
 
-            if (!IsInAdminSection)
+            /*if (!IsInAdminSection)
             {
                 HtmlNode.ElementsFlags.Remove("form");
                 document = new HtmlAgilityPack.HtmlDocument();
@@ -287,7 +287,7 @@ namespace WebApplication
 
                     html = document.DocumentNode.WriteContentTo();
                 }
-            }
+            }*/
 
 
             var settings = SettingsMapper.GetSettings();

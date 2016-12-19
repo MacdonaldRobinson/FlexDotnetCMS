@@ -9,5 +9,10 @@ namespace WebApplication.Views.PageHandlers
         {
             DynamicContent.Controls.Add(this.ParseControl(MediaDetailsMapper.ParseWithTemplate(CurrentMediaDetail)));
         }
+
+        public new FrameworkLibrary.Page CurrentMediaDetail
+        {
+            get { return (FrameworkLibrary.Page)base.CurrentMediaDetail; }
+        }
     }
 }

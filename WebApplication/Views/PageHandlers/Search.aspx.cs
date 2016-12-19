@@ -1,5 +1,5 @@
-﻿using FrameworkLibrary;
-using System;
+﻿using System;
+using FrameworkLibrary;
 
 namespace WebApplication.Views.PageHandlers
 {
@@ -8,6 +8,11 @@ namespace WebApplication.Views.PageHandlers
         protected void Page_Init(object sender, EventArgs e)
         {
             DynamicContent.Controls.Add(this.ParseControl(MediaDetailsMapper.ParseWithTemplate(CurrentMediaDetail)));
+        }
+
+        public new FrameworkLibrary.Page CurrentMediaDetail
+        {
+            get { return (FrameworkLibrary.Page)base.CurrentMediaDetail; }
         }
     }
 }

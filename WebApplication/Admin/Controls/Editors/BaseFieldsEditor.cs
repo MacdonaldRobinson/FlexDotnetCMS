@@ -163,6 +163,49 @@ namespace WebApplication.Admin.Controls.Editors
 
             SelectorFieldOptions.Add(new SelectorFieldOption()
             {
+                OptionText = "Drop Down List",
+                OptionValue = "DropDownList",
+                AdminControl = @"<asp:DropDownList runat='server'>
+    <asp:ListItem Text='Item1' Value='Item1'></asp:ListItem>
+    <asp:ListItem Text='Item2' Value='Item2'></asp:ListItem>
+    <asp:ListItem Text='Item3' Value='Item3'></asp:ListItem>
+    <asp:ListItem Text='Item4' Value='Item4'></asp:ListItem>
+    <asp:ListItem Text='Item5' Value='Item5'></asp:ListItem>
+</asp:DropDownList>",
+                GetAdminControlValue = @"@using System.Web.UI.WebControls
+@{
+    var selectedItems = ((ListItemCollection)Model.Control.Items).Cast<ListItem>().Where(i => i.Selected);
+    @Raw(StringHelper.ObjectToJson(selectedItems.Select(i => i.Value).ToList()));
+}",
+                SetAdminControlValue = @"@{
+    var newValues = StringHelper.JsonToObject<List<string>>(Model.NewValue);
+
+    if(newValues != null)
+    {
+        foreach(var controlItem in Model.Control.Items)
+        {
+            if(Enumerable.Contains(newValues, controlItem.Value))
+            {
+                controlItem.Selected=true;
+            }
+        }
+    }
+}",
+                FrontEndLayout = @"@{
+    var fieldValues = StringHelper.JsonToObject<List<string>>(Model.Field.FieldValue);
+
+    if(fieldValues != null)
+    {
+        foreach(var item in fieldValues)
+        {
+            <li>@item</li>
+        }
+    }
+}",
+            });
+
+            SelectorFieldOptions.Add(new SelectorFieldOption()
+            {
                 OptionText = "File Selector",
                 OptionValue = "FileSelector",
                 AdminControl = "<Admin:FileSelector runat='server' DirPath='/media/uploads/' />",

@@ -19,6 +19,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
         {
             MainLayout.Text = selectedItem.MainLayout;
             SummaryLayout.Text = selectedItem.SummaryLayout;
+            FeaturedLayout.Text = selectedItem.FeaturedLayout;
             UseMediaTypeLayouts.Checked = selectedItem.UseMediaTypeLayouts;
         }
 
@@ -26,6 +27,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
         {
             selectedItem.MainLayout = MainLayout.Text;
             selectedItem.SummaryLayout = SummaryLayout.Text;
+            selectedItem.FeaturedLayout = FeaturedLayout.Text;
             selectedItem.UseMediaTypeLayouts = UseMediaTypeLayouts.Checked;
         }
     }

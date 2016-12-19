@@ -47,7 +47,16 @@ namespace WebApplication.Services
             var location = GeoLocationHelper.GetLocation(ip);
             var imagesBaseDir = URIHelper.BasePath + "/media/uploads/images/banners/homebanners/";
 
-            var cityBaseDir = imagesBaseDir + location.City.Name.ToLower() + "/";
+            var cityBaseDir = imagesBaseDir;
+
+            if(location.City.Name != null)
+            {
+                cityBaseDir = imagesBaseDir + location.City.Name.ToLower() + "/";
+            }
+            else
+            {
+                cityBaseDir = imagesBaseDir + "others/";
+            }
 
             var path = "";
 

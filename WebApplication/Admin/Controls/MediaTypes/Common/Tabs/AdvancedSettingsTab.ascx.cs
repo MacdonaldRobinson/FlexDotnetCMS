@@ -45,7 +45,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
             Handler.SetValue(selectedItem.Handler);
             MediaTypeID.Text = selectedItem.MediaTypeID.ToString();
             MediaType.Text = MediaTypesMapper.GetByID(selectedItem.MediaTypeID).Name.ToString();
-            EnableCaching.Checked = selectedItem.EnableCaching;            
+            EnableCaching.Checked = selectedItem.EnableCaching;
 
             if (selectedItem.LastUpdatedByUserID != 0)
                 LastModifiedByUser.Text = UsersMapper.GetByID(selectedItem.LastUpdatedByUserID).UserName;
@@ -62,7 +62,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
         public void UpdateObjectFromFields()
         {
             selectedItem.Handler = Handler.GetValue().ToString();
-            selectedItem.EnableCaching = EnableCaching.Checked;            
+            selectedItem.EnableCaching = EnableCaching.Checked;
 
             if (MasterPageSelector.SelectedValue != "")
                 selectedItem.MasterPageID = long.Parse(MasterPageSelector.SelectedValue);
@@ -98,6 +98,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
                     newField.SetAdminControlValue = mediaTypeField.SetAdminControlValue;
                     newField.FieldValue = mediaTypeField.FieldValue;
                     newField.MediaTypeField = mediaTypeField;
+                    newField.UseMediaTypeFieldFrontEndLayout = true;
 
                     newField.DateCreated = DateTime.Now;
                     newField.DateLastModified = DateTime.Now;
@@ -120,7 +121,8 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
                 }
                 else
                 {
-                    Response.Redirect(Request.RawUrl);
+                    var url = AdminBasePage.GetRedirectToMediaDetailUrl(selectedItem.MediaTypeID, selectedItem.MediaID);
+                    Response.Redirect(url);
                 }
             }
         }

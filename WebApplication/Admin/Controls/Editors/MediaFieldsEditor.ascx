@@ -84,7 +84,7 @@
     <ContentTemplate>
         <fieldset>
             <legend>Currently Created Fields</legend>
-            <asp:GridView runat="server" ID="ItemList" AutoGenerateColumns="false" AllowPaging="true" CssClass="DragDropGrid" OnPageIndexChanging="ItemList_PageIndexChanging" PageSize="20">
+            <asp:GridView runat="server" ID="ItemList" AutoGenerateColumns="false" AllowPaging="false" CssClass="DragDropGrid" OnPageIndexChanging="ItemList_PageIndexChanging" PageSize="20">
                 <Columns>
                     <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
                     <asp:BoundField DataField="OrderIndex" HeaderText="OrderIndex" SortExpression="OrderIndex" />

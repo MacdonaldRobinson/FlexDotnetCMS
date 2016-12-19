@@ -58,6 +58,11 @@ namespace WebApplication.Controls.RenderChildren
                 Children.DataBind();
             }
 
+            if(PageSize == 0)
+            {
+                PageSize = children.Count();
+            }
+
             if (PageSize is int)
                 Pager.PageSize = int.Parse(PageSize.ToString());
         }
@@ -95,7 +100,7 @@ namespace WebApplication.Controls.RenderChildren
                 return;
 
             var dataItem = (IMediaDetail)e.Item.DataItem;
-            var layout = (Literal)e.Item.FindControl("Layout");                        
+            var layout = (Literal)e.Item.FindControl("Layout");
 
             layout.Text = MediaDetailsMapper.ParseSpecialTags(dataItem, "{" + ChildPropertyName + "}");
         }

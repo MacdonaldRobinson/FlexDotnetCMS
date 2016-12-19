@@ -93,11 +93,20 @@ namespace WebApplication.Controls
         {
             ListView list = (ListView)sender;
             HtmlContainerControl ul = (HtmlContainerControl)list.FindControl("ul");
+            var BackButton = (HtmlContainerControl)list.FindControl("BackButton");
+
+            if ((BackButton != null) && (RenderBackButton))
+                BackButton.Visible = true;
 
             if (ul.Attributes["class"] == null)
                 ul.Attributes.Add("class", "");
 
             ul.Attributes["class"] += " level" + currentDepth.ToString();
+
+            if(currentDepth == 1)
+            {
+                ul.Attributes["class"] += "";
+            }
 
             if (currentDepth == 0)
             {
@@ -223,32 +232,43 @@ namespace WebApplication.Controls
                         childItems = childItems.Where(i => i.ShowInMenu || i.RenderInFooter);
                 }
 
-                if ((currentDepth < renderDepth) || (renderDepth == -1))
+                if(!detail.CssClasses.Contains("NoChildren"))
                 {
-                    ChildList.LayoutTemplate = ItemsList.LayoutTemplate;
-                    ChildList.ItemTemplate = ItemsList.ItemTemplate;
-                    ChildList.ItemDataBound += new EventHandler<ListViewItemEventArgs>(ItemsList_OnItemDataBound);
-                    ChildList.LayoutCreated += new EventHandler(ItemsList_OnLayoutCreated);
-
-                    if ((childItems != null) && (IsFooterMenu))
-                        childItems = childItems.Where(i => i.RenderInFooter);
-                    else if (childItems != null)
-                        childItems = childItems.Where(i => i.ShowInMenu);
-
-                    if (!displayProtectedSections)
+                    if ((currentDepth < renderDepth) || (renderDepth == -1))
                     {
-                        var list = childItems.OrderBy(i => i.Media.OrderIndex).AsEnumerable();
+                        //ChildList.LayoutTemplate = ItemsList.LayoutTemplate;
+                        ChildList.ItemTemplate = ItemsList.ItemTemplate;
+                        ChildList.ItemDataBound += new EventHandler<ListViewItemEventArgs>(ItemsList_OnItemDataBound);
+                        ChildList.LayoutCreated += new EventHandler(ItemsList_OnLayoutCreated);
 
-                        if (RenderParentItemInChildNav)
+                        if ((childItems != null) && (IsFooterMenu))
+                            childItems = childItems.Where(i => i.RenderInFooter);
+                        else if (childItems != null)
+                            childItems = childItems.Where(i => i.ShowInMenu);
+
+                        if (!displayProtectedSections)
                         {
-                            var parentDetails = new List<IMediaDetail>();
-                            parentDetails.Add(detail);
+                            var list = childItems.OrderBy(i => i.Media.OrderIndex).AsEnumerable();
 
-                            list = list.Concat(parentDetails);
+                            if (list.Any())
+                                li.Attributes["class"] += " has-children";
+
+                            if ((currentDepth > 0) && (RenderParentItemInChildNav))
+                            {
+                                /*var parentDetails = new List<IMediaDetail>();
+                                detail.CssClasses = "NoChildren";
+                                parentDetails.Add(detail);*/
+
+                                list = list.ToList();
+                                detail.CssClasses = "NoChildren";
+                                ((List<IMediaDetail>)list).Insert(0, detail);
+
+                                //list = list.Concat(parentDetails);
+                            }
+
+                            ChildList.DataSource = list;
+                            ChildList.DataBind();
                         }
-
-                        ChildList.DataSource = list;
-                        ChildList.DataBind();
                     }
 
                     currentDepth = currentDepth - 1;
@@ -316,6 +336,7 @@ namespace WebApplication.Controls
         public string TopLevelAnchorClasses { get; set; }
         public string SubAnchorClasses { get; set; }
         public string SubULClasses { get; set; }
+        public bool RenderBackButton { get; set; }
 
         public bool DisplayProtectedSections
         {

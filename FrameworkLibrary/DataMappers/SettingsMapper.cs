@@ -18,11 +18,6 @@ namespace FrameworkLibrary
             return _settings;
         }
 
-        public static void SetSettings(Settings settings)
-        {
-            _settings = settings;
-        }
-
         public static void ClearCache()
         {
             ContextHelper.Remove(mapperKey, mapperStorageContext);

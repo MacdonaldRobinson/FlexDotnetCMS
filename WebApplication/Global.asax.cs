@@ -29,8 +29,8 @@ namespace WebApplication
                     Response.Redirect(installerPath);
             }
 
-            if (Request.Url.Host.StartsWith("www."))
-                Response.RedirectPermanent(Request.Url.AbsoluteUri.Replace("www.", ""));
+            if (!AppSettings.IsRunningOnDev && !Request.Url.Host.StartsWith("www."))
+                Response.RedirectPermanent(Request.Url.AbsoluteUri.Replace("://", "://www."));
 
             BaseService.AddResponseHeaders();
 

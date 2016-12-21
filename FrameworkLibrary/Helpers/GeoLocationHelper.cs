@@ -17,7 +17,11 @@ namespace FrameworkLibrary
             /* Database is updated monthly and can be downloaded from: http://dev.maxmind.com/geoip/geoip2/geolite2/ */
 
             var databasePath = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data/"), "GeoLite2-City.mmdb");
-            MaxMindDatabaseReader = new DatabaseReader(databasePath);
+
+            if (File.Exists(databasePath))
+            {
+                MaxMindDatabaseReader = new DatabaseReader(databasePath);
+            }
         }
 
         private static string GenerateRequestUrl(string visitorIp, string format)
@@ -31,22 +35,12 @@ namespace FrameworkLibrary
 
             try
             {
-                var found = MaxMindDatabaseReader.City(visitorIp);
-
-                if (found != null)
+                if (MaxMindDatabaseReader != null)
+                {
+                    var found = MaxMindDatabaseReader.City(visitorIp);
                     return found;
+                }
 
-                /*var webRequestHelper = new WebRequestHelper();
-
-                var returnRequest = webRequestHelper.MakeWebRequest(GenerateRequestUrl(visitorIp, format));
-
-                var entry = new IPLocationTrackerEntry();
-                entry.IPAddress = visitorIp;
-                entry.Location = returnRequest;
-
-                var returnObj = IPLocationTrackerHelper.Insert(entry);
-
-                return returnRequest;*/
                 return new CityResponse();
             }
             catch (Exception ex)

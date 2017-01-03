@@ -294,25 +294,22 @@ namespace WebApplication
 
             if (settings.EnableGlossaryTerms && !IsInAdminSection)
             {
-                if (Master.ToString().Contains("views_masterpages"))
+                var selectedNodes = document.DocumentNode.SelectNodes("//p/text()|//li/text()");
+                var terms = GlossaryTermsMapper.GetAll();
+
+                if (selectedNodes != null)
                 {
-                    var selectedNodes = document.DocumentNode.SelectNodes("//p|//li");
-                    var terms = GlossaryTermsMapper.GetAll();
-
-                    if (selectedNodes != null)
+                    foreach (HtmlNode node in selectedNodes)
                     {
-                        foreach (HtmlNode node in selectedNodes)
+                        foreach (var term in terms)
                         {
-                            foreach (var term in terms)
-                            {
-                                var tempTerm = term.Term.Trim();
+                            var tempTerm = term.Term.Trim();
 
-                                node.InnerHtml = Regex.Replace(node.InnerHtml, @"\b" + Regex.Escape(tempTerm) + @"\b", me =>
-                                {
-                                    var template = "<span data-toggle=\"tooltip\" title=\"" + term.Definition + "\">" + me.Value + "</span>";
-                                    return template;
-                                }, RegexOptions.IgnoreCase);
-                            }
+                            node.InnerHtml = Regex.Replace(node.InnerHtml, @"\b" + Regex.Escape(tempTerm) + @"\b" + "(?![^<]*</[a-z]+>)", me =>
+                            {
+                                var template = "<span data-toggle=\"tooltip\" title=\"" + term.Definition + "\">" + me.Value + "</span>";
+                                return template;
+                            }, RegexOptions.IgnoreCase);
                         }
                     }
                 }

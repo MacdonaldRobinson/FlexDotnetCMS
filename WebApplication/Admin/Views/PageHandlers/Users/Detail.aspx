@@ -59,6 +59,6 @@
         </asp:CheckBoxList>
     </div>
     <div class="buttons">
-        <asp:LinkButton ID="Save" runat="server" OnClick="Save_OnClick">Save</asp:LinkButton>
+        <asp:LinkButton ID="Save" runat="server" OnClick="Save_OnClick" CssClass="SavePageButton">Save</asp:LinkButton>
     </div>
 </asp:Content>

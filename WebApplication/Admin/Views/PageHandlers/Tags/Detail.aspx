@@ -7,7 +7,7 @@
 <div id="tabs" class="tabs">
   <ul>
     <li><a href="#Main">Main</a></li>
-    <li><a href="#AssociatedMediaItems">Associated Media Items</a></li>    
+    <li><a href="#AssociatedMediaItems">Associated Media Items</a></li>
   </ul>
   <div id="Main">
       <fieldset>
@@ -26,13 +26,13 @@
             <Admin:FileSelector ID="ThumbnailPath" runat="server" DirPath="~/media/uploads/images/thumbnails/" />
         </div>
         <div class="buttons">
-            <asp:LinkButton ID="Save" runat="server" OnClick="Save_OnClick">Save</asp:LinkButton>
-        </div>  
-    </fieldset>             
+            <asp:LinkButton ID="Save" runat="server" OnClick="Save_OnClick" CssClass="SavePageButton">Save</asp:LinkButton>
+        </div>
+    </fieldset>
   </div>
   <div id="AssociatedMediaItems">
       <fieldset>
-        <Admin:TagsAssociationEditor ID="TagsAssociationEditor" runat="server" />    
+        <Admin:TagsAssociationEditor ID="TagsAssociationEditor" runat="server" />
         </fieldset>
   </div>
 </div>

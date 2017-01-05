@@ -22,7 +22,7 @@
 
                 <div>
                     <label for="<%= DefaultMasterPageSelector.ClientID %>">
-                        Default Template:</label>
+                        Default Master Page:</label>
                     <div>
                         <asp:DropDownList runat="server" ID="DefaultMasterPageSelector">
                         </asp:DropDownList>
@@ -107,7 +107,7 @@
                     Current time on the server is: <%= DateTime.Now.ToString() %>
                 </div>
                 <div class="buttons">
-                    <asp:LinkButton ID="Save" runat="server" OnClick="Save_OnClick">Save</asp:LinkButton>
+                    <asp:LinkButton ID="Save" runat="server" OnClick="Save_OnClick" CssClass="SavePageButton">Save</asp:LinkButton>
                 </div>
             </fieldset>
         </ContentTemplate>

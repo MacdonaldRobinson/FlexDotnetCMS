@@ -522,6 +522,18 @@ $(document).ready(function () {
         timeFormat: 'hh:mm:ss TT'
     });
 
+    $(document).on("keydown", function (event) {
+        if (event.ctrlKey || event.metaKey) {
+            switch (String.fromCharCode(event.which).toLowerCase()) {
+                case 's':
+                    $('.SavePageButton')[0].click();
+                    event.preventDefault();
+
+                    break;
+            }
+        }
+    });
+
     tfm_path = "/Scripts/tinyfilemanager.net";
     tinymce.init({
         selector: ".editor",

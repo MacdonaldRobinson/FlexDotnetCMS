@@ -267,8 +267,6 @@ namespace WebApplication
                 }
             }
 
-            HtmlAgilityPack.HtmlDocument document = null;
-
             /*if (!IsInAdminSection)
             {
                 HtmlNode.ElementsFlags.Remove("form");
@@ -294,6 +292,9 @@ namespace WebApplication
 
             if (settings.EnableGlossaryTerms && !IsInAdminSection)
             {
+                var document = new HtmlAgilityPack.HtmlDocument();
+                document.LoadHtml(html);
+
                 var selectedNodes = document.DocumentNode.SelectNodes("//p/text()|//li/text()");
                 var terms = GlossaryTermsMapper.GetAll();
 

@@ -1,5 +1,5 @@
 # FlexDotnetCMS
-A powerful, flexible and easy to use ASP .NET CMS
+A powerful, flexible, easy to use and Fully Featured ASP .NET CMS
 
 For More Details Please visit the project wiki at: https://github.com/MacdonaldRobinson/FlexDotnetCMS/wiki
 

@@ -56,7 +56,14 @@ namespace WebApplication.Handlers
 
                     if (!string.IsNullOrEmpty(cacheData))
                         BaseService.WriteHtml(cacheData + "<!-- Loaded from level 2 - File Cache -->");
+                }
 
+                if (AppSettings.EnableLevel3RedisCaching)
+                {
+                    var cacheData = RedisCacheHelper.GetFromCache(cacheKey);
+
+                    if (!string.IsNullOrEmpty(cacheData))
+                        BaseService.WriteHtml(cacheData + "<!-- Loaded from level 3 - Redis Cache -->");
                 }
 
                 if(!(bool)BaseMapper.CanConnectToDB)
@@ -67,6 +74,9 @@ namespace WebApplication.Handlers
 
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {
+            RedisCacheHelper.SetRedisCacheConnectionString(AppSettings.RedisCacheConnectionString);
+            FileCacheHelper.SetFileSystemCacheDirPath(AppSettings.FileSystemCacheDirPath);
+
             virtualPath = URIHelper.GetCurrentVirtualPath().ToLower();
 
             if ((virtualPath != "~/") && (!virtualPath.EndsWith("/")))

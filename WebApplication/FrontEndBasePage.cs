@@ -335,6 +335,11 @@ namespace WebApplication
                         {
                             CurrentMediaDetail.SaveToFileCache(UserSelectedVersion, html, Request.Url.Query);
                         }
+
+                        if (AppSettings.EnableLevel3RedisCaching)
+                        {
+                            CurrentMediaDetail.SaveToRedisCache(UserSelectedVersion, html, Request.Url.Query);
+                        }
                     }
 
                     ContextHelper.SetToSession("CurrentMediaDetail", CurrentMediaDetail);

@@ -7,7 +7,8 @@ namespace FrameworkLibrary
     {
         string AbsoluteUrl { get; }
         bool AllowCommenting { get; set; }
-        string AutoCalculatedVirtualPath { get; }        string CachedVirtualPath { get; set; }
+        string AutoCalculatedVirtualPath { get; }
+        string CachedVirtualPath { get; set; }
         bool CanAddToCart { get; set; }
         bool CanRender { get; }
         IEnumerable<IMediaDetail> ChildMediaDetails { get; }
@@ -102,6 +103,7 @@ namespace FrameworkLibrary
         Field LoadField(string fieldCode);
         void RemoveFromCache();
         string RenderShortCode(string shortCode);
+        void SaveToRedisCache(RenderVersion renderVersion, string html, string queryString = "");
         void SaveToFileCache(RenderVersion renderVersion, string html, string queryString = "");
         void SaveToMemoryCache(RenderVersion renderVersion, string html, string queryString = "");
         Return Validate();

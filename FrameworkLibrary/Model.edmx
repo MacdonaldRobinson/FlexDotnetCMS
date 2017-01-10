@@ -2724,7 +2724,7 @@
         <EntityTypeShape EntityType="FrameworkModel.MediaDetailField" Width="1.5" PointX="7.25" PointY="4.5" />
         <AssociationConnector Association="FrameworkModel.FK_MediaDetailFields_MediaDetails" />
         <InheritanceConnector EntityType="FrameworkModel.MediaDetailField" />
-        <EntityTypeShape EntityType="FrameworkModel.MediaTypeField" Width="1.5" PointX="13" PointY="5.75" />
+        <EntityTypeShape EntityType="FrameworkModel.MediaTypeField" Width="1.5" PointX="11.75" PointY="7" />
         <AssociationConnector Association="FrameworkModel.FK_MediaTypesFields_MediaTypes" />
         <InheritanceConnector EntityType="FrameworkModel.MediaTypeField" />
         <AssociationConnector Association="FrameworkModel.FK_MediaDetailsFields_MediaTypesFields" />

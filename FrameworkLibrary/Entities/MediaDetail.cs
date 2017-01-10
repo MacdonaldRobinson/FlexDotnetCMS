@@ -142,15 +142,18 @@ namespace FrameworkLibrary
             var mobileCacheKey = GetCacheKey(RenderVersion.Mobile);
 
             FileCacheHelper.ClearCache(htmlCacheKey);
+            RedisCacheHelper.ClearCache(htmlCacheKey);
             ContextHelper.RemoveFromCache(htmlCacheKey);
 
             FileCacheHelper.ClearCache(mobileCacheKey);
             ContextHelper.RemoveFromCache(mobileCacheKey);
 
             FileCacheHelper.ClearCache(htmlCacheKey + "?version=0");
+            RedisCacheHelper.ClearCache(htmlCacheKey + "?version=0");
             ContextHelper.RemoveFromCache(htmlCacheKey + "?version=0");
 
             FileCacheHelper.ClearCache(mobileCacheKey + "?version=0");
+            RedisCacheHelper.ClearCache(mobileCacheKey + "?version=0");
             ContextHelper.RemoveFromCache(mobileCacheKey + "?version=0");
 
             var parents = MediaDetailsMapper.GetAllParentMediaDetails(this, this.Language).Where(i=>i.ID != this.ID);
@@ -202,6 +205,33 @@ namespace FrameworkLibrary
                 cacheKey = cacheKey.Replace("?&", "?").Replace("??", "?").ToLower();
 
                 FileCacheHelper.SaveToCache(cacheKey, html);
+            }
+        }
+
+        public void SaveToRedisCache(RenderVersion renderVersion, string html, string queryString = "")
+        {
+            var cacheKey = GetCacheKey(renderVersion);
+
+            if (string.IsNullOrEmpty(queryString))
+            {
+                RedisCacheHelper.SaveToCache(cacheKey, html);
+                RedisCacheHelper.SaveToCache(cacheKey + "?version=0", html);
+            }
+            else
+            {
+                var items = HttpUtility.ParseQueryString(queryString);
+
+                foreach (var item in items)
+                {
+                    var str = item + "=" + items[item.ToString()];
+
+                    cacheKey = cacheKey.Replace(str, "");
+                }
+
+                cacheKey = cacheKey + queryString;
+                cacheKey = cacheKey.Replace("?&", "?").Replace("??", "?").ToLower();
+
+                RedisCacheHelper.SaveToCache(cacheKey, html);
             }
         }
 

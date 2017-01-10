@@ -100,6 +100,30 @@ namespace WebApplication
             }
         }
 
+        public static bool EnableLevel3RedisCaching
+        {
+            get
+            {
+                return bool.Parse(ConfigurationManager.AppSettings["EnableLevel3RedisCaching"]);
+            }
+        }
+
+        public static string FileSystemCacheDirPath
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["FileSystemCacheDirPath"];
+            }
+        }
+
+        public static string RedisCacheConnectionString
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["RedisCacheConnectionString"];
+            }
+        }
+
         public static string WeatherApiKey
         {
             get

@@ -138,6 +138,7 @@ namespace FrameworkLibrary
 
         public static object GetFromCache(string key)
         {
+            key = key.ToLower();
             return HttpContext.Current.Cache[key];
         }
 
@@ -182,6 +183,8 @@ namespace FrameworkLibrary
 
         public static bool SetToCache(string key, object value, DateTime? expiryDateTime = null)
         {
+            key = key.ToLower();
+
             if ((expiryDateTime == null) && (CacheDurationInSeconds != null))
                 expiryDateTime = DateTime.Now.AddSeconds((double)CacheDurationInSeconds);
 

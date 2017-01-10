@@ -31,7 +31,7 @@ namespace FrameworkLibrary
             pdfConverter.PdfFooterOptions.PageNumberText = "Page";
             pdfConverter.PdfFooterOptions.ShowPageNumber = true;
 
-            pdfConverter.LicenseKey = "2/Dp++P76uzt++316/vo6vXq6fXi4uLi";
+            pdfConverter.LicenseKey = "";
         }
 
         /// <summary>

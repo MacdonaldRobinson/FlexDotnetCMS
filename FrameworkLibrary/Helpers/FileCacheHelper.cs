@@ -6,8 +6,13 @@ namespace FrameworkLibrary
 {
     public class FileCacheHelper
     {
-        private static string baseDir = "~/App_Data/Cache/";
+        private static string baseDir = "";
         private static string htmlFileName = "index.html";
+
+        public static void SetFileSystemCacheDirPath(string dirPath)
+        {
+            baseDir = dirPath;
+        }
 
         public static double? CacheDurationInSeconds
         {
@@ -96,10 +101,10 @@ namespace FrameworkLibrary
                 try
                 {
                     File.Delete(file.FullName);
-                }                    
+                }
                 catch(Exception ex)
                 {
-                    ErrorHelper.LogException(ex);                        
+                    ErrorHelper.LogException(ex);
                 }
             }
 
@@ -108,7 +113,7 @@ namespace FrameworkLibrary
                 try
                 {
                     Directory.Delete(directory.FullName, true);
-                }                    
+                }
                 catch(Exception ex)
                 {
                     ErrorHelper.LogException(ex);

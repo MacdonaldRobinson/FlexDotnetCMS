@@ -19,8 +19,8 @@
                 <asp:BoundField DataField="DateLastModified" HeaderText="DateLastModified" SortExpression="DateLastModified" />
                 <asp:TemplateField HeaderText="">
                     <ItemTemplate>
-                        <asp:LinkButton ID="LoadHistory" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="LoadHistory_Click">Load</asp:LinkButton>|
-                        <asp:HyperLink ID="PreviewHistory" runat="server" CssClass="preview" NavigateUrl='<%# Eval("AbsoluteUrl") +"?version="+ Eval("HistoryVersionNumber") %>'>Preview</asp:HyperLink>|
+                        <asp:LinkButton ID="LoadHistory" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="LoadHistory_Click">Load</asp:LinkButton> |
+                        <asp:HyperLink ID="PreviewHistory" runat="server" CssClass="preview" NavigateUrl='<%# Eval("AbsoluteUrl") +"?version="+ Eval("HistoryVersionNumber") %>'>Preview</asp:HyperLink> |
                         <asp:LinkButton ID="DeleteHistory" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="DeleteHistory_Click">Delete</asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>

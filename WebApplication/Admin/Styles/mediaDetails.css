@@ -138,3 +138,11 @@ img.MarkedAsDeleted {
 .dvPreview img {
     margin-right:5px;
 }
+
+#PathToFileHolder img{
+    background-color: #cccccc;
+}
+
+fieldset table td a{
+    font-weight: bold;
+}

@@ -447,3 +447,7 @@ html, body {
 .sortable {
     cursor:move;
 }
+
+fieldset table td, fieldset table th{
+    padding: 5px;
+}

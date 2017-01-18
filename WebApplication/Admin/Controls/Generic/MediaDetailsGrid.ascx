@@ -13,8 +13,8 @@
                 <asp:BoundField DataField="DateLastModified" HeaderText="DateLastModified" SortExpression="DateLastModified" />
                 <asp:TemplateField HeaderText="">
                     <ItemTemplate>
-                        <asp:LinkButton ID="Edit" runat="server" OnClick="Edit_Click">Edit</asp:LinkButton>|
-                        <asp:HyperLink ID="PreviewHistory" runat="server" Target="_blank" CssClass="colorbox iframe" NavigateUrl='<%# Eval("AbsoluteUrl") +"?version="+ Eval("HistoryVersionNumber") %>'>Preview</asp:HyperLink>|
+                        <asp:LinkButton ID="Edit" runat="server" OnClick="Edit_Click">Edit</asp:LinkButton> |
+                        <asp:HyperLink ID="PreviewHistory" runat="server" Target="_blank" CssClass="colorbox iframe" NavigateUrl='<%# Eval("AbsoluteUrl") +"?version="+ Eval("HistoryVersionNumber") %>'>Preview</asp:HyperLink> |
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>

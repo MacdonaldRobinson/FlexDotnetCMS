@@ -197,14 +197,15 @@ namespace WebApplication.Admin.Controls.Editors
 
                 if (field != null)
                 {
-                    BaseMapper.DeleteObjectFromContext(field);
+                    //TODO: Only un-comment for testing
+                    /*var mediaDetailFields = field.MediaDetailFields.ToList();
 
-                    var mediaTypesFields = BaseMapper.GetDataModel().Fields.Where(i => i.ID == field.ID);
-
-                    foreach (var mediaTypesField in mediaTypesFields)
+                    foreach (var mediaDetailField in mediaDetailFields)
                     {
-                        BaseMapper.DeleteObjectFromContext((MediaTypeField)mediaTypesField);
-                    }
+                        BaseMapper.DeleteObjectFromContext(mediaDetailField);
+                    }*/
+
+                    BaseMapper.DeleteObjectFromContext(field);
 
                     var returnObj = MediaTypesMapper.Update(mediaType);
 

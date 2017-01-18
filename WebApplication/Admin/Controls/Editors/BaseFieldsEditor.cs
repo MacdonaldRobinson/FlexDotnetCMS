@@ -347,6 +347,24 @@ namespace WebApplication.Admin.Controls.Editors
 
             SelectorFieldOptions.Add(new SelectorFieldOption()
             {
+                OptionText = "Hide Default Admin Fields",
+                OptionValue = "HideDefaultAdminFields",
+                AdminControl = @"<script type='text/javascript'>
+    $(document).ready(function(){        
+        $('#ShortDescriptionHolder').hide();
+        $('#LongDescriptionHolder').hide();
+        $('#TagsHolder').hide();
+        $('#PathToFileHolder').hide();
+    });
+</script>
+",
+                GetAdminControlValue = "SelectedValue",
+                SetAdminControlValue = "SelectedValue",
+                FrontEndLayout = ""
+            });
+
+            SelectorFieldOptions.Add(new SelectorFieldOption()
+            {
                 OptionText = "Other",
                 OptionValue = "Other",
                 AdminControl = "",

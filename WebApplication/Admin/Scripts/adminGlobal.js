@@ -551,6 +551,7 @@ $(document).ready(function () {
         relative_urls: false,
         convert_urls: false,
         remove_script_host: false,
+        verify_html: false,
         extended_valid_elements: 'span[*],a[*]',
         custom_shortcuts: false,
         setup: function (editor) {

@@ -307,7 +307,7 @@ namespace FrameworkLibrary
 
             absUrl = absUrl.Replace(BaseUrl, "~/").Replace("~//", "~/");
 
-            if (!absUrl.EndsWith("/") && !absUrl.Contains("?") && !absUrl.Contains("#"))
+            if (!absUrl.EndsWith("/") && !absUrl.Contains("?") && !absUrl.Contains("#") && !absUrl.Contains("."))
             {
                 absUrl = absUrl + "/";
             }

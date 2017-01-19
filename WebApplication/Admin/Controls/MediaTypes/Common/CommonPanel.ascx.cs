@@ -265,13 +265,19 @@ namespace WebApplication.Admin.Controls.MediaTypes
                     if (href.StartsWith("{"))
                         continue;
 
-                    var tildaHref = URIHelper.ConvertAbsUrlToTilda(href);
+                    if (href.StartsWith("http") && !href.Contains(URIHelper.BaseUrl))
+                        continue;
 
-                    var mediaDetail = BaseMapper.GetDataModel().MediaDetails.Where(i => i.CachedVirtualPath == tildaHref && i.HistoryVersionNumber == 0)?.FirstOrDefault();
+                    href = URIHelper.ConvertToAbsUrl(href);
+                    var uri = new Uri(href);
+
+                    var absPath = URIHelper.ConvertAbsUrlToTilda(uri.AbsolutePath);
+
+                    var mediaDetail = BaseMapper.GetDataModel().MediaDetails.Where(i => i.CachedVirtualPath == absPath && i.HistoryVersionNumber == 0)?.FirstOrDefault();
 
                     if (mediaDetail != null)
                     {
-                        aTag.Attributes["href"].Value = "{Link:" + mediaDetail.MediaID + "}";
+                        aTag.Attributes["href"].Value = "{Link:" + mediaDetail.MediaID + "}"+ uri.Query+uri.Fragment;
                     }
                 }
             }
@@ -343,7 +349,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
                         {
                             fieldValue = ConvertATagsToShortCodes(fieldValue);
                             dataItem.FieldValue = fieldValue.Replace(URIHelper.BaseUrl, "{BaseUrl}");
-                        }                            
+                        }
                     }
                 }
             }

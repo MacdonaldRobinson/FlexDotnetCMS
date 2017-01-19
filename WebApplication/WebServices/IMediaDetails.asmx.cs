@@ -31,6 +31,14 @@ namespace WebApplication.Services
         }
 
         [WebMethod]
+        public void GetGlossaryTerms()
+        {
+            string response = JsonConvert.SerializeObject(GlossaryTermsMapper.GetAll());
+
+            WriteJSON(response);
+        }
+
+        [WebMethod]
         public void GetGeoLocation(string ip)
         {
             GeoLocationHelper.APIKey = AppSettings.GeoLocationAPIKey;

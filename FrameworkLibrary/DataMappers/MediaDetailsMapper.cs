@@ -517,6 +517,9 @@ namespace FrameworkLibrary
             MediaTypeEnum mediaTypeEnum = MediaTypeEnum.Page;
             var mediaType = MediaTypesMapper.GetByID(mediaTypeId);
 
+            if (mediaType == null)
+                return new Page();
+
             Enum.TryParse(mediaType.Name, out mediaTypeEnum);
 
             var language = FrameworkSettings.GetCurrentLanguage();

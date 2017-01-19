@@ -440,6 +440,11 @@ html, body {
         margin: 10px;
     }
 
+    .dropZone .text {
+        color: #000;
+        font-weight: bold;
+    }
+
 .hidden {
     display: none;
 }

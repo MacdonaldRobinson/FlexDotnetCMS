@@ -181,7 +181,14 @@ namespace FrameworkLibrary
                     relOrTildaToRootPath = RemoveTrailingSlash(relOrTildaToRootPath);
             }
 
-            return (BaseUrl + relOrTildaToRootPath).Replace("\\", "/");
+            var url = (BaseUrl + relOrTildaToRootPath).Replace("\\", "/");
+
+            if((url.Contains("?") || url.Contains("#")) && url.EndsWith("/"))
+            {
+                url = url.Substring(0, url.Length - 1);
+            }
+
+            return url;
         }
 
         public static bool IsCMSLoginRequest(string url)
@@ -193,12 +200,17 @@ namespace FrameworkLibrary
 
             return false;
         }
-        
+
 
         public static string BaseUrl
         {
             get
             {
+                var baseUrl = (string)ContextHelper.GetFromRequestContext("BaseUrl");
+
+                if (!string.IsNullOrEmpty(baseUrl))
+                    return baseUrl;
+
                 string appPath = HttpContext.Current.Request.ApplicationPath;
 
                 if (!appPath.EndsWith("/"))
@@ -209,6 +221,8 @@ namespace FrameworkLibrary
                 if (IsSSL())
                     url = url.Replace("http:", "https:");
 
+                ContextHelper.SetToRequestContext("BaseUrl", url);
+
                 return url;
             }
         }
@@ -217,7 +231,16 @@ namespace FrameworkLibrary
         {
             get
             {
-                return LanguageBaseUrl(FrameworkSettings.GetCurrentLanguage());
+                var baseUrlWithLanguage = (string)ContextHelper.GetFromRequestContext("BaseUrlWithLanguage");
+
+                if (!string.IsNullOrEmpty(baseUrlWithLanguage))
+                    return baseUrlWithLanguage;
+
+                var url = LanguageBaseUrl(FrameworkSettings.GetCurrentLanguage());
+
+                ContextHelper.SetToRequestContext("BaseUrlWithLanguage", url);
+
+                return url;
             }
         }
 
@@ -282,7 +305,14 @@ namespace FrameworkLibrary
             if (absUrl.StartsWith("/"))
                 absUrl = BaseUrl + absUrl.Remove(0, 1);
 
-            return absUrl.Replace(BaseUrl, "~/").Replace("~//", "~/");
+            absUrl = absUrl.Replace(BaseUrl, "~/").Replace("~//", "~/");
+
+            if (!absUrl.EndsWith("/") && !absUrl.Contains("?") && !absUrl.Contains("#"))
+            {
+                absUrl = absUrl + "/";
+            }
+
+            return absUrl;
         }
 
         public static string ConvertToAbsPath(string relOrTildaPath)

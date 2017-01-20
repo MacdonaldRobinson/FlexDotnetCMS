@@ -17,6 +17,9 @@ namespace FrameworkLibrary
 
         private static Lazy<ConnectionMultiplexer> lazyConnection = new Lazy<ConnectionMultiplexer>(() =>
         {
+            if (string.IsNullOrEmpty(_connectionString))
+                return null;
+
             return ConnectionMultiplexer.Connect(_connectionString);
         });
 
@@ -24,7 +27,7 @@ namespace FrameworkLibrary
         {
             get
             {
-                return lazyConnection.Value;
+                return lazyConnection?.Value;
             }
         }
 

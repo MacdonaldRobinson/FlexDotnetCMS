@@ -59,8 +59,8 @@ namespace WebApplication.Admin.Views.PageHandlers.Settings
             settings.ShoppingCartTax = decimal.Parse(ShoppingCartTax.Text);
             settings.MaxRequestLength = int.Parse(MaxRequestLengthInMB.Text) * (1024 * 1024);
             settings.MaxUploadFileSizePerFile = int.Parse(MaxUploadFileSizePerFileInMB.Text) * (1024 * 1024);
-            settings.GlobalCodeInHead = GlobalCodeInHead.Text;
-            settings.GlobalCodeInBody = GlobalCodeInBody.Text;
+            settings.GlobalCodeInHead = MediaDetailsMapper.ConvertATagsToShortCodes(GlobalCodeInHead.Text);
+            settings.GlobalCodeInBody = MediaDetailsMapper.ConvertATagsToShortCodes(GlobalCodeInBody.Text);
             settings.SiteOfflineUrl = SiteOfflineUrl.Text;
             settings.PageNotFoundUrl = PageNotFoundUrl.Text;
             settings.EnableGlossaryTerms = EnableGlossaryTerms.Checked;

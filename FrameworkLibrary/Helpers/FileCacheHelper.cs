@@ -91,6 +91,9 @@ namespace FrameworkLibrary
 
         public static Return ClearAllCache()
         {
+            if (string.IsNullOrEmpty(baseDir))
+                return new Return();
+
             var directoryInfo = new DirectoryInfo(URIHelper.ConvertToAbsPath(baseDir));
 
             var subDirectories = directoryInfo.GetDirectories();

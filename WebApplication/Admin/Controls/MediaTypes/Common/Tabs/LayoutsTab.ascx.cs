@@ -25,9 +25,9 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
 
         public void UpdateObjectFromFields()
         {
-            selectedItem.MainLayout = MainLayout.Text;
-            selectedItem.SummaryLayout = SummaryLayout.Text;
-            selectedItem.FeaturedLayout = FeaturedLayout.Text;
+            selectedItem.MainLayout = MediaDetailsMapper.ConvertATagsToShortCodes(MainLayout.Text);
+            selectedItem.SummaryLayout = MediaDetailsMapper.ConvertATagsToShortCodes(SummaryLayout.Text);
+            selectedItem.FeaturedLayout = MediaDetailsMapper.ConvertATagsToShortCodes(FeaturedLayout.Text);
             selectedItem.UseMediaTypeLayouts = UseMediaTypeLayouts.Checked;
         }
     }

@@ -94,6 +94,49 @@ namespace FrameworkLibrary
             return childOfMediaDetail == null ? FilterByShowInMenuStatus(FilterByCanRenderStatus(FilterByIsHistoryStatus(items, false), true), true) : FilterByShowInMenuStatus(FilterByCanRenderStatus(FilterByIsHistoryStatus(items, false), true).Where(i => i.Media.ParentMediaID == childOfMediaDetail.Media.ID), false);
         }
 
+
+        public static string ConvertATagsToShortCodes(string content)
+        {
+            if (!content.Contains("<a"))
+                return content;
+
+            var document = new HtmlAgilityPack.HtmlDocument();
+            document.LoadHtml(content);
+
+            var aTags = document.DocumentNode.SelectNodes("//a");
+
+            if (aTags == null)
+                return content;
+
+            foreach (var aTag in aTags)
+            {
+                var href = aTag.Attributes["href"]?.Value;
+
+                if (!string.IsNullOrEmpty(href))
+                {
+                    if (href.StartsWith("{"))
+                        continue;
+
+                    if (href.StartsWith("http") && !href.Contains(URIHelper.BaseUrl))
+                        continue;
+
+                    href = URIHelper.ConvertToAbsUrl(href);
+                    var uri = new Uri(href);
+
+                    var absPath = URIHelper.ConvertAbsUrlToTilda(uri.AbsolutePath);
+
+                    var mediaDetail = BaseMapper.GetDataModel().MediaDetails.Where(i => i.CachedVirtualPath == absPath && i.HistoryVersionNumber == 0)?.FirstOrDefault();
+
+                    if (mediaDetail != null)
+                    {
+                        aTag.Attributes["href"].Value = "{Link:" + mediaDetail.MediaID + "}" + uri.Query + uri.Fragment;
+                    }
+                }
+            }
+
+            return document.DocumentNode.WriteContentTo();
+        }
+
         public static IEnumerable<IMediaDetail> SearchForTerm(string searchTerm)
         {
             if (string.IsNullOrEmpty(searchTerm) || searchTerm.Length < 3)

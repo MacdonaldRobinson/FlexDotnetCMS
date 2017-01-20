@@ -208,11 +208,15 @@ namespace WebApplication.Admin.Views.MasterPages
         public void GetChildNodes(long id)
         {
             var rootNode = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetail == null && i.MediaID == id);
-            var childMediaDetails = MediaDetailsMapper.GetAtleastOneChildByMedia(rootNode.Media, AdminBasePage.CurrentLanguage).Where(i=>i.MediaType.ShowInSiteTree).OrderBy(i=>i.Media.OrderIndex);
-            //var childMediaDetails = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.Media.ParentMediaID == rootNode.MediaID && i.ID != rootNode.ID && i.MediaType.ShowInSiteTree && i.LanguageID == AdminBasePage.CurrentLanguage.ID).OrderBy(i => i.Media.OrderIndex).ToList();
 
-            var jsTreeNodes = childMediaDetails.Select(i => GetJsTreeNode(i));
-            WriteJSON(StringHelper.ObjectToJson(jsTreeNodes));
+            if (rootNode != null)
+            {
+                var childMediaDetails = MediaDetailsMapper.GetAtleastOneChildByMedia(rootNode.Media, AdminBasePage.CurrentLanguage).Where(i => i.MediaType.ShowInSiteTree).OrderBy(i => i.Media.OrderIndex);
+                //var childMediaDetails = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.Media.ParentMediaID == rootNode.MediaID && i.ID != rootNode.ID && i.MediaType.ShowInSiteTree && i.LanguageID == AdminBasePage.CurrentLanguage.ID).OrderBy(i => i.Media.OrderIndex).ToList();
+
+                var jsTreeNodes = childMediaDetails.Select(i => GetJsTreeNode(i));
+                WriteJSON(StringHelper.ObjectToJson(jsTreeNodes));
+            }
         }
 
         /*private string JsTreeNodesToJson(IEnumerable<JsTreeNode> nodes)

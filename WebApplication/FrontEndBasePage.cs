@@ -288,7 +288,7 @@ namespace WebApplication
             }*/
 
 
-            var settings = SettingsMapper.GetSettings();
+            /*var settings = SettingsMapper.GetSettings();
 
             if (settings.EnableGlossaryTerms && !IsInAdminSection)
             {
@@ -316,7 +316,7 @@ namespace WebApplication
                 }
 
                 html = document.DocumentNode.WriteContentTo();
-            }
+            }*/
 
             html = ParserHelper.ParseData(html, TemplateVars);
 

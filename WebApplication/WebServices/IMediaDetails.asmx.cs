@@ -33,7 +33,12 @@ namespace WebApplication.Services
         [WebMethod]
         public void GetGlossaryTerms()
         {
-            string response = JsonConvert.SerializeObject(GlossaryTermsMapper.GetAll());
+            string response = "{}";
+
+            if (SettingsMapper.GetSettings().EnableGlossaryTerms)
+            {
+                response = JsonConvert.SerializeObject(GlossaryTermsMapper.GetAll());
+            }
 
             WriteJSON(response);
         }

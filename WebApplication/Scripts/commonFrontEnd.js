@@ -27,4 +27,35 @@
             }        
         });
     }
+
+    $.get("/WebServices/IMediaDetails.asmx/GetGlossaryTerms", function (data) {
+        $(data).each(function () {
+            var term = this.Term;
+            var definition = this.Definition;
+
+            var regex = new RegExp("\\b" + term + "\\b(?![^<]*</span>)", "gi");
+
+            var replacedTerm = [];
+
+            $("p:contains(" + term + "), li:contains(" + term + ")").not(".cd-nav li").each(function () {
+                var html = $(this).html();
+
+                if ($(this).find("span[title~='" + term + "']").length > 0)
+                    return false;
+
+                var html = html.replace(regex, function (match, offset, original) {
+
+                    console.log(original);
+
+                    return "<span data-toggle='tooltip' title='" + definition + "'>" + match + "</span>";
+                });
+
+                $(this).html(html);
+            });
+
+        });
+
+        initToolTips();
+    });
+
 });

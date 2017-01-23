@@ -13,15 +13,6 @@ namespace WebApplication.Admin.Controls.MediaTypes {
     public partial class CommonPanel {
         
         /// <summary>
-        /// SelectedTabIndexs control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField SelectedTabIndexs;
-        
-        /// <summary>
         /// Tabs control.
         /// </summary>
         /// <remarks>

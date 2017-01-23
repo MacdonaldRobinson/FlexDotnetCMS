@@ -28,7 +28,7 @@
             <asp:GridView runat="server" ID="ItemList" AllowSorting="false" AutoGenerateColumns="false" AllowPaging="true" CssClass="DragDropGrid DataTable" OnPageIndexChanging="ItemList_PageIndexChanging" OnDataBound="ItemList_DataBound" OnRowDataBound="ItemList_RowDataBound" Width="100%" PageSize="20" OnSorting="ItemList_Sorting">
                 <Columns>
                     <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
-                    <asp:BoundField DataField="SectionTitle" HeaderText="SectionTitle" SortExpression="SectionTitle" />
+                    <asp:BoundField DataField="LinkTitle" HeaderText="LinkTitle" SortExpression="LinkTitle" />
                     <asp:BoundField DataField="DateCreated" HeaderText="DateCreated" SortExpression="DateCreated" />
                     <asp:BoundField DataField="DateLastModified" HeaderText="DateLastModified" SortExpression="DateLastModified" />
                     <asp:TemplateField HeaderText="">

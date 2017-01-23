@@ -148,7 +148,7 @@ html {
 }
 
 fieldset {
-    padding: 10px;
+    padding: 10px 5px;
     border-color: #4e5054;
     border-width: 3px 0 0 0;
     background-color: white;
@@ -157,6 +157,7 @@ fieldset {
     fieldset fieldset {
         border-color: #000000;
         border-width: 1px;
+        padding: 10px;
     }
 
     fieldset > div {
@@ -456,3 +457,14 @@ html, body {
 fieldset table td, fieldset table th{
     padding: 5px;
 }
+
+.ui-accordion .ui-accordion-content {
+    padding: 10px;
+}
+
+#SiteTreeWrapper li.selected > a {
+    background: #99ccff none repeat scroll 0 0;
+    border-radius: 2px;
+    box-shadow: 0 0 1px #999 inset;
+}
+

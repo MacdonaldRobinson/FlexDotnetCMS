@@ -101,17 +101,18 @@
 }
 
 #mainArea #left-component {
-    width: 75em;
+    width: 57em;
 }
 
 #mainArea #my-divider {
-    left: 75em; /* Same as left component width */
+    left: 57em; /* Same as left component width */
     width: 5px;
 }
 
 #mainArea #right-component {
-    left: 75em; /* Same as left component width */
+    left: 57em; /* Same as left component width */
     margin-left: 5px; /* Same as divider width */
+    overflow: hidden;
 }
 
 img.MarkedAsDeleted {
@@ -145,4 +146,13 @@ img.MarkedAsDeleted {
 
 fieldset table td a{
     font-weight: bold;
+}
+
+#left-component h1 span {
+    display:block;
+    margin-top:5px;
+}
+
+.ui-tabs .ui-tabs-panel {
+    padding: 5px;
 }

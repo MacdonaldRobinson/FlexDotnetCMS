@@ -5,24 +5,6 @@
 
 <script type="text/javascript">
 
-    function BindActiveTabs()
-    {
-        var TabIndexsJson = $("#<%= SelectedTabIndexs.ClientID %>").val();
-
-        if (TabIndexsJson != "") {
-            var TabObjIndexs = JSON.parse(TabIndexsJson);
-
-            $(TabObjIndexs).each(function () {
-                var tabUl = $(".tabs > ul")[this.tabUlIndex];
-
-                $($(tabUl).children("li")[this.activeLiIndex]).find("a").click();
-            });
-
-        }
-
-        //console.log(TabIndexsJson);
-    }
-
     $(document).ready(function () {
 
         $(".LinkTitle").on("blur", function () {
@@ -32,46 +14,6 @@
         $(".LinkTitle").on("focus", function () {
             ClearFieldsIfSameAs($(this).val(), this);
         });
-
-        $(document).on("click", ".tabs li a", function () {
-            var tabUl = $(this).parents("ul");
-            var tabUlIndex = $(".tabs > ul").index(tabUl);
-
-            var activeLi = tabUl.children("li.ui-state-active");
-            var activeLiIndex = tabUl.children().index(activeLi);
-
-            var existingJson = $("#<%= SelectedTabIndexs.ClientID %>").val();
-            var existingArray = new Array();
-
-            if (existingJson == "") {
-                existingJson = "[]";
-                $("#<%= SelectedTabIndexs.ClientID %>").val(existingJson);
-            }
-
-            existingArray = JSON.parse(existingJson);
-
-            var obj = new Object();
-            obj.tabUlIndex = tabUlIndex;
-            obj.activeLiIndex = activeLiIndex;
-
-            var pushNew = true;
-
-            $(existingArray).each(function () {
-                if (this.tabUlIndex == obj.tabUlIndex) {
-                    this.activeLiIndex = obj.activeLiIndex;
-                    pushNew = false;
-                }
-            });
-
-            if (pushNew)
-                existingArray.push(obj);
-
-            var json = JSON.stringify(existingArray);
-
-            $("#<%= SelectedTabIndexs.ClientID %>").val(json);
-
-        });
-
     });
 
     function ClearFieldsIfSameAs(value, objReference) {
@@ -125,8 +67,6 @@
         margin-bottom: 10px;
     }
 </style>
-
-<asp:HiddenField ID="SelectedTabIndexs" runat="server" />
 
 <div id="tabs" class="tabs">
     <ul>

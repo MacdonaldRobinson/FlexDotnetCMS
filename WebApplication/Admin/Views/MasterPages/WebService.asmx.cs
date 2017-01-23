@@ -92,6 +92,11 @@ namespace WebApplication.Admin.Views.MasterPages
             if ((!detail.CanRender) || (!detail.IsPublished))
                 node.li_attr._class += " unPublished";
 
+            if(AdminBasePage.SelectedMediaDetail != null && AdminBasePage.SelectedMediaDetail.ID == detail.ID)
+            {
+                node.li_attr._class += " selected";
+            }
+
             var draft = detail.History.FirstOrDefault(i => i.IsDraft && i.LanguageID == detail.LanguageID);
 
             if (draft != null)
@@ -185,7 +190,22 @@ namespace WebApplication.Admin.Views.MasterPages
         public void SearchForNodes(string filterText)
         {
             filterText = filterText.ToLower().Trim();
-            var foundItems = MediasMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0 && i.LanguageID == AdminBasePage.CurrentLanguage.ID && (i.MediaID.ToString() == filterText || i.MainContent.ToLower().Contains(filterText) || i.ShortDescription.ToLower().Contains(filterText) || i.SectionTitle.ToLower().Contains(filterText) || i.Fields.Any(j=>j.FieldValue.ToLower().Contains(filterText)))).ToList();
+            var foundItems = MediasMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ShowInSiteTree &&
+                                                                            i.HistoryVersionNumber == 0 &&
+                                                                            i.LanguageID == AdminBasePage.CurrentLanguage.ID &&
+                                                                            (i.MediaID.ToString() == filterText ||
+                                                                                i.MainContent.ToLower().Contains(filterText) ||
+                                                                                i.ShortDescription.ToLower().Contains(filterText) ||
+                                                                                i.SectionTitle.ToLower().Contains(filterText) ||
+                                                                                i.MainLayout.ToLower().Contains(filterText) ||
+                                                                                i.MediaType.MainLayout.ToLower().Contains(filterText) ||
+                                                                                i.Fields.Any(j => (j.FieldAssociations.Count == 0 && j.FieldValue.ToLower().Contains(filterText)) ||
+                                                                                                j.FieldAssociations.Any(k => !k.MediaDetail.MediaType.ShowInSiteTree &&
+                                                                                                                            (k.MediaDetail.SectionTitle.ToLower().Contains(filterText) ||
+                                                                                                                            k.MediaDetail.MainContent.ToLower().Contains(filterText) ||
+                                                                                                                            k.MediaDetail.MainLayout.ToLower().Contains(filterText))
+                                                                                                                        ))
+                                                                            )).ToList();
 
             var jsTreeNodes = foundItems.Select(i => GetJsTreeNode(i));
 

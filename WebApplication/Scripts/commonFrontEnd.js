@@ -33,7 +33,7 @@
             var term = this.Term;
             var definition = this.Definition;
 
-            var regex = new RegExp("\\b" + term + "\\b(?![^<]*</span>)", "gi");
+            var regex = new RegExp("\\b" + term + "\\b(?![^<]*</[a|span]+>)", "gi");
 
             var replacedTerm = [];
 
@@ -44,9 +44,6 @@
                     return false;
 
                 var html = html.replace(regex, function (match, offset, original) {
-
-                    console.log(original);
-
                     return "<span data-toggle='tooltip' title='" + definition + "'>" + match + "</span>";
                 });
 

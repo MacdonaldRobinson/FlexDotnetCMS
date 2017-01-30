@@ -9,40 +9,6 @@
 
         $(document).ready(function(){
 
-            $(window).bind('keydown', function(event) {
-                if (event.ctrlKey || event.metaKey) {
-                    switch (String.fromCharCode(event.which).toLowerCase()) {
-                        case 's':
-                            $('.SavePageButton')[0].click();
-                            event.preventDefault();
-
-                        break;
-                    }
-                }
-            });
-
-            /*$(window).keypress(function(event) {
-
-                if (!(event.which == 115 && event.ctrlKey) && !(event.which == 19)) return true;
-
-                $('.SavePageButton')[0].click();
-
-                event.preventDefault();
-                return false;
-            });*/
-
-            $(document).on('click', '.SavePageButton', function(event){
-                var saveFieldButton = $(".SaveFieldButton");
-                var text = saveFieldButton.text();
-
-                if(text.indexOf("Save") != -1)
-                {
-                    saveFieldButton[0].click();
-                }
-
-                return true;
-            });
-
             $(document).on('click', 'a.preview', function(event){
                 return UpdatePreview(event);
             });

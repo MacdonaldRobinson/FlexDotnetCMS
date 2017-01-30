@@ -1,6 +1,8 @@
 ﻿using FrameworkLibrary;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace WebApplication.Admin.Controls.Editors
@@ -12,6 +14,15 @@ namespace WebApplication.Admin.Controls.Editors
         public void SetItems(IMediaDetail mediaDetail)
         {
             this.mediaDetail = mediaDetail;
+        }
+
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            BindFieldTypeDropDown(FieldTypeDropDown);
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
             Bind();
         }
 
@@ -19,8 +30,6 @@ namespace WebApplication.Admin.Controls.Editors
         {
             ItemList.DataSource = mediaDetail.Fields.OrderBy(i => i.OrderIndex).ToList();
             ItemList.DataBind();
-
-            BindFieldTypeDropDown(FieldTypeDropDown);
 
             var id = long.Parse(FieldID.Value);
             var field = (MediaDetailField)BaseMapper.GetDataModel().Fields.Find(id);
@@ -186,54 +195,55 @@ namespace WebApplication.Admin.Controls.Editors
             ItemList.DataBind();
         }
 
+        public MediaDetailField GetDataItemFromSender(Control sender)
+        {
+            //var dataItemIndex = ((ItemList.PageSize * ItemList.PageIndex) +
+            var dataItemIndex = ((GridViewRow)(sender).Parent.Parent).DataItemIndex;
+            var dataItem = ((List<MediaDetailField>)ItemList.DataSource).ElementAt(dataItemIndex);
+
+            return dataItem;
+        }
+
         protected void Edit_Click(object sender, EventArgs e)
         {
-            var id = ((LinkButton)sender).CommandArgument;
+            var field = GetDataItemFromSender((Control)sender);
 
-            if (!string.IsNullOrEmpty(id) && id != "0")
+            if (field != null)
             {
-                var field = mediaDetail.Fields.SingleOrDefault(i => i.ID == long.Parse(id));
-
-                if (field != null)
-                    UpdatedFieldsFromObject(field);
+                UpdatedFieldsFromObject(field);
             }
         }
 
         protected void Delete_Click(object sender, EventArgs e)
         {
-            var id = ((LinkButton)sender).CommandArgument;
+            var field = GetDataItemFromSender((Control)sender);
 
-            if (!string.IsNullOrEmpty(id) && id !="0")
+            if (field != null && field.ID !=0)
             {
-                var field = mediaDetail.Fields.SingleOrDefault(i => i.ID == long.Parse(id));
+                var mediaDetailFields = BaseMapper.GetDataModel().Fields.Where(i => i.ID == field.ID);
 
-                if (field != null)
+                foreach (MediaDetailField mediaDetailField in mediaDetailFields)
                 {
-                    var mediaDetailFields = BaseMapper.GetDataModel().Fields.Where(i => i.ID == field.ID);
+                    var fieldAssociations = mediaDetailField.FieldAssociations.ToList();
 
-                    foreach (MediaDetailField mediaDetailField in mediaDetailFields)
+                    foreach (var fieldAssociation in fieldAssociations)
                     {
-                        var fieldAssociations = mediaDetailField.FieldAssociations.ToList();
-
-                        foreach (var fieldAssociation in fieldAssociations)
-                        {
-                            BaseMapper.GetDataModel().FieldAssociations.Remove(fieldAssociation);
-                        }
-
-                        BaseMapper.DeleteObjectFromContext(mediaDetailField);
+                        BaseMapper.GetDataModel().FieldAssociations.Remove(fieldAssociation);
                     }
 
-                    var returnObj = MediaDetailsMapper.Update(mediaDetail);
+                    BaseMapper.DeleteObjectFromContext(mediaDetailField);
+                }
 
-                    if (!returnObj.IsError)
-                    {
-                        UpdatedFieldsFromObject(new MediaDetailField());
-                        Bind();
-                    }
-                    else
-                    {
-                        BasePage.DisplayErrorMessage("Error", returnObj.Error);
-                    }
+                var returnObj = MediaDetailsMapper.Update(mediaDetail);
+
+                if (!returnObj.IsError)
+                {
+                    UpdatedFieldsFromObject(new MediaDetailField());
+                    Bind();
+                }
+                else
+                {
+                    BasePage.DisplayErrorMessage("Error", returnObj.Error);
                 }
             }
         }

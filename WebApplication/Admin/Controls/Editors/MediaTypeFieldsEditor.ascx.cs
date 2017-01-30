@@ -1,6 +1,8 @@
 ﻿using FrameworkLibrary;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace WebApplication.Admin.Controls.Editors
@@ -12,9 +14,17 @@ namespace WebApplication.Admin.Controls.Editors
         public void SetItems(MediaType mediaType)
         {
             this.mediaType = mediaType;
-            Bind();
         }
 
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            BindFieldTypeDropDown(FieldTypeDropDown);
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            Bind();
+        }
         private void Bind()
         {
             if(mediaType != null)
@@ -22,8 +32,6 @@ namespace WebApplication.Admin.Controls.Editors
                 ItemList.DataSource = mediaType.Fields.ToList();
                 ItemList.DataBind();
             }
-
-            BindFieldTypeDropDown(FieldTypeDropDown);
         }
 
         public AdminBasePage BasePage
@@ -174,50 +182,51 @@ namespace WebApplication.Admin.Controls.Editors
             ItemList.DataBind();
         }
 
+        public MediaTypeField GetDataItemFromSender(Control sender)
+        {
+            //var dataItemIndex = ((ItemList.PageSize * ItemList.PageIndex) +
+            var dataItemIndex = ((GridViewRow)(sender).Parent.Parent).DataItemIndex;
+            var dataItem = ((List<MediaTypeField>)ItemList.DataSource).ElementAt(dataItemIndex);
+
+            return dataItem;
+        }
+
         protected void Edit_Click(object sender, EventArgs e)
         {
-            var id = ((LinkButton)sender).CommandArgument;
+            var field = GetDataItemFromSender((Control)sender);
 
-            if (!string.IsNullOrEmpty(id))
+            if (field != null)
             {
-                var field = mediaType.Fields.SingleOrDefault(i => i.ID == long.Parse(id));
-
-                if (field != null)
-                    UpdatedFieldsFromObject(field);
+                UpdatedFieldsFromObject(field);
             }
         }
 
         protected void Delete_Click(object sender, EventArgs e)
         {
-            var id = ((LinkButton)sender).CommandArgument;
+            var field = GetDataItemFromSender((Control)sender);
 
-            if (!string.IsNullOrEmpty(id))
+            if (field!= null && field.ID != 0)
             {
-                var field = mediaType.Fields.SingleOrDefault(i => i.ID == long.Parse(id));
+                //TODO: Only un-comment for testing
+                /*var mediaDetailFields = field.MediaDetailFields.ToList();
 
-                if (field != null)
+                foreach (var mediaDetailField in mediaDetailFields)
                 {
-                    //TODO: Only un-comment for testing
-                    /*var mediaDetailFields = field.MediaDetailFields.ToList();
+                    BaseMapper.DeleteObjectFromContext(mediaDetailField);
+                }*/
 
-                    foreach (var mediaDetailField in mediaDetailFields)
-                    {
-                        BaseMapper.DeleteObjectFromContext(mediaDetailField);
-                    }*/
+                BaseMapper.DeleteObjectFromContext(field);
 
-                    BaseMapper.DeleteObjectFromContext(field);
+                var returnObj = MediaTypesMapper.Update(mediaType);
 
-                    var returnObj = MediaTypesMapper.Update(mediaType);
-
-                    if (!returnObj.IsError)
-                    {
-                        UpdatedFieldsFromObject(new MediaTypeField());
-                        Bind();
-                    }
-                    else
-                    {
-                        BasePage.DisplayErrorMessage("Error", returnObj.Error);
-                    }
+                if (!returnObj.IsError)
+                {
+                    UpdatedFieldsFromObject(new MediaTypeField());
+                    Bind();
+                }
+                else
+                {
+                    BasePage.DisplayErrorMessage("Error", returnObj.Error);
                 }
             }
         }

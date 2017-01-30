@@ -343,7 +343,8 @@ namespace WebApplication.Admin.MediaArticle
                 if ((parentMediaItem != null) && (atleastOne != null))
                     under = atleastOne.LinkTitle;
 
-                sectionTitle = title = "Creating New Media of Type '" + MediaTypesMapper.GetByID(mediaTypeId).Name + "' Under '" + under + "' with Language '" + CurrentLanguage.Name + "'";
+                sectionTitle = "Creating: <span>New Media of Type '" + MediaTypesMapper.GetByID(mediaTypeId).Name + "' Under '" + under + "' with Language '" + CurrentLanguage.Name + "'</span>";
+                title = StringHelper.StripHtmlTags(sectionTitle);
             }
             else
             {

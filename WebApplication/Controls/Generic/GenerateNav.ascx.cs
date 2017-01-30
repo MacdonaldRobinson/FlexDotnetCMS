@@ -143,14 +143,7 @@ namespace WebApplication.Controls
 
                 if (detail.UseDirectLink)
                 {
-                    if (detail.DirectLink.Contains("#footer"))
-                    {
-                        virtualPath = HttpContext.Current.Request.Url + "#footer";
-                    }
-                    else
-                    {
-                        virtualPath = detail.DirectLink;
-                    }
+                    virtualPath = detail.DirectLink;
                 }
 
                 if(currentDepth == 1)
@@ -172,16 +165,21 @@ namespace WebApplication.Controls
                 if (detail.OpenInNewWindow)
                     Link.Target = "_blank";
 
-                if (!virtualPath.EndsWith("/"))
+                if (!virtualPath.StartsWith("{") && !virtualPath.EndsWith("/"))
                 {
                     if (!virtualPath.Contains("."))
                         virtualPath += "/";
                 }
 
-                var path = URIHelper.ConvertToAbsUrl(virtualPath);
+                var path = virtualPath;
 
-                if (path.Contains("#") && path.EndsWith("/"))
-                    path = path.Remove(path.Length - 1);
+                if (!virtualPath.StartsWith("{"))
+                {
+                    path = URIHelper.ConvertToAbsUrl(virtualPath);
+
+                    if (path.Contains("#") && path.EndsWith("/"))
+                        path = path.Remove(path.Length - 1);
+                }
 
                 Link.NavigateUrl = path;
 

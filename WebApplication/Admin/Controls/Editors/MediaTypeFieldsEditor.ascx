@@ -12,7 +12,7 @@
     <ContentTemplate>
         <fieldset>
             <legend>Currently Created Fields</legend>
-            <asp:GridView runat="server" ID="ItemList" AutoGenerateColumns="false" AllowPaging="false" OnPageIndexChanging="ItemList_PageIndexChanging">
+            <asp:GridView runat="server" ID="ItemList" AutoGenerateColumns="false" AllowPaging="true" OnPageIndexChanging="ItemList_PageIndexChanging" PageSize="10">
                 <Columns>
                     <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
                     <asp:BoundField DataField="FieldCode" HeaderText="FieldCode" SortExpression="FieldCode" />

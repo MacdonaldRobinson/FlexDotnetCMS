@@ -1,5 +1,6 @@
 ﻿using FrameworkLibrary;
 using System;
+using System.Web.UI;
 using System.Linq;
 using System.Web.UI.WebControls;
 
@@ -97,29 +98,32 @@ namespace WebApplication.Admin.Controls.Editors
             Bind();
         }*/
 
+
+        public IMediaDetail GetDataItemFromSender(Control sender)
+        {
+            var dataItemIndex = ((ItemList.PageSize * ItemList.PageIndex) + ((GridViewRow)(sender).Parent.Parent).DataItemIndex);
+            var dataItem = ((System.Collections.Generic.List<FrameworkLibrary.MediaDetail>)ItemList.DataSource).ElementAt(dataItemIndex);
+
+            return dataItem;
+        }
+
         protected void LoadHistory_Click(object sender, EventArgs e)
         {
-            var id = ((LinkButton)sender).CommandArgument;
+            var dataItem = GetDataItemFromSender((LinkButton)sender);
 
-            if (!string.IsNullOrEmpty(id))
+            if (dataItem != null)
             {
-                var item = selectedItem.History.SingleOrDefault(i => i.ID == long.Parse(id));
-
-                if (item != null)
-                    HandleLoad(item);
+                HandleLoad(dataItem);
             }
         }
 
         protected void DeleteHistory_Click(object sender, EventArgs e)
         {
-            var id = ((LinkButton)sender).CommandArgument;
+            var dataItem = GetDataItemFromSender((LinkButton)sender);
 
-            if (!string.IsNullOrEmpty(id))
+            if (dataItem != null)
             {
-                var item = selectedItem.History.SingleOrDefault(i => i.ID == long.Parse(id));
-
-                if (item != null)
-                    HandleDelete(item);
+                HandleDelete(dataItem);
             }
         }
     }

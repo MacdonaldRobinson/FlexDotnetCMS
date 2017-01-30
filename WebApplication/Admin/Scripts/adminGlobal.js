@@ -410,7 +410,7 @@ function initAceEditors() {
             var value = textarea.val();
 
             if ($("#PreviewPanel").length > 0)
-                $("#PreviewPanel")[0].contentWindow.document.getElementById("MainContentPlaceHolder").innerHTML = value;
+                $("#PreviewPanel")[0].contentWindow.document.body.innerHTML = value;
         }
     });
 
@@ -441,6 +441,9 @@ function initAceEditors() {
         editor.setTheme("ace/theme/iplastic");
         editor.setValue(textarea.val());
         editor.getSession().setMode("ace/mode/html");
+        editor.$blockScrolling = Infinity;
+        editor.$useWorker = false;
+
         var langTools = ace.require('ace/ext/language_tools');
 
         // enable autocompletion and snippets
@@ -465,6 +468,33 @@ function initAceEditors() {
         }
         editor.completers = [langTools.snippetCompleter, langTools.textCompleter, customCompleter]
 
+        var htmlBeautifyOptions = {
+        };
+
+        editor.commands.addCommand({
+            name: 'Beautify',
+            bindKey: { win: 'Ctrl-S', mac: 'Command-S' },
+            exec: function (editor) {
+                var value = editor.getSession().getValue();
+
+                // TODO: Format HTML
+                value = value.replace(/<[^]+/, function (match) {
+
+                    if (/@for|@if|@[\s]?{|Helper.|!=|List</.test(match)) {
+                        return match;
+                    }
+                    match = html_beautify(match);
+                    return match;
+                });
+
+                editor.setValue(value);
+
+                $(".SavePageButton")[0].click();
+
+            },
+            readOnly: true // false if this command should not apply in readOnly mode
+        });
+
         editor.getSession().on('change', function () {
             var value = editor.getSession().getValue();
 
@@ -472,9 +502,10 @@ function initAceEditors() {
 
             if ($("#PreviewPanel").length > 0) {
                 if (textarea.parent().find("#AttachEditorToBrowserPanel").is(":checked")) {
-                    $("#PreviewPanel")[0].contentWindow.document.getElementById("MainContentPlaceHolder").innerHTML = value;
+                    $("#PreviewPanel")[0].contentWindow.document.body.innerHTML = value;
                 }
             }
+
         });
     });
 }
@@ -534,10 +565,27 @@ $(document).ready(function () {
         }
     });
 
+    $(document).on('click', '.SavePageButton', function (event) {
+        var text = $(".SaveFieldButton").text();
+
+        if (text.indexOf("Save") != -1) {
+            var autoClickedSaveFieldButton = false;
+
+            OnUpdatePanelRefreshComplete(function (event) {
+                if (!autoClickedSaveFieldButton) {
+                    $(".SaveFieldButton")[0].click();
+                    autoClickedSaveFieldButton = true;
+                }
+            });
+        }
+
+        return true;
+    });
+
     tfm_path = "/Scripts/tinyfilemanager.net";
     tinymce.init({
         selector: ".editor",
-        content_css: "/Views/MasterPages/SiteTemplates/css/compiled/style.css, /Admin/Styles/editor.css",
+        content_css: "/Views/MasterPages/SiteTemplates/css/style.css, /Admin/Styles/editor.css",
         plugins: [
           'advlist autolink lists link image charmap print preview hr anchor pagebreak',
           'searchreplace wordcount visualblocks visualchars fullscreen',

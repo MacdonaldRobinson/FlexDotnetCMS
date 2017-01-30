@@ -24,7 +24,7 @@
 
             if (hasTarget) {
                 window.reload();
-            }        
+            }
         });
     }
 
@@ -49,10 +49,7 @@
 
                 $(this).html(html);
             });
-
         });
-
-        initToolTips();
     });
 
 });

@@ -29,7 +29,7 @@ namespace WebApplication
                     Response.Redirect(installerPath);
             }
 
-            if (!AppSettings.IsRunningOnDev && !Request.Url.Host.StartsWith("www."))
+            if (!AppSettings.IsRunningOnDev && (!Request.Url.Host.StartsWith("www.") && !Request.Url.Host.Contains("localhost")))
                 Response.RedirectPermanent(Request.Url.AbsoluteUri.Replace("://", "://www."));
 
             BaseService.AddResponseHeaders();

@@ -15,7 +15,7 @@
                 <div class="clear"></div>
             </div>
         </div>
-<%--        <div>
+        <div>
             <h3>Clear All Cache & Delete All History Versions</h3>
             This tool will delete all history versions currently saved in the database and will clear all the cache at the same time<br />
             <div class="buttons">
@@ -24,7 +24,7 @@
                 Delete any saved Drafts as well
                 <div class="clear"></div>
             </div>
-        </div>--%>
+        </div>
     </fieldset>
 
     <fieldset>

@@ -261,8 +261,10 @@ namespace FrameworkLibrary
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(tagValue))
+                    if (data != tagValue && !data.StartsWith("@"))
+                    {
                         data = tagValue;
+                    }
                 }
             }
 

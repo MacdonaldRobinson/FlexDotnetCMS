@@ -14,10 +14,6 @@ namespace WebApplication.Admin.Controls.Editors
         public void SetItems(MediaType mediaType)
         {
             this.mediaType = mediaType;
-        }
-
-        protected void Page_Init(object sender, EventArgs e)
-        {
             BindFieldTypeDropDown(FieldTypeDropDown);
         }
 
@@ -25,6 +21,7 @@ namespace WebApplication.Admin.Controls.Editors
         {
             Bind();
         }
+
         private void Bind()
         {
             if(mediaType != null)

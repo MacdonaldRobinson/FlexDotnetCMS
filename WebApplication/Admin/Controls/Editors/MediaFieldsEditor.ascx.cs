@@ -19,18 +19,22 @@ namespace WebApplication.Admin.Controls.Editors
         protected void Page_Init(object sender, EventArgs e)
         {
             BindFieldTypeDropDown(FieldTypeDropDown);
+            UpdateVisibility();
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Bind();
+            BindItemList();
         }
 
-        private void Bind()
+        private void BindItemList()
         {
             ItemList.DataSource = mediaDetail.Fields.OrderBy(i => i.OrderIndex).ToList();
             ItemList.DataBind();
+        }
 
+        private void UpdateVisibility()
+        {
             var id = long.Parse(FieldID.Value);
             var field = (MediaDetailField)BaseMapper.GetDataModel().Fields.Find(id);
 
@@ -125,7 +129,7 @@ namespace WebApplication.Admin.Controls.Editors
             {
                 FieldID.Value = mediaField.ID.ToString();
                 BindVisibility(mediaField);
-                Bind();
+                BindItemList();
 
                 mediaField.MediaDetail.RemoveFromCache();
             }
@@ -239,7 +243,7 @@ namespace WebApplication.Admin.Controls.Editors
                 if (!returnObj.IsError)
                 {
                     UpdatedFieldsFromObject(new MediaDetailField());
-                    Bind();
+                    BindItemList();
                 }
                 else
                 {

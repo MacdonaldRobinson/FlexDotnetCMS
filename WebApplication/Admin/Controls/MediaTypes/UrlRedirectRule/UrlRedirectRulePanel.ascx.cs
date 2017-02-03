@@ -26,6 +26,10 @@ namespace WebApplication.Admin.Controls.MediaTypes.UrlRedirectRule
         {
             var selectedItem = (FrameworkLibrary.UrlRedirectRule)SelectedItem;
             selectedItem.VirtualPathToRedirect = VirtualPathToRedirect.Text;
+
+            if (!selectedItem.VirtualPathToRedirect.EndsWith("/"))
+                selectedItem.VirtualPathToRedirect = selectedItem.VirtualPathToRedirect + "/";
+
             selectedItem.RedirectToUrl = RedirectToUrl.Text;
             selectedItem.Is301Redirect = Is301Redirect.Checked;
 

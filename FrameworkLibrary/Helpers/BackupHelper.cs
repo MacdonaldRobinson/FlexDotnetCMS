@@ -29,7 +29,7 @@ namespace FrameworkLibrary
                 // Create backup device item for the backup
                 BackupDeviceItem bdi = new BackupDeviceItem(backUpPath, DeviceType.File);
 
-                // Create the backup informaton
+                // Create the backup informaton 
                 Microsoft.SqlServer.Management.Smo.Backup bk = new Backup();
 
                 //bk.PercentComplete += new PercentCompleteEventHandler(percentComplete);

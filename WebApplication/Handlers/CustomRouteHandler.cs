@@ -144,7 +144,14 @@ namespace WebApplication.Handlers
 
                 if (redirectRule != null)
                 {
-                    var newUrl = URIHelper.ConvertToAbsUrl(redirectRule.RedirectToUrl);
+                    var newUrl = redirectRule.RedirectToUrl;
+
+                    if (newUrl.Contains("{"))
+                    {
+                        newUrl = MediaDetailsMapper.ParseSpecialTags(redirectRule, newUrl);
+                    }
+
+                    newUrl = URIHelper.ConvertToAbsUrl(newUrl);
 
                     if (Request.QueryString.Count > 0)
                         newUrl += "?" + Request.QueryString;

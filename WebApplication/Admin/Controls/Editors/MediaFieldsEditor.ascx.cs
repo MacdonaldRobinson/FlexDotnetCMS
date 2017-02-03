@@ -25,6 +25,7 @@ namespace WebApplication.Admin.Controls.Editors
         protected void Page_Load(object sender, EventArgs e)
         {
             BindItemList();
+            UpdateVisibility();
         }
 
         private void BindItemList()

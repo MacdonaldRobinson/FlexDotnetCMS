@@ -468,3 +468,6 @@ fieldset table td, fieldset table th{
     box-shadow: 0 0 1px #999 inset;
 }
 
+.tooltip {
+    cursor: pointer;
+}

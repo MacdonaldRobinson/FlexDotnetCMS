@@ -27,5 +27,6 @@ namespace FrameworkLibrary
         public string AdminControl { get; set; }
         public string GetAdminControlValue { get; set; }
         public string SetAdminControlValue { get; set; }
+        public string FieldDescription { get; set; }
     }
 }

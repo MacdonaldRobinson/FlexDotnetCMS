@@ -74,6 +74,7 @@ namespace WebApplication.Admin.Controls.Editors
                     mediaDetailField.FieldCode = mediaTypeField.FieldCode;
                     mediaDetailField.FieldLabel = mediaTypeField.FieldLabel;
                     mediaDetailField.FieldValue = mediaTypeField.FieldValue;
+                    mediaDetailField.FieldDescription = mediaTypeField.FieldDescription;
                     mediaDetailField.AdminControl = mediaTypeField.AdminControl;
                     mediaDetailField.FrontEndLayout = mediaTypeField.FrontEndLayout;
                     mediaDetailField.GroupName = mediaTypeField.GroupName;
@@ -102,6 +103,7 @@ namespace WebApplication.Admin.Controls.Editors
                 {
                     mediaDetailField.FieldCode = mediaTypeField.FieldCode;
                     mediaDetailField.FieldLabel = mediaTypeField.FieldLabel;
+                    mediaDetailField.FieldDescription = mediaTypeField.FieldDescription;
                     mediaDetailField.AdminControl = mediaTypeField.AdminControl;
 
                     if(mediaDetailField.UseMediaTypeFieldFrontEndLayout)
@@ -142,6 +144,7 @@ namespace WebApplication.Admin.Controls.Editors
             mediaTypeField.MediaTypeID = mediaType.ID;
             mediaTypeField.FieldCode = FieldCode.Text;
             mediaTypeField.FieldLabel = FieldLabel.Text;
+            mediaTypeField.FieldDescription = FieldDescription.GetValue().ToString();
             mediaTypeField.AdminControl = AdminControl.Text;
             mediaTypeField.FrontEndLayout = FrontEndLayout.Text;
             mediaTypeField.GroupName = GroupName.Text;
@@ -159,6 +162,7 @@ namespace WebApplication.Admin.Controls.Editors
             FieldID.Value = mediaTypeField.ID.ToString();
             FieldCode.Text = mediaTypeField.FieldCode;
             FieldLabel.Text = mediaTypeField.FieldLabel;
+            FieldDescription.SetValue(mediaTypeField.FieldDescription);
             AdminControl.Text = mediaTypeField.AdminControl;
             FieldValue.Text = mediaTypeField.FieldValue;
             FrontEndLayout.Text = mediaTypeField.FrontEndLayout;

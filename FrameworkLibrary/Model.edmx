@@ -29,6 +29,7 @@
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FieldCode" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="FieldLabel" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="FieldDescription" Type="nvarchar(max)" Nullable="false" />
           <Property Name="RenderLabelAfterControl" Type="bit" Nullable="false" />
           <Property Name="AdminControl" Type="nvarchar(max)" Nullable="false" />
           <Property Name="FieldValue" Type="nvarchar(max)" Nullable="false" />
@@ -1844,6 +1845,7 @@
           <Property Name="AdminControl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="GetAdminControlValue" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SetAdminControlValue" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FieldDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MediaDetailField" BaseType="FrameworkModel.Field">
           <Property Name="MediaDetailID" Type="Int64" Nullable="false" />
@@ -2395,6 +2397,7 @@
           <EntitySetMapping Name="Fields">
             <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.Field)">
               <MappingFragment StoreEntitySet="Fields">
+                <ScalarProperty Name="FieldDescription" ColumnName="FieldDescription" />
                 <ScalarProperty Name="SetAdminControlValue" ColumnName="SetAdminControlValue" />
                 <ScalarProperty Name="GetAdminControlValue" ColumnName="GetAdminControlValue" />
                 <ScalarProperty Name="AdminControl" ColumnName="AdminControl" />

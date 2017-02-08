@@ -114,17 +114,21 @@
                 </div>
                 <h2>
                     <asp:Literal ID="FieldDetailsTitle" runat="server" /></h2>
-                <asp:HiddenField ID="FieldID" runat="server" Value="0" />
+                    <asp:HiddenField ID="FieldID" runat="server" Value="0" />
                 <div>
                     <label for="<%# FieldCode.ClientID %>">Field Code:</label>
-                <asp:TextBox runat="server" ID="FieldCode" />
+                    <asp:TextBox runat="server" ID="FieldCode" />
                 </div>
                 <div>
                     <label for="<%# FieldLabel.ClientID %>">Field Label:</label>
-                <asp:TextBox runat="server" ID="FieldLabel" />
+                    <asp:TextBox runat="server" ID="FieldLabel" />
                 </div>
                 <div>
                     <asp:CheckBox runat="server" ID="RenderLabelAfterControl" /> <label for="<%# RenderLabelAfterControl.ClientID %>">Render Label After Control</label>
+                </div>
+                <div>
+                    <label for="<%# FieldDescription.ClientID %>">Field Description:</label>
+                    <Admin:Editor ID="FieldDescription" runat="server" Height="200px" />
                 </div>
                 <div>
                     <label for="<%# GroupName.ClientID %>">Group Name:</label>
@@ -167,6 +171,7 @@
                         <asp:TextBox runat="server" ID="FieldValue" TextMode="MultiLine" />
                     </div>
                 </div>
+
             </fieldset>
         </asp:Panel>
     </ContentTemplate>

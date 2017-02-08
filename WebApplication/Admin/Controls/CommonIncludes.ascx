@@ -23,6 +23,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.8/beautify.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.8/beautify-html.js"></script>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/css/tooltipster.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/js/jquery.tooltipster.min.js"></script>
+
 <script type="text/javascript" src="/Admin/Scripts/adminGlobal.js"></script>
 
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
@@ -56,8 +61,6 @@
             });
 
         }
-
-        console.log(TabIndexsJson);
     }
 
     $(document).ready(function () {

@@ -138,9 +138,9 @@
                                 <ItemTemplate>
                                     <asp:Panel runat="server" CssClass="field" ID="FieldWrapper">
                                         <asp:HiddenField ID="FieldID" Value="0" runat="server" />
-                                        <%# (!Item.RenderLabelAfterControl) ? "<label data-fieldcode='"+Item.FieldCode+"'>"+Item.FieldLabel+"<div class='floatRight'><small>USAGE: {Field:"+Item.FieldCode+"}</small></label></div>" : "" %>
+                                        <%# (!Item.RenderLabelAfterControl) ? "<label data-fieldcode='"+Item.FieldCode+"'>"+Item.FieldLabel+"</label> <i class='fa fa-question-circle tooltip' aria-hidden='true' title='"+Item.FieldDescription+"'></i><div class='floatRight'><small>USAGE: {Field:"+Item.FieldCode+"}</small></div>" : "" %>
                                             <asp:PlaceHolder runat="server" ID="DynamicField" />
-                                        <%# (Item.RenderLabelAfterControl) ? "<label data-fieldcode='"+Item.FieldCode+"'>"+Item.FieldLabel+"</label><div class='floatRight'><small>USAGE: {Field:"+Item.FieldCode+"}<small></div>" : "" %>
+                                        <%# (Item.RenderLabelAfterControl) ? "<label data-fieldcode='"+Item.FieldCode+"'>"+Item.FieldLabel+"</label> <i class='fa fa-question-circle tooltip' aria-hidden='true' title='"+Item.FieldDescription+"'></i><div class='floatRight'><small>USAGE: {Field:"+Item.FieldCode+"}<small></div>" : "" %>
                                     </asp:Panel>
                                 </ItemTemplate>
                             </asp:ListView>

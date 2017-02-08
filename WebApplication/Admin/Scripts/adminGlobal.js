@@ -396,6 +396,7 @@ function getFieldsAutoComplete()
 }
 
 function initAceEditors() {
+
     var wordList = getFieldsAutoComplete();
 
     $(document).on("change", "#AttachEditorToBrowserPanel", function () {
@@ -519,11 +520,24 @@ function destroyAceEditors() {
     });
 }
 
+function destroyTinyMCE() {
+    if (typeof (tinyMCE) !== 'undefined') {
+        var length = tinymce.editors.length;
+        for (var i = length; i > 0; i--) {
+            var editor = tinymce.editors[i - 1];
+            editor.remove();
+        };
+    }
+}
+
+
 $(window).load(function () {
     initAceEditors();
+    initTinyMCE();
 
     $(document).ajaxComplete(function () {
         initAceEditors();
+        initTinyMCE();
     });
 });
 
@@ -542,6 +556,20 @@ function BindTabs()
 $(document).ready(function () {
 
     //BindScrollMagic();
+
+    $('.tooltip').each(function () {
+        var title = $(this).attr("title");
+        if(title == undefined || title == "")
+        {
+            $(this).hide();
+        }
+    });
+
+    $('.tooltip').tooltipster({
+        contentAsHTML: true,
+        interactive: true,
+        trigger: 'click'
+    });
 
     $('ul.sf-menu').superfish();
     BindTabs();
@@ -581,18 +609,23 @@ $(document).ready(function () {
 
         return true;
     });
+});
 
+function initTinyMCE()
+{
+    tinymce.editors = [];
     tfm_path = "/Scripts/tinyfilemanager.net";
     tinymce.init({
         selector: ".editor",
         content_css: "/Views/MasterPages/SiteTemplates/css/style.css, /Admin/Styles/editor.css",
+        menubar: false,
         plugins: [
           'advlist autolink lists link image charmap print preview hr anchor pagebreak',
           'searchreplace wordcount visualblocks visualchars fullscreen',
           'insertdatetime media youtube nonbreaking save table contextmenu directionality',
           'emoticons template paste textcolor colorpicker textpattern imagetools ace'
         ],
-        toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media youtube ace',
+        toolbar1: 'insertfile undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media youtube ace',
         templates: [
         ],
         image_advtab: true,
@@ -621,7 +654,7 @@ $(document).ready(function () {
 
         }
     });
-});
+}
 
 function BindGridViewSortable(CssSelector, WebserviceUrl, UpdatePanelClientId, OnAfterRefreshFunction) {
     var DragDropGridSortable = $(CssSelector).sortable({
@@ -915,7 +948,6 @@ $(document)
     });
 
 function pageLoad() {
-
     RefreshSiteTreeNodeById($("#SiteTree").jstree("get_selected")[0]);
     BindScrollMagic();
     BindDataTable();

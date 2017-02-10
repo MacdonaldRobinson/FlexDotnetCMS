@@ -298,7 +298,7 @@ namespace WebApplication.Installer
 
                 SetWebconfigReadonly();
 
-                Response.Redirect("~/", false);
+                Response.Redirect("~/admin/", false);
             }
             catch (Exception ex)
             {
@@ -362,7 +362,7 @@ namespace WebApplication.Installer
                 else
                 {
                     admin.EmailAddress = CMSEmailAddress.Text;
-                    admin.Password = StringHelper.Encrypt(Password.Text.Trim());
+                    admin.Password = StringHelper.Encrypt(CMSPassword.Text.Trim());
 
                     returnObj = UsersMapper.Update(admin);
                 }

@@ -80,6 +80,7 @@ namespace WebApplication.Admin.Controls.Editors
                     mediaDetailField.GroupName = mediaTypeField.GroupName;
                     mediaDetailField.RenderLabelAfterControl = mediaTypeField.RenderLabelAfterControl;
                     mediaDetailField.UseMediaTypeFieldFrontEndLayout = true;
+                    mediaDetailField.UseMediaTypeFieldDescription = true;
 
                     mediaDetailField.GetAdminControlValue = mediaTypeField.GetAdminControlValue;
                     mediaDetailField.SetAdminControlValue = mediaTypeField.SetAdminControlValue;
@@ -101,20 +102,20 @@ namespace WebApplication.Admin.Controls.Editors
 
                 foreach (var mediaDetailField in mediaTypeField.MediaDetailFields)
                 {
-                    mediaDetailField.FieldCode = mediaTypeField.FieldCode;
-                    mediaDetailField.FieldLabel = mediaTypeField.FieldLabel;
-                    mediaDetailField.FieldDescription = mediaTypeField.FieldDescription;
-                    mediaDetailField.AdminControl = mediaTypeField.AdminControl;
+                    if (mediaDetailField.UseMediaTypeFieldDescription)
+                        mediaDetailField.FieldDescription = mediaTypeField.FieldDescription;
 
-                    if(mediaDetailField.UseMediaTypeFieldFrontEndLayout)
+                    if (mediaDetailField.UseMediaTypeFieldFrontEndLayout)
                         mediaDetailField.FrontEndLayout = mediaTypeField.FrontEndLayout;
-
-                    mediaDetailField.GroupName = mediaTypeField.GroupName;
-                    mediaDetailField.RenderLabelAfterControl = mediaTypeField.RenderLabelAfterControl;
 
                     if (string.IsNullOrEmpty(mediaDetailField.FieldValue))
                         mediaDetailField.FieldValue = mediaTypeField.FieldValue;
 
+                    mediaDetailField.FieldCode = mediaTypeField.FieldCode;
+                    mediaDetailField.FieldLabel = mediaTypeField.FieldLabel;
+                    mediaDetailField.AdminControl = mediaTypeField.AdminControl;
+                    mediaDetailField.GroupName = mediaTypeField.GroupName;
+                    mediaDetailField.RenderLabelAfterControl = mediaTypeField.RenderLabelAfterControl;
                     mediaDetailField.GetAdminControlValue = mediaTypeField.GetAdminControlValue;
                     mediaDetailField.SetAdminControlValue = mediaTypeField.SetAdminControlValue;
                     mediaDetailField.DateLastModified = DateTime.Now;

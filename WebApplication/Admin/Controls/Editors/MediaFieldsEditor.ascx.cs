@@ -153,6 +153,7 @@ namespace WebApplication.Admin.Controls.Editors
             mediaField.SetAdminControlValue = SetAdminControlValue.Text;
             mediaField.FrontEndLayout = FrontEndLayout.Text;
             mediaField.FieldDescription = FieldDescription.GetValue().ToString();
+            mediaField.UseMediaTypeFieldDescription = UseMediaTypeFieldDescription.Checked;
 
             var mediaTypeField = mediaDetail.MediaType.Fields.SingleOrDefault(i => i.FieldCode == mediaField.FieldCode);
 
@@ -192,6 +193,7 @@ namespace WebApplication.Admin.Controls.Editors
             SetAdminControlValue.Text = mediaField.SetAdminControlValue;
             UseMediaTypeFieldFrontEndLayout.Checked = mediaField.UseMediaTypeFieldFrontEndLayout;
             FieldDescription.SetValue(mediaField.FieldDescription);
+            UseMediaTypeFieldDescription.Checked = mediaField.UseMediaTypeFieldDescription;
 
             BindVisibility(mediaField);
         }

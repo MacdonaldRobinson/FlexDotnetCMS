@@ -126,6 +126,12 @@
                 <div>
                     <asp:CheckBox runat="server" ID="RenderLabelAfterControl" /> <label for="<%# RenderLabelAfterControl.ClientID %>">Render Label After Control</label>
                 </div>
+                <div id="UseMediaTypeFieldDescriptionWrapper" runat="server">
+                    <label>
+                        <asp:CheckBox ID="UseMediaTypeFieldDescription" runat="server" />
+                        <label for="<%# UseMediaTypeFieldDescription.ClientID %>">Use Media Type Field Description</label>
+                    </label>
+                </div>
                 <div>
                     <label for="<%# FieldDescription.ClientID %>">Field Description:</label>
                     <Admin:Editor ID="FieldDescription" runat="server" Height="200px" />

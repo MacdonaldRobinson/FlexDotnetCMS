@@ -343,5 +343,43 @@ namespace WebApplication.Installer
                 Messages.Text += ex.Message + "" + ex.InnerException + "<br />";
             }
         }
+
+        protected void UpdateCMSAdminLogin_Click(object sender, EventArgs e)
+        {
+            var returnObj = new Return();
+
+            if (CMSEmailAddress.Text == "" || CMSPassword.Text == "")
+            {
+                Messages.Text = "Please make sure to enter a valid 'Email Address' and 'Password'";
+            }
+            else
+            {
+                var admin = UsersMapper.GetByUserName("admin");
+                if (admin == null)
+                {
+                    returnObj.Error = new Elmah.Error() { Message = "Cannot find user with username: 'admin'" };
+                }
+                else
+                {
+                    admin.EmailAddress = CMSEmailAddress.Text;
+                    admin.Password = StringHelper.Encrypt(Password.Text.Trim());
+
+                    returnObj = UsersMapper.Update(admin);
+                }
+
+                if (returnObj.IsError)
+                {
+                    Messages.Text = returnObj.Error.Message + "" + returnObj.Error.Exception.InnerException + "<br />";
+                }
+                else
+                {
+                    DisableInstallerPanel.Visible = true;
+                    Messages.Text = "Successfully updated CMS Admin Login Credentials";
+                }
+            }
+
+            ExecutePanel.Visible = true;
+
+        }
     }
 }

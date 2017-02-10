@@ -121,14 +121,33 @@
                                     <i>Note: Based on the script that is being executed, all data in the existing database will be lost, it is best that you backup the database prior to executing any scripts</i>
                                     <br />
                                     <asp:DropDownList runat="server" ID="SqlFiles">
-                                    </asp:DropDownList>
+                                    </asp:DropDownList><br />
                                     <asp:LinkButton Text="Execute SQL File" runat="server" ID="ExecuteSQLFile" OnClick="ExecuteSQL_Click" OnClientClick="return confirm('Are you sure you want to execute the selected sql script against the database? All existing data in the database will be lost.')" />
                                 </div>
                             </div>
                             <div class="step">
-                                <h3>Step 5: Disable Installer</h3>
-                                <asp:LinkButton Text="Disable Installer" runat="server" ID="DisableInstaller" OnClick="DisableInstaller_Click" />
+                                <h3>Step 5: CMS Admin Login Credentials</h3>
+                                <div>
+                                    Username: admin<br /><br />
+                                </div>
+                                <div>
+                                    Email Address:<br />
+                                    <asp:TextBox runat="server" ID="CMSEmailAddress" />
+                                </div>
+                                <div>
+                                    Password:<br />
+                                    <asp:TextBox runat="server" ID="CMSPassword" />
+                                </div>
+                                <div>
+                                    <asp:LinkButton Text="Update" runat="server" ID="UpdateCMSAdminLogin" OnClick="UpdateCMSAdminLogin_Click" />
+                                </div>
                             </div>
+                            <asp:PlaceHolder runat="server" ID="DisableInstallerPanel" Visible="false">
+                                <div class="step">
+                                    <h3>Step 6: Disable Installer</h3>
+                                    <asp:LinkButton Text="Disable Installer" runat="server" ID="DisableInstaller" OnClick="DisableInstaller_Click" />
+                                </div>
+                            </asp:PlaceHolder>
                         </asp:PlaceHolder>
                         <p>
                             <fieldset>

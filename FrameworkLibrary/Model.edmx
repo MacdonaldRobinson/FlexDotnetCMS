@@ -181,6 +181,7 @@
           <Property Name="MediaDetailID" Type="bigint" Nullable="false" />
           <Property Name="MediaTypeFieldID" Type="bigint" />
           <Property Name="UseMediaTypeFieldFrontEndLayout" Type="bit" Nullable="false" />
+          <Property Name="UseMediaTypeFieldDescription" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="MediaTags">
           <Key>
@@ -1854,6 +1855,7 @@
           <NavigationProperty Name="MediaTypeField" Relationship="FrameworkModel.FK_MediaDetailsFields_MediaTypesFields" FromRole="MediaDetailField" ToRole="MediaTypeField" />
           <Property Name="UseMediaTypeFieldFrontEndLayout" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="FieldAssociations" Relationship="FrameworkModel.FK_FieldsAssociations_MediaDetailsFields" FromRole="MediaDetailField" ToRole="FieldsAssociation" />
+          <Property Name="UseMediaTypeFieldDescription" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_MediaDetailFields_MediaDetails">
           <End Type="FrameworkModel.MediaDetail" Multiplicity="1" Role="MediaDetail" />
@@ -2415,6 +2417,7 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.MediaDetailField)">
               <MappingFragment StoreEntitySet="MediaDetailsFields">
+                <ScalarProperty Name="UseMediaTypeFieldDescription" ColumnName="UseMediaTypeFieldDescription" />
                 <ScalarProperty Name="UseMediaTypeFieldFrontEndLayout" ColumnName="UseMediaTypeFieldFrontEndLayout" />
                 <ScalarProperty Name="ID" ColumnName="FieldID" />
                 <ScalarProperty Name="MediaDetailID" ColumnName="MediaDetailID" />

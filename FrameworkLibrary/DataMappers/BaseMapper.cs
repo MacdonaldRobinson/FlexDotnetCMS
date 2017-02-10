@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity.Validation;
 using System.Linq;
 
 namespace FrameworkLibrary
@@ -60,6 +61,24 @@ namespace FrameworkLibrary
 
                 if (returnVal == 0)
                     throw new Exception("No changes made", new Exception("The transaction was successfull but no changes were made"));
+            }
+            catch (DbEntityValidationException ex)
+            {
+                returnObj.Error = ErrorHelper.CreateError(ex);
+
+                var message = "";
+                foreach (var validationError in ex.EntityValidationErrors)
+                {
+                    foreach (var error in validationError.ValidationErrors)
+                    {
+                        message += error.ErrorMessage + "<br />\r\n";
+                    }
+                }
+
+                returnObj.Error.Message += "<br>\r\n"+message;
+
+                if (logError)
+                    ErrorHelper.LogException(ex);
             }
             catch (Exception ex)
             {

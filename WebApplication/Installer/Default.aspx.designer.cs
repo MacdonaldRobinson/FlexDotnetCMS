@@ -157,6 +157,42 @@ namespace WebApplication.Installer {
         protected global::System.Web.UI.WebControls.LinkButton ExecuteSQLFile;
         
         /// <summary>
+        /// CMSEmailAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox CMSEmailAddress;
+        
+        /// <summary>
+        /// CMSPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox CMSPassword;
+        
+        /// <summary>
+        /// UpdateCMSAdminLogin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton UpdateCMSAdminLogin;
+        
+        /// <summary>
+        /// DisableInstallerPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder DisableInstallerPanel;
+        
+        /// <summary>
         /// DisableInstaller control.
         /// </summary>
         /// <remarks>

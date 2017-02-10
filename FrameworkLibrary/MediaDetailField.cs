@@ -23,6 +23,7 @@ namespace FrameworkLibrary
         public long MediaDetailID { get; set; }
         public Nullable<long> MediaTypeFieldID { get; set; }
         public bool UseMediaTypeFieldFrontEndLayout { get; set; }
+        public bool UseMediaTypeFieldDescription { get; set; }
     
         public virtual MediaDetail MediaDetail { get; set; }
         public virtual MediaTypeField MediaTypeField { get; set; }

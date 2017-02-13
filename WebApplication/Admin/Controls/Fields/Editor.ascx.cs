@@ -34,6 +34,9 @@ namespace WebApplication.Admin.Controls.Fields
 
         public override void SetValue(object value)
         {
+            if (value == null)
+                value = "";
+
             Instance.Text = value.ToString();
         }
 

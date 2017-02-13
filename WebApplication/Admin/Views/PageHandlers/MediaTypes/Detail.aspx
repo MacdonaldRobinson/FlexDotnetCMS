@@ -35,7 +35,7 @@
                         </div>
                         <div>
                             <label for="<%= MasterPageSelector.ClientID %>">
-                                Master Page</label>
+                                Template</label>
                             <Site:MasterPageSelector ID="MasterPageSelector" runat="server" />
                         </div>
                         <div>

@@ -231,8 +231,18 @@ namespace WebApplication.Admin.Views.MasterPages
 
             if (rootNode != null)
             {
-                var childMediaDetails = MediaDetailsMapper.GetAtleastOneChildByMedia(rootNode.Media, AdminBasePage.CurrentLanguage).Where(i => i.MediaType.ShowInSiteTree).OrderBy(i => i.Media.OrderIndex);
+                IEnumerable<IMediaDetail> childMediaDetails = MediaDetailsMapper.GetAtleastOneChildByMedia(rootNode.Media, AdminBasePage.CurrentLanguage).Where(i => i.MediaType.ShowInSiteTree).OrderBy(i => i.Media.OrderIndex);
                 //var childMediaDetails = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.Media.ParentMediaID == rootNode.MediaID && i.ID != rootNode.ID && i.MediaType.ShowInSiteTree && i.LanguageID == AdminBasePage.CurrentLanguage.ID).OrderBy(i => i.Media.OrderIndex).ToList();
+
+                childMediaDetails = childMediaDetails.Where(i =>
+                {
+                    if(i.RolesMediaDetails.Count > 0)
+                    {
+                        return FrameworkSettings.CurrentUser.IsInRoles(i.RolesMediaDetails.Select(j => j.Role));
+                    }
+
+                    return true;
+                });
 
                 var jsTreeNodes = childMediaDetails.Select(i => GetJsTreeNode(i));
                 WriteJSON(StringHelper.ObjectToJson(jsTreeNodes));

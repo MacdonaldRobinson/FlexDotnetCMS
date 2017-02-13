@@ -22,7 +22,7 @@
 
                 <div>
                     <label for="<%= DefaultMasterPageSelector.ClientID %>">
-                        Default Master Page:</label>
+                        Default Template:</label>
                     <div>
                         <asp:DropDownList runat="server" ID="DefaultMasterPageSelector">
                         </asp:DropDownList>

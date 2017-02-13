@@ -292,6 +292,14 @@ namespace WebApplication.Controls
             }
         }
 
+        public long RootMediaID
+        {
+            set
+            {
+                rootMedia = MediasMapper.GetByID(value);
+            }
+        }
+
         public bool IsBreadCrumbMenu { get; set; }
 
         public Media RootMedia

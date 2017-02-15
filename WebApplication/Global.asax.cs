@@ -29,7 +29,9 @@ namespace WebApplication
                     Response.Redirect(installerPath);
             }
 
-            if (!AppSettings.IsRunningOnDev && (!Request.Url.Host.StartsWith("www.") && !Request.Url.Host.Contains("localhost")))
+            var isSubDomain = (Request.Url.AbsoluteUri.Split('.').Length > 2);
+
+            if (!AppSettings.IsRunningOnDev && (!Request.Url.Host.StartsWith("www.") && !Request.Url.Host.StartsWith("localhost") && !isSubDomain))
                 Response.RedirectPermanent(Request.Url.AbsoluteUri.Replace("://", "://www."));
 
             BaseService.AddResponseHeaders();

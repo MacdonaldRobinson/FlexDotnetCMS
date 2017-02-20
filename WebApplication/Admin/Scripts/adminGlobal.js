@@ -392,6 +392,10 @@ function getFieldsAutoComplete()
         wordsArray.push("{Field:" + text + "}");
     });
 
+    wordsArray.push('<Site:GenerateNav \n\t runat="server" \n\t RenderRootMedia="True" \n\t RootMediaID="2" \n\t RenderDepth="2" \n\t DisplayProtectedSections="false" />');
+    wordsArray.push('<Site:RenderChildren \n\t runat="server" \n\t ShowPager="True" \n\t PageSize="10" \n\t ChildPropertyName="UseSummaryLayout" \n\t Where=\'MediaType.Name=="Page"\' \n\t OrderBy="DateCreated DESC" />');
+
+
     return wordsArray;
 }
 

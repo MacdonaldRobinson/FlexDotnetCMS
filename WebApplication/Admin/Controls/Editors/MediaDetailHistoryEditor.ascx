@@ -11,7 +11,7 @@
         <asp:GridView runat="server" ID="ItemList" AutoGenerateColumns="false" AllowPaging="true" OnPageIndexChanging="ItemList_PageIndexChanging" PageSize="20">
             <Columns>
                 <%--<asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />--%>
-                <%--<asp:BoundField DataField="IsDraft" HeaderText="IsDraft" SortExpression="IsDraft" />--%>
+                <asp:BoundField DataField="IsDraft" HeaderText="IsDraft" SortExpression="IsDraft" />
                 <asp:BoundField DataField="Title" HeaderText="Title" SortExpression="Title" />
                 <%--<asp:BoundField DataField="VirtualPath" HeaderText="VirtualPath" SortExpression="VirtualPath" />--%>
                 <asp:BoundField DataField="HistoryVersionNumber" HeaderText="Version" SortExpression="HistoryVersionNumber" />

@@ -31,7 +31,7 @@ namespace WebApplication.Admin.Controls.Editors
             if (selectedItem == null)
                 return;
 
-            this.ItemList.DataSource = selectedItem.History.Where(i=>!i.IsDraft).OrderByDescending(i => i.HistoryVersionNumber).ToList();
+            this.ItemList.DataSource = selectedItem.History.OrderByDescending(i => i.HistoryVersionNumber).ToList();
             this.ItemList.DataBind();
         }
 

@@ -236,6 +236,22 @@ namespace WebApplication.Handlers
 
                 if (detail != null)
                 {
+                    var draft = detail.History.FirstOrDefault(i => i.IsDraft);
+
+                    if (draft != null && draft.PublishDate > detail.PublishDate && draft.CanRender)
+                    {
+                        var returnObj = draft.PublishLive();
+
+                        if(!returnObj.IsError)
+                        {
+                            detail.RemoveFromCache();
+                            draft.RemoveFromCache();
+
+                            FrameworkSettings.CurrentFrameworkBaseMedia = FrameworkBaseMedia.GetInstanceByMediaDetail(draft);
+                            detail = (MediaDetail)FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail;
+                        }
+                    }
+
                     if (detail.RedirectToFirstChild)
                     {
                         var items = MediaDetailsMapper.GetAllChildMediaDetails(detail.MediaID, detail.LanguageID).ToList();

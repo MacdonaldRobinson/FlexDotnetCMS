@@ -168,6 +168,9 @@ namespace FrameworkLibrary
 
         public void SaveToMemoryCache(RenderVersion renderVersion, string html, string queryString = "")
         {
+            if (HasDraft)
+                return;
+
             var key = GetCacheKey(renderVersion);
 
             if (string.IsNullOrEmpty(queryString))
@@ -179,10 +182,14 @@ namespace FrameworkLibrary
             {
                 ContextHelper.SetToCache(key + queryString, html);
             }
+
         }
 
         public void SaveToFileCache(RenderVersion renderVersion, string html, string queryString = "")
         {
+            if (HasDraft)
+                return;
+
             var cacheKey = GetCacheKey(renderVersion);
             var cache = FileCacheHelper.GetFromCache(cacheKey);
 
@@ -211,6 +218,9 @@ namespace FrameworkLibrary
 
         public void SaveToRedisCache(RenderVersion renderVersion, string html, string queryString = "")
         {
+            if (HasDraft)
+                return;
+
             var cacheKey = GetCacheKey(renderVersion);
 
             if (string.IsNullOrEmpty(queryString))
@@ -569,6 +579,107 @@ namespace FrameworkLibrary
             contextPageTitle = pageTitle;
 
             return contextPageTitle;
+        }
+
+        public bool HasDraft
+        {
+            get
+            {
+                return this.Media.MediaDetails.Where(i => i.IsDraft).Any();
+            }
+        }
+
+        public Return PublishLive()
+        {
+            var returnObj = new Return();
+            var liveVersion = BaseMapper.GetObjectFromContext((MediaDetail)this.Media.LiveMediaDetail);
+            var selectedItem = BaseMapper.GetObjectFromContext((MediaDetail)this);
+
+            IEnumerable<MediaDetail> items = liveVersion.History.ToList();
+
+            foreach (var item in items)
+            {
+                if (item.ID != selectedItem.ID)
+                {
+                    var tmpItem = BaseMapper.GetObjectFromContext(item);
+                    item.HistoryForMediaDetailID = selectedItem.ID;
+                }
+            }
+
+            selectedItem.HistoryVersionNumber = 0;
+            selectedItem.HistoryForMediaDetail = null;
+            selectedItem.IsDraft = false;
+            selectedItem.PublishDate = DateTime.Now;
+            //selectedItem.ShowInMenu = true;
+
+            foreach (var fieldAssociations in selectedItem.FieldAssociations)
+            {
+                var index = 1;
+                foreach (var history in fieldAssociations.MediaDetail.History)
+                {
+                    history.HistoryForMediaDetail = fieldAssociations.MediaDetail;
+                    history.HistoryVersionNumber = 1;
+
+                    index++;
+                }
+
+                fieldAssociations.MediaDetail.HistoryForMediaDetail = null;
+                fieldAssociations.MediaDetail.HistoryVersionNumber = 0;
+            }
+
+            foreach (var field in selectedItem.Fields)
+            {
+                foreach (var fieldAssociations in field.FieldAssociations)
+                {
+                    var index = 1;
+
+                    foreach (var mediaDetail in fieldAssociations.MediaDetail.Media.MediaDetails)
+                    {
+                        mediaDetail.HistoryForMediaDetail = fieldAssociations.MediaDetail;
+                        mediaDetail.HistoryVersionNumber = 1;
+
+                        index++;
+                    }
+
+                    fieldAssociations.MediaDetail.HistoryForMediaDetail = null;
+                    fieldAssociations.MediaDetail.HistoryVersionNumber = 0;
+                }
+            }
+
+
+            liveVersion.HistoryVersionNumber = items.OrderByDescending(i => i.HistoryVersionNumber).FirstOrDefault().HistoryVersionNumber + 1;
+            liveVersion.HistoryForMediaDetail = (MediaDetail)selectedItem;
+
+            var associations = BaseMapper.GetDataModel().FieldAssociations.Where(i => i.AssociatedMediaDetailID == liveVersion.ID);
+
+            foreach (var association in associations)
+            {
+                association.MediaDetail = (MediaDetail)selectedItem;
+            }
+
+            returnObj = MediaDetailsMapper.Update(selectedItem);
+
+            if (!returnObj.IsError)
+            {
+                liveVersion.HistoryForMediaDetailID = selectedItem.ID;
+                returnObj = MediaDetailsMapper.Update(liveVersion);
+
+                if (!returnObj.IsError)
+                {
+                    ContextHelper.Clear(ContextType.Cache);
+                    FileCacheHelper.ClearAllCache();
+
+                    return returnObj;
+                }
+                else
+                {
+                    return returnObj;
+                }
+            }
+            else
+            {
+                return returnObj;
+            }
         }
 
         public bool HasAnyRoles()

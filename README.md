@@ -6,7 +6,6 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 # Features
 - Ability to change the SEO for every page: Page title, Meta Description, Meta Keywords, Link title ( Url Segment for the page )
 - All pages automaticly get a search engine friendly URL, you have the ability to change the uri segment for the page from the CMS
-- All pages automatically get Open Graph Meta Tags. So when you share the link to a page on facebook or other social media platforms these platforms will be able to pull the proper information
 - Every time you save a page in the CMS it will automatically create a history version which you can then reload and publish LIVE again.
 - The HTML structure of the page and the Content of the page are clearly seperated and both the Content and the HTML structure for the page can be edited directly in the CMS, there is no need to use a 3rd party editor or to use FTP, this speeds up the time it takes to make changes on the website.  
 - Since the HTML structure and the content are clearly seperated you do not need to worry about having the client change any of the HTML structure.

@@ -12,7 +12,13 @@ namespace WebApplication.Views.MediaTypeHandlers
     {
         protected void Page_Init(object sender, EventArgs e)
         {
-            //DynamicContent.Controls.Add(this.ParseControl(MediaDetailsMapper.ParseSpecialTags(CurrentMediaDetail)));
+            var templateTopAndBottomSegments = CurrentMediaDetail.GetTemplateTopAndBottomSegments(this);
+
+            if(templateTopAndBottomSegments.Count > 1)
+            {
+                TemplateTopSegment.Controls.Add(templateTopAndBottomSegments.ElementAt(0));
+                TemplateBottomSegment.Controls.Add(templateTopAndBottomSegments.ElementAt(1));
+            }
 
             var blogCategoriesMediaTypeId = 50;
             var blogPostMediaTypeId = 24;

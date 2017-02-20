@@ -13,6 +13,15 @@ namespace WebApplication.Views.MediaTypeHandlers {
     public partial class Blog {
         
         /// <summary>
+        /// TemplateTopSegment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder TemplateTopSegment;
+        
+        /// <summary>
         /// BlogPosts control.
         /// </summary>
         /// <remarks>
@@ -29,5 +38,14 @@ namespace WebApplication.Views.MediaTypeHandlers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListView BlogCategories;
+        
+        /// <summary>
+        /// TemplateBottomSegment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder TemplateBottomSegment;
     }
 }

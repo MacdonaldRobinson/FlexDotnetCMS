@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.UI;
 
 namespace FrameworkLibrary
 {
@@ -299,6 +300,27 @@ namespace FrameworkLibrary
             {
                 return MediaDetailsMapper.GetAllChildMediaDetails(MediaID, LanguageID).Where(i=>!i.IsDeleted && i.IsPublished);
             }
+        }
+
+        public List<Control> GetTemplateTopAndBottomSegments(System.Web.UI.Page control)
+        {
+            var masterPage = GetMasterPage();
+            var templateTopAndBottomSegments = new List<Control>();
+
+            if (masterPage != null)
+            {
+                var topAndBottomSegments = StringHelper.SplitByString(masterPage.Layout, "{PageContent}");
+
+                if (topAndBottomSegments.Length > 1)
+                {
+                    templateTopAndBottomSegments.Add(control.ParseControl(topAndBottomSegments.ElementAt(0)));
+                    templateTopAndBottomSegments.Add(control.ParseControl(topAndBottomSegments.ElementAt(1)));
+
+                    return templateTopAndBottomSegments;
+                }
+            }
+
+            return templateTopAndBottomSegments;
         }
 
         public string VirtualPath

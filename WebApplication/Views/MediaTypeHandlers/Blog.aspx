@@ -1,5 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/MasterPages/SiteTemplates/Template1.Master" AutoEventWireup="true" CodeBehind="Blog.aspx.cs" Inherits="WebApplication.Views.MediaTypeHandlers.Blog" %>
 
+
+<asp:PlaceHolder runat="server" ID="TemplateTopSegment" />
+
 <div class="blog">
 
     <asp:ListView runat="server" ID="BlogPosts" ItemType="FrameworkLibrary.Page">
@@ -39,3 +42,5 @@
 <div class="blog-pager">
     <Site:Pager runat="server" PageSize="10" PagedControlID="BlogPosts" />
 </div>
+
+<asp:PlaceHolder runat="server" ID="TemplateBottomSegment" />

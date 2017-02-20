@@ -246,9 +246,9 @@ namespace WebApplication.Controls
 
                         if (!displayProtectedSections)
                         {
-                            var list = childItems.OrderBy(i => i.Media.OrderIndex).AsEnumerable();
+                            var list = childItems.OrderBy(i => i.Media.OrderIndex).ToList();
 
-                            if (list.Any())
+                            if (list.Count > 0)
                                 li.Attributes["class"] += " has-children";
 
                             if ((currentDepth > 0) && (RenderParentItemInChildNav))

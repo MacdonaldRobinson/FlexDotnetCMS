@@ -21,6 +21,18 @@ namespace FrameworkLibrary
             return sb.ToString();
         }
 
+        public static string RenderPage(System.Web.UI.Page page, string html)
+        {
+            var str = new System.IO.StringWriter();
+            var wrt = new HtmlTextWriter(str);
+
+            page.ParseControl(html).RenderControl(wrt);
+
+            html = str.ToString();
+
+            return html;
+        }
+
         public static string RenderControlWithPostBack(string virtualPath)
         {
             System.Web.UI.Page page = new System.Web.UI.Page();

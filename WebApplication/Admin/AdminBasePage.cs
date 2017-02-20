@@ -19,7 +19,8 @@ namespace WebApplication.Admin
 
         protected void Page_PreInit(object sender, EventArgs e)
         {
-            if (this.CurrentUser == null)
+            var currentUser = this.CurrentUser;
+            if (currentUser == null)
             {
                 FormsAuthentication.SignOut();
                 FormsAuthentication.RedirectToLoginPage();
@@ -28,7 +29,7 @@ namespace WebApplication.Admin
                 return;
             }
 
-            if (!this.CurrentUser.HasPermission(PermissionsEnum.AccessCMS))
+            if (!currentUser.HasPermission(PermissionsEnum.AccessCMS))
                 Response.Redirect("~/");
 
             if (this.MasterPageFile != null)

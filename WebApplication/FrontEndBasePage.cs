@@ -235,13 +235,17 @@ namespace WebApplication
 
             string html = str.ToString();
 
-            /*var masterPage = CurrentMediaDetail.GetMasterPage();
-
-            if (masterPage != null)
+            /*if (CurrentMediaDetail != null && !html.Contains("<html"))
             {
-                if (masterPage.UseLayout)
+                var masterPage = CurrentMediaDetail.GetMasterPage();
+
+                if (masterPage != null)
                 {
-                    html = masterPage.Layout.Replace("{PageContent}", html);
+                    if (masterPage.UseLayout)
+                    {
+                        html = masterPage.Layout.Replace("{PageContent}", html);
+                        html = LoaderHelper.RenderPage(this, html);
+                    }
                 }
             }*/
 

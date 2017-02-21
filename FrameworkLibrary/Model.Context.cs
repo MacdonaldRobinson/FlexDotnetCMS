@@ -47,5 +47,6 @@ namespace FrameworkLibrary
         public virtual DbSet<RoleMediaDetail> RolesMediaDetails { get; set; }
         public virtual DbSet<FieldAssociation> FieldAssociations { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<FieldType> FieldTypes { get; set; }
     }
 }

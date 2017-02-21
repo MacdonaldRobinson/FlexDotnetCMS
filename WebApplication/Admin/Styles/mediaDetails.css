@@ -133,6 +133,13 @@ img.MarkedAsDeleted {
     .UploadedItems .item img {
         max-height: 100px;
         max-width: 100px;
+        background-color: #cccccc;
+    }
+
+    .UploadedItems .item div {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
 

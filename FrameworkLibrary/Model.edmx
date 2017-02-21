@@ -50,6 +50,19 @@
           <Property Name="AssociatedMediaDetailID" Type="bigint" Nullable="false" />
           <Property Name="OrderIndex" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="FieldTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CodeToRenderAdminControl" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CodeToGetAdminControlValue" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CodeToSetAdminControlValue" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CodeToRenderFrontEndLayout" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="GlossaryTerms">
           <Key>
             <PropertyRef Name="ID" />
@@ -913,6 +926,7 @@
           <EntitySet Name="EmailLog" EntityType="Self.EmailLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fields" EntityType="Self.Fields" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FieldsAssociations" EntityType="Self.FieldsAssociations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FieldTypes" EntityType="Self.FieldTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GlossaryTerms" EntityType="Self.GlossaryTerms" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IPLocationTracker" EntityType="Self.IPLocationTracker" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Languages" EntityType="Self.Languages" Schema="dbo" store:Type="Tables" />
@@ -1269,6 +1283,7 @@
             <End Role="MediaComment" EntitySet="Comments" />
             <End Role="MediaComment1" EntitySet="Comments" />
           </AssociationSet>
+          <EntitySet Name="FieldTypes" EntityType="FrameworkModel.FieldType" />
           </EntityContainer>
         <EntityType Name="EmailLog">
           <Key>
@@ -2059,6 +2074,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="FieldType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CodeToRenderAdminControl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CodeToGetAdminControlValue" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CodeToSetAdminControlValue" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CodeToRenderFrontEndLayout" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateLastModified" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2480,6 +2508,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="FieldTypes">
+            <EntityTypeMapping TypeName="FrameworkModel.FieldType">
+              <MappingFragment StoreEntitySet="FieldTypes">
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CodeToRenderFrontEndLayout" ColumnName="CodeToRenderFrontEndLayout" />
+                <ScalarProperty Name="CodeToSetAdminControlValue" ColumnName="CodeToSetAdminControlValue" />
+                <ScalarProperty Name="CodeToGetAdminControlValue" ColumnName="CodeToGetAdminControlValue" />
+                <ScalarProperty Name="CodeToRenderAdminControl" ColumnName="CodeToRenderAdminControl" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2747,6 +2789,7 @@
         <AssociationConnector Association="FrameworkModel.FK_MediaComments_Languages" />
         <AssociationConnector Association="FrameworkModel.FK_MediaComments_Media" />
         <AssociationConnector Association="FrameworkModel.FK_Comments_ReplyToCommentID" />
+        <EntityTypeShape EntityType="FrameworkModel.FieldType" Width="1.5" PointX="9.375" PointY="0.75" />
         </Diagram>
     </Diagrams>
   </Designer>

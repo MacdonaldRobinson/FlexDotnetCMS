@@ -49,6 +49,7 @@
                                     <li><a href="/Admin/Views/PageHandlers/Permissions/Default.aspx">Manage Permissions</a></li>
                                     <li><a href="/Admin/Views/PageHandlers/Languages/Default.aspx">Manage Languages</a></li>
                                     <li><a href="/Admin/Views/PageHandlers/MediaTypes/Default.aspx">Manage MediaTypes</a></li>
+                                    <li><a href="/Admin/Views/PageHandlers/FieldTypes/Default.aspx">Manage Field Types</a></li>
                                     <li><a href="/Admin/Views/PageHandlers/MasterPages/Default.aspx">Manage Templates</a></li>
                                     <li><a href="/Admin/Views/PageHandlers/AdminTools/Default.aspx">Admin Tools</a></li>
                                 </ul>

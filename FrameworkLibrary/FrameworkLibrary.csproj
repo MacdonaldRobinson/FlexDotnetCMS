@@ -197,6 +197,7 @@
     </Compile>
     <Compile Include="DataMappers\CommentsMapper.cs" />
     <Compile Include="DataMappers\FieldsMapper.cs" />
+    <Compile Include="DataMappers\FieldTypesMapper.cs" />
     <Compile Include="DataMappers\GlossaryTermsMapper.cs" />
     <Compile Include="DataMappers\IPLocationTrackerHelper.cs" />
     <Compile Include="DataMappers\MasterPagesMapper.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Entities\Entities.cs" />
     <Compile Include="Entities\Field.cs" />
     <Compile Include="Entities\FieldAssociation.cs" />
+    <Compile Include="Entities\FieldType.cs" />
     <Compile Include="Entities\GlossaryTerm.cs" />
     <Compile Include="Entities\IMediaDetail.cs" />
     <Compile Include="Entities\IPLocationTrackerEntry.cs" />
@@ -278,6 +280,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="FieldAssociation.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FieldType.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="FrameworkBaseMedia.cs" />

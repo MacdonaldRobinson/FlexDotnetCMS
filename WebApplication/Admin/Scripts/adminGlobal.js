@@ -958,7 +958,7 @@ function pageLoad() {
     BindSortable();
     BindTabs();
     BindMultiFileUploaderImageLoadError();
-    initAceEditors();
+    //initAceEditors();
 
     if (typeof (BindActiveTabs) == 'function')
         BindActiveTabs();

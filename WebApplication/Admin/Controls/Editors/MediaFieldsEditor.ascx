@@ -17,10 +17,10 @@
                 check(this);
             });
 
-            initAccordians();
             BindReOrder();
             BindScrollMagic();
             initAceEditors();
+            initAccordians();
 
             if (event != undefined && event._postBackSettings != undefined && event._postBackSettings.asyncTarget != undefined)
             {
@@ -62,6 +62,7 @@
     $(document).ajaxComplete(function () {
         BindReOrder();
         BindScrollMagic();
+        initAceEditors();
         initAccordians();
     });
 

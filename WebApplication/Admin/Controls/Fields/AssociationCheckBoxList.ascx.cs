@@ -22,18 +22,18 @@ namespace WebApplication.Admin.Controls.Fields
 
         private void BindItems()
         {
-            var parentMediaDetail = MediaDetailsMapper.GetByID(ParentMediaDetailID);
+            var parentMedia = MediasMapper.GetByID(ParentMediaID);
             IEnumerable<IMediaDetail> mediaDetailItems = new List<IMediaDetail>();
 
-            if (parentMediaDetail != null)
+            if (parentMedia != null)
             {
                 if (MediaTypeID > 0)
                 {
-                    mediaDetailItems = parentMediaDetail.ChildMediaDetails.Where(i => i.MediaTypeID == MediaTypeID &&  i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
+                    mediaDetailItems = parentMedia.LiveMediaDetail.ChildMediaDetails.Where(i => i.MediaTypeID == MediaTypeID &&  i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
                 }
                 else
                 {
-                    mediaDetailItems = parentMediaDetail.ChildMediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
+                    mediaDetailItems = parentMedia.LiveMediaDetail.ChildMediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
                 }
             }
 
@@ -41,7 +41,7 @@ namespace WebApplication.Admin.Controls.Fields
             {
                 if (MediaTypeID > 0)
                 {
-                    mediaDetailItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaTypeID == MediaTypeID && i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);                    
+                    mediaDetailItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaTypeID == MediaTypeID && i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
                 }
             }
 
@@ -64,7 +64,7 @@ namespace WebApplication.Admin.Controls.Fields
             }
         }
 
-        public long ParentMediaDetailID { get; set; }
+        public long ParentMediaID { get; set; }
         public long MediaTypeID { get; set; }
         public bool IsRadioButtonList { get; set; }
 

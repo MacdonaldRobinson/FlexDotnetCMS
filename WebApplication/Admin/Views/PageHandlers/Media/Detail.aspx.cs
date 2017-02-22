@@ -156,23 +156,24 @@ namespace WebApplication.Admin.MediaArticle
                     foreach (var field in fields)
                     {
                         var newField = new MediaDetailField();
-                        newField.FieldCode = field.FieldCode;
+                        newField.CopyFrom(field);
+
+                        /*newField.FieldCode = field.FieldCode;
                         newField.FieldLabel = field.FieldLabel;
                         newField.AdminControl = field.AdminControl;
                         newField.GroupName = field.GroupName;
                         newField.RenderLabelAfterControl = field.RenderLabelAfterControl;
                         newField.GetAdminControlValue = field.GetAdminControlValue;
                         newField.SetAdminControlValue = field.SetAdminControlValue;
-
-                        if(field.FieldAssociations.Count > 0)
-                            newField.FieldValue = "";
-                        else
-                            newField.FieldValue = field.FieldValue;
-
                         newField.FrontEndLayout = field.FrontEndLayout;
                         newField.MediaTypeFieldID = field.MediaTypeFieldID;
                         newField.OrderIndex = field.OrderIndex;
-                        newField.UseMediaTypeFieldFrontEndLayout = field.UseMediaTypeFieldFrontEndLayout;
+                        newField.UseMediaTypeFieldFrontEndLayout = field.UseMediaTypeFieldFrontEndLayout;*/
+
+                        if (field.FieldAssociations.Count > 0)
+                            newField.FieldValue = "";
+                        else
+                            newField.FieldValue = field.FieldValue;
 
                         newField.DateCreated = DateTime.Now;
                         newField.DateLastModified = DateTime.Now;

@@ -26,7 +26,7 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldTypes
         protected void Page_Init(object sender, EventArgs e)
         {
             if (Items == null)
-                Items = BaseMapper.GetDataModel().FieldTypes.ToList();
+                Items = BaseMapper.GetDataModel().FieldTypes.OrderBy(i=>i.Name).ToList();
 
             Bind();
         }

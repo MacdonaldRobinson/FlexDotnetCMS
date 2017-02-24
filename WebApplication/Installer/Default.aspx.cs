@@ -375,6 +375,8 @@ namespace WebApplication.Installer
                 {
                     DisableInstallerPanel.Visible = true;
                     Messages.Text = "Successfully updated CMS Admin Login Credentials";
+
+                    MailChimpHelper.AddEmailAddressToFlexDotNetCMSInstallerList(admin.EmailAddress);
                 }
             }
 

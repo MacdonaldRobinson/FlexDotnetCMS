@@ -22,5 +22,6 @@ namespace FrameworkLibrary
         public string CodeToRenderFrontEndLayout { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.DateTime DateLastModified { get; set; }
+        public string FieldDescription { get; set; }
     }
 }

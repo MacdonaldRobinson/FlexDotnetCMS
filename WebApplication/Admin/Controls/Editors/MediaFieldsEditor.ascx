@@ -134,10 +134,6 @@
                     </label>
                 </div>
                 <div>
-                    <label for="<%# FieldDescription.ClientID %>">Field Description:</label>
-                    <Admin:Editor ID="FieldDescription" runat="server" Height="200px" />
-                </div>
-                <div>
                     <label for="<%# GroupName.ClientID %>">Group Name:</label>
                 <asp:TextBox runat="server" ID="GroupName" />
                 </div>
@@ -148,6 +144,10 @@
                     <asp:DropDownList runat="server" ID="FieldTypeDropDown" AutoPostBack="true" AppendDataBoundItems="true" OnSelectedIndexChanged="FieldTypeDropDown_SelectedIndexChanged">
                         <asp:ListItem Text="--Select A Type--" Value="" />
                     </asp:DropDownList>
+                </div>
+                <div>
+                    <label for="<%# FieldDescription.ClientID %>">Field Description:</label>
+                    <Admin:Editor ID="FieldDescription" runat="server" Height="200px" />
                 </div>
                 <div>
                     <label for="<%# AdminControl.ClientID %>">Admin Control:</label>

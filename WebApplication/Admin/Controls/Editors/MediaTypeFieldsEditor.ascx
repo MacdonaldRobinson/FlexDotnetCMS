@@ -43,10 +43,6 @@
                     <asp:TextBox runat="server" ID="FieldLabel" />
                 </div>
                 <div>
-                    <label for="<%# FieldDescription.ClientID %>">Field Description:</label>
-                    <Admin:Editor ID="FieldDescription" runat="server" Height="200px" />
-                </div>
-                <div>
                     <asp:CheckBox runat="server" ID="RenderLabelAfterControl" /> <label for="<%# RenderLabelAfterControl.ClientID %>">Render Label After Control</label>
                 </div>
                 <div>
@@ -58,7 +54,10 @@
                         <asp:ListItem Text="--Select A Type--" Value="" />
                     </asp:DropDownList>
                 </div>
-
+                <div>
+                    <label for="<%# FieldDescription.ClientID %>">Field Description:</label>
+                    <Admin:Editor ID="FieldDescription" runat="server" Height="200px" />
+                </div>
                 <div>
                     <label for="<%# AdminControl.ClientID %>">Admin Control:</label>
                     <asp:TextBox runat="server" ID="AdminControl" TextMode="MultiLine" class="AceEditor" />

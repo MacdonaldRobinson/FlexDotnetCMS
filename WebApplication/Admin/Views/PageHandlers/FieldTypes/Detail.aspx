@@ -29,6 +29,13 @@
             CodeToRenderFrontEndLayout</label>
         <asp:TextBox ID="CodeToRenderFrontEndLayout" runat="server" TextMode="MultiLine" Width="100%" CssClass="AceEditor" Height="300px"></asp:TextBox>
     </div>
+
+    <div>
+        <label for="<%= FieldDescription.ClientID %>">
+            FieldDescription</label>
+        <Admin:Editor ID="FieldDescription" runat="server" Height="200px" />
+    </div>
+
     <div class="buttons">
         <asp:LinkButton ID="Save" runat="server" OnClick="Save_OnClick" CssClass="SavePageButton">Save</asp:LinkButton>
     </div>

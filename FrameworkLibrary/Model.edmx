@@ -60,6 +60,7 @@
           <Property Name="CodeToGetAdminControlValue" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CodeToSetAdminControlValue" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CodeToRenderFrontEndLayout" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FieldDescription" Type="nvarchar(max)" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateLastModified" Type="datetime" Nullable="false" />
         </EntityType>
@@ -2086,6 +2087,7 @@
           <Property Name="CodeToRenderFrontEndLayout" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateLastModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FieldDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2511,6 +2513,7 @@
           <EntitySetMapping Name="FieldTypes">
             <EntityTypeMapping TypeName="FrameworkModel.FieldType">
               <MappingFragment StoreEntitySet="FieldTypes">
+                <ScalarProperty Name="FieldDescription" ColumnName="FieldDescription" />
                 <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="CodeToRenderFrontEndLayout" ColumnName="CodeToRenderFrontEndLayout" />

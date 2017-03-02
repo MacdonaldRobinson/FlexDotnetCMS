@@ -42,6 +42,7 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldTypes
             selectedItem.CodeToGetAdminControlValue = CodeToGetAdminControlValue.Text;
             selectedItem.CodeToSetAdminControlValue = CodeToSetAdminControlValue.Text;
             selectedItem.CodeToRenderFrontEndLayout = CodeToRenderFrontEndLayout.Text;
+            selectedItem.FieldDescription = FieldDescription.GetValue().ToString();
         }
 
         private void UpdateFieldsFromObject()
@@ -51,6 +52,7 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldTypes
             CodeToGetAdminControlValue.Text = selectedItem.CodeToGetAdminControlValue;
             CodeToSetAdminControlValue.Text = selectedItem.CodeToSetAdminControlValue;
             CodeToRenderFrontEndLayout.Text = selectedItem.CodeToRenderFrontEndLayout;
+            FieldDescription.SetValue(selectedItem.FieldDescription);
         }
 
         protected void Save_OnClick(object sender, EventArgs e)

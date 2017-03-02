@@ -53,6 +53,7 @@ namespace WebApplication.Admin.Controls.Editors
                 var getAdminControlValue = (TextBox)this.FindControl("GetAdminControlValue");
                 var setAdminControlValue = (TextBox)this.FindControl("SetAdminControlValue");
                 var frontEndLayout = (TextBox)this.FindControl("FrontEndLayout");
+                var fieldDescription = (dynamic)this.FindControl("FieldDescription");
                 var fieldValue = (TextBox)this.FindControl("FieldValue");
 
                 if (adminControl != null)
@@ -73,6 +74,11 @@ namespace WebApplication.Admin.Controls.Editors
                 if (frontEndLayout != null)
                 {
                     frontEndLayout.Text = selectorFieldOption.CodeToRenderFrontEndLayout;
+                }
+
+                if (fieldDescription != null)
+                {
+                    fieldDescription.SetValue(selectorFieldOption.FieldDescription);
                 }
 
                 if (fieldValue != null)

@@ -40,10 +40,26 @@
             transform: translateY(-50%);
         }
 
+        label {
+            font-weight: bold;
+        }
+
+        select {
+            margin-bottom: 10px;
+        }
+
         .step{
             border-bottom: 1px solid #000000;
             padding-bottom:20px;
         }
+
+            .step > div {
+                margin-left: 40px;
+            }
+
+                .step > div > div {
+                    margin-bottom: 10px;
+                }
     </style>
 </head>
 <body>
@@ -118,8 +134,9 @@
                             <div class="step">
                                 <h3>Step 4: Select SQL file to execute</h3>
                                 <div>
-                                    <i>Note: Based on the script that is being executed, all data in the existing database will be lost, it is best that you backup the database prior to executing any scripts</i>
-                                    <br />
+                                    <div>
+                                        <i>Note: Based on the script that is being executed, all data in the existing database will be lost, it is best that you backup the database prior to executing any scripts</i>
+                                    </div>
                                     <asp:DropDownList runat="server" ID="SqlFiles">
                                     </asp:DropDownList><br />
                                     <asp:LinkButton Text="Execute SQL File" runat="server" ID="ExecuteSQLFile" OnClick="ExecuteSQL_Click" OnClientClick="return confirm('Are you sure you want to execute the selected sql script against the database? All existing data in the database will be lost.')" />
@@ -128,18 +145,28 @@
                             <div class="step">
                                 <h3>Step 5: CMS Admin Login Credentials</h3>
                                 <div>
-                                    Username: admin<br /><br />
-                                </div>
-                                <div>
-                                    Email Address:<br />
-                                    <asp:TextBox runat="server" ID="CMSEmailAddress" />
-                                </div>
-                                <div>
-                                    Password:<br />
-                                    <asp:TextBox runat="server" ID="CMSPassword" />
-                                </div>
-                                <div>
-                                    <asp:LinkButton Text="Update" runat="server" ID="UpdateCMSAdminLogin" OnClick="UpdateCMSAdminLogin_Click" />
+                                    <div>
+                                        <label>Username: admin</label><br /><br />
+                                    </div>
+                                    <div>
+                                        <label>Email Address:</label><br />
+                                        <asp:TextBox runat="server" ID="CMSEmailAddress" />
+                                    </div>
+                                    <div>
+                                        <label>Password:</label><br />
+                                        <asp:TextBox runat="server" ID="CMSPassword" />
+                                    </div>
+                                    <div>
+                                        <label>First Name:</label><br />
+                                        <asp:TextBox runat="server" ID="FirstName" />
+                                    </div>
+                                    <div>
+                                        <label>Last Name:</label><br />
+                                        <asp:TextBox runat="server" ID="LastName" />
+                                    </div>
+                                    <div>
+                                        <asp:LinkButton Text="Update" runat="server" ID="UpdateCMSAdminLogin" OnClick="UpdateCMSAdminLogin_Click" />
+                                    </div>
                                 </div>
                             </div>
                             <asp:PlaceHolder runat="server" ID="DisableInstallerPanel" Visible="false">

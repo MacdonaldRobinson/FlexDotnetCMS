@@ -572,6 +572,7 @@ $(document).ready(function () {
     $('.tooltip').tooltipster({
         contentAsHTML: true,
         interactive: true,
+        maxWidth: 500,
         trigger: 'click'
     });
 

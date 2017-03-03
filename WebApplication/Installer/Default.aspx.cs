@@ -362,6 +362,8 @@ namespace WebApplication.Installer
                 else
                 {
                     admin.EmailAddress = CMSEmailAddress.Text;
+                    admin.FirstName = FirstName.Text;
+                    admin.LastName = LastName.Text;
                     admin.Password = StringHelper.Encrypt(CMSPassword.Text.Trim());
 
                     returnObj = UsersMapper.Update(admin);
@@ -376,7 +378,7 @@ namespace WebApplication.Installer
                     DisableInstallerPanel.Visible = true;
                     Messages.Text = "Successfully updated CMS Admin Login Credentials";
 
-                    MailChimpHelper.AddEmailAddressToFlexDotNetCMSInstallerList(admin.EmailAddress);
+                    MailChimpHelper.AddUserToFlexDotNetCMSInstallerList(admin);
                 }
             }
 

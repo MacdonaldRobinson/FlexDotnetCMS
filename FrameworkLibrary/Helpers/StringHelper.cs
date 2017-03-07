@@ -45,7 +45,11 @@ namespace FrameworkLibrary
             else
             {
 
-                return JsonConvert.SerializeObject(to);
+                return JsonConvert.SerializeObject(to, Formatting.None,
+                                                    new JsonSerializerSettings()
+                                                    {
+                                                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                                                    });
             }
         }
 

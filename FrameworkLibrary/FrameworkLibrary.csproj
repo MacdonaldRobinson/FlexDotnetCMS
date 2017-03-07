@@ -191,6 +191,14 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Chat\ChatManager.cs" />
+    <Compile Include="Classes\Chat\ChatMessage.cs" />
+    <Compile Include="Classes\Chat\ChatRoom.cs" />
+    <Compile Include="Classes\Chat\ChatUser.cs" />
+    <Compile Include="Classes\Chat\IChatRoom.cs" />
+    <Compile Include="Classes\Chat\PrivateChatRoom.cs" />
+    <Compile Include="Classes\Chat\PublicChatRoom.cs" />
+    <Compile Include="Classes\Chat\RoomMode.cs" />
     <Compile Include="Classes\ControlAdapters\TreeViewAdapter.cs" />
     <Compile Include="Classes\CustomIdentity.cs" />
     <Compile Include="Classes\CustomTreeView.cs" />

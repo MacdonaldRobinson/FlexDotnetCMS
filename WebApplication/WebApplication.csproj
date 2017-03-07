@@ -298,6 +298,7 @@
     <Content Include="Controls\Widgets\Instagram.ascx" />
     <Content Include="Controls\Widgets\LanguageToggle.ascx" />
     <Content Include="Controls\Widgets\MailChipSignupForm.ascx" />
+    <Content Include="Controls\Widgets\PublicChat.ascx" />
     <Content Include="Controls\Widgets\RssReader.ascx" />
     <Content Include="Controls\Widgets\Search.ascx" />
     <Content Include="Controls\Widgets\SearchResults.ascx" />
@@ -621,6 +622,7 @@
     <Content Include="Views\PageHandlers\SiteOffline.aspx" />
     <Content Include="Views\PageHandlers\Tags.aspx" />
     <Content Include="WebServices\BaseService.asmx" />
+    <Content Include="WebServices\Chat.asmx" />
     <Content Include="WebServices\ConstantContact.asmx" />
     <Content Include="WebServices\Facebook.asmx" />
     <Content Include="WebServices\Flicker.asmx" />
@@ -1539,6 +1541,13 @@
     <Compile Include="Controls\Widgets\MailChipSignupForm.ascx.designer.cs">
       <DependentUpon>MailChipSignupForm.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Widgets\PublicChat.ascx.cs">
+      <DependentUpon>PublicChat.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Widgets\PublicChat.ascx.designer.cs">
+      <DependentUpon>PublicChat.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Widgets\RssReader.ascx.cs">
       <DependentUpon>RssReader.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1703,6 +1712,10 @@
     </Compile>
     <Compile Include="WebServices\BaseService.asmx.cs">
       <DependentUpon>BaseService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Chat.asmx.cs">
+      <DependentUpon>Chat.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServices\ConstantContact.asmx.cs">

@@ -73,13 +73,23 @@
             message = encodeURI(message);
             $.post(webserviceUrl + "/SendMessage", { chatRoomId: chatRoomId, message: message } , function (data) {
                 ChatMessage.val("");
-                GetPublicChat(nickNameText);
+                GetPublicChat(nickNameText);                
             })
+        }
+
+        function ScrollToBottom()
+        {
+            ChatArea.scrollTop(ChatArea[0].scrollHeight);
         }
 
         function GetPublicChat(nickname)
         {
-            ChatArea.scrollTop(ChatArea[0].scrollHeight);
+            var scrollToBottom = false;
+
+            if (ChatArea.scrollTop() == ChatArea[0].scrollTopMax)
+            {
+                scrollToBottom = true;
+            }                
 
             $.get(webserviceUrl + "/GetPublicChatRoom?NickName=" + nickname, function (data) {
 
@@ -106,6 +116,12 @@
                         ChatArea.html(newText);
                     }                    
                 });
+
+                if (scrollToBottom)
+                {
+                    ScrollToBottom();
+                }
+
             })
         }
 

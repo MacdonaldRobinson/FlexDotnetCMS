@@ -14,6 +14,7 @@
         var LoadChat = $("#LoadChat");
         var NickName = $("#NickName");  
         var FirstStep = $("#FirstStep");  
+        var ClearChat = $("#ClearChat");          
 
         var webserviceUrl = "/Webservices/Chat.asmx";
 
@@ -36,6 +37,12 @@
                 LoadChat[0].click();
             }
         })
+
+        ClearChat.on("click", function() {
+            $.get(webserviceUrl + "/ClearChatRoom?chatRoomId="+chatRoomId, function (data) {
+                GetPublicChat(nickNameText);
+            })
+        });
 
         LoadChat.on("click", function () {
             nickNameText = NickName.val();
@@ -181,7 +188,9 @@
                 <div id="ChatArea"></div>
             </div>
             <div class="field">
-                <textarea id="ChatMessage"></textarea><input id="SendMessage" type="button" value="Send Message" />
+                <textarea id="ChatMessage"></textarea>
+                <input id="SendMessage" type="button" value="Send Message" />
+                <input id="ClearChat" type="button" value="Clear Chat" />
             </div>
         </div>
     </div>

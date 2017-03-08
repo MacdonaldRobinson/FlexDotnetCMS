@@ -50,6 +50,19 @@ namespace WebApplication.Services
 
             WriteJSON(StringHelper.ObjectToJson(publicChatRoom));
         }
+
+        [WebMethod(EnableSession = true)]
+        public void ClearChatRoom(string chatRoomId)
+        {
+            var chatUser = new ChatUser(Session.SessionID);
+            var chatRoom = ChatManager.GetChatRoomByID(new Guid(chatRoomId));
+            var foundUser = chatRoom.GetUserInChatRoom(chatUser);
+
+            if(foundUser != null)
+            {
+                chatRoom.DeleteChatMessages();
+            }            
+        }
         
         [ScriptMethod(UseHttpGet = false)]
         [WebMethod(EnableSession = true)]        

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Services;
 using FrameworkLibrary;
+using System.Web.Script.Services;
 
 namespace WebApplication.Services
 {
@@ -49,8 +50,9 @@ namespace WebApplication.Services
 
             WriteJSON(StringHelper.ObjectToJson(publicChatRoom));
         }
-
-        [WebMethod(EnableSession = true)]
+        
+        [ScriptMethod(UseHttpGet = false)]
+        [WebMethod(EnableSession = true)]        
         public void SendMessage(string chatRoomId, string message)
         {
             var chatRoom = ChatManager.GetChatRoomByID(new Guid(chatRoomId));

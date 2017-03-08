@@ -15,10 +15,12 @@
         var NickName = $("#NickName");  
         var FirstStep = $("#FirstStep");  
 
+        var webserviceUrl = "/Webservices/Chat.asmx";
+
         AlertMessages.show();
         AlertMessages.text("Please wait checking your session ...");
 
-        $.get("/Webservices/Chat.asmx/GetChatUserBySession", function (data) {
+        $.get(webserviceUrl+"/GetChatUserBySession", function (data) {
 
             if (data.NickName == null || data.NickName == "")
             {
@@ -61,7 +63,8 @@
         });
 
         function SendChatMessage(chatRoomId, message) {
-            $.get("/Webservices/Chat.asmx/SendMessage?chatRoomId=" + chatRoomId + "&message=" + message, function (data) {
+            message = encodeURI(message);
+            $.post(webserviceUrl + "/SendMessage", { chatRoomId: chatRoomId, message: message } , function (data) {
                 ChatMessage.val("");
                 GetPublicChat(nickNameText);
             })
@@ -71,7 +74,7 @@
         {
             ChatArea.scrollTop(ChatArea[0].scrollHeight);
 
-            $.get("/Webservices/Chat.asmx/GetPublicChatRoom?NickName=" + nickname, function (data) {
+            $.get(webserviceUrl + "/GetPublicChatRoom?NickName=" + nickname, function (data) {
 
                 chatRoomId = data.ChatRoomID;
 
@@ -84,7 +87,7 @@
 
                     if (elem.MessageMode == 1)
                     {
-                        newText = newText + "<span class='chatMessageEntry'><span class='chatMessageEntryNickName'>" + elem.ChatUser.NickName + "</span>: " + elem.Message + "</span>";
+                        newText = newText + "<span class='chatMessageEntry'><span class='chatMessageEntryNickName'>" + elem.ChatUser.NickName + "</span>" + decodeURI(elem.Message) + "</span>";
                     }
                     else if (elem.MessageMode == 0)
                     {
@@ -112,40 +115,74 @@
         margin-bottom: 10px;
     }
 
+    #ChatWindowWrapper {
+        border: 1px solid #F8CBB4;
+        width: 400px;
+        background-color: #F8CBB4;
+        padding: 10px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+    }
+
     #FirstStep, #ChatAreaWrapper, #AlertMessages {
         display:none;
     }
 
-    #ChatAreaWrapper input[type=text], #ChatAreaWrapper #ChatArea {
+    #ChatAreaWrapper #ChatMessage, #ChatAreaWrapper #ChatArea {
         width: 100%;
     }
 
     #ChatAreaWrapper #ChatArea {
-        height: 200px;
+        height: 300px;
         overflow-y:scroll;
+        background-color: #F2F2F2;
+        padding: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
     }
 
     .chatMessageEntry {
         display: block;
         margin-bottom: 5px;
+        background-color: #fff;
+        padding: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;        
+        font-size: 12px;
+    }
+
+    .chatMessageEntry.systemMessage{
+        color: gray;
+    }
+
+    .chatMessageEntry .chatMessageEntryNickName{
+        display:block;
+        color: #DE8400;
     }
 
 </style>
 
-<div id="AlertMessages"></div>
+<div id="ChatWindowWrapper"> 
+    <div id="ChatWindow">
+        <div id="AlertMessages"></div>
 
-<div id="FirstStep">
-    <label>Enter your nickname:</label>
-    <input type="text" id="NickName" />
-    <input id="LoadChat" type="button" value="LoadChat" />
-</div>
+        <div id="FirstStep">
+            <label>Enter your nickname:</label>
+            <input type="text" id="NickName" />
+            <input id="LoadChat" type="button" value="LoadChat" />
+        </div>
 
-<div id="ChatAreaWrapper">
-    <div class="field">
-        <label>Chat Messages:</label>
-        <div id="ChatArea"></div>
-    </div>
-    <div class="field">
-        <input type="text" id="ChatMessage" /><input id="SendMessage" type="button" value="Send Message" />
+        <div id="ChatAreaWrapper">
+            <div class="field">
+                <label>Welcome to LIVE Chat:</label>
+                <div id="ChatArea"></div>
+            </div>
+            <div class="field">
+                <textarea id="ChatMessage"></textarea><input id="SendMessage" type="button" value="Send Message" />
+            </div>
+        </div>
     </div>
 </div>

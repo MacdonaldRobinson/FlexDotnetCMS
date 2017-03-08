@@ -12,8 +12,8 @@ namespace FrameworkLibrary
         {
             if (chatUser.GetLoggedInUser() != null)
             {
-                _currentUsers.Add(chatUser);
-            }
+                base.JoinChatRoom(chatUser);
+            }            
         }
     }
 }

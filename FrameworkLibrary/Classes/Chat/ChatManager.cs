@@ -82,9 +82,17 @@ namespace FrameworkLibrary
                         }
                         else
                         {
-                            if(!chatRoom.CurrentUsers.Any(i=>i.SessionID == chatUser.SessionID))
+                            var foundChatUser = chatRoom.CurrentUsers.FirstOrDefault(i => i.SessionID == chatUser.SessionID);
+                            if (foundChatUser == null)
                             {
                                 chatRoom.JoinChatRoom(chatUser);                                
+                            }
+                            else
+                            {
+                                if(!string.IsNullOrEmpty(chatUser.NickName) && chatUser.NickName != foundChatUser.NickName)
+                                {
+                                    foundChatUser.NickName = chatUser.NickName;
+                                }
                             }
                         }
                     }

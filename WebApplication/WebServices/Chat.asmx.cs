@@ -21,11 +21,18 @@ namespace WebApplication.Services
         private ChatManager ChatManager { get; } = ChatManager.GetInstance();
 
         [WebMethod(EnableSession = true)]
-        public void GetNickNameBySession()
+        public void GetChatUserBySession()
         {
             var chatUser = new ChatUser(Session.SessionID);
             var publicChatRoom = ChatManager.GetOrCreateChatRoom(RoomMode.Public, _chatRoomName, chatUser);
-            publicChatRoom.IsUserInChatRoom(chatUser);
+            var foundUser = publicChatRoom.GetUserInChatRoom(chatUser);
+
+            if(foundUser != null)
+            {
+                chatUser = foundUser;                
+            }
+
+            WriteJSON(StringHelper.ObjectToJson(chatUser));
         }
 
         [WebMethod(EnableSession = true)]
@@ -49,7 +56,7 @@ namespace WebApplication.Services
             var chatRoom = ChatManager.GetChatRoomByID(new Guid(chatRoomId));
             var chatUser = new ChatUser(Session.SessionID);
 
-            if (chatRoom.IsUserInChatRoom(chatUser))
+            if (chatRoom.GetUserInChatRoom(chatUser) != null)
             {
                 chatRoom.AddMessage(chatUser, message);
             }

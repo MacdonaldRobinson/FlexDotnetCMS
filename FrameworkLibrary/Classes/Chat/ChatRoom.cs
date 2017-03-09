@@ -21,7 +21,7 @@ namespace FrameworkLibrary
             {
                 chatUser.LastChatMessageDateTime = DateTime.Now;
                 _currentUsers.Add(chatUser);
-                _chatMessages.Add(new ChatMessage(ref chatUser, $"{chatUser.NickName} joint the chat room", ChatMessageMode.System));
+                _chatMessages.Add(new ChatMessage(ref chatUser, $"{chatUser.NickName} joined the chat room", ChatMessageMode.System));
             }
         }
 
@@ -32,6 +32,7 @@ namespace FrameworkLibrary
             if(foundUser != null)
             {
                 _currentUsers.Remove(foundUser);
+                _chatMessages.Add(new ChatMessage(ref foundUser, $"{foundUser.NickName} has left the chat room", ChatMessageMode.System));
             }            
         }
 

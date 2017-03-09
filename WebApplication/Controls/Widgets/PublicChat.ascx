@@ -7,36 +7,31 @@
         var nickNameText = "";
         
         var AlertMessages = $("#AlertMessages");
-        var ChatAreaWrapper = $("#ChatAreaWrapper");
+        var ChatScreen = $("#ChatScreen");
         var ChatArea = $("#ChatArea");
         var ChatMessage = $("#ChatMessage");
         var SendMessage = $("#SendMessage");
         var LoadChat = $("#LoadChat");
         var NickName = $("#NickName");  
-        var FirstStep = $("#FirstStep");  
+        var LoginScreen = $("#LoginScreen");  
         var ClearChat = $("#ClearChat");          
 
         var webserviceUrl = "/Webservices/Chat.asmx";
 
-        AlertMessages.show();
-        AlertMessages.text("Please wait checking your session ...");
+        ShowAlertMessage("Please wait checking your session ...");
+        LoginScreen.hide();
+        ChatScreen.hide();
 
-        $.get(webserviceUrl+"/GetChatUserBySession", function (data) {
-
-            if (data.NickName == null || data.NickName == "")
-            {
-                AlertMessages.text("");
-                AlertMessages.hide();
-                FirstStep.show();
+        $.get(webserviceUrl + "/GetChatUserBySession", function (data) {
+            ShowAlertMessage("");
+            if (data == null || data.NickName == null || data.NickName == "") {                
+                ShowLoginScreen();
             }
-            else
-            {
-                AlertMessages.text("");
-                AlertMessages.hide();
+            else {
                 NickName.val(data.NickName);
                 LoadChat[0].click();
             }
-        })
+        });
 
         ClearChat.on("click", function() {
             $.get(webserviceUrl + "/ClearChatRoom?chatRoomId="+chatRoomId, function (data) {
@@ -53,8 +48,7 @@
                 GetPublicChat(nickNameText);
             }, 1000);            
 
-            FirstStep.hide();
-            ChatAreaWrapper.show();
+            ShowChatScreen();
         });
 
         ChatMessage.on("keypress", function (event) {
@@ -77,21 +71,57 @@
             })
         }
 
+
+        function ShowAlertMessage(message)
+        {
+            AlertMessages.text(message);
+            AlertMessages.show();
+        }
+
+        function ShowLoginScreen()
+        {            
+            LoginScreen.show();
+            ChatScreen.hide();
+        }
+
+        function ShowChatScreen()
+        {
+            ShowAlertMessage("");
+            LoginScreen.hide();
+            ChatScreen.show();
+        }
+
         function ScrollToBottom()
         {
             ChatArea.scrollTop(ChatArea[0].scrollHeight);
+        }
+
+        function TimeoutChat()
+        {
+            clearInterval(chatInterval);            
+            ShowLoginScreen();
+            ShowAlertMessage("You have been logged out due to inactivity");
         }
 
         function GetPublicChat(nickname)
         {
             var scrollToBottom = false;
 
-            if (ChatArea.scrollTop() == ChatArea[0].scrollTopMax)
+            //console.log(ChatArea[0].scrollHeight)
+            var maxScrollHeight = ChatArea.prop('scrollHeight') - ChatArea.innerHeight();
+
+            if (ChatArea.scrollTop() == maxScrollHeight)
             {
                 scrollToBottom = true;
             }                
 
-            $.get(webserviceUrl + "/GetPublicChatRoom?NickName=" + nickname, function (data) {
+            $.get(webserviceUrl + "/GetPublicChatRoom?NickName=" + nickname, function (data) {                      
+
+                if (data == null)
+                {
+                    TimeoutChat();
+                    return;
+                }
 
                 chatRoomId = data.ChatRoomID;
 
@@ -148,15 +178,15 @@
         border-radius: 5px;
     }
 
-    #FirstStep, #ChatAreaWrapper, #AlertMessages {
+    #LoginScreen, #ChatScreen, #AlertMessages {
         display:none;
     }
 
-    #ChatAreaWrapper #ChatMessage, #ChatAreaWrapper #ChatArea {
+    #ChatScreen #ChatMessage, #ChatScreen #ChatArea {
         width: 100%;
     }
 
-    #ChatAreaWrapper #ChatArea {
+    #ChatScreen #ChatArea {
         height: 300px;
         overflow-y:scroll;
         background-color: #F2F2F2;
@@ -192,13 +222,13 @@
     <div id="ChatWindow">
         <div id="AlertMessages"></div>
 
-        <div id="FirstStep">
+        <div id="LoginScreen">
             <label>Enter your nickname:</label>
             <input type="text" id="NickName" />
             <input id="LoadChat" type="button" value="LoadChat" />
         </div>
 
-        <div id="ChatAreaWrapper">
+        <div id="ChatScreen">
             <div class="field">
                 <label>Welcome to LIVE Chat:</label>
                 <div id="ChatArea"></div>

@@ -62,7 +62,9 @@ namespace FrameworkLibrary
 
                         if (chatRoom == null)
                         {
-                            var newChatRoom = new PrivateChatRoom(chatRoomName, chatUser);
+                            var newChatRoom = new PrivateChatRoom(chatRoomName);
+                            newChatRoom.JoinChatRoom(chatUser);
+
                             _chatRooms.Add(newChatRoom);
 
                             chatRoom = newChatRoom;
@@ -75,28 +77,36 @@ namespace FrameworkLibrary
 
                         if(chatRoom == null)
                         {
-                            var newChatRoom = new PublicChatRoom(chatRoomName, chatUser);
+                            var newChatRoom = new PublicChatRoom(chatRoomName);
+                            newChatRoom.JoinChatRoom(chatUser);
                             _chatRooms.Add(newChatRoom);
 
                             chatRoom = newChatRoom;
                         }
-                        else
-                        {
-                            var foundChatUser = chatRoom.CurrentUsers.FirstOrDefault(i => i.SessionID == chatUser.SessionID);
-                            if (foundChatUser == null)
-                            {
-                                chatRoom.JoinChatRoom(chatUser);                                
-                            }
-                            else
-                            {
-                                if(!string.IsNullOrEmpty(chatUser.NickName) && chatUser.NickName != foundChatUser.NickName)
-                                {
-                                    foundChatUser.NickName = chatUser.NickName;
-                                }
-                            }
-                        }
                     }
                     break;
+            }
+
+            var foundChatUser = chatRoom.CurrentUsers.FirstOrDefault(i => i.SessionID == chatUser.SessionID);
+
+            if (foundChatUser == null)
+            {
+                chatRoom.JoinChatRoom(chatUser);                                
+            }
+            else
+            {
+                if (foundChatUser.IsActive)
+                {
+                    if (!string.IsNullOrEmpty(chatUser.NickName) && chatUser.NickName != foundChatUser.NickName)
+                    {
+                        foundChatUser.NickName = chatUser.NickName;
+                    }
+                }
+                else
+                {
+                    chatRoom.RemoveUser(foundChatUser);
+                    return null;
+                }
             }
 
             return chatRoom;

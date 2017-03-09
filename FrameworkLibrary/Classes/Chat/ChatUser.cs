@@ -7,7 +7,9 @@ namespace FrameworkLibrary
         public string SessionID { get; set; }
         public string NickName { get; set; }
         public long LoggedInUserID { get; set; }
-        public DateTime LastChatMessageDateTime { get; set; }
+        public DateTime LastChatMessageDateTime { get; set; } = DateTime.Now;
+
+        private TimeSpan _inactiveDuration = TimeSpan.FromSeconds(60);
 
         public ChatUser(string sessionId, string nickName, long loggedInUserId = 0)
         {
@@ -19,6 +21,14 @@ namespace FrameworkLibrary
         public ChatUser(string sessionId)
         {
             SessionID = sessionId;
+        }
+
+        public bool IsActive
+        {
+            get
+            {
+                return DateTime.Now < (LastChatMessageDateTime + _inactiveDuration);
+            }            
         }
 
         public User GetLoggedInUser()

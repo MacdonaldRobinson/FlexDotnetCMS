@@ -13,6 +13,7 @@ namespace FrameworkLibrary
         void DeleteChatMessages();
         void AddMessage(ChatUser chatUser, string message);
         void JoinChatRoom(ChatUser chatUser);
+        void RemoveUser(ChatUser chatUser);
         ChatUser GetUserInChatRoom(ChatUser chatUser);
     }
 }

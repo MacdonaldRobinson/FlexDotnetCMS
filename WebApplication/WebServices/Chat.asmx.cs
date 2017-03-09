@@ -26,11 +26,15 @@ namespace WebApplication.Services
         {
             var chatUser = new ChatUser(Session.SessionID);
             var publicChatRoom = ChatManager.GetOrCreateChatRoom(RoomMode.Public, _chatRoomName, chatUser);
-            var foundUser = publicChatRoom.GetUserInChatRoom(chatUser);
 
-            if(foundUser != null)
+            if (publicChatRoom != null)
             {
-                chatUser = foundUser;                
+                var foundUser = publicChatRoom.GetUserInChatRoom(chatUser);
+
+                if (foundUser != null)
+                {
+                    chatUser = foundUser;
+                }
             }
 
             WriteJSON(StringHelper.ObjectToJson(chatUser));

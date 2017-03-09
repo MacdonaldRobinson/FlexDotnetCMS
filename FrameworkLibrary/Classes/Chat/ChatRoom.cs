@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -11,17 +12,27 @@ namespace FrameworkLibrary
 
         public RoomMode ChatRoomMode { get; } = RoomMode.Private;
 
-        protected List<ChatUser> _currentUsers { get; set; } = new List<ChatUser>();
-        private List<ChatMessage> _chatMessages = new List<ChatMessage>();
+        private List<ChatUser> _currentUsers { get; set; } = new List<ChatUser>();
+        private List<ChatMessage> _chatMessages = new List<ChatMessage>();        
 
         public virtual void JoinChatRoom(ChatUser chatUser)
         {
             if (chatUser != null && !string.IsNullOrEmpty(chatUser.NickName))
             {
+                chatUser.LastChatMessageDateTime = DateTime.Now;
                 _currentUsers.Add(chatUser);
                 _chatMessages.Add(new ChatMessage(ref chatUser, $"{chatUser.NickName} joint the chat room", ChatMessageMode.System));
             }
+        }
 
+        public void RemoveUser(ChatUser chatUser)
+        {
+            var foundUser = _currentUsers.Find(i=>i.SessionID == chatUser.SessionID);
+
+            if(foundUser != null)
+            {
+                _currentUsers.Remove(foundUser);
+            }            
         }
 
         public DateTime DateCreated { get; } = DateTime.Now;
@@ -42,9 +53,8 @@ namespace FrameworkLibrary
             }
         }        
 
-        public ChatRoom(string chatRoomName, List<ChatUser> currentUsers, RoomMode chatRoomMode)
-        {
-            _currentUsers = currentUsers;
+        public ChatRoom(string chatRoomName, RoomMode chatRoomMode)
+        {            
             ChatRoomName = chatRoomName;
             ChatRoomMode = chatRoomMode;
         }
@@ -68,7 +78,7 @@ namespace FrameworkLibrary
 
         public ChatUser GetUserInChatRoom(ChatUser chatUser)
         {
-            var foundUser = _currentUsers.Find(i => i.SessionID == chatUser.SessionID);
+            var foundUser = CurrentUsers.FirstOrDefault(i => i.SessionID == chatUser.SessionID);
 
             if (foundUser != null)
                 return foundUser;

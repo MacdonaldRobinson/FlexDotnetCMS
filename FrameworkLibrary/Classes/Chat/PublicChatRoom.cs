@@ -4,7 +4,7 @@ namespace FrameworkLibrary
 {
     public class PublicChatRoom : ChatRoom
     {
-        public PublicChatRoom(string chatRoomName, ChatUser chatUser) : base(chatRoomName, new List<ChatUser>() { chatUser }, RoomMode.Public)
+        public PublicChatRoom(string chatRoomName) : base(chatRoomName, RoomMode.Public)
         {
         }
 

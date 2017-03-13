@@ -10,7 +10,7 @@ namespace FrameworkLibrary
         public long LoggedInUserID { get; set; }
         public DateTime LastChatMessageDateTime { get; set; } = DateTime.Now;
 
-        private TimeSpan _inactiveDuration = TimeSpan.FromSeconds(30);
+        private TimeSpan _inactiveDuration = TimeSpan.FromMinutes(10);
 
         public ChatUser(string sessionId, string nickName, long loggedInUserId = 0)
         {

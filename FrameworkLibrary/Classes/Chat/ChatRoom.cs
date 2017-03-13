@@ -15,13 +15,35 @@ namespace FrameworkLibrary
         private List<ChatUser> _currentUsers { get; set; } = new List<ChatUser>();
         private List<ChatMessage> _chatMessages = new List<ChatMessage>();        
 
+        public long ChatMessagesCount
+        { 
+            get
+            {
+                return ChatMessages.Count;
+            }
+        }
+
+        public string LastChatUserNickName
+        { 
+            get
+            {
+                return ChatMessages.Where(i=>i.MessageMode == ChatMessageMode.User).OrderByDescending(i=>i.DateCreated).FirstOrDefault()?.ChatUser?.NickName;
+            }
+        }
+
         public virtual void JoinChatRoom(ChatUser chatUser)
         {
-            if (chatUser != null && !string.IsNullOrEmpty(chatUser.NickName))
+            var foundUserInChatRoom = GetUserInChatRoom(chatUser);
+
+            if (chatUser != null && foundUserInChatRoom == null && !string.IsNullOrEmpty(chatUser.NickName))
             {
                 chatUser.LastChatMessageDateTime = DateTime.Now;
-                _currentUsers.Add(chatUser);
-                _chatMessages.Add(new ChatMessage(ref chatUser, $"{chatUser.NickName} joined the chat room", ChatMessageMode.System));
+
+                if(_currentUsers.Find(i=>i.NickName == chatUser.NickName) == null)
+                {
+                    _currentUsers.Add(chatUser);
+                    _chatMessages.Add(new ChatMessage(ref chatUser, $"{chatUser.NickName} joined the chat room", ChatMessageMode.System));
+                }
             }
         }
 
@@ -41,7 +63,7 @@ namespace FrameworkLibrary
         public ReadOnlyCollection<ChatUser> CurrentUsers
         {
             get
-            {
+            {                
                 return _currentUsers.AsReadOnly();
             }
         }

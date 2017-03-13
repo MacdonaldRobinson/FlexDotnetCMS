@@ -162,11 +162,14 @@
     <Content Include="Admin\Controls\Selectors\FlickerPhotoSetSelector.ascx" />
     <Content Include="Admin\Controls\Selectors\Generic\PermissionsSelector.ascx" />
     <Content Include="Admin\Controls\Selectors\WebService.asmx" />
+    <Content Include="Admin\Controls\Widgets\AdminChat.ascx" />
     <Content Include="Admin\media\images\css\ajax-loading.gif" />
     <Content Include="Admin\media\images\css\background.jpg" />
     <Content Include="Admin\media\images\css\leftArrow.png" />
     <Content Include="Admin\media\images\css\logo.png" />
     <Content Include="Admin\Views\MasterPages\WebService.asmx" />
+    <Content Include="Admin\Views\PageHandlers\Chat\AdminChat.asmx" />
+    <Content Include="Admin\Views\PageHandlers\Chat\Chat.aspx" />
     <Content Include="Admin\Views\PageHandlers\FieldTypes\Default.aspx" />
     <Content Include="Admin\Views\PageHandlers\FieldTypes\Detail.aspx" />
     <Content Include="Admin\Views\PageHandlers\GlossaryTerms\Default.aspx" />
@@ -298,7 +301,7 @@
     <Content Include="Controls\Widgets\Instagram.ascx" />
     <Content Include="Controls\Widgets\LanguageToggle.ascx" />
     <Content Include="Controls\Widgets\MailChipSignupForm.ascx" />
-    <Content Include="Controls\Widgets\PublicChat.ascx" />
+    <Content Include="Controls\Widgets\Chat.ascx" />
     <Content Include="Controls\Widgets\RssReader.ascx" />
     <Content Include="Controls\Widgets\Search.ascx" />
     <Content Include="Controls\Widgets\SearchResults.ascx" />
@@ -893,8 +896,26 @@
       <DependentUpon>WebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Admin\Controls\Widgets\AdminChat.ascx.cs">
+      <DependentUpon>AdminChat.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Widgets\AdminChat.ascx.designer.cs">
+      <DependentUpon>AdminChat.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\Views\MasterPages\WebService.asmx.cs">
       <DependentUpon>WebService.asmx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Chat\AdminChat.asmx.cs">
+      <DependentUpon>AdminChat.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Chat\Chat.aspx.cs">
+      <DependentUpon>Chat.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Chat\Chat.aspx.designer.cs">
+      <DependentUpon>Chat.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Views\PageHandlers\FieldTypes\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -1541,12 +1562,12 @@
     <Compile Include="Controls\Widgets\MailChipSignupForm.ascx.designer.cs">
       <DependentUpon>MailChipSignupForm.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Widgets\PublicChat.ascx.cs">
-      <DependentUpon>PublicChat.ascx</DependentUpon>
+    <Compile Include="Controls\Widgets\Chat.ascx.cs">
+      <DependentUpon>Chat.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controls\Widgets\PublicChat.ascx.designer.cs">
-      <DependentUpon>PublicChat.ascx</DependentUpon>
+    <Compile Include="Controls\Widgets\Chat.ascx.designer.cs">
+      <DependentUpon>Chat.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controls\Widgets\RssReader.ascx.cs">
       <DependentUpon>RssReader.ascx</DependentUpon>

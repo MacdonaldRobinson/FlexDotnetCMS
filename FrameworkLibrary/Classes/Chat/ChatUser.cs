@@ -4,12 +4,13 @@ namespace FrameworkLibrary
 {
     public class ChatUser
     {
+        public Guid ChatUserID { get; } = Guid.NewGuid();
         public string SessionID { get; set; }
         public string NickName { get; set; }
         public long LoggedInUserID { get; set; }
         public DateTime LastChatMessageDateTime { get; set; } = DateTime.Now;
 
-        private TimeSpan _inactiveDuration = TimeSpan.FromSeconds(60);
+        private TimeSpan _inactiveDuration = TimeSpan.FromSeconds(30);
 
         public ChatUser(string sessionId, string nickName, long loggedInUserId = 0)
         {

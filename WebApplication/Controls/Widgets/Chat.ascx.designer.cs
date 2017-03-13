@@ -11,7 +11,7 @@ namespace WebApplication.Controls.Widgets
 {
 
 
-    public partial class PublicChat
+    public partial class Chat
     {
     }
 }

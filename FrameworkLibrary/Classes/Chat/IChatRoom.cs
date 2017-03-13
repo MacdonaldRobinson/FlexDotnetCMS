@@ -15,5 +15,7 @@ namespace FrameworkLibrary
         void JoinChatRoom(ChatUser chatUser);
         void RemoveUser(ChatUser chatUser);
         ChatUser GetUserInChatRoom(ChatUser chatUser);
+        long ChatMessagesCount { get; }
+        string LastChatUserNickName { get; }
     }
 }

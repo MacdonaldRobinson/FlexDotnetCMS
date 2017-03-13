@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace WebApplication.Controls.Widgets
+namespace WebApplication.Admin.Views.PageHandlers.Chat
 {
-    public partial class PublicChat : System.Web.UI.UserControl
+    public partial class Chat : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -10,10 +10,7 @@ namespace FrameworkLibrary
 
         public override void JoinChatRoom(ChatUser chatUser)
         {
-            if (chatUser.GetLoggedInUser() != null)
-            {
-                base.JoinChatRoom(chatUser);
-            }            
+            base.JoinChatRoom(chatUser);
         }
     }
 }

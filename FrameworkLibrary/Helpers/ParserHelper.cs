@@ -234,60 +234,15 @@ namespace FrameworkLibrary
                 if (tagValue.StartsWith("~/"))
                     tagValue = URIHelper.ConvertToAbsUrl(tagValue);
 
-                if (!string.IsNullOrEmpty(tagValue) && (data.Contains("@{") || data.Contains("@using") || data.Contains("@for") || data.Contains("@Model")) && compileRazor)
-                {
-                    var razorTagValue = "@using FrameworkLibrary\n@using System\n@using System.Linq\n@using System.Web\n" + tagValue;
-                    var tagKey = "templateKey:" + tagValue;
-
-                    try
-                    {
-                        var result = RunOrCompileRazorCode(razorTagValue, tagKey, obj);
-
-                        /*if (tagValue != result)
-                        {
-                            data = data.Replace(tag, result);
-                        }
-                        else
-                        {
-                            data = tagValue;
-                        }*/
-                        data = result;
-
-                    }
-                    catch (Exception ex)
-                    {
-                        ErrorHelper.LogException(ex);
-                    }
-                }
-                else
-                {
-                    if (data != tagValue && !data.StartsWith("@"))
-                    {
-                        data = tagValue;
-                    }
-                }
+                data = RunOrCompileRazorCode(tag, tagValue, obj, compileRazor);
             }
 
-            if (!string.IsNullOrEmpty(data) && (data.Contains("@{") || data.Contains("@using") || data.Contains("@for") || data.Contains("@Model")) && compileRazor)
-            {
-                data = "@using FrameworkLibrary\n@using System\n@using System.Linq\n@using System.Web\n" + data;
-                var topTagKey = "templateKey:" + data;
-
-                try
-                {
-                    var topResult = RunOrCompileRazorCode(data, topTagKey, obj);
-                    data = data.Replace(data, topResult);
-                }
-                catch (Exception ex)
-                {
-                    ErrorHelper.LogException(ex);
-                }
-            }
+            data = RunOrCompileRazorCode(data, data, obj, compileRazor);
 
             return data;
         }
 
-        public static string RunOrCompileRazorCode(string code, string key, object obj)
+        public static string RunOrCompileRazorCode(string tag, string code, object obj, bool compileRazor)
         {
             /*var config = new TemplateServiceConfiguration();
             config.Debug = true;
@@ -297,14 +252,42 @@ namespace FrameworkLibrary
 
             Engine.Razor = service;*/
 
-            if (Engine.Razor.IsTemplateCached(key, null))
+            if (!string.IsNullOrEmpty(code) && (code.Contains("@{") || code.Contains("@using") || code.Contains("@for") || code.Contains("@Model")) && compileRazor)
             {
-                return Engine.Razor.Run(key, null, obj);
+                code = "@using FrameworkLibrary\n@using System\n@using System.Linq\n@using System.Web\n" + code;
+                var key = "templateKey:" + code;
+
+                try
+                {
+                    if (Engine.Razor.IsTemplateCached(key, null))
+                    {
+                        return Engine.Razor.Run(key, null, obj);
+                    }
+
+                    var result = Engine.Razor.RunCompile(code, key, null, obj);
+                    return result;
+                }
+                catch (RazorEngine.Templating.TemplateCompilationException ex)
+                {
+                    if(tag.StartsWith("{"))
+                    {
+                        code = tag;
+                    }
+                    else
+                    {
+                        code = "";
+                    }
+
+                    var error = ErrorHelper.CreateError(string.Join("\n", ex.CompilerErrors.Select(i=>i.ErrorText)), code);
+                    ErrorHelper.LogException(error.Exception);               
+
+                    throw new Exception(tag + "\r\n\r\n"+ error.Exception.Message +"\r\n\r\n"+error.Exception.InnerException);
+                }                
+            }       
+            else
+            {
+                return code;
             }
-
-            var result = Engine.Razor.RunCompile(code, key, null, obj);
-
-            return result;
         }
 
         public static void SetValue(object obj, string propertyName, object value)

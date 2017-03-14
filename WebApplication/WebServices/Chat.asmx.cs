@@ -30,7 +30,9 @@ namespace WebApplication.Services
             {
                 /*if(FrameworkSettings.CurrentUser != null)
                 {*/
-                    chatRooms = ChatManager.GetChatRooms(roomMode);
+                chatRooms = ChatManager.GetChatRooms(roomMode);    
+                chatRooms = chatRooms.Where(i=>i.CurrentUsers.Any(j=>j.SessionID == Session.SessionID));
+
                 /*}*/
             }
             else

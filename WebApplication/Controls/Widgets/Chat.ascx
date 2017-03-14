@@ -199,6 +199,8 @@
                     {
                         additionalClasses = "active";
                     }
+
+                    console.log(elem);
                     
                     if(elem.LastChatUserNickName != nickNameText && elem.LastChatUserNickName != null)
                     {

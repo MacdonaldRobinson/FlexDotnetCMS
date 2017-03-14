@@ -22,13 +22,15 @@ namespace WebApplication.Admin.Controls.Fields
 
             if (parentMedia != null)
             {
+                var liveMediaDetail = parentMedia.GetLiveMediaDetail();
+
                 if (MediaTypeID > 0)
                 {
-                    mediaDetailItems = parentMedia.LiveMediaDetail.ChildMediaDetails.Where(i => i.MediaTypeID == MediaTypeID && i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
+                    mediaDetailItems = liveMediaDetail.ChildMediaDetails.Where(i => i.MediaTypeID == MediaTypeID && i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
                 }
                 else
                 {
-                    mediaDetailItems = parentMedia.LiveMediaDetail.ChildMediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
+                    mediaDetailItems = liveMediaDetail.ChildMediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
                 }
             }
 

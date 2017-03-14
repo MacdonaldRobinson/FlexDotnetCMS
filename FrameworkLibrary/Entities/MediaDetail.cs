@@ -89,51 +89,57 @@ namespace FrameworkLibrary
             return renderVersion.ToString() + "_" + this.AutoCalculatedVirtualPath.Replace("~", "");
         }
 
-        public IMediaDetail PreviousMediaDetail
+        public IMediaDetail GetPreviousMediaDetail()
         {
-            get
+            var children = this.Media?.ParentMedia?.GetLiveMediaDetail()?.ChildMediaDetails?.ToList();
+
+            if (children == null)
+                return null;
+
+            var currentIndex = children.FindIndex(i => i.ID == this.ID);
+            var previousIndex = currentIndex - 1;
+
+            if (previousIndex < 0)
+                previousIndex = 0;
+
+            if(children.Count > 0)
             {
-                var children = this.Media?.ParentMedia?.LiveMediaDetail?.ChildMediaDetails?.ToList();
-
-                if (children == null)
-                    return null;
-
-                var currentIndex = children.FindIndex(i => i.ID == this.ID);
-                var previousIndex = currentIndex - 1;
-
-                if (previousIndex < 0)
-                    previousIndex = 0;
-
-                var previousMediaDetail = children[previousIndex];
+                var previousMediaDetail = children[previousIndex];                
 
                 if (previousMediaDetail.ID == this.ID)
                     return null;
 
                 return previousMediaDetail;
             }
+
+            return null;            
         }
 
-        public IMediaDetail NextMediaDetail
+        public IMediaDetail GetNextMediaDetail()
         {
-            get
+            var children = this.Media?.ParentMedia?.GetLiveMediaDetail()?.ChildMediaDetails?.ToList();
+
+            if (children == null)
+                return null;
+
+            var currentIndex = children.FindIndex(i => i.ID == this.ID);
+            var nextIndex = currentIndex + 1;
+
+            if (nextIndex >= children.Count)
+                nextIndex = 0;
+
+            if(children.Count > 0)
             {
-                var children = this.Media?.ParentMedia?.LiveMediaDetail?.ChildMediaDetails?.ToList();
-
-                if (children == null)
-                    return null;
-
-                var currentIndex = children.FindIndex(i => i.ID == this.ID);
-                var nextIndex = currentIndex + 1;
-
-                if (nextIndex >= children.Count)
-                    nextIndex = 0;
-
                 var nextMediaDetail = children[nextIndex];
 
                 if (nextMediaDetail.ID == this.ID)
                     return null;
 
                 return nextMediaDetail;
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -585,6 +591,9 @@ namespace FrameworkLibrary
         {
             get
             {
+                if (this.Media == null)
+                    return false;
+
                 return this.Media.MediaDetails.Where(i => i.IsDraft).Any();
             }
         }
@@ -592,7 +601,7 @@ namespace FrameworkLibrary
         public Return PublishLive()
         {
             var returnObj = new Return();
-            var liveVersion = BaseMapper.GetObjectFromContext((MediaDetail)this.Media.LiveMediaDetail);
+            var liveVersion = BaseMapper.GetObjectFromContext((MediaDetail)this.Media.GetLiveMediaDetail());
             var selectedItem = BaseMapper.GetObjectFromContext((MediaDetail)this);
 
             IEnumerable<MediaDetail> items = liveVersion.History.ToList();

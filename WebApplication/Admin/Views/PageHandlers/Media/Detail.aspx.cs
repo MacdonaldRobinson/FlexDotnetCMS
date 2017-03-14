@@ -149,7 +149,7 @@ namespace WebApplication.Admin.MediaArticle
                     }
                 }
 
-                var fields = selectedItem.Media.LiveMediaDetail?.Fields;
+                var fields = selectedItem.Media.GetLiveMediaDetail()?.Fields;
 
                 if (fields != null)
                 {
@@ -182,7 +182,7 @@ namespace WebApplication.Admin.MediaArticle
                     }
                 }
 
-                selectedItem.CopyFrom(selectedItem.Media?.LiveMediaDetail);
+                selectedItem.CopyFrom(selectedItem.Media?.GetLiveMediaDetail());
             }
             else
             {

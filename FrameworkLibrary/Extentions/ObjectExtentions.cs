@@ -30,7 +30,7 @@ namespace FrameworkLibrary
             ommitPropertiesBySegment.Add("ValidationErrors");
             ommitPropertiesBySegment.Add("Count");
             ommitPropertiesBySegment.Add("Capacity");
-            ommitPropertiesBySegment.Add("ParentMediaDetail");
+            ommitPropertiesBySegment.Add("LiveMediaDetail");            
             ommitPropertiesBySegment.Add("Language");
             ommitPropertiesBySegment.Add("CacheData");
         }
@@ -312,7 +312,8 @@ namespace FrameworkLibrary
                                         tmpJson += item;
                                     }
 
-                                    if (counter >= max) continue;
+                                    if (counter >= max)
+                                        continue;
                                     tmpJson += ", ";
                                     counter++;
                                 }
@@ -324,7 +325,24 @@ namespace FrameworkLibrary
                         }
                     }
                     else
-                        value = "\"" + StringHelper.JavascriptStringEncode(value.ToString().Replace(System.Environment.NewLine, "")) + "\"";
+                    {
+                        if (value is string || value is int || value is long || value is DateTime)
+                        {
+                            value = "\"" + StringHelper.JavascriptStringEncode(value.ToString().Replace(System.Environment.NewLine, "")) + "\"";
+                        }
+                        else if (value is object)
+                        {
+                            if (depthCount < maxDepthAllowed)
+                            {
+                                depthCount = depthCount + 1;
+                                value = "\"" + _ToJSON(value, depthCount) + "\"";
+                            }
+                            else
+                            {
+                                value = "\"" + StringHelper.JavascriptStringEncode(value.ToString().Replace(System.Environment.NewLine, "")) + "\"";
+                            }
+                        }
+                    }                        
                 }
 
                 if (ommitValuesBySegment.Any(ommitValueBySegment => value.ToString().Contains(ommitValueBySegment)))
@@ -335,7 +353,7 @@ namespace FrameworkLibrary
                 if (ommit)
                     continue;
 
-                json += "\"" + property.Name + "\" : " + value + ", ";
+                json += "\"" + property.Name + "\" : " + value.ToString() + ", ";
             }
 
             json += "}";

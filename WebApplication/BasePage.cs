@@ -624,8 +624,9 @@ namespace WebApplication
         public void SendMediaCommentApprovalRequest(Media obj)
         {
             string message = "";
-            message = "There was a comment made on a news article with the title '" + obj.LiveMediaDetail.Title + "', click on the following link to approve or reject this comment: " + URIHelper.BaseUrl + "admin/" + obj.LiveMediaDetail.MediaType.Name + "/Edit.aspx?id=" + obj.ID;
-            SendEmailToUser(obj.LiveMediaDetail.CreatedByUser, message, "Comment Approval Request");
+            var liveMediaDetail = obj.GetLiveMediaDetail();
+            message = "There was a comment made on a news article with the title '" + liveMediaDetail.Title + "', click on the following link to approve or reject this comment: " + URIHelper.BaseUrl + "admin/" + liveMediaDetail.MediaType.Name + "/Edit.aspx?id=" + obj.ID;
+            SendEmailToUser(liveMediaDetail.CreatedByUser, message, "Comment Approval Request");
         }
     }
 }

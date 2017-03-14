@@ -1,7 +1,10 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -29,28 +32,23 @@ namespace FrameworkLibrary
             return default(T);
         }
 
-        public static string ObjectToJson(object to, long depth=1)
+        public static string ObjectToJson(object to, long depth=1, Formatting indent = Formatting.None)
         {
+            var settings = new JsonSerializerSettings
+            {
+                PreserveReferencesHandling = PreserveReferencesHandling.None,
+                ReferenceLoopHandling = ReferenceLoopHandling.Error
+            };
+
             if (to is IMediaDetail)
             {
                 var mediaDetail = BaseMapper.GetDataModel(true, false).MediaDetails.FirstOrDefault(i => i.ID == ((IMediaDetail)to).ID);
-
-                return JsonConvert.SerializeObject(mediaDetail, Formatting.None,
-                                                    new JsonSerializerSettings()
-                                                    {
-                                                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-                                                    });
-
+                to = mediaDetail;
             }
-            else
-            {
 
-                return JsonConvert.SerializeObject(to, Formatting.None,
-                                                    new JsonSerializerSettings()
-                                                    {
-                                                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-                                                    });
-            }
+            var json = JsonConvert.SerializeObject(to, indent, settings);
+            return json;
+
         }
 
         public static bool ContainsWord(string inputString, string term)

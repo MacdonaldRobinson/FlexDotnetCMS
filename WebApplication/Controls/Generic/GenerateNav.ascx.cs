@@ -45,7 +45,7 @@ namespace WebApplication.Controls
 
             var mediaDetail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.MediaID == rootMedia.ID && i.LanguageID == BasePage.CurrentLanguage.ID);
 
-            if (mediaDetail == null)
+            if (mediaDetail == null || mediaDetail.MediaType == null)
                 return;
 
             if (mediaDetail.MediaType.Name == MediaTypeEnum.RootPage.ToString())

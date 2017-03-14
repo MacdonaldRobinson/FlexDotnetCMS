@@ -771,7 +771,16 @@ namespace FrameworkLibrary
 
             if (calculatedVirtualPath != mediaDetail.CachedVirtualPath)
             {
-                var childMedias = obj.Media.ChildMedias.Where(i => i.LiveMediaDetail != null && i.LiveMediaDetail.HistoryVersionNumber == 0 && i.LiveMediaDetail.MediaType.ShowInSiteTree);
+                var childMedias = obj.Media.ChildMedias.Where(i => {
+                    var liveMediaDetail = i.GetLiveMediaDetail();
+
+                    if (liveMediaDetail != null && liveMediaDetail.HistoryVersionNumber == 0 && liveMediaDetail.MediaType.ShowInSiteTree)
+                    {
+                        return true;
+                    }
+
+                    return false;                        
+                });
 
                 foreach (var item in childMedias)
                 {
@@ -929,7 +938,9 @@ namespace FrameworkLibrary
                                 var returnValue = property;
                                 var replaceShortCodes = returnValue.Contains("?ReplaceShortCodes");
 
-                                returnValue = ParseSpecialTags(selectMedia.LiveMediaDetail, returnValue);
+                                var liveMediaDetail = selectMedia.GetLiveMediaDetail();
+
+                                returnValue = ParseSpecialTags(liveMediaDetail, returnValue);
 
                                 if (replaceShortCodes)
                                 {
@@ -937,7 +948,7 @@ namespace FrameworkLibrary
                                 }
                                 else
                                 {
-                                    returnValue = ParseSpecialTags(selectMedia.LiveMediaDetail, returnValue);
+                                    returnValue = ParseSpecialTags(liveMediaDetail, returnValue);
                                 }
 
                                 customCode = customCode.Replace(itemAsString, returnValue);
@@ -1070,7 +1081,7 @@ namespace FrameworkLibrary
 
                         if (media != null)
                         {
-                            customCode = customCode.Replace(linkShortCode.ToString(), media.LiveMediaDetail.AbsoluteUrl);
+                            customCode = customCode.Replace(linkShortCode.ToString(), media.GetLiveMediaDetail().AbsoluteUrl);
                         }
                         else
                         {

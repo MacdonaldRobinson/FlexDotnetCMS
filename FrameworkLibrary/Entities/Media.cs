@@ -5,13 +5,10 @@ namespace FrameworkLibrary
 {
     public partial class Media : IMustContainID
     {
-        public IMediaDetail LiveMediaDetail
+        public IMediaDetail GetLiveMediaDetail()
         {
-            get
-            {
-                var currentLanguage = FrameworkSettings.GetCurrentLanguage();
-                return this.MediaDetails.SingleOrDefault(i => i.HistoryForMediaDetail == null && i.LanguageID == currentLanguage.ID && i.MediaType.ShowInSiteTree);
-            }
+            var currentLanguage = FrameworkSettings.GetCurrentLanguage();
+            return this.MediaDetails.SingleOrDefault(i => i.HistoryForMediaDetail == null && i.LanguageID == currentLanguage.ID && i.MediaType.ShowInSiteTree);
         }
 
         public string GetTagsAsString()
@@ -82,7 +79,7 @@ namespace FrameworkLibrary
 
         public List<Media> GetSiblings()
         {
-            var siblings = this.ParentMedia?.ChildMedias?.Where(i=>i.LiveMediaDetail != null).OrderBy(i => i.OrderIndex).ToList();
+            var siblings = this.ParentMedia?.ChildMedias?.Where(i=>i.GetLiveMediaDetail() != null).OrderBy(i => i.OrderIndex).ToList();
 
             if (siblings == null)
                 return new List<Media>();

@@ -37,8 +37,8 @@ namespace WebApplication.Admin.Controls.Fields
 
             var field = GetField();
 
-            var newIds = obj.Select(i => i.id).ToList().ToJSON(2);
-            var oldIds = field.FieldAssociations.Select(i => i.AssociatedMediaDetailID).ToList().ToJSON(2);
+            var newIds = obj.Select(i => i.id).ToList().ToJson(2);
+            var oldIds = field.FieldAssociations.Select(i => i.AssociatedMediaDetailID).ToList().ToJson(2);
 
             if (newIds == oldIds)
                 return;

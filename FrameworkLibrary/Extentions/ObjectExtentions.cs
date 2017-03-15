@@ -193,21 +193,21 @@ namespace FrameworkLibrary
             toProperty.SetValue(toObject, value, null);
         }
 
-        public static string ToJSON<T>(this T to, long toDepth = 1) where T : class
+        public static string ToJson(this object to, long toDepth = 1)
         {
             var tmpMaxDepthAllowed = maxDepthAllowed;
 
             if (toDepth < maxDepthAllowed)
                 maxDepthAllowed = int.Parse(toDepth.ToString());
 
-            var json = _ToJSON<T>(to, 1);
+            var json = _ToJson(to, 1);
 
             maxDepthAllowed = tmpMaxDepthAllowed;
 
             return json;
         }
 
-        private static string _ToJSON<T>(this T to, long depthCount = 1) where T : class
+        private static string _ToJson<T>(this T to, long depthCount = 1)
         {
             var json = "{";
 
@@ -273,7 +273,7 @@ namespace FrameworkLibrary
 
                 if ((isAssemblyObject) && (depthCount <= maxDepthAllowed))
                 {
-                    value = value.ToJSON(depthCount + 1);
+                    value = value.ToJson(depthCount + 1);
                 }
                 else
                 {
@@ -303,9 +303,9 @@ namespace FrameworkLibrary
                             {
                                 foreach (var item in dynValue)
                                 {
-                                    if (dynValue.GetType().GetInterface("IEnumerator") != null)
+                                    if (item.GetType().GetInterface("IEnumerator") != null)
                                     {
-                                        tmpJson += ObjectExtentions.ToJSON(item, depthCount);
+                                        tmpJson += ObjectExtentions.ToJson(item, depthCount);
                                     }
                                     else
                                     {
@@ -335,7 +335,7 @@ namespace FrameworkLibrary
                             if (depthCount < maxDepthAllowed)
                             {
                                 depthCount = depthCount + 1;
-                                value = "\"" + _ToJSON(value, depthCount) + "\"";
+                                value = "\"" + _ToJson(value, depthCount) + "\"";
                             }
                             else
                             {

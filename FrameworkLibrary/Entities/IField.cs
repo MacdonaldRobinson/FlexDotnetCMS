@@ -4,7 +4,6 @@ namespace FrameworkLibrary
 {
     public interface IField
     {
-
         long ID { get; set; }
         string FieldCode { get; set; }
         string FieldLabel { get; set; }
@@ -18,6 +17,5 @@ namespace FrameworkLibrary
         string AdminControl { get; set; }
         string GetAdminControlValue { get; set; }
         string SetAdminControlValue { get; set; }
-
     }
 }

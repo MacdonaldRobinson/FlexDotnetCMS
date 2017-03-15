@@ -26,23 +26,27 @@ namespace WebApplication.Admin.Controls.Fields
             {                
                 if (MediaTypeID > 0)
                 {
-                    mediaDetailItems = mediaDetail.ChildMediaDetails.Where(i => i.MediaTypeID == MediaTypeID && i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
+                    mediaDetailItems = mediaDetail.ChildMediaDetails.Where(i => i.MediaTypeID == MediaTypeID && i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted);
                 }
                 else
                 {
-                    mediaDetailItems = mediaDetail.ChildMediaDetails.Where(i=>i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
-                }
-
-                autoSuggestList = GetAutoSuggestList(mediaDetailItems);
+                    mediaDetailItems = mediaDetail.ChildMediaDetails.Where(i=>i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted);
+                }                
             }
             else
             {
                 if (MediaTypeID > 0)
                 {
-                    mediaDetailItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaTypeID == MediaTypeID && i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
-                    autoSuggestList = GetAutoSuggestList(mediaDetailItems);
+                    mediaDetailItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaTypeID == MediaTypeID && i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted);                    
                 }                
             }
+
+            if (ShowInMenu != ShowStatus.Any)
+            {
+                mediaDetailItems = mediaDetailItems.Where(i => i.ShowInMenu == bool.Parse(ShowInMenu.ToString()));
+            }
+
+            autoSuggestList = GetAutoSuggestList(mediaDetailItems);
 
             return StringHelper.ObjectToJson(autoSuggestList);
         }
@@ -73,6 +77,7 @@ namespace WebApplication.Admin.Controls.Fields
             return json;
         }
 
+        public ShowStatus ShowInMenu { get; set; } = ShowStatus.True;
         public long ParentMediaDetailID { get; set; }
         public long MediaTypeID { get; set; }
 
@@ -91,8 +96,8 @@ namespace WebApplication.Admin.Controls.Fields
             var ids = StringHelper.JsonToObject<List<long>>(values);
             var field = GetField();
 
-            var newIds = ids.ToList().ToJSON(2);
-            var oldIds = field.FieldAssociations.Select(i => i.AssociatedMediaDetailID).ToList().ToJSON(2);
+            var newIds = ids.ToList().ToJson(2);
+            var oldIds = field.FieldAssociations.Select(i => i.AssociatedMediaDetailID).ToList().ToJson(2);
 
             if (newIds == oldIds)
                 return;

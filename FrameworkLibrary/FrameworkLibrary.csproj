@@ -287,6 +287,7 @@
     <Compile Include="Enums\PermissionsEnum.cs" />
     <Compile Include="Enums\RolesEnum.cs" />
     <Compile Include="Enums\ContextType.cs" />
+    <Compile Include="Enums\ShowStatus.cs" />
     <Compile Include="Enums\StatusEnum.cs" />
     <Compile Include="Enums\RenderVersion.cs" />
     <Compile Include="Extentions\MediaDetailExtentions.cs" />

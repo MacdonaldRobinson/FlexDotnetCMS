@@ -385,7 +385,7 @@ namespace WebApplication.Admin.Views.MasterPages
 
             var returnObj = MediasMapper.Update(sourceMedia);
 
-            return returnObj.ToJSON();
+            return returnObj.ToJson();
         }
 
         private void SetShowInMenuStatus(MediaDetail detail, bool showInMenu)

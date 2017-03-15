@@ -390,7 +390,7 @@ namespace WebApplication
             Response.ContentType = "application/json";
             Response.StatusCode = 200;
 
-            var json = mediaDetail.ToJSON(depth);
+            var json = mediaDetail.ToJson(depth);
 
             Response.Write(json);
 

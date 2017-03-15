@@ -26,11 +26,11 @@ namespace WebApplication.Admin.Controls.Fields
 
                 if (MediaTypeID > 0)
                 {
-                    mediaDetailItems = liveMediaDetail.ChildMediaDetails.Where(i => i.MediaTypeID == MediaTypeID && i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
+                    mediaDetailItems = liveMediaDetail.ChildMediaDetails.Where(i => i.MediaTypeID == MediaTypeID && i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted);
                 }
                 else
                 {
-                    mediaDetailItems = liveMediaDetail.ChildMediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
+                    mediaDetailItems = liveMediaDetail.ChildMediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted);
                 }
             }
 
@@ -38,8 +38,13 @@ namespace WebApplication.Admin.Controls.Fields
             {
                 if (MediaTypeID > 0)
                 {
-                    mediaDetailItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaTypeID == MediaTypeID && i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted && i.ShowInMenu);
+                    mediaDetailItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaTypeID == MediaTypeID && i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted);
                 }
+            }
+
+            if (ShowInMenu != ShowStatus.Any)
+            {
+                mediaDetailItems = mediaDetailItems.Where(i => i.ShowInMenu == bool.Parse(ShowInMenu.ToString()));
             }
 
             ItemsList.DataSource = mediaDetailItems.ToList();
@@ -64,6 +69,7 @@ namespace WebApplication.Admin.Controls.Fields
             }
         }
 
+        public ShowStatus ShowInMenu { get; set; } = ShowStatus.True;
         public long ParentMediaID { get; set; }
         public long MediaTypeID { get; set; }
 
@@ -82,8 +88,8 @@ namespace WebApplication.Admin.Controls.Fields
             var obj = StringHelper.JsonToObject<List<long>>(values);
             var field = GetField();
 
-            var newIds = obj.ToList().ToJSON(2);
-            var oldIds = field.FieldAssociations.Select(i => i.AssociatedMediaDetailID).ToList().ToJSON(2);
+            var newIds = obj.ToList().ToJson(2);
+            var oldIds = field.FieldAssociations.Select(i => i.AssociatedMediaDetailID).ToList().ToJson(2);
 
             if (newIds == oldIds)
                 return;

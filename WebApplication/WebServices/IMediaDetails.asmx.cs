@@ -95,7 +95,7 @@ namespace WebApplication.Services
             IMediaDetail detail = MediaDetailsMapper.GetByID(id);
 
             if (detail != null)
-                json = detail.ToJSON();
+                json = detail.ToJson();
 
             WriteJSON(json);
         }
@@ -110,7 +110,7 @@ namespace WebApplication.Services
             if (detail != null)
                 relatedItems = MediaDetailsMapper.GetRelatedItems(detail);
 
-            WriteJSON(relatedItems.ToJSON());
+            WriteJSON(relatedItems.ToJson());
         }
 
         [WebMethod]
@@ -138,7 +138,7 @@ namespace WebApplication.Services
             if (detail != null)
                 filterOptions = MediaDetailsMapper.GetFilterOptions(detail);
 
-            WriteJSON(filterOptions.ToJSON());
+            WriteJSON(filterOptions.ToJson());
         }
 
         [WebMethod]
@@ -148,7 +148,7 @@ namespace WebApplication.Services
 
             var items = MediaDetailsMapper.SearchForTerm(searchTerm);
 
-            WriteJSON(items.ToJSON());
+            WriteJSON(items.ToJson());
         }
     }
 }

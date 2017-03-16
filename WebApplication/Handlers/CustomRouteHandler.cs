@@ -238,7 +238,7 @@ namespace WebApplication.Handlers
                 {
                     var draft = detail.History.FirstOrDefault(i => i.IsDraft);
 
-                    if (draft != null && draft.PublishDate > detail.PublishDate && draft.CanRender)
+                    if (draft != null && (draft.PublishDate - detail.PublishDate) > TimeSpan.FromSeconds(10) && draft.CanRender)
                     {
                         var returnObj = draft.PublishLive();
 

@@ -102,12 +102,20 @@ namespace WebApplication.Admin.Views.MasterPages
             if (draft != null)
             {
                 node.li_attr._class += " hasDraft";
-                nodeText += $"<small class='hasDraftWrapper'>Has Draft</small>";
+
+                var autoPublishCode = "";
 
                 if (draft.DateLastModified > detail.DateLastModified)
                 {
                     node.li_attr._class += " draftIsNewer";
+
+                    if ((draft.PublishDate - detail.PublishDate) > TimeSpan.FromSeconds(10))
+                    {
+                        autoPublishCode = $"<i class='fa fa-clock-o' aria-hidden='true' title='This draft is set to auto-publish at: {draft.PublishDate}'></i> ";
+                    }                    
                 }
+
+                nodeText += $"<small class='hasDraftWrapper'>{autoPublishCode}Has Draft</ small>";
             }
 
             var pendingComments = detail.Media.Comments.Count(i => i.Status == StatusEnum.Pending.ToString() && i.LanguageID == detail.LanguageID);

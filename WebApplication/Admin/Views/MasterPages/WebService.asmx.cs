@@ -108,11 +108,11 @@ namespace WebApplication.Admin.Views.MasterPages
                 if (draft.DateLastModified > detail.DateLastModified)
                 {
                     node.li_attr._class += " draftIsNewer";
+                }
 
-                    if ((draft.PublishDate - detail.PublishDate) > TimeSpan.FromSeconds(10))
-                    {
-                        autoPublishCode = $"<i class='fa fa-clock-o' aria-hidden='true' title='This draft is set to auto-publish at: {draft.PublishDate}'></i> ";
-                    }                    
+                if ((draft.PublishDate - detail.PublishDate) > TimeSpan.FromSeconds(10))
+                {
+                    autoPublishCode = $"<i class='fa fa-clock-o' aria-hidden='true' title='This draft is set to auto-publish at: {draft.PublishDate}'></i> ";
                 }
 
                 nodeText += $"<small class='hasDraftWrapper'>{autoPublishCode}Has Draft</ small>";

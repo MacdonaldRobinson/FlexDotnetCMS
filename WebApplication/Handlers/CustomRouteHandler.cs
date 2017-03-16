@@ -195,10 +195,10 @@ namespace WebApplication.Handlers
                     detail = (MediaDetail)FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail;
                 }
 
-                if (detail != null && !detail.CanUserAccessSection(FrameworkSettings.CurrentUser))
+                /*if (detail != null && !detail.CanUserAccessSection(FrameworkSettings.CurrentUser))
                 {
                     FormsAuthentication.RedirectToLoginPage();
-                }
+                }*/
 
                 if (detail != null)
                 {

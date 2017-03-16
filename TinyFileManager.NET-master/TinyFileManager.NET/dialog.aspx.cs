@@ -490,7 +490,7 @@ namespace TinyFileManager.NET
                     }
                     else
                     {
-                        strRet += " <span class=\"divider\">/</span></li> <li><a href=\"" + this.strCurrLink + "&currpath=" + strTempPath + "\">" + strFolder + "</a>";
+                        strRet += " <span class=\"divider\">/</span></li> <li><a href=\"" + this.strCurrLink + "&currpath=\\" + strTempPath + "\">" + strFolder + "</a>";
                     }
                 }
             }   // foreach

@@ -141,6 +141,64 @@
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/bootstrap-lightbox.min.js"></script>
     <script type="text/javascript" src="js/dropzone.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        function getUrlVars()
+        {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for(var i = 0; i < hashes.length; i++)
+            {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+        $(document).ready(function(){
+            $(".thumbnails li").not(":first-child").draggable({ revert: true, helper: "clone" });
+            $(".thumbnails .ff-item-type-dir").droppable({
+              drop: function( event, ui ) {
+
+                var elem = $(this).find("a[title='Open']");
+
+                if(elem.length > 0)
+                {
+                    dropped = elem.attr("href");
+                }
+
+                $(ui.draggable).each(function(){    
+                    
+                    var isDirectory = $(this).hasClass("ff-item-type-dir");
+
+                    if(isDirectory)
+                    {
+                        var elem = $(this).find("a[title='Open']");
+
+                        if(elem.length > 0)
+                        {
+                            dragged = elem.attr("href");
+                        }
+                    }
+                    else
+                    {
+                        var form = $(this).find("form");                    
+
+                        if(form.length > 0)
+                        {
+                            dragged = form.attr("action");
+                        }
+                    }
+
+                    $.post("/Admin/Views/MasterPages/WebService.asmx/MoveFileManagerItem", { draggedItem: dragged, droppedOn: dropped }, function(){
+                        window.location.reload();
+                    });
+
+                });
+              }
+            });            
+        });            
+    </script>
     <script language="javascript" type="text/javascript">
 
         var ext_img=new Array(<% Response.Write(this.objConfig.strAllowedImageExtensions); %>);

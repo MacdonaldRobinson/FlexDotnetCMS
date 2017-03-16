@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web.Services;
 
@@ -387,6 +388,45 @@ namespace WebApplication.Admin.Views.MasterPages
             UserMustHaveAccessTo(detail);
 
             detail.Media.MoveDown();
+        }
+
+        [WebMethod(EnableSession = true)]
+        public void MoveFileManagerItem(string draggedItem, string droppedOn)
+        {
+            var draggedItemUriSegments = System.Web.HttpUtility.ParseQueryString(draggedItem);
+            var droppedOnUriSegments = System.Web.HttpUtility.ParseQueryString(droppedOn);
+
+            var draggedFile =  draggedItemUriSegments["file"];
+            var draggedCurrPath = draggedItemUriSegments["currpath"];
+            var droppedCurrPath = droppedOnUriSegments["currpath"];
+
+            var toDirectory = URIHelper.BasePath + droppedCurrPath;
+
+            if (draggedFile != "" && draggedFile != null)
+            {
+                var filePath = URIHelper.BasePath + draggedFile;
+
+                if (File.Exists(filePath))
+                {
+                    var fileInfo = new FileInfo(filePath);
+
+                    File.Move(fileInfo.FullName, toDirectory +"\\"+ fileInfo.Name);
+                }
+            }
+            else if (draggedCurrPath != "" && draggedCurrPath != null)
+            {
+                var dirPath = URIHelper.BasePath + draggedCurrPath;
+
+                if (Directory.Exists(dirPath))
+                {
+                    var dirInfo = new DirectoryInfo(dirPath);
+
+                    Directory.Move(dirInfo.FullName, toDirectory +"\\"+ dirInfo.Name);
+                }
+
+            }
+
+
         }
 
         [WebMethod(EnableSession = true)]

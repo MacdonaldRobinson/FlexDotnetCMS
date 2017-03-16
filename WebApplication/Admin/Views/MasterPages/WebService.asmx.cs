@@ -277,16 +277,19 @@ namespace WebApplication.Admin.Views.MasterPages
                 throw new Exception("You do not have the appropriate permissions to create items");
             }
 
-            var mediaDetail = MediaDetailsMapper.GetByID(id);
+            var detail = MediaDetailsMapper.GetByID(id);
 
-            AdminBasePage.SelectedMediaDetail = mediaDetail;
-            AdminBasePage.SelectedMedia = mediaDetail.Media;
+            UserMustHaveAccessTo(detail);
+
+            AdminBasePage.SelectedMediaDetail = detail;
+            AdminBasePage.SelectedMedia = detail.Media;
         }
 
         [WebMethod(EnableSession = true)]
         public void Delete(long id)
         {
             var detail = MediaDetailsMapper.GetByID(id);
+            UserMustHaveAccessTo(detail);
             SetDeleteStatus(detail, true);
         }
 
@@ -294,6 +297,7 @@ namespace WebApplication.Admin.Views.MasterPages
         public void ClearCache(long id)
         {
             var detail = MediaDetailsMapper.GetByID(id);
+            UserMustHaveAccessTo(detail);
             detail.RemoveFromCache();
         }
 
@@ -301,6 +305,7 @@ namespace WebApplication.Admin.Views.MasterPages
         public void UnDelete(long id)
         {
             var detail = MediaDetailsMapper.GetByID(id);
+            UserMustHaveAccessTo(detail);
             SetDeleteStatus(detail, false);
         }
 
@@ -311,6 +316,8 @@ namespace WebApplication.Admin.Views.MasterPages
 
             if (detail != null)
             {
+                UserMustHaveAccessTo(detail);
+
                 HandleDeletePermanentlyRecursive(detail.Media);
                 ContextHelper.ClearAllMemoryCache();
                 FileCacheHelper.ClearAllCache();
@@ -324,6 +331,8 @@ namespace WebApplication.Admin.Views.MasterPages
 
             if (detail != null)
             {
+                UserMustHaveAccessTo(detail);
+
                 var mediaDetail = HandleDuplicate(detail, detail.Media.ParentMedia);
 
                 ContextHelper.ClearAllMemoryCache();
@@ -339,6 +348,8 @@ namespace WebApplication.Admin.Views.MasterPages
         public void ShowInMenu(long id)
         {
             var detail = MediaDetailsMapper.GetByID(id);
+            UserMustHaveAccessTo(detail);
+
             SetShowInMenuStatus((MediaDetail)detail, true);
         }
 
@@ -346,6 +357,8 @@ namespace WebApplication.Admin.Views.MasterPages
         public void HideFromMenu(long id)
         {
             var detail = MediaDetailsMapper.GetByID(id);
+            UserMustHaveAccessTo(detail);
+
             SetShowInMenuStatus((MediaDetail)detail, false);
         }
 
@@ -353,6 +366,8 @@ namespace WebApplication.Admin.Views.MasterPages
         public void MoveUp(long id)
         {
             var detail = MediaDetailsMapper.GetByID(id);
+            UserMustHaveAccessTo(detail);
+
             detail.Media.MoveUp();
         }
 
@@ -360,6 +375,9 @@ namespace WebApplication.Admin.Views.MasterPages
         public void MoveDown(long id)
         {
             var detail = MediaDetailsMapper.GetByID(id);
+
+            UserMustHaveAccessTo(detail);
+
             detail.Media.MoveDown();
         }
 
@@ -368,6 +386,8 @@ namespace WebApplication.Admin.Views.MasterPages
         {
             var sourceMedia = BaseMapper.GetObjectFromContext(MediasMapper.GetByID(sourceMediaId));
             var parentMedia = BaseMapper.GetObjectFromContext(MediasMapper.GetByID(parentMediaId));
+
+            UserMustHaveAccessTo(sourceMedia.GetLiveMediaDetail());
 
             var oldParentId = sourceMedia.ParentMediaID;
 
@@ -595,8 +615,46 @@ namespace WebApplication.Admin.Views.MasterPages
             return MediaDetailsMapper.GetAtleastOneByMedia(item, AdminBasePage.CurrentLanguage);
         }
 
+        private Exception AccessDeniedException(IMediaDetail detail = null)
+        {
+            if (detail == null)
+            {
+                return new Exception("You do not have the appropriate permissions to perform this operation");
+            }
+            else
+            {
+                return new Exception($"You do not have the appropriate permissions to perform this operation on '{detail.SectionTitle}'");
+            }
+        }
+
+        private void UserMustHaveAccessTo(IMediaDetail detail)
+        {
+            if (FrameworkSettings.CurrentUser == null || !detail.CanUserAccessSection(FrameworkSettings.CurrentUser))
+            {
+                throw AccessDeniedException(detail);
+            }
+        }
+
+        private void UserMustBeInRole(RoleEnum roleEnum)
+        {
+            if (FrameworkSettings.CurrentUser == null || !FrameworkSettings.CurrentUser.IsInRole(roleEnum))
+            {
+                throw AccessDeniedException();
+            }
+        }
+
+        private void UserMustHavePermission(PermissionsEnum permissionEnum)
+        {
+            if (FrameworkSettings.CurrentUser == null || !FrameworkSettings.CurrentUser.HasPermission(permissionEnum))
+            {
+                throw AccessDeniedException();
+            }
+        }
+
         private void SetDeleteStatus(IMediaDetail detail, bool isDeleted)
         {
+            UserMustHaveAccessTo(detail);
+
             if (!FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.DeleteItems))
             {
                 throw new Exception("You do not have the appropriate permissions to delete/undelete items");
@@ -619,6 +677,8 @@ namespace WebApplication.Admin.Views.MasterPages
         [WebMethod]
         public int ReOrderMediaFields(List<FrameworkLibrary.MediaDetailField> items)
         {
+            UserMustBeInRole(RoleEnum.Administrator);
+
             var index = 0;
             foreach (var item in items)
             {

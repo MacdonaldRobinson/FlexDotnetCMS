@@ -72,6 +72,21 @@ namespace FrameworkLibrary
 
         public bool CanUserAccessSection(User user)
         {
+            var roles = this.GetRoles();
+
+            if (roles.Count == 0)
+            {
+                roles = this.MediaType.GetRoles();
+            }
+
+            if (roles.Count > 0)
+            {
+                if (!user.IsInRoles(roles))
+                {
+                    return false;
+                }
+            }
+
             if (IsProtected)
             {
                 if (user == null)
@@ -693,7 +708,7 @@ namespace FrameworkLibrary
 
         public bool HasAnyRoles()
         {
-            return UsersMediaDetails.Count > 0;
+            return RolesMediaDetails.Count > 0;
         }
 
         public bool HasAnyUsers()
@@ -704,6 +719,11 @@ namespace FrameworkLibrary
         public bool HasRole(Role role)
         {
             return RolesMediaDetails.Where(i => i.ID == role.ID).Any();
+        }
+
+        public List<Role> GetRoles()
+        {
+            return RolesMediaDetails.Select(i => i.Role).ToList();            
         }
 
         public bool HasUser(User user)

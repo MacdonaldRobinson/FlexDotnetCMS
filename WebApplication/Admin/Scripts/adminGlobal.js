@@ -187,7 +187,7 @@ function HandleContextMenuClick(action, target, node) {
                     window.location.href = "/Admin/Views/PageHandlers/Media/Create.aspx";
                 },
                 error: function (xhr, status, error) {
-                    //console.log(xhr);
+                    DisplayJsonException(xhr);
                 }
             });
             break;
@@ -205,7 +205,7 @@ function HandleContextMenuClick(action, target, node) {
                     //RefreshSiteTreeViewAjaxPanel();
                 },
                 error: function (xhr, status, error) {
-                    //console.log(xhr);
+                    DisplayJsonException(xhr);                    
                 }
             });
             break;
@@ -223,7 +223,7 @@ function HandleContextMenuClick(action, target, node) {
                     //window.location.reload();
                 },
                 error: function (xhr, status, error) {
-                    //console.log(xhr);
+                    DisplayJsonException(xhr);
                 }
             });
             break;
@@ -240,7 +240,7 @@ function HandleContextMenuClick(action, target, node) {
                     RefreshSiteTreeNodeById(node.parent);
                 },
                 error: function (xhr, status, error) {
-                    //console.log(xhr);
+                    DisplayJsonException(xhr);
                 }
             });
             break;
@@ -257,7 +257,7 @@ function HandleContextMenuClick(action, target, node) {
                     window.location.href = msg.d.replace("~", "");
                 },
                 error: function (xhr, status, error) {
-                    //console.log(xhr);
+                    DisplayJsonException(xhr);
                 }
             });
             break;
@@ -275,7 +275,7 @@ function HandleContextMenuClick(action, target, node) {
                     RefreshSiteTreeNodeById(node.parent);
                 },
                 error: function (xhr, status, error) {
-                    //console.log(xhr);
+                    DisplayJsonException(xhr);
                 }
             });
             break;
@@ -293,7 +293,7 @@ function HandleContextMenuClick(action, target, node) {
                     RefreshSiteTreeNodeById(node.parent);
                 },
                 error: function (xhr, status, error) {
-                    //console.log(xhr);
+                    DisplayJsonException(xhr);
                 }
             });
             break;
@@ -311,7 +311,7 @@ function HandleContextMenuClick(action, target, node) {
                     RefreshSiteTreeNodeById(node.parent);
                 },
                 error: function (xhr, status, error) {
-                    //console.log(xhr);
+                    DisplayJsonException(xhr);
                 }
             });
             break;
@@ -329,7 +329,7 @@ function HandleContextMenuClick(action, target, node) {
                     RefreshSiteTreeNodeById(node.parent);
                 },
                 error: function (xhr, status, error) {
-                    //console.log(xhr);
+                    DisplayJsonException(xhr);
                 }
             });
             break;
@@ -367,7 +367,7 @@ function HandleContextMenuClick(action, target, node) {
                     RefreshSiteTreeNodeById(node.parent);
                 },
                 error: function (xhr, status, error) {
-                    //console.log(xhr);
+                    DisplayJsonException(xhr);
                 }
             });
             break;
@@ -905,6 +905,8 @@ function BindTree(filterText) {
                 RefreshSiteTreeNodeById(parentMediaId);
             },
             error: function (xhr, status, error) {
+                DisplayJsonException(xhr);
+                RefreshSiteTreeNodeById(parentMediaId);
             }
         });
 

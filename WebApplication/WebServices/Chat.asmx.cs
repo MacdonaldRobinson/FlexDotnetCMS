@@ -60,6 +60,8 @@ namespace WebApplication.Services
 
             if(me != null && otherUser != null && me.ChatUserID != otherUser.ChatUserID && me.NickName != otherUser.NickName)
             {
+                var foundChatRoom = ChatManager.GetChatRoomWithUsers(RoomMode.Private, new List<ChatUser>() { me, otherUser });
+
                 chatroom = ChatManager.GetOrCreateChatRoom(RoomMode.Private, me.NickName+","+otherUser.NickName, me);
                 chatroom.JoinChatRoom(otherUser);
             }
@@ -75,12 +77,18 @@ namespace WebApplication.Services
             {
                 userId = FrameworkSettings.CurrentUser.ID;
             }
+
             var chatUser = new ChatUser(Session.SessionID, nickName, userId);
             IChatRoom chatRoom = null;
 
             if(chatRoomId != "" && chatRoomId != "0" && chatRoomId != "null")
             {
                 chatRoom = ChatManager.GetChatRoomByID(new Guid(chatRoomId));
+
+                if (chatRoom != null && chatRoom.ChatRoomMode != roomMode)
+                {
+                    chatRoom = null;
+                }
             }
 
             if(chatRoom == null)

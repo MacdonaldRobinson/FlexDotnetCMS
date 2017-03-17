@@ -36,8 +36,11 @@
         CheckSession();
 
         $(document).on("click", ".chatRoomEntry" , function(){
-            var id = $(this).attr("data-chatroomid");               
-            SwitchChatRoom(id);
+            var id = $(this).attr("data-chatroomid");            
+            var name = $(this).text();
+            var mode = $(this).attr("data-chatroommode");
+
+            SwitchChatRoom(id, name, mode);
         });
 
         $(document).on("click", ".chatRoomUserEntry" , function(){
@@ -45,8 +48,8 @@
 
             $.get(webserviceUrl + "/CreatePrivateChatRoomWith?otherChatUserId=" + otherChatUserId, function (data) {                          
                 if(data != null)
-                {
-                    SwitchChatRoom(data.ChatRoomID);
+                {                  
+                    SwitchChatRoom(data.ChatRoomID, data.ChatRoomName, "Private");
                 }
             })
         });
@@ -57,11 +60,8 @@
             var newChatRoomName = prompt("Enter a name for the chatroom");
 
             if(newChatRoomName != null)
-            {
-                chatRoomName = newChatRoomName;
-                chatRoomId = 0;
-                roomMode = "Public";                
-                SwitchChatRoom(chatRoomId);
+            {                
+                SwitchChatRoom(0, newChatRoomName, "Public");
             }                       
         });
 
@@ -109,6 +109,7 @@
                 }
                 else{
                     ShowChatScreen();
+                    NickName.val(data.NickName);
                     LoadChat[0].click();
                 }
             });        
@@ -130,7 +131,7 @@
             }, 1000); 
         }
 
-        function SwitchChatRoom(id)
+        function SwitchChatRoom(id, name, mode)
         {
             console.log("Switching chat room ...");
             if(getChatInterval != null)
@@ -139,6 +140,8 @@
             }       
             
             chatRoomId = id;
+            chatRoomName = name;            
+            roomMode = mode;   
 
             StartChatInterval();
         }
@@ -198,9 +201,7 @@
                     if(elem.ChatRoomID == chatRoomId)
                     {
                         additionalClasses = "active";
-                    }
-
-                    console.log(elem);
+                    }                    
                     
                     if(elem.LastChatUserNickName != nickNameText && elem.LastChatUserNickName != null)
                     {
@@ -337,7 +338,7 @@
         -moz-border-radius: 5px;
         -webkit-border-radius: 5px;
         border-radius: 5px;        
-        font-size: 12px;
+        font-size: 11px;
     }
 
     .chatMessageEntry.systemMessage{
@@ -393,18 +394,12 @@
             background-color: #4C9689;
         }
 
-    @keyframes Glow {
-        from {background-color: #4C9689;}
-        to {background-color: yellow;}
-    }
-
-    .chatRoomEntry.newMessage {
-        animation-name: Glow;
-        animation-duration: 1s;
-        animation-timing-function: linear;        
-        animation-iteration-count: infinite;
-        animation-direction: alternate;
-        background-color: red;
+    .newMessage::after{
+        content:'(New Messages)';
+        color: red;
+        float: right;
+        font-weight: bold;        
+        background-color: yellow;
     }
 
 </style>

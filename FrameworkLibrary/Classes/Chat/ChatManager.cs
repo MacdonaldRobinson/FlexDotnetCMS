@@ -122,6 +122,11 @@ namespace FrameworkLibrary
             return ChatRooms.FirstOrDefault(i=>i.ChatRoomMode == roomMode && i.ChatRoomName == chatRoomName);
         }
 
+        public IChatRoom GetChatRoomWithUsers(RoomMode roomMode, List<ChatUser> chatUsers)
+        {
+            return ChatRooms.FirstOrDefault(i => i.ChatRoomMode == roomMode && chatUsers.TrueForAll(j=>i.CurrentUsers.Contains(j)));
+        }
+
         public IChatRoom GetOrCreateChatRoom(RoomMode roomMode, string chatRoomName, ChatUser chatUser)
         {
             IChatRoom chatRoom = null;

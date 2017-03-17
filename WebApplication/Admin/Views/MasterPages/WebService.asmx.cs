@@ -55,6 +55,9 @@ namespace WebApplication.Admin.Views.MasterPages
 
     public class WebService : WebApplication.Services.BaseService
     {
+        public WebService()
+        {
+        }
         private void UpdateTreeNode(JsTreeNode node, IMediaDetail detail)
         {
             if (detail == null)

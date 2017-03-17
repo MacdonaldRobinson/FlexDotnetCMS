@@ -2,6 +2,7 @@
 using System.Collections;
 using System.IO;
 using System.Web;
+using FrameworkLibrary;
 
 namespace TinyFileManager.NET
 {
@@ -31,6 +32,11 @@ namespace TinyFileManager.NET
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (FrameworkSettings.CurrentUser == null)
+            {
+                throw new Exception("You must be logged into the CMS inorder to access the file manager");
+            }
+
             strCmd = Request.QueryString["cmd"] + "";
             strType = Request.QueryString["type"] + "";
             strFolder = Request.QueryString["folder"] + "";
@@ -41,6 +47,13 @@ namespace TinyFileManager.NET
             strProfile = Request.QueryString["profile"] + "";
             baseUrl = Request.QueryString["BaseUrl"] + "";
             var defaultRootPath = "/media/uploads/";
+
+            var requestPath = URIHelper.ConvertAbsUrlToTilda(strCurrPath).Replace("\\", "/").Replace("//","/").Replace("~/","/");
+
+            if (!requestPath.Contains(defaultRootPath))
+            {
+                strCurrPath = defaultRootPath;
+            }
 
             if (string.IsNullOrEmpty(baseUrl))
             {

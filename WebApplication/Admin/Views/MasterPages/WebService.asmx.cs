@@ -399,8 +399,15 @@ namespace WebApplication.Admin.Views.MasterPages
             var draggedFile =  draggedItemUriSegments["file"];
             var draggedCurrPath = draggedItemUriSegments["currpath"];
             var droppedCurrPath = droppedOnUriSegments["currpath"];
+            
+            droppedCurrPath = URIHelper.ConvertAbsUrlToTilda(droppedCurrPath).Replace("\\", "/").Replace("//", "/").Replace("~/", "/");
 
-            var toDirectory = URIHelper.BasePath + droppedCurrPath;
+            if (!droppedCurrPath.Contains("/media/uploads"))
+            {
+                throw new Exception("You cannot move the item to this folder, you can only move it to folders under /media/uploads/");
+            }
+
+            var toDirectory = URIHelper.BasePath + droppedCurrPath;                      
 
             if (draggedFile != "" && draggedFile != null)
             {

@@ -28,12 +28,12 @@ namespace WebApplication.Services
 
             if(roomMode == RoomMode.Private)
             {
-                /*if(FrameworkSettings.CurrentUser != null)
-                {*/
-                chatRooms = ChatManager.GetChatRooms(roomMode);    
-                chatRooms = chatRooms.Where(i=>i.CurrentUsers.Any(j=>j.SessionID == Session.SessionID));
+                chatRooms = ChatManager.GetChatRooms(roomMode);
 
-                /*}*/
+                if (FrameworkSettings.CurrentUser == null)
+                {
+                    chatRooms = chatRooms.Where(i => i.CurrentUsers.Any(j => j.SessionID == Session.SessionID));
+                }                
             }
             else
             {
@@ -95,7 +95,21 @@ namespace WebApplication.Services
             {
                 if(chatRoomName == "")
                 {
-                    chatRoomName = _chatRoomName;
+                    if (roomMode == RoomMode.Public)
+                    {
+                        chatRoomName = _chatRoomName;
+                    }
+                    else if(roomMode == RoomMode.Private)
+                    {
+                        if (nickName != "")
+                        {
+                            chatRoomName = nickName;
+                        }
+                        else
+                        {
+                            chatRoomName = Session.SessionID;                            
+                        }
+                    }
                 }
 
                 chatRoom = ChatManager.GetOrCreateChatRoom(roomMode, chatRoomName, chatUser);

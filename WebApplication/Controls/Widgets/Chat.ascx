@@ -11,6 +11,7 @@
         var chatRoomName = "";
         var nickNameText = "";
         var roomMode = "<%= ChatRoomMode %>";
+        var initialRoomMode = "<%= ChatRoomMode %>";
         
         var AlertMessages = $("#AlertMessages");
         var ChatScreen = $("#ChatScreen");
@@ -35,6 +36,10 @@
 
         CheckSession();
 
+        $("#ChatTab").on("click", function(){
+            $("#ChatWindow").slideToggle();
+        });
+
         $(document).on("click", ".chatRoomEntry" , function(){
             var id = $(this).attr("data-chatroomid");            
             var name = $(this).text();
@@ -44,14 +49,17 @@
         });
 
         $(document).on("click", ".chatRoomUserEntry" , function(){
-            var otherChatUserId = $(this).attr("data-chatroomuserid");
+            if(initialRoomMode == "Public")
+            {            
+                var otherChatUserId = $(this).attr("data-chatroomuserid");
 
-            $.get(webserviceUrl + "/CreatePrivateChatRoomWith?otherChatUserId=" + otherChatUserId, function (data) {                          
-                if(data != null)
-                {                  
-                    SwitchChatRoom(data.ChatRoomID, data.ChatRoomName, "Private");
-                }
-            })
+                $.get(webserviceUrl + "/CreatePrivateChatRoomWith?otherChatUserId=" + otherChatUserId, function (data) {                          
+                    if(data != null)
+                    {                  
+                        SwitchChatRoom(data.ChatRoomID, data.ChatRoomName, "Private");
+                    }
+                });
+            }
         });
         
 
@@ -221,8 +229,11 @@
 
         function GetChatRooms()
         {
-            _GetChatRoom("Public", PublicChatRooms);
-            _GetChatRoom("Private", PrivateChatRooms);
+            if(initialRoomMode == "Public")
+            {
+                _GetChatRoom("Public", PublicChatRooms);
+                _GetChatRoom("Private", PrivateChatRooms);
+            }
         }
 
         function GetChatRoom(nickname)
@@ -305,6 +316,14 @@
         margin-bottom: 10px;
     }
 
+    #ChatTab {
+        width:100%;
+        text-align:center;
+        display: block;
+        cursor:pointer;
+        background-color: green;
+    }
+
     #ChatWindowWrapper {
         border: 1px solid #F8CBB4;
         width: 100%;
@@ -313,7 +332,23 @@
         -moz-border-radius: 5px;
         -webkit-border-radius: 5px;
         border-radius: 5px;
+        position: absolute;
+        bottom:0;
+        z-index: 99999999999;
     }
+
+        #ChatWindowWrapper.Private .SidePanel{
+            display:none;
+        }
+
+        #ChatWindowWrapper.Private #ChatAreaWrapper{
+            width: 100%;
+            margin:0;
+        }
+
+        #ChatWindowWrapper.Private #ChatAreaWrapper > label {
+            display: none;
+        }
 
     #LoginScreen, #ChatScreen, #AlertMessages {
         display:none;
@@ -321,7 +356,7 @@
 
     
     #ChatArea, .ChatInfoBox {
-        height: 300px;
+        height: 200px;
         overflow-y:scroll;
         background-color: #F2F2F2;
         padding: 5px;
@@ -357,11 +392,11 @@
     #ChatAreaWrapper {        
         margin-left: 10px;
         margin-right: 10px;
-        width: 68%;
+        width: 50%;
     }
 
     #ChatRoomUsers{
-        height: 500px;
+        height: 450px;
     }
 
     #SendMessageWrapper {
@@ -373,7 +408,7 @@
     }
 
     #ChatArea {
-        height: 555px;
+        height: 380px;
     }
 
     .SidePanel {
@@ -404,7 +439,7 @@
 
 </style>
 
-<div id="ChatWindowWrapper"> 
+<div id="ChatWindowWrapper" class="<%= ChatRoomMode %>"> 
     <div id="ChatWindow">
         <div id="AlertMessages"></div>
 
@@ -445,5 +480,6 @@
                 </div>                
             </div>
         </div>
-    </div>
+    </div>    
+    <a id="ChatTab">Live Chat</a>
 </div>

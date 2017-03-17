@@ -90,6 +90,7 @@
                 </div>
             </div>
         </div>
+        <Site:Chat runat="server" ChatRoomMode="Public" />
     </form>
 </body>
 </html>

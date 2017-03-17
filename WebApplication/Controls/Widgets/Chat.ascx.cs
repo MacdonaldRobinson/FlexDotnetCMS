@@ -12,9 +12,12 @@ namespace WebApplication.Controls.Widgets
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (ChatRoomMode == RoomMode.Private)
+            {
 
+            }
         }
 
-        public RoomMode ChatRoomMode { get;set; }
+        public RoomMode ChatRoomMode { get; set; } = RoomMode.Public;
     }
 }

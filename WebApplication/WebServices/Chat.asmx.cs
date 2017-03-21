@@ -47,6 +47,17 @@ namespace WebApplication.Services
         public void CheckSession(RoomMode roomMode)
         {            
             var chatUser = ChatManager.ChatUsers.FirstOrDefault(i=>i.SessionID == Session.SessionID);
+
+            if(chatUser == null && FrameworkSettings.CurrentUser != null)
+            {
+                var nickName = FrameworkSettings.CurrentUser.UserName;
+
+                chatUser = new ChatUser(Session.SessionID);
+                chatUser.NickName = nickName;
+
+                ChatManager.GetOrCreateChatRoom(RoomMode.Public, _chatRoomName, chatUser);
+            }
+
             WriteJSON(StringHelper.ObjectToJson(chatUser));
         }
 
@@ -67,6 +78,21 @@ namespace WebApplication.Services
             }
 
             WriteJSON(StringHelper.ObjectToJson(chatroom));
+        }
+
+        [WebMethod(EnableSession = true)]
+        public void DeleteChatRoom(string chatRoomId)
+        {
+            var chatRoom = new Guid(chatRoomId);
+
+            if(chatRoom != null)
+            {
+                ChatManager.DeleteChatRoom(chatRoom);
+            }
+            else
+            {
+                throw new Exception("Cannot find chatroom");
+            }
         }
 
         [WebMethod(EnableSession = true)]

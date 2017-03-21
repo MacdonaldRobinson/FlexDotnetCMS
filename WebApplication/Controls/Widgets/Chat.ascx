@@ -36,8 +36,19 @@
 
         CheckSession();
 
-        $("#ChatTab").on("click", function(){
+        $(".openChat").on("click", function () {
             $("#ChatWindow").slideToggle();
+        });
+
+        $(document).on("click", ".deleteRoom", function (e) {
+
+            var id = $(this).attr("data-chatroomid");
+
+            $.get(webserviceUrl + "/DeleteChatRoom?chatRoomId=" + id, function (data) {                
+            })
+
+            e.preventDefault();
+            return false;
         });
 
         $(document).on("click", ".chatRoomEntry" , function(){
@@ -111,6 +122,7 @@
         function CheckSession()
         {
             $.get(webserviceUrl + "/CheckSession?roomMode=" + roomMode, function (data) {
+                console.log(data);
                 ShowAlertMessage("");                
                 if (data == null || data.NickName == null || data.NickName == "") {                
                     TimeoutChat();
@@ -141,6 +153,7 @@
 
         function SwitchChatRoom(id, name, mode)
         {
+            console.log(arguments);
             console.log("Switching chat room ...");
             if(getChatInterval != null)
             {
@@ -203,9 +216,9 @@
             $.get(webserviceUrl + "/GetChatRooms?roomMode="+roomMode, function (data) {  
                 var currentChatRoomsText = ChatRoomElem.html();
                 var newChatRoomsText = "";                
-
                 $(data).each(function (index, elem) {                              
                     var additionalClasses = "";
+
                     if(elem.ChatRoomID == chatRoomId)
                     {
                         additionalClasses = "active";
@@ -216,7 +229,7 @@
                         additionalClasses +=" newMessage";
                     }
 
-                    newChatRoomsText = newChatRoomsText + '<span class="'+roomMode+'ChatRoomEntry chatRoomEntry '+additionalClasses+'" data-chatroomid="'+elem.ChatRoomID+'" data-chatroommode="'+elem.ChatRoomMode+'" data-lastchatusernickname="'+elem.LastChatUserNickName+'" data-chatmessagescount="'+elem.ChatMessagesCount+'">'+elem.ChatRoomName+'</span>';                    
+                    newChatRoomsText = newChatRoomsText + '<span class="' + roomMode + 'ChatRoomEntry chatRoomEntry ' + additionalClasses + '" data-chatroomid="' + elem.ChatRoomID + '" data-chatroommode="' + elem.ChatRoomMode + '" data-lastchatusernickname="' + elem.LastChatUserNickName + '" data-chatmessagescount="' + elem.ChatMessagesCount + '">' + elem.ChatRoomName + '<span class="deleteRoom" data-chatroomid="' + elem.ChatRoomID + '">x</span></span>';                    
                 });
 
                 if (currentChatRoomsText != newChatRoomsText)
@@ -276,7 +289,7 @@
 
                 var currentChatAreaText = ChatArea.html();
                 var newChatAreaText = "";
-
+                
                 $(data.ChatMessages).each(function (index, elem) {                    
                     
                     if (elem.MessageMode == 1)
@@ -314,21 +327,34 @@
 
     .field {
         margin-bottom: 10px;
+        height: 100%;
+    }
+
+    .deleteRoom {
+        float: right;
+        font-size: 14px;
+        font-weight: bold;
+        color:red;
+        cursor: pointer;
     }
 
     #ChatTab {
-        width:100%;
         text-align:center;
         display: block;
         cursor:pointer;
         background-color: green;
+        position:absolute;
+        z-index:9999999999;
+        bottom:0;
+        right:0;
+        padding: 5px;
+        color: #fff;
     }
 
     #ChatWindowWrapper {
         border: 1px solid #F8CBB4;
         width: 100%;
-        background-color: #F8CBB4;
-        padding: 10px;
+        background-color: #F8CBB4;        
         -moz-border-radius: 5px;
         -webkit-border-radius: 5px;
         border-radius: 5px;
@@ -337,12 +363,17 @@
         z-index: 99999999999;
     }
 
+    #ChatWindow {
+        display:none;
+    }
+
         #ChatWindowWrapper.Private .SidePanel{
             display:none;
         }
 
         #ChatWindowWrapper.Private #ChatAreaWrapper{
-            width: 100%;
+            width:100%;
+            min-height: 500px;
             margin:0;
         }
 
@@ -350,19 +381,27 @@
             display: none;
         }
 
+        #ChatWindowWrapper.Private #ChatArea {
+            height: 85%;
+        }
+
     #LoginScreen, #ChatScreen, #AlertMessages {
         display:none;
     }
 
+    #ChatScreen{
+        height: 500px;
+    }
+
     
-    #ChatArea, .ChatInfoBox {
-        height: 200px;
+    #ChatArea, .ChatInfoBox {        
         overflow-y:scroll;
         background-color: #F2F2F2;
         padding: 5px;
         -moz-border-radius: 5px;
         -webkit-border-radius: 5px;
         border-radius: 5px;
+        height: 88%;
     }
 
     .chatMessageEntry, .chatRoomEntry, .chatRoomUserEntry{
@@ -385,18 +424,25 @@
         color: #DE8400;
     }
 
-    #ChatRoomUsersWrapper, #ChatRoomsWrapper, #ChatAreaWrapper {
+    #ChatRoomUsersWrapper, #ChatAreaWrapper {
        float: left;
     }
 
+    #ChatRoomsWrapper {
+        float:right;
+    }
+
+        #ChatRoomsWrapper > div {
+            height: 50%;
+        }
+
     #ChatAreaWrapper {        
-        margin-left: 10px;
-        margin-right: 10px;
-        width: 50%;
+        padding:0 5px;
+        width: 68%;
     }
 
     #ChatRoomUsers{
-        height: 450px;
+        height: 95%;
     }
 
     #SendMessageWrapper {
@@ -408,13 +454,11 @@
     }
 
     #ChatArea {
-        height: 380px;
+        height: 79%;
     }
 
     .SidePanel {
-        width: 15%;
-        max-width:300px;
-        min-width:200px;
+        width: 15%;        
     }
 
     .clear {
@@ -437,6 +481,23 @@
         background-color: yellow;
     }
 
+    .flexContainer {
+        display: flex;        
+        flex-wrap:nowrap;
+        justify-content:center;
+        align-items: stretch;
+        align-content:stretch;
+        height: 100%;
+    }
+
+        .flexContainer .row {
+            flex-direction:row;
+        }
+
+        .flexContainer .column {
+            flex-direction:column;
+        }
+
 </style>
 
 <div id="ChatWindowWrapper" class="<%= ChatRoomMode %>"> 
@@ -450,9 +511,8 @@
         </div>
 
         <div id="ChatScreen">
-            <div class="field">
-                <label>Welcome to LIVE Chat</label>
-                <div>        
+            <div class="field">                
+                <div class="flexContainer row">        
                     <div id="ChatRoomUsersWrapper" class="SidePanel">
                         <label>Chat Room Users:</label>
                         <div id="ChatRoomUsers" class="ChatInfoBox"></div>
@@ -466,7 +526,7 @@
                             <input id="ClearChat" type="button" value="Clear Chat" />
                         </div>                    
                     </div>
-                    <div id="ChatRoomsWrapper" class="SidePanel">
+                    <div id="ChatRoomsWrapper" class="SidePanel flexContainer column">
                         <div id="PublicChatRoomsWrapper">
                             <label>Public Chatrooms: <a href="javascript:void(0)" id="AddPublicChatRoom">Add</a></label>
                             <div id="PublicChatRooms" class="ChatInfoBox"></div>
@@ -475,11 +535,11 @@
                             <label>Private Chatrooms:</label>
                             <div id="PrivateChatRooms" class="ChatInfoBox"></div>
                         </div>
-                    </div>  
-                    <div class="clear"></div>
+                    </div>                      
                 </div>                
             </div>
         </div>
-    </div>    
-    <a id="ChatTab">Live Chat</a>
+    </div>        
 </div>
+
+<a id="ChatTab" class="openChat">Live Chat</a>

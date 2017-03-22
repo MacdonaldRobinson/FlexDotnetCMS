@@ -68,7 +68,7 @@ namespace WebApplication.Admin.Views.MasterPages
             node.text = detail.SectionTitle;
 
             //node.children =( MediaDetailsMapper.GetAtleastOneChildByMedia(detail.Media, AdminBasePage.CurrentLanguage).Where(i => i.MediaType.ShowInSiteTree).Count() > 0);
-            node.children = (BaseMapper.GetDataModel().MediaDetails.Count(i => i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0 && i.Media.ParentMediaID == detail.MediaID) > 0);
+            node.children = (BaseMapper.GetDataModel(true, true).MediaDetails.AsNoTracking().Count(i => i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0 && i.Media.ParentMediaID == detail.MediaID) > 0);
 
             node.text = detail.SectionTitle.ToString();
             //node.Attributes.Add("FrontEndUrl", detail.AbsoluteUrl);
@@ -172,7 +172,7 @@ namespace WebApplication.Admin.Views.MasterPages
         [WebMethod(EnableSession = true)]
         public void GetRootNodes()
         {
-            var rootNode = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetail == null && i.Media.ParentMedia == null);
+            var rootNode = BaseMapper.GetDataModel(true, true).MediaDetails.AsNoTracking().FirstOrDefault(i => i.HistoryForMediaDetail == null && i.Media.ParentMedia == null);
             WriteJSON(StringHelper.ObjectToJson(GetJsTreeNode(rootNode)));
         }
 
@@ -202,7 +202,7 @@ namespace WebApplication.Admin.Views.MasterPages
         public void SearchForNodes(string filterText)
         {
             filterText = filterText.ToLower().Trim();
-            var foundItems = MediasMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ShowInSiteTree &&
+            var foundItems = BaseMapper.GetDataModel(true, true).MediaDetails.AsNoTracking().Where(i => i.MediaType.ShowInSiteTree &&
                                                                             i.HistoryVersionNumber == 0 &&
                                                                             i.LanguageID == AdminBasePage.CurrentLanguage.ID &&
                                                                             (i.MediaID.ToString() == filterText ||
@@ -239,7 +239,7 @@ namespace WebApplication.Admin.Views.MasterPages
         [WebMethod(EnableSession = true)]
         public void GetChildNodes(long id)
         {
-            var rootNode = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetail == null && i.MediaID == id);
+            var rootNode = BaseMapper.GetDataModel(true, true).MediaDetails.AsNoTracking().FirstOrDefault(i => i.HistoryForMediaDetail == null && i.MediaID == id);
 
             if (rootNode != null)
             {

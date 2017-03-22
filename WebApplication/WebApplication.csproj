@@ -169,7 +169,7 @@
     <Content Include="Admin\media\images\css\logo.png" />
     <Content Include="Admin\Views\MasterPages\WebService.asmx" />
     <Content Include="Admin\Views\PageHandlers\Chat\AdminChat.asmx" />
-    <Content Include="Admin\Views\PageHandlers\Chat\Chat.aspx" />
+    <Content Include="Admin\Views\PageHandlers\Chat\Default.aspx" />
     <Content Include="Admin\Views\PageHandlers\FieldTypes\Default.aspx" />
     <Content Include="Admin\Views\PageHandlers\FieldTypes\Detail.aspx" />
     <Content Include="Admin\Views\PageHandlers\GlossaryTerms\Default.aspx" />
@@ -910,12 +910,12 @@
       <DependentUpon>AdminChat.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Admin\Views\PageHandlers\Chat\Chat.aspx.cs">
-      <DependentUpon>Chat.aspx</DependentUpon>
+    <Compile Include="Admin\Views\PageHandlers\Chat\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Admin\Views\PageHandlers\Chat\Chat.aspx.designer.cs">
-      <DependentUpon>Chat.aspx</DependentUpon>
+    <Compile Include="Admin\Views\PageHandlers\Chat\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Views\PageHandlers\FieldTypes\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

@@ -536,12 +536,16 @@ function destroyTinyMCE() {
 
 
 $(window).load(function () {
+    
     initAceEditors();
     initTinyMCE();
 
-    $(document).ajaxComplete(function () {
-        initAceEditors();
-        initTinyMCE();
+    $(document).ajaxComplete(function (event, xhr, settings) {
+        if (settings.url.indexOf("Chat.asmx") == -1)
+        {
+            initAceEditors();
+            initTinyMCE();
+        }
     });
 });
 

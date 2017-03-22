@@ -35,7 +35,7 @@
                     <div id="topMenu" class="floatLeft">
                         <ul class="sf-menu">
                             <li><a href="/Admin/Default.aspx">Dashboard</a></li>
-                            <li><a href="/Scripts/tinyfilemanager.net/dialog.aspx" class="colorbox iframe">FileManager</a></li>                            
+                            <li><a href="/Scripts/tinyfilemanager.net/dialog.aspx" class="colorbox iframe">FileManager</a></li>
                             <li id="GlossaryTermsNavItem" runat="server" visible="false"><a href="/Admin/Views/PageHandlers/GlossaryTerms/Default.aspx">Manage Glossary Terms</a></li>
                             <%  if (BasePage.CurrentUser.IsInRole(RoleEnum.Administrator))
                                 { %>

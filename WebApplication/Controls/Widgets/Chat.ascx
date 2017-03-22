@@ -13,6 +13,7 @@
         var roomMode = "<%= ChatRoomMode %>";
         var initialRoomMode = "<%= ChatRoomMode %>";
         
+        var ChatWindowWrapper = $("#ChatWindowWrapper");
         var AlertMessages = $("#AlertMessages");
         var ChatScreen = $("#ChatScreen");
         var ChatArea = $("#ChatArea");
@@ -26,7 +27,9 @@
         var PublicChatRooms = $("#PublicChatRooms");
         var PrivateChatRooms = $("#PrivateChatRooms");
         var AddPublicChatRoom = $("#AddPublicChatRoom");     
-        var ChatRoomName = $("#ChatRoomName");                
+        var ChatRoomName = $("#ChatRoomName");        
+
+        var checkDuration= 1000;
 
         var webserviceUrl = "/Webservices/Chat.asmx";
 
@@ -37,7 +40,7 @@
         CheckSession();
 
         $(".openChat").on("click", function () {
-            $("#ChatWindow").slideToggle();
+            ChatWindowWrapper.slideToggle();
         });
 
         $(document).on("click", ".deleteRoom", function (e) {
@@ -101,7 +104,7 @@
 
             getChatRoomsInterval = setInterval(function () {
                 GetChatRooms();
-            }, 1000); 
+            }, checkDuration); 
 
 
             ShowChatScreen();
@@ -148,7 +151,7 @@
         {
             getChatInterval = setInterval(function () {
                 GetChatRoom(nickNameText);
-            }, 1000); 
+            }, checkDuration); 
         }
 
         function SwitchChatRoom(id, name, mode)
@@ -240,9 +243,14 @@
             });
         }
 
+        function IsChatWindowVisable()
+        {
+            return ChatWindowWrapper.is(":visible");
+        }
+
         function GetChatRooms()
         {
-            if(initialRoomMode == "Public")
+            if (initialRoomMode == "Public" && IsChatWindowVisable())
             {
                 _GetChatRoom("Public", PublicChatRooms);
                 _GetChatRoom("Private", PrivateChatRooms);
@@ -251,6 +259,9 @@
 
         function GetChatRoom(nickname)
         {
+            if (!IsChatWindowVisable())
+                return false;
+            
             var scrollToBottom = false;            
             var maxScrollHeight = ChatArea.prop('scrollHeight') - ChatArea.innerHeight();
 
@@ -316,6 +327,7 @@
             })
         }
 
+
     });
 </script>
 
@@ -326,7 +338,10 @@
     }
 
     .field {
-        margin-bottom: 10px;
+        margin-bottom: 10px;        
+    }
+
+    .fullHeight {
         height: 100%;
     }
 
@@ -361,9 +376,11 @@
         position: absolute;
         bottom:0;
         z-index: 99999999999;
+        display: none;
     }
 
-    #ChatWindow {
+
+    #ChatWindowWrapper.Private #ChatWindow {
         display:none;
     }
 
@@ -401,7 +418,7 @@
         -moz-border-radius: 5px;
         -webkit-border-radius: 5px;
         border-radius: 5px;
-        height: 88%;
+        height: 79%;
     }
 
     .chatMessageEntry, .chatRoomEntry, .chatRoomUserEntry{
@@ -442,7 +459,7 @@
     }
 
     #ChatRoomUsers{
-        height: 95%;
+        height: 89%;
     }
 
     #SendMessageWrapper {
@@ -451,6 +468,7 @@
 
     #ChatMessage {
         width: 100%;
+        height: 50px;
     }
 
     #ChatArea {
@@ -511,7 +529,7 @@
         </div>
 
         <div id="ChatScreen">
-            <div class="field">                
+            <div class="field fullHeight">                
                 <div class="flexContainer row">        
                     <div id="ChatRoomUsersWrapper" class="SidePanel">
                         <label>Chat Room Users:</label>

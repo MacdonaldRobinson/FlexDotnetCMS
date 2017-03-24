@@ -29,11 +29,7 @@ namespace WebApplication.Services
             if(roomMode == RoomMode.Private)
             {
                 chatRooms = ChatManager.GetChatRooms(roomMode);
-
-                if (FrameworkSettings.CurrentUser == null)
-                {
-                    chatRooms = chatRooms.Where(i => i.CurrentUsers.Any(j => j.SessionID == Session.SessionID));
-                }                
+                chatRooms = chatRooms.Where(i => i.CurrentUsers.Any(j => j.SessionID.ToString() == Session.SessionID) || !i.CurrentUsers.Any(j=>j.LoggedInUserID != 0));
             }
             else
             {
@@ -147,6 +143,12 @@ namespace WebApplication.Services
                 if(foundUserInChatRoom == null)
                 {
                     var foundUserWithNickName = chatRoom.CurrentUsers.FirstOrDefault(i=>i.NickName == chatUser.NickName);
+
+                    if(foundUserWithNickName != null && FrameworkSettings.CurrentUser!= null && foundUserWithNickName.LoggedInUserID == FrameworkSettings.CurrentUser?.ID)
+                    {
+                        chatRoom.RemoveUser(foundUserWithNickName);
+                        foundUserWithNickName = null;
+                    }
 
                     if(foundUserWithNickName == null)
                     {

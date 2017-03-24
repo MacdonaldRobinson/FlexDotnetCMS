@@ -45,26 +45,31 @@
 
         $(document).on("click", ".deleteRoom", function (e) {
 
+            StopChatInterval();
+
             var id = $(this).attr("data-chatroomid");
 
-            $.get(webserviceUrl + "/DeleteChatRoom?chatRoomId=" + id, function (data) {                
+            $.get(webserviceUrl + "/DeleteChatRoom?chatRoomId=" + id, function (data) {
+                StartChatInterval();
             })
 
             e.preventDefault();
             return false;
         });
-
-        $(document).on("click", ".chatRoomEntry" , function(){
-            var id = $(this).attr("data-chatroomid");            
-            var name = $(this).text();
-            var mode = $(this).attr("data-chatroommode");
-
-            SwitchChatRoom(id, name, mode);
+        
+        $(document).on("click", ".chatRoomEntry", function () {
+            if (!$(this).hasClass("active")) {
+                var id = $(this).attr("data-chatroomid");
+                var name = $(this).text();
+                var mode = $(this).attr("data-chatroommode");
+                
+                SwitchChatRoom(id, name, mode);
+            }
         });
 
-        $(document).on("click", ".chatRoomUserEntry" , function(){
+        $(document).on("click", ".chatRoomUserEntry", function () {            
             if(initialRoomMode == "Public")
-            {            
+            {                            
                 var otherChatUserId = $(this).attr("data-chatroomuserid");
 
                 $.get(webserviceUrl + "/CreatePrivateChatRoomWith?otherChatUserId=" + otherChatUserId, function (data) {                          
@@ -89,7 +94,7 @@
 
         ClearChat.on("click", function() {
             $.get(webserviceUrl + "/ClearChatRoom?chatRoomId=" + chatRoomId, function (data) {
-                GetChatRoom(nickNameText);
+                GetChatRoom(nickNameText, roomMode, chatRoomId, chatRoomName);
             })
         });
 
@@ -101,11 +106,6 @@
             ChatArea.html("Loading Chat ...");
 
             StartChatInterval();         
-
-            getChatRoomsInterval = setInterval(function () {
-                GetChatRooms();
-            }, checkDuration); 
-
 
             ShowChatScreen();
         });
@@ -124,8 +124,9 @@
 
         function CheckSession()
         {
-            $.get(webserviceUrl + "/CheckSession?roomMode=" + roomMode, function (data) {
-                console.log(data);
+            StopChatInterval();
+
+            $.get(webserviceUrl + "/CheckSession?roomMode=" + roomMode, function (data) {                
                 ShowAlertMessage("");                
                 if (data == null || data.NickName == null || data.NickName == "") {                
                     TimeoutChat();
@@ -149,25 +150,37 @@
 
         function StartChatInterval()
         {
+            StopChatInterval();
+
+            getChatRoomsInterval = setInterval(function () {
+                GetChatRooms();
+            }, checkDuration); 
+
             getChatInterval = setInterval(function () {
-                GetChatRoom(nickNameText);
+                GetChatRoom(nickNameText, roomMode, chatRoomId, chatRoomName);
             }, checkDuration); 
         }
 
-        function SwitchChatRoom(id, name, mode)
+        function StopChatInterval()
         {
-            console.log(arguments);
-            console.log("Switching chat room ...");
-            if(getChatInterval != null)
-            {
+            if (getChatInterval != null) {
                 clearInterval(getChatInterval);
-            }       
+            }
+
+            if (getChatRoomsInterval != null) {
+                clearInterval(getChatRoomsInterval);
+            }
+        }
+
+        function SwitchChatRoom(id, name, mode) {
+
+            StopChatInterval();
             
             chatRoomId = id;
             chatRoomName = name;            
-            roomMode = mode;   
+            roomMode = mode;
 
-            StartChatInterval();
+            setTimeout(function () { StartChatInterval(); }, 1000);
         }
 
 
@@ -175,7 +188,7 @@
             message = encodeURI(message);
             $.post(webserviceUrl + "/SendMessage", { chatRoomId: chatRoomId, message: message } , function (data) {
                 ChatMessage.val("");
-                GetChatRoom(nickNameText);                
+                GetChatRoom(nickNameText, roomMode, chatRoomId, chatRoomName);                
             })
         }
 
@@ -232,7 +245,7 @@
                         additionalClasses +=" newMessage";
                     }
 
-                    newChatRoomsText = newChatRoomsText + '<span class="' + roomMode + 'ChatRoomEntry chatRoomEntry ' + additionalClasses + '" data-chatroomid="' + elem.ChatRoomID + '" data-chatroommode="' + elem.ChatRoomMode + '" data-lastchatusernickname="' + elem.LastChatUserNickName + '" data-chatmessagescount="' + elem.ChatMessagesCount + '">' + elem.ChatRoomName + '<span class="deleteRoom" data-chatroomid="' + elem.ChatRoomID + '">x</span></span>';                    
+                    newChatRoomsText = newChatRoomsText + '<span class="' + roomMode + 'ChatRoomEntry chatRoomEntry ' + additionalClasses + '" data-chatroomid="' + elem.ChatRoomID + '" data-chatroommode="' + elem.ChatRoomMode + '" data-lastchatusernickname="' + elem.LastChatUserNickName + '" data-chatmessagescount="' + elem.ChatMessagesCount + '">' + elem.ChatRoomName + '</span><span class="deleteRoom" data-chatroomid="' + elem.ChatRoomID + '">x</span>';                    
                 });
 
                 if (currentChatRoomsText != newChatRoomsText)
@@ -257,7 +270,7 @@
             }
         }
 
-        function GetChatRoom(nickname)
+        function GetChatRoom(nickname, roomMode, chatRoomId, chatRoomName)
         {
             if (!IsChatWindowVisable())
                 return false;
@@ -269,9 +282,10 @@
             {
                 scrollToBottom = true;
             }
+            var path = webserviceUrl + "/GetOrCreateChatRoom?NickName=" + nickname + "&roomMode=" + roomMode + "&chatRoomId=" + chatRoomId + "&chatRoomName=" + chatRoomName;
 
-            $.get(webserviceUrl + "/GetOrCreateChatRoom?NickName=" + nickname + "&roomMode="+roomMode + "&chatRoomId="+chatRoomId+"&chatRoomName="+chatRoomName, function (data) {                
-                
+            $.get(path, function (data) {                                
+
                 if (data == null)
                 {
                     TimeoutChat();
@@ -322,8 +336,7 @@
                 if (scrollToBottom)
                 {
                     ScrollToBottom();
-                }
-
+                }                
             })
         }
 
@@ -335,10 +348,6 @@
     label {
         display: block;
         font-weight:bold;
-    }
-
-    .field {
-        margin-bottom: 10px;        
     }
 
     .fullHeight {
@@ -377,12 +386,13 @@
         bottom:0;
         z-index: 99999999999;
         display: none;
+        right: 0;
     }
 
 
-    #ChatWindowWrapper.Private #ChatWindow {
-        display:none;
-    }
+        #ChatWindowWrapper.Private {
+            width: 450px;            
+        }
 
         #ChatWindowWrapper.Private .SidePanel{
             display:none;
@@ -398,9 +408,6 @@
             display: none;
         }
 
-        #ChatWindowWrapper.Private #ChatArea {
-            height: 85%;
-        }
 
     #LoginScreen, #ChatScreen, #AlertMessages {
         display:none;
@@ -492,11 +499,13 @@
         }
 
     .newMessage::after{
-        content:'(New Messages)';
-        color: red;
-        float: right;
-        font-weight: bold;        
-        background-color: yellow;
+        content: '(new)';
+        color: orange;
+        float: left;
+        font-weight: bold;
+        font-size: 12px;
+        padding: 1px 5px;
+        line-height: 12px;
     }
 
     .flexContainer {
@@ -529,7 +538,7 @@
         </div>
 
         <div id="ChatScreen">
-            <div class="field fullHeight">                
+            <div class="fullHeight">                
                 <div class="flexContainer row">        
                     <div id="ChatRoomUsersWrapper" class="SidePanel">
                         <label>Chat Room Users:</label>
@@ -538,7 +547,7 @@
                     <div id="ChatAreaWrapper">
                         <label>Chat Room Name: <span id="ChatRoomName"></span></label>
                         <div id="ChatArea"></div>
-                        <div class="field" id="SendMessageWrapper">
+                        <div id="SendMessageWrapper">
                             <textarea id="ChatMessage"></textarea>
                             <input id="SendMessage" type="button" value="Send Message" />
                             <input id="ClearChat" type="button" value="Clear Chat" />

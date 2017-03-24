@@ -40,6 +40,13 @@ namespace FrameworkLibrary
             if (obj == null)
                 return "";
 
+            data = data.Trim();
+
+            if (data.StartsWith("@") && data.EndsWith("}"))
+            {
+                data = RunOrCompileRazorCode(data, data, obj, compileRazor);
+            }
+
             var matches = Regex.Matches(data, openToken + "[a-zA-Z0-9-.&=<>/\\;(\n|\r|\r\n)\"#?']+" + closeToken);
 
             foreach (var item in matches)

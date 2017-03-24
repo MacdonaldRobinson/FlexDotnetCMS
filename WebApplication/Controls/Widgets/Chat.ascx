@@ -58,13 +58,11 @@
         });
         
         $(document).on("click", ".chatRoomEntry", function () {
-            if (!$(this).hasClass("active")) {
-                var id = $(this).attr("data-chatroomid");
-                var name = $(this).text();
-                var mode = $(this).attr("data-chatroommode");
+            var id = $(this).attr("data-chatroomid");
+            var name = $(this).text();
+            var mode = $(this).attr("data-chatroommode");
                 
-                SwitchChatRoom(id, name, mode);
-            }
+            SwitchChatRoom(id, name, mode);
         });
 
         $(document).on("click", ".chatRoomUserEntry", function () {            
@@ -94,7 +92,7 @@
 
         ClearChat.on("click", function() {
             $.get(webserviceUrl + "/ClearChatRoom?chatRoomId=" + chatRoomId, function (data) {
-                GetChatRoom(nickNameText, roomMode, chatRoomId, chatRoomName);
+                GetChatRoom();
             })
         });
 
@@ -157,7 +155,7 @@
             }, checkDuration); 
 
             getChatInterval = setInterval(function () {
-                GetChatRoom(nickNameText, roomMode, chatRoomId, chatRoomName);
+                GetChatRoom();
             }, checkDuration); 
         }
 
@@ -170,6 +168,7 @@
             if (getChatRoomsInterval != null) {
                 clearInterval(getChatRoomsInterval);
             }
+
         }
 
         function SwitchChatRoom(id, name, mode) {
@@ -180,7 +179,9 @@
             chatRoomName = name;            
             roomMode = mode;
 
-            setTimeout(function () { StartChatInterval(); }, 1000);
+            GetChatRoom();
+
+            //setTimeout(function () { StartChatInterval(); }, 1000);
         }
 
 
@@ -188,7 +189,7 @@
             message = encodeURI(message);
             $.post(webserviceUrl + "/SendMessage", { chatRoomId: chatRoomId, message: message } , function (data) {
                 ChatMessage.val("");
-                GetChatRoom(nickNameText, roomMode, chatRoomId, chatRoomName);                
+                GetChatRoom();                
             })
         }
 
@@ -227,9 +228,10 @@
             ShowAlertMessage("You have been logged out due to inactivity");
         }
 
+        var GetChatRoomsAjaxRequest = null;
         function _GetChatRoom(roomMode, ChatRoomElem)
         {
-            $.get(webserviceUrl + "/GetChatRooms?roomMode="+roomMode, function (data) {  
+            GetChatRoomsAjaxRequest = $.get(webserviceUrl + "/GetChatRooms?roomMode="+roomMode, function (data) {  
                 var currentChatRoomsText = ChatRoomElem.html();
                 var newChatRoomsText = "";                
                 $(data).each(function (index, elem) {                              
@@ -245,7 +247,7 @@
                         additionalClasses +=" newMessage";
                     }
 
-                    newChatRoomsText = newChatRoomsText + '<span class="' + roomMode + 'ChatRoomEntry chatRoomEntry ' + additionalClasses + '" data-chatroomid="' + elem.ChatRoomID + '" data-chatroommode="' + elem.ChatRoomMode + '" data-lastchatusernickname="' + elem.LastChatUserNickName + '" data-chatmessagescount="' + elem.ChatMessagesCount + '">' + elem.ChatRoomName + '</span><span class="deleteRoom" data-chatroomid="' + elem.ChatRoomID + '">x</span>';                    
+                    newChatRoomsText = newChatRoomsText + '<span class="' + roomMode + 'ChatRoomEntry chatRoomEntry ' + additionalClasses + '" data-chatroomid="' + elem.ChatRoomID + '" data-chatroommode="' + elem.ChatRoomMode + '" data-lastchatusernickname="' + elem.LastChatUserNickName + '" data-chatmessagescount="' + elem.ChatMessagesCount + '">' + elem.ChatRoomName + ' <span class="deleteRoom" data-chatroomid="' + elem.ChatRoomID + '"></span></span>';                    
                 });
 
                 if (currentChatRoomsText != newChatRoomsText)
@@ -270,7 +272,15 @@
             }
         }
 
-        function GetChatRoom(nickname, roomMode, chatRoomId, chatRoomName)
+        function UpdateGlobal(ChatRoom)
+        {
+            chatRoomId = ChatRoom.ChatRoomID;
+            chatRoomName = ChatRoom.ChatRoomName;
+            roomMode = ChatRoom.ChatRoomMode;
+        }
+
+        var GetChatRoomAjaxRequest = null;
+        function GetChatRoom()
         {
             if (!IsChatWindowVisable())
                 return false;
@@ -282,18 +292,23 @@
             {
                 scrollToBottom = true;
             }
-            var path = webserviceUrl + "/GetOrCreateChatRoom?NickName=" + nickname + "&roomMode=" + roomMode + "&chatRoomId=" + chatRoomId + "&chatRoomName=" + chatRoomName;
 
-            $.get(path, function (data) {                                
+            var path = webserviceUrl + "/GetOrCreateChatRoom?NickName=" + nickNameText + "&roomMode=" + roomMode + "&chatRoomId=" + chatRoomId + "&chatRoomName=" + chatRoomName;            
+
+            if (GetChatRoomAjaxRequest != null)
+            {
+                GetChatRoomAjaxRequest.abort();
+            }
+
+            GetChatRoomAjaxRequest = $.get(path, function (data) {                                                
 
                 if (data == null)
                 {
                     TimeoutChat();
                     return;
-                }                                                              
+                }              
 
-                chatRoomId = data.ChatRoomID;
-                chatRoomName = data.ChatRoomName;
+                UpdateGlobal(data);
 
                 ChatRoomName.text(chatRoomName);
 
@@ -333,6 +348,8 @@
                     ChatArea.html(newChatAreaText);
                 }
 
+                StartChatInterval();
+
                 if (scrollToBottom)
                 {
                     ScrollToBottom();
@@ -345,23 +362,6 @@
 </script>
 
 <style type="text/css">
-    label {
-        display: block;
-        font-weight:bold;
-    }
-
-    .fullHeight {
-        height: 100%;
-    }
-
-    .deleteRoom {
-        float: right;
-        font-size: 14px;
-        font-weight: bold;
-        color:red;
-        cursor: pointer;
-    }
-
     #ChatTab {
         text-align:center;
         display: block;
@@ -389,6 +389,24 @@
         right: 0;
     }
 
+    #ChatWindowWrapper label {
+        display: block;
+        font-weight:bold;
+    }
+
+    #ChatWindowWrapper .fullHeight {
+        height: 100%;
+    }
+
+    #ChatWindowWrapper .deleteRoom::after {
+        float: right;
+        font-size: 14px;
+        font-weight: bold;
+        color:red;
+        cursor: pointer;
+        line-height: 12px;
+        content: 'x'
+    }
 
         #ChatWindowWrapper.Private {
             width: 450px;            

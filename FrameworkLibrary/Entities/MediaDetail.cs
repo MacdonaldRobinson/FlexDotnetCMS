@@ -609,8 +609,28 @@ namespace FrameworkLibrary
                 if (this.Media == null)
                     return false;
 
-                return this.Media.MediaDetails.Where(i => i.IsDraft).Any();
+                return GetDrafts().Any();
             }
+        }
+
+        public IEnumerable<IMediaDetail> GetDrafts()
+        {
+            var drafts = new List<IMediaDetail>();
+
+            if (this.Media == null)
+                return drafts;
+
+            return this.Media.MediaDetails.Where(i => i.IsDraft);
+        }
+
+        public IMediaDetail GetLatestDraft()
+        {
+            var drafts = GetDrafts();
+
+            if (!drafts.Any())
+                return null;
+
+            return drafts.OrderBy(i=>i.DateCreated).FirstOrDefault();
         }
 
         public Return PublishLive()
@@ -671,7 +691,15 @@ namespace FrameworkLibrary
             }
 
 
-            liveVersion.HistoryVersionNumber = items.OrderByDescending(i => i.HistoryVersionNumber).FirstOrDefault().HistoryVersionNumber + 1;
+            if (items.Any())
+            {
+                liveVersion.HistoryVersionNumber = items.OrderByDescending(i => i.HistoryVersionNumber).FirstOrDefault().HistoryVersionNumber + 1;
+            }
+            else
+            {
+                liveVersion.HistoryVersionNumber = 1;
+            }
+
             liveVersion.HistoryForMediaDetail = (MediaDetail)selectedItem;
 
             var associations = BaseMapper.GetDataModel().FieldAssociations.Where(i => i.AssociatedMediaDetailID == liveVersion.ID);

@@ -236,7 +236,7 @@ namespace WebApplication.Handlers
 
                 if (detail != null)
                 {
-                    var draft = detail.History.FirstOrDefault(i => i.IsDraft);
+                    var draft = detail.GetLatestDraft();
 
                     if (draft != null && (draft.PublishDate - detail.PublishDate) > TimeSpan.FromSeconds(10) && draft.CanRender)
                     {

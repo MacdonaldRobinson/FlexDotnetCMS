@@ -100,6 +100,10 @@ namespace FrameworkLibrary
         bool HasAnyUsers();
         bool HasRole(Role role);
         bool HasUser(User user);
+        bool HasDraft { get; }
+        IEnumerable<IMediaDetail> GetDrafts();
+        IMediaDetail GetLatestDraft();
+        Return PublishLive();
         Field LoadField(string fieldCode);
         void RemoveFromCache();
         string RenderShortCode(string shortCode);

@@ -200,13 +200,16 @@ namespace WebApplication.Handlers
                     FormsAuthentication.RedirectToLoginPage();
                 }*/
 
-                if (detail != null)
+                /*if (detail != null)
                 {
-                    if (URIHelper.ConvertAbsUrlToTilda(detail.AbsoluteUrl).Replace("~", "") != Request.Url.AbsolutePath)
+                    var absUrlBase = URIHelper.ConvertAbsUrlToTilda(detail.AbsoluteUrl).Replace("~", "");
+                    var absPathBase = URIHelper.ConvertAbsUrlToTilda(Request.Url.AbsolutePath).Replace("~", "");
+
+                    if (absUrlBase != absPathBase)
                     {
                         Response.Redirect(detail.AbsoluteUrl + Request.Url.Query);
                     }
-                }
+                }*/
 
                 if (detail != null)
                 {

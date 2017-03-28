@@ -16,8 +16,7 @@ namespace FrameworkLibrary
 
             if (HttpContext.Current.Request.ApplicationPath != "/")
             {
-                var segments = GetUriSegments(virtualPath);
-                virtualPath = virtualPath.ToLower().Replace("/" + segments.ElementAt(0).ToLower() + "/", "");
+                virtualPath = virtualPath.ToLower().Replace(HttpContext.Current.Request.ApplicationPath.ToLower(), "");
             }
 
             if (virtualPath.ToLower().Contains("~/default.aspx"))
@@ -221,6 +220,8 @@ namespace FrameworkLibrary
                 if (IsSSL())
                     url = url.Replace("http:", "https:");
 
+                url = url.ToLower();
+
                 ContextHelper.SetToRequestContext("BaseUrl", url);
 
                 return url;
@@ -240,7 +241,7 @@ namespace FrameworkLibrary
 
                 ContextHelper.SetToRequestContext("BaseUrlWithLanguage", url);
 
-                return url;
+                return url.ToLower();
             }
         }
 
@@ -293,14 +294,22 @@ namespace FrameworkLibrary
 
         public static string ConvertAbsUrlToTilda(string absUrl)
         {
-            if (absUrl.Trim() == "")
+            absUrl = absUrl.ToLower().Trim();
+
+            if (absUrl == "")
                 return "";
 
             if (absUrl.StartsWith("~/"))
                 return absUrl;
 
             if (!absUrl.Contains("://"))
-                absUrl = BaseUrl + absUrl;
+            {
+                if(absUrl.StartsWith("/"))
+                {
+                    absUrl = absUrl.Substring(1, absUrl.Length-1);
+                    absUrl = (BaseUrl + absUrl);
+                }
+            }                
 
             if (absUrl.StartsWith("/"))
                 absUrl = BaseUrl + absUrl.Remove(0, 1);

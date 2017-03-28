@@ -241,7 +241,10 @@ namespace FrameworkLibrary
                 if (tagValue.StartsWith("~/"))
                     tagValue = URIHelper.ConvertToAbsUrl(tagValue);
 
-                data = RunOrCompileRazorCode(tag, tagValue, obj, compileRazor);
+                if (!string.IsNullOrEmpty(tagValue))
+                {
+                    data = RunOrCompileRazorCode(tag, tagValue, obj, compileRazor);
+                }
             }
 
             data = RunOrCompileRazorCode(data, data, obj, compileRazor);

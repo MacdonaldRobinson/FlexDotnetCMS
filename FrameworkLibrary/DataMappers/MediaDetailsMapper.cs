@@ -1081,7 +1081,12 @@ namespace FrameworkLibrary
 
                         if (media != null)
                         {
-                            customCode = customCode.Replace(linkShortCode.ToString(), media.GetLiveMediaDetail().AbsoluteUrl);
+                            var liveMediaDetail = media.GetLiveMediaDetail();
+
+                            if (liveMediaDetail != null)
+                            {
+                                customCode = customCode.Replace(linkShortCode.ToString(), liveMediaDetail.AbsoluteUrl);
+                            }
                         }
                         else
                         {

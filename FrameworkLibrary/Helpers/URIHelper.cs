@@ -321,6 +321,9 @@ namespace FrameworkLibrary
                 absUrl = absUrl + "/";
             }
 
+            if (!absUrl.StartsWith("~/"))
+                absUrl = "~/" + absUrl;
+
             return absUrl;
         }
 

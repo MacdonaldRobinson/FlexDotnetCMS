@@ -8,7 +8,7 @@ namespace FrameworkLibrary
         public IMediaDetail GetLiveMediaDetail()
         {
             var currentLanguage = FrameworkSettings.GetCurrentLanguage();
-            return this.MediaDetails.SingleOrDefault(i => i.HistoryForMediaDetail == null && i.LanguageID == currentLanguage.ID && i.MediaType.ShowInSiteTree);
+            return this.MediaDetails.SingleOrDefault(i => i.HistoryForMediaDetail == null && i.LanguageID == currentLanguage.ID && ((i.MediaType != null)? i.MediaType.ShowInSiteTree : false));
         }
 
         public string GetTagsAsString()

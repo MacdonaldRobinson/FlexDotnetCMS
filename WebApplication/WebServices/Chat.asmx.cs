@@ -70,7 +70,12 @@ namespace WebApplication.Services
                 var foundChatRoom = ChatManager.GetChatRoomWithUsers(RoomMode.Private, new List<ChatUser>() { me, otherUser });
 
                 chatroom = ChatManager.GetOrCreateChatRoom(RoomMode.Private, me.NickName+","+otherUser.NickName, me);
-                chatroom.JoinChatRoom(otherUser);
+
+                if(chatroom != null)
+                {
+                    chatroom.JoinChatRoom(otherUser);
+                }
+
             }
 
             WriteJSON(StringHelper.ObjectToJson(chatroom));
@@ -144,11 +149,11 @@ namespace WebApplication.Services
                 {
                     var foundUserWithNickName = chatRoom.CurrentUsers.FirstOrDefault(i=>i.NickName == chatUser.NickName);
 
-                    if(foundUserWithNickName != null && FrameworkSettings.CurrentUser!= null && foundUserWithNickName.LoggedInUserID == FrameworkSettings.CurrentUser?.ID)
+                    /*if(foundUserWithNickName != null && FrameworkSettings.CurrentUser!= null && foundUserWithNickName.LoggedInUserID == FrameworkSettings.CurrentUser?.ID)
                     {
                         chatRoom.RemoveUser(foundUserWithNickName);
                         foundUserWithNickName = null;
-                    }
+                    }*/
 
                     if(foundUserWithNickName == null)
                     {
@@ -192,6 +197,19 @@ namespace WebApplication.Services
             if(foundUser != null)
             {
                 chatRoom.DeleteChatMessages();
+            }
+        }
+
+        [WebMethod(EnableSession = true)]
+        public void LeaveChatRoom(string chatRoomId)
+        {
+            var chatUser = new ChatUser(Session.SessionID);
+            var chatRoom = ChatManager.GetChatRoomByID(new Guid(chatRoomId));
+            var foundUser = chatRoom.GetUserInChatRoom(chatUser);
+
+            if(foundUser != null)
+            {
+                chatRoom.RemoveUser(chatUser);
             }
         }
 

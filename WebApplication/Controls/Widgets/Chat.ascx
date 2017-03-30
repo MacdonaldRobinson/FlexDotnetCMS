@@ -20,9 +20,9 @@
         var ChatMessage = $("#ChatMessage");
         var SendMessage = $("#SendMessage");
         var LoadChat = $("#LoadChat");
+        var LeaveChatRoom = $("#LeaveChatRoom");
         var NickName = $("#NickName");  
-        var LoginScreen = $("#LoginScreen");  
-        var ClearChat = $("#ClearChat");          
+        var LoginScreen = $("#LoginScreen");          
         var ChatRoomUsers = $("#ChatRoomUsers");
         var PublicChatRooms = $("#PublicChatRooms");
         var PrivateChatRooms = $("#PrivateChatRooms");
@@ -41,6 +41,14 @@
 
         $(".openChat").on("click", function () {
             ChatWindowWrapper.slideToggle();
+        });
+
+        LeaveChatRoom.on("click", function () {
+            StopChatInterval();
+
+            $.get(webserviceUrl + "/LeaveChatRoom?chatRoomId=" + chatRoomId, function (data) {
+                SwitchChatRoom(0, "General", "Public");
+            })
         });
 
         $(document).on("click", ".deleteRoom", function (e) {
@@ -88,12 +96,6 @@
             {                
                 SwitchChatRoom(0, newChatRoomName, "Public");
             }                       
-        });
-
-        ClearChat.on("click", function() {
-            $.get(webserviceUrl + "/ClearChatRoom?chatRoomId=" + chatRoomId, function (data) {
-                GetChatRoom();
-            })
         });
 
         LoadChat.on("click", function () {
@@ -172,7 +174,7 @@
         }
 
         function SwitchChatRoom(id, name, mode) {
-
+            console.log(arguments);
             StopChatInterval();
             
             chatRoomId = id;
@@ -293,7 +295,8 @@
                 scrollToBottom = true;
             }
 
-            var path = webserviceUrl + "/GetOrCreateChatRoom?NickName=" + nickNameText + "&roomMode=" + roomMode + "&chatRoomId=" + chatRoomId + "&chatRoomName=" + chatRoomName;            
+            var path = webserviceUrl + "/GetOrCreateChatRoom?NickName=" + nickNameText + "&roomMode=" + roomMode + "&chatRoomId=" + chatRoomId + "&chatRoomName=" + chatRoomName;
+            console.log(path);
 
             if (GetChatRoomAjaxRequest != null)
             {
@@ -568,7 +571,7 @@
                         <div id="SendMessageWrapper">
                             <textarea id="ChatMessage"></textarea>
                             <input id="SendMessage" type="button" value="Send Message" />
-                            <input id="ClearChat" type="button" value="Clear Chat" />
+                            <input id="LeaveChatRoom" type="button" value="Leave Chat Room" />
                         </div>                    
                     </div>
                     <div id="ChatRoomsWrapper" class="SidePanel flexContainer column">

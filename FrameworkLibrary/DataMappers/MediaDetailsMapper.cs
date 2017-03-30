@@ -433,7 +433,7 @@ namespace FrameworkLibrary
             if (virtualPathByCurrentHost.Contains(".aspx"))
                 return null;
 
-            var item = BaseMapper.GetDataModel().MediaDetails.Where(i => (i.CachedVirtualPath == virtualPathByCurrentHost || i.CachedVirtualPath == virtualPath) && i.LanguageID == currentLanguage.ID && i.HistoryVersionNumber == versionNumber).ToList().Where(i => i.CanRender || HttpContext.Current.Request["version"] != null).FirstOrDefault();
+            var item = BaseMapper.GetDataModel().MediaDetails.Where(i => (i.CachedVirtualPath == virtualPathByCurrentHost || i.CachedVirtualPath == virtualPath) && i.LanguageID == currentLanguage.ID && i.HistoryVersionNumber == versionNumber).ToList().Where(i => i.CanRender || HttpContext.Current.Request["version"] != null).OrderByDescending(i => i.DateLastModified).FirstOrDefault();
 
             if (item != null)
                 return item;

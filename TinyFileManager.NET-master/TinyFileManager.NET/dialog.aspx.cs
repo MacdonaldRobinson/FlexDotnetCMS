@@ -350,6 +350,9 @@ namespace TinyFileManager.NET
 
                     //load folders
                     arrFolders = Directory.GetDirectories(this.objConfig.strUploadPath + this.strCurrPath);
+
+                    var renameLink = "<a href='javascript:void(0)' class='btn btn-rename'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
+
                     foreach (string strF in arrFolders)
                     {
                         this.objFItem = new TinyFileManager.NET.clsFileItem();
@@ -361,6 +364,7 @@ namespace TinyFileManager.NET
                         if (this.objConfig.boolAllowDeleteFolder)
                         {
                             this.objFItem.strDeleteLink = "<a href=\"" + this.strCurrLink + "&cmd=delfolder&folder=" + this.objFItem.strPath + "&currpath=" + this.strCurrPath + "\" class=\"btn erase-button top-right\" onclick=\"return confirm('Are you sure to delete the folder and all the objects in it?');\" title=\"Erase\"><i class=\"icon-trash\"></i></a>";
+                            this.objFItem.strDeleteLink = this.objFItem.strDeleteLink + renameLink;
                         }
                         else
                         {
@@ -465,12 +469,14 @@ namespace TinyFileManager.NET
                                 this.objFItem.strPreviewLink = "<a class=\"btn preview disabled\" title=\"Preview\"><i class=\"icon-eye-open\"></i></a>";
                             }
 
+                            this.objFItem.strPreviewLink = this.objFItem.strPreviewLink + renameLink;
+
                             var path = strF.Replace(Server.MapPath("~/"), "").Replace("\\", "/");
 
                             if (!path.StartsWith("/"))
                                 path = "/" + path;
 
-                            this.objFItem.strLink = "<a href=\"#\" title=\"Select\" onclick=\"" + this.strApply + "('" + baseUrl + path + "'," + this.strType + ")\";\"><img data-src=\"holder.js/140x100\" alt=\"140x100\" src=\"" + this.objFItem.strThumbImage + "\" height=\"100\"><h4>" + this.objFItem.strName + "</h4></a>";
+                            this.objFItem.strLink = "<a href=\"#\" title=\"Select\" onclick=\"" + this.strApply + "('" + baseUrl + path + "'," + this.strType + ")\";\"><img data-src=\"holder.js/140x100\" alt=\"140x100\" src=\"" + this.objFItem.strThumbImage + "\" height=\"100\"><h4>" + this.objFItem.strName + new FileInfo(this.objFItem.strPath).Extension + "</h4></a>";
 
                             this.arrLinks.Add(objFItem);
                         }

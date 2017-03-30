@@ -391,6 +391,44 @@ namespace WebApplication.Admin.Views.MasterPages
         }
 
         [WebMethod(EnableSession = true)]
+        public void RenameFileManagerItem(string oldText, string newText, string href)
+        {
+            var hrefQueryString = System.Web.HttpUtility.ParseQueryString(href);
+
+            var hrefFile =  hrefQueryString["file"];
+            var hrefCurrPath = hrefQueryString["currpath"];             
+            
+            if(!string.IsNullOrEmpty(hrefFile))
+            {                                
+                var oldFileInfo = new FileInfo(URIHelper.BasePath + hrefFile);
+
+                var newHref = oldFileInfo.Directory.FullName +"\\"+ newText;
+
+                var newFileInfo = new FileInfo(newHref);                
+
+                if(oldFileInfo.Exists && !newFileInfo.Exists)
+                {
+                    File.Move(oldFileInfo.FullName, newFileInfo.FullName);
+                }
+
+            }
+            else if(!string.IsNullOrEmpty(hrefCurrPath))
+            {
+                var absPath = URIHelper.ConvertToAbsPath(hrefCurrPath);
+                var oldDirectoryInfo = new DirectoryInfo(absPath);
+                
+                var newHref = oldDirectoryInfo.Parent.FullName +"\\"+ newText;
+
+                var newDirInfo = new DirectoryInfo(newHref);
+
+                if(oldDirectoryInfo.Exists && !newDirInfo.Exists)
+                {
+                    Directory.Move(oldDirectoryInfo.FullName, newDirInfo.FullName);
+                }
+            }
+        }
+
+        [WebMethod(EnableSession = true)]
         public void MoveFileManagerItem(string draggedItem, string droppedOn)
         {
             var draggedItemUriSegments = System.Web.HttpUtility.ParseQueryString(draggedItem);

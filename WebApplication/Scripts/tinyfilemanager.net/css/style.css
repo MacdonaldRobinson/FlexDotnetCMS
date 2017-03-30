@@ -38,3 +38,9 @@ h3{ font-size:14px;}
 .directory-img{
 	margin-top:25px;
 }
+
+.btn-rename {
+    top: 0;
+    position: absolute;
+    left: 0;
+}

@@ -10,6 +10,7 @@
     <link href="css/bootstrap-lightbox.min.css" rel="stylesheet" type="text/css" />
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <link href="css/dropzone.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 </head>
 <body>
 
@@ -155,8 +156,63 @@
             }
             return vars;
         }
+
+        function getPath(elem)
+        {
+            var href = "";
+            var li = $(elem).parents("li");
+            var isDirectory = li.hasClass("ff-item-type-dir");
+                    
+            if(isDirectory)
+            {
+                var elem = li.find("a[title='Open']");
+
+                if(elem.length > 0)
+                {
+                    href = elem.attr("href");
+                }
+            }
+            else
+            {
+                var form = li.find("form");                    
+
+                if(form.length > 0)
+                {
+                    href = form.attr("action");
+                }
+            }
+
+            return href;
+        }
+
         $(document).ready(function(){
             $(".thumbnails li").not(":first-child").draggable({ revert: true, helper: "clone" });
+
+            $(".btn-rename").on("click", function () {
+                var foundItem = $(this).parents(".thumbnail").find("h3");
+
+                if (foundItem.length == 0)
+                {
+                    foundItem = $(this).parents(".thumbnail").find("h4");
+                }       
+
+                var oldText = $(foundItem).text().trim();
+                
+                var newText = prompt("What would you like to rename it to?", oldText);
+                newText = newText.trim();
+
+                if (oldText != newText)
+                {   
+                    var href = getPath(this);
+
+                    $.post("/Admin/Views/MasterPages/WebService.asmx/RenameFileManagerItem", { oldText: oldText, newText: newText, href: href }, function(){
+                        window.location.reload();
+                    });                    
+
+                }
+                          
+            });
+
             $(".thumbnails .ff-item-type-dir").droppable({
               drop: function( event, ui ) {
 

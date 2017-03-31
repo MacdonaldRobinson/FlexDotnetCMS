@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Xml.Linq;
+using FrameworkLibrary;
 
 namespace TinyFileManager.NET
 {
@@ -262,7 +263,7 @@ namespace TinyFileManager.NET
                     }
                     else
                     {
-                        return HttpContext.Current.Server.MapPath("/").TrimEnd('\\');
+                        return URIHelper.BasePath.TrimEnd('\\');
                     }
                 }
             }

@@ -5,8 +5,6 @@
 </asp:Content>
 <asp:Content ID="MediaDetailPanel" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script type="text/javascript">
-        var baseUrl = '<%= URIHelper.BaseUrl %>';
-
         $(document).ready(function(){
 
             $(document).on('click', 'a.preview', function(event){
@@ -23,7 +21,7 @@
 
             function UpdatePreviewUrl(url)
             {
-                if(url != undefined && url.indexOf(baseUrl) != -1){
+                if (url != undefined && url.indexOf(BaseUrl) != -1) {
                     $("#PreviewPanel").attr("src", url);
                 }
                 return false;
@@ -40,7 +38,7 @@
 
     <div class="split-pane fixed-left">
         <div class="split-pane-component" id="left-component">
-            <link href="/Admin/Styles/mediaDetails.css" rel="stylesheet" />
+            <link href="<%= URIHelper.BaseUrl %>Admin/Styles/mediaDetails.css" rel="stylesheet" />
             <script type="text/javascript">
                 var selectedMediaId = <%=(SelectedMedia != null) ? SelectedMedia.ID : 0 %>;
                 var selectedMediaDetailId = <%=(SelectedMediaDetail != null) ? SelectedMediaDetail.ID : 0 %>;

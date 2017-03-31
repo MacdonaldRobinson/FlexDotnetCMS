@@ -173,18 +173,19 @@ function getParameterByName(name) {
 function HandleContextMenuClick(action, target, node) {
     var mediaDetailId = target.parent().attr("mediadetailid");
     var targetText = target.text();
+    var BaseWebserverUrl = BaseUrl + "Admin/Views/MasterPages/Webservice.asmx";
 
     switch (action) {
         case "CreateChild":
             jQuery.ajax({
                 type: "POST",
-                url: "/Admin/Views/MasterPages/Webservice.asmx/CreateChild",
+                url: BaseWebserverUrl + "/CreateChild",
                 data: "{'id':'" + mediaDetailId + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "text",
                 success:
                 function (msg) {
-                    window.location.href = "/Admin/Views/PageHandlers/Media/Create.aspx";
+                    window.location.href = BaseWebserverUrl + "/Create.aspx";
                 },
                 error: function (xhr, status, error) {
                     DisplayJsonException(xhr);
@@ -194,7 +195,7 @@ function HandleContextMenuClick(action, target, node) {
         case "Delete":
             jQuery.ajax({
                 type: "POST",
-                url: "/Admin/Views/MasterPages/Webservice.asmx/Delete",
+                url: BaseWebserverUrl + "/Delete",
                 data: "{'id':'" + mediaDetailId + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "text",
@@ -212,7 +213,7 @@ function HandleContextMenuClick(action, target, node) {
         case "UnDelete":
             jQuery.ajax({
                 type: "POST",
-                url: "/Admin/Views/MasterPages/Webservice.asmx/UnDelete",
+                url: BaseWebserverUrl + "/UnDelete",
                 data: "{'id':'" + mediaDetailId + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "text",
@@ -230,7 +231,7 @@ function HandleContextMenuClick(action, target, node) {
         case "Duplicate":
             jQuery.ajax({
                 type: "POST",
-                url: "/Admin/Views/MasterPages/Webservice.asmx/Duplicate",
+                url: BaseWebserverUrl + "/Duplicate",
                 data: "{'id':'" + mediaDetailId + "'}",
                 contentType: "application/json; charset=utf-8",
                 success:
@@ -247,7 +248,7 @@ function HandleContextMenuClick(action, target, node) {
         case "DuplicateAndEdit":
             jQuery.ajax({
                 type: "POST",
-                url: "/Admin/Views/MasterPages/Webservice.asmx/Duplicate",
+                url: BaseWebserverUrl + "/Duplicate",
                 data: "{'id':'" + mediaDetailId + "'}",
                 contentType: "application/json; charset=utf-8",
                 success:
@@ -264,7 +265,7 @@ function HandleContextMenuClick(action, target, node) {
         case "ShowInMenu":
             jQuery.ajax({
                 type: "POST",
-                url: "/Admin/Views/MasterPages/Webservice.asmx/ShowInMenu",
+                url: BaseWebserverUrl + "/ShowInMenu",
                 data: "{'id':'" + mediaDetailId + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "text",
@@ -282,7 +283,7 @@ function HandleContextMenuClick(action, target, node) {
         case "HideFromMenu":
             jQuery.ajax({
                 type: "POST",
-                url: "/Admin/Views/MasterPages/Webservice.asmx/HideFromMenu",
+                url: BaseWebserverUrl + "/HideFromMenu",
                 data: "{'id':'" + mediaDetailId + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "text",
@@ -300,7 +301,7 @@ function HandleContextMenuClick(action, target, node) {
         case "MoveUp":
             jQuery.ajax({
                 type: "POST",
-                url: "/Admin/Views/MasterPages/Webservice.asmx/MoveUp",
+                url: BaseWebserverUrl + "/MoveUp",
                 data: "{'id':'" + mediaDetailId + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "text",
@@ -318,7 +319,7 @@ function HandleContextMenuClick(action, target, node) {
         case "MoveDown":
             jQuery.ajax({
                 type: "POST",
-                url: "/Admin/Views/MasterPages/Webservice.asmx/MoveDown",
+                url: BaseWebserverUrl + "/MoveDown",
                 data: "{'id':'" + mediaDetailId + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "text",
@@ -339,7 +340,7 @@ function HandleContextMenuClick(action, target, node) {
             if (areYouSure) {
                 jQuery.ajax({
                     type: "POST",
-                    url: "/Admin/Views/MasterPages/Webservice.asmx/DeletePermanently",
+                    url: BaseWebserverUrl + "/DeletePermanently",
                     data: "{'id':'" + mediaDetailId + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "text",
@@ -358,7 +359,7 @@ function HandleContextMenuClick(action, target, node) {
         case "ClearCache":
             jQuery.ajax({
                 type: "POST",
-                url: "/Admin/Views/MasterPages/Webservice.asmx/ClearCache",
+                url: BaseWebserverUrl + "/ClearCache",
                 data: "{'id':'" + mediaDetailId + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "text",
@@ -552,7 +553,7 @@ $(window).load(function () {
 function BindMultiFileUploaderImageLoadError()
 {
     $(".MultiFileUploader img").error(function () {
-        $(this).attr("src", "/media/images/icons/File.jpg");
+        $(this).attr("src", BaseUrl + "media/images/icons/File.jpg");
     });
 }
 
@@ -623,10 +624,10 @@ $(document).ready(function () {
 function initTinyMCE()
 {
     tinymce.editors = [];
-    tfm_path = "/Scripts/tinyfilemanager.net";
+    tfm_path = BaseUrl + "Scripts/tinyfilemanager.net";
     tinymce.init({
         selector: ".editor",
-        content_css: "/Views/MasterPages/SiteTemplates/css/style.css, /Admin/Styles/editor.css",
+        content_css: BaseUrl + "Views/MasterPages/SiteTemplates/css/style.css, " + BaseUrl + "Admin/Styles/editor.css",
         menubar: false,
         plugins: [
           'advlist autolink lists link image charmap print preview hr anchor pagebreak',
@@ -801,9 +802,9 @@ function BindTree(filterText) {
             'data': {
                 'url': function (node) {
                     if (filterText == "" || filterText == undefined || filterText == null)
-                        return node.id === '#' ? '/Admin/Views/MasterPages/WebService.asmx/GetRootNodes' : '/Admin/Views/MasterPages/WebService.asmx/GetChildNodes';
+                        return node.id === '#' ? BaseUrl + 'Admin/Views/MasterPages/WebService.asmx/GetRootNodes' : BaseUrl + 'Admin/Views/MasterPages/WebService.asmx/GetChildNodes';
                     else
-                        return '/Admin/Views/MasterPages/WebService.asmx/SearchForNodes?filterText=' + filterText;
+                        return BaseUrl + 'Admin/Views/MasterPages/WebService.asmx/SearchForNodes?filterText=' + filterText;
 
                 },
                 'data': function (node) {
@@ -899,7 +900,7 @@ function BindTree(filterText) {
 
         jQuery.ajax({
             type: "POST",
-            url: "/Admin/Views/MasterPages/Webservice.asmx/HandleNodeDragDrop",
+            url: BaseWebserverUrl + "/HandleNodeDragDrop",
             data: "{'sourceMediaId':'" + sourceMediaId + "', 'parentMediaId':'" + parentMediaId + "', 'newPosition':'" + newPosition + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: "text",

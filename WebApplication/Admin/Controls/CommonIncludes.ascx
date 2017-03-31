@@ -3,44 +3,44 @@
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.colorbox/1.6.4/jquery.colorbox-min.js"></script>
-<script type="text/javascript" src="/Scripts/global.js"></script>
+<script type="text/javascript" src="<%= URIHelper.BaseUrl %>Scripts/global.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.hoverintent/1.8.1/jquery.hoverIntent.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/superfish/1.7.9/js/superfish.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.ui-contextmenu/1.13.0/jquery.ui-contextmenu.min.js"></script>
-<script type="text/javascript" src="/Scripts/split-pane-master/split-pane.js"></script>
+<script type="text/javascript" src="<%= URIHelper.BaseUrl %>Scripts/split-pane-master/split-pane.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js"></script>
-<script type="text/javascript" src="/Scripts/tinymce/js/tinymce/tinymce.min.js"></script>
+<script type="text/javascript" src="<%= URIHelper.BaseUrl %>Scripts/tinymce/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.5/jquery.jgrowl.min.js"></script>
-<script type="text/javascript" src="/Admin/Scripts/jquery.autoSuggest.packed.js"></script>
+<script type="text/javascript" src="<%= URIHelper.BaseUrl %>Admin/Scripts/jquery.autoSuggest.packed.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/jstree.min.js"></script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.8/beautify.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.8/beautify-html.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.8/beautify.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.8/beautify-html.js"></script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/css/tooltipster.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/js/jquery.tooltipster.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/css/tooltipster.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/js/jquery.tooltipster.min.js"></script>
 
-<script type="text/javascript" src="/Admin/Scripts/adminGlobal.js"></script>
+<script type="text/javascript" src="<%= URIHelper.BaseUrl %>Admin/Scripts/adminGlobal.js"></script>
 
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/buttons/1.1.2/css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/themes/default/style.min.css" />
-<link rel="stylesheet" href="/Admin/Styles/autoSuggest.css" />
+<link rel="stylesheet" href="<%= URIHelper.BaseUrl %>Admin/Styles/autoSuggest.css" />
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.5/jquery.jgrowl.min.css" />
-<link rel="stylesheet" href="/Scripts/colorbox-master/example3/colorbox.css" />
+<link rel="stylesheet" href="<%= URIHelper.BaseUrl %>Scripts/colorbox-master/example3/colorbox.css" />
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/superfish/1.7.9/css/superfish.min.css" />
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.css" />
-<link rel="stylesheet" href="/Scripts/split-pane-master/split-pane.css" />
-<link rel="stylesheet" href="/Admin/Styles/adminGlobal.css" />
+<link rel="stylesheet" href="<%= URIHelper.BaseUrl %>Scripts/split-pane-master/split-pane.css" />
+<link rel="stylesheet" href="<%= URIHelper.BaseUrl %>Admin/Styles/adminGlobal.css" />
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -54,6 +54,9 @@
     ga('linker:autoLink', ['<% = Request.Url.Host %>']);
 
     ga('send', 'pageview');
+
+    var BaseUrl = "<%= URIHelper.BaseUrl%>";
+
 </script>
 
 <script>

@@ -175,7 +175,7 @@ namespace FrameworkLibrary
                                     }
                                     else if (tempNestedProperty is string)
                                     {
-                                        if(tempMethodInfo != null)
+                                        if (tempMethodInfo != null)
                                         {
                                             tagValue = tempNestedProperty.ToString();
                                         }
@@ -248,6 +248,20 @@ namespace FrameworkLibrary
             }
 
             data = RunOrCompileRazorCode(data, data, obj, compileRazor);
+
+            return data;
+        }
+
+        public static string ReplaceHrefAndSrcsToAbsoluteUrls(string data)
+        {
+            if (data.Contains("src=\"/") || data.Contains("src='/") || data.Contains("href=\"/") || data.Contains("href='/"))
+            {
+                data = StringHelper.Replace(data, "src=\"/", $"src=\"{URIHelper.BaseUrl}");
+                data = StringHelper.Replace(data, "src='/", $"src='{URIHelper.BaseUrl}");
+                data = StringHelper.Replace(data, "href=\"/", $"href=\"{URIHelper.BaseUrl}");
+                data = StringHelper.Replace(data, "href='/", $"href='{URIHelper.BaseUrl}");
+                data = StringHelper.Replace(data, URIHelper.BaseUrl + "/", "//");
+            }
 
             return data;
         }

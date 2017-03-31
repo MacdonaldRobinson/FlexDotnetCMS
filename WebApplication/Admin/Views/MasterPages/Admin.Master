@@ -8,7 +8,7 @@
 <head runat="server">
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
+    </asp:ContentPlaceHolder>    
 </head>
 <body scroll="no">
     <form id="form1" runat="server" class="dropzone">
@@ -34,24 +34,24 @@
                     </div>
                     <div id="topMenu" class="floatLeft">
                         <ul class="sf-menu">
-                            <li><a href="/Admin/Default.aspx">Dashboard</a></li>
-                            <li><a href="/Scripts/tinyfilemanager.net/dialog.aspx" class="colorbox iframe">FileManager</a></li>
-                            <li id="GlossaryTermsNavItem" runat="server" visible="false"><a href="/Admin/Views/PageHandlers/GlossaryTerms/Default.aspx">Manage Glossary Terms</a></li>
+                            <li><a href="<%= URIHelper.BaseUrl %>Admin/Default.aspx">Dashboard</a></li>
+                            <li><a href="<%= URIHelper.BaseUrl %>Scripts/tinyfilemanager.net/dialog.aspx" class="colorbox iframe">FileManager</a></li>
+                            <li id="GlossaryTermsNavItem" runat="server" visible="false"><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/GlossaryTerms/Default.aspx">Manage Glossary Terms</a></li>
                             <%  if (BasePage.CurrentUser.IsInRole(RoleEnum.Administrator))
                                 { %>
                             <li><a href="#">Advance Options</a>
                                 <ul>
-                                    <li><a href="/Admin/Views/PageHandlers/Tags/Default.aspx">Manage Tags</a></li>
+                                    <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Tags/Default.aspx">Manage Tags</a></li>
                                     <%--<li><a href="/Admin/Views/PageHandlers/FieldFiles/Default.aspx">Manage Field Files</a></li>--%>
-                                    <li><a href="/Admin/Views/PageHandlers/Settings/Default.aspx">Manage Settings</a></li>
-                                    <li><a href="/Admin/Views/PageHandlers/Users/Default.aspx">Manage Users</a></li>
-                                    <li><a href="/Admin/Views/PageHandlers/Roles/Default.aspx">Manage Roles</a></li>
-                                    <li><a href="/Admin/Views/PageHandlers/Permissions/Default.aspx">Manage Permissions</a></li>
-                                    <li><a href="/Admin/Views/PageHandlers/Languages/Default.aspx">Manage Languages</a></li>
-                                    <li><a href="/Admin/Views/PageHandlers/MediaTypes/Default.aspx">Manage MediaTypes</a></li>
-                                    <li><a href="/Admin/Views/PageHandlers/FieldTypes/Default.aspx">Manage Field Types</a></li>
-                                    <li><a href="/Admin/Views/PageHandlers/MasterPages/Default.aspx">Manage Templates</a></li>
-                                    <li><a href="/Admin/Views/PageHandlers/AdminTools/Default.aspx">Admin Tools</a></li>
+                                    <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Settings/Default.aspx">Manage Settings</a></li>
+                                    <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Users/Default.aspx">Manage Users</a></li>
+                                    <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Roles/Default.aspx">Manage Roles</a></li>
+                                    <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Permissions/Default.aspx">Manage Permissions</a></li>
+                                    <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Languages/Default.aspx">Manage Languages</a></li>
+                                    <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MediaTypes/Default.aspx">Manage MediaTypes</a></li>
+                                    <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/FieldTypes/Default.aspx">Manage Field Types</a></li>
+                                    <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MasterPages/Default.aspx">Manage Templates</a></li>
+                                    <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/AdminTools/Default.aspx">Admin Tools</a></li>
                                 </ul>
                             </li>
                             <% } %>
@@ -70,7 +70,7 @@
                             <Admin:LanguageSwitcher ID="LanguageSwitcher" runat="server" />
                             <div id="SiteTreeWrapper">
                                 <div>
-                                    <asp:HyperLink ID="CreateItem" Text="Create Item" runat="server"  NavigateUrl="/Admin/Views/PageHandlers/Media/Create.aspx" Visible="false"/>
+                                    <asp:HyperLink ID="CreateItem" Text="Create Item" runat="server"  NavigateUrl='<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Media/Create.aspx' Visible="false"/>
                                 </div>
                                 <asp:TextBox runat="server" ID="Filter" placeholder="Search ..." Width="90%" ClientIDMode="Static"></asp:TextBox>
                                 <div id="SiteTree"></div>

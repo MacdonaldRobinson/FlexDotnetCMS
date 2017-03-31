@@ -28,9 +28,6 @@ namespace FrameworkLibrary
         {
             get
             {
-                if (FrameworkSettings.CurrentUser != null)
-                    return true;
-
                 return DateTime.Now < (LastChatMessageDateTime + _inactiveDuration);
             }            
         }

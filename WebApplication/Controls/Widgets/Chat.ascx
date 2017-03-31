@@ -31,7 +31,7 @@
 
         var checkDuration= 1000;
 
-        var webserviceUrl = "/Webservices/Chat.asmx";
+        var webserviceUrl = "<%= URIHelper.BaseUrl %>Webservices/Chat.asmx";
 
         ShowAlertMessage("Please wait checking your session ...");
         LoginScreen.hide();

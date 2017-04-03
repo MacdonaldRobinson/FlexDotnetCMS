@@ -394,10 +394,22 @@ function getFieldsAutoComplete()
     });
 
     wordsArray.push('<Site:GenerateNav \n\t runat="server" \n\t RenderRootMedia="True" \n\t RootMediaID="2" \n\t RenderDepth="2" \n\t DisplayProtectedSections="false" />');
-    wordsArray.push('<Site:RenderChildren \n\t runat="server" \n\t ShowPager="True" \n\t PageSize="10" \n\t ChildPropertyName="UseSummaryLayout" \n\t Where=\'MediaType.Name=="Page"\' \n\t OrderBy="DateCreated DESC" />');
+    wordsArray.push('<Site:RenderChildren \n\t runat="server" \n\t ShowPager="True" \n\t PageSize="10" \n\t ChildPropertyName="UseSummaryLayout" \n\t Where=\'MediaType.Name=="Page"\' \n\t OrderBy="DateCreated DESC" />');    
 
 
     return wordsArray;
+}
+
+function launchIntoFullscreen(element) {
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+    }
 }
 
 function initAceEditors() {
@@ -420,6 +432,11 @@ function initAceEditors() {
         }
     });
 
+    $(document).on("click", ".AceEditorFullScreen", function () {
+        var element = $(this).parent().find(".ace_editor")[0];        
+        launchIntoFullscreen(element);                
+    });
+
 
     $(".AceEditor").each(function () {
         var id = $(this).attr("id");
@@ -435,6 +452,11 @@ function initAceEditors() {
             }
         }
 
+        if ($("#" + id).parent().find(".AceEditorFullScreen").length == 0)
+        {
+            $("#" + id).parent().prepend("<a class='AceEditorFullScreen' href='#'>View Full Screen</a><br />");
+        }        
+
         var style = $(this).attr("style");
 
         $(this).parent().append("<div id='" + editorId + "' class='ace-editor' style='" + style + "'></div>");
@@ -446,7 +468,9 @@ function initAceEditors() {
 
         editor.setTheme("ace/theme/iplastic");
         editor.setValue(textarea.val());
+        //editor.setTheme("ace/theme/razor");
         editor.getSession().setMode("ace/mode/html");
+        //editor.getSession().setMode("ace/mode/razor");
         editor.$blockScrolling = Infinity;
         editor.$useWorker = false;
 
@@ -456,7 +480,7 @@ function initAceEditors() {
         editor.setOptions({
             enableBasicAutocompletion: true,
             enableSnippets: true,
-            enableLiveAutocompletion: true,
+            enableLiveAutocompletion: false,
             showPrintMargin: false
         });
 

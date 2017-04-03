@@ -47,7 +47,16 @@
             StopChatInterval();
 
             $.get(webserviceUrl + "/LeaveChatRoom?chatRoomId=" + chatRoomId, function (data) {
-                SwitchChatRoom(0, "General", "Public");
+                console.log(roomMode);
+                var roomName = "General";
+                if (roomMode == 1)
+                {
+                    TimeoutChat();
+                }
+                else
+                {
+                    SwitchChatRoom(0, "General", roomMode);
+                }                
             })
         });
 
@@ -227,7 +236,7 @@
             clearInterval(getChatInterval);            
             clearInterval(getChatRoomsInterval);   
             ShowLoginScreen();
-            ShowAlertMessage("You have been logged out due to inactivity");
+            ShowAlertMessage("You have been logged out");
         }
 
         var GetChatRoomsAjaxRequest = null;
@@ -571,7 +580,7 @@
                         <div id="SendMessageWrapper">
                             <textarea id="ChatMessage"></textarea>
                             <input id="SendMessage" type="button" value="Send Message" />
-                            <input id="LeaveChatRoom" type="button" value="Leave Chat Room" />
+                            <input id="LeaveChatRoom" type="button" value="Logout" />
                         </div>                    
                     </div>
                     <div id="ChatRoomsWrapper" class="SidePanel flexContainer column">

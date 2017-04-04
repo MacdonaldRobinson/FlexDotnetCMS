@@ -537,13 +537,13 @@ namespace FrameworkLibrary
 
             description = StringHelper.StripHtmlTags(description);
 
-            if ((description == "") || (description == LinkTitle))
+            /*if ((description == "") || (description == LinkTitle))
             {
                 description = StringHelper.StripHtmlTags(StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(this.MainContent)));
 
                 if (description.Length > 255)
                     description = description.Substring(0, 255) + " ...";
-            }
+            }*/
 
             contextMetaDescription = StringHelper.StripHtmlTags(description);
 
@@ -559,7 +559,7 @@ namespace FrameworkLibrary
             var metaKeywords = MetaKeywords.Trim();
 
             if (MetaKeywords.Trim() == "")
-                contextMetaKeywords = GetMetaDescription();
+                contextMetaKeywords = GetPageTitle();
             else
                 contextMetaKeywords = metaKeywords;
 

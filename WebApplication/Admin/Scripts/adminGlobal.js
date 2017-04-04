@@ -395,6 +395,9 @@ function getFieldsAutoComplete()
 
     wordsArray.push('<Site:GenerateNav \n\t runat="server" \n\t RenderRootMedia="True" \n\t RootMediaID="2" \n\t RenderDepth="2" \n\t DisplayProtectedSections="false" />');
     wordsArray.push('<Site:RenderChildren \n\t runat="server" \n\t ShowPager="True" \n\t PageSize="10" \n\t ChildPropertyName="UseSummaryLayout" \n\t Where=\'MediaType.Name=="Page"\' \n\t OrderBy="DateCreated DESC" />');    
+    wordsArray.push('@model Website');
+    wordsArray.push('@model Page');
+    wordsArray.push('@Model.GetRelatedItems() // If Model is Page or Website');
 
 
     return wordsArray;
@@ -493,7 +496,6 @@ function initAceEditors() {
                         meta: "static"
                     };
                 }));
-
             }
         }
         editor.completers = [langTools.snippetCompleter, langTools.textCompleter, customCompleter]

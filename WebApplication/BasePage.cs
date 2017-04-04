@@ -295,9 +295,9 @@ namespace WebApplication
                         masterPage = MasterPagesMapper.GetByPathToFile(Page.MasterPageFile);
 
                         if (useMobile)
-                            masterFilePath = masterPage.MobileTemplate;
+                            masterFilePath = masterPage?.MobileTemplate;
                         else
-                            masterFilePath = masterPage.PathToFile;
+                            masterFilePath = masterPage?.PathToFile;
                     }
                 }
             }

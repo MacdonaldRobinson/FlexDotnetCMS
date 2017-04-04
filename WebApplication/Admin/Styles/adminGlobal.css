@@ -471,3 +471,29 @@ fieldset table td, fieldset table th{
 .tooltip {
     cursor: pointer;
 }
+
+.ace_editor:fullscreen {
+    width: 100%;
+    height: 100% !important;
+}
+
+.ace_editor:-webkit-full-screen {
+    width: 100%;
+    height: 100% !important;
+}
+
+.ace_editor:-moz-full-screen {
+    width: 100%;
+    height: 100% !important;
+}
+
+.ace_editor:-ms-fullscreen {
+    width: 100%;
+    height: 100% !important;
+}
+
+.ace_editor:fullscreen {
+    width: 100%;
+    height: 100% !important;
+}
+   

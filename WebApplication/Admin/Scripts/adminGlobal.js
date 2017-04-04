@@ -404,6 +404,7 @@ function getFieldsAutoComplete()
 }
 
 function launchIntoFullscreen(element) {
+    //element = $(element).parent()[0];
     if (element.requestFullscreen) {
         element.requestFullscreen();
     } else if (element.mozRequestFullScreen) {

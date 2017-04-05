@@ -18,4 +18,4 @@
 *.bak
 /WebApplication/App_Data/*.mdf
 /WebApplication/App_Data/*.ldf
-/WebApplication/media/uploads
+/WebApplication/media/uploads/fields

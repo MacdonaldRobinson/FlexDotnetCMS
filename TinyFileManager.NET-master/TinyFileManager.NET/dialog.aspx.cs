@@ -48,11 +48,15 @@ namespace TinyFileManager.NET
             baseUrl = Request.QueryString["BaseUrl"] + "";
             var defaultRootPath = "/media/uploads/";
 
-            var requestPath = URIHelper.ConvertAbsUrlToTilda(strCurrPath).Replace("\\", "/").Replace("//","/").Replace("~/","/");
 
-            if (!requestPath.Contains(defaultRootPath))
+            if (!FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.DeleteItemsPermanently))
             {
-                strCurrPath = defaultRootPath;
+                var requestPath = URIHelper.ConvertAbsUrlToTilda(strCurrPath).Replace("\\", "/").Replace("//", "/").Replace("~/", "/");
+
+                if (!requestPath.Contains(defaultRootPath))
+                {
+                    strCurrPath = defaultRootPath;
+                }
             }
 
             if (string.IsNullOrEmpty(baseUrl))

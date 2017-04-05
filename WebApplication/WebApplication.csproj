@@ -163,6 +163,7 @@
     <Content Include="Admin\Controls\Selectors\Generic\PermissionsSelector.ascx" />
     <Content Include="Admin\Controls\Selectors\WebService.asmx" />
     <Content Include="Admin\Controls\Widgets\AdminChat.ascx" />
+    <Content Include="Admin\data\ace_custom_snippets.html" />
     <Content Include="Admin\media\images\css\ajax-loading.gif" />
     <Content Include="Admin\media\images\css\background.jpg" />
     <Content Include="Admin\media\images\css\leftArrow.png" />
@@ -296,7 +297,7 @@
     <Content Include="Controls\PdfTemplates\Template1\Footer.ascx" />
     <Content Include="Controls\Lists\RelatedItemsList.ascx" />
     <Content Include="Controls\RenderChildren\RenderChildren.ascx" />
-    <Content Include="Controls\RenderMediaDetail\RenderMediaDetail.ascx" />
+    <Content Include="Controls\RenderMedia\RenderMedia.ascx" />
     <Content Include="Controls\Widgets\GoogleMaps.ascx" />
     <Content Include="Controls\Widgets\Instagram.ascx" />
     <Content Include="Controls\Widgets\LanguageToggle.ascx" />
@@ -1527,12 +1528,12 @@
     <Compile Include="Controls\RenderChildren\RenderChildren.ascx.designer.cs">
       <DependentUpon>RenderChildren.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RenderMediaDetail\RenderMediaDetail.ascx.cs">
-      <DependentUpon>RenderMediaDetail.ascx</DependentUpon>
+    <Compile Include="Controls\RenderMedia\RenderMedia.ascx.cs">
+      <DependentUpon>RenderMedia.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controls\RenderMediaDetail\RenderMediaDetail.ascx.designer.cs">
-      <DependentUpon>RenderMediaDetail.ascx</DependentUpon>
+    <Compile Include="Controls\RenderMedia\RenderMedia.ascx.designer.cs">
+      <DependentUpon>RenderMedia.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controls\Widgets\GoogleMaps.ascx.cs">
       <DependentUpon>GoogleMaps.ascx</DependentUpon>

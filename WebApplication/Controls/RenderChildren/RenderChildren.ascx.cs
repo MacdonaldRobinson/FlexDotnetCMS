@@ -17,9 +17,9 @@ namespace WebApplication.Controls.RenderChildren
             {
                 IMediaDetail mediaDetail = null;
 
-                if (MediaDetailID != null)
+                if (MediaID != null)
                 {
-                    mediaDetail = MediaDetailsMapper.GetByID((long)MediaDetailID);
+                    mediaDetail = MediasMapper.GetByID((long)MediaID)?.GetLiveMediaDetail();
                 }
 
                 if (mediaDetail == null)
@@ -27,16 +27,19 @@ namespace WebApplication.Controls.RenderChildren
                     mediaDetail = BasePage.CurrentMediaDetail;
                 }
 
-                if (!string.IsNullOrEmpty(Where))
-                    children = mediaDetail.ChildMediaDetails.Where(Where);
-                else
-                    children = mediaDetail.ChildMediaDetails;
+                if(mediaDetail != null)
+                {
+                    if (!string.IsNullOrEmpty(Where))
+                        children = mediaDetail.ChildMediaDetails.Where(Where);
+                    else
+                        children = mediaDetail.ChildMediaDetails;
 
-                if (!string.IsNullOrEmpty(OrderBy))
-                    children = children.OrderBy(OrderBy);
+                    if (!string.IsNullOrEmpty(OrderBy))
+                        children = children.OrderBy(OrderBy);
 
-                if (Take > 0)
-                    children = children.Take(Take);
+                    if (Take > 0)
+                        children = children.Take(Take);
+                }
             }
             catch (Exception ex)
             {
@@ -80,7 +83,7 @@ namespace WebApplication.Controls.RenderChildren
 
         public string OrderBy { get; set; }
 
-        public long? MediaDetailID { get; set; }
+        public long? MediaID { get; set; }
 
         public bool ShowPager { get; set; }
 

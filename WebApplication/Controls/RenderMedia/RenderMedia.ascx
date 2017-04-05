@@ -1,4 +1,5 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="RenderMediaDetail.ascx.cs" Inherits="WebApplication.Controls.RenderCurrentMediaDetail" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="RenderMedia.ascx.cs" Inherits="WebApplication.Controls.RenderMedia.RenderMedia" %>
+
 
 <asp:PlaceHolder runat="server" ID="DynamicContent" />
 

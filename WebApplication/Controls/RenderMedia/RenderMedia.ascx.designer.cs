@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApplication.Controls {
+namespace WebApplication.Controls.RenderMedia {
     
     
-    public partial class RenderCurrentMediaDetail {
+    public partial class RenderMedia {
         
         /// <summary>
         /// DynamicContent control.

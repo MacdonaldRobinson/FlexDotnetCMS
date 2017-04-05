@@ -78,7 +78,7 @@
         </asp:ListView>
     </ul>
     <div id="Main">
-        <fieldset>
+        <fieldset id="MainFields">
             <div id="VirtualPathHolder">
                 <label class="exception" for="<%= VirtualPath.ClientID %>">
                     Virtual Path:</label>

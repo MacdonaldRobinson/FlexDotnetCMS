@@ -379,28 +379,131 @@ function HandleContextMenuClick(action, target, node) {
     }
 }
 
+function createAutoCompleteObject(caption, value, meta)
+{
+    return { caption: caption, value: value, meta: meta }; 
+}
+
 function getFieldsAutoComplete()
 {
     var wordsArray = [];
 
-    $("#Main label:first-child").each(function () {
-        var text = $(this).text().replace(/\s/g, '').replace(":","");
-        wordsArray.push("{" + text + "}");
+    $("#MainFields label:first-child").each(function () {
+        var labelFor = $(this).attr("for");
+
+        if (labelFor != undefined)
+        {
+            var splitFor = $(this).attr("for").split("_");      
+            var text = splitFor[splitFor.length - 1];
+            //var text = $(this).text().replace(/\s/g, '').replace(":", "");
+            text = "{" + text + "}";                   
+
+            wordsArray.push(createAutoCompleteObject(text, text, "main"));
+        }
     });
 
     $(".field > label").each(function () {
-        var text = $(this).attr('data-fieldcode').replace(/\s/g, '');
-        wordsArray.push("{Field:" + text + "}");
+        var text = $(this).attr('data-fieldcode').replace(/\s/g, '');        
+        text = "{Field:" + text + "}";
+        wordsArray.push(createAutoCompleteObject(text, text, "custom field"));        
     });
 
-    wordsArray.push('<Site:GenerateNav \n\t runat="server" \n\t RenderRootMedia="True" \n\t RootMediaID="2" \n\t RenderDepth="2" \n\t DisplayProtectedSections="false" />');
-    wordsArray.push('<Site:RenderChildren \n\t runat="server" \n\t ShowPager="True" \n\t PageSize="10" \n\t ChildPropertyName="UseSummaryLayout" \n\t Where=\'MediaType.Name=="Page"\' \n\t OrderBy="DateCreated DESC" />');    
-    wordsArray.push('@model Website');
-    wordsArray.push('@model Page');
-    wordsArray.push('@Model.GetRelatedItems() // If Model is Page or Website');
+    wordsArray.push(createAutoCompleteObject(
+        '<Site:GenerateNav', 
+        `<Site:GenerateNav runat="server"
+                RenderRootMedia="True"
+                RootMediaID="2"
+                RenderDepth="2"
+                DisplayProtectedSections="false" />`,
+        'user control'
+    ));
+
+    wordsArray.push(createAutoCompleteObject(
+        '<Site:RenderChildren',
+        `<Site:RenderChildren runat="server"
+                MediaID="0"
+                ShowPager="True"
+                PageSize="10"
+                ChildPropertyName="UseSummaryLayout"
+                Where=\'MediaType.Name=="Page"\'
+                OrderBy="DateCreated DESC" />`,
+        'user control'
+    ));
+
+    wordsArray.push(createAutoCompleteObject(
+        '<Site:RenderMedia',
+        `<Site:RenderMedia runat="server"
+                MediaID="2"
+                PropertyName="UseSummaryLayout" />`,
+        'user control'
+    ));
+
+    wordsArray.push(createAutoCompleteObject(
+        'LayoutsTab:RazorIfField', 
+        `<!-- LayoutsTab:RazorIfField: Razor Code Showing how to load a field and check its value -->
+@{            
+    var field = Model.RenderShortCode("{Field:test1}");
+
+    <ul>
+    @if(field == "True")
+    {
+        <li>If condition is true</li>
+    }
+    else
+    {
+        <li>You entered: @field</li>
+    }
+    </ul>
+}`,
+        'razor code'
+    ));
+
+
+    wordsArray.push(createAutoCompleteObject(
+        'LayoutsTab:RazorLoopAssociatedItems',
+        `<!-- LayoutsTab:RazorLoopAssociatedItems: Razor Code showing how you can load a field and loop through its associated items -->
+@{            
+    var field = Model.LoadField("Dropfield");
+
+    <ul>
+    @foreach(var item in field.FieldAssociations)
+    {
+        var detail = item.MediaDetail;
+        <li><a href="@detail.AbsoluteUrl">@detail.SectionTitle</a></li>
+    }
+    </ul>
+}`,
+        'razor code'
+    ));
+
+    wordsArray.push(createAutoCompleteObject(
+        'FieldsTab:RazorGallery',
+        `<!-- FieldsTab:RazorGallery: Razor Code showing how you can load a field and loop through its associated items -->
+@model RazorFieldParams
+@{
+    var field = (MediaDetailField)Model.Field;
+    var galleryId = "gallery-"+field.ID;
+
+    <script>
+        head.load(['https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.12/jquery.bxslider.min.js','https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.12/jquery.bxslider.min.css'], function() {
+            // Call a function when done
+            $("#@galleryId").bxSlider();
+        });
+    </script>
+
+    <ul id="@galleryId">
+    @foreach(var item in field.FieldAssociations.OrderBy(i=>i.OrderIndex))
+    {
+        <li><a href='#'><img src='@URIHelper.ConvertToAbsUrl(item.MediaDetail.PathToFile)?width=300&height=300&mode=min' alt='@item.MediaDetail.SectionTitle'></a></li>
+    }
+    </ul>
+}`,
+        'razor code'
+    ));    
 
 
     return wordsArray;
+        
 }
 
 function launchIntoFullscreen(element) {
@@ -438,6 +541,7 @@ function initAceEditors() {
 
     $(document).on("click", ".AceEditorFullScreen", function () {
         var element = $(this).parent().find(".ace_editor")[0];        
+        //var element = $("#mainArea")[0];        
         launchIntoFullscreen(element);                
     });
 
@@ -458,7 +562,7 @@ function initAceEditors() {
 
         if ($("#" + id).parent().find(".AceEditorFullScreen").length == 0)
         {
-            $("#" + id).parent().prepend("<a class='AceEditorFullScreen' href='#'>View Full Screen</a><br />");
+            $("#" + id).parent().prepend("<a class='AceEditorFullScreen' href='#' data-editorid='" + editorId +"'>View Full Screen</a><br />");
         }        
 
         var style = $(this).attr("style");
@@ -490,15 +594,16 @@ function initAceEditors() {
 
         var customCompleter = {
             getCompletions: function (editor, session, pos, prefix, callback) {
-                callback(null, wordList.map(function (word) {
+                callback(null, wordList.map(function (autoCompleteObject) {
                     return {
-                        caption: word,
-                        value: word,
-                        meta: "static"
+                        caption: autoCompleteObject.caption,
+                        value: autoCompleteObject.value,
+                        meta: autoCompleteObject.meta
                     };
                 }));
             }
         }
+
         editor.completers = [langTools.snippetCompleter, langTools.textCompleter, customCompleter]
 
         var htmlBeautifyOptions = {
@@ -591,7 +696,7 @@ function BindTabs()
 
 $(document).ready(function () {
 
-    //BindScrollMagic();
+    //BindScrollMagic();    
 
     $('.tooltip').each(function () {
         var title = $(this).attr("title");
@@ -992,8 +1097,8 @@ function pageLoad() {
     BindDataTable();
     BindSortable();
     BindTabs();
-    BindMultiFileUploaderImageLoadError();
-    //initAceEditors();
+    BindMultiFileUploaderImageLoadError();    
+    initAceEditors();
 
     if (typeof (BindActiveTabs) == 'function')
         BindActiveTabs();

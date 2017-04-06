@@ -28,7 +28,7 @@
         });
     }
   
-    $.get("/WebServices/IMediaDetails.asmx/GetGlossaryTerms", function (data) {
+    $.get(BaseUrl + "WebServices/IMediaDetails.asmx/GetGlossaryTerms", function (data) {
         $(data).each(function () {
             var term = this.Term;
             var definition = this.Definition;

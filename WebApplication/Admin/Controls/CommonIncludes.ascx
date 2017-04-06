@@ -1,5 +1,9 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CommonIncludes.ascx.cs" Inherits="WebApplication.Admin.Controls.CommonIncludes" %>
 
+<script type="text/javascript">
+    var BaseUrl = "<%= URIHelper.BaseUrl%>";
+</script>
+
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.colorbox/1.6.4/jquery.colorbox-min.js"></script>
@@ -53,9 +57,7 @@
     ga('require', 'linker');
     ga('linker:autoLink', ['<% = Request.Url.Host %>']);
 
-    ga('send', 'pageview');
-
-    var BaseUrl = "<%= URIHelper.BaseUrl%>";
+    ga('send', 'pageview');    
 
 </script>
 

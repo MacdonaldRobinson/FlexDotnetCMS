@@ -170,10 +170,11 @@ function getParameterByName(name) {
         return decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+var BaseWebserverUrl = BaseUrl + "Admin/Views/MasterPages/Webservice.asmx";
+
 function HandleContextMenuClick(action, target, node) {
     var mediaDetailId = target.parent().attr("mediadetailid");
-    var targetText = target.text();
-    var BaseWebserverUrl = BaseUrl + "Admin/Views/MasterPages/Webservice.asmx";
+    var targetText = target.text();    
 
     switch (action) {
         case "CreateChild":
@@ -477,6 +478,33 @@ function getFieldsAutoComplete()
     ));
 
     wordsArray.push(createAutoCompleteObject(
+        'LayoutsTab:RazorRenderChildren',
+        `<!-- LayoutsTab:RazorRenderChildren: Razor Code to loop through and render child items -->
+@{
+    var mediaId = Model.MediaID; // You can change this to any Media ID to load the children of that page
+    var media = MediasMapper.GetByID(mediaId);
+    
+    if(media != null)
+    {
+        var mediaDetail = media.GetLiveMediaDetail();
+        
+        if(mediaDetail != null)
+        {
+            var childItems =  mediaDetail.ChildMediaDetails;
+            <ul>
+            @foreach(var child in childItems)
+            {
+                <li><a href="@child.AbsoluteUrl">@child.SectionTitle</a></li>
+            }
+            </ul>
+        }
+    }
+}`,
+        'razor code'
+    ));
+
+
+    wordsArray.push(createAutoCompleteObject(
         'FieldsTab:RazorGallery',
         `<!-- FieldsTab:RazorGallery: Razor Code showing how you can load a field and loop through its associated items -->
 @model RazorFieldParams
@@ -500,8 +528,7 @@ function getFieldsAutoComplete()
 }`,
         'razor code'
     ));    
-
-
+    
     return wordsArray;
         
 }
@@ -575,10 +602,8 @@ function initAceEditors() {
         textarea.hide();
 
         editor.setTheme("ace/theme/iplastic");
-        editor.setValue(textarea.val());
-        //editor.setTheme("ace/theme/razor");
-        editor.getSession().setMode("ace/mode/html");
-        //editor.getSession().setMode("ace/mode/razor");
+        editor.setValue(textarea.val());        
+        editor.getSession().setMode("ace/mode/html");        
         editor.$blockScrolling = Infinity;
         editor.$useWorker = false;
 
@@ -589,7 +614,7 @@ function initAceEditors() {
             enableBasicAutocompletion: true,
             enableSnippets: true,
             enableLiveAutocompletion: false,
-            showPrintMargin: false
+            showPrintMargin: false,             
         });
 
         var customCompleter = {
@@ -759,7 +784,7 @@ function initTinyMCE()
     tfm_path = BaseUrl + "Scripts/tinyfilemanager.net";
     tinymce.init({
         selector: ".editor",
-        content_css: BaseUrl + "Views/MasterPages/SiteTemplates/css/style.css, " + BaseUrl + "Admin/Styles/editor.css",
+        content_css: BaseUrl + "Views/MasterPages/SiteTemplates/css/main.css, " + BaseUrl + "Admin/Styles/editor.css",
         menubar: false,
         plugins: [
           'advlist autolink lists link image charmap print preview hr anchor pagebreak',

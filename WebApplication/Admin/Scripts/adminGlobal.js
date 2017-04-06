@@ -185,7 +185,7 @@ function HandleContextMenuClick(action, target, node) {
                 dataType: "text",
                 success:
                 function (msg) {
-                    window.location.href = BaseWebserverUrl + "/Create.aspx";
+                    window.location.href = BaseUrl + "Admin/Views/PageHandlers/Media/Create.aspx";
                 },
                 error: function (xhr, status, error) {
                     DisplayJsonException(xhr);

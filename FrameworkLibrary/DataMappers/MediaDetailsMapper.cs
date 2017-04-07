@@ -905,6 +905,11 @@ namespace FrameworkLibrary
             return html;
         }
 
+        public static string ReplaceFieldWithParsedValue(string originalText, string textToReplace, IField mediaField, string parsedValue)
+        {
+            return  originalText.Replace(textToReplace, $"<div class='field' data-fieldid='{mediaField.ID}'>{parsedValue}</div>");
+        }
+
         public static string ParseSpecialTags(IMediaDetail mediaDetail, string propertyName = "{UseMainLayout}", int previousCount = 0, object passToParser = null)
         {
             if (mediaDetail == null)
@@ -1047,18 +1052,20 @@ namespace FrameworkLibrary
                             if (!string.IsNullOrEmpty(frontEndLayout))
                             {
                                 var parsedValue = ParseSpecialTags(mediaDetail, frontEndLayout, 0, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail });
-                                customCode = customCode.Replace(field.ToString(), parsedValue);
+                                customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, parsedValue);
                             }
                             else
                             {
                                 if (mediaField.GetAdminControlValue.Contains("@"))
                                 {
                                     var parsedValue = ParseSpecialTags(mediaDetail, mediaField.FieldValue, 0, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail });
-                                    customCode = customCode.Replace(field.ToString(), parsedValue);
+                                    customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, parsedValue);
+                                    //customCode = customCode.Replace(field.ToString(), parsedValue);
                                 }
                                 else
                                 {
-                                    customCode = customCode.Replace(field.ToString(), mediaField.FieldValue);
+                                    customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, mediaField.FieldValue);
+                                    //customCode = customCode.Replace(field.ToString(), mediaField.FieldValue);
                                 }
                             }
                         }

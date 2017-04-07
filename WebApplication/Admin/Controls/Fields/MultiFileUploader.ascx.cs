@@ -52,42 +52,50 @@ namespace WebApplication.Admin.Controls.Fields
             var hasDeleted = false;
             var hasReordered = false;
 
-            if (IsPostBack && MultiFileUpload.HasFiles && !hasRun)
+
+            try
             {
-                hasRun = true;
-
-                var index = 0;
-                foreach (var file in MultiFileUpload.PostedFiles)
+                if (IsPostBack && MultiFileUpload.HasFiles && !hasRun)
                 {
-                    var fileInfo = (new System.IO.FileInfo(GetFolderPath() + file.FileName));
+                    hasRun = true;
 
-                    if (!fileInfo.Directory.Exists)
-                        fileInfo.Directory.Create();
-
-                    if (fileInfo.Directory.Exists)
+                    var index = 0;
+                    foreach (var file in MultiFileUpload.PostedFiles)
                     {
-                        file.SaveAs(fileInfo.FullName);
+                        var fileInfo = (new System.IO.FileInfo(GetFolderPath() + file.FileName));
 
-                        var filePath = URIHelper.ConvertAbsUrlToTilda(URIHelper.ConvertAbsPathToAbsUrl(fileInfo.FullName));
+                        if (!fileInfo.Directory.Exists)
+                            fileInfo.Directory.Create();
 
-                        if (!field.FieldAssociations.Any(i => i.MediaDetail.PathToFile == filePath))
+                        if (fileInfo.Directory.Exists)
                         {
-                            var fieldAssociation = new FieldAssociation();
-                            fieldAssociation.MediaDetail = (MediaDetail)PagesMapper.CreateObject(MediaTypeID, MediasMapper.CreateObject(), AdminBasePage.SelectedMedia);
-                            fieldAssociation.MediaDetail.PathToFile = filePath;
-                            fieldAssociation.MediaDetail.PublishDate = DateTime.Now;
-                            fieldAssociation.MediaDetail.CreatedByUser = fieldAssociation.MediaDetail.LastUpdatedByUser = FrameworkSettings.CurrentUser;
-                            fieldAssociation.MediaDetail.CachedVirtualPath = fieldAssociation.MediaDetail.CalculatedVirtualPath();
-                            fieldAssociation.MediaDetail.LanguageID = SettingsMapper.GetSettings().DefaultLanguage.ID;
+                            file.SaveAs(fileInfo.FullName);
 
-                            field.FieldAssociations.Add(fieldAssociation);
+                            var filePath = URIHelper.ConvertAbsUrlToTilda(URIHelper.ConvertAbsPathToAbsUrl(fileInfo.FullName));
 
-                            index++;
+                            if (!field.FieldAssociations.Any(i => i.MediaDetail.PathToFile == filePath))
+                            {
+                                var fieldAssociation = new FieldAssociation();
+                                fieldAssociation.MediaDetail = (MediaDetail)PagesMapper.CreateObject(MediaTypeID, MediasMapper.CreateObject(), AdminBasePage.SelectedMedia);
+                                fieldAssociation.MediaDetail.PathToFile = filePath;
+                                fieldAssociation.MediaDetail.PublishDate = DateTime.Now;
+                                fieldAssociation.MediaDetail.CreatedByUser = fieldAssociation.MediaDetail.LastUpdatedByUser = FrameworkSettings.CurrentUser;
+                                fieldAssociation.MediaDetail.CachedVirtualPath = fieldAssociation.MediaDetail.CalculatedVirtualPath();
+                                fieldAssociation.MediaDetail.LanguageID = SettingsMapper.GetSettings().DefaultLanguage.ID;
 
-                            var returnObj = BaseMapper.SaveDataModel();
+                                field.FieldAssociations.Add(fieldAssociation);
+
+                                index++;
+
+                                var returnObj = BaseMapper.SaveDataModel();
+                            }
                         }
                     }
                 }
+            }
+            catch(Exception ex)
+            {
+
             }
 
             if (ItemsToDelete.Text != "" && ItemsToDelete.Text != "[]")
@@ -203,7 +211,7 @@ namespace WebApplication.Admin.Controls.Fields
         {
             var field = GetField();
 
-            var media = MediasMapper.GetByID(AdminBasePage.SelectedMedia.ID);
+            var media = MediasMapper.GetByID(field.MediaDetail.MediaID);
 
             var fieldAssociation = new FieldAssociation();
             fieldAssociation.MediaDetail = (MediaDetail)PagesMapper.CreateObject(MediaTypeID, MediasMapper.CreateObject(), media);

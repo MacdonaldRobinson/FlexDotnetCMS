@@ -65,14 +65,29 @@ namespace WebApplication.Admin.Controls.Fields
             var returnObj = BaseMapper.GetDataModel().SaveChanges();
         }
 
+        public new bool IsPostBack
+        {
+            get
+            {
+                return HttpContext.Current.Request.HttpMethod == "POST";
+            }
+        }
+
         public override void SetValue(object value)
         {
             if (value == "")
                 return;
 
-            if (IsPostBack)
+            try
             {
-                SaveToDB(value.ToString());
+                if (IsPostBack)
+                {
+                    SaveToDB(value.ToString());
+                }
+            }
+            catch(Exception)
+            {
+
             }
 
             Values.Value = value.ToString();

@@ -171,6 +171,7 @@
     <Content Include="Admin\Views\MasterPages\WebService.asmx" />
     <Content Include="Admin\Views\PageHandlers\Chat\AdminChat.asmx" />
     <Content Include="Admin\Views\PageHandlers\Chat\Default.aspx" />
+    <Content Include="Admin\Views\PageHandlers\FieldEditor\Default.aspx" />
     <Content Include="Admin\Views\PageHandlers\FieldTypes\Default.aspx" />
     <Content Include="Admin\Views\PageHandlers\FieldTypes\Detail.aspx" />
     <Content Include="Admin\Views\PageHandlers\GlossaryTerms\Default.aspx" />
@@ -916,6 +917,13 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Admin\Views\PageHandlers\Chat\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\FieldEditor\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\FieldEditor\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Views\PageHandlers\FieldTypes\Default.aspx.cs">

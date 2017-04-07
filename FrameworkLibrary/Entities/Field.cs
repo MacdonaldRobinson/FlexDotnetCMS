@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FrameworkLibrary
 {
-    public partial class Field : IField
+    public partial class Field : IField, IMustContainID
     {
     }
 }

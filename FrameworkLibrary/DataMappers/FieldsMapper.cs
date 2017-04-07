@@ -19,6 +19,13 @@ namespace FrameworkLibrary
         {
             var allItems = GetAll();
             return allItems.FirstOrDefault(item => item.ID == id);
-        }        
+        }
+
+        public static Return Update(IField obj)
+        {
+            obj.DateLastModified = DateTime.Now;
+
+            return Update(MapperKey, obj);
+        }
     }
 }

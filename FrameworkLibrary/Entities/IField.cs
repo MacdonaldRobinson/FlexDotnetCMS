@@ -2,7 +2,7 @@
 
 namespace FrameworkLibrary
 {
-    public interface IField
+    public interface IField : IMustContainID
     {
         long ID { get; set; }
         string FieldCode { get; set; }
@@ -17,5 +17,6 @@ namespace FrameworkLibrary
         string AdminControl { get; set; }
         string GetAdminControlValue { get; set; }
         string SetAdminControlValue { get; set; }
+        string FieldDescription { get; set; }
     }
 }

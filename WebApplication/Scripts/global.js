@@ -60,7 +60,8 @@ $(document).ready(function () {
         initAccordians();
     });
 
-	$(document).on("click", ".colorbox.iframe", function () {
+    $(document).on("click", ".colorbox.iframe", function () {
+        
         var dataOnColorboxClose = $(this).attr("data-OnColorboxClose");
 
         var width = $(this).attr("data-width");

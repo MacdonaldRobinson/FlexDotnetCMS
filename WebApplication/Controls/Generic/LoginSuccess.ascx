@@ -4,4 +4,7 @@ Welcome&nbsp;
 &nbsp;
 <br />
 <br />
-<asp:LoginStatus ID="LoginStatus" CssClass="btn btn-primary customBtn" runat="Server" OnLoggedOut="LoginStatus_OnLoggedOut" />
+<%--<asp:LinkButton ID="Logout" Text="Logout" runat="server" CssClass="btn btn-primary customBtn" OnClick="Logout_Click"/>--%>
+<%--<form runat="server">
+    <asp:LoginStatus ID="LoginStatus" CssClass="btn btn-primary customBtn" runat="Server" OnLoggedOut="LoginStatus_OnLoggedOut" />
+</form>--%>

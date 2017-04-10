@@ -13,15 +13,6 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor {
     public partial class Default {
         
         /// <summary>
-        /// Submit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Submit;
-        
-        /// <summary>
         /// DynamicField control.
         /// </summary>
         /// <remarks>
@@ -29,5 +20,14 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.PlaceHolder DynamicField;
+        
+        /// <summary>
+        /// Submit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton Submit;
     }
 }

@@ -46,7 +46,7 @@ namespace WebApplication.Controls.OnLogin {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton EditCurrentPage;
+        protected global::System.Web.UI.WebControls.HyperLink EditCurrentPage;
         
         /// <summary>
         /// LoginSuccess control.

@@ -52,52 +52,6 @@ namespace WebApplication.Admin.Controls.Fields
             var hasDeleted = false;
             var hasReordered = false;
 
-
-            try
-            {
-                if (IsPostBack && MultiFileUpload.HasFiles && !hasRun)
-                {
-                    hasRun = true;
-
-                    var index = 0;
-                    foreach (var file in MultiFileUpload.PostedFiles)
-                    {
-                        var fileInfo = (new System.IO.FileInfo(GetFolderPath() + file.FileName));
-
-                        if (!fileInfo.Directory.Exists)
-                            fileInfo.Directory.Create();
-
-                        if (fileInfo.Directory.Exists)
-                        {
-                            file.SaveAs(fileInfo.FullName);
-
-                            var filePath = URIHelper.ConvertAbsUrlToTilda(URIHelper.ConvertAbsPathToAbsUrl(fileInfo.FullName));
-
-                            if (!field.FieldAssociations.Any(i => i.MediaDetail.PathToFile == filePath))
-                            {
-                                var fieldAssociation = new FieldAssociation();
-                                fieldAssociation.MediaDetail = (MediaDetail)PagesMapper.CreateObject(MediaTypeID, MediasMapper.CreateObject(), AdminBasePage.SelectedMedia);
-                                fieldAssociation.MediaDetail.PathToFile = filePath;
-                                fieldAssociation.MediaDetail.PublishDate = DateTime.Now;
-                                fieldAssociation.MediaDetail.CreatedByUser = fieldAssociation.MediaDetail.LastUpdatedByUser = FrameworkSettings.CurrentUser;
-                                fieldAssociation.MediaDetail.CachedVirtualPath = fieldAssociation.MediaDetail.CalculatedVirtualPath();
-                                fieldAssociation.MediaDetail.LanguageID = SettingsMapper.GetSettings().DefaultLanguage.ID;
-
-                                field.FieldAssociations.Add(fieldAssociation);
-
-                                index++;
-
-                                var returnObj = BaseMapper.SaveDataModel();
-                            }
-                        }
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-
-            }
-
             if (ItemsToDelete.Text != "" && ItemsToDelete.Text != "[]")
             {
                 var deleteIds = StringHelper.JsonToObject<List<long>>(ItemsToDelete.Text);
@@ -291,7 +245,58 @@ namespace WebApplication.Admin.Controls.Fields
 
         protected void UploadFilesNow_Click(object sender, EventArgs e)
         {
+            try
+            {
+                var field = GetField();
 
+                if (IsPostBack && Request.Files.Count > 0 && !hasRun)
+                {
+                    hasRun = true;
+
+                    var index = 0;
+                    foreach (string item in Request.Files)
+                    {
+                        var file = Request.Files[item];
+                        var fileInfo = (new System.IO.FileInfo(GetFolderPath() + file.FileName));
+
+                        if (!fileInfo.Directory.Exists)
+                            fileInfo.Directory.Create();
+
+                        if (fileInfo.Directory.Exists)
+                        {
+                            file.SaveAs(fileInfo.FullName);
+
+                            var filePath = URIHelper.ConvertAbsUrlToTilda(URIHelper.ConvertAbsPathToAbsUrl(fileInfo.FullName));
+
+                            if (!field.FieldAssociations.Any(i => i.MediaDetail.PathToFile == filePath))
+                            {
+                                var fieldAssociation = new FieldAssociation();
+                                fieldAssociation.MediaDetail = (MediaDetail)PagesMapper.CreateObject(MediaTypeID, MediasMapper.CreateObject(), AdminBasePage.SelectedMedia);
+                                fieldAssociation.MediaDetail.PathToFile = filePath;
+                                fieldAssociation.MediaDetail.PublishDate = DateTime.Now;
+                                fieldAssociation.MediaDetail.CreatedByUser = fieldAssociation.MediaDetail.LastUpdatedByUser = FrameworkSettings.CurrentUser;
+                                fieldAssociation.MediaDetail.CachedVirtualPath = fieldAssociation.MediaDetail.CalculatedVirtualPath();
+                                fieldAssociation.MediaDetail.LanguageID = SettingsMapper.GetSettings().DefaultLanguage.ID;
+
+                                field.FieldAssociations.Add(fieldAssociation);
+
+                                index++;
+
+                                var returnObj = BaseMapper.SaveDataModel();
+                            }
+                        }
+                    }
+                }
+                SetValue(GetValue());
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
         }
     }
 }

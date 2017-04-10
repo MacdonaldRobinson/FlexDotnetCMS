@@ -120,7 +120,7 @@ img.MarkedAsDeleted {
 }
 
 .UploadedItems {
-
+    margin-top: 10px;
 }
 
 .UploadedItems .item {
@@ -144,7 +144,10 @@ img.MarkedAsDeleted {
 
 
 .dvPreview img {
-    margin-right:5px;
+    margin: 5px 5px 5px 0;
+    max-height: 100px;
+    max-width: 100px;
+    background-color: #cccccc;
 }
 
 #PathToFileHolder img{

@@ -9,7 +9,6 @@
     </div>    
     <div>
         <asp:LinkButton Text="Login" runat="server" ID="Submit" OnClick="Submit_Click"/>
-
     </div>
 </asp:Panel>
 

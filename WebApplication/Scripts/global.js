@@ -52,7 +52,7 @@ function OnUpdatePanelRefreshComplete(OnUpdatePanelRefreshCompleteFunction) {
     }
 }
 
-$(document).ready(function () {
+$(document).ready(function () {        
 
     initAccordians();
 
@@ -61,7 +61,16 @@ $(document).ready(function () {
     });
 
 	$(document).on("click", ".colorbox.iframe", function () {
-		var dataOnColorboxClose = $(this).attr("data-OnColorboxClose");
+        var dataOnColorboxClose = $(this).attr("data-OnColorboxClose");
+
+        var width = $(this).attr("data-width");
+        if (width != undefined)
+            colorBoxWidth = width;
+
+        var height = $(this).attr("data-height");
+        if (height != undefined)
+            colorBoxHeight = height;
+
 		$.colorbox({
 			href: $(this).attr("href"), width: colorBoxWidth, height: colorBoxHeight, iframe: true, fixed: true, onClosed: function () {
 				if (dataOnColorboxClose != undefined)
@@ -79,7 +88,7 @@ $(document).ready(function () {
 
 	function resizeColorBox() {
 		if ($('#cboxOverlay').is(':visible')) {
-			jQuery.colorbox.resize({ width: colorBoxWidth, height: colorBoxWidth });
+            jQuery.colorbox.resize({ width: colorBoxWidth, height: colorBoxHeight });
 		}
 	}
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.UI.WebControls;
 
 namespace WebApplication.Admin.Controls.Fields
@@ -31,6 +32,14 @@ namespace WebApplication.Admin.Controls.Fields
 
         public long FieldID { get; set; }
         private MediaDetailField _field = null;
+
+        public new bool IsPostBack
+        {
+            get
+            {
+                return HttpContext.Current.Request.HttpMethod == "POST";
+            }
+        }
 
         public MediaDetailField GetField()
         {

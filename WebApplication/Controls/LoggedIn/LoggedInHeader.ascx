@@ -17,29 +17,34 @@
         <div class="cms-header-logout">
             <Site:LoginSuccess ID="LoginSuccess" runat="server" />
         </div>
-    </asp:Panel>
 
-    <style>
-        .field {
-            border: 1px solid red;
-            position: relative;
-        }
-            .field:before {
-                content: 'Edit';
-                position: absolute;
-                top:0;
-                left: 0;
-                z-index: 99999999;
-                background-color: #000000;
-                color: #fff;
-                cursor:pointer;
-                padding: 2px;
+        <style>
+            .field {
+                border: 1px solid #808080;
+                position: relative;
+                padding-top: 40px;                
             }
-    </style>
+                .field .edit {
+                    content: 'Edit';
+                    position: absolute;
+                    top:0;
+                    left: 0;
+                    z-index: 99999999;
+                    background-color: #000000;
+                    color: #fff;
+                    cursor:pointer;
+                    padding: 2px;
+                }
+        </style>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-        });
-    </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("[data-fieldid]").each(function () {
+                    var fieldId = $(this).attr("data-fieldid");
 
+                    $(this).prepend("<a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId +"' data-OnColorboxClose='window.location.reload()' data-width='800px' data-height='500px'>Edit</a>");
+                });
+            });
+        </script>
+    </asp:Panel>
 </form>

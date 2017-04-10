@@ -29,11 +29,6 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor
             }
         }
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            //LoadField();
-        }
-
         public void LoadField()
         {
             if (Field == null)
@@ -79,48 +74,37 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor
             DynamicField.Controls.Add(control);
         }
 
-        protected void Submit_Click(object sender, EventArgs e)
+        public void SaveField()
         {
             if (DynamicField.Controls.Count == 0)
-                return;            
+                return;
 
             var control = DynamicField.Controls[0];
-
+            
             if (control is WebApplication.Admin.Controls.Fields.IFieldControl)
             {
-                var valAsString = ((WebApplication.Admin.Controls.Fields.IFieldControl)control).GetValue().ToString();
-
-                if (!string.IsNullOrEmpty(valAsString))
-                {
-                    valAsString = MediaDetailsMapper.ConvertATagsToShortCodes(valAsString);
-
-                    if (valAsString.Contains(URIHelper.BaseUrl))
-                        valAsString = valAsString.Replace(URIHelper.BaseUrl, "{BaseUrl}");
-                }
-
-                Field.FieldValue = valAsString;
+                var ctrl = ((WebApplication.Admin.Controls.Fields.IFieldControl)control);
+                ctrl.SetValue(ctrl.GetValue());
+                Field.FieldValue = ctrl.GetValue().ToString();
             }
             else
             {
-                var fieldValue = "";
-
-                if (Field.GetAdminControlValue.Contains("@"))
+                try
                 {
-                    fieldValue = ParserHelper.ParseData(Field.GetAdminControlValue, new { Control = control });
+                    Field.FieldValue = ParserHelper.ParseData("{"+Field.GetAdminControlValue+"}", control);
                 }
-                else
+                catch (Exception ex)
                 {
-                    fieldValue = ParserHelper.ParseData("{" + Field.GetAdminControlValue + "}", control);
-                }
-
-                if (fieldValue != "{" + Field.GetAdminControlValue + "}")
-                {
-                    fieldValue = MediaDetailsMapper.ConvertATagsToShortCodes(fieldValue);
-                    Field.FieldValue = fieldValue.Replace(URIHelper.BaseUrl, "{BaseUrl}");
+                    DisplayErrorMessage("Error", ErrorHelper.CreateError(ex));
                 }
             }
 
             var returnObj = FieldsMapper.Update(Field);
+        }
+
+        protected void Submit_Click(object sender, EventArgs e)
+        {            
+            SaveField();
         }
     }
 }

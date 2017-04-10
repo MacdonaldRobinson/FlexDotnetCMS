@@ -907,7 +907,12 @@ namespace FrameworkLibrary
 
         public static string ReplaceFieldWithParsedValue(string originalText, string textToReplace, IField mediaField, string parsedValue)
         {
-            return  originalText.Replace(textToReplace, $"<div class='field' data-fieldid='{mediaField.ID}'>{parsedValue}</div>");
+            if(FrameworkSettings.CurrentUser != null)
+            {
+                parsedValue = $"<div class='field' data-fieldid='{mediaField.ID}'>{parsedValue}</div>";
+            }
+
+            return originalText.Replace(textToReplace, parsedValue);
         }
 
         public static string ParseSpecialTags(IMediaDetail mediaDetail, string propertyName = "{UseMainLayout}", int previousCount = 0, object passToParser = null)

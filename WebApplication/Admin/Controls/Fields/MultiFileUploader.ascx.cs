@@ -254,9 +254,9 @@ namespace WebApplication.Admin.Controls.Fields
                     hasRun = true;
 
                     var index = 0;
-                    foreach (string item in Request.Files)
-                    {
-                        var file = Request.Files[item];
+                    for (int i = 0; i < Request.Files.Count; i++)
+                    {                    
+                        var file = Request.Files[i];
                         var fileInfo = (new System.IO.FileInfo(GetFolderPath() + file.FileName));
 
                         if (!fileInfo.Directory.Exists)
@@ -268,10 +268,11 @@ namespace WebApplication.Admin.Controls.Fields
 
                             var filePath = URIHelper.ConvertAbsUrlToTilda(URIHelper.ConvertAbsPathToAbsUrl(fileInfo.FullName));
 
-                            if (!field.FieldAssociations.Any(i => i.MediaDetail.PathToFile == filePath))
+                            if (!field.FieldAssociations.Any(j => j.MediaDetail.PathToFile == filePath))
                             {
                                 var fieldAssociation = new FieldAssociation();
                                 fieldAssociation.MediaDetail = (MediaDetail)PagesMapper.CreateObject(MediaTypeID, MediasMapper.CreateObject(), AdminBasePage.SelectedMedia);
+                                fieldAssociation.MediaDetail.LinkTitle = fieldAssociation.MediaDetail.SectionTitle = fileInfo.Name;
                                 fieldAssociation.MediaDetail.PathToFile = filePath;
                                 fieldAssociation.MediaDetail.PublishDate = DateTime.Now;
                                 fieldAssociation.MediaDetail.CreatedByUser = fieldAssociation.MediaDetail.LastUpdatedByUser = FrameworkSettings.CurrentUser;

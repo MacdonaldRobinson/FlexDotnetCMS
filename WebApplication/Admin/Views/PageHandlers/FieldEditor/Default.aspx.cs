@@ -10,7 +10,7 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor
 {
     public partial class Default : AdminBasePage
     {
-        public IField Field { get; set; }
+        public MediaDetailField Field { get; set; }
 
         protected void Page_Init(object sender, EventArgs e)
         {
@@ -21,9 +21,9 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor
                 var fieldId = long.Parse(fieldIdStr);
                 var field = FieldsMapper.GetByID(fieldId);
 
-                if (field != null)
+                if (field != null && field is MediaDetailField)
                 {
-                    Field = field;
+                    Field = field as MediaDetailField;
                     LoadField();
                 }
             }
@@ -72,6 +72,13 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor
             }
 
             DynamicField.Controls.Add(control);
+
+            var frontEndLayout = Field.FrontEndLayout;
+
+            if (Field.UseMediaTypeFieldFrontEndLayout)
+                frontEndLayout = Field.MediaTypeField.FrontEndLayout;
+
+            FrontEndLayout.Text = frontEndLayout;
         }
 
         public void SaveField()
@@ -98,6 +105,11 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor
                     DisplayErrorMessage("Error", ErrorHelper.CreateError(ex));
                 }
             }
+
+            if (Field.UseMediaTypeFieldFrontEndLayout)
+                Field.MediaTypeField.FrontEndLayout = FrontEndLayout.Text;
+            else
+                Field.FrontEndLayout = FrontEndLayout.Text;
 
             var returnObj = FieldsMapper.Update(Field);
         }

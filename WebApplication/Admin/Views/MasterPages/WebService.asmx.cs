@@ -281,7 +281,7 @@ namespace WebApplication.Admin.Views.MasterPages
         [WebMethod(EnableSession = true)]
         public void CreateChild(long id)
         {
-            if (!FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.SaveItems))
+            if (!FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.Save))
             {
                 throw new Exception("You do not have the appropriate permissions to create items");
             }
@@ -586,7 +586,7 @@ namespace WebApplication.Admin.Views.MasterPages
 
         private void HandleDeletePermanently(Media item)
         {
-            if (!FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.DeleteItemsPermanently))
+            if (!FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.Delete))
             {
                 throw new Exception("You do not have the appropriate permissions to delete items permanently");
             }
@@ -630,7 +630,7 @@ namespace WebApplication.Admin.Views.MasterPages
         {
             var parentItem = item.ParentMedia;
 
-            if (!FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.DeleteItemsPermanently))
+            if (!FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.Delete))
             {
                 throw new Exception("You do not have the appropriate permissions to delete items permanently");
             }
@@ -748,7 +748,7 @@ namespace WebApplication.Admin.Views.MasterPages
         {
             UserMustHaveAccessTo(detail);
 
-            if (!FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.DeleteItems))
+            if (!FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.Delete))
             {
                 throw new Exception("You do not have the appropriate permissions to delete/undelete items");
             }

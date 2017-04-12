@@ -384,7 +384,7 @@ namespace WebApplication.Admin.MediaArticle
 
         protected void PublishNow_OnClick(object sender, EventArgs e)
         {
-            if (!CurrentUser.HasPermission(PermissionsEnum.PublishItems))
+            if (!CurrentUser.HasPermission(PermissionsEnum.Publish))
             {
                 DisplayErrorMessage("Error publishing item", ErrorHelper.CreateError(new Exception("You do not have the appropriate permissions to publish items")));
                 return;
@@ -582,7 +582,7 @@ namespace WebApplication.Admin.MediaArticle
                 return;
             }
 
-            if (!CurrentUser.HasPermission(PermissionsEnum.SaveItems))
+            if (!CurrentUser.HasPermission(PermissionsEnum.Publish))
             {
                 DisplayErrorMessage("Error saving item", ErrorHelper.CreateError(new Exception("You do not have the appropriate permissions to save items")));
                 return;
@@ -651,7 +651,7 @@ namespace WebApplication.Admin.MediaArticle
                 return;
             }
 
-            if ((oldPostPublishDate != selectedItem.PublishDate) && !CurrentUser.HasPermission(PermissionsEnum.PublishItems))
+            if ((oldPostPublishDate != selectedItem.PublishDate) && !CurrentUser.HasPermission(PermissionsEnum.Publish))
             {
                 DisplayErrorMessage("Error saving item", ErrorHelper.CreateError(new Exception("You do not have the appropriate permissions to publish items")));
                 return;

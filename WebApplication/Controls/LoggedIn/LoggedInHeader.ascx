@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LoggedInHeader.ascx.cs" Inherits="WebApplication.Controls.OnLogin.LoggedInHeader" %>
 
-    <asp:Panel runat="server" ID="LoggedInHeaderPanel" ClientIDMode="Static" Visible="false" CssClass="cms-header">
+    <asp:Panel runat="server" ID="LoggedInHeaderPanel" ClientIDMode="Static" Visible="false">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
         <script type="text/javascript">
             $(document).ready(function () {
@@ -9,26 +9,68 @@
                 }
             });
         </script>
-        <asp:Panel ID="AccessCMSPermissionsPanel" runat="server" Visible="false" CssClass="cms-header-controls">
-            <asp:HyperLink ID="QuickEditCurrentPage" runat="server" CssClass="colorbox iframe" data-OnColorboxClose="window.location.reload()"><i class="fa fa-pencil"></i>&nbsp;Quick Edit Page</asp:HyperLink>
-            <br />
-            <asp:HyperLink ID="EditCurrentPage" runat="server" Target="_blank" data-OnColorboxClose="window.location.reload()"><i class="fa fa-expand"></i>&nbsp;Edit in CMS</asp:HyperLink>
+        <asp:Panel ID="AccessCMSPermissionsPanel" runat="server" Visible="false" ClientIDMode="Static">
+            <div class="floatLeft">            
+                <a ID="QuickEditCurrentPage" class="colorbox iframe button floatLeft" data-OnColorboxClose="window.location.reload()" href="<%= CurrentMediaDetailAdminUrl %>&masterFilePath=~/Admin/Views/MasterPages/Popup.Master"><i class="fa fa-pencil"></i>&nbsp;Edit Page</a>                
+                <div id="AdminPanel" runat="server" class="floatLeft">
+                    <a ID="EditSettings" class="colorbox iframe button floatLeft" data-OnColorboxClose="window.location.reload()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Settings/Default.aspx?masterFilePath=~/Admin/Views/MasterPages/Popup.Master"><i class="fa fa-expand"></i>&nbsp;Edit Settings</a>
+                    <a ID="EditTemplate" class="colorbox iframe button floatLeft" data-OnColorboxClose="window.location.reload()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MasterPages/Detail.aspx?id=<%= BasePage.CurrentMediaDetail.GetMasterPage().ID %>"><i class="fa fa-expand"></i>&nbsp;Edit Template</a>
+                    <a ID="EditMediaType" class="colorbox iframe button floatLeft" data-OnColorboxClose="window.location.reload()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MediaTypes/Detail.aspx?id=<%= BasePage.CurrentMediaDetail.MediaTypeID %>"><i class="fa fa-expand"></i>&nbsp;Edit Media Type</a>            
+                </div>
+            </div>
+            <div class="floatRight"> 
+                <a ID="EditCurrentPage" Target="_blank" class="button floatRight" data-OnColorboxClose="window.location.reload()" href="<%= CurrentMediaDetailAdminUrl %>"><i class="fa fa-expand"></i>&nbsp;Edit in CMS</a>
+            </div>
+            <div class="clear"></div>
         </asp:Panel>
-        <div class="cms-header-logout">
-            <Site:LoginSuccess ID="LoginSuccess" runat="server" />
-        </div>
 
         <style>
+            #LoggedInHeaderPanel {
+                background-color: #000;
+                padding: 5px;
+                color: #fff;
+            }
+
+            #AccessCMSPermissionsPanel a.button{
+                display: block;
+                color: #fff;                
+                border: 1px solid #fff;
+                padding: 5px;              
+                margin-left: 10px;
+                text-decoration: none;
+            }
+
+            #AccessCMSPermissionsPanel a.button:hover{
+                background-color: red;
+            }
+
+            #AccessCMSPermissionsPanel:after {
+                clear: both;
+            }
+
+            div.clear {
+                clear: both;
+            }
+
+            .floatLeft {
+                float: left;
+            }
+
+            .floatRight {
+                float: right;
+            }
+
             .field {
-                border: 1px dotted #000;
+                border: 1px dashed;
                 position: relative;                      
                 display:inline-block;
+                border-color: rgba(0, 0, 0, .5);
             }
             .field:hover{
-                border-color:red;
+                border-color: rgba(255, 0, 0, 1);                
             }
                 .field:hover .edit {
-                    background-color: red;
+                    background-color: red;  
                     opacity: 1;
                 }
                 .field .edit {
@@ -41,7 +83,7 @@
                     cursor: pointer;
                     padding: 2px 5px;
                     font-size: 12px;
-                    font-style: normal;
+                    font-style: normal;   
                     opacity: 0.1;
                 }
         </style>

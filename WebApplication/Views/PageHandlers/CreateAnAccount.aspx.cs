@@ -25,10 +25,10 @@ namespace WebApplication.Views.PageHandlers
             newUser.AuthenticationType = AuthType.Forms.ToString();
             newUser.IsActive = true;
 
-            var role = RoleEnum.FrontEndUser;
+            /*var role = RoleEnum.FrontEndUser;
             RoleEnum.TryParse(Category.Text, out role);
 
-            newUser.Roles.Add(BaseMapper.GetObjectFromContext(RolesMapper.GetByEnum(role)));
+            newUser.Roles.Add(BaseMapper.GetObjectFromContext(RolesMapper.GetByEnum(role)));*/
 
             var returnObj = newUser.Validate();
             var userExists = UsersMapper.GetByEmailAddress(newUser.EmailAddress);

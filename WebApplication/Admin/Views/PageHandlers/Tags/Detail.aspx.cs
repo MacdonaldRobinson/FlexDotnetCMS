@@ -3,7 +3,7 @@ using System;
 
 namespace WebApplication.Admin.Views.PageHandlers.Tags
 {
-    public partial class Detail : AdminBasePage
+    public partial class Detail : AdvanceOptionsBasePage
     {
         private Tag selectedItem = null;
 

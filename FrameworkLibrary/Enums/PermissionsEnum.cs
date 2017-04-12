@@ -2,14 +2,12 @@
 {
     public enum PermissionsEnum
     {
-        SaveItems,
-        DeleteItems,
-        DeleteItemsPermanently,
-        PublishItems,
         AccessCMS,
         AccessAdvanceOptions,
-        AccessBannersManager,
-        AccessTagsManager,
-        AccessProtectedSections
+        AccessProtectedSections,
+        Create,
+        Save,
+        Delete,
+        Publish        
     }
 }

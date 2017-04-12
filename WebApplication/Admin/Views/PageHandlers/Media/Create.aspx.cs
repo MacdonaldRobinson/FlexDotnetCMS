@@ -22,7 +22,7 @@ namespace WebApplication.Admin.Views.PageHandlers.MediaArticle
 
         protected void CreateMedia_OnClick(object sender, EventArgs e)
         {
-            if (!CurrentUser.HasPermission(PermissionsEnum.SaveItems))
+            if (!CurrentUser.HasPermission(PermissionsEnum.Save))
             {
                 DisplayErrorMessage("Error creating item", ErrorHelper.CreateError(new Exception("You do not have the appropriate permissions create items")));
                 return;

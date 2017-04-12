@@ -6,7 +6,7 @@ using System.Linq.Dynamic;
 
 namespace WebApplication.Admin.Views.PageHandlers.Tags
 {
-    public partial class Default : AdminBasePage
+    public partial class Default : AdvanceOptionsBasePage
     {
         private List<Tag> Items
         {

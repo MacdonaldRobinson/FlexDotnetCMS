@@ -16,8 +16,7 @@
 
         <Admin:CommonIncludes runat="server" ID="CommonIncludes" />
 
-        <script type="text/javascript">
-
+        <script type="text/javascript">            
             function RefreshSiteTreeViewAjaxPanel() {
                 //window.location.reload();
             }

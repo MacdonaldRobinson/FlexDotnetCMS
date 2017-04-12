@@ -14,8 +14,13 @@ namespace WebApplication.Controls.OnLogin
 
                 LoggedInHeaderPanel.Visible = true;
 
-                QuickEditCurrentPage.NavigateUrl = WebApplication.BasePage.GetRedirectToMediaDetailUrl(BasePage.CurrentMediaDetail.MediaTypeID, BasePage.CurrentMediaDetail.MediaID) + "&masterFilePath=~/Admin/Views/MasterPages/Popup.Master";
-                EditCurrentPage.NavigateUrl = WebApplication.BasePage.GetRedirectToMediaDetailUrl(BasePage.CurrentMediaDetail.MediaTypeID, BasePage.CurrentMediaDetail.MediaID);
+                if(!this.BasePage.CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions))
+                {
+                    AdminPanel.Visible = false;
+                }
+
+                //QuickEditCurrentPage.NavigateUrl = WebApplication.BasePage.GetRedirectToMediaDetailUrl(BasePage.CurrentMediaDetail.MediaTypeID, BasePage.CurrentMediaDetail.MediaID) + "&masterFilePath=~/Admin/Views/MasterPages/Popup.Master";
+                //EditCurrentPage.NavigateUrl = WebApplication.BasePage.GetRedirectToMediaDetailUrl(BasePage.CurrentMediaDetail.MediaTypeID, BasePage.CurrentMediaDetail.MediaID);
             }
             else
             {
@@ -28,7 +33,15 @@ namespace WebApplication.Controls.OnLogin
             WebApplication.BasePage.RedirectToMediaDetail(this.BasePage.CurrentMediaDetail);
         }
 
-        private FrontEndBasePage BasePage
+        public string CurrentMediaDetailAdminUrl
+        {
+            get
+            {
+                return WebApplication.BasePage.GetRedirectToMediaDetailUrl(BasePage.CurrentMediaDetail.MediaTypeID, BasePage.CurrentMediaDetail.MediaID);
+            }
+        }        
+
+        public FrontEndBasePage BasePage
         {
             get
             {

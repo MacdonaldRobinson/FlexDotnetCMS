@@ -31,30 +31,12 @@ namespace WebApplication.Controls.OnLogin {
         protected global::System.Web.UI.WebControls.Panel AccessCMSPermissionsPanel;
         
         /// <summary>
-        /// QuickEditCurrentPage control.
+        /// AdminPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink QuickEditCurrentPage;
-        
-        /// <summary>
-        /// EditCurrentPage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink EditCurrentPage;
-        
-        /// <summary>
-        /// LoginSuccess control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::WebApplication.Controls.LoginSuccess LoginSuccess;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AdminPanel;
     }
 }

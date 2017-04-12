@@ -22,6 +22,15 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor {
         protected global::System.Web.UI.WebControls.LinkButton Submit;
         
         /// <summary>
+        /// LayoutsTab control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl LayoutsTab;
+        
+        /// <summary>
         /// DynamicField control.
         /// </summary>
         /// <remarks>

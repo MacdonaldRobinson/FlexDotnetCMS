@@ -6,6 +6,7 @@
 
 
     <script type="text/javascript">  
+        MasterPage = "FieldEditor";
         $(document).ready(function () {
             $("#tabs").tabs();                        
         });
@@ -22,7 +23,7 @@
     <div id="tabs">
         <ul>
             <li><a href="#tabs-1">Main</a></li>
-            <li><a href="#tabs-2">Layout</a></li>            
+            <li id="LayoutsTab" runat="server"><a href="#tabs-2">Layout</a></li>            
         </ul>
         <div id="tabs-1" class="tab">
             <div>

@@ -1123,7 +1123,11 @@ function pageLoad() {
     BindSortable();
     BindTabs();
     BindMultiFileUploaderImageLoadError();    
-    //initAceEditors();
+
+    if (MasterPage != undefined && MasterPage.indexOf("FieldEditor") == -1)
+    {
+        initAceEditors();
+    }    
 
     if (typeof (BindActiveTabs) == 'function')
         BindActiveTabs();

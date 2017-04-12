@@ -18,6 +18,12 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor
 
             if (!string.IsNullOrEmpty(fieldIdStr))
             {
+                if(!CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions))
+                {
+                    LayoutsTab.Visible = false;
+                    FrontEndLayout.Visible = false;
+                }
+
                 var fieldId = long.Parse(fieldIdStr);
                 var field = FieldsMapper.GetByID(fieldId);
 
@@ -112,6 +118,16 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor
                 Field.FrontEndLayout = FrontEndLayout.Text;
 
             var returnObj = FieldsMapper.Update(Field);
+
+            if(returnObj.IsError)
+            {
+                DisplayErrorMessage("Error", returnObj.Error);
+            }
+            else
+            {
+                DisplaySuccessMessage("Successfully saved");
+            }
+
         }
 
         protected void Submit_Click(object sender, EventArgs e)

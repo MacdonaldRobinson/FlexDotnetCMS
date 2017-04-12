@@ -234,8 +234,8 @@ namespace FrameworkLibrary
 
         public static Return Insert<T>(string mapperKey, T obj, bool logError = true) where T : class, IMustContainID
         {
-            if (!CurrentUserHasPermissions(PermissionsEnum.SaveItems))
-                return GetPermissionDeniedError();
+            /*if (!CurrentUserHasPermissions(PermissionsEnum.Create))
+                return GetPermissionDeniedError();*/
 
             var returnObj = AddObjectToContext(obj);
 
@@ -257,7 +257,7 @@ namespace FrameworkLibrary
         /// <returns>An instance of the Return class</returns>
         public static Return Update<T>(string mapperKey, T obj, bool logError = true) where T : class, IMustContainID
         {
-            if (!CurrentUserHasPermissions(PermissionsEnum.SaveItems))
+            if (!CurrentUserHasPermissions(PermissionsEnum.Save))
                 return GetPermissionDeniedError();
 
             var returnObj = SaveDataModel(logError);
@@ -282,8 +282,8 @@ namespace FrameworkLibrary
         /// <returns>An instance of the Return class</returns>
         public static Return Delete<T>(string mapperKey, T obj, bool logError = true) where T : class, IMustContainID
         {
-            if (!CurrentUserHasPermissions(PermissionsEnum.DeleteItemsPermanently))
-                return GetPermissionDeniedError();
+            /*if (!CurrentUserHasPermissions(PermissionsEnum.DeleteItemsPermanently))
+                return GetPermissionDeniedError();*/
 
             var returnObj = DeleteObjectFromContext(obj);
 

@@ -29,8 +29,8 @@ namespace WebApplication.Admin
                 return;
             }
 
-            if (!currentUser.HasPermission(PermissionsEnum.AccessCMS))
-                Response.Redirect("~/");
+            /*if (!currentUser.HasPermission(PermissionsEnum.AccessCMS))
+                Response.Redirect("~/");*/
 
             if (this.MasterPageFile != null)
             {

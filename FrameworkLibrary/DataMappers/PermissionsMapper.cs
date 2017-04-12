@@ -113,7 +113,7 @@ namespace FrameworkLibrary
 
         public static Return DeletePermanently(Permission obj)
         {
-            var roleMediaDetails = RolesMediaDetailsMapper.GetAllWithPermission(obj);
+            /*var roleMediaDetails = RolesMediaDetailsMapper.GetAllWithPermission(obj);
 
             foreach (RoleMediaDetail entry in roleMediaDetails)
                 RolesMediaDetailsMapper.DeletePermanently(entry);
@@ -126,7 +126,7 @@ namespace FrameworkLibrary
             var roles = RolesMapper.GetAllWithPermission(obj);
 
             foreach (var entry in roles)
-                entry.Permissions.Remove(BaseMapper.GetObjectFromContext(obj));
+                entry.Permissions.Remove(BaseMapper.GetObjectFromContext(obj));*/
 
             return Delete(MapperKey, obj);
         }

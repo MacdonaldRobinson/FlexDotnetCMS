@@ -49,7 +49,7 @@ namespace TinyFileManager.NET
             var defaultRootPath = "/media/uploads/";
 
 
-            if (!FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.DeleteItemsPermanently))
+            if (!FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.Delete))
             {
                 var requestPath = URIHelper.ConvertAbsUrlToTilda(strCurrPath).Replace("\\", "/").Replace("//", "/").Replace("~/", "/");
 

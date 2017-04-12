@@ -546,8 +546,7 @@ function launchIntoFullscreen(element) {
     }
 }
 
-function initAceEditors() {
-
+function initAceEditors() {    
     var wordList = getFieldsAutoComplete();
 
     $(document).on("change", "#AttachEditorToBrowserPanel", function () {
@@ -573,9 +572,15 @@ function initAceEditors() {
     });
 
 
-    $(".AceEditor").each(function () {
+    $(".AceEditor").each(function () {        
+
+        var textarea = $(this);
+        
         var id = $(this).attr("id");
         var editorId = $(this).attr("name") + "-editor";
+
+        if (document.getElementById(editorId) != null)
+            return;
 
         if ($("#PreviewPanel").length > 0) {
             if ($(this).hasClass("CanAttachToBrowserPanel"))
@@ -596,8 +601,7 @@ function initAceEditors() {
 
         $(this).parent().append("<div id='" + editorId + "' class='ace-editor' style='" + style + "'></div>");
 
-        var editor = ace.edit(editorId);
-        var textarea = $(this);
+        var editor = ace.edit(editorId);       
 
         textarea.hide();
 
@@ -694,15 +698,19 @@ function destroyTinyMCE() {
 
 
 $(window).load(function () {
-    
-    initAceEditors();
-    initTinyMCE();
+
+    setTimeout(function () {
+        initAceEditors();
+        initTinyMCE();
+    }, 1000);        
 
     $(document).ajaxComplete(function (event, xhr, settings) {
         if (settings.url.indexOf("Chat.asmx") == -1)
         {
-            initAceEditors();
-            initTinyMCE();
+            setTimeout(function () {
+                initAceEditors();
+                initTinyMCE();
+            }, 1000); 
         }
     });
 });
@@ -761,6 +769,7 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '.SavePageButton', function (event) {
+
         var text = $(".SaveFieldButton").text();
 
         if (text.indexOf("Save") != -1) {
@@ -769,7 +778,7 @@ $(document).ready(function () {
             OnUpdatePanelRefreshComplete(function (event) {
                 if (!autoClickedSaveFieldButton) {
                     $(".SaveFieldButton")[0].click();
-                    autoClickedSaveFieldButton = true;
+                    autoClickedSaveFieldButton = true;                    
                 }
             });
         }
@@ -1126,7 +1135,9 @@ function pageLoad() {
 
     if (MasterPage != undefined && MasterPage.indexOf("FieldEditor") == -1)
     {
-        initAceEditors();
+        setTimeout(function () {
+            initAceEditors();
+        }, 1000)
     }    
 
     if (typeof (BindActiveTabs) == 'function')

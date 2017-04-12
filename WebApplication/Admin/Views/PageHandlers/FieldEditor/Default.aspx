@@ -15,7 +15,7 @@
     </script>
 
     <div class="buttons floatRight">
-        <asp:LinkButton Text="Save" ID="Submit" runat="server" OnClick="Submit_Click"/>        
+        <asp:LinkButton Text="Save" ID="Submit" runat="server" OnClick="Submit_Click" CssClass="SavePageButton"/>        
     </div>
     <div class="clear"></div>            
 

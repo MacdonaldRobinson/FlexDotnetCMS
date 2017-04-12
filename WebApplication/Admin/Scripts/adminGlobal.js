@@ -603,13 +603,16 @@ function initAceEditors() {
 
         var editor = ace.edit(editorId);       
 
+
         textarea.hide();
 
         editor.setTheme("ace/theme/iplastic");
-        editor.setValue(textarea.val());        
+        editor.setValue(textarea.val(), 1);
         editor.getSession().setMode("ace/mode/html");        
         editor.$blockScrolling = Infinity;
         editor.$useWorker = false;
+
+        //editor.clearSelection();
 
         var langTools = ace.require('ace/ext/language_tools');
 
@@ -618,7 +621,7 @@ function initAceEditors() {
             enableBasicAutocompletion: true,
             enableSnippets: true,
             enableLiveAutocompletion: false,
-            showPrintMargin: false,             
+            showPrintMargin: false,
         });
 
         var customCompleter = {
@@ -654,7 +657,7 @@ function initAceEditors() {
                     return match;
                 });
 
-                editor.setValue(value);
+                editor.setValue(value, 1);
 
                 $(".SavePageButton")[0].click();
 

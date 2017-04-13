@@ -510,16 +510,15 @@ function getFieldsAutoComplete()
 @model RazorFieldParams
 @{
     var field = (MediaDetailField)Model.Field;
-    var galleryId = "gallery-"+field.ID;
 
     <script>
-        head.load(['https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.12/jquery.bxslider.min.js','https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.12/jquery.bxslider.min.css'], function() {
+        head.load(['//cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.12/jquery.bxslider.min.js','//cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.12/jquery.bxslider.min.css'], function() {
             // Call a function when done
-            $("#@galleryId").bxSlider();
+            $(".bxslider").bxSlider();
         });
     </script>
-
-    <ul id="@galleryId">
+    
+    <ul class="bxslider">
     @foreach(var item in field.FieldAssociations.OrderBy(i=>i.OrderIndex))
     {
         <li><a href='#'><img src='@URIHelper.ConvertToAbsUrl(item.MediaDetail.PathToFile)?width=300&height=300&mode=min' alt='@item.MediaDetail.SectionTitle'></a></li>

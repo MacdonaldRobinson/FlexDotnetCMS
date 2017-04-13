@@ -14,7 +14,7 @@ namespace WebApplication.Admin
 
         protected override void OnInit(EventArgs e)
         {
-            canAccessSection = true;//CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions);
+            canAccessSection = CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions);
 
             base.OnInit(e);
 

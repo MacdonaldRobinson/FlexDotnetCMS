@@ -4,8 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1>
-        <asp:Literal ID="Section" runat="server"></asp:Literal></h1>
+    <h1>Manage MediaTypes</h1>
     <asp:UpdatePanel runat="server" UpdateMode="Conditional" ID="UpdatePanel">
         <ContentTemplate>
             <a href="javascript:void(0);" onclick="executeAction('Create','', '<%= UpdatePanel.ClientID %>');">Create New</a>

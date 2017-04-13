@@ -21,9 +21,7 @@ namespace WebApplication.Admin.Views.PageHandlers.MediaTypes
             }
         }
         protected void Page_Init(object sender, EventArgs e)
-        {
-            this.Section.Text = this.Page.Title = "Manage MediaTypes";
-
+        {            
             if(Items == null)
                 Items = MediaTypesMapper.GetDataModel().MediaTypes.OrderBy(i => i.Name).ToList();
 

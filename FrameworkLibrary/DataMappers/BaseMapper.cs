@@ -234,8 +234,8 @@ namespace FrameworkLibrary
 
         public static Return Insert<T>(string mapperKey, T obj, bool logError = true) where T : class, IMustContainID
         {
-            /*if (!CurrentUserHasPermissions(PermissionsEnum.Create))
-                return GetPermissionDeniedError();*/
+            if (!CurrentUserHasPermissions(PermissionsEnum.Create))
+                return GetPermissionDeniedError();
 
             var returnObj = AddObjectToContext(obj);
 

@@ -601,13 +601,22 @@ function initAceEditors() {
         $(this).parent().append("<div id='" + editorId + "' class='ace-editor' style='" + style + "'></div>");
 
         var editor = ace.edit(editorId);       
-
-
         textarea.hide();
+
+        editor.on('focus', function () {
+            editor.getSession().setUseWorker(true);
+        });
+
+        editor.on('blur', function () {
+            editor.getSession().setUseWorker(false);
+        });
+
+        var session = editor.getSession();
+        session.setUseWorker(false);
 
         editor.setTheme("ace/theme/iplastic");
         editor.setValue(textarea.val(), 1);
-        editor.getSession().setMode("ace/mode/html");        
+        session.setMode("ace/mode/html");        
         editor.$blockScrolling = Infinity;
         editor.$useWorker = false;
 
@@ -666,7 +675,6 @@ function initAceEditors() {
 
         editor.getSession().on('change', function () {
             var value = editor.getSession().getValue();
-
             textarea.val(value);
 
             if ($("#PreviewPanel").length > 0) {
@@ -701,18 +709,18 @@ function destroyTinyMCE() {
 
 $(window).load(function () {
 
-    setTimeout(function () {
+    //setTimeout(function () {
         initAceEditors();
         initTinyMCE();
-    }, 1000);        
+    //}, 1000);        
 
     $(document).ajaxComplete(function (event, xhr, settings) {
         if (settings.url.indexOf("Chat.asmx") == -1)
         {
-            setTimeout(function () {
+            //setTimeout(function () {
                 initAceEditors();
                 initTinyMCE();
-            }, 1000); 
+            //}, 1000); 
         }
     });
 });

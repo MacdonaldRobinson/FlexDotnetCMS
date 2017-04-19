@@ -909,7 +909,10 @@ namespace FrameworkLibrary
         {
             if(FrameworkSettings.CurrentUser != null)
             {
-                parsedValue = $"<div class='field' data-fieldid='{mediaField.ID}'>{parsedValue}</div>";
+                if (parsedValue.Contains("<"))
+                {
+                    parsedValue = $"<div class='field' data-fieldid='{mediaField.ID}'>{parsedValue}</div>";
+                }
             }
 
             return originalText.Replace(textToReplace, parsedValue);

@@ -66,10 +66,7 @@
                 display:inline-block;
                 border-color: rgba(0, 0, 0, .5);
             }
-            .field:hover{
-                border-color: rgba(255, 0, 0, 1);                
-            }
-                .field:hover .edit {
+                .field .edit:hover {
                     background-color: red;  
                     opacity: 1;
                 }
@@ -84,7 +81,7 @@
                     padding: 2px 5px;
                     font-size: 12px;
                     font-style: normal;   
-                    opacity: 0.1;
+                    opacity: 0.2;
                 }
         </style>
 
@@ -93,7 +90,7 @@
                 $("[data-fieldid]").each(function () {
                     var fieldId = $(this).attr("data-fieldid");
 
-                    $(this).prepend("<a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='window.location.reload()' data-width='60%' data-height='60%'>Edit</a>");
+                    $(this).prepend("<a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='window.location.reload()' data-width='60%' data-height='80%'>Edit</a>");
                 });
             });
         </script>

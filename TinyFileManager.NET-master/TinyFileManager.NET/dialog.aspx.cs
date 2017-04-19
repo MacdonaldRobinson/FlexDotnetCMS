@@ -475,11 +475,11 @@ namespace TinyFileManager.NET
 
                             this.objFItem.strPreviewLink = this.objFItem.strPreviewLink + renameLink;
 
-                            var path = strF.Replace(Server.MapPath("~/"), "").Replace("\\", "/");
+                            var path = strF.Replace(Server.MapPath("~/"), "").Replace("\\", "/").Replace("///","/");
 
                             if (!path.StartsWith("/"))
                                 path = "/" + path;
-
+                            
                             this.objFItem.strLink = "<a href=\"#\" title=\"Select\" onclick=\"" + this.strApply + "('" + baseUrl + path + "'," + this.strType + ")\";\"><img data-src=\"holder.js/140x100\" alt=\"140x100\" src=\"" + this.objFItem.strThumbImage + "\" height=\"100\"><h4>" + this.objFItem.strName + new FileInfo(this.objFItem.strPath).Extension + "</h4></a>";
 
                             this.arrLinks.Add(objFItem);

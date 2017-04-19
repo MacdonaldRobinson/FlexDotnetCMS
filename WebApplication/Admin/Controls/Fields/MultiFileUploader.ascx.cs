@@ -179,6 +179,8 @@ namespace WebApplication.Admin.Controls.Fields
 
             if(mediaType != null)
             {
+                fieldAssociation.MediaDetail.UseMediaTypeLayouts = mediaType.UseMediaTypeLayouts;
+
                 foreach (var mediaTypeFields in mediaType.Fields)
                 {
                     var mediaDetailField = new MediaDetailField();

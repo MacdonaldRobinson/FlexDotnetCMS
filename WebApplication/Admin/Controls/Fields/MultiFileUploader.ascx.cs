@@ -259,6 +259,10 @@ namespace WebApplication.Admin.Controls.Fields
                     for (int i = 0; i < Request.Files.Count; i++)
                     {                    
                         var file = Request.Files[i];
+
+                        if (string.IsNullOrEmpty(file.FileName))
+                            continue;
+
                         var fileInfo = (new System.IO.FileInfo(GetFolderPath() + file.FileName));
 
                         if (!fileInfo.Directory.Exists)
@@ -274,7 +278,7 @@ namespace WebApplication.Admin.Controls.Fields
                             {
                                 var fieldAssociation = new FieldAssociation();
                                 fieldAssociation.MediaDetail = (MediaDetail)PagesMapper.CreateObject(MediaTypeID, MediasMapper.CreateObject(), AdminBasePage.SelectedMedia);
-                                fieldAssociation.MediaDetail.LinkTitle = fieldAssociation.MediaDetail.SectionTitle = fileInfo.Name;
+                                fieldAssociation.MediaDetail.LinkTitle = fieldAssociation.MediaDetail.SectionTitle = fieldAssociation.MediaDetail.ShortDescription = fieldAssociation.MediaDetail.MainContent = fileInfo.Name;
                                 fieldAssociation.MediaDetail.PathToFile = filePath;
                                 fieldAssociation.MediaDetail.PublishDate = DateTime.Now;
                                 fieldAssociation.MediaDetail.CreatedByUser = fieldAssociation.MediaDetail.LastUpdatedByUser = FrameworkSettings.CurrentUser;

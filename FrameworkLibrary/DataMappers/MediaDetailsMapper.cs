@@ -578,6 +578,19 @@ namespace FrameworkLibrary
 
             detail.MediaTypeID = mediaTypeId;
 
+            detail.UseMediaTypeLayouts = true;
+
+            foreach (var mediaTypeField in mediaType.Fields)
+            {
+                var mediaDetailField = new MediaDetailField();
+                mediaDetailField.CopyFrom(mediaTypeField);
+                mediaDetailField.UseMediaTypeFieldFrontEndLayout = true;
+                mediaDetailField.UseMediaTypeFieldDescription = true;
+                mediaDetailField.MediaTypeFieldID = mediaTypeField.ID;
+
+                detail.Fields.Add(mediaDetailField);
+            }
+
             return detail;
         }
 
@@ -907,12 +920,9 @@ namespace FrameworkLibrary
 
         public static string ReplaceFieldWithParsedValue(string originalText, string textToReplace, IField mediaField, string parsedValue)
         {
-            if(FrameworkSettings.CurrentUser != null)
+            if (parsedValue.Contains("<"))
             {
-                if (parsedValue.Contains("<"))
-                {
-                    parsedValue = $"<div class='field' data-fieldid='{mediaField.ID}'>{parsedValue}</div>";
-                }
+                parsedValue = $"<div class='field' data-fieldid='{mediaField.ID}' data-fieldcode='{mediaField.FieldCode}'>{parsedValue}</div>";
             }
 
             return originalText.Replace(textToReplace, parsedValue);

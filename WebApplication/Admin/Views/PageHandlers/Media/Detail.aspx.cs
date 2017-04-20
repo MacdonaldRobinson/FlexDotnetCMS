@@ -123,32 +123,6 @@ namespace WebApplication.Admin.MediaArticle
 
                 selectedItem.UseMediaTypeLayouts = mediaType.UseMediaTypeLayouts;
 
-                if (selectedItem.Media.MediaDetails.Count == 0)
-                {
-                    foreach (var field in mediaType.Fields)
-                    {
-                        var newField = new MediaDetailField();
-                        newField.CopyFrom(field);
-                        /*newField.FieldCode = field.FieldCode;
-                        newField.FieldLabel = field.FieldLabel;
-                        newField.FieldDescription = field.FieldDescription;
-                        newField.AdminControl = field.AdminControl;
-                        newField.GroupName = field.GroupName;
-                        newField.RenderLabelAfterControl = field.RenderLabelAfterControl;
-                        newField.GetAdminControlValue = field.GetAdminControlValue;
-                        newField.SetAdminControlValue = field.SetAdminControlValue;
-                        newField.FieldValue = field.FieldValue;
-                        newField.FrontEndLayout = field.FrontEndLayout;
-                        newField.MediaTypeField = field;*/
-                        newField.UseMediaTypeFieldFrontEndLayout = true;
-
-                        newField.DateCreated = DateTime.Now;
-                        newField.DateLastModified = DateTime.Now;
-
-                        selectedItem.Fields.Add(newField);
-                    }
-                }
-
                 var fields = selectedItem.Media.GetLiveMediaDetail()?.Fields;
 
                 if (fields != null)
@@ -157,18 +131,6 @@ namespace WebApplication.Admin.MediaArticle
                     {
                         var newField = new MediaDetailField();
                         newField.CopyFrom(field);
-
-                        /*newField.FieldCode = field.FieldCode;
-                        newField.FieldLabel = field.FieldLabel;
-                        newField.AdminControl = field.AdminControl;
-                        newField.GroupName = field.GroupName;
-                        newField.RenderLabelAfterControl = field.RenderLabelAfterControl;
-                        newField.GetAdminControlValue = field.GetAdminControlValue;
-                        newField.SetAdminControlValue = field.SetAdminControlValue;
-                        newField.FrontEndLayout = field.FrontEndLayout;
-                        newField.MediaTypeFieldID = field.MediaTypeFieldID;
-                        newField.OrderIndex = field.OrderIndex;
-                        newField.UseMediaTypeFieldFrontEndLayout = field.UseMediaTypeFieldFrontEndLayout;*/
 
                         if (field.FieldAssociations.Count > 0)
                             newField.FieldValue = "";
@@ -351,8 +313,8 @@ namespace WebApplication.Admin.MediaArticle
             }
             else
             {
-                title = "Editing: " + selectedItem.Title;
-                sectionTitle = "Editing: <span>" + selectedItem.Title + "</span>";
+                title = "Editing: " + selectedItem.SectionTitle;
+                sectionTitle = "Editing: <span>" + selectedItem.SectionTitle + "</span>";
             }
 
             this.Page.Title = title;

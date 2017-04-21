@@ -103,6 +103,8 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
                 else
                     historyMediaDetails = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber > 0 && !i.IsDraft);
 
+                historyMediaDetails = historyMediaDetails.ToList();
+
                 foreach (var item in historyMediaDetails)
                 {
                     var returnObj = MediaDetailsMapper.DeletePermanently((MediaDetail)item);

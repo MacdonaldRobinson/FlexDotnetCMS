@@ -80,6 +80,7 @@
                 position: relative;                      
                 display:inline-block;
                 border-color: rgba(0, 0, 0, .5);
+                padding-top: 25px;
             }
 
                 .field.hover {
@@ -102,6 +103,7 @@
                     font-style: normal;   
                     opacity: 0.2;
                 }
+
         </style>
 
         <script type="text/javascript">

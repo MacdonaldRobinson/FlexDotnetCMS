@@ -1,73 +1,68 @@
-﻿.pageBanners ul li
-{
+﻿.pageBanners ul li {
     list-style-type: none;
 }
 
-.column
-{
+.column {
     float: left;
     margin-right: 10px;
 }
 
 /*Banner Styles*/
 
-.pageBanners .column2 ul li{float:left;margin:1em;}
-.pageBanners .column2 ul{float:left;}
+.pageBanners .column2 ul li {
+    float: left;
+    margin: 1em;
+}
 
-.pageBanners li
-{
+.pageBanners .column2 ul {
+    float: left;
+}
+
+.pageBanners li {
     margin-top: 10px;
 }
 
-.pageBanners > .column1 img
-{
+.pageBanners > .column1 img {
     max-width: 300px;
     max-height: 200px;
 }
 
-.pageBanners > .column1 .imageHolder
-{
+.pageBanners > .column1 .imageHolder {
     width: 300px;
     height: 200px;
 }
 
-.pageBanners > .column1 input[type="text"]
-{
+.pageBanners > .column1 input[type="text"] {
     width: 300px;
 }
 
-.pageBanners > .column2 img
-{
+.pageBanners > .column2 img {
     max-width: 100px;
     max-height: 50px;
 }
 
-.pageBanners > .column2 .imageHolder
-{
+.pageBanners > .column2 .imageHolder {
     height: 50px;
 }
 
-.pageBanners > .column1
-{
+.pageBanners > .column1 {
     width: 60%;
 }
 
-.columnContainer
-{
+.columnContainer {
     border: 1px solid black;
     padding: 5px;
 }
 
-.pageBanners > .column2
-{
+.pageBanners > .column2 {
     width: 35%;
 }
 
-.fullHeight{
+.fullHeight {
     height: 100%;
 }
 
-#EditPanel{
+#EditPanel {
     width: 50%;
 }
 
@@ -75,45 +70,45 @@
     width: 45%;
 }
 
-#PreviewPanel{
+#PreviewPanel {
     float: left;
     width: 100%;
     height: 100%;
 }
 
-.SavePanel{
+.SavePanel {
     position: absolute;
-    z-index:100;
-    right:0;
+    z-index: 100;
+    right: 0;
     top: 0;
     background-color: #fff;
 }
 
 #SaveFields {
-    width:240px;
-    left:0;
+    width: 240px;
+    left: 0;
     position: absolute;
     background-color: #fff;
 }
 
 #mainArea {
-    overflow:hidden;
-}
-
-#mainArea #left-component {
-    width: 57em;
-}
-
-#mainArea #my-divider {
-    left: 57em; /* Same as left component width */
-    width: 5px;
-}
-
-#mainArea #right-component {
-    left: 57em; /* Same as left component width */
-    margin-left: 5px; /* Same as divider width */
     overflow: hidden;
 }
+
+    #mainArea #left-component {
+        width: 57em;
+    }
+
+    #mainArea #my-divider {
+        left: 57em; /* Same as left component width */
+        width: 5px;
+    }
+
+    #mainArea #right-component {
+        left: 57em; /* Same as left component width */
+        margin-left: 5px; /* Same as divider width */
+        overflow: hidden;
+    }
 
 img.MarkedAsDeleted {
     opacity: 0.5;
@@ -127,20 +122,21 @@ img.MarkedAsDeleted {
         float: left;
         text-align: center;
         padding-top: 10px;
-        width: 103px;
+        width: 100px;
+        height: 100px;
     }
 
-    .UploadedItems .item img {
-        height: 60px;
-        width: 60px;
-        background-color: #cccccc;
-    }
+        .UploadedItems .item img {
+            height: 60px;
+            width: 60px;
+            background-color: #cccccc;
+        }
 
-    .UploadedItems .item div {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+        .UploadedItems .item div {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
 
 
 .dvPreview img {
@@ -150,17 +146,17 @@ img.MarkedAsDeleted {
     background-color: #cccccc;
 }
 
-#PathToFileHolder img{
+#PathToFileHolder img {
     background-color: #cccccc;
 }
 
-fieldset table td a{
+fieldset table td a {
     font-weight: bold;
 }
 
 #left-component h1 span {
-    display:block;
-    margin-top:5px;
+    display: block;
+    margin-top: 5px;
 }
 
 .ui-tabs .ui-tabs-panel {

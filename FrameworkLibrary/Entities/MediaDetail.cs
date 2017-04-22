@@ -277,6 +277,12 @@ namespace FrameworkLibrary
             return MediaDetailsMapper.ParseSpecialTags(this, shortCode);
         }
 
+        public string RenderFieldCode(string fieldCode)
+        {
+            var shortCode = "{Field:"+fieldCode+"}";
+            return RenderShortCode(shortCode);
+        }
+
         public string RenderMainLayout()
         {
             return RenderShortCode("{UseMainLayout}");

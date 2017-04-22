@@ -923,7 +923,7 @@ namespace FrameworkLibrary
 
         public static string ReplaceFieldWithParsedValue(string originalText, string textToReplace, IField mediaField, string parsedValue)
         {
-            if (mediaField.ShowFrontEndFieldEditor && parsedValue.Contains("<"))
+            if (mediaField.ShowFrontEndFieldEditor)
             {
                 parsedValue = $"<div class='field' data-fieldid='{mediaField.ID}' data-fieldcode='{mediaField.FieldCode}'>{parsedValue}</div>";
             }

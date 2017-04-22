@@ -522,7 +522,7 @@ namespace WebApplication.Admin.Views.MasterPages
 
         public IMediaDetail HandleDuplicate(IMediaDetail detail, Media parentMedia)
         {
-            var duplicatedItem = MediaDetailsMapper.CreateObject(detail.MediaTypeID, null, parentMedia);
+            var duplicatedItem = MediaDetailsMapper.CreateObject(detail.MediaTypeID, null, parentMedia, false);
             duplicatedItem.CopyFrom(detail, new List<string> { "MediaID", "Media" });
             duplicatedItem.CachedVirtualPath = duplicatedItem.CalculatedVirtualPath();
 

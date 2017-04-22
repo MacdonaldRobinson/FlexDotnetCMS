@@ -277,9 +277,15 @@ namespace FrameworkLibrary
             return MediaDetailsMapper.ParseSpecialTags(this, shortCode);
         }
 
-        public string RenderFieldCode(string fieldCode)
+        public string RenderField(string fieldCode)
         {
             var shortCode = "{Field:"+fieldCode+"}";
+            return RenderShortCode(shortCode);
+        }
+
+        public string RenderField(long fieldId)
+        {
+            var shortCode = "{Field:" + fieldId + "}";
             return RenderShortCode(shortCode);
         }
 
@@ -662,37 +668,56 @@ namespace FrameworkLibrary
             selectedItem.PublishDate = DateTime.Now;
             //selectedItem.ShowInMenu = true;
 
-            foreach (var fieldAssociations in selectedItem.FieldAssociations)
+            foreach (var fieldAssociation in selectedItem.FieldAssociations)
             {
                 var index = 1;
-                foreach (var history in fieldAssociations.MediaDetail.History)
+                foreach (var history in fieldAssociation.MediaDetail.History)
                 {
-                    history.HistoryForMediaDetail = fieldAssociations.MediaDetail;
+                    history.HistoryForMediaDetail = fieldAssociation.MediaDetail;
                     history.HistoryVersionNumber = 1;
 
                     index++;
                 }
 
-                fieldAssociations.MediaDetail.HistoryForMediaDetail = null;
-                fieldAssociations.MediaDetail.HistoryVersionNumber = 0;
+                fieldAssociation.MediaDetail.HistoryForMediaDetail = null;
+                fieldAssociation.MediaDetail.HistoryVersionNumber = 0;
             }
 
             foreach (var field in selectedItem.Fields)
             {
-                foreach (var fieldAssociations in field.FieldAssociations)
+                foreach (var fieldAssociation in field.FieldAssociations)
                 {
                     var index = 1;
 
-                    foreach (var mediaDetail in fieldAssociations.MediaDetail.Media.MediaDetails)
+                    foreach (var mediaDetail in fieldAssociation.MediaDetail.Media.MediaDetails)
                     {
-                        mediaDetail.HistoryForMediaDetail = fieldAssociations.MediaDetail;
+                        mediaDetail.HistoryForMediaDetail = fieldAssociation.MediaDetail;
                         mediaDetail.HistoryVersionNumber = 1;
 
                         index++;
                     }
 
-                    fieldAssociations.MediaDetail.HistoryForMediaDetail = null;
-                    fieldAssociations.MediaDetail.HistoryVersionNumber = 0;
+                    fieldAssociation.MediaDetail.HistoryForMediaDetail = null;
+                    fieldAssociation.MediaDetail.HistoryVersionNumber = 0;
+                }
+            }
+
+            foreach (var mediaTypeField in selectedItem.MediaType.Fields)
+            {
+                if(!selectedItem.Fields.Any(i=>i.FieldCode == mediaTypeField.FieldCode))
+                {
+                    var mediaDetailField = new MediaDetailField();
+                    mediaDetailField.CopyFrom(mediaTypeField);
+                    
+                    mediaDetailField.UseMediaTypeFieldFrontEndLayout = true;
+                    mediaDetailField.UseMediaTypeFieldDescription = true;                    
+
+                    mediaDetailField.MediaTypeField = mediaTypeField;
+
+                    mediaDetailField.DateCreated = mediaDetailField.DateLastModified = DateTime.Now;
+
+                    mediaDetailField.OrderIndex = selectedItem.Fields.Count;
+                    selectedItem.Fields.Add(mediaDetailField);
                 }
             }
 
@@ -786,6 +811,64 @@ namespace FrameworkLibrary
             get
             {
                 return AutoCalculatedVirtualPath + "qrcode/";
+            }
+        }
+
+        public void UpdateField(string fieldCode, string newValue)
+        {
+            var field = this.Fields.FirstOrDefault(i => i.FieldCode == fieldCode);
+
+            if (field != null)
+            {
+                field.FieldValue = newValue;
+            }
+        }
+
+        public string SectionTitle
+        {
+            get
+            {
+                return this.RenderField("SectionTitle");
+            }
+            set
+            {
+                UpdateField("SectionTitle", value);
+            }
+        }
+
+        public string ShortDescription
+        {
+            get
+            {
+                return this.RenderField("ShortDescription");
+            }
+            set
+            {
+                UpdateField("ShortDescription", value);
+            }
+        }
+
+        public string MainContent
+        {
+            get
+            {
+                return this.RenderField("MainContent");
+            }
+            set
+            {
+                UpdateField("MainContent", value);
+            }
+        }
+
+        public string PathToFile
+        {
+            get
+            {
+                return this.RenderField("PathToFile");
+            }
+            set
+            {
+                UpdateField("PathToFile", value);
             }
         }
     }

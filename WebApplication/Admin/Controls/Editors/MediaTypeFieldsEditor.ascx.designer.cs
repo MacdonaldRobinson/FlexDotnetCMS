@@ -13,6 +13,24 @@ namespace WebApplication.Admin.Controls.Editors {
     public partial class MediaTypeFieldsEditor {
         
         /// <summary>
+        /// MediaTypeSelector control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::WebApplication.Admin.Controls.Selectors.Generic.MediaTypeSelector MediaTypeSelector;
+        
+        /// <summary>
+        /// CopyFields control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CopyFields;
+        
+        /// <summary>
         /// ItemList control.
         /// </summary>
         /// <remarks>
@@ -65,6 +83,15 @@ namespace WebApplication.Admin.Controls.Editors {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox RenderLabelAfterControl;
+        
+        /// <summary>
+        /// ShowFrontEndFieldEditor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox ShowFrontEndFieldEditor;
         
         /// <summary>
         /// GroupName control.

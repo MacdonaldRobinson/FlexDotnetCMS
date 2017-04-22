@@ -154,6 +154,7 @@ namespace WebApplication.Admin.Controls.Editors
             mediaField.FrontEndLayout = FrontEndLayout.Text;
             mediaField.FieldDescription = FieldDescription.GetValue().ToString();
             mediaField.UseMediaTypeFieldDescription = UseMediaTypeFieldDescription.Checked;
+            mediaField.ShowFrontEndFieldEditor = ShowFrontEndFieldEditor.Checked;
 
             var mediaTypeField = mediaDetail.MediaType.Fields.SingleOrDefault(i => i.FieldCode == mediaField.FieldCode);
 
@@ -194,6 +195,7 @@ namespace WebApplication.Admin.Controls.Editors
             UseMediaTypeFieldFrontEndLayout.Checked = mediaField.UseMediaTypeFieldFrontEndLayout;
             FieldDescription.SetValue(mediaField.FieldDescription);
             UseMediaTypeFieldDescription.Checked = mediaField.UseMediaTypeFieldDescription;
+            ShowFrontEndFieldEditor.Checked = mediaField.ShowFrontEndFieldEditor;
 
             BindVisibility(mediaField);
         }

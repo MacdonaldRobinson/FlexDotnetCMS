@@ -12,12 +12,19 @@
 <asp:UpdatePanel runat="server">
     <ContentTemplate>
         <fieldset>
+            <legend>Copy Fields From Other Meida Types</legend>
+            <label>Current Media types:</label>
+            <Admin:MediaTypeSelector ID="MediaTypeSelector" runat="server" />
+            <asp:Button Text="Copy Fields" runat="server" ID="CopyFields" OnClick="CopyFields_Click"/>
+        </fieldset>
+        <fieldset>
             <legend>Currently Created Fields</legend>
             <asp:GridView runat="server" ID="ItemList" AutoGenerateColumns="false" AllowPaging="true" OnPageIndexChanging="ItemList_PageIndexChanging" PageSize="10">
                 <Columns>
                     <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
                     <asp:BoundField DataField="FieldCode" HeaderText="FieldCode" SortExpression="FieldCode" />
                     <asp:BoundField DataField="FieldLabel" HeaderText="FieldLabel" SortExpression="FieldLabel" />
+                    <asp:BoundField DataField="GroupName" HeaderText="GroupName" SortExpression="GroupName" />
                     <asp:BoundField DataField="DateCreated" HeaderText="DateCreated" SortExpression="DateCreated" />
                     <asp:BoundField DataField="DateLastModified" HeaderText="DateLastModified" SortExpression="DateLastModified" />
                     <asp:TemplateField HeaderText="">
@@ -44,6 +51,9 @@
                 </div>
                 <div>
                     <asp:CheckBox runat="server" ID="RenderLabelAfterControl" /> <label for="<%# RenderLabelAfterControl.ClientID %>">Render Label After Control</label>
+                </div>
+                <div>
+                    <asp:CheckBox runat="server" ID="ShowFrontEndFieldEditor" /> <label for="<%# ShowFrontEndFieldEditor.ClientID %>">Show Front End Field Editor</label>
                 </div>
                 <div>
                     <label for="<%# GroupName.ClientID %>">Group Name:</label>

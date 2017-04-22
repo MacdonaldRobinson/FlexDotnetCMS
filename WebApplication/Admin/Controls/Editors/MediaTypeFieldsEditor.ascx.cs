@@ -68,22 +68,15 @@ namespace WebApplication.Admin.Controls.Editors
                 UpdatedObjectFromFields(mediaTypeField);
                 mediaType.Fields.Add(mediaTypeField);
 
-                foreach (var mediaDetail in mediaType.MediaDetails)
+                var mediaDetailsToAddFieldsTo = mediaType.MediaDetails.Where(i => i.HistoryVersionNumber == 0 || i.IsDraft).ToList();
+
+                foreach (var mediaDetail in mediaDetailsToAddFieldsTo)
                 {
                     var mediaDetailField = new MediaDetailField();
-                    mediaDetailField.FieldCode = mediaTypeField.FieldCode;
-                    mediaDetailField.FieldLabel = mediaTypeField.FieldLabel;
-                    mediaDetailField.FieldValue = mediaTypeField.FieldValue;
-                    mediaDetailField.FieldDescription = mediaTypeField.FieldDescription;
-                    mediaDetailField.AdminControl = mediaTypeField.AdminControl;
-                    mediaDetailField.FrontEndLayout = mediaTypeField.FrontEndLayout;
-                    mediaDetailField.GroupName = mediaTypeField.GroupName;
-                    mediaDetailField.RenderLabelAfterControl = mediaTypeField.RenderLabelAfterControl;
+                    mediaDetailField.CopyFrom(mediaTypeField);
+                    
                     mediaDetailField.UseMediaTypeFieldFrontEndLayout = true;
-                    mediaDetailField.UseMediaTypeFieldDescription = true;
-
-                    mediaDetailField.GetAdminControlValue = mediaTypeField.GetAdminControlValue;
-                    mediaDetailField.SetAdminControlValue = mediaTypeField.SetAdminControlValue;
+                    mediaDetailField.UseMediaTypeFieldDescription = true;                    
 
                     mediaDetailField.MediaTypeField = mediaTypeField;
 
@@ -102,6 +95,8 @@ namespace WebApplication.Admin.Controls.Editors
 
                 foreach (var mediaDetailField in mediaTypeField.MediaDetailFields)
                 {
+                    mediaDetailField.CopyFrom(mediaTypeField);
+
                     if (mediaDetailField.UseMediaTypeFieldDescription)
                         mediaDetailField.FieldDescription = mediaTypeField.FieldDescription;
 
@@ -111,13 +106,6 @@ namespace WebApplication.Admin.Controls.Editors
                     if (string.IsNullOrEmpty(mediaDetailField.FieldValue))
                         mediaDetailField.FieldValue = mediaTypeField.FieldValue;
 
-                    mediaDetailField.FieldCode = mediaTypeField.FieldCode;
-                    mediaDetailField.FieldLabel = mediaTypeField.FieldLabel;
-                    mediaDetailField.AdminControl = mediaTypeField.AdminControl;
-                    mediaDetailField.GroupName = mediaTypeField.GroupName;
-                    mediaDetailField.RenderLabelAfterControl = mediaTypeField.RenderLabelAfterControl;
-                    mediaDetailField.GetAdminControlValue = mediaTypeField.GetAdminControlValue;
-                    mediaDetailField.SetAdminControlValue = mediaTypeField.SetAdminControlValue;
                     mediaDetailField.DateLastModified = DateTime.Now;
                 }
             }
@@ -152,6 +140,7 @@ namespace WebApplication.Admin.Controls.Editors
             mediaTypeField.RenderLabelAfterControl = RenderLabelAfterControl.Checked;
             mediaTypeField.GetAdminControlValue = GetAdminControlValue.Text;
             mediaTypeField.SetAdminControlValue = SetAdminControlValue.Text;
+            mediaTypeField.ShowFrontEndFieldEditor = ShowFrontEndFieldEditor.Checked;
             mediaTypeField.FieldValue = FieldValue.Text;
             mediaTypeField.DateCreated = DateTime.Now;
             mediaTypeField.DateLastModified = DateTime.Now;
@@ -171,6 +160,7 @@ namespace WebApplication.Admin.Controls.Editors
             RenderLabelAfterControl.Checked = mediaTypeField.RenderLabelAfterControl;
             GetAdminControlValue.Text = mediaTypeField.GetAdminControlValue;
             SetAdminControlValue.Text = mediaTypeField.SetAdminControlValue;
+            ShowFrontEndFieldEditor.Checked = mediaTypeField.ShowFrontEndFieldEditor;
         }
 
         protected void Cancel_Click(object sender, EventArgs e)
@@ -230,6 +220,34 @@ namespace WebApplication.Admin.Controls.Editors
                 {
                     BasePage.DisplayErrorMessage("Error", returnObj.Error);
                 }
+            }
+        }        
+
+        protected void CopyFields_Click(object sender, EventArgs e)
+        {
+            var otherMediaType = MediaTypeSelector.GetSelectedMediaType();
+
+            foreach (var otherMediaTypeField in otherMediaType.Fields)
+            {
+                if(!mediaType.Fields.Any(i=>i.FieldCode == otherMediaTypeField.FieldCode))
+                {
+                    var mediaTypeField = new MediaTypeField();
+                    mediaTypeField.CopyFrom(otherMediaTypeField);
+                    mediaTypeField.DateCreated = mediaTypeField.DateLastModified = DateTime.Now;
+
+                    mediaType.Fields.Add(mediaTypeField);
+                }
+            }
+
+            var returnObj = MediaTypesMapper.Update(mediaType);
+
+            if (!returnObj.IsError)
+            {
+                Bind();
+            }
+            else
+            {
+                BasePage.DisplayErrorMessage("Error", returnObj.Error);
             }
         }
     }

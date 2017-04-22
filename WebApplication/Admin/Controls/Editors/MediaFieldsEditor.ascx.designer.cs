@@ -94,6 +94,15 @@ namespace WebApplication.Admin.Controls.Editors {
         protected global::System.Web.UI.WebControls.CheckBox RenderLabelAfterControl;
         
         /// <summary>
+        /// ShowFrontEndFieldEditor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox ShowFrontEndFieldEditor;
+        
+        /// <summary>
         /// UseMediaTypeFieldDescriptionWrapper control.
         /// </summary>
         /// <remarks>

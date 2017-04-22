@@ -29,7 +29,6 @@ namespace FrameworkLibrary
         public long MediaID { get; set; }
         public string Title { get; set; }
         public string LinkTitle { get; set; }
-        public string ShortDescription { get; set; }
         public long LanguageID { get; set; }
         public long NumberOfViews { get; set; }
         public long NumberOfStars { get; set; }
@@ -45,7 +44,6 @@ namespace FrameworkLibrary
         public bool AllowCommenting { get; set; }
         public Nullable<long> HistoryForMediaDetailID { get; set; }
         public int HistoryVersionNumber { get; set; }
-        public string SectionTitle { get; set; }
         public bool CanAddToCart { get; set; }
         public decimal Price { get; set; }
         public long QuantityInStock { get; set; }
@@ -71,8 +69,6 @@ namespace FrameworkLibrary
         public bool UseMediaTypeLayouts { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
         public Nullable<System.DateTime> PublishDate { get; set; }
-        public string MainContent { get; set; }
-        public string PathToFile { get; set; }
     
         public virtual Language Language { get; set; }
         public virtual Media Media { get; set; }

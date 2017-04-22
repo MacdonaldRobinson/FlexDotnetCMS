@@ -182,16 +182,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
             var keyValuePair = new Dictionary<string, string>();
             keyValuePair.Add("TemplateBaseUrl", BasePage.TemplateVars["TemplateBaseUrl"]);
             keyValuePair.Add("BaseUrl", BasePage.TemplateVars["BaseUrl"]);
-
-            var mainContent = MediaDetailsMapper.ConvertATagsToShortCodes(MainContent.GetValue().ToString());
-            var shortDescription = MediaDetailsMapper.ConvertATagsToShortCodes(ShortDescription.GetValue().ToString());
-
-            item.MainContent = ParserHelper.ParseData(mainContent, keyValuePair, true);
-            //item.LongDescriptionMobileVersion = ParserHelper.ParseData(LongDescriptionMobileVersion.GetSiteEditor.Text.Replace("%7B", "{").Replace("%7D", "}"), keyValuePair, true);
-            item.SectionTitle = SectionTitle.Text;
-            item.ShortDescription = ParserHelper.ParseData(shortDescription, keyValuePair, true);
-            item.PathToFile = PathToFile.GetValue().ToString();
-
+            
             //TagsSelector.SetDefaultTag(item.LinkTitle);
 
             IEnumerable<Tag> tags = TagsSelector.GetTags();
@@ -400,11 +391,6 @@ namespace WebApplication.Admin.Controls.MediaTypes
             }
 
             LinkTitle.Text = item.LinkTitle;
-            MainContent.SetValue(ParserHelper.ParseData(item.MainContent, BasePage.TemplateVars));
-            //LongDescriptionMobileVersion.GetSiteEditor.Text = ParserHelper.ParseData(item.LongDescriptionMobileVersion, BasePage.TemplateVars);
-            SectionTitle.Text = item.SectionTitle;
-            ShortDescription.SetValue(ParserHelper.ParseData(item.ShortDescription, BasePage.TemplateVars));
-            PathToFile.SetValue(item.PathToFile);
 
             var virtualPath = item.AutoCalculatedVirtualPath;
 

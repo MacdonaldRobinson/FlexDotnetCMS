@@ -38,6 +38,7 @@
           <Property Name="OrderIndex" Type="bigint" Nullable="false" />
           <Property Name="GroupName" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="FrontEndLayout" Type="nvarchar(max)" />
+          <Property Name="ShowFrontEndFieldEditor" Type="bit" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateLastModified" Type="datetime" Nullable="false" />
         </EntityType>
@@ -145,9 +146,6 @@
           <Property Name="UseDirectLink" Type="bit" Nullable="false" />
           <Property Name="OpenInNewWindow" Type="bit" Nullable="false" />
           <Property Name="DirectLink" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="SectionTitle" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="ShortDescription" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="MainContent" Type="nvarchar(max)" Nullable="false" />
           <Property Name="MetaKeywords" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="MetaDescription" Type="nvarchar(max)" Nullable="false" />
           <Property Name="LanguageID" Type="bigint" Nullable="false" />
@@ -185,7 +183,6 @@
           <Property Name="SummaryLayout" Type="nvarchar(max)" Nullable="false" />
           <Property Name="FeaturedLayout" Type="nvarchar(max)" Nullable="false" />
           <Property Name="UseMediaTypeLayouts" Type="bit" Nullable="false" />
-          <Property Name="PathToFile" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="MediaDetailsFields">
           <Key>
@@ -1341,7 +1338,6 @@
           <Property Name="MediaID" Nullable="false" Type="Int64" />
           <Property Name="Title" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" Type="String" />
           <Property Name="LinkTitle" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" Type="String" />
-          <Property Name="ShortDescription" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" Type="String" />
           <Property Name="LanguageID" Nullable="false" Type="Int64" />
           <Property Name="NumberOfViews" Nullable="false" Type="Int64" />
           <Property Name="NumberOfStars" Nullable="false" Type="Int64" />
@@ -1365,7 +1361,6 @@
           <Property Type="Int32" Name="HistoryVersionNumber" Nullable="false" />
           <NavigationProperty Name="History" Relationship="FrameworkModel.FK_MediaDetails_HistoryForMediaDetailID" FromRole="MediaDetail" ToRole="MediaDetail1" />
           <NavigationProperty Name="HistoryForMediaDetail" Relationship="FrameworkModel.FK_MediaDetails_HistoryForMediaDetailID" FromRole="MediaDetail1" ToRole="MediaDetail" />
-          <Property Type="String" Name="SectionTitle" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="Boolean" Name="CanAddToCart" Nullable="false" />
           <Property Type="Decimal" Name="Price" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Int64" Name="QuantityInStock" Nullable="false" />
@@ -1393,9 +1388,7 @@
           <NavigationProperty Name="Fields" Relationship="FrameworkModel.FK_MediaDetailFields_MediaDetails" FromRole="MediaDetail" ToRole="MediaDetailsField" />
           <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
           <Property Name="PublishDate" Type="DateTime" Precision="3" />
-          <Property Name="MainContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="RolesMediaDetails" Relationship="FrameworkModel.FK_RolesMediaDetails_MediaDetailID" FromRole="MediaDetail" ToRole="RolesMediaDetail" />
-          <Property Name="PathToFile" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="FieldAssociations" Relationship="FrameworkModel.FK_FieldAssociations_MediaDetails" FromRole="MediaDetail" ToRole="FieldsAssociation" />
           </EntityType>
         <EntityType Name="Page" BaseType="FrameworkModel.MediaDetail">
@@ -1863,6 +1856,7 @@
           <Property Name="GetAdminControlValue" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SetAdminControlValue" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FieldDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ShowFrontEndFieldEditor" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="MediaDetailField" BaseType="FrameworkModel.Field">
           <Property Name="MediaDetailID" Type="Int64" Nullable="false" />
@@ -2140,8 +2134,6 @@
           <EntitySetMapping Name="MediaDetails">
             <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.MediaDetail)">
               <MappingFragment StoreEntitySet="MediaDetails">
-                <ScalarProperty Name="PathToFile" ColumnName="PathToFile" />
-                <ScalarProperty Name="MainContent" ColumnName="MainContent" />
                 <ScalarProperty Name="PublishDate" ColumnName="PublishDate" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
                 <ScalarProperty Name="UseMediaTypeLayouts" ColumnName="UseMediaTypeLayouts" />
@@ -2167,7 +2159,6 @@
                 <ScalarProperty Name="QuantityInStock" ColumnName="QuantityInStock" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="CanAddToCart" ColumnName="CanAddToCart" />
-                <ScalarProperty Name="SectionTitle" ColumnName="SectionTitle" />
                 <ScalarProperty Name="HistoryVersionNumber" ColumnName="HistoryVersionNumber" />
                 <ScalarProperty Name="HistoryForMediaDetailID" ColumnName="HistoryForMediaDetailID" />
                 <ScalarProperty Name="AllowCommenting" ColumnName="AllowCommenting" />
@@ -2184,7 +2175,6 @@
                 <ScalarProperty Name="NumberOfStars" ColumnName="NumberOfStars" />
                 <ScalarProperty Name="NumberOfViews" ColumnName="NumberOfViews" />
                 <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
-                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
                 <ScalarProperty Name="LinkTitle" ColumnName="LinkTitle" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="MediaID" ColumnName="MediaID" />
@@ -2429,6 +2419,7 @@
           <EntitySetMapping Name="Fields">
             <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.Field)">
               <MappingFragment StoreEntitySet="Fields">
+                <ScalarProperty Name="ShowFrontEndFieldEditor" ColumnName="ShowFrontEndFieldEditor" />
                 <ScalarProperty Name="FieldDescription" ColumnName="FieldDescription" />
                 <ScalarProperty Name="SetAdminControlValue" ColumnName="SetAdminControlValue" />
                 <ScalarProperty Name="GetAdminControlValue" ColumnName="GetAdminControlValue" />

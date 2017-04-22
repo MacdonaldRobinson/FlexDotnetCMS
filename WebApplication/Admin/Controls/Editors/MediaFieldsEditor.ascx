@@ -90,7 +90,7 @@
                     <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
                     <asp:BoundField DataField="OrderIndex" HeaderText="OrderIndex" SortExpression="OrderIndex" />
                     <asp:BoundField DataField="FieldCode" HeaderText="FieldCode" SortExpression="FieldCode" />
-                    <%--<asp:BoundField DataField="FieldLabel" HeaderText="FieldLabel" SortExpression="FieldLabel" />--%>
+                    <asp:BoundField DataField="FieldLabel" HeaderText="FieldLabel" SortExpression="FieldLabel" />
                     <asp:BoundField DataField="GroupName" HeaderText="GroupName" SortExpression="GroupName" />
                     <asp:BoundField DataField="MediaTypeFieldID" HeaderText="MediaTypeFieldID" SortExpression="MediaTypeFieldID" />
 <%--                    <asp:BoundField DataField="DateCreated" HeaderText="DateCreated" SortExpression="DateCreated" />
@@ -126,6 +126,9 @@
                 </div>
                 <div>
                     <asp:CheckBox runat="server" ID="RenderLabelAfterControl" /> <label for="<%# RenderLabelAfterControl.ClientID %>">Render Label After Control</label>
+                </div>
+                <div>
+                    <asp:CheckBox runat="server" ID="ShowFrontEndFieldEditor" /> <label for="<%# ShowFrontEndFieldEditor.ClientID %>">Show Front End Field Editor</label>
                 </div>
                 <div id="UseMediaTypeFieldDescriptionWrapper" runat="server">
                     <label>

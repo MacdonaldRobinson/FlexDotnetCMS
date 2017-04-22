@@ -313,8 +313,8 @@ namespace WebApplication.Admin.MediaArticle
             }
             else
             {
-                title = "Editing: " + selectedItem.SectionTitle;
-                sectionTitle = "Editing: <span>" + selectedItem.SectionTitle + "</span>";
+                title = "Editing: " + selectedItem.LinkTitle;
+                sectionTitle = "Editing: <span>" + selectedItem.LinkTitle + "</span>";
             }
 
             this.Page.Title = title;

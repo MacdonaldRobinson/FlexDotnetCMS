@@ -69,7 +69,7 @@
                             <Admin:LanguageSwitcher ID="LanguageSwitcher" runat="server" />
                             <div id="SiteTreeWrapper">
                                 <div>
-                                    <asp:HyperLink ID="CreateItem" Text="Create Item" runat="server"  NavigateUrl='<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Media/Create.aspx' Visible="false"/>
+                                    <asp:HyperLink ID="CreateItem" Text="Create Item" runat="server" Visible="false"/>
                                 </div>
                                 <asp:TextBox runat="server" ID="Filter" placeholder="Search ..." Width="90%" ClientIDMode="Static"></asp:TextBox>
                                 <div id="SiteTree"></div>

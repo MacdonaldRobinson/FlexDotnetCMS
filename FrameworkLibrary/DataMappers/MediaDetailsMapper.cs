@@ -551,7 +551,7 @@ namespace FrameworkLibrary
             }
         }
 
-        public static IMediaDetail CreateObject(long mediaTypeId, Media mediaItem, Media parentMedia)
+        public static IMediaDetail CreateObject(long mediaTypeId, Media mediaItem, Media parentMedia, bool createMediaTypeFields = true)
         {
             if (mediaTypeId == 0)
                 return new Page();
@@ -580,15 +580,18 @@ namespace FrameworkLibrary
 
             detail.UseMediaTypeLayouts = true;
 
-            foreach (var mediaTypeField in mediaType.Fields)
+            if (createMediaTypeFields)
             {
-                var mediaDetailField = new MediaDetailField();
-                mediaDetailField.CopyFrom(mediaTypeField);
-                mediaDetailField.UseMediaTypeFieldFrontEndLayout = true;
-                mediaDetailField.UseMediaTypeFieldDescription = true;
-                mediaDetailField.MediaTypeFieldID = mediaTypeField.ID;
+                foreach (var mediaTypeField in mediaType.Fields)
+                {
+                    var mediaDetailField = new MediaDetailField();
+                    mediaDetailField.CopyFrom(mediaTypeField);
+                    mediaDetailField.UseMediaTypeFieldFrontEndLayout = true;
+                    mediaDetailField.UseMediaTypeFieldDescription = true;
+                    mediaDetailField.MediaTypeFieldID = mediaTypeField.ID;
 
-                detail.Fields.Add(mediaDetailField);
+                    detail.Fields.Add(mediaDetailField);
+                }
             }
 
             return detail;
@@ -920,7 +923,7 @@ namespace FrameworkLibrary
 
         public static string ReplaceFieldWithParsedValue(string originalText, string textToReplace, IField mediaField, string parsedValue)
         {
-            if (parsedValue.Contains("<"))
+            if (mediaField.ShowFrontEndFieldEditor && parsedValue.Contains("<"))
             {
                 parsedValue = $"<div class='field' data-fieldid='{mediaField.ID}' data-fieldcode='{mediaField.FieldCode}'>{parsedValue}</div>";
             }

@@ -67,11 +67,8 @@
         float: right;
     }
 
-    .field {
-        border: 1px dashed;
-        position: relative;                      
-        display:inline-block;
-        border-color: rgba(0, 0, 0, .5);
+    .field {        
+        position: relative;
         padding-top: 25px;
     }
 
@@ -87,7 +84,7 @@
         }
 
         .field.hover {
-            border: 1px dashed rgba(0,0,0,.3) !important;
+            border: 1px dashed rgba(0,0,0,.3);
         }
         .field .edit:hover {
             background-color: red;  
@@ -112,7 +109,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         CreateFieldsEditor();
-        HideFieldsEditor();
+        //HideFieldsEditor();
 
         function HideFieldsEditor() {
             $(".field").addClass("hide");
@@ -127,7 +124,7 @@
                 var fieldId = $(this).attr("data-fieldid");
                 var fieldcode = $(this).attr("data-fieldcode");
 
-                $(this).prepend("<a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='window.location.reload()' data-width='60%' data-height='80%'>Edit - {Field:" + fieldcode + "}</a>");
+                $(this).prepend("<a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='window.location.reload()' data-width='60%' data-height='80%'>Edit</a>");
             });
 
             $(document).on("click", ".field .edit", function () {
@@ -166,6 +163,10 @@
             $("#LoggedInHeaderPanel").hide();
             HideFieldsEditor();
         }
+        else
+        {
+            ShowFieldsEditor();
+        }
 
         $("#SlideTab").on("click", function () {
             $("#AccessCMSPermissionsPanel").slideToggle(function () {
@@ -173,13 +174,5 @@
             });
         });
 
-        $(window).on("load", function () {
-            if ($("#LoggedInHeaderPanel").length > 0 && $("#LoggedInHeaderPanel").css("display") != "none") {
-                ShowFieldsEditor();
-            }
-            else {
-                HideFieldsEditor();
-            }
-        });
     });
 </script>

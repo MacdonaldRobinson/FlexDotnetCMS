@@ -36,6 +36,11 @@ namespace WebApplication.Admin
                 LanguageSwitcher.Visible = false;
             else
                 LanguageSwitcher.Visible = true;
+
+            //AdminBasePage.SelectedMedia = null;
+            //AdminBasePage.SelectedMediaDetail = null;
+
+            CreateItem.NavigateUrl = $"{URIHelper.BaseUrl}Admin/Views/PageHandlers/Media/Create.aspx";
         }
 
         protected void LoginStatus_OnLoggedOut(object sender, EventArgs e)

@@ -921,9 +921,9 @@ namespace FrameworkLibrary
             return html;
         }
 
-        public static string ReplaceFieldWithParsedValue(string originalText, string textToReplace, IField mediaField, string parsedValue)
+        public static string ReplaceFieldWithParsedValue(string originalText, string textToReplace, IField mediaField, string parsedValue, bool includeFieldWrapper)
         {
-            if (mediaField.ShowFrontEndFieldEditor)
+            if (mediaField.ShowFrontEndFieldEditor && includeFieldWrapper)
             {
                 parsedValue = $"<div class='field' data-fieldid='{mediaField.ID}' data-fieldcode='{mediaField.FieldCode}'>{parsedValue}</div>";
             }
@@ -931,7 +931,7 @@ namespace FrameworkLibrary
             return originalText.Replace(textToReplace, parsedValue);
         }
 
-        public static string ParseSpecialTags(IMediaDetail mediaDetail, string propertyName = "{UseMainLayout}", int previousCount = 0, object passToParser = null)
+        public static string ParseSpecialTags(IMediaDetail mediaDetail, string propertyName = "{UseMainLayout}", int previousCount = 0, object passToParser = null, bool includeFieldWrapper = true)
         {
             if (mediaDetail == null)
                 return "";
@@ -1073,19 +1073,19 @@ namespace FrameworkLibrary
                             if (!string.IsNullOrEmpty(frontEndLayout))
                             {
                                 var parsedValue = ParseSpecialTags(mediaDetail, frontEndLayout, 0, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail });
-                                customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, parsedValue);
+                                customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, parsedValue, includeFieldWrapper);
                             }
                             else
                             {
                                 if (mediaField.GetAdminControlValue.Contains("@"))
                                 {
                                     var parsedValue = ParseSpecialTags(mediaDetail, mediaField.FieldValue, 0, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail });
-                                    customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, parsedValue);
+                                    customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, parsedValue, includeFieldWrapper);
                                     //customCode = customCode.Replace(field.ToString(), parsedValue);
                                 }
                                 else
                                 {
-                                    customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, mediaField.FieldValue);
+                                    customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, mediaField.FieldValue, includeFieldWrapper);
                                     //customCode = customCode.Replace(field.ToString(), mediaField.FieldValue);
                                 }
                             }

@@ -272,7 +272,7 @@ namespace WebApplication.Admin.Controls.Fields
                         {
                             file.SaveAs(fileInfo.FullName);
 
-                            var filePath = URIHelper.ConvertAbsUrlToTilda(URIHelper.ConvertAbsPathToAbsUrl(fileInfo.FullName));
+                            var filePath = URIHelper.ConvertAbsUrlToTilda(URIHelper.ConvertAbsPathToAbsUrl(fileInfo.FullName)).Replace("~", "");
 
                             if (!field.FieldAssociations.Any(j => j.MediaDetail.PathToFile == filePath))
                             {

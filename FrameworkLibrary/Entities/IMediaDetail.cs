@@ -106,9 +106,9 @@ namespace FrameworkLibrary
         Return PublishLive();
         Field LoadField(string fieldCode);
         void RemoveFromCache();
-        string RenderShortCode(string shortCode);
-        string RenderField(string fieldCode);
-        string RenderField(long fieldId);
+        string RenderShortCode(string shortCode, bool includeFieldWrapper = true);
+        string RenderField(string fieldCode, bool includeFieldWrapper = true);
+        string RenderField(long fieldId, bool includeFieldWrapper = true);
         void SaveToRedisCache(RenderVersion renderVersion, string html, string queryString = "");
         void SaveToFileCache(RenderVersion renderVersion, string html, string queryString = "");
         void SaveToMemoryCache(RenderVersion renderVersion, string html, string queryString = "");

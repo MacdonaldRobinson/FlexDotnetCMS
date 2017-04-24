@@ -272,21 +272,21 @@ namespace FrameworkLibrary
             return Fields.SingleOrDefault(i => i.FieldCode == fieldCode);
         }
 
-        public string RenderShortCode(string shortCode)
+        public string RenderShortCode(string shortCode, bool includeFieldWrapper = true)
         {
-            return MediaDetailsMapper.ParseSpecialTags(this, shortCode);
+            return MediaDetailsMapper.ParseSpecialTags(this, shortCode, includeFieldWrapper: includeFieldWrapper);
         }
 
-        public string RenderField(string fieldCode)
+        public string RenderField(string fieldCode, bool includeFieldWrapper = true)
         {
             var shortCode = "{Field:"+fieldCode+"}";
-            return RenderShortCode(shortCode);
+            return RenderShortCode(shortCode, includeFieldWrapper);
         }
 
-        public string RenderField(long fieldId)
+        public string RenderField(long fieldId, bool includeFieldWrapper = true)
         {
             var shortCode = "{Field:" + fieldId + "}";
-            return RenderShortCode(shortCode);
+            return RenderShortCode(shortCode, includeFieldWrapper);
         }
 
         public string RenderMainLayout()

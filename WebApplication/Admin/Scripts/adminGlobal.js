@@ -1145,6 +1145,7 @@ function pageLoad() {
 
     if (MasterPage != undefined && MasterPage.indexOf("FieldEditor") == -1)
     {
+        initTinyMCE();
         setTimeout(function () {
             initAceEditors();
         }, 1000)

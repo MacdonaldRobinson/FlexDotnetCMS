@@ -124,6 +124,9 @@
                     <label for="<%# FieldLabel.ClientID %>">Field Label:</label>
                     <asp:TextBox runat="server" ID="FieldLabel" />
                 </div>
+                <div id="AssociateWithMediaTypeFieldWrapper" runat="server" visible="false">
+                    <asp:CheckBox runat="server" ID="AssociateWithMediaTypeField" /> <label for="<%# AssociateWithMediaTypeField.ClientID %>">Associate With Media Type Field</label>
+                </div>
                 <div>
                     <asp:CheckBox runat="server" ID="RenderLabelAfterControl" /> <label for="<%# RenderLabelAfterControl.ClientID %>">Render Label After Control</label>
                 </div>
@@ -139,9 +142,6 @@
                 <div>
                     <label for="<%# GroupName.ClientID %>">Group Name:</label>
                 <asp:TextBox runat="server" ID="GroupName" />
-                </div>
-                <div id="AssociateWithMediaTypeFieldWrapper" runat="server" visible="false">
-                    <asp:CheckBox runat="server" ID="AssociateWithMediaTypeField" /> <label for="<%# AssociateWithMediaTypeField.ClientID %>">Associate With Media Type Field</label>
                 </div>
                 <div>
                     <asp:DropDownList runat="server" ID="FieldTypeDropDown" AutoPostBack="true" AppendDataBoundItems="true" OnSelectedIndexChanged="FieldTypeDropDown_SelectedIndexChanged">

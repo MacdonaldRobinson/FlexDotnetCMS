@@ -25,7 +25,7 @@ namespace WebApplication.Admin.Controls.Editors
         protected void Page_Load(object sender, EventArgs e)
         {
             BindItemList();
-            UpdateVisibility();
+            //UpdateVisibility();
         }
 
         private void BindItemList()
@@ -59,18 +59,21 @@ namespace WebApplication.Admin.Controls.Editors
                 {
                     UseMediaTypeFieldFrontEndLayout.Checked = mediaField.UseMediaTypeFieldFrontEndLayout;
                     UseMediaTypeFieldFrontEndLayoutWrapper.Visible = true;
+                    UseMediaTypeFieldDescriptionWrapper.Visible = true;
                 }
                 else
                 {
                     UseMediaTypeFieldFrontEndLayoutWrapper.Visible = false;
                     UseMediaTypeFieldFrontEndLayout.Checked = false;
-                    mediaField.UseMediaTypeFieldFrontEndLayout = false;
+                    mediaField.UseMediaTypeFieldFrontEndLayout = false;                    
+                    UseMediaTypeFieldDescriptionWrapper.Visible = false;
                 }
             }
             else
             {
-                UseMediaTypeFieldFrontEndLayoutWrapper.Visible = AssociateWithMediaTypeFieldWrapper.Visible = false;
+                UseMediaTypeFieldDescriptionWrapper.Visible = UseMediaTypeFieldFrontEndLayoutWrapper.Visible = AssociateWithMediaTypeFieldWrapper.Visible = false;
                 UseMediaTypeFieldFrontEndLayout.Checked = false;
+
                 mediaField.MediaTypeField = null;
                 mediaField.UseMediaTypeFieldFrontEndLayout = false;
             }
@@ -121,7 +124,15 @@ namespace WebApplication.Admin.Controls.Editors
             else
             {
                 mediaField = mediaDetail.Fields.SingleOrDefault(i => i.ID == fieldId);
+
+                var previouslyAssociateWithMediaTypeField = mediaField.MediaTypeFieldID;
+
                 UpdatedObjectFromFields(mediaField);
+
+                if ((previouslyAssociateWithMediaTypeField == 0 || previouslyAssociateWithMediaTypeField == null) && mediaField.MediaTypeFieldID != 0)
+                {
+                    mediaField.UseMediaTypeFieldDescription = mediaField.UseMediaTypeFieldFrontEndLayout = true;
+                }
             }
 
             var returnObj = MediaDetailsMapper.Update(mediaDetail);
@@ -178,6 +189,8 @@ namespace WebApplication.Admin.Controls.Editors
 
             mediaField.DateCreated = DateTime.Now;
             mediaField.DateLastModified = DateTime.Now;
+
+            //BindVisibility(mediaField);
         }
 
         private void UpdatedFieldsFromObject(MediaDetailField mediaField)

@@ -177,19 +177,9 @@ namespace WebApplication.Admin.Controls.Fields
 
             var mediaType = MediaTypesMapper.GetByID(fieldAssociation.MediaDetail.MediaTypeID);
 
-            if(mediaType != null)
+            if (mediaType != null)
             {
                 fieldAssociation.MediaDetail.UseMediaTypeLayouts = mediaType.UseMediaTypeLayouts;
-
-                foreach (var mediaTypeFields in mediaType.Fields)
-                {
-                    var mediaDetailField = new MediaDetailField();
-                    mediaDetailField.CopyFrom(mediaTypeFields);
-                    mediaDetailField.ID = 0;
-                    mediaDetailField.MediaTypeFieldID = mediaTypeFields.ID;
-
-                    fieldAssociation.MediaDetail.Fields.Add(mediaDetailField);
-                }
             }
 
             field.FieldAssociations.Add(fieldAssociation);

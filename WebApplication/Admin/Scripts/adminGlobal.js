@@ -956,6 +956,48 @@ function RefreshSiteTreeNodeById(nodeId)
         jsTree.refresh_node(nodeId);
 }
 
+function ConvertDivToSiteTree(divSelector)
+{
+    var jsTree = $(divSelector).jstree(true);
+    var filterText = "";
+
+    if (jsTree != false) {
+        jsTree.destroy();
+    }
+
+    $(divSelector).jstree({
+        "plugins": ["checkbox"],
+        "checkbox": {
+            "keep_selected_style": false
+        },
+        'types': {
+            'default': {
+                'icon': 'jstree-icon jstree-file'
+            }
+        },
+        "core": {
+            // so that create works
+            "check_callback": true,
+            "multiple": true,
+            'data': {
+                'url': function (node) {
+                    if (filterText == "" || filterText == undefined || filterText == null)
+                        return node.id === '#' ? BaseUrl + 'Admin/Views/MasterPages/WebService.asmx/GetRootNodes' : BaseUrl + 'Admin/Views/MasterPages/WebService.asmx/GetChildNodes';
+                    else
+                        return BaseUrl + 'Admin/Views/MasterPages/WebService.asmx/SearchForNodes?filterText=' + filterText;
+
+                },
+                'data': function (node) {
+                    return { 'id': node.id };
+                }
+            }
+        }
+    }).on('ready.jstree', function (e, data) {        
+        $(divSelector).jstree("deselect_all");
+    });
+    
+}
+
 function BindTree(filterText) {
 
     var jsTree = $('#SiteTree').jstree(true);

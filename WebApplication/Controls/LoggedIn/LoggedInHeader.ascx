@@ -107,7 +107,7 @@
 </style>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function () {        
         CreateFieldsEditor();
         //HideFieldsEditor();
 
@@ -156,15 +156,14 @@
                     toggleButton.text(text.replace("Hide", "Show"));
                 }
             });
-        });
-
+        });        
 
         if (window.top != window) {
             $("#LoggedInHeaderPanel").hide();
             HideFieldsEditor();
         }
         else
-        {
+        {            
             ShowFieldsEditor();
         }
 

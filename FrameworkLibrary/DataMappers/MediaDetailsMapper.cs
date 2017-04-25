@@ -1060,7 +1060,7 @@ namespace FrameworkLibrary
                             if (mediaField is MediaDetailField)
                             {
                                 var mediaDetailField = mediaField as MediaDetailField;
-                                if (mediaDetailField.UseMediaTypeFieldFrontEndLayout)
+                                if (mediaDetailField.MediaTypeField != null && mediaDetailField.UseMediaTypeFieldFrontEndLayout)
                                 {
                                     frontEndLayout = mediaDetailField.MediaTypeField?.FrontEndLayout;
                                 }

@@ -334,7 +334,7 @@ namespace WebApplication.Admin.Views.MasterPages
         }
 
         [WebMethod(EnableSession = true)]
-        public string Duplicate(long id)
+        public string Duplicate(long id, bool duplicateChildren = false)
         {
             var detail = MediaDetailsMapper.GetByID(id);
 
@@ -342,7 +342,7 @@ namespace WebApplication.Admin.Views.MasterPages
             {
                 UserMustHaveAccessTo(detail);
 
-                var mediaDetail = HandleDuplicate(detail, detail.Media.ParentMedia);
+                var mediaDetail = HandleDuplicate(detail, detail.Media.ParentMedia, duplicateChildren);
 
                 ContextHelper.ClearAllMemoryCache();
 
@@ -520,7 +520,7 @@ namespace WebApplication.Admin.Views.MasterPages
             }
         }
 
-        public IMediaDetail HandleDuplicate(IMediaDetail detail, Media parentMedia)
+        public IMediaDetail HandleDuplicate(IMediaDetail detail, Media parentMedia, bool duplicateChildren = false)
         {
             var duplicatedItem = MediaDetailsMapper.CreateObject(detail.MediaTypeID, null, parentMedia, false);
             duplicatedItem.CopyFrom(detail, new List<string> { "MediaID", "Media" });
@@ -555,7 +555,7 @@ namespace WebApplication.Admin.Views.MasterPages
                         var associatedMediaDetail = MediaDetailsMapper.GetByID(fieldAssociation.AssociatedMediaDetailID);
                         fieldAssociation.AssociatedMediaDetailID = 0;
 
-                        fieldAssociation.MediaDetail = (MediaDetail)HandleDuplicate(associatedMediaDetail, associatedMediaDetail.Media.ParentMedia);
+                        fieldAssociation.MediaDetail = (MediaDetail)HandleDuplicate(associatedMediaDetail, associatedMediaDetail.Media.ParentMedia, true);
                     }
 
                     mediaDetailField.FieldAssociations.Add(fieldAssociation);
@@ -570,13 +570,16 @@ namespace WebApplication.Admin.Views.MasterPages
                 throw returnObj.Error.Exception;
             else
             {
-                foreach (var child in detail.Media.ChildMedias)
+                if (duplicateChildren)
                 {
-                    var mediaDetailsToCopy = child.MediaDetails.Where(i => !i.IsDraft && !i.IsHistory);
-
-                    foreach (var childDetail in mediaDetailsToCopy)
+                    foreach (var child in detail.Media.ChildMedias)
                     {
-                        HandleDuplicate(childDetail, duplicatedItem.Media);
+                        var mediaDetailsToCopy = child.MediaDetails.Where(i => !i.IsDraft && !i.IsHistory);
+
+                        foreach (var childDetail in mediaDetailsToCopy)
+                        {
+                            HandleDuplicate(childDetail, duplicatedItem.Media);
+                        }
                     }
                 }
             }

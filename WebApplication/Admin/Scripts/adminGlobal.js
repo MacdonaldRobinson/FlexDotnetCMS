@@ -233,7 +233,7 @@ function HandleContextMenuClick(action, target, node) {
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/Duplicate",
-                data: "{'id':'" + mediaDetailId + "'}",
+                data: "{'id':'" + mediaDetailId + "', 'duplicateChildren':false}",
                 contentType: "application/json; charset=utf-8",
                 success:
                 function (msg) {
@@ -246,17 +246,17 @@ function HandleContextMenuClick(action, target, node) {
                 }
             });
             break;
-        case "DuplicateAndEdit":
+        case "DuplicateIncludingAllChildren":
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/Duplicate",
-                data: "{'id':'" + mediaDetailId + "'}",
+                data: "{'id':'" + mediaDetailId + "', 'duplicateChildren':true}",
                 contentType: "application/json; charset=utf-8",
                 success:
                 function (msg) {
                     //RefreshSiteTreeViewAjaxPanel();
                     RefreshSiteTreeNodeById(node.parent);
-                    window.location.href = msg.d.replace("~", "");
+                    //window.location.href = msg.d.replace("~", "");
                 },
                 error: function (xhr, status, error) {
                     DisplayJsonException(xhr);
@@ -1059,10 +1059,10 @@ function BindTree(filterText) {
                             HandleContextMenuClick("Duplicate", obj.reference, node);
                         }
                     },
-                    "DuplicateAndEdit": {
-                        "label": "Duplicate And Edit",
+                    "DuplicateIncludingAllChildren": {
+                        "label": "Duplicate (Including All Children)",
                         "action": function (obj) {
-                            HandleContextMenuClick("DuplicateAndEdit", obj.reference, node);
+                            HandleContextMenuClick("DuplicateIncludingAllChildren", obj.reference, node);
                         }
                     }
                 };

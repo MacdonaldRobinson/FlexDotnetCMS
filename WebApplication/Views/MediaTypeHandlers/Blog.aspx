@@ -5,6 +5,22 @@
 
 <div class="blog">
 
+    <asp:ListView runat="server" ID="BlogCategories" ItemType="FrameworkLibrary.Page">
+        <LayoutTemplate>
+            <div class="blog-categories">
+                <h3>Categories</h3>
+                <ul>
+                    <asp:PlaceHolder runat="server" ID="itemPlaceHolder" />
+                </ul>
+            </div>
+        </LayoutTemplate>
+        <ItemTemplate>
+            <li>
+                <a href="<%# Item.AbsoluteUrl %>" class='<%# (Item.ID == CurrentMediaDetail.ID)? "current":"" %>'><%# Item.SectionTitle %></a>
+            </li>
+        </ItemTemplate>
+    </asp:ListView>
+
     <asp:ListView runat="server" ID="BlogPosts" ItemType="FrameworkLibrary.Page">
         <LayoutTemplate>
             <div class="blog-post-list">
@@ -23,21 +39,6 @@
         </ItemTemplate>
     </asp:ListView>
 
-    <asp:ListView runat="server" ID="BlogCategories" ItemType="FrameworkLibrary.Page">
-        <LayoutTemplate>
-            <div class="blog-categories">
-                <h3>Categories</h3>
-                <ul>
-                    <asp:PlaceHolder runat="server" ID="itemPlaceHolder" />
-                </ul>
-            </div>
-        </LayoutTemplate>
-        <ItemTemplate>
-            <li>
-                <a href="<%# Item.AbsoluteUrl %>" class='<%# (Item.ID == CurrentMediaDetail.ID)? "current":"" %>'><%# Item.SectionTitle %></a>
-            </li>
-        </ItemTemplate>
-    </asp:ListView>
 </div>
 <div class="blog-pager">
     <Site:Pager runat="server" PageSize="10" PagedControlID="BlogPosts" />

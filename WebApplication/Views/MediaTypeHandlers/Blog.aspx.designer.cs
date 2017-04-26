@@ -22,15 +22,6 @@ namespace WebApplication.Views.MediaTypeHandlers {
         protected global::System.Web.UI.WebControls.PlaceHolder TemplateTopSegment;
         
         /// <summary>
-        /// BlogPosts control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView BlogPosts;
-        
-        /// <summary>
         /// BlogCategories control.
         /// </summary>
         /// <remarks>
@@ -38,6 +29,15 @@ namespace WebApplication.Views.MediaTypeHandlers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListView BlogCategories;
+        
+        /// <summary>
+        /// BlogPosts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListView BlogPosts;
         
         /// <summary>
         /// TemplateBottomSegment control.

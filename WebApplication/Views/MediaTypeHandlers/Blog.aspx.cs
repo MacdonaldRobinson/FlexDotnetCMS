@@ -20,13 +20,18 @@ namespace WebApplication.Views.MediaTypeHandlers
                 TemplateBottomSegment.Controls.Add(templateTopAndBottomSegments.ElementAt(1));
             }
 
-            BlogCategories.DataSource = CurrentMediaDetail.ChildMediaDetails.OrderBy(i=>i.Media.OrderIndex).ToList();
+            var blogPosts = BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.Name == "BlogPost" && i.HistoryVersionNumber == 0);
+            var categories = BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.Name == "BlogCategory" && i.HistoryVersionNumber == 0);
+            
+            BlogCategories.DataSource = categories.ToList().Where(i => i.CanRender).ToList();
             BlogCategories.DataBind();
+            
+            if(CurrentMediaDetail.MediaType.Name == "BlogCategory")
+            {
+                blogPosts = blogPosts.Where(i => i.Media.ParentMediaID == CurrentMediaDetail.MediaID);
+            }
 
-            IEnumerable<IMediaDetail> blogPosts = new List<IMediaDetail>();
-
-            blogPosts = CurrentMediaDetail.ChildMediaDetails.Where(i=>i.HistoryVersionNumber == 0 && i.LanguageID == CurrentLanguage.ID).OrderByDescending(i => (i.PublishDate == null)? DateTime.Parse(i.Fields.FirstOrDefault(j=>j.FieldCode == "ArticlePublishDate").FieldValue) : i.PublishDate).ToList();
-            BlogPosts.DataSource = blogPosts;
+            BlogPosts.DataSource = blogPosts.OrderBy(i => i.DateCreated).ToList().Where(i => i.CanRender).ToList();
             BlogPosts.DataBind();
         }
 

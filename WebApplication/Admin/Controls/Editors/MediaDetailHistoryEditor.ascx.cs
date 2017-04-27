@@ -37,7 +37,7 @@ namespace WebApplication.Admin.Controls.Editors
 
         private void HandleLoad(IMediaDetail item)
         {
-            WebApplication.BasePage.RedirectToMediaDetail(item, item.HistoryVersionNumber);
+            WebApplication.BasePage.RedirectToAdminUrl(item, item.HistoryVersionNumber);
         }
 
         private void HandleDelete(IMediaDetail item)

@@ -446,6 +446,11 @@ html, body {
         font-weight: bold;
     }
 
+    .dropZone .edit {
+        float: right;
+        line-height: 25px;
+    }
+
 .hidden {
     display: none;
 }

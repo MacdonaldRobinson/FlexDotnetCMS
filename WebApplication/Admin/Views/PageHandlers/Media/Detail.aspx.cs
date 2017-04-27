@@ -281,7 +281,7 @@ namespace WebApplication.Admin.MediaArticle
 
         protected void ViewCurrentVersion_OnClick(object sender, EventArgs e)
         {
-            WebApplication.BasePage.RedirectToMediaDetail(selectedItem);
+            WebApplication.BasePage.RedirectToAdminUrl(selectedItem);
         }
 
         /*protected override void OnPreRender(EventArgs e)
@@ -483,7 +483,7 @@ namespace WebApplication.Admin.MediaArticle
             PublishNow_OnClick(sender, e);
 
             if ((selectedItem != null) && (selectedItem.IsPublished))
-                RedirectToMediaDetail(selectedItem.MediaTypeID, selectedItem.MediaID, selectedItem.Media.ParentMediaID);
+                RedirectToAdminUrl(selectedItem.MediaTypeID, selectedItem.MediaID, selectedItem.Media.ParentMediaID);
         }
 
         protected void LoadLatestDraft_OnClick(object sender, EventArgs e)
@@ -491,7 +491,7 @@ namespace WebApplication.Admin.MediaArticle
             var latestDraft = selectedItem.History.Where(i => i.IsDraft).OrderByDescending(i => i.HistoryVersionNumber).FirstOrDefault();
 
             if (latestDraft != null)
-                RedirectToMediaDetail(selectedItem, latestDraft.HistoryVersionNumber);
+                RedirectToAdminUrl(selectedItem, latestDraft.HistoryVersionNumber);
         }
 
         protected void PublishLive_OnClick(object sender, EventArgs e)
@@ -506,7 +506,7 @@ namespace WebApplication.Admin.MediaArticle
                 //if (selectedItem.AbsoluteUrl != liveVersion.AbsoluteUrl)
                 //    ChangeLinksForAllMediaDetails(liveVersion.AbsoluteUrl, selectedItem.AbsoluteUrl);
 
-                RedirectToMediaDetail(selectedItem);
+                RedirectToAdminUrl(selectedItem);
             }
             else
             {
@@ -578,7 +578,7 @@ namespace WebApplication.Admin.MediaArticle
                     UpdateFieldsFromObject();
                 }
 
-                RedirectToMediaDetail(selectedItem, history.HistoryVersionNumber);
+                RedirectToAdminUrl(selectedItem, history.HistoryVersionNumber);
 
                 return;
             }
@@ -681,7 +681,7 @@ namespace WebApplication.Admin.MediaArticle
                     }
                     else
                     {
-                        RedirectToMediaDetail(selectedItem.MediaTypeID, selectedItem.MediaID, selectedItem.Media.ParentMediaID);
+                        RedirectToAdminUrl(selectedItem.MediaTypeID, selectedItem.MediaID, selectedItem.Media.ParentMediaID);
                     }
 
                     //ChangeLinksForAllMediaDetails(oldAbsoluteUrl, selectedItem.AbsoluteUrl);
@@ -699,7 +699,7 @@ namespace WebApplication.Admin.MediaArticle
 
                 if (((Request["selectedMediaId"] == null) || (Request["selectedMediaId"].ToString() == "0")) && (commandArgument != "SaveAndPublish"))
                 {
-                    RedirectToMediaDetail(selectedItem.MediaTypeID, selectedItem.MediaID, selectedItem.Media.ParentMediaID);
+                    RedirectToAdminUrl(selectedItem.MediaTypeID, selectedItem.MediaID, selectedItem.Media.ParentMediaID);
                 }
                 else
                 {

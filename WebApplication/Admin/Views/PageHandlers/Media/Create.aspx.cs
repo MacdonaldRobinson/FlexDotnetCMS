@@ -34,11 +34,11 @@ namespace WebApplication.Admin.Views.PageHandlers.MediaArticle
 
             if (SelectedMedia != null)
             {
-                WebApplication.BasePage.RedirectToMediaDetail(long.Parse(MediaTypeSelector.MediaTypesDropDownList.SelectedValue), 0, SelectedMedia.ID);
+                WebApplication.BasePage.RedirectToAdminUrl(long.Parse(MediaTypeSelector.MediaTypesDropDownList.SelectedValue), 0, SelectedMedia.ID);
             }
             else
             {
-                WebApplication.BasePage.RedirectToMediaDetail(long.Parse(MediaTypeSelector.MediaTypesDropDownList.SelectedValue), 0);
+                WebApplication.BasePage.RedirectToAdminUrl(long.Parse(MediaTypeSelector.MediaTypesDropDownList.SelectedValue), 0);
             }
         }
     }

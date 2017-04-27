@@ -33,7 +33,7 @@ namespace WebApplication.Admin.Controls.Generic
             if (item == null)
                 return;
 
-            WebApplication.BasePage.RedirectToMediaDetail(item);
+            WebApplication.BasePage.RedirectToAdminUrl(item);
         }
     }
 }

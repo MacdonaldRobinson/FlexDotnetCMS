@@ -72,7 +72,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
 
                 if (mediaDetail != null)
                 {
-                    var url = AdminBasePage.GetRedirectToMediaDetailUrl(mediaDetail.MediaTypeID, mediaDetail.MediaID);
+                    var url = AdminBasePage.GetAdminUrl(mediaDetail.MediaTypeID, mediaDetail.MediaID);
 
                     Response.Redirect(url);
                 }
@@ -140,7 +140,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
 
                 if (editLink != null)
                 {
-                    editLink.NavigateUrl = AdminBasePage.GetRedirectToMediaDetailUrl(dataItem.MediaTypeID, dataItem.MediaID);
+                    editLink.NavigateUrl = AdminBasePage.GetAdminUrl(dataItem.MediaTypeID, dataItem.MediaID);
                 }
             }
         }

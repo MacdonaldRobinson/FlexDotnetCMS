@@ -66,11 +66,9 @@ namespace WebApplication.Admin.Controls.Editors
             {
                 var mediaTypeField = new MediaTypeField();
                 UpdatedObjectFromFields(mediaTypeField);
-                mediaType.Fields.Add(mediaTypeField);
+                mediaType.Fields.Add(mediaTypeField);                
 
-                var mediaDetailsToAddFieldsTo = mediaType.MediaDetails.Where(i => i.HistoryVersionNumber == 0 || i.IsDraft).ToList();
-
-                foreach (var mediaDetail in mediaDetailsToAddFieldsTo)
+                foreach (var mediaDetail in mediaType.MediaDetails)
                 {
                     var mediaDetailField = new MediaDetailField();
                     mediaDetailField.CopyFrom(mediaTypeField);

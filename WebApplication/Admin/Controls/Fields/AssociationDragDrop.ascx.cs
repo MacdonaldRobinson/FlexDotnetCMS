@@ -14,6 +14,7 @@ namespace WebApplication.Admin.Controls.Fields
     {
         public string name { get; set; }
         public long id { get; set; }
+        public string adminUrl { get; set; }
     }
 
     public partial class AssociationDragDrop : BaseFieldControl
@@ -98,6 +99,7 @@ namespace WebApplication.Admin.Controls.Fields
                     var jsonObj = new JsonObj();
                     jsonObj.name = item.MediaDetail.Title;
                     jsonObj.id = item.MediaDetail.ID;
+                    jsonObj.adminUrl = AdminBasePage.GetAdminUrl(item.MediaDetail, true);
 
                     jsonObjList.Add(jsonObj);
                 }

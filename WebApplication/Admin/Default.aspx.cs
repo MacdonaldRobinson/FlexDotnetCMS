@@ -26,7 +26,7 @@ namespace WebApplication.Admin
             var dataItem = (IMediaDetail)e.Item.DataItem;
             var HyperLink = (HtmlAnchor)e.Item.FindControl("HyperLink");
 
-            HyperLink.HRef = GetRedirectToMediaDetailUrl(dataItem.MediaTypeID, dataItem.MediaID);
+            HyperLink.HRef = GetAdminUrl(dataItem.MediaTypeID, dataItem.MediaID);
         }
     }
 }

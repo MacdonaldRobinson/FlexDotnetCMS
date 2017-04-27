@@ -202,22 +202,34 @@ namespace WebApplication
             return GetRedirectToMediaDetailUrl(mediaType, selectedMediaId, parentMediaId, historyVersion);
         }*/
 
-        public static string GetRedirectToMediaDetailUrl(long mediaTypeId, long selectedMediaId, long? parentMediaId = null, long historyVersion = 0)
+        public static string GetAdminUrl(long mediaTypeId, long selectedMediaId, long? parentMediaId = null, long historyVersion = 0, bool popupTemplate = false)
         {
-            return $"{URIHelper.BaseUrl}Admin/Views/PageHandlers/Media/Detail.aspx?mediaTypeId={mediaTypeId}&selectedMediaId={selectedMediaId}&parentMediaId={parentMediaId}&historyVersion={historyVersion}";
+            var url = $"{URIHelper.BaseUrl}Admin/Views/PageHandlers/Media/Detail.aspx?mediaTypeId={mediaTypeId}&selectedMediaId={selectedMediaId}&parentMediaId={parentMediaId}&historyVersion={historyVersion}";
+
+            if(popupTemplate)
+            {
+                url = $"{url}&masterFilePath=~/Admin/Views/MasterPages/Popup.Master";
+            }
+
+            return url;
         }
 
-        public static void RedirectToMediaDetail(IMediaDetail detail, long historyVersion = 0)
+        public static string GetAdminUrl(IMediaDetail detail, bool popupTemplate = false)
         {
-            RedirectToMediaDetail(detail.MediaTypeID, detail.MediaID, detail.Media.ParentMediaID, detail.Language, detail, historyVersion);
+            return GetAdminUrl(detail.MediaTypeID, detail.MediaID, detail.Media.ParentMediaID, detail.HistoryVersionNumber, popupTemplate);
         }
 
-        public static void RedirectToMediaDetail(long mediaTypeId, long selectedMediaId, long? parentMediaId = null, Language language = null, IMediaDetail detail = null, long historyVersion = 0)
+        public static void RedirectToAdminUrl(IMediaDetail detail, long historyVersion = 0)
+        {
+            RedirectToAdminUrl(detail.MediaTypeID, detail.MediaID, detail.Media.ParentMediaID, detail.Language, detail, historyVersion);
+        }
+
+        public static void RedirectToAdminUrl(long mediaTypeId, long selectedMediaId, long? parentMediaId = null, Language language = null, IMediaDetail detail = null, long historyVersion = 0)
         {
             if (language != null)
                 FrameworkSettings.SetCurrentLanguage(language);
 
-            var url = GetRedirectToMediaDetailUrl(mediaTypeId, selectedMediaId, parentMediaId, historyVersion);
+            var url = GetAdminUrl(mediaTypeId, selectedMediaId, parentMediaId, historyVersion);
 
             if (!string.IsNullOrEmpty(HttpContext.Current.Request["masterFilePath"]))
                 url = url + "&masterFilePath=" + HttpContext.Current.Request["masterFilePath"];

@@ -30,14 +30,14 @@ namespace WebApplication.Controls.OnLogin
 
         protected void EditCurrentPage_OnClick(object sender, EventArgs e)
         {
-            WebApplication.BasePage.RedirectToMediaDetail(this.BasePage.CurrentMediaDetail);
+            WebApplication.BasePage.RedirectToAdminUrl(this.BasePage.CurrentMediaDetail);
         }
 
         public string CurrentMediaDetailAdminUrl
         {
             get
             {
-                return WebApplication.BasePage.GetRedirectToMediaDetailUrl(BasePage.CurrentMediaDetail.MediaTypeID, BasePage.CurrentMediaDetail.MediaID);
+                return WebApplication.BasePage.GetAdminUrl(BasePage.CurrentMediaDetail.MediaTypeID, BasePage.CurrentMediaDetail.MediaID);
             }
         }        
 

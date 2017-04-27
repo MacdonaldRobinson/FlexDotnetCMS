@@ -133,7 +133,7 @@ namespace WebApplication.Admin.Views.MasterPages
             node.a_attr.frontendurl = detail.AbsoluteUrl;
             node.li_attr.mediaDetailId = detail.ID.ToString();
 
-            node.a_attr.href = URIHelper.ConvertToAbsUrl(WebApplication.BasePage.GetRedirectToMediaDetailUrl(detail.MediaTypeID, detail.MediaID));
+            node.a_attr.href = URIHelper.ConvertToAbsUrl(WebApplication.BasePage.GetAdminUrl(detail.MediaTypeID, detail.MediaID));
 
             if (detail?.MediaType?.Name == "Website" || detail?.MediaType?.Name == "RootPage")
             {
@@ -346,7 +346,7 @@ namespace WebApplication.Admin.Views.MasterPages
 
                 ContextHelper.ClearAllMemoryCache();
 
-                var url = WebApplication.BasePage.GetRedirectToMediaDetailUrl(mediaDetail.MediaTypeID, mediaDetail.MediaID);
+                var url = WebApplication.BasePage.GetAdminUrl(mediaDetail.MediaTypeID, mediaDetail.MediaID);
                 return url;
             }
 

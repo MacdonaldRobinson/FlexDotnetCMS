@@ -121,7 +121,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
                 }
                 else
                 {
-                    var url = AdminBasePage.GetRedirectToMediaDetailUrl(selectedItem.MediaTypeID, selectedItem.MediaID);
+                    var url = AdminBasePage.GetAdminUrl(selectedItem.MediaTypeID, selectedItem.MediaID);
                     Response.Redirect(url);
                 }
             }

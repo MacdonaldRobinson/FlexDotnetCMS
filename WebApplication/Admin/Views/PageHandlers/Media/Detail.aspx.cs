@@ -395,7 +395,7 @@ namespace WebApplication.Admin.MediaArticle
 
             if ((selectedItem.ID != 0) && (historyVersion == 0))
             {
-                history = MediaDetailsMapper.CreateObject(fromItem.MediaTypeID, fromItem.Media, fromItem.Media.ParentMedia);
+                history = MediaDetailsMapper.CreateObject(fromItem.MediaTypeID, fromItem.Media, fromItem.Media.ParentMedia, false);
                 history.CopyFrom(BaseMapper.GetObjectFromContext(fromItem));
                 history.IsDraft = isDraft;
                 //history.HistoryForMediaDetail = fromItem;

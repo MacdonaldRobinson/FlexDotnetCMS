@@ -826,7 +826,7 @@ namespace FrameworkLibrary
             return returnObj;
         }
 
-        public static void ClearObjectRelations(IMediaDetail obj)
+        public static IMediaDetail ClearObjectRelations(IMediaDetail obj)
         {
             var history = obj.History.ToList();
             foreach (MediaDetail item in history)
@@ -843,8 +843,8 @@ namespace FrameworkLibrary
                 {
                     if (association.MediaDetail != null && association.MediaDetail.FieldAssociations.Count < 2 && !association.MediaDetail.MediaType.ShowInSiteTree)
                     {
-                        ClearObjectRelations(association.MediaDetail);
-                        MediaDetailsMapper.DeleteObjectFromContext(association.MediaDetail);
+                        var returnObj = ClearObjectRelations(association.MediaDetail);
+                        MediaDetailsMapper.DeleteObjectFromContext((MediaDetail)returnObj);
                     }
 
                     if (association.MediaDetail != null)
@@ -871,6 +871,8 @@ namespace FrameworkLibrary
 
             foreach (var item in comments)
                 GetDataModel().Comments.Remove(item);
+
+            return obj;
         }
 
         public static Return DeletePermanently(MediaDetail obj)

@@ -18,160 +18,160 @@
         </div>
         <div class="clear"></div>
     </asp:Panel>
-</asp:Panel>
-<style>
-    #SlideTab {
-        background-color: red;
-        display:block;
-        cursor: pointer;         
-        text-align: center;
-    }
-    #LoggedInHeaderPanel {
-        background-color: #000;
-        color: #fff;
-        position: fixed;
-        bottom:0;
-        z-index:999;
-    }
-
-    #ToggleFieldEditor {
-        cursor: pointer;
-    }
-
-    #AccessCMSPermissionsPanel a.button{
-        display: block;
-        color: #fff;                
-        border: 1px solid #fff;
-        padding: 5px;              
-        margin: 10px;
-        text-decoration: none;
-    }
-
-    #AccessCMSPermissionsPanel a.button:hover{
-        background-color: red;
-    }
-
-    #AccessCMSPermissionsPanel:after {
-        clear: both;
-    }
-
-    div.clear {
-        clear: both;
-    }
-
-    .floatLeft {
-        float: left;
-    }
-
-    .floatRight {
-        float: right;
-    }
-
-    .field {        
-        position: relative;
-        padding-top: 25px;
-    }
-
-        .field.hide {
-            padding:0;
-            margin:0;
-            border:none !important;
-            display:inline;
-
+    <style>
+        #SlideTab {
+            background-color: red;
+            display:block;
+            cursor: pointer;         
+            text-align: center;
         }
-        .field.hide .edit{
-            display:none;
-        }
-
-        .field.hover {
-            border: 1px dashed rgba(0,0,0,.3);
-        }
-        .field .edit:hover {
-            background-color: red;  
-            opacity: 1;
-        }
-        .field .edit {
-            content: 'Edit';
-            position: absolute;
-            top: 0px;
-            left: 0px;                    
+        #LoggedInHeaderPanel {
             background-color: #000;
             color: #fff;
+            position: fixed;
+            bottom:0;
+            z-index:999;
+        }
+
+        #ToggleFieldEditor {
             cursor: pointer;
-            padding: 2px 5px;
-            font-size: 12px;
-            font-style: normal;   
-            opacity: 0.2;
         }
 
-</style>
-
-<script type="text/javascript">
-    $(document).ready(function () {        
-        CreateFieldsEditor();
-        //HideFieldsEditor();
-
-        function HideFieldsEditor() {
-            $(".field").addClass("hide");
+        #AccessCMSPermissionsPanel a.button{
+            display: block;
+            color: #fff;                
+            border: 1px solid #fff;
+            padding: 5px;              
+            margin: 10px;
+            text-decoration: none;
         }
 
-        function ShowFieldsEditor() {
-            $(".field").removeClass("hide");
+        #AccessCMSPermissionsPanel a.button:hover{
+            background-color: red;
         }
 
-        function CreateFieldsEditor() {
-            $("[data-fieldid]").each(function () {
-                var fieldId = $(this).attr("data-fieldid");
-                var fieldcode = $(this).attr("data-fieldcode");
-
-                $(this).prepend("<a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='window.location.reload()' data-width='60%' data-height='80%'>Edit</a>");
-            });
-
-            $(document).on("click", ".field .edit", function () {
-                $(".field .edit").hide();
-            });
-
-            $(document).on("mouseenter", ".field .edit", function () {
-                $(this).parent().addClass("hover");
-            });
-
-            $(document).on("mouseleave", ".field .edit", function () {
-                $(this).parent().removeClass("hover");
-            });
+        #AccessCMSPermissionsPanel:after {
+            clear: both;
         }
 
-        $("#ToggleFieldEditor").on("click", function () {
-            var toggleButton = $(this);
-
-            $(".field").each(function () {
-
-                var text = toggleButton.text();
-
-                if ($(this).hasClass("hide")) {
-                    $(this).removeClass("hide");
-                    toggleButton.text(text.replace("Show", "Hide"));
-                }
-                else {
-                    $(this).addClass("hide");
-                    toggleButton.text(text.replace("Hide", "Show"));
-                }
-            });
-        });        
-
-        if (window.top != window) {
-            $("#LoggedInHeaderPanel").hide();
-            HideFieldsEditor();
-        }
-        else
-        {            
-            ShowFieldsEditor();
+        div.clear {
+            clear: both;
         }
 
-        $("#SlideTab").on("click", function () {
-            $("#AccessCMSPermissionsPanel").slideToggle(function () {
+        .floatLeft {
+            float: left;
+        }
 
+        .floatRight {
+            float: right;
+        }
+
+        .field {        
+            position: relative;
+            padding-top: 25px;
+        }
+
+            .field.hide {
+                padding:0;
+                margin:0;
+                border:none !important;
+                display:inline;
+
+            }
+            .field.hide .edit{
+                display:none;
+            }
+
+            .field.hover {
+                border: 1px dashed rgba(0,0,0,.3);
+            }
+            .field .edit:hover {
+                background-color: red;  
+                opacity: 1;
+            }
+            .field .edit {
+                content: 'Edit';
+                position: absolute;
+                top: 0px;
+                left: 0px;                    
+                background-color: #000;
+                color: #fff;
+                cursor: pointer;
+                padding: 2px 5px;
+                font-size: 12px;
+                font-style: normal;   
+                opacity: 0.2;
+            }
+
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function () {        
+            CreateFieldsEditor();
+            //HideFieldsEditor();
+
+            function HideFieldsEditor() {
+                $(".field").addClass("hide");
+            }
+
+            function ShowFieldsEditor() {
+                $(".field").removeClass("hide");
+            }
+
+            function CreateFieldsEditor() {
+                $("[data-fieldid]").each(function () {
+                    var fieldId = $(this).attr("data-fieldid");
+                    var fieldcode = $(this).attr("data-fieldcode");
+
+                    $(this).prepend("<a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='window.location.reload()' data-width='60%' data-height='80%'>Edit</a>");
+                });
+
+                $(document).on("click", ".field .edit", function () {
+                    $(".field .edit").hide();
+                });
+
+                $(document).on("mouseenter", ".field .edit", function () {
+                    $(this).parent().addClass("hover");
+                });
+
+                $(document).on("mouseleave", ".field .edit", function () {
+                    $(this).parent().removeClass("hover");
+                });
+            }
+
+            $("#ToggleFieldEditor").on("click", function () {
+                var toggleButton = $(this);
+
+                $(".field").each(function () {
+
+                    var text = toggleButton.text();
+
+                    if ($(this).hasClass("hide")) {
+                        $(this).removeClass("hide");
+                        toggleButton.text(text.replace("Show", "Hide"));
+                    }
+                    else {
+                        $(this).addClass("hide");
+                        toggleButton.text(text.replace("Hide", "Show"));
+                    }
+                });
+            });        
+
+            if (window.top != window) {
+                $("#LoggedInHeaderPanel").hide();
+                HideFieldsEditor();
+            }
+            else
+            {            
+                ShowFieldsEditor();
+            }
+
+            $("#SlideTab").on("click", function () {
+                $("#AccessCMSPermissionsPanel").slideToggle(function () {
+
+                });
             });
+
         });
-
-    });
-</script>
+    </script>
+</asp:Panel>

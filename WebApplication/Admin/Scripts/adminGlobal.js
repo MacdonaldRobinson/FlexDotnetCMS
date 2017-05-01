@@ -1053,12 +1053,6 @@ function BindTree(filterText) {
                             HandleContextMenuClick("UnDelete", obj.reference, node);
                         }
                     },
-                    "DeletePermanently": {
-                        "label": "Delete Permanently",
-                        "action": function (obj) {
-                            HandleContextMenuClick("DeletePermanently", obj.reference, node);
-                        }
-                    },
                     "ShowInMenu": {
                         "label": "Show In Menu",
                         "action": function (obj) {
@@ -1102,9 +1096,15 @@ function BindTree(filterText) {
                         }
                     },
                     "DuplicateIncludingAllChildren": {
-                        "label": "Duplicate (Including All Children)",
+                        "label": "Duplicate + Children",
                         "action": function (obj) {
                             HandleContextMenuClick("DuplicateIncludingAllChildren", obj.reference, node);
+                        }
+                    },
+                    "DeletePermanently": {
+                        "label": "Delete Permanently",
+                        "action": function (obj) {
+                            HandleContextMenuClick("DeletePermanently", obj.reference, node);
                         }
                     }
                 };

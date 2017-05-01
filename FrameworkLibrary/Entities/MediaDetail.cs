@@ -385,7 +385,7 @@ namespace FrameworkLibrary
 
             foreach (var parent in parents)
             {
-                if (parent is Website)
+                if (parent is RootPage || parent is Website)
                     continue;
 
                 virtualPath = StringHelper.CreateSlug(parent.LinkTitle) + "/" + virtualPath;

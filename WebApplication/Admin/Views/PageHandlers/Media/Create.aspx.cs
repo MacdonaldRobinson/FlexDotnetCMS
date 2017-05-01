@@ -1,5 +1,7 @@
 ﻿using FrameworkLibrary;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace WebApplication.Admin.Views.PageHandlers.MediaArticle
 {
@@ -13,11 +15,24 @@ namespace WebApplication.Admin.Views.PageHandlers.MediaArticle
         {
             base.OnPreRender(e);
 
-            if (SelectedMedia == null)
-                return;
+            if(!BaseMapper.GetDataModel().MediaDetails.Any())
+            {
+                var rootMediaType = MediaTypesMapper.GetByEnum(MediaTypeEnum.RootPage);
 
-            MediaType mediaType = MediaTypesMapper.GetByID(MediaDetailsMapper.GetAtleastOneByMedia(SelectedMedia, CurrentLanguage).MediaTypeID);
-            MediaTypeSelector.SetMediaTypes(mediaType.MediaTypes);
+                if(rootMediaType != null)
+                {
+                    MediaTypeSelector.SetMediaTypes(new List<MediaType>() { rootMediaType });
+                }                
+            }
+            else
+            {
+                if (SelectedMedia != null)
+                {
+                    MediaType mediaType = MediaTypesMapper.GetByID(MediaDetailsMapper.GetAtleastOneByMedia(SelectedMedia, CurrentLanguage).MediaTypeID);
+                    MediaTypeSelector.SetMediaTypes(mediaType.MediaTypes);
+                }
+            }
+
         }
 
         protected void CreateMedia_OnClick(object sender, EventArgs e)

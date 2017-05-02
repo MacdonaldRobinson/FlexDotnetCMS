@@ -33,7 +33,7 @@ namespace WebApplication.Handlers
                 URIHelper.ForceSSL();
             }
 
-            if (FrameworkSettings.CurrentUserInSession == null && Request.HttpMethod == "GET" && (!(bool)BaseMapper.CanConnectToDB || AppSettings.EnableOutputCaching))
+            if (FrameworkSettings.CurrentUser == null && Request.HttpMethod == "GET" && (!(bool)BaseMapper.CanConnectToDB || AppSettings.EnableOutputCaching))
             {
                 var userSelectedVersion = RenderVersion.HTML;
 

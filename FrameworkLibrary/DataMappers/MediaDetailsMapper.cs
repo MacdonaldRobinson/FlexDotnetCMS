@@ -931,6 +931,7 @@ namespace FrameworkLibrary
                 if(arguments["editor"].ToLower() == "true" || arguments["editor"].ToLower() == "false")
                 {
                     bool.TryParse(arguments["editor"], out includeFieldWrapper);
+                    mediaField.ShowFrontEndFieldEditor = includeFieldWrapper;
                 }                
             }
 

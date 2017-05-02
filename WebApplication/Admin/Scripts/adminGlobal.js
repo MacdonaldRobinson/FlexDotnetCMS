@@ -809,9 +809,9 @@ function initTinyMCE()
           'advlist autolink lists link image charmap print preview hr anchor pagebreak',
           'searchreplace wordcount visualblocks visualchars fullscreen',
           'insertdatetime media youtube nonbreaking save table contextmenu directionality',
-          'emoticons template paste textcolor colorpicker textpattern imagetools ace'
+          'emoticons template paste textcolor colorpicker textpattern imagetools ace imgmap'
         ],
-        toolbar1: 'insertfile undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media youtube ace',
+        toolbar1: 'insertfile undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media youtube ace | imgmap',
         templates: [
         ],
         image_advtab: true,

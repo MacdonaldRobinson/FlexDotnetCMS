@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Collections;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -13,6 +13,7 @@ namespace FrameworkLibrary
         public Field Field { get; set; }
         public Control Control { get; set; }
         public IMediaDetail MediaDetail { get; set; }
+        public Dictionary<string, string> Arguments { get; set; } = new Dictionary<string, string>();
     }
 
     public class MediaDetailsMapper : BaseMapper
@@ -923,11 +924,19 @@ namespace FrameworkLibrary
             return html;
         }
 
-        public static string ReplaceFieldWithParsedValue(string originalText, string textToReplace, IField mediaField, string parsedValue, bool includeFieldWrapper)
+        public static string ReplaceFieldWithParsedValue(string originalText, string textToReplace, IField mediaField, string parsedValue, bool includeFieldWrapper, Dictionary<string, string> arguments)
         {
+            if(arguments.ContainsKey("editor"))
+            {
+                if(arguments["editor"].ToLower() == "true" || arguments["editor"].ToLower() == "false")
+                {
+                    bool.TryParse(arguments["editor"], out includeFieldWrapper);
+                }                
+            }
+
             if (mediaField.ShowFrontEndFieldEditor && includeFieldWrapper)
             {
-                parsedValue = $"<div class='field' data-fieldid='{mediaField.ID}' data-fieldcode='{mediaField.FieldCode}'>{parsedValue}</div>";
+                parsedValue = $"<div class='field' data-fieldid='{mediaField.ID}' data-fieldcode='{mediaField.FieldCode}' data-arguments='{StringHelper.ObjectToJson(arguments)}'>{parsedValue}</div>";
             }
 
             return originalText.Replace(textToReplace, parsedValue);
@@ -1012,86 +1021,81 @@ namespace FrameworkLibrary
 
             if (customCode.Contains("{Field:"))
             {
-                var fields = Regex.Matches(customCode, "{Field:[a-zA-Z0-9:=\"\".]+}");
+                var fields = Regex.Matches(customCode, "{Field:[a-zA-Z0-9&?=]+}");
 
                 foreach (var field in fields)
                 {
                     var fieldCode = field.ToString().Replace("{Field:", "").Replace("}", "");
 
-                    var segments = fieldCode.Split('=');
-                    var firstSegment = segments[0];
-                    var tmpIntSegment0 = 0;
-                    Field mediaField = null;
+                    var split = fieldCode.Split('?');
+                    var arguments = new Dictionary<string,string>();
 
-                    if (int.TryParse(firstSegment, out tmpIntSegment0))
+                    if (split.Count() > 1)
                     {
-                        mediaField = BaseMapper.GetDataModel().Fields.FirstOrDefault(i => i.ID == tmpIntSegment0);
+                        fieldCode = split[0];
+
+                        foreach (var argumentString in split[1].Split('&'))
+                        {
+                            var argumentArray = argumentString.Split('=');
+                            if (argumentArray.Count() > 1)
+                            {                                
+                                arguments.Add(argumentArray[0].ToString(), argumentArray[1].ToString());                                
+                            }
+                        }
                     }
-                    else
-                    {
-                        mediaField = mediaDetail.Fields.FirstOrDefault(i => i.FieldCode == firstSegment);
-                    }
+
+                    var mediaField = mediaDetail.Fields.FirstOrDefault(i => i.FieldCode == fieldCode);
 
                     if (mediaField == null)
                         continue;
 
-                    if (segments.Count() > 1)
-                    {
-                        var segment2 = segments[1].Replace("\"", "");
+                    var fieldType = ParserHelper.ParseData(mediaField.AdminControl, new RazorFieldParams { Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments });
 
-                        if (segment2 == mediaField.FieldValue)
-                            customCode = customCode.Replace(field.ToString(), "").Replace("{.", "{");
+                    var parserPage = new System.Web.UI.Page();
+                    parserPage.AppRelativeVirtualPath = "~/";
+                    var control = parserPage.ParseControl(fieldType);
+
+                    if (control?.Controls.Count > 0 && control.Controls[0].GetType().FullName.StartsWith("ASP") && mediaField.GetAdminControlValue.Contains("@"))
+                    {
+                        var tag = mediaField.AdminControl.Replace("/>", "FieldID='" + mediaField.ID.ToString() + "' />");
+                        customCode = customCode.Replace(field.ToString(), tag);
                     }
                     else
                     {
-                        var fieldType = ParserHelper.ParseData(mediaField.AdminControl, new RazorFieldParams { Field = mediaField, MediaDetail = mediaDetail });
+                        var frontEndLayout = mediaField.FrontEndLayout;
 
-                        var parserPage = new System.Web.UI.Page();
-                        parserPage.AppRelativeVirtualPath = "~/";
-                        var control = parserPage.ParseControl(fieldType);
-
-                        if (control?.Controls.Count > 0 && control.Controls[0].GetType().FullName.StartsWith("ASP") && mediaField.GetAdminControlValue.Contains("@"))
+                        if (mediaField is MediaDetailField)
                         {
-                            var tag = mediaField.AdminControl.Replace("/>", "FieldID='" + mediaField.ID.ToString() + "' />");
-                            customCode = customCode.Replace(field.ToString(), tag);
-                        }
-                        else
-                        {
-                            var frontEndLayout = mediaField.FrontEndLayout;
-
-                            if (mediaField is MediaDetailField)
+                            var mediaDetailField = mediaField as MediaDetailField;
+                            if (mediaDetailField.MediaTypeField != null && mediaDetailField.UseMediaTypeFieldFrontEndLayout)
                             {
-                                var mediaDetailField = mediaField as MediaDetailField;
-                                if (mediaDetailField.MediaTypeField != null && mediaDetailField.UseMediaTypeFieldFrontEndLayout)
-                                {
-                                    frontEndLayout = mediaDetailField.MediaTypeField?.FrontEndLayout;
-                                }
-                                else
-                                {
-                                    frontEndLayout = mediaDetailField.FrontEndLayout;
-                                }
-                            }
-
-                            if (!string.IsNullOrEmpty(frontEndLayout))
-                            {
-                                var parsedValue = ParseSpecialTags(mediaDetail, frontEndLayout, 0, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail });
-                                customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, parsedValue, includeFieldWrapper);
+                                frontEndLayout = mediaDetailField.MediaTypeField?.FrontEndLayout;
                             }
                             else
                             {
-                                if (mediaField.GetAdminControlValue.Contains("@"))
-                                {
-                                    var parsedValue = ParseSpecialTags(mediaDetail, mediaField.FieldValue, 0, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail });
-                                    customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, parsedValue, includeFieldWrapper);
-                                    //customCode = customCode.Replace(field.ToString(), parsedValue);
-                                }
-                                else
-                                {
-                                    customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, mediaField.FieldValue, includeFieldWrapper);
-                                    //customCode = customCode.Replace(field.ToString(), mediaField.FieldValue);
-                                }
+                                frontEndLayout = mediaDetailField.FrontEndLayout;
                             }
                         }
+
+                        if (!string.IsNullOrEmpty(frontEndLayout))
+                        {
+                            var parsedValue = ParseSpecialTags(mediaDetail, frontEndLayout, 0, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments });
+                            customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, parsedValue, includeFieldWrapper, arguments);
+                        }
+                        else
+                        {
+                            if (mediaField.GetAdminControlValue.Contains("@"))
+                            {
+                                var parsedValue = ParseSpecialTags(mediaDetail, mediaField.FieldValue, 0, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments });
+                                customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, parsedValue, includeFieldWrapper, arguments);
+                                //customCode = customCode.Replace(field.ToString(), parsedValue);
+                            }
+                            else
+                            {
+                                customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, mediaField.FieldValue, includeFieldWrapper, arguments);
+                                //customCode = customCode.Replace(field.ToString(), mediaField.FieldValue);
+                            }
+                        }                        
                     }
                 }
             }
@@ -1146,7 +1150,7 @@ namespace FrameworkLibrary
 
             customCode = ParserHelper.ParseData(customCode, passToParser);
 
-            var matches = Regex.Matches(customCode, "{[a-zA-Z0-9:=\"\".(),\']+}");
+            var matches = Regex.Matches(customCode, "{[a-zA-Z0-9:=\"\".(),\'?&]+}");
 
             if (matches.Count > 0 && matches.Count != previousCount)
             {

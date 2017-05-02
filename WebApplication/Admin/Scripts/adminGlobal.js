@@ -443,7 +443,7 @@ function getFieldsAutoComplete()
         'LayoutsTab:RazorIfField', 
         `<!-- LayoutsTab:RazorIfField: Razor Code Showing how to load a field and check its value -->
 @{            
-    var field = Model.RenderShortCode("{Field:test1}");
+    var field = Model.RenderField("test1");
 
     <ul>
     @if(field == "True")
@@ -956,7 +956,7 @@ function RefreshSiteTreeNodeById(nodeId)
         jsTree.refresh_node(nodeId);
 }
 
-function ConvertDivToSiteTree(divSelector)
+function ConvertDivToSiteTree(divSelector, targetSelector, mediaId)
 {
     var jsTree = $(divSelector).jstree(true);
     var filterText = "";
@@ -977,24 +977,26 @@ function ConvertDivToSiteTree(divSelector)
         },
         "core": {
             // so that create works
-            "check_callback": true,
             "multiple": true,
+            "cascade":"",
             'data': {
                 'url': function (node) {
                     if (filterText == "" || filterText == undefined || filterText == null)
                         return node.id === '#' ? BaseUrl + 'Admin/Views/MasterPages/WebService.asmx/GetRootNodes' : BaseUrl + 'Admin/Views/MasterPages/WebService.asmx/GetChildNodes';
                     else
                         return BaseUrl + 'Admin/Views/MasterPages/WebService.asmx/SearchForNodes?filterText=' + filterText;
-
                 },
                 'data': function (node) {
                     return { 'id': node.id };
                 }
             }
         }
-    }).on('ready.jstree', function (e, data) {        
-        $(divSelector).jstree("deselect_all");
-    });
+    }).on('ready.jstree', function (e, data) {
+        data.instance.uncheck_all();  
+        }).on("changed.jstree", function (node, action, selected, event) {
+            var checkedItems = action.instance.get_checked();
+            $(targetSelector).val(JSON.stringify(checkedItems));
+    })
     
 }
 

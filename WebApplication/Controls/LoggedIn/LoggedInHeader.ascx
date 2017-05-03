@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
-    <a id="SlideTab">CMS Shortcuts</a>
+    <a id="SlideTab"><i class="fa fa-arrow-down" aria-hidden="true"></i>CMS Shortcuts</a>
     <asp:Panel ID="AccessCMSPermissionsPanel" runat="server" Visible="false" ClientIDMode="Static">
         <div>            
             <a id="ToggleFieldEditor" class="button">Hide Field Editors</a>
@@ -26,13 +26,19 @@
             display:block;
             cursor: pointer;         
             text-align: center;
+            padding: 5px;
         }
+
+            #SlideTab .fa {
+                margin-right: 5px;
+            }
+
         #LoggedInHeaderPanel {
             background-color: #000;
             color: #fff;
             position: fixed;
             bottom:0;
-            z-index:999;
+            z-index:999999;
         }
 
         #ToggleFieldEditor {
@@ -108,14 +114,33 @@
     </style>
 
     <script type="text/javascript">
-        $(document).ready(function () {            
+        $(document).ready(function () {        
+
+            function UpdateSliderTabIcon()
+            {                
+                if ($("#AccessCMSPermissionsPanel").is(":visible"))
+                {                    
+                    $("#SlideTab .fa").removeClass("fa-arrow-up");
+                    $("#SlideTab .fa").addClass("fa-arrow-down");
+                }
+                else
+                {                    
+                    $("#SlideTab .fa").removeClass("fa-arrow-down");
+                    $("#SlideTab .fa").addClass("fa-arrow-up");
+                }
+            }
+
             if (GetCMSShortcutsVisibility() == "true")
             {
-                $("#AccessCMSPermissionsPanel").show();
+                $("#AccessCMSPermissionsPanel").show(0, function () {
+                    UpdateSliderTabIcon();
+                });                
             }
             else if (GetCMSShortcutsVisibility() == "false")
             {                
-                $("#AccessCMSPermissionsPanel").hide();
+                $("#AccessCMSPermissionsPanel").hide(0, function () {                    
+                    UpdateSliderTabIcon();
+                });                
             }
             CreateFieldsEditor();
             //HideFieldsEditor();
@@ -197,7 +222,10 @@
             }
 
             function SetCMSShortcutsVisibility(val) {                
-                return $.cookie('CMSShortcutsVisibility', val);
+                var visibility = $.cookie('CMSShortcutsVisibility', val);
+                UpdateSliderTabIcon();
+
+                return visibility;
             }
 
         });

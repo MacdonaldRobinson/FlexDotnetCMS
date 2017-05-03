@@ -1,7 +1,9 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LoggedInHeader.ascx.cs" Inherits="WebApplication.Controls.OnLogin.LoggedInHeader" %>
 
 <asp:Panel runat="server" ID="LoggedInHeaderPanel" ClientIDMode="Static" Visible="false">        
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
     <a id="SlideTab">CMS Shortcuts</a>
     <asp:Panel ID="AccessCMSPermissionsPanel" runat="server" Visible="false" ClientIDMode="Static">
         <div>            
@@ -106,7 +108,15 @@
     </style>
 
     <script type="text/javascript">
-        $(document).ready(function () {        
+        $(document).ready(function () {            
+            if (GetCMSShortcutsVisibility() == "true")
+            {
+                $("#AccessCMSPermissionsPanel").show();
+            }
+            else if (GetCMSShortcutsVisibility() == "false")
+            {                
+                $("#AccessCMSPermissionsPanel").hide();
+            }
             CreateFieldsEditor();
             //HideFieldsEditor();
 
@@ -139,7 +149,8 @@
                 });
             }
 
-            $("#ToggleFieldEditor").on("click", function () {
+            $("#ToggleFieldEditor").on("click", function () {                
+
                 var toggleButton = $(this);
 
                 $(".field").each(function () {
@@ -167,10 +178,27 @@
             }
 
             $("#SlideTab").on("click", function () {
-                $("#AccessCMSPermissionsPanel").slideToggle(function () {
-
+                $("#AccessCMSPermissionsPanel").slideToggle(function () {                        
+                    SetCMSShortcutsVisibility($(this).is(":visible"));               
                 });
             });
+
+            function GetCMSShortcutsVisibility()
+            {
+                var visibility = $.cookie('CMSShortcutsVisibility');
+
+                if (visibility == undefined)
+                {
+                    visibility = $("#AccessCMSPermissionsPanel").is(":visible");
+                    SetCMSShortcutsVisibility(visibility);                    
+                }
+
+                return visibility;
+            }
+
+            function SetCMSShortcutsVisibility(val) {                
+                return $.cookie('CMSShortcutsVisibility', val);
+            }
 
         });
     </script>

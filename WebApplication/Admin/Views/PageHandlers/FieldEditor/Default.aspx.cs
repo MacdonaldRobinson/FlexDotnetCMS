@@ -112,7 +112,7 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor
                 }
             }
 
-            if (Field.UseMediaTypeFieldFrontEndLayout)
+            if (Field.MediaTypeField != null && Field.UseMediaTypeFieldFrontEndLayout)
                 Field.MediaTypeField.FrontEndLayout = FrontEndLayout.Text;
             else
                 Field.FrontEndLayout = FrontEndLayout.Text;

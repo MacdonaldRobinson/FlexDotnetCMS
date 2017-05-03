@@ -708,14 +708,14 @@ function destroyTinyMCE() {
 
 
 $(window).load(function () {
-    console.log("window load");
+    //console.log("window load");
     //setTimeout(function () {
         initAceEditors();
         initTinyMCE();
     //}, 1000);        
 
     $(document).ajaxComplete(function (event, xhr, settings) {
-        console.log("ajaxComplete");
+        //console.log("ajaxComplete");
         if (settings.url.indexOf("Chat.asmx") == -1)
         {
             //setTimeout(function () {

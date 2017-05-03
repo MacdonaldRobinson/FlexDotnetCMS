@@ -21,11 +21,12 @@
             BindScrollMagic();
             initAceEditors();
             initAccordians();
+            initTinyMCE();
 
             if (event != undefined && event._postBackSettings != undefined && event._postBackSettings.asyncTarget != undefined)
             {
-                if (event._postBackSettings.asyncTarget.indexOf("$MediaFieldsEditor") !=-1)
-                {
+                if (event._postBackSettings.asyncTarget.indexOf("$Update") != -1)
+                {                    
                     ReloadPreviewPanel();
 
                     if (event._postBackSettings.asyncTarget.indexOf("$Delete") != -1)

@@ -708,13 +708,14 @@ function destroyTinyMCE() {
 
 
 $(window).load(function () {
-
+    console.log("window load");
     //setTimeout(function () {
         initAceEditors();
         initTinyMCE();
     //}, 1000);        
 
     $(document).ajaxComplete(function (event, xhr, settings) {
+        console.log("ajaxComplete");
         if (settings.url.indexOf("Chat.asmx") == -1)
         {
             //setTimeout(function () {
@@ -788,7 +789,10 @@ $(document).ready(function () {
             OnUpdatePanelRefreshComplete(function (event) {
                 if (!autoClickedSaveFieldButton) {
                     $(".SaveFieldButton")[0].click();
-                    autoClickedSaveFieldButton = true;                    
+                    autoClickedSaveFieldButton = true;     
+
+                    //ReloadPreviewPanel();
+
                 }
             });
         }
@@ -809,9 +813,9 @@ function initTinyMCE()
           'advlist autolink lists link image charmap print preview hr anchor pagebreak',
           'searchreplace wordcount visualblocks visualchars fullscreen',
           'insertdatetime media youtube nonbreaking save table contextmenu directionality',
-          'emoticons template paste textcolor colorpicker textpattern imagetools ace imgmap'
+          'emoticons template paste textcolor colorpicker textpattern imagetools ace imgmap table'
         ],
-        toolbar1: 'insertfile undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media youtube ace | imgmap',
+        toolbar1: 'file undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | insert table link image imgmap media youtube ace',
         templates: [
         ],
         image_advtab: true,
@@ -1180,8 +1184,8 @@ $(document)
 
     });
 
-function pageLoad() {
-    RefreshSiteTreeNodeById($("#SiteTree").jstree("get_selected")[0]);
+function pageLoad(sender, args) {    
+    /*RefreshSiteTreeNodeById($("#SiteTree").jstree("get_selected")[0]);
     BindScrollMagic();
     BindDataTable();
     BindSortable();
@@ -1197,7 +1201,7 @@ function pageLoad() {
     }    
 
     if (typeof (BindActiveTabs) == 'function')
-        BindActiveTabs();
+        BindActiveTabs();*/
 }
 
 function BindDataTable() {

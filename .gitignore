@@ -21,3 +21,6 @@
 /WebApplication/Views/MasterPages/SiteTemplates/node_modules/*
 /WebApplication/Views/MasterPages/SiteTemplates/.sass-cache/*
 /WebApplication/media/uploads/fields
+/packages
+/*.psess
+/*.vspx

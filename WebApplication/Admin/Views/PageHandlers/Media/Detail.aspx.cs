@@ -598,6 +598,7 @@ namespace WebApplication.Admin.MediaArticle
             if (selectedItem == null)
                 selectedItem = MediaDetailsMapper.CreateObject(mediaTypeId, selectedMediaItem, parentMediaItem);
 
+            var oldLinkTitle = selectedItem.LinkTitle;
             var oldVirtualPath = selectedItem.VirtualPath;
             var canRender = selectedItem.CanRender;
             var oldAbsoluteUrl = selectedItem.AbsoluteUrl;
@@ -667,7 +668,7 @@ namespace WebApplication.Admin.MediaArticle
 
                 selectedItem.RemoveFromCache();
 
-                if (oldVirtualPath != selectedItem.VirtualPath || canRender != selectedItem.CanRender)
+                if (oldVirtualPath != selectedItem.VirtualPath || canRender != selectedItem.CanRender || oldLinkTitle != selectedItem.LinkTitle)
                 {
                     ContextHelper.Clear(ContextType.Cache);
                     FileCacheHelper.ClearAllCache();

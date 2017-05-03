@@ -81,7 +81,7 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor
 
             var frontEndLayout = Field.FrontEndLayout;
 
-            if (Field.UseMediaTypeFieldFrontEndLayout)
+            if (Field.MediaTypeField != null && Field.UseMediaTypeFieldFrontEndLayout)
                 frontEndLayout = Field.MediaTypeField.FrontEndLayout;
 
             FrontEndLayout.Text = frontEndLayout;

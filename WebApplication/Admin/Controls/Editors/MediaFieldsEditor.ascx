@@ -68,7 +68,7 @@
     });
 
     function BindReOrder()
-    {
+    {        
         BindGridViewSortable("#<%=ItemList.ClientID%>", "/Admin/Views/MasterPages/Webservice.asmx/ReOrderMediaFields", "<%= MediaFieldsUpdatePanel.ClientID%>", function () {
             window.location.href = window.location.href;
         });
@@ -132,7 +132,7 @@
                     <asp:CheckBox runat="server" ID="RenderLabelAfterControl" /> <label for="<%# RenderLabelAfterControl.ClientID %>">Render Label After Control</label>
                 </div>
                 <div>
-                    <asp:CheckBox runat="server" ID="ShowFrontEndFieldEditor" /> <label for="<%# ShowFrontEndFieldEditor.ClientID %>">Show Front End Field Editor</label>
+                    <asp:CheckBox runat="server" ID="ShowFrontEndFieldEditor" Checked="true"/> <label for="<%# ShowFrontEndFieldEditor.ClientID %>">Show Front End Field Editor</label>
                 </div>
                 <div id="UseMediaTypeFieldDescriptionWrapper" runat="server">
                     <label>

@@ -169,6 +169,7 @@ namespace WebApplication.Admin.Controls.Fields
 
             var fieldAssociation = new FieldAssociation();
             fieldAssociation.MediaDetail = (MediaDetail)PagesMapper.CreateObject(MediaTypeID, MediasMapper.CreateObject(), media);
+            fieldAssociation.MediaDetail.SectionTitle = fieldAssociation.MediaDetail.ShortDescription = fieldAssociation.MediaDetail.MainContent = fieldAssociation.MediaDetail.LinkTitle;
             fieldAssociation.MediaDetail.PathToFile = "/media/images/icons/File.jpg";
             fieldAssociation.MediaDetail.PublishDate = DateTime.Now;
             fieldAssociation.MediaDetail.CreatedByUserID = fieldAssociation.MediaDetail.LastUpdatedByUserID = FrameworkSettings.CurrentUser.ID;

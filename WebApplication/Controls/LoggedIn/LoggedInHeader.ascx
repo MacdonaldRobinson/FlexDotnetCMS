@@ -158,7 +158,7 @@
                     var fieldId = $(this).attr("data-fieldid");
                     var fieldcode = $(this).attr("data-fieldcode");
 
-                    $(this).prepend("<a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='window.location.reload()' data-width='60%' data-height='80%'>Edit</a>");
+                    $(this).prepend("<a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='window.location.reload()' data-width='60%' data-height='80%'>Edit - {Field:" + fieldcode+"}</a>");
                 });
 
                 $(document).on("click", ".field .edit", function () {

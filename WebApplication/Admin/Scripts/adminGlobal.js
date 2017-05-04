@@ -510,23 +510,97 @@ function getFieldsAutoComplete()
 @model RazorFieldParams
 @{
     var field = (MediaDetailField)Model.Field;
-
-    <script>
-        head.load(['//cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.12/jquery.bxslider.min.js','//cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.12/jquery.bxslider.min.css'], function() {
-            // Call a function when done
-            $(".bxslider").bxSlider();
-        });
-    </script>
+    var wrapperId = "Gallery-"+field.ID;
+    var fieldAssociations = field.FieldAssociations.OrderBy(i=>i.OrderIndex);
     
-    <ul class="bxslider">
-    @foreach(var item in field.FieldAssociations.OrderBy(i=>i.OrderIndex))
-    {
-        <li><a href='#'><img src='@URIHelper.ConvertToAbsUrl(item.MediaDetail.PathToFile)?width=300&height=300&mode=min' alt='@item.MediaDetail.SectionTitle'></a></li>
+    if(fieldAssociations.Count() > 0)
+    {    
+        <script>
+            head.load(['//cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.12/jquery.bxslider.min.js','//cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.12/jquery.bxslider.min.css'], function() {
+                // Call a function when done
+                $("#@wrapperId").bxSlider();
+            });
+        </script>
+        
+        <ul id="@wrapperId">
+        @foreach(var item in fieldAssociations)
+        {
+            <li><a href='#'><img src='@URIHelper.ConvertToAbsUrl(item.MediaDetail.PathToFile)?width=300&height=300&mode=min' alt='@item.MediaDetail.SectionTitle'></a></li>
+        }
+        </ul>
     }
-    </ul>
 }`,
         'razor code'
     ));    
+
+    wordsArray.push(createAutoCompleteObject(
+        'FieldsTab:RazorTabs',
+        `<!-- FieldsTab:RazorTabs: Razor Code showing how you can load a field and loop through its associated items -->
+@model RazorFieldParams
+@{
+    var field = (MediaDetailField)Model.Field;
+    var fieldAssociations = field.FieldAssociations.OrderBy(i=>i.OrderIndex);
+    var wrapperId = "Tabs-"+field.ID;
+    
+    if(fieldAssociations.Count() > 0)
+    {
+        <script>
+            head.load(['//code.jquery.com/ui/1.12.1/jquery-ui.js','//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css'], function() {
+                // Call a function when done
+                $("#@wrapperId").tabs();
+            });
+        </script>
+        
+        <div id="@wrapperId">
+            <ul>
+            @foreach(var item in fieldAssociations)
+            {
+                <li><a href="#Tab-@item.MediaDetail.MediaID">@item.MediaDetail.SectionTitle</a></li>
+            }
+            </ul>
+            @foreach(var item in fieldAssociations)
+            {
+                <div id="Tab-@item.MediaDetail.MediaID">
+                    <p>@Raw(item.MediaDetail.MainContent)</p>
+                </div>
+            }        
+        </div>
+    }
+}`,
+        'razor code'
+    ));
+
+    wordsArray.push(createAutoCompleteObject(
+        'FieldsTab:RazorAccordian',
+        `<!-- FieldsTab:RazorAccordian: Razor Code showing how you can load a field and loop through its associated items -->
+@model RazorFieldParams
+@{
+    var field = (MediaDetailField)Model.Field;
+    var fieldAssociations = field.FieldAssociations.OrderBy(i=>i.OrderIndex);
+    var wrapperId = "Accordian-"+field.ID;
+
+    if(fieldAssociations.Count() > 0)
+    {    
+        <script>
+            head.load(['//code.jquery.com/ui/1.12.1/jquery-ui.js','//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css'], function() {
+                // Call a function when done
+                $("#@wrapperId").accordion();
+            });
+        </script>
+    
+        <div id="@wrapperId">
+            @foreach(var item in fieldAssociations)
+            {
+                <h3>@item.MediaDetail.SectionTitle</h3>
+                <div>
+                    @Raw(item.MediaDetail.SectionTitle)
+                </div>            
+            }
+        </div>
+    }
+}`,
+        'razor code'
+    ));
     
     return wordsArray;
         
@@ -898,20 +972,26 @@ function BindGridViewSortable(CssSelector, WebserviceUrl, UpdatePanelClientId, O
 
             var jsonString = "{\"items\":[" + entries + "]}";
 
-            jQuery.ajax({
-                type: "POST",
-                url: WebserviceUrl,
-                data: jsonString,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (msg) {
-                    var isFunc = jQuery.isFunction(OnAfterRefreshFunction);
+            if (WebserviceUrl != "") {
+                jQuery.ajax({
+                    type: "POST",
+                    url: WebserviceUrl,
+                    data: jsonString,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        var isFunc = jQuery.isFunction(OnAfterRefreshFunction);
 
-                    RefreshUpdatePanel(UpdatePanelClientId, function () { BindGridViewSortable(CssSelector, WebserviceUrl, UpdatePanelClientId); if (isFunc) { OnAfterRefreshFunction(); } });
-                },
-                error: function (xhr, status, error) {
-                }
-            });
+                        RefreshUpdatePanel(UpdatePanelClientId, function () { BindGridViewSortable(CssSelector, WebserviceUrl, UpdatePanelClientId); if (isFunc) { OnAfterRefreshFunction(); } });
+                    },
+                    error: function (xhr, status, error) {
+                    }
+                });
+            }
+            else
+            {
+                OnAfterRefreshFunction();
+            }
         }
     });
 }
@@ -1396,7 +1476,7 @@ function init() {
         values.val(jsonString);
     }
 
-    $(document).on("click", ".DeleteImage", function () {
+    $(document).on("click", ".MultiFileUploader .DeleteItem", function () {
 
         var root = $(this).closest(".MultiFileUploader");
 

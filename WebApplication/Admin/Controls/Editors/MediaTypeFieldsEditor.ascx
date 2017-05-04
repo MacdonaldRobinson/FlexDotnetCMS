@@ -53,7 +53,7 @@
                     <asp:CheckBox runat="server" ID="RenderLabelAfterControl" /> <label for="<%# RenderLabelAfterControl.ClientID %>">Render Label After Control</label>
                 </div>
                 <div>
-                    <asp:CheckBox runat="server" ID="ShowFrontEndFieldEditor" /> <label for="<%# ShowFrontEndFieldEditor.ClientID %>">Show Front End Field Editor</label>
+                    <asp:CheckBox runat="server" ID="ShowFrontEndFieldEditor" Checked="true"/> <label for="<%# ShowFrontEndFieldEditor.ClientID %>">Show Front End Field Editor</label>
                 </div>
                 <div>
                     <label for="<%# GroupName.ClientID %>">Group Name:</label>

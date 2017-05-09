@@ -137,6 +137,14 @@ html {
     margin-left: 5px;
 }
 
+#SiteTree .restrictedWrapper {
+    background-color: red;
+    color: #fff;
+    padding: 2px;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+
 
 #SiteTree .isHidden > a, #SiteTree .unPublished > a {
     font-style: italic;

@@ -302,7 +302,7 @@ namespace FrameworkLibrary
             return filtered;
         }
 
-        public static Return CanAccessMediaDetail(IMediaDetail mediaDetail, User user)
+        public static Return CanAccessMediaDetail(IMediaDetail mediaDetail, User user, bool checkParents = true)
         {
             var returnObj = GenerateReturn();
 
@@ -318,22 +318,36 @@ namespace FrameworkLibrary
             {
                 if (!user.IsInRoles(mediaType.GetRoles()))
                 {
-                    returnObj = GenerateReturn("Cannot access item", "The roles that you belong to do not have permissions to access this media type");
+                    returnObj = GenerateReturn("Cannot access item", $"The roles that you belong to do not have permissions to access this media type: '{mediaType.Name}'");
+                    return returnObj;
                 }
             }
             else if (mediaDetail.RolesMediaDetails.Count != 0)
             {
+                var limitedtoRoles = String.Join(",", mediaDetail.RolesMediaDetails.Select(i => i.Role.Name));
                 if (user.Roles.Count == 0)
                 {
-                    returnObj = GenerateReturn("Cannot access item", "You do not belong to any role, this item is restricted to certin roles");
+                    returnObj = GenerateReturn("Cannot access item", $"You do not belong to any roles, this item is restricted to certin roles: '{limitedtoRoles}'");
                 }
                 else if (!mediaDetail.RolesMediaDetails.Where(i => user.IsInRole(i.Role)).Any())
                 {
-                    returnObj = GenerateReturn("Cannot access item", "The roles that you belong to do not have permissions to access this item");
+                    returnObj = GenerateReturn("Cannot access item", $"The roles that you belong to do not have permissions to access this item: '{limitedtoRoles}'");
                 }
                 else if ((mediaDetail.UsersMediaDetails.Count != 0) && (!mediaDetail.UsersMediaDetails.Where(i => i.UserID == user.ID).Any()))
                 {
                     returnObj = GenerateReturn("Cannot access item", "You do not have permissions to access this item");
+                }
+
+                return returnObj;
+            }
+
+            if(checkParents)
+            {
+                var parentMediaDetail = mediaDetail.Media.ParentMedia?.GetLiveMediaDetail();
+
+                if(parentMediaDetail != null)
+                {
+                    returnObj = CanAccessMediaDetail(parentMediaDetail, user);
                 }
             }
 
@@ -927,7 +941,20 @@ namespace FrameworkLibrary
 
         public static string ReplaceFieldWithParsedValue(string originalText, string textToReplace, IField mediaField, string parsedValue, bool includeFieldWrapper, Dictionary<string, string> arguments)
         {
-            if(arguments.ContainsKey("editor"))
+            var byPassEditorCheck = false;
+            if(mediaField is MediaDetailField && FrameworkSettings.CurrentUser != null)
+            {
+                var mediaDetailField = mediaField as MediaDetailField;
+                var returnObj = CanAccessMediaDetail(mediaDetailField.MediaDetail, FrameworkSettings.CurrentUser);
+
+                if(returnObj.IsError)
+                {
+                    includeFieldWrapper = false;
+                    byPassEditorCheck = true;
+                }
+            }
+
+            if(!byPassEditorCheck && arguments.ContainsKey("editor"))
             {
                 if(arguments["editor"].ToLower() == "true" || arguments["editor"].ToLower() == "false")
                 {

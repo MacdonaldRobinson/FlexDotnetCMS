@@ -124,7 +124,13 @@ namespace WebApplication.Admin.Views.MasterPages
             if (pendingComments > 0)
             {
                 node.li_attr._class += " hasPendingComments";
-                nodeText += $"<small class='hasPendingCommentsWrapper'>Pending(" + pendingComments + ")</small>";
+                nodeText += $"<small class='hasPendingCommentsWrapper'><i class='fa fa-lock' aria-hidden='true'></i></small>";
+            }
+
+            if (detail.MediaType.GetRoles().Count > 0 || detail.RolesMediaDetails.Count > 0)
+            {
+                node.li_attr._class += " restricted";
+                nodeText += $"<small class='restrictedWrapper'><i class='fa fa-lock' aria-hidden='true'></i> Restricted</small>";
             }
 
             node.text = nodeText;
@@ -245,9 +251,9 @@ namespace WebApplication.Admin.Views.MasterPages
 
                 childMediaDetails = childMediaDetails.Where(i =>
                 {
-                    if(i.RolesMediaDetails.Count > 0)
+                    if(MediaDetailsMapper.CanAccessMediaDetail(i, FrameworkSettings.CurrentUser).IsError)
                     {
-                        return FrameworkSettings.CurrentUser.IsInRoles(i.RolesMediaDetails.Select(j => j.Role));
+                        return false;
                     }
 
                     return true;

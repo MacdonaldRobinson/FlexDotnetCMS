@@ -81,8 +81,10 @@ namespace WebApplication.Controls
                 {
                     var newlist = new List<IMediaDetail>();
 
-                    if (BasePage.CurrentWebsite != null)
-                        newlist.Add(BasePage.CurrentWebsite);
+                    var rootMediaDetail = RootMedia?.GetLiveMediaDetail();
+
+                    if (rootMediaDetail != null)
+                        newlist.Add(rootMediaDetail);
 
                     items = newlist.Concat(items);
                 }

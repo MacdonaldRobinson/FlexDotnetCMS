@@ -918,6 +918,7 @@ namespace FrameworkLibrary
                 if (masterPage.UseLayout)
                 {
                     html = masterPage.Layout.Replace("{PageContent}", html);
+                    html = ParseSpecialTags(mediaDetail, html);
                 }
             }
 

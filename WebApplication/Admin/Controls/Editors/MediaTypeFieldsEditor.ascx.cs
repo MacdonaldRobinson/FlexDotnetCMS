@@ -26,7 +26,7 @@ namespace WebApplication.Admin.Controls.Editors
         {
             if(mediaType != null)
             {
-                ItemList.DataSource = mediaType.Fields.ToList();
+                ItemList.DataSource = mediaType.Fields.OrderBy(i=>i.OrderIndex).ToList();
                 ItemList.DataBind();
             }
         }

@@ -786,6 +786,16 @@ namespace WebApplication.Admin.Views.MasterPages
 
                     index++;
                 }
+
+                if(mediaField is MediaTypeField)
+                {
+                    var mediaTypeField = mediaField as MediaTypeField;
+
+                    foreach (var mediaDetailField in mediaTypeField.MediaDetailFields)
+                    {
+                        mediaDetailField.OrderIndex = mediaTypeField.OrderIndex;
+                    }
+                }
             }
 
             return BaseMapper.GetDataModel().SaveChanges();

@@ -2,26 +2,49 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        OnUpdatePanelRefreshComplete(function () {
+        BindReOrder();
+
+        OnUpdatePanelRefreshComplete(function (event) {
+            BindReOrder();
+            BindScrollMagic();
             initAceEditors();
+            initAccordians();
             initTinyMCE();
+            
         });
+
+        BindScrollMagic();
+
     });
+
+    $(document).ajaxComplete(function () {
+        BindReOrder();
+        BindScrollMagic();
+        initAceEditors();
+        initAccordians();
+    });
+
+    function BindReOrder() {
+        BindGridViewSortable("#<%=ItemList.ClientID%>", "/Admin/Views/MasterPages/Webservice.asmx/ReOrderMediaFields", "<%= ItemList.ClientID%>", function () {
+            //window.location.href = window.location.href;
+        });
+    }
 </script>
 
 <asp:UpdatePanel runat="server">
     <ContentTemplate>
         <fieldset>
-            <legend>Copy Fields From Other Meida Types</legend>
+            <legend>Copy Fields From Other Media Types</legend>
             <label>Current Media types:</label>
             <Admin:MediaTypeSelector ID="MediaTypeSelector" runat="server" />
-            <asp:Button Text="Copy Fields" runat="server" ID="CopyFields" OnClick="CopyFields_Click"/>
-        </fieldset>
+            <asp:Button Text="Copy All Fields" runat="server" ID="CopyFields" OnClick="CopyFields_Click"/>
+        </fieldset><br>
         <fieldset>
             <legend>Currently Created Fields</legend>
-            <asp:GridView runat="server" ID="ItemList" AutoGenerateColumns="false" AllowPaging="true" OnPageIndexChanging="ItemList_PageIndexChanging" PageSize="10">
+            <asp:GridView runat="server" ID="ItemList" CssClass="DragDropGrid" AutoGenerateColumns="false" AllowPaging="true" OnPageIndexChanging="ItemList_PageIndexChanging" PageSize="10">
                 <Columns>
                     <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
+                    <asp:BoundField DataField="OrderIndex" HeaderText="OrderIndex" SortExpression="OrderIndex" />
                     <asp:BoundField DataField="FieldCode" HeaderText="FieldCode" SortExpression="FieldCode" />
                     <asp:BoundField DataField="FieldLabel" HeaderText="FieldLabel" SortExpression="FieldLabel" />
                     <asp:BoundField DataField="GroupName" HeaderText="GroupName" SortExpression="GroupName" />
@@ -30,7 +53,7 @@
                     <asp:TemplateField HeaderText="">
                         <ItemTemplate>
                             <asp:LinkButton ID="Edit" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="Edit_Click">Edit</asp:LinkButton> |
-                            <asp:LinkButton ID="Delete" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="Delete_Click" OnClientClick="return confirm('Are you sure you want to perminently delete this field? you will loose all data that has been assigned to this field.')">Delete</asp:LinkButton>
+                            <asp:LinkButton ID="Delete" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="Delete_Click" OnClientClick="return confirm('Are you sure you want to perminently delete this field? you will loose all data that has been assigned to this field.')">Delete</asp:LinkButton>                            
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

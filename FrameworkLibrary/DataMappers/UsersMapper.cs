@@ -29,14 +29,14 @@ namespace FrameworkLibrary
         {
             var obj = GenerateReturn();
 
-            var userMediaDetails = fromUser.UsersMediaDetails.ToList();
+            var userMedias = fromUser.UsersMedias.ToList();
             var createdMediaDetails = fromUser.CreatedMediaDetails.ToList();
             var lastUpdatedMediaDetails = fromUser.LastUpdatedMediaDetails.ToList();
 
-            foreach (var userMediaDetail in userMediaDetails)
+            foreach (var userMediaDetail in userMedias)
             {
                 userMediaDetail.UserID = toUser.ID;
-                obj = UsersMediaDetailsMapper.Update(userMediaDetail);
+                obj = UsersMediasMapper.Update(userMediaDetail);
             }
 
             foreach (var createdMediadetail in createdMediaDetails)

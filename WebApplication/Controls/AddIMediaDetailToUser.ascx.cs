@@ -27,7 +27,7 @@ namespace WebApplication.Controls
             if (MediaDetailToAdd == null)
                 return;
 
-            var found = MediaDetailToAdd.UsersMediaDetails.Where(i => i.MediaDetailID == MediaDetailToAdd.ID).ToList();
+            var found = MediaDetailToAdd.Media.UsersMedias.Where(i => i.MediaID == MediaDetailToAdd.MediaID).ToList();
 
             if (found.Count == 0)
             {
@@ -43,14 +43,14 @@ namespace WebApplication.Controls
 
         protected void AddToUser_OnClick(object sender, EventArgs e)
         {
-            var usersMediaDetails = new UserMediaDetail();
-            usersMediaDetails.MediaDetailID = MediaDetailToAdd.ID;
+            var usersMediaDetails = new UserMedia();
+            usersMediaDetails.MediaID = MediaDetailToAdd.MediaID;
             usersMediaDetails.UserID = BasePage.CurrentUser.ID;
             usersMediaDetails.DateCreated = usersMediaDetails.DateLastModified = DateTime.Now;
             usersMediaDetails.PermissionID = PermissionsMapper.GetPermissionsFromEnum(PermissionsEnum.AccessProtectedSections).ID;
 
             var currentMediaDetail = BaseMapper.GetObjectFromContext((MediaDetail)MediaDetailToAdd);
-            currentMediaDetail.UsersMediaDetails.Add(usersMediaDetails);
+            currentMediaDetail.Media.UsersMedias.Add(usersMediaDetails);
 
             var returnObj = MediaDetailsMapper.Update(currentMediaDetail);
 
@@ -73,16 +73,16 @@ namespace WebApplication.Controls
         protected void RemoveFromUser_OnClick(object sender, EventArgs e)
         {
             var currentMediaDetail = BaseMapper.GetObjectFromContext((MediaDetail)MediaDetailToAdd);
-            var found = currentMediaDetail.UsersMediaDetails.SingleOrDefault(i => i.MediaDetailID == currentMediaDetail.ID);
+            var found = currentMediaDetail.Media.UsersMedias.SingleOrDefault(i => i.MediaID == currentMediaDetail.MediaID);
 
             if (found == null)
                 return;
 
-            var returnObj = UsersMediaDetailsMapper.DeletePermanently(found);
+            var returnObj = UsersMediasMapper.DeletePermanently(found);
 
             if (!returnObj.IsError)
             {
-                currentMediaDetail.UsersMediaDetails.Remove(found);
+                currentMediaDetail.Media.UsersMedias.Remove(found);
                 returnObj = MediaDetailsMapper.Update(currentMediaDetail);
                 UpdateVisibility();
             }

@@ -20,7 +20,7 @@ namespace FrameworkLibrary
             this.Permissions = new HashSet<Permission>();
             this.Users = new HashSet<User>();
             this.MediaTypesRoles = new HashSet<MediaTypeRole>();
-            this.RolesMediaDetails = new HashSet<RoleMediaDetail>();
+            this.RolesMedias = new HashSet<RoleMedia>();
         }
     
         public long ID { get; set; }
@@ -38,6 +38,6 @@ namespace FrameworkLibrary
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MediaTypeRole> MediaTypesRoles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RoleMediaDetail> RolesMediaDetails { get; set; }
+        public virtual ICollection<RoleMedia> RolesMedias { get; set; }
     }
 }

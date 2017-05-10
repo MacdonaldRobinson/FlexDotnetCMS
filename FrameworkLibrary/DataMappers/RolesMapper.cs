@@ -39,7 +39,7 @@ namespace FrameworkLibrary
             return roles.Where(item => item.IsActive).Where(item => item.Permissions.Where(i => i.ID == permission.ID).Count() != 0);
         }
 
-        public static IEnumerable<Role> GetRoles(IEnumerable<RoleMediaDetail> roleMediaDetails)
+        public static IEnumerable<Role> GetRoles(IEnumerable<RoleMedia> roleMediaDetails)
         {
             var roles = new List<Role>();
 
@@ -113,10 +113,10 @@ namespace FrameworkLibrary
 
         public static void RemoveFromMediaDetails(Role obj)
         {
-            var items = obj.RolesMediaDetails;
+            var items = obj.RolesMedias;
 
             foreach (var item in items)
-                GetDataModel().RolesMediaDetails.Remove(item);
+                GetDataModel().RolesMedias.Remove(item);
         }
 
         public static Return DeletePermanently(Role obj)

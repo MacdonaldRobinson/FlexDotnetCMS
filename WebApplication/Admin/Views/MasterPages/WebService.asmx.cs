@@ -127,7 +127,7 @@ namespace WebApplication.Admin.Views.MasterPages
                 nodeText += $"<small class='hasPendingCommentsWrapper'><i class='fa fa-lock' aria-hidden='true'></i></small>";
             }
 
-            if (detail.MediaType.GetRoles().Count > 0 || detail.RolesMediaDetails.Count > 0)
+            if (detail.MediaType.GetRoles().Count > 0 || detail.Media.RolesMedias.Count > 0)
             {
                 node.li_attr._class += " restricted";
                 nodeText += $"<small class='restrictedWrapper'><i class='fa fa-lock' aria-hidden='true'></i> Restricted</small>";

@@ -49,7 +49,7 @@ namespace WebApplication.Admin.Controls.Selectors
                 SetUser(User);
 
                 if (AdminBasePage.SelectedMediaDetail != null)
-                    PermissionsSelector.SetSelectedPermissions(UsersMediaDetailsMapper.GetUserPermissions(User, AdminBasePage.SelectedMediaDetail));
+                    PermissionsSelector.SetSelectedPermissions(UsersMediasMapper.GetUserPermissions(User, AdminBasePage.SelectedMediaDetail));
             }
         }
 
@@ -70,19 +70,19 @@ namespace WebApplication.Admin.Controls.Selectors
             PermissionsSelector.SetSelectedPermissions(permissions);
         }
 
-        public IEnumerable<UserMediaDetail> GetUserMediaDetails()
+        public IEnumerable<UserMedia> GetUserMediaDetails()
         {
             User User = GetSelectedUser();
             var selectedPermissions = PermissionsSelector.GetSelectedPermissions();
-            var UserMediaDetails = new List<UserMediaDetail>();
+            var UserMediaDetails = new List<UserMedia>();
 
             foreach (Permission permission in selectedPermissions)
             {
-                var UserMediaDetail = new UserMediaDetail();
+                var UserMediaDetail = new UserMedia();
                 UserMediaDetail.DateCreated = UserMediaDetail.DateLastModified = DateTime.Now;
                 UserMediaDetail.UserID = User.ID;
                 UserMediaDetail.PermissionID = permission.ID;
-                UserMediaDetail.MediaDetailID = AdminBasePage.SelectedMediaDetail.ID;
+                UserMediaDetail.MediaID = AdminBasePage.SelectedMedia.ID;
 
                 UserMediaDetails.Add(UserMediaDetail);
             }

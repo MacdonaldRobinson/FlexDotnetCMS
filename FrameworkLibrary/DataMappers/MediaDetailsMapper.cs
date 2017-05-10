@@ -286,7 +286,7 @@ namespace FrameworkLibrary
 
         public static IEnumerable<IMediaDetail> FilterByRole(IEnumerable<IMediaDetail> items, Role role)
         {
-            return items.Where(item => item.RolesMediaDetails.Where(i => i.ID == role.ID).Any());
+            return items.Where(item => item.Media.RolesMedias.Where(i => i.RoleID == role.ID).Any());
         }
 
         public static IEnumerable<IMediaDetail> FilterByRoles(List<IMediaDetail> items, IEnumerable<Role> roles)
@@ -322,18 +322,18 @@ namespace FrameworkLibrary
                     return returnObj;
                 }
             }
-            else if (mediaDetail.RolesMediaDetails.Count != 0)
+            else if (mediaDetail.Media.RolesMedias.Count != 0)
             {
-                var limitedtoRoles = String.Join(",", mediaDetail.RolesMediaDetails.Select(i => i.Role.Name));
+                var limitedtoRoles = String.Join(",", mediaDetail.Media.RolesMedias.Select(i => i.Role.Name));
                 if (user.Roles.Count == 0)
                 {
                     returnObj = GenerateReturn("Cannot access item", $"You do not belong to any roles, this item is restricted to certin roles: '{limitedtoRoles}'");
                 }
-                else if (!mediaDetail.RolesMediaDetails.Where(i => user.IsInRole(i.Role)).Any())
+                else if (!mediaDetail.Media.RolesMedias.Where(i => user.IsInRole(i.Role)).Any())
                 {
                     returnObj = GenerateReturn("Cannot access item", $"The roles that you belong to do not have permissions to access this item: '{limitedtoRoles}'");
                 }
-                else if ((mediaDetail.UsersMediaDetails.Count != 0) && (!mediaDetail.UsersMediaDetails.Where(i => i.UserID == user.ID).Any()))
+                else if ((mediaDetail.Media.UsersMedias.Count != 0) && (!mediaDetail.Media.UsersMedias.Where(i => i.UserID == user.ID).Any()))
                 {
                     returnObj = GenerateReturn("Cannot access item", "You do not have permissions to access this item");
                 }
@@ -869,11 +869,11 @@ namespace FrameworkLibrary
                 GetDataModel().Fields.Remove(item);
             }
 
-            var roleMediaDetails = obj.RolesMediaDetails.ToList();
+            var roleMedia = obj.Media.RolesMedias.ToList();
 
-            foreach (RoleMediaDetail item in roleMediaDetails)
+            foreach (RoleMedia item in roleMedia)
             {
-                GetDataModel().RolesMediaDetails.Remove(item);
+                GetDataModel().RolesMedias.Remove(item);
             }
 
             var fieldAssociations = obj.FieldAssociations.ToList();
@@ -945,7 +945,9 @@ namespace FrameworkLibrary
             if(mediaField is MediaDetailField && FrameworkSettings.CurrentUser != null)
             {
                 var mediaDetailField = mediaField as MediaDetailField;
-                var returnObj = CanAccessMediaDetail(mediaDetailField.MediaDetail, FrameworkSettings.CurrentUser);
+                var mediaDetail = (mediaDetailField.MediaDetail != null) ? mediaDetailField.MediaDetail : MediaDetailsMapper.GetByID(mediaDetailField.MediaDetailID);
+
+                var returnObj = CanAccessMediaDetail(mediaDetail, FrameworkSettings.CurrentUser);
 
                 if(returnObj.IsError)
                 {

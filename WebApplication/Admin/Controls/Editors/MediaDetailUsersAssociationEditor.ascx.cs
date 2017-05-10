@@ -30,7 +30,7 @@ namespace WebApplication.Admin.Controls.Editors
             if (selectedItem == null)
                 return;
 
-            this.ItemList.DataSource = UsersMediaDetailsMapper.GetUsers(selectedItem.UsersMediaDetails);
+            this.ItemList.DataSource = UsersMediasMapper.GetUsers(selectedItem.Media.UsersMedias);
             this.ItemList.DataBind();
         }
 
@@ -42,17 +42,17 @@ namespace WebApplication.Admin.Controls.Editors
         protected void Save_OnClick(object sender, EventArgs e)
         {
             selectedItem = BaseMapper.GetObjectFromContext((MediaDetail)selectedItem);
-            IEnumerable<UserMediaDetail> UserMediaDetails = UserPermissionsSelector.GetUserMediaDetails();
+            IEnumerable<UserMedia> UserMediaDetails = UserPermissionsSelector.GetUserMediaDetails();
 
             User User = UserPermissionsSelector.GetSelectedUser();
-            IEnumerable<UserMediaDetail> removeItems = selectedItem.UsersMediaDetails.Where(i => i.UserID == User.ID);
+            IEnumerable<UserMedia> removeItems = selectedItem.Media.UsersMedias.Where(i => i.UserID == User.ID);
 
-            foreach (UserMediaDetail removeItem in removeItems)
-                UsersMediaDetailsMapper.DeletePermanently(removeItem);
+            foreach (UserMedia removeItem in removeItems)
+                UsersMediasMapper.DeletePermanently(removeItem);
 
-            foreach (UserMediaDetail UserMediaDetail in UserMediaDetails)
+            foreach (UserMedia UserMediaDetail in UserMediaDetails)
             {
-                selectedItem.UsersMediaDetails.Add(UserMediaDetail);
+                selectedItem.Media.UsersMedias.Add(UserMediaDetail);
             }
 
             Return obj = MediaDetailsMapper.Update(selectedItem);
@@ -72,15 +72,15 @@ namespace WebApplication.Admin.Controls.Editors
             this.EditPanel.Visible = false;
         }
 
-        private void HandleDelete(IEnumerable<UserMediaDetail> selectedUserMediaDetails)
+        private void HandleDelete(IEnumerable<UserMedia> selectedUserMediaDetails)
         {
             selectedItem = BaseMapper.GetObjectFromContext((MediaDetail)selectedItem);
             Return obj = BaseMapper.GenerateReturn();
-            foreach (UserMediaDetail selectedUserMediaDetail in selectedUserMediaDetails)
+            foreach (UserMedia selectedUserMediaDetail in selectedUserMediaDetails)
             {
-                UserMediaDetail item = BaseMapper.GetObjectFromContext(selectedUserMediaDetail);
-                selectedItem.UsersMediaDetails.Remove(selectedUserMediaDetail);
-                obj = UsersMediaDetailsMapper.DeletePermanently(selectedUserMediaDetail);
+                UserMedia item = BaseMapper.GetObjectFromContext(selectedUserMediaDetail);
+                selectedItem.Media.UsersMedias.Remove(selectedUserMediaDetail);
+                obj = UsersMediasMapper.DeletePermanently(selectedUserMediaDetail);
 
                 if (obj.IsError)
                     break;
@@ -120,10 +120,10 @@ namespace WebApplication.Admin.Controls.Editors
 
             if (!string.IsNullOrEmpty(id))
             {
-                IEnumerable<UserMediaDetail> selectedUserMediaDetails = new List<UserMediaDetail>();
+                IEnumerable<UserMedia> selectedUserMediaDetails = new List<UserMedia>();
 
                 if (ItemList.SelectedValue != null)
-                    selectedUserMediaDetails = UsersMediaDetailsMapper.GetByUser(UsersMapper.GetByID(long.Parse(ItemList.SelectedValue.ToString())), selectedItem);
+                    selectedUserMediaDetails = UsersMediasMapper.GetByUser(UsersMapper.GetByID(long.Parse(ItemList.SelectedValue.ToString())), selectedItem);
 
                 HandleDelete(selectedUserMediaDetails);
             }

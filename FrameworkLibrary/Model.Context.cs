@@ -30,7 +30,6 @@ namespace FrameworkLibrary
         public virtual DbSet<Media> AllMedia { get; set; }
         public virtual DbSet<MediaDetail> MediaDetails { get; set; }
         public virtual DbSet<Permission> Permissions { get; set; }
-        public virtual DbSet<UserMediaDetail> UsersMediaDetails { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<MediaType> MediaTypes { get; set; }
@@ -44,9 +43,10 @@ namespace FrameworkLibrary
         public virtual DbSet<GlossaryTerm> GlossaryTerms { get; set; }
         public virtual DbSet<Field> Fields { get; set; }
         public virtual DbSet<IPLocationTrackerEntry> IPLocationTrackerEntries { get; set; }
-        public virtual DbSet<RoleMediaDetail> RolesMediaDetails { get; set; }
         public virtual DbSet<FieldAssociation> FieldAssociations { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<FieldType> FieldTypes { get; set; }
+        public virtual DbSet<UserMedia> UsersMedias { get; set; }
+        public virtual DbSet<RoleMedia> RolesMedias { get; set; }
     }
 }

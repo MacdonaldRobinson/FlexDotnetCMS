@@ -5,22 +5,22 @@ using System.Linq;
 
 namespace FrameworkLibrary
 {
-    public class UsersMediaDetailsMapper : BaseMapper
+    public class UsersMediasMapper : BaseMapper
     {
         private const string MapperKey = "UsersMediaDetailsMapperKey";
 
-        public static IEnumerable<UserMediaDetail> GetAll()
+        public static IEnumerable<UserMedia> GetAll()
         {
-            return GetAll(MapperKey, () => GetDataModel().UsersMediaDetails.OrderByDescending(i => i.DateCreated));
+            return GetAll(MapperKey, () => GetDataModel().UsersMedias.OrderByDescending(i => i.DateCreated));
         }
 
-        public static UserMediaDetail GetByID(long id)
+        public static UserMedia GetByID(long id)
         {
             var allItems = GetAll();
             return allItems.FirstOrDefault(item => item.ID == id);
         }
 
-        public static IEnumerable<User> GetUsers(IEnumerable<UserMediaDetail> userMediaDetails)
+        public static IEnumerable<User> GetUsers(IEnumerable<UserMedia> userMediaDetails)
         {
             var users = new List<User>();
 
@@ -32,23 +32,23 @@ namespace FrameworkLibrary
             return users;
         }
 
-        public static IEnumerable<UserMediaDetail> GetAllWithPermission(Permission permission)
+        public static IEnumerable<UserMedia> GetAllWithPermission(Permission permission)
         {
             var items = GetAll();
 
             return items.Where(item => item.PermissionID == permission.ID);
         }
 
-        public static IEnumerable<UserMediaDetail> GetByUser(User user, IMediaDetail mediaDetail)
+        public static IEnumerable<UserMedia> GetByUser(User user, IMediaDetail mediaDetail)
         {
-            var allItems = mediaDetail.UsersMediaDetails.Where(i => i.UserID == user.ID);
+            var allItems = mediaDetail.Media.UsersMedias.Where(i => i.UserID == user.ID);
 
             return allItems;
         }
 
         public static IEnumerable<Permission> GetUserRolesPermissions(User user, IMediaDetail mediaDetail)
         {
-            return RolesMediaDetailsMapper.GetRolesPermissions(user.Roles, mediaDetail);
+            return RolesMediasMapper.GetRolesPermissions(user.Roles, mediaDetail);
         }
 
         public static IEnumerable<Permission> GetNotInRolesPermissions(User user, IMediaDetail mediaDetail)
@@ -63,12 +63,12 @@ namespace FrameworkLibrary
             return (from item in allItems where item.Permission.IsActive select item.Permission);
         }
 
-        public static UserMediaDetail CreateObject()
+        public static UserMedia CreateObject()
         {
-            return GetDataModel().UsersMediaDetails.Create();
+            return GetDataModel().UsersMedias.Create();
         }
 
-        public static Return Insert(UserMediaDetail obj)
+        public static Return Insert(UserMedia obj)
         {
             obj.DateCreated = DateTime.Now;
             obj.DateLastModified = DateTime.Now;
@@ -76,7 +76,7 @@ namespace FrameworkLibrary
             return Insert(MapperKey, obj);
         }
 
-        public static Return Update(UserMediaDetail obj)
+        public static Return Update(UserMedia obj)
         {
             obj.DateCreated = DateTime.Now;
             obj.DateLastModified = DateTime.Now;
@@ -84,7 +84,7 @@ namespace FrameworkLibrary
             return Update(MapperKey, obj);
         }
 
-        public static Return DeletePermanently(UserMediaDetail obj)
+        public static Return DeletePermanently(UserMedia obj)
         {
             return Delete(MapperKey, obj);
         }

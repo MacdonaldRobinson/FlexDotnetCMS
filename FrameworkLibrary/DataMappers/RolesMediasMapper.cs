@@ -5,24 +5,24 @@ using System.Linq;
 
 namespace FrameworkLibrary
 {
-    public class RolesMediaDetailsMapper : BaseMapper
+    public class RolesMediasMapper : BaseMapper
     {
         private const string MapperKey = "RolesMediaDetailsMapperKey";
 
-        public static IEnumerable<RoleMediaDetail> GetAll()
+        public static IEnumerable<RoleMedia> GetAll()
         {
-            return GetAll(MapperKey, () => GetDataModel().RolesMediaDetails.OrderByDescending(i => i.DateCreated));
+            return GetAll(MapperKey, () => GetDataModel().RolesMedias.OrderByDescending(i => i.DateCreated));
         }
 
-        public static RoleMediaDetail GetByID(long id)
+        public static RoleMedia GetByID(long id)
         {
             var allItems = GetAll();
             return allItems.FirstOrDefault(item => item.ID == id);
         }
 
-        public static IEnumerable<RoleMediaDetail> GetByRole(Role role, IMediaDetail mediaDetail)
+        public static IEnumerable<RoleMedia> GetByRole(Role role, IMediaDetail mediaDetail)
         {
-            var allItems = mediaDetail.RolesMediaDetails.Where(i => i.RoleID == role.ID);
+            var allItems = mediaDetail.Media.RolesMedias.Where(i => i.RoleID == role.ID);
 
             return allItems;
         }
@@ -34,7 +34,7 @@ namespace FrameworkLibrary
             return allItems.SelectMany(i => i.Role.Permissions.Where(j => j.IsActive));
         }
 
-        public static IEnumerable<RoleMediaDetail> GetAllWithPermission(Permission permission)
+        public static IEnumerable<RoleMedia> GetAllWithPermission(Permission permission)
         {
             var items = GetAll();
 
@@ -52,7 +52,7 @@ namespace FrameworkLibrary
             return permissions.Distinct();
         }
 
-        public static IEnumerable<Role> GetRoles(IEnumerable<RoleMediaDetail> roleMediaDetails)
+        public static IEnumerable<Role> GetRoles(IEnumerable<RoleMedia> roleMediaDetails)
         {
             var roles = new List<Role>();
 
@@ -64,12 +64,12 @@ namespace FrameworkLibrary
             return roles;
         }
 
-        public static RoleMediaDetail CreateObject()
+        public static RoleMedia CreateObject()
         {
-            return GetDataModel().RolesMediaDetails.Create();
+            return GetDataModel().RolesMedias.Create();
         }
 
-        public static Return Insert(RoleMediaDetail obj)
+        public static Return Insert(RoleMedia obj)
         {
             obj.DateCreated = DateTime.Now;
             obj.DateLastModified = DateTime.Now;
@@ -77,7 +77,7 @@ namespace FrameworkLibrary
             return Insert(MapperKey, obj);
         }
 
-        public static Return Update(RoleMediaDetail obj)
+        public static Return Update(RoleMedia obj)
         {
             obj.DateCreated = DateTime.Now;
             obj.DateLastModified = DateTime.Now;
@@ -85,7 +85,7 @@ namespace FrameworkLibrary
             return Update(MapperKey, obj);
         }
 
-        public static Return DeletePermanently(RoleMediaDetail obj)
+        public static Return DeletePermanently(RoleMedia obj)
         {
             return Delete(MapperKey, obj);
         }

@@ -18,10 +18,8 @@ namespace FrameworkLibrary
         public MediaDetail()
         {
             this.RecurringTimePeriod = "\'\'";
-            this.UsersMediaDetails = new HashSet<UserMediaDetail>();
             this.History = new HashSet<MediaDetail>();
             this.Fields = new HashSet<MediaDetailField>();
-            this.RolesMediaDetails = new HashSet<RoleMediaDetail>();
             this.FieldAssociations = new HashSet<FieldAssociation>();
         }
     
@@ -72,8 +70,6 @@ namespace FrameworkLibrary
     
         public virtual Language Language { get; set; }
         public virtual Media Media { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserMediaDetail> UsersMediaDetails { get; set; }
         public virtual MediaType MediaType { get; set; }
         public virtual User CreatedByUser { get; set; }
         public virtual User LastUpdatedByUser { get; set; }
@@ -83,8 +79,6 @@ namespace FrameworkLibrary
         public virtual MasterPage MasterPage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MediaDetailField> Fields { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RoleMediaDetail> RolesMediaDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FieldAssociation> FieldAssociations { get; set; }
     }

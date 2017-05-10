@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FrameworkLibrary
 {
-    public partial class RoleMediaDetail : IMustContainID
+    public partial class RoleMedia : IMustContainID
     {
     }
 }

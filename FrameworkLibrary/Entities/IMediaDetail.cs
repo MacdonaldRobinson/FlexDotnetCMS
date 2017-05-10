@@ -66,8 +66,7 @@ namespace FrameworkLibrary
         long QuantityInStock { get; set; }
         string RecurringTimePeriod { get; set; }
         bool RedirectToFirstChild { get; set; }
-        bool RenderInFooter { get; set; }
-        ICollection<RoleMediaDetail> RolesMediaDetails { get; set; }
+        bool RenderInFooter { get; set; }        
         string RssVirtualPath { get; }
         string SectionTitle { get; set; }
         string SefTitle { get; set; }
@@ -79,8 +78,7 @@ namespace FrameworkLibrary
         bool UseDirectLink { get; set; }
         string UseFeaturedLayout { get; }
         string UseMainLayout { get; }
-        bool UseMediaTypeLayouts { get; set; }
-        ICollection<UserMediaDetail> UsersMediaDetails { get; set; }
+        bool UseMediaTypeLayouts { get; set; }        
         string UseSummaryLayout { get; }
         List<ValidationError> ValidationErrors { get; }
         string VirtualPath { get; }

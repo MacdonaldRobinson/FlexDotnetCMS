@@ -17,9 +17,9 @@ namespace FrameworkLibrary
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Permission()
         {
-            this.UsersMediaDetails = new HashSet<UserMediaDetail>();
             this.Roles = new HashSet<Role>();
             this.MediaTypeRolesPermissions = new HashSet<MediaTypeRolePermission>();
+            this.UsersMedias = new HashSet<UserMedia>();
         }
     
         public long ID { get; set; }
@@ -31,10 +31,10 @@ namespace FrameworkLibrary
         public System.DateTime DateLastModified { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserMediaDetail> UsersMediaDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Role> Roles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MediaTypeRolePermission> MediaTypeRolesPermissions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserMedia> UsersMedias { get; set; }
     }
 }

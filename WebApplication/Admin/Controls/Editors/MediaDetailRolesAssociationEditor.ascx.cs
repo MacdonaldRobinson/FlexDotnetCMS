@@ -34,7 +34,7 @@ namespace WebApplication.Admin.Controls
             if (selectedItem == null)
                 return;
 
-            this.ItemList.DataSource = RolesMediaDetailsMapper.GetRoles(selectedItem.RolesMediaDetails);
+            this.ItemList.DataSource = RolesMediasMapper.GetRoles(selectedItem.Media.RolesMedias);
             this.ItemList.DataBind();
         }
 
@@ -52,17 +52,17 @@ namespace WebApplication.Admin.Controls
         protected void Save_OnClick(object sender, EventArgs e)
         {
             selectedItem = BaseMapper.GetObjectFromContext((MediaDetail)selectedItem);
-            IEnumerable<RoleMediaDetail> RoleMediaDetails = RolePermissionsSelector.GetRoleMediaDetails();
+            IEnumerable<RoleMedia> RoleMediaDetails = RolePermissionsSelector.GetRoleMediaDetails();
 
             Role role = RolePermissionsSelector.GetSelectedRole();
-            IEnumerable<RoleMediaDetail> removeItems = selectedItem.RolesMediaDetails.Where(i => i.RoleID == role.ID);
+            IEnumerable<RoleMedia> removeItems = selectedItem.Media.RolesMedias.Where(i => i.RoleID == role.ID);
 
-            foreach (RoleMediaDetail removeItem in removeItems)
-                RolesMediaDetailsMapper.DeletePermanently(removeItem);
+            foreach (RoleMedia removeItem in removeItems)
+                RolesMediasMapper.DeletePermanently(removeItem);
 
-            foreach (RoleMediaDetail RoleMediaDetail in RoleMediaDetails)
+            foreach (RoleMedia RoleMediaDetail in RoleMediaDetails)
             {
-                selectedItem.RolesMediaDetails.Add(RoleMediaDetail);
+                selectedItem.Media.RolesMedias.Add(RoleMediaDetail);
             }
 
             Return obj = MediaDetailsMapper.Update(selectedItem);
@@ -82,24 +82,24 @@ namespace WebApplication.Admin.Controls
             this.EditPanel.Visible = false;
         }
 
-        private void HandleDelete(IEnumerable<RoleMediaDetail> RoleMediaDetails)
+        private void HandleDelete(IEnumerable<RoleMedia> RoleMediaDetails)
         {
             selectedItem = BaseMapper.GetObjectFromContext((MediaDetail)selectedItem);
             Role role = null;
             Return obj = BaseMapper.GenerateReturn();
 
-            foreach (RoleMediaDetail RoleMediaDetail in RoleMediaDetails)
+            foreach (RoleMedia RoleMediaDetail in RoleMediaDetails)
             {
-                obj = RolesMediaDetailsMapper.DeletePermanently(RoleMediaDetail);
+                obj = RolesMediasMapper.DeletePermanently(RoleMediaDetail);
                 role = RoleMediaDetail.Role;
             }
 
             if (!obj.IsError)
             {
-                IEnumerable<UserMediaDetail> userMediaDetails = selectedItem.UsersMediaDetails.Where(i => i.User.IsInRole(role));
+                IEnumerable<UserMedia> userMediaDetails = selectedItem.Media.UsersMedias.Where(i => i.User.IsInRole(role));
 
-                foreach (UserMediaDetail userMediaDetail in userMediaDetails)
-                    UsersMediaDetailsMapper.DeletePermanently(userMediaDetail);
+                foreach (UserMedia userMediaDetail in userMediaDetails)
+                    UsersMediasMapper.DeletePermanently(userMediaDetail);
 
                 Bind();
             }
@@ -134,12 +134,12 @@ namespace WebApplication.Admin.Controls
             {
                 var item = selectedItem.History.SingleOrDefault(i => i.ID == long.Parse(id));
 
-                IEnumerable<RoleMediaDetail> RoleMediaDetails = new List<RoleMediaDetail>();
+                IEnumerable<RoleMedia> RoleMediaDetails = new List<RoleMedia>();
 
                 if (ItemList.SelectedValue != null)
                 {
                     Role role = RolesMapper.GetByID(long.Parse(ItemList.SelectedValue.ToString()));
-                    RoleMediaDetails = RolesMediaDetailsMapper.GetByRole(role, selectedItem);
+                    RoleMediaDetails = RolesMediasMapper.GetByRole(role, selectedItem);
                 }
 
                 HandleDelete(RoleMediaDetails);

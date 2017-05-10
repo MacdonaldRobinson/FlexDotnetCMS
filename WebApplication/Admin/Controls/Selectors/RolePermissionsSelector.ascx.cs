@@ -38,7 +38,7 @@ namespace WebApplication.Admin.Controls.Selectors
                 PermissionsSelector.ShowPermissions(role.Permissions);
 
                 if (AdminBasePage.SelectedMediaDetail != null)
-                    PermissionsSelector.SetSelectedPermissions(RolesMediaDetailsMapper.GetRolePermissions(role, AdminBasePage.SelectedMediaDetail));
+                    PermissionsSelector.SetSelectedPermissions(RolesMediasMapper.GetRolePermissions(role, AdminBasePage.SelectedMediaDetail));
             }
         }
 
@@ -57,19 +57,19 @@ namespace WebApplication.Admin.Controls.Selectors
             PermissionsSelector.SetSelectedPermissions(permissions);
         }
 
-        public IEnumerable<RoleMediaDetail> GetRoleMediaDetails()
+        public IEnumerable<RoleMedia> GetRoleMediaDetails()
         {
             Role role = GetSelectedRole();
             var selectedPermissions = PermissionsSelector.GetSelectedPermissions();
-            var RoleMediaDetails = new List<RoleMediaDetail>();
+            var RoleMediaDetails = new List<RoleMedia>();
 
             foreach (Permission permission in selectedPermissions)
             {
-                var RoleMediaDetail = new RoleMediaDetail();
+                var RoleMediaDetail = new RoleMedia();
                 RoleMediaDetail.DateCreated = RoleMediaDetail.DateLastModified = DateTime.Now;
                 RoleMediaDetail.RoleID = role.ID;
                 //RoleMediaDetail.PermissionID = permission.ID;
-                RoleMediaDetail.MediaDetailID = AdminBasePage.SelectedMediaDetail.ID;
+                RoleMediaDetail.MediaID = AdminBasePage.SelectedMedia.ID;
 
                 RoleMediaDetails.Add(RoleMediaDetail);
             }

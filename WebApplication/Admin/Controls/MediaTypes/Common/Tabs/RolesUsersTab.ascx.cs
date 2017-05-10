@@ -15,7 +15,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
         {
             if (!IsPostBack)
             {
-                MultiRoleSelector.SetSelectedRoles(this.selectedItem.RolesMediaDetails.Select(i => i.Role).ToList());
+                MultiRoleSelector.SetSelectedRoles(this.selectedItem.Media.RolesMedias.Select(i => i.Role).ToList());
             }
         }
 
@@ -26,18 +26,18 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
             if (roles == null)
                 return;
 
-            var existingRoles = selectedItem.RolesMediaDetails.ToList();
+            var existingRoles = selectedItem.Media.RolesMedias.ToList();
 
             foreach (var existingRole in existingRoles)
             {
-                BaseMapper.GetDataModel().RolesMediaDetails.Remove(existingRole);
+                BaseMapper.GetDataModel().RolesMedias.Remove(existingRole);
             }
 
             foreach (var role in roles)
             {
                 var contextRole = BaseMapper.GetObjectFromContext(role);
 
-                BaseMapper.GetDataModel().RolesMediaDetails.Add(new RoleMediaDetail() { MediaDetail = (MediaDetail)selectedItem, Role = contextRole, DateCreated = DateTime.Now, DateLastModified = DateTime.Now });
+                BaseMapper.GetDataModel().RolesMedias.Add(new RoleMedia() { Media = selectedItem.Media, Role = contextRole, DateCreated = DateTime.Now, DateLastModified = DateTime.Now });
                 //this.selectedItem.RolesMediaDetails.Add(new RoleMediaDetail() { Role = contextRole, DateCreated = DateTime.Now, DateLastModified = DateTime.Now });
             }
         }

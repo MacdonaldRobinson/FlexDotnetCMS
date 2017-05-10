@@ -767,27 +767,27 @@ namespace FrameworkLibrary
 
         public bool HasAnyRoles()
         {
-            return RolesMediaDetails.Count > 0;
+            return Media.RolesMedias.Count > 0;
         }
 
         public bool HasAnyUsers()
         {
-            return UsersMediaDetails.Count > 0;
+            return Media.UsersMedias.Count > 0;
         }
 
         public bool HasRole(Role role)
         {
-            return RolesMediaDetails.Where(i => i.ID == role.ID).Any();
+            return Media.RolesMedias.Where(i => i.ID == role.ID).Any();
         }
 
         public List<Role> GetRoles()
         {
-            return RolesMediaDetails.Select(i => i.Role).ToList();            
+            return Media.RolesMedias.Select(i => i.Role).ToList();            
         }
 
         public bool HasUser(User user)
         {
-            return UsersMediaDetails.Where(i => i.UserID == user.ID).Any();
+            return Media.UsersMedias.Where(i => i.UserID == user.ID).Any();
         }
 
         public string RssVirtualPath

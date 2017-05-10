@@ -12,15 +12,15 @@ namespace FrameworkLibrary
     using System;
     using System.Collections.Generic;
     
-    public partial class RoleMediaDetail
+    public partial class RoleMedia
     {
         public long ID { get; set; }
-        public long MediaDetailID { get; set; }
+        public long MediaID { get; set; }
         public long RoleID { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.DateTime DateLastModified { get; set; }
     
-        public virtual MediaDetail MediaDetail { get; set; }
+        public virtual Media Media { get; set; }
         public virtual Role Role { get; set; }
     }
 }

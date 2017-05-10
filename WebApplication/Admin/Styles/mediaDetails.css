@@ -78,10 +78,11 @@
 
 .SavePanel {
     position: absolute;
+    width: 450px;
     z-index: 100;
     right: 0;
     top: 0;
-    background-color: #fff;
+    background-color: #fff;    
 }
 
 #SaveFields {

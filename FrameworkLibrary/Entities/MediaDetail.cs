@@ -828,7 +828,7 @@ namespace FrameworkLibrary
         {
             get
             {
-                return this.RenderField("SectionTitle");
+                return this.RenderField("SectionTitle", false);
             }
             set
             {
@@ -840,7 +840,7 @@ namespace FrameworkLibrary
         {
             get
             {
-                return this.RenderField("ShortDescription");
+                return this.RenderField("ShortDescription", false);
             }
             set
             {
@@ -852,7 +852,7 @@ namespace FrameworkLibrary
         {
             get
             {
-                return this.RenderField("MainContent");
+                return this.RenderField("MainContent", false);
             }
             set
             {
@@ -864,7 +864,7 @@ namespace FrameworkLibrary
         {
             get
             {
-                return this.RenderField("PathToFile");
+                return this.RenderField("PathToFile", false);
             }
             set
             {

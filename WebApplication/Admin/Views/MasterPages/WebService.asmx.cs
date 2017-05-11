@@ -116,7 +116,7 @@ namespace WebApplication.Admin.Views.MasterPages
                     autoPublishCode = $"<i class='fa fa-clock-o' aria-hidden='true' title='This draft is set to auto-publish at: {draft.PublishDate}'></i> ";
                 }
 
-                nodeText += $"<small class='hasDraftWrapper'>{autoPublishCode}Has Draft</ small>";
+                nodeText += $"<small class='hasDraftWrapper'>{autoPublishCode}Has Draft</small>";
             }
 
             var pendingComments = detail.Media.Comments.Count(i => i.Status == StatusEnum.Pending.ToString() && i.LanguageID == detail.LanguageID);

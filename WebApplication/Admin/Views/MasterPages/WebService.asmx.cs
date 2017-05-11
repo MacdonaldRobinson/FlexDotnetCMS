@@ -124,7 +124,7 @@ namespace WebApplication.Admin.Views.MasterPages
             if (pendingComments > 0)
             {
                 node.li_attr._class += " hasPendingComments";
-                nodeText += $"<small class='hasPendingCommentsWrapper'><i class='fa fa-lock' aria-hidden='true'></i></small>";
+                nodeText += $"<small class='hasPendingCommentsWrapper'>Pending Comments</small>";
             }
 
             if (detail.MediaType.GetRoles().Count > 0 || detail.Media.RolesMedias.Count > 0)

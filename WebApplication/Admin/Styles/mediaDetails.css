@@ -78,7 +78,7 @@
 
 .SavePanel {
     position: absolute;
-    width: 480px;
+    /*width: 480px;*/
     z-index: 100;
     right: 0;
     top: 0;

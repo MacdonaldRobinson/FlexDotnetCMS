@@ -1332,6 +1332,7 @@ function BindSortable() {
 
 function BindScrollMagic()
 {
+    console.log("test");
     if(window.navigator.appVersion.indexOf("Trident") == -1)
         ScrollMagicSetup(".SavePanel");
 
@@ -1397,7 +1398,7 @@ $(function () {
 function init() {
     BindTree();
     BindSortable();
-    //BindScrollMagic();
+    BindScrollMagic();
 
     $("#Filter").on("keyup", function (e) {
         var code = e.keyCode || e.which;

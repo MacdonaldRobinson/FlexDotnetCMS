@@ -41,6 +41,11 @@ namespace FrameworkLibrary
         {
             get
             {
+                var defaultLanguage = LanguagesMapper.GetDefaultLanguage();
+
+                if (this.UseDefaultLanguageLayouts && this.LanguageID != defaultLanguage.ID)
+                    return this.Media.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage())?.UseMainLayout;
+
                 if (this.UseMediaTypeLayouts)
                     return this.MediaType?.MainLayout;
                 else
@@ -52,6 +57,11 @@ namespace FrameworkLibrary
         {
             get
             {
+                var defaultLanguage = LanguagesMapper.GetDefaultLanguage();
+
+                if (this.UseDefaultLanguageLayouts && this.LanguageID != defaultLanguage.ID)
+                    return this.Media.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage())?.UseSummaryLayout;
+
                 if (this.UseMediaTypeLayouts)
                     return this.MediaType?.SummaryLayout;
                 else
@@ -63,6 +73,11 @@ namespace FrameworkLibrary
         {
             get
             {
+                var defaultLanguage = LanguagesMapper.GetDefaultLanguage();
+
+                if (this.UseDefaultLanguageLayouts && this.LanguageID != defaultLanguage.ID)
+                    return this.Media.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage())?.UseSummaryLayout;
+
                 if (this.UseMediaTypeLayouts)
                     return this.MediaType?.FeaturedLayout;
                 else

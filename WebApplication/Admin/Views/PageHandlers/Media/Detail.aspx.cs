@@ -123,7 +123,7 @@ namespace WebApplication.Admin.MediaArticle
 
                 selectedItem.UseMediaTypeLayouts = mediaType.UseMediaTypeLayouts;
 
-                var fields = selectedItem.Media.GetLiveMediaDetail()?.Fields;
+                var fields = selectedItem.Media.GetLiveMediaDetail()?.Fields.Where(i=>i.MediaTypeFieldID == null);
 
                 if (fields != null)
                 {

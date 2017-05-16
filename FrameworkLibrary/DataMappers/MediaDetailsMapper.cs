@@ -594,6 +594,7 @@ namespace FrameworkLibrary
             detail.MediaTypeID = mediaTypeId;
 
             detail.UseMediaTypeLayouts = true;
+            detail.UseDefaultLanguageLayouts = true;
 
             if (createMediaTypeFields)
             {

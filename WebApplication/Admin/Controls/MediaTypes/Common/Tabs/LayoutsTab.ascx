@@ -8,7 +8,20 @@
             check();
         });
 
+        $(".UseDefaultLanguageLayouts input[type=checkbox]").on("change", function () {
+            check();
+        });
+
         function check() {
+
+            if ($(".UseDefaultLanguageLayouts input[type=checkbox]").prop("checked")) {
+                $("#UseDefaultLanguageLayoutsToggle").hide();
+            }
+            else
+            {
+                $("#UseDefaultLanguageLayoutsToggle").show();
+            }
+
             if ($(".UseMediaTypeLayouts input[type=checkbox]").prop("checked")) {
                 $("#ItemLayouts").hide();
             }
@@ -21,26 +34,36 @@
 </script>
 
 <fieldset>
-    <div>
-        <label class="exception" for="<%= UseMediaTypeLayouts.ClientID %>">
-            <asp:CheckBox runat="server" ID="UseMediaTypeLayouts" CssClass="UseMediaTypeLayouts" />
-            Use Media Type Layouts
+    <div id="UseDefaultLanguageLayoutsToggleWrapper" runat="server" visible="false">
+        <label class="exception" for="<%= UseDefaultLanguageLayouts.ClientID %>">
+            <asp:CheckBox runat="server" ID="UseDefaultLanguageLayouts" CssClass="UseDefaultLanguageLayouts" />
+            Use Default Language Layouts
             <br />
-            <em>NOTE: If this is checked then the media type layouts will be used instead of the layouts below</em>
+            <em>NOTE: If this is checked then the layouts from the default language will be used instead of the ones below</em>
         </label>
     </div>
-    <div id="ItemLayouts" class="accordian opened">
-        <h3>Main Layout</h3>
+    <div id="UseDefaultLanguageLayoutsToggle">
         <div>
-            <asp:TextBox runat="server" ID="MainLayout" TextMode="MultiLine" Height="500px" CssClass="AceEditor CanAttachToBrowserPanel"/>
+            <label class="exception" for="<%= UseMediaTypeLayouts.ClientID %>">
+                <asp:CheckBox runat="server" ID="UseMediaTypeLayouts" CssClass="UseMediaTypeLayouts" />
+                Use Media Type Layouts
+                <br />
+                <em>NOTE: If this is checked then the media type layouts will be used instead of the layouts below</em>
+            </label>
         </div>
-        <h3>Summary Layout</h3>
-        <div>
-            <asp:TextBox runat="server" ID="SummaryLayout" TextMode="MultiLine" Height="400px" CssClass="AceEditor" />
-        </div>
-        <h3>Featured Layout</h3>
-        <div>
-            <asp:TextBox runat="server" ID="FeaturedLayout" TextMode="MultiLine" Height="400px" CssClass="AceEditor" />
+        <div id="ItemLayouts" class="accordian opened">
+            <h3>Main Layout</h3>
+            <div>
+                <asp:TextBox runat="server" ID="MainLayout" TextMode="MultiLine" Height="500px" CssClass="AceEditor CanAttachToBrowserPanel"/>
+            </div>
+            <h3>Summary Layout</h3>
+            <div>
+                <asp:TextBox runat="server" ID="SummaryLayout" TextMode="MultiLine" Height="400px" CssClass="AceEditor" />
+            </div>
+            <h3>Featured Layout</h3>
+            <div>
+                <asp:TextBox runat="server" ID="FeaturedLayout" TextMode="MultiLine" Height="400px" CssClass="AceEditor" />
+            </div>
         </div>
     </div>
 

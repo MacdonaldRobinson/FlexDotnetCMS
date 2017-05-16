@@ -67,6 +67,7 @@ namespace FrameworkLibrary
         public bool UseMediaTypeLayouts { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
         public Nullable<System.DateTime> PublishDate { get; set; }
+        public bool UseDefaultLanguageLayouts { get; set; }
     
         public virtual Language Language { get; set; }
         public virtual Media Media { get; set; }

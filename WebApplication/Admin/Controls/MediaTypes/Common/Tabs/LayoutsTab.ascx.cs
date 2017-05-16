@@ -13,6 +13,11 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
         public void SetObject(IMediaDetail selectedItem)
         {
             this.selectedItem = selectedItem;
+
+            if(selectedItem.LanguageID != LanguagesMapper.GetDefaultLanguage().ID)
+            {
+                UseDefaultLanguageLayoutsToggleWrapper.Visible = true;
+            }
         }
 
         public void UpdateFieldsFromObject()
@@ -21,6 +26,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
             SummaryLayout.Text = selectedItem.SummaryLayout;
             FeaturedLayout.Text = selectedItem.FeaturedLayout;
             UseMediaTypeLayouts.Checked = selectedItem.UseMediaTypeLayouts;
+            UseDefaultLanguageLayouts.Checked = selectedItem.UseDefaultLanguageLayouts;
         }
 
         public void UpdateObjectFromFields()
@@ -29,6 +35,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
             selectedItem.SummaryLayout = MediaDetailsMapper.ConvertATagsToShortCodes(SummaryLayout.Text);
             selectedItem.FeaturedLayout = MediaDetailsMapper.ConvertATagsToShortCodes(FeaturedLayout.Text);
             selectedItem.UseMediaTypeLayouts = UseMediaTypeLayouts.Checked;
+            selectedItem.UseDefaultLanguageLayouts = UseDefaultLanguageLayouts.Checked;
         }
     }
 }

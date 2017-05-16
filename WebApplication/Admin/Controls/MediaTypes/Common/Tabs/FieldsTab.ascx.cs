@@ -17,7 +17,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
         }
 
         public void UpdateFieldsFromObject()
-        {            
+        {
         }
 
         public void UpdateObjectFromFields()

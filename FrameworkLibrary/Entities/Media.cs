@@ -5,10 +5,15 @@ namespace FrameworkLibrary
 {
     public partial class Media : IMustContainID
     {
-        public IMediaDetail GetLiveMediaDetail()
+        public IMediaDetail GetLiveMediaDetail(Language language = null)
         {
-            var currentLanguage = FrameworkSettings.GetCurrentLanguage();
-            return this.MediaDetails.SingleOrDefault(i => i.HistoryForMediaDetail == null && i.LanguageID == currentLanguage.ID && ((i.MediaType != null)? i.MediaType.ShowInSiteTree : false));
+            if(language == null)
+            {
+                var currentLanguage = FrameworkSettings.GetCurrentLanguage();
+                language = currentLanguage;
+            }     
+            
+            return this.MediaDetails.SingleOrDefault(i => i.HistoryForMediaDetail == null && i.LanguageID == language.ID && ((i.MediaType != null)? i.MediaType.ShowInSiteTree : false));
         }
 
         public string GetTagsAsString()

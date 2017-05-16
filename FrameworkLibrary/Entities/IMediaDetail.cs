@@ -78,7 +78,8 @@ namespace FrameworkLibrary
         bool UseDirectLink { get; set; }
         string UseFeaturedLayout { get; }
         string UseMainLayout { get; }
-        bool UseMediaTypeLayouts { get; set; }        
+        bool UseMediaTypeLayouts { get; set; }
+        bool UseDefaultLanguageLayouts { get; set; }
         string UseSummaryLayout { get; }
         List<ValidationError> ValidationErrors { get; }
         string VirtualPath { get; }

@@ -183,6 +183,7 @@
           <Property Name="SummaryLayout" Type="nvarchar(max)" Nullable="false" />
           <Property Name="FeaturedLayout" Type="nvarchar(max)" Nullable="false" />
           <Property Name="UseMediaTypeLayouts" Type="bit" Nullable="false" />
+          <Property Name="UseDefaultLanguageLayouts" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="MediaDetailsFields">
           <Key>
@@ -1390,6 +1391,7 @@
           <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
           <Property Name="PublishDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="FieldAssociations" Relationship="FrameworkModel.FK_FieldAssociations_MediaDetails" FromRole="MediaDetail" ToRole="FieldsAssociation" />
+          <Property Name="UseDefaultLanguageLayouts" Type="Boolean" Nullable="false" />
           </EntityType>
         <EntityType Name="Page" BaseType="FrameworkModel.MediaDetail">
         </EntityType>
@@ -2134,6 +2136,7 @@
           <EntitySetMapping Name="MediaDetails">
             <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.MediaDetail)">
               <MappingFragment StoreEntitySet="MediaDetails">
+                <ScalarProperty Name="UseDefaultLanguageLayouts" ColumnName="UseDefaultLanguageLayouts" />
                 <ScalarProperty Name="PublishDate" ColumnName="PublishDate" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
                 <ScalarProperty Name="UseMediaTypeLayouts" ColumnName="UseMediaTypeLayouts" />

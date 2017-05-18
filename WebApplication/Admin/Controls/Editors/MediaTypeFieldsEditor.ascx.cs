@@ -90,9 +90,9 @@ namespace WebApplication.Admin.Controls.Editors
                 var oldFieldCode = mediaTypeField.FieldCode;
 
                 UpdatedObjectFromFields(mediaTypeField);
-
                 foreach (var mediaDetailField in mediaTypeField.MediaDetailFields)
                 {
+                    var mediaDetailFieldValue = mediaDetailField.FieldValue;
                     mediaDetailField.CopyFrom(mediaTypeField);
 
                     if (mediaDetailField.UseMediaTypeFieldDescription)
@@ -101,8 +101,11 @@ namespace WebApplication.Admin.Controls.Editors
                     if (mediaDetailField.UseMediaTypeFieldFrontEndLayout)
                         mediaDetailField.FrontEndLayout = mediaTypeField.FrontEndLayout;
 
-                    if (string.IsNullOrEmpty(mediaDetailField.FieldValue))
+                    if (string.IsNullOrEmpty(mediaDetailFieldValue))
                         mediaDetailField.FieldValue = mediaTypeField.FieldValue;
+                    else
+                        mediaDetailField.FieldValue = mediaDetailFieldValue;
+
 
                     mediaDetailField.DateLastModified = DateTime.Now;
                 }

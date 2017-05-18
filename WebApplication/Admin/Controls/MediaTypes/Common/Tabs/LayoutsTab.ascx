@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LayoutsTab.ascx.cs" Inherits="WebApplication.Admin.Controls.MediaTypes.Common.Tabs.LayoutsTab" %>
-
+ENJOY CONDO LIVING THAT PROVIDES CONVENIENCE AND PROXIMITY TO AMENITIES, RECREATIONAL ACCESS AND THE PRESTIGE THAT COMES WITH A LAKE COMMUNITY. 
 <script type="text/javascript">
     $(document).ready(function () {
         check();

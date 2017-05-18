@@ -83,7 +83,7 @@
                 padding:0;
                 margin:0;
                 border:none !important;
-                display:inline;
+                display:inline !important;
 
             }
             .field.hide .edit{
@@ -91,7 +91,7 @@
             }
 
             .field.hover {
-                border: 1px dashed rgba(0,0,0,.3);
+                outline: 2px dashed rgba(0,0,0,.3);
             }
             .field .edit:hover {
                 background-color: red;  

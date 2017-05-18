@@ -420,7 +420,7 @@ namespace FrameworkLibrary
                     var website = WebsitesMapper.GetWebsite(0, activeLanguage);
                     virtualPath = virtualPath.Replace(URIHelper.ConvertAbsUrlToTilda(URIHelper.BaseUrlWithLanguage), website.CachedVirtualPath);
 
-                    var mediaDetail = GetAllActiveMediaDetails().FirstOrDefault(i => i.VirtualPath == virtualPath && i.Language == activeLanguage);
+                    var mediaDetail = GetAllActiveMediaDetails().FirstOrDefault(i => i.VirtualPath == virtualPath && i.Language == activeLanguage && i.MediaType.ShowInSiteTree);
 
                     if (mediaDetail != null)
                         return mediaDetail;
@@ -448,7 +448,7 @@ namespace FrameworkLibrary
             if (virtualPathByCurrentHost.Contains(".aspx"))
                 return null;
 
-            var item = BaseMapper.GetDataModel().MediaDetails.Where(i => (i.CachedVirtualPath == virtualPathByCurrentHost || i.CachedVirtualPath == virtualPath) && i.LanguageID == currentLanguage.ID && i.HistoryVersionNumber == versionNumber).ToList().Where(i => i.CanRender || HttpContext.Current.Request["version"] != null).OrderByDescending(i => i.DateLastModified).FirstOrDefault();
+            var item = BaseMapper.GetDataModel().MediaDetails.Where(i => (i.CachedVirtualPath == virtualPathByCurrentHost || i.CachedVirtualPath == virtualPath) && i.LanguageID == currentLanguage.ID && i.HistoryVersionNumber == versionNumber && i.MediaType.ShowInSiteTree).ToList().Where(i => i.CanRender || HttpContext.Current.Request["version"] != null).OrderByDescending(i => i.DateLastModified).FirstOrDefault();
 
             if (item != null)
                 return item;

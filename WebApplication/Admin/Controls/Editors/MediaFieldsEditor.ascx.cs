@@ -49,15 +49,7 @@ namespace WebApplication.Admin.Controls.Editors
         private void BindVisibility(MediaDetailField mediaField)
         {
             var possibleMediaTypeField = mediaField?.MediaDetail?.MediaType.Fields.SingleOrDefault(i => i.FieldCode == mediaField.FieldCode);
-            var defaultLanguageId = LanguagesMapper.GetDefaultLanguage()?.ID;
 
-            MediaDetailField possibleDefaultLanguageField = null;
-
-            if (mediaField?.MediaDetail != null && defaultLanguageId != mediaField?.MediaDetail?.LanguageID)
-            {
-                possibleDefaultLanguageField = mediaField?.MediaDetail.Media.MediaDetails.FirstOrDefault(i => i.LanguageID == defaultLanguageId && i.HistoryVersionNumber == 0)?.Fields.FirstOrDefault(i=>i.FieldCode == mediaField.FieldCode);
-            }
-            
             if (possibleMediaTypeField != null)
             {
                 AssociateWithMediaTypeFieldWrapper.Visible = true;

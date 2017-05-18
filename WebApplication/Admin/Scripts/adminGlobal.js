@@ -640,7 +640,13 @@ function initAceEditors() {
 
     $(document).on("click", ".AceEditorFullScreen", function () {
         var element = $(this).parent().find(".ace_editor")[0];        
-        //var element = $("#mainArea")[0];        
+        /*var mainArea = $("#mainArea")[0];        
+
+        if (mainArea != undefined || mainArea != null)
+        {
+            element = mainArea;
+        }*/
+
         launchIntoFullscreen(element);                
     });
 
@@ -1332,7 +1338,6 @@ function BindSortable() {
 
 function BindScrollMagic()
 {
-    console.log("test");
     if(window.navigator.appVersion.indexOf("Trident") == -1)
         ScrollMagicSetup(".SavePanel");
 

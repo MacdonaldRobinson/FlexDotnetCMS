@@ -71,7 +71,7 @@
                                         <a href="javascript:void(0)" class="DeleteItem" data-id="<%# Item.ID %>">Delete</a>
                                     </div>
                                     <a>
-                                        <img src="<%# (Item.MediaDetail != null) ? URIHelper.ConvertToAbsUrl(Item.MediaDetail.LoadField("PathToFile").FieldValue) : "#" %>" alt="<%# (Item.MediaDetail != null) ? Item.MediaDetail.LoadField("SectionTitle").FieldValue : "" %>" />
+                                        <img src="<%# (Item.MediaDetail != null) ? ((Item.MediaDetail.PathToFile != null)? URIHelper.ConvertToAbsUrl(Item.MediaDetail.PathToFile): "") : "#" %>" alt="<%# (Item.MediaDetail != null) ? Item.MediaDetail.SectionTitle : "" %>" />
                                         <div style="max-width:100px;">
                                             <%# (Item.MediaDetail != null) ? Item.MediaDetail.SectionTitle : "" %>
                                         </div>

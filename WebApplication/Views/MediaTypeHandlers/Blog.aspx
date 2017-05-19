@@ -16,7 +16,7 @@
         </LayoutTemplate>
         <ItemTemplate>
             <li>
-                <a href="<%# Item.AbsoluteUrl %>" class='<%# (Item.ID == CurrentMediaDetail.ID)? "current":"" %>'><%# Item.SectionTitle %></a>
+                <a href="<%# Item.AbsoluteUrl %>" class='<%# (Item.ID == CurrentMediaDetail.ID)? "current":"" %>'><%# Item.RenderField("SectionTitle") %></a>
             </li>
         </ItemTemplate>
     </asp:ListView>
@@ -31,9 +31,9 @@
         </LayoutTemplate>
         <ItemTemplate>
             <li>
-                <h3><a href="<%# Item.AbsoluteUrl %>"><%# Item.SectionTitle %></a></h3>
-                <em><%# Item.RenderShortCode("{Field:ArticlePublishDate}") %></em>
-                <%# Item.ShortDescription %>
+                <h3><a href="<%# Item.AbsoluteUrl %>"><%# Item.RenderField("SectionTitle") %></a></h3>
+                <em><%# Item.RenderField("ArticlePublishDate") %></em>
+                <%# Item.RenderField("ShortDescription") %>
                 <a class="btn aqua no-margin" href="<%# Item.AbsoluteUrl %>">Read More</a>
             </li>
         </ItemTemplate>

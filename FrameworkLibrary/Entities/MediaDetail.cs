@@ -879,7 +879,15 @@ namespace FrameworkLibrary
         {
             get
             {
-                return this.RenderField("PathToFile", false);
+                var pathToFile = this.RenderField("PathToFile", false);
+
+                if(pathToFile.Contains("<"))
+                {
+                    var match = System.Text.RegularExpressions.Regex.Match(pathToFile, "\"[a-zA-Z0-9:=]+.*[ ]");
+                    pathToFile = match.Value.Replace("\"", "").Replace("'","");
+                }
+                
+                return pathToFile;
             }
             set
             {

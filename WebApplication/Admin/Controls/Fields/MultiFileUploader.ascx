@@ -16,12 +16,12 @@
 
             function BindReOrder()
             {                
-                BindGridViewSortable("#<%=FieldItems.ClientID%>", "", "<%= AdminUpdatePanel.ClientID%>", function () {     
+                BindGridViewSortable("#<%=AdminUpdatePanel.ClientID %> .FieldItems", "", "<%= AdminUpdatePanel.ClientID%>", function () {     
 
-                    var ReorderItems = $("#<%=FieldItems.ClientID%> .item").parents(".MultiFileUploader").find(".ReorderItems");
+                    var ReorderItems = $("#<%=AdminUpdatePanel.ClientID%> .FieldItems .item").parents(".MultiFileUploader").find(".ReorderItems");
                     
                     var arr = new Array();
-                    $("#<%=FieldItems.ClientID%> .item").each(function () {
+                    $("#<%=AdminUpdatePanel.ClientID%> .FieldItems .item").each(function () {
                         var id = $(this).attr("data-id");
                         arr.push(id);
                     });
@@ -36,7 +36,7 @@
 
     </script>
 
-    <asp:UpdatePanel runat="server" ID="AdminUpdatePanel" class="AdminUpdatePanel">
+    <asp:UpdatePanel runat="server" ID="AdminUpdatePanel" class="AdminUpdatePanel MultiFileUploader">
         <ContentTemplate>
             <fieldset>
                 <div>
@@ -86,7 +86,7 @@
                 <asp:TextBox runat="server" CssClass="ItemsToDelete" ID="ItemsToDelete" Text="[]" Style="display: none;" />
                 <asp:TextBox runat="server" CssClass="ReorderItems" ID="ReorderItems" Text="[]" Style="display: none;"/>
 
-                <asp:GridView runat="server" ID="FieldItems" AutoGenerateColumns="false" AllowPaging="true" CssClass="DragDropGrid" OnPageIndexChanging="ItemList_PageIndexChanging" ItemType="FrameworkLibrary.FieldAssociation" Visible="false" Width="100%">
+                <asp:GridView runat="server" ID="FieldItems" AutoGenerateColumns="false" AllowPaging="true" CssClass="FieldItems DragDropGrid" OnPageIndexChanging="ItemList_PageIndexChanging" ItemType="FrameworkLibrary.FieldAssociation" Visible="false" Width="100%">
                     <Columns>                        
                         <asp:BoundField DataField="MediaDetail.SectionTitle" HeaderText="SectionTitle" SortExpression="MediaDetail.SectionTitle" />
                         <asp:BoundField DataField="MediaDetail.CreatedByUser.Username" HeaderText="CreatedByUser" SortExpression="MediaDetail.CreatedByUser.Username" />

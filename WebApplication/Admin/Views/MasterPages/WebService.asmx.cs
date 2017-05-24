@@ -209,16 +209,16 @@ namespace WebApplication.Admin.Views.MasterPages
                                                                             i.HistoryVersionNumber == 0 &&
                                                                             i.LanguageID == AdminBasePage.CurrentLanguage.ID &&
                                                                             (i.MediaID.ToString() == filterText ||
-                                                                                i.MainContent.ToLower().Contains(filterText) ||
-                                                                                i.ShortDescription.ToLower().Contains(filterText) ||
-                                                                                i.SectionTitle.ToLower().Contains(filterText) ||
+                                                                                i.Fields.FirstOrDefault(j=>j.FieldCode=="MainContent").FieldValue.ToLower().Contains(filterText) ||
+                                                                                i.Fields.FirstOrDefault(j => j.FieldCode == "ShortDescription").FieldValue.ToLower().Contains(filterText) ||
+                                                                                i.Fields.FirstOrDefault(j => j.FieldCode == "SectionTitle").FieldValue.ToLower().Contains(filterText) ||
                                                                                 i.MainLayout.ToLower().Contains(filterText) ||
                                                                                 i.MediaType.MainLayout.ToLower().Contains(filterText) ||
                                                                                 i.Fields.Any(j => (j.FieldAssociations.Count == 0 && j.FieldValue.ToLower().Contains(filterText)) ||
                                                                                                 j.FieldAssociations.Any(k => !k.MediaDetail.MediaType.ShowInSiteTree &&
-                                                                                                                            (k.MediaDetail.SectionTitle.ToLower().Contains(filterText) ||
-                                                                                                                            k.MediaDetail.MainContent.ToLower().Contains(filterText) ||
-                                                                                                                            k.MediaDetail.MainLayout.ToLower().Contains(filterText))
+                                                                                                                            (k.MediaDetail.Fields.FirstOrDefault(l => l.FieldCode == "SectionTitle").FieldValue.ToLower().Contains(filterText) ||
+                                                                                                                            k.MediaDetail.Fields.FirstOrDefault(l => l.FieldCode == "MainContent").FieldValue.ToLower().Contains(filterText) ||
+                                                                                                                            k.MediaDetail.Fields.FirstOrDefault(l => l.FieldCode == "MainLayout").FieldValue.ToLower().Contains(filterText))
                                                                                                                         ))
                                                                             )).ToList();
 

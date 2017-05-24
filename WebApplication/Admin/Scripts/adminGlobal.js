@@ -452,7 +452,7 @@ function getFieldsAutoComplete()
     }
     else
     {
-        <li>You entered: @field</li>
+        <li>You entered: @Raw(field)</li>
     }
     </ul>
 }`,
@@ -470,7 +470,7 @@ function getFieldsAutoComplete()
     @foreach(var item in field.FieldAssociations)
     {
         var detail = item.MediaDetail;
-        <li><a href="@detail.AbsoluteUrl">@detail.SectionTitle</a></li>
+        <li><a href="@detail.AbsoluteUrl">@Raw(detail.RenderField("SectionTitle"))</a></li>
     }
     </ul>
 }`,
@@ -494,7 +494,7 @@ function getFieldsAutoComplete()
             <ul>
             @foreach(var child in childItems)
             {
-                <li><a href="@child.AbsoluteUrl">@child.SectionTitle</a></li>
+                <li><a href="@child.AbsoluteUrl">@Raw(child.RenderField("SectionTitle"))</a></li>
             }
             </ul>
         }
@@ -555,13 +555,13 @@ function getFieldsAutoComplete()
             <ul>
             @foreach(var item in fieldAssociations)
             {
-                <li><a href="#Tab-@item.MediaDetail.MediaID">@item.MediaDetail.SectionTitle</a></li>
+                <li><a href="#Tab-@item.MediaDetail.MediaID">@Raw(item.MediaDetail.RenderField("SectionTitle"))</a></li>
             }
             </ul>
             @foreach(var item in fieldAssociations)
             {
                 <div id="Tab-@item.MediaDetail.MediaID">
-                    <p>@Raw(item.MediaDetail.MainContent)</p>
+                    <p>@Raw(item.MediaDetail.RenderField("MainContent"))</p>
                 </div>
             }        
         </div>
@@ -591,9 +591,9 @@ function getFieldsAutoComplete()
         <div id="@wrapperId">
             @foreach(var item in fieldAssociations)
             {
-                <h3>@item.MediaDetail.SectionTitle</h3>
+                <h3>@Raw(item.MediaDetail.RenderField("SectionTitle"))</h3>
                 <div>
-                    @Raw(item.MediaDetail.SectionTitle)
+                    @Raw(item.MediaDetail.RenderField("SectionTitle"))
                 </div>            
             }
         </div>

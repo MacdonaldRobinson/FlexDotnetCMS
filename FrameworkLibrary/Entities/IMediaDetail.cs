@@ -111,6 +111,6 @@ namespace FrameworkLibrary
         void SaveToRedisCache(RenderVersion renderVersion, string html, string queryString = "");
         void SaveToFileCache(RenderVersion renderVersion, string html, string queryString = "");
         void SaveToMemoryCache(RenderVersion renderVersion, string html, string queryString = "");
-        Return Validate();
+        Return Validate();        
     }
 }

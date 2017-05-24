@@ -87,7 +87,10 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
                     var foundField = selectedItem.Fields.SingleOrDefault(i => i.FieldCode == mediaTypeField.FieldCode);
 
                     if (foundField != null)
+                    {
+                        foundField.MediaTypeField = mediaTypeField;                        
                         continue;
+                    }                        
 
                     var newField = new MediaDetailField();
                     newField.FieldCode = mediaTypeField.FieldCode;

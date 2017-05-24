@@ -76,14 +76,14 @@
 
         .field {        
             position: relative;
-            padding-top: 25px;
+            /*padding-top: 25px;*/
+            display: inline-block !important;
         }
 
             .field.hide {
                 padding:0;
                 margin:0;
-                border:none !important;
-                display:inline !important;
+                border:none !important;                
 
             }
             .field.hide .edit{
@@ -91,10 +91,10 @@
             }
 
             .field.hover {
-                outline: 2px dashed rgba(0,0,0,.3);
+                outline: 2px dashed rgba(255,0,0, 1)!important;
             }
             .field .edit:hover {
-                background-color: red;  
+                background-color: red !important;  
                 opacity: 1;
             }
             .field .edit {
@@ -102,13 +102,15 @@
                 position: absolute;
                 top: 0px;
                 left: 0px;                    
-                background-color: #000;
-                color: #fff;
+                background-color: #000 !important;
+                color: #fff !important;
                 cursor: pointer;
                 padding: 2px 5px;
                 font-size: 12px;
                 font-style: normal;   
-                opacity: 0.2;
+                opacity: 0.3;
+                white-space: nowrap;
+                margin-top: -20px;
             }
 
     </style>
@@ -158,7 +160,7 @@
                     var fieldId = $(this).attr("data-fieldid");
                     var fieldcode = $(this).attr("data-fieldcode");
 
-                    $(this).prepend("<a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='window.location.reload()' data-width='60%' data-height='80%'>Edit - {Field:" + fieldcode+"}</a>");
+                    $(this).prepend("<a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='window.location.reload()' data-width='60%' data-height='80%'>Edit</a>");
                 });
 
                 $(document).on("click", ".field .edit", function () {

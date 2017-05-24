@@ -130,5 +130,13 @@ namespace FrameworkLibrary
                 return "/?MediaID=" + this.ID;
             }
         }
+
+        public string PermaShortCodeLink
+        {
+            get
+            {
+                return "{Link:"+this.ID+"}";
+            }
+        }
     }
 }

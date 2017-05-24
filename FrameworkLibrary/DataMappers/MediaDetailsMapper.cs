@@ -101,7 +101,21 @@ namespace FrameworkLibrary
             if (!content.Contains("<a"))
                 return content;
 
-            var document = new HtmlAgilityPack.HtmlDocument();
+            string pattern = @"/[/a-zA-Z0-9-.]{3,}";
+            var newString = Regex.Replace(content, pattern, match => {
+                var mediaDetail = MediaDetailsMapper.GetByVirtualPath(URIHelper.ConvertAbsUrlToTilda(match.Value));
+
+                if (mediaDetail != null)
+                {
+                    return mediaDetail.Media.PermaShortCodeLink;
+                }
+                else
+                {
+                    return match.Value;
+                }
+            });
+
+            /*var document = new HtmlAgilityPack.HtmlDocument();
             document.LoadHtml(content);
 
             var aTags = document.DocumentNode.SelectNodes("//a");
@@ -135,7 +149,9 @@ namespace FrameworkLibrary
                 }
             }
 
-            return document.DocumentNode.WriteContentTo();
+            return document.DocumentNode.WriteContentTo();*/
+
+            return newString;
         }
 
         public static IEnumerable<IMediaDetail> SearchForTerm(string searchTerm)
@@ -1048,6 +1064,21 @@ namespace FrameworkLibrary
                     }
 
                     customCode = customCode.Replace(item.ToString().ToString(), tempCode);
+                }
+            }
+
+            if (customCode.Contains("{ParentField:"))
+            {
+                var fields = Regex.Matches(customCode, "{ParentField:[a-zA-Z0-9&?=]+}");
+
+                foreach (var field in fields)
+                {
+                    var fieldCode = field.ToString().Replace("{ParentField:", "{Field:");
+
+                    var shortCodeValue = ParseSpecialTags(mediaDetail.Media.ParentMedia.GetLiveMediaDetail(), fieldCode);
+
+                    customCode = customCode.Replace(field.ToString(), shortCodeValue);
+
                 }
             }
 

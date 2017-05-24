@@ -883,7 +883,7 @@ namespace FrameworkLibrary
 
                 if(pathToFile.Contains("<"))
                 {
-                    var match = System.Text.RegularExpressions.Regex.Match(pathToFile, "\"[a-zA-Z0-9:=]+.*[ ]");
+                    var match = System.Text.RegularExpressions.Regex.Match(pathToFile, "/[/a-zA-Z0-9-.]+");
                     pathToFile = match.Value.Replace("\"", "").Replace("'","");
                 }
                 
@@ -893,6 +893,6 @@ namespace FrameworkLibrary
             {
                 UpdateField("PathToFile", value);
             }
-        }
+        }        
     }
 }

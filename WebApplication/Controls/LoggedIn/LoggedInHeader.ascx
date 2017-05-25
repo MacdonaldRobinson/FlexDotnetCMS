@@ -110,6 +110,10 @@
                 font-style: normal;   
                 opacity: 0.3;
                 white-space: nowrap;
+                margin-top: -30px;
+            }
+
+            .field .field .edit {
                 margin-top: -20px;
             }
 

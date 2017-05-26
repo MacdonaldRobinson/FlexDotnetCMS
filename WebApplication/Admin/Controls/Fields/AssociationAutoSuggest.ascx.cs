@@ -94,6 +94,10 @@ namespace WebApplication.Admin.Controls.Fields
         private void SaveToDB(string values)
         {
             var ids = StringHelper.JsonToObject<List<long>>(values);
+
+            if (ids == null)
+                return;
+
             var field = GetField();
 
             var newIds = ids.ToList().ToJson(2);

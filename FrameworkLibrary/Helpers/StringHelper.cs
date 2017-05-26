@@ -27,7 +27,16 @@ namespace FrameworkLibrary
         public static T JsonToObject<T>(string to)
         {
             if (to.StartsWith("{") || to.StartsWith("["))
-                return JsonConvert.DeserializeObject<T>(to);
+            {
+                try
+                {
+                    return JsonConvert.DeserializeObject<T>(to);
+                }
+                catch(Exception ex)
+                {
+                    return default(T);
+                }
+            }
 
             return default(T);
         }

@@ -93,14 +93,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
                     }                        
 
                     var newField = new MediaDetailField();
-                    newField.FieldCode = mediaTypeField.FieldCode;
-                    newField.FieldLabel = mediaTypeField.FieldLabel;
-                    newField.AdminControl = mediaTypeField.AdminControl;
-                    newField.GroupName = mediaTypeField.GroupName;
-                    newField.GetAdminControlValue = mediaTypeField.GetAdminControlValue;
-                    newField.SetAdminControlValue = mediaTypeField.SetAdminControlValue;
-                    newField.FieldValue = mediaTypeField.FieldValue;
-                    newField.MediaTypeField = mediaTypeField;
+                    newField.CopyFrom(mediaTypeField);
                     newField.UseMediaTypeFieldFrontEndLayout = true;
 
                     newField.DateCreated = DateTime.Now;

@@ -1259,12 +1259,15 @@ $(document)
         var isDropZone = target.hasClass("dropZone")
 
         if (isDropZone) {
+            var mediaDetailId = elem.parent().attr("mediadetailid");
+            var text = elem.text();
 
             var href = elem.attr("href") + "&masterFilePath=~/Admin/Views/MasterPages/Popup.Master";
-            var li = "<li mediadetailid='" + elem.parent().attr("mediadetailid") + "'><a class='delete'>x</a><span class='text'>" + elem.text() + "</span><a class='edit colorbox iframe' href='" + href+"'>Edit</a></li>";
-
-            if (target.find("li[mediadetailid='" + elem.parent().attr("mediadetailid") + "']").length == 0) {
-                target.append("<li mediadetailid='" + elem.parent().attr("mediadetailid") + "'><a class='delete'>x</a><span class='text'>" + elem.text() + "</span></span><a class='edit colorbox iframe' href='" + href +"'>Edit</a></li>");
+            var li = "<li mediadetailid='" + mediaDetailId + "'><a class='delete'>x</a><span class='text'>" + text + "</span><a class='edit colorbox iframe' href='" + href + "'>Edit</a></li>";
+            
+            if (target.find("li[mediadetailid='" + mediaDetailId + "']").length == 0) {               
+                target.append(li);
+                UpdateValuesFromUL(target);
             }
         }
 
@@ -1400,6 +1403,57 @@ $(function () {
       });
 });
 
+function UpdateULFromValues(elem) {
+
+    var values = $(elem).find("input[type='hidden']");
+
+    //console.log(values);
+    var json = eval(values.val());
+    /*var valsArray = vals.split(",");
+
+    for (item of valsArray) {
+        console.log(item);
+    }*/
+
+    $(json).each(function () {
+        //console.log(this);            
+        $(elem).append("<li mediadetailid='" + this.id + "'><a class='delete'>x</a><span class='text'>" + this.name + "</span><a class='edit colorbox iframe' href='" + this.adminUrl + "'>Edit</a></li>");
+
+    });
+}
+
+function UpdateValuesFromUL(elem) {
+    var values = $(elem).find("input[type='hidden']");
+
+    var arr = new Array();
+
+    $(elem).children("li:not(.hidden)").each(function () {
+        var mediadetailid = $(this).attr("mediadetailid");
+        var adminUrl = $(this).find("a.edit").attr("href").replace(window.location.origin, "");
+
+        if (adminUrl.indexOf("masterFilePath") == -1)
+        {
+            adminUrl = adminUrl + "&masterFilePath=~/Admin/Views/MasterPages/Popup.Master";
+        }
+
+        var name = $(this).children("span.text").text();
+
+        if (name != "") {
+            var obj = new Object();
+            obj.name = name;
+            obj.id = mediadetailid;
+            obj.adminUrl = adminUrl;
+
+            arr.push(obj);
+        }
+
+    });
+
+    var jsonString = JSON.stringify(arr);
+
+    values.val(jsonString);
+}
+
 function init() {
     BindTree();
     BindSortable();
@@ -1427,6 +1481,23 @@ function init() {
         UpdateValuesFromUL(elem);
     });
 
+    $("ul.dropZone").sortable({
+        update: function (event, ui) {            
+            UpdateValuesFromUL(this);
+        }
+    });
+
+    //TODO
+    /*
+
+    $(document).on("click", ".dropZone li a.delete", function () {
+
+        var elem = $(this).closest(".dropZone")[0];
+        $(this).closest("li").remove();
+
+        UpdateValuesFromUL(elem);
+    });
+
     $("ul.dropZone").bind("DOMSubtreeModified", function () {
         UpdateValuesFromUL(this);
     });
@@ -1435,52 +1506,7 @@ function init() {
         update: function (event, ui) {
             UpdateValuesFromUL(this);
         }
-    });
-
-    function UpdateULFromValues(elem) {
-
-        var values = $(elem).find("input[type='hidden']");
-
-        //console.log(values);
-        var json = eval(values.val());
-        /*var valsArray = vals.split(",");
-
-        for (item of valsArray) {
-            console.log(item);
-        }*/
-
-        $(json).each(function () {
-            //console.log(this);            
-            $(elem).append("<li mediadetailid='" + this.id + "'><a class='delete'>x</a><span class='text'>" + this.name + "</span><a class='edit colorbox iframe' href='" + this.adminUrl +"'>Edit</a></li>");
-
-        });
-    }
-
-    function UpdateValuesFromUL(elem) {
-        var values = $(elem).find("input[type='hidden']");
-
-        var arr = new Array();
-
-        $(elem).children("li:not(.hidden)").each(function () {
-            var mediadetailid = $(this).attr("mediadetailid");
-            var adminUrl = $(this).find("a.edit").attr("href").replace(window.location.origin, "") +"&masterFilePath=~/Admin/Views/MasterPages/Popup.Master";
-            var name = $(this).children("span.text").text();
-
-            if (name != "") {
-                var obj = new Object();
-                obj.name = name;
-                obj.id = mediadetailid;
-                obj.adminUrl = adminUrl;
-
-                arr.push(obj);
-            }
-
-        });
-
-        var jsonString = JSON.stringify(arr);
-
-        values.val(jsonString);
-    }
+    });*/
 
     $(document).on("click", ".MultiFileUploader .DeleteItem", function () {
 

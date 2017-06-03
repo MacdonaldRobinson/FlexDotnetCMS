@@ -27,6 +27,7 @@
             cursor: pointer;         
             text-align: center;
             padding: 5px;
+            color: #fff;
         }
 
             #SlideTab .fa {
@@ -91,7 +92,7 @@
             }
 
             .field.hover {
-                outline: 2px dashed rgba(255,0,0, 1)!important;
+                outline: 2px dashed rgba(0,0,0, 0.5)!important;
             }
             .field .edit:hover {
                 background-color: red !important;  
@@ -164,7 +165,7 @@
                     var fieldId = $(this).attr("data-fieldid");
                     var fieldcode = $(this).attr("data-fieldcode");
 
-                    $(this).prepend("<a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='window.location.reload()' data-width='60%' data-height='80%'>Edit</a>");
+                    $(this).prepend("<a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='window.location.reload()' data-width='60%' data-height='80%'>Edit - {Field:" + fieldcode+"}</a>");
                 });
 
                 $(document).on("click", ".field .edit", function () {

@@ -340,7 +340,7 @@ namespace WebApplication.Admin.Views.MasterPages
         }
 
         [WebMethod(EnableSession = true)]
-        public string Duplicate(long id, bool duplicateChildren = false)
+        public string Duplicate(long id, bool duplicateChildren = false, string newName="")
         {
             var detail = MediaDetailsMapper.GetByID(id);
 
@@ -348,7 +348,7 @@ namespace WebApplication.Admin.Views.MasterPages
             {
                 UserMustHaveAccessTo(detail);
 
-                var mediaDetail = HandleDuplicate(detail, detail.Media.ParentMedia, duplicateChildren);
+                var mediaDetail = HandleDuplicate(detail, detail.Media.ParentMedia, duplicateChildren, newName);
 
                 ContextHelper.ClearAllMemoryCache();
 
@@ -526,10 +526,16 @@ namespace WebApplication.Admin.Views.MasterPages
             }
         }
 
-        public IMediaDetail HandleDuplicate(IMediaDetail detail, Media parentMedia, bool duplicateChildren = false)
+        public IMediaDetail HandleDuplicate(IMediaDetail detail, Media parentMedia, bool duplicateChildren = false, string newName="")
         {
             var duplicatedItem = MediaDetailsMapper.CreateObject(detail.MediaTypeID, null, parentMedia, false);
             duplicatedItem.CopyFrom(detail, new List<string> { "MediaID", "Media" });
+
+            if (newName != "")
+            {
+                duplicatedItem.LinkTitle = newName;
+            }
+
             duplicatedItem.CachedVirtualPath = duplicatedItem.CalculatedVirtualPath();
 
             /*if (duplicatedItem.ID == 0)
@@ -548,6 +554,11 @@ namespace WebApplication.Admin.Views.MasterPages
             {
                 var mediaDetailField = new MediaDetailField();
                 mediaDetailField.CopyFrom(item);
+
+                if (newName != "" && mediaDetailField.FieldCode == "SectionTitle")
+                {
+                    mediaDetailField.FieldValue = newName;
+                }                                                                
 
                 mediaDetailField.DateCreated = mediaDetailField.DateLastModified = DateTime.Now;
 

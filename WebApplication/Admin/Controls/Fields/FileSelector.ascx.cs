@@ -92,7 +92,7 @@ namespace WebApplication.Admin.Controls.Fields
                     try
                     {
                         SelectedFile.Text = ParserHelper.ParseData(SelectedFile.Text, BasePage.GetDefaultTemplateVars(""));
-                        DirPath = URIHelper.ConvertAbsUrlToTilda(URIHelper.ConvertAbsPathToAbsUrl(new FileInfo(URIHelper.ConvertToAbsPath(URIHelper.ConvertAbsUrlToTilda(SelectedFile.Text))).DirectoryName)).Replace("~", "");
+                        DirPath = SelectedFile.Text;
                     }
                     catch (Exception ex)
                     {

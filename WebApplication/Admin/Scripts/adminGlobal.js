@@ -230,10 +230,11 @@ function HandleContextMenuClick(action, target, node) {
             });
             break;
         case "Duplicate":
+            var newName = prompt("Enter a new name for the page");
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/Duplicate",
-                data: "{'id':'" + mediaDetailId + "', 'duplicateChildren':false}",
+                data: "{'id':'" + mediaDetailId + "', 'duplicateChildren':false,'newName':'" + newName+"'}",
                 contentType: "application/json; charset=utf-8",
                 success:
                 function (msg) {
@@ -247,10 +248,11 @@ function HandleContextMenuClick(action, target, node) {
             });
             break;
         case "DuplicateIncludingAllChildren":
+            var newName = prompt("Enter a new name for the page");
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/Duplicate",
-                data: "{'id':'" + mediaDetailId + "', 'duplicateChildren':true}",
+                data: "{'id':'" + mediaDetailId + "', 'duplicateChildren':true,'newName':'" + newName +"'}",
                 contentType: "application/json; charset=utf-8",
                 success:
                 function (msg) {
@@ -411,194 +413,95 @@ function getFieldsAutoComplete()
 
     wordsArray.push(createAutoCompleteObject(
         '<Site:GenerateNav', 
-        `<Site:GenerateNav runat="server"
-                RenderRootMedia="True"
-                RootMediaID="2"
-                RenderDepth="2"
-                DisplayProtectedSections="false" />`,
+        '<Site:GenerateNav runat="server" \
+                RenderRootMedia="True" \
+                RootMediaID="2"\
+                RenderDepth="2"\
+                DisplayProtectedSections="false" /',
         'user control'
     ));
 
     wordsArray.push(createAutoCompleteObject(
         '<Site:RenderChildren',
-        `<Site:RenderChildren runat="server"
-                MediaID="0"
-                ShowPager="True"
-                PageSize="10"
-                ChildPropertyName="UseSummaryLayout"
-                Where=\'MediaType.Name=="Page"\'
-                OrderBy="DateCreated DESC" />`,
+        '<Site:RenderChildren runat="server" \
+                MediaID="0" \
+                ShowPager="True" \
+                PageSize="10" \
+                ChildPropertyName="UseSummaryLayout" \
+                Where=\'MediaType.Name=="Page"\' \
+                OrderBy="DateCreated DESC" />',
         'user control'
     ));
 
     wordsArray.push(createAutoCompleteObject(
         '<Site:RenderMedia',
-        `<Site:RenderMedia runat="server"
-                MediaID="2"
-                PropertyName="UseSummaryLayout" />`,
+        '<Site:RenderMedia runat="server" \
+                MediaID="2" \
+                PropertyName="UseSummaryLayout" />',
         'user control'
     ));
 
     wordsArray.push(createAutoCompleteObject(
         'LayoutsTab:RazorIfField', 
-        `<!-- LayoutsTab:RazorIfField: Razor Code Showing how to load a field and check its value -->
-@{            
-    var field = Model.RenderField("test1");
-
-    <ul>
-    @if(field == "True")
-    {
-        <li>If condition is true</li>
-    }
-    else
-    {
-        <li>You entered: @Raw(field)</li>
-    }
-    </ul>
-}`,
+        '<!-- LayoutsTab:RazorIfField: Razor Code Showing how to load a field and check its value --> \
+@{ \
+    var field = Model.RenderField("test1"); \
+        \
+    <ul>\
+    @if(field == "True")\
+    {\
+        <li>If condition is true</li>\
+    }\
+    else\
+    {\
+        <li>You entered: @Raw(field)</li>\
+    }\
+    </ul>\
+}',
         'razor code'
     ));
 
 
     wordsArray.push(createAutoCompleteObject(
         'LayoutsTab:RazorLoopAssociatedItems',
-        `<!-- LayoutsTab:RazorLoopAssociatedItems: Razor Code showing how you can load a field and loop through its associated items -->
-@{            
-    var field = Model.LoadField("Dropfield");
-
-    <ul>
-    @foreach(var item in field.FieldAssociations)
-    {
-        var detail = item.MediaDetail;
-        <li><a href="@detail.AbsoluteUrl">@Raw(detail.RenderField("SectionTitle"))</a></li>
-    }
-    </ul>
-}`,
+        '<!-- LayoutsTab:RazorLoopAssociatedItems: Razor Code showing how you can load a field and loop through its associated items -->\
+@{            \
+    var field = Model.LoadField("Dropfield");\
+        \
+    <ul>\
+    @foreach(var item in field.FieldAssociations)\
+    {\
+        var detail = item.MediaDetail;\
+        <li><a href="@detail.AbsoluteUrl">@Raw(detail.RenderField("SectionTitle"))</a></li>\
+    }\
+    </ul>\
+}',
         'razor code'
     ));
 
     wordsArray.push(createAutoCompleteObject(
         'LayoutsTab:RazorRenderChildren',
-        `<!-- LayoutsTab:RazorRenderChildren: Razor Code to loop through and render child items -->
-@{
-    var mediaId = Model.MediaID; // You can change this to any Media ID to load the children of that page
-    var media = MediasMapper.GetByID(mediaId);
-    
-    if(media != null)
-    {
-        var mediaDetail = media.GetLiveMediaDetail();
-        
-        if(mediaDetail != null)
-        {
-            var childItems =  mediaDetail.ChildMediaDetails;
-            <ul>
-            @foreach(var child in childItems)
-            {
-                <li><a href="@child.AbsoluteUrl">@Raw(child.RenderField("SectionTitle"))</a></li>
-            }
-            </ul>
-        }
-    }
-}`,
-        'razor code'
-    ));
-
-
-    wordsArray.push(createAutoCompleteObject(
-        'FieldsTab:RazorGallery',
-        `<!-- FieldsTab:RazorGallery: Razor Code showing how you can load a field and loop through its associated items -->
-@model RazorFieldParams
-@{
-    var field = (MediaDetailField)Model.Field;
-    var wrapperId = "Gallery-"+field.ID;
-    var fieldAssociations = field.FieldAssociations.OrderBy(i=>i.OrderIndex);
-    
-    if(fieldAssociations.Count() > 0)
-    {    
-        <script>
-            head.load(['//cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.12/jquery.bxslider.min.js','//cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.12/jquery.bxslider.min.css'], function() {
-                // Call a function when done
-                $("#@wrapperId").bxSlider();
-            });
-        </script>
-        
-        <ul id="@wrapperId">
-        @foreach(var item in fieldAssociations)
-        {
-            <li><a href='#'><img src='@URIHelper.ConvertToAbsUrl(item.MediaDetail.PathToFile)?width=300&height=300&mode=min' alt='@item.MediaDetail.SectionTitle'></a></li>
-        }
-        </ul>
-    }
-}`,
-        'razor code'
-    ));    
-
-    wordsArray.push(createAutoCompleteObject(
-        'FieldsTab:RazorTabs',
-        `<!-- FieldsTab:RazorTabs: Razor Code showing how you can load a field and loop through its associated items -->
-@model RazorFieldParams
-@{
-    var field = (MediaDetailField)Model.Field;
-    var fieldAssociations = field.FieldAssociations.OrderBy(i=>i.OrderIndex);
-    var wrapperId = "Tabs-"+field.ID;
-    
-    if(fieldAssociations.Count() > 0)
-    {
-        <script>
-            head.load(['//code.jquery.com/ui/1.12.1/jquery-ui.js','//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css'], function() {
-                // Call a function when done
-                $("#@wrapperId").tabs();
-            });
-        </script>
-        
-        <div id="@wrapperId">
-            <ul>
-            @foreach(var item in fieldAssociations)
-            {
-                <li><a href="#Tab-@item.MediaDetail.MediaID">@Raw(item.MediaDetail.RenderField("SectionTitle"))</a></li>
-            }
-            </ul>
-            @foreach(var item in fieldAssociations)
-            {
-                <div id="Tab-@item.MediaDetail.MediaID">
-                    <p>@Raw(item.MediaDetail.RenderField("MainContent"))</p>
-                </div>
-            }        
-        </div>
-    }
-}`,
-        'razor code'
-    ));
-
-    wordsArray.push(createAutoCompleteObject(
-        'FieldsTab:RazorAccordian',
-        `<!-- FieldsTab:RazorAccordian: Razor Code showing how you can load a field and loop through its associated items -->
-@model RazorFieldParams
-@{
-    var field = (MediaDetailField)Model.Field;
-    var fieldAssociations = field.FieldAssociations.OrderBy(i=>i.OrderIndex);
-    var wrapperId = "Accordian-"+field.ID;
-
-    if(fieldAssociations.Count() > 0)
-    {    
-        <script>
-            head.load(['//code.jquery.com/ui/1.12.1/jquery-ui.js','//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css'], function() {
-                // Call a function when done
-                $("#@wrapperId").accordion();
-            });
-        </script>
-    
-        <div id="@wrapperId">
-            @foreach(var item in fieldAssociations)
-            {
-                <h3>@Raw(item.MediaDetail.RenderField("SectionTitle"))</h3>
-                <div>
-                    @Raw(item.MediaDetail.RenderField("SectionTitle"))
-                </div>            
-            }
-        </div>
-    }
-}`,
+        '<!-- LayoutsTab:RazorRenderChildren: Razor Code to loop through and render child items -->\
+@{\
+    var mediaId = Model.MediaID; // You can change this to any Media ID to load the children of that page\
+    var media = MediasMapper.GetByID(mediaId);\
+    \
+    if(media != null)\
+    {\
+        var mediaDetail = media.GetLiveMediaDetail();\
+        \
+        if(mediaDetail != null)\
+        {\
+            var childItems =  mediaDetail.ChildMediaDetails;\
+            <ul>\
+            @foreach(var child in childItems)\
+            {\
+                <li><a href="@child.AbsoluteUrl">@Raw(child.RenderField("SectionTitle"))</a></li>\
+            }\
+            </ul>\
+        }\
+    }\
+}',
         'razor code'
     ));
     

@@ -66,7 +66,7 @@ namespace TinyFileManager.NET
                 baseUrl = protocal + Request.Url.Authority;
             }            
 
-            if ((strCurrPath == "") || (!Directory.Exists(Server.MapPath(strCurrPath))))
+            if ((strCurrPath == "") || strCurrPath.Contains("//") || (!Directory.Exists(Server.MapPath(strCurrPath))))
                 strCurrPath = defaultRootPath;            
 
             if (strCurrPath.Contains(baseUrl))

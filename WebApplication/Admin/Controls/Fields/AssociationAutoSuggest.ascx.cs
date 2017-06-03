@@ -18,19 +18,21 @@ namespace WebApplication.Admin.Controls.Fields
     {
         public string GetDataJson()
         {
-            var mediaDetail = MediaDetailsMapper.GetByID(ParentMediaDetailID);
+            var media = MediasMapper.GetByID(ParentMediaID);
             var autoSuggestList = new List<AutoSuggest>();
             IEnumerable<IMediaDetail> mediaDetailItems = new List<IMediaDetail>();
 
-            if (mediaDetail != null)
-            {                
+            if (media != null)
+            {
+                var liveMediaDetail = media.GetLiveMediaDetail();
+
                 if (MediaTypeID > 0)
                 {
-                    mediaDetailItems = mediaDetail.ChildMediaDetails.Where(i => i.MediaTypeID == MediaTypeID && i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted);
+                    mediaDetailItems = liveMediaDetail.ChildMediaDetails.Where(i => i.MediaTypeID == MediaTypeID && i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted);
                 }
                 else
                 {
-                    mediaDetailItems = mediaDetail.ChildMediaDetails.Where(i=>i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted);
+                    mediaDetailItems = liveMediaDetail.ChildMediaDetails.Where(i=>i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && !i.IsDeleted);
                 }                
             }
             else
@@ -78,7 +80,7 @@ namespace WebApplication.Admin.Controls.Fields
         }
 
         public ShowStatus ShowInMenu { get; set; } = ShowStatus.True;
-        public long ParentMediaDetailID { get; set; }
+        public long ParentMediaID { get; set; }
         public long MediaTypeID { get; set; }
 
         public override void RenderControlInFrontEnd()

@@ -73,6 +73,12 @@ namespace FrameworkLibrary
                     type.MediaTypes.Remove(removeMediaType);
             }
 
+            var fields = obj.Fields.ToList();
+            foreach (var field in fields)
+            {
+                BaseMapper.DeleteObjectFromContext(field);
+            }
+            
             obj.MediaTypes.Clear();
         }
 

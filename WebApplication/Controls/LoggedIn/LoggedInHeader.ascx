@@ -100,7 +100,7 @@
             }
             .field .edit {
                 content: 'Edit';
-                position: absolute;
+                position: static;
                 top: 0px;
                 left: 0px;                    
                 background-color: #000 !important;
@@ -112,10 +112,12 @@
                 opacity: 0.3;
                 white-space: nowrap;
                 margin-top: -30px;
+                z-index: 999999;
+                float: left;
             }
 
             .field .field .edit {
-                margin-top: -20px;
+                margin-top: -5px;
             }
 
     </style>
@@ -165,7 +167,7 @@
                     var fieldId = $(this).attr("data-fieldid");
                     var fieldcode = $(this).attr("data-fieldcode");
 
-                    $(this).prepend("<a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='window.location.reload()' data-width='60%' data-height='80%'>Edit - {Field:" + fieldcode+"}</a>");
+                    $(this).prepend("<a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='window.location.reload()' data-width='60%' data-height='80%'>Edit - {Field:" + fieldcode+"}</a><div class='clear'></div>");
                 });
 
                 $(document).on("click", ".field .edit", function () {

@@ -4,6 +4,7 @@ A powerful, flexible, easy to use and Fully Featured ASP .NET CMS
 To view the complete developer guide click here: https://github.com/MacdonaldRobinson/FlexDotnetCMS/raw/master/WebApplication/Admin/media/docs/FlexDotnetCMSGuide.docx
 
 # Features
+- FrontEnd Editing: Every field can be edited from the frontend of the website
 - Ability to change the SEO for every page: Page title, Meta Description, Meta Keywords, Link title ( Url Segment for the page )
 - All pages automaticly get a search engine friendly URL, you have the ability to change the uri segment for the page from the CMS
 - Every time you save a page in the CMS it will automatically create a history version which you can then reload and publish LIVE again.

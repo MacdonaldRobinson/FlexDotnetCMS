@@ -41,6 +41,17 @@ namespace FrameworkLibrary
             return default(T);
         }
 
+        public  static string GetPathFromHtml(string html)
+        {
+            if (html.Contains("<"))
+            {
+                var match = System.Text.RegularExpressions.Regex.Match(html, "/[/a-zA-Z0-9-.]+");
+                html = match.Value.Replace("\"", "").Replace("'", "");
+            }
+
+            return html;
+        }
+
         public static string ObjectToJson(object to, long depth=1, Formatting indent = Formatting.None)
         {
             var settings = new JsonSerializerSettings

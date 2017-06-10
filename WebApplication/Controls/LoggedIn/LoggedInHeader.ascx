@@ -1,13 +1,19 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LoggedInHeader.ascx.cs" Inherits="WebApplication.Controls.OnLogin.LoggedInHeader" %>
 
+<style>
+    .field {        
+        position: relative;
+        /*padding-top: 25px;*/
+        display: inline-block !important;
+    }
+</style>
 <asp:Panel runat="server" ID="LoggedInHeaderPanel" ClientIDMode="Static" Visible="false">        
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
     <a id="SlideTab"><i class="fa fa-arrow-down" aria-hidden="true"></i>CMS Shortcuts</a>
     <asp:Panel ID="AccessCMSPermissionsPanel" runat="server" Visible="false" ClientIDMode="Static">
-        <div>            
-            <a id="ToggleFieldEditor" class="button">Hide Field Editors</a>
+        <div>                        
             <a ID="QuickEditCurrentPage" class="colorbox iframe button" data-OnColorboxClose="window.location.reload()" href="<%= CurrentMediaDetailAdminUrl %>&masterFilePath=~/Admin/Views/MasterPages/Popup.Master"><i class="fa fa-pencil"></i>&nbsp;Edit Page</a>                
             <div id="AdminPanel" runat="server">
                 <a ID="EditSettings" class="colorbox iframe button" data-OnColorboxClose="window.location.reload()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Settings/Default.aspx?masterFilePath=~/Admin/Views/MasterPages/Popup.Master"><i class="fa fa-wrench"></i>&nbsp;Edit Settings</a>
@@ -42,10 +48,6 @@
             z-index:999999;
         }
 
-        #ToggleFieldEditor {
-            cursor: pointer;
-        }
-
         #AccessCMSPermissionsPanel a.button{
             display: block;
             color: #fff;                
@@ -73,12 +75,6 @@
 
         .floatRight {
             float: right;
-        }
-
-        .field {        
-            position: relative;
-            /*padding-top: 25px;*/
-            display: inline-block !important;
         }
 
             .field.hide {
@@ -123,6 +119,15 @@
     </style>
 
     <script type="text/javascript">
+
+        function HideFieldsEditor() {
+            $(".field").addClass("hide");
+        }
+
+        function ShowFieldsEditor() {
+            $(".field").removeClass("hide");
+        }
+
         $(document).ready(function () {        
 
             function UpdateSliderTabIcon()
@@ -139,27 +144,23 @@
                 }
             }
 
+            CreateFieldsEditor();            
+            
             if (GetCMSShortcutsVisibility() == "true")
-            {
+            {                
                 $("#AccessCMSPermissionsPanel").show(0, function () {
-                    UpdateSliderTabIcon();
+                    UpdateSliderTabIcon();                    
                 });                
             }
             else if (GetCMSShortcutsVisibility() == "false")
-            {                
+            {
+                setTimeout(function () {
+                    HideFieldsEditor();
+                }, 100);
+
                 $("#AccessCMSPermissionsPanel").hide(0, function () {                    
-                    UpdateSliderTabIcon();
+                    UpdateSliderTabIcon();                     
                 });                
-            }
-            CreateFieldsEditor();
-            //HideFieldsEditor();
-
-            function HideFieldsEditor() {
-                $(".field").addClass("hide");
-            }
-
-            function ShowFieldsEditor() {
-                $(".field").removeClass("hide");
             }
 
             function CreateFieldsEditor() {
@@ -181,26 +182,7 @@
                 $(document).on("mouseleave", ".field .edit", function () {
                     $(this).parent().removeClass("hover");
                 });
-            }
-
-            $("#ToggleFieldEditor").on("click", function () {                
-
-                var toggleButton = $(this);
-
-                $(".field").each(function () {
-
-                    var text = toggleButton.text();
-
-                    if ($(this).hasClass("hide")) {
-                        $(this).removeClass("hide");
-                        toggleButton.text(text.replace("Show", "Hide"));
-                    }
-                    else {
-                        $(this).addClass("hide");
-                        toggleButton.text(text.replace("Hide", "Show"));
-                    }
-                });
-            });        
+            }    
 
             if (window.top != window) {
                 $("#LoggedInHeaderPanel").hide();
@@ -232,7 +214,16 @@
 
             function SetCMSShortcutsVisibility(val) {                
                 var visibility = $.cookie('CMSShortcutsVisibility', val);
-                UpdateSliderTabIcon();
+                UpdateSliderTabIcon(); 
+
+                if (val)
+                {
+                    ShowFieldsEditor();
+                }
+                else
+                {
+                    HideFieldsEditor();
+                }
 
                 return visibility;
             }

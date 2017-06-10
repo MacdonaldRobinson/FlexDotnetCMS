@@ -79,11 +79,29 @@ namespace FrameworkLibrary
                         PropertyInfo tempPropertyInfo = null;
                         MethodInfo tempMethodInfo = null;
 
-                        var methodParamsMatches = Regex.Matches(nestedProperty, "([a-zA-Z0-9]+)");
+                        var matchParams = Regex.Matches(nestedProperty, "([a-zA-Z0-9]+)");
+
+                        var methodParamsMatches = new List<string>();
+                        
+                        for (int i = 0; i < matchParams.Count; i++)
+                        {
+                            var val = matchParams[i].ToString();
+                            if (val != "quot")
+                            {
+                                methodParamsMatches.Add(val);
+                            }
+                        }
 
                         if (nestedProperty.Contains("(") && !nestedProperty.Contains("."))
                         {
-                            tempMethodInfo = tempNestedProperty.GetType().GetMethod(methodParamsMatches[0].Value);
+                            try
+                            {
+                                tempMethodInfo = tempNestedProperty.GetType().GetMethod(methodParamsMatches[0]);
+                            }
+                            catch(Exception ex)
+                            {
+                                ErrorHelper.LogException(ex);
+                            }
                         }
                         else
                         {
@@ -111,7 +129,7 @@ namespace FrameworkLibrary
                                 for (var i = 0; i < methodParamsMatches.Count - 1; i++)
                                 {
                                     if (parametersInfo.Count() > i)
-                                        objParams[i] = Convert.ChangeType(methodParamsMatches[i + 1].Value, parametersInfo[i].ParameterType);
+                                        objParams[i] = Convert.ChangeType(methodParamsMatches[i + 1], parametersInfo[i].ParameterType);
                                 }
 
                                 tempNestedProperty = tempMethodInfo.Invoke(tempNestedProperty, objParams.Where(i => i != null)?.ToArray());

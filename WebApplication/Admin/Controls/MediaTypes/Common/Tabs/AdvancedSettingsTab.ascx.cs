@@ -88,13 +88,13 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
 
                     if (foundField != null)
                     {
-                        foundField.MediaTypeField = mediaTypeField;                        
+                        foundField.MediaTypeField = mediaTypeField;
                         continue;
-                    }                        
+                    }
 
                     var newField = new MediaDetailField();
                     newField.CopyFrom(mediaTypeField);
-                    newField.UseMediaTypeFieldFrontEndLayout = true;
+                    newField.UseMediaTypeFieldFrontEndLayout = true;                    
 
                     newField.DateCreated = DateTime.Now;
                     newField.DateLastModified = DateTime.Now;
@@ -107,6 +107,14 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
                     selectedItem.MainLayout = newMediaType.MainLayout;
                     selectedItem.FeaturedLayout = newMediaType.FeaturedLayout;
                     selectedItem.SummaryLayout = newMediaType.SummaryLayout;
+                }
+
+                foreach (var field in selectedItem.Fields)
+                {
+                    if (field.MediaTypeField != null && field.MediaTypeField.MediaType != newMediaType)
+                    {
+                        field.MediaTypeField = null;
+                    }
                 }
 
                 var returnObj = MediaDetailsMapper.Update(selectedItem);

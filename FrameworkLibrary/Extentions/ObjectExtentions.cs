@@ -121,11 +121,19 @@ namespace FrameworkLibrary
                 var toProperty = to.GetType().GetProperty(property.Name);
 
                 if (toProperty == null) continue;
-                var value = property.GetValue(from, null);
 
-                updatedProperties.Add(toProperty, value);
+                try
+                {
+                    var value = property.GetValue(from, null);
 
-                UpdateProperty(toProperty, value, to, from);
+                    updatedProperties.Add(toProperty, value);
+
+                    UpdateProperty(toProperty, value, to, from);
+                }
+                catch(Exception ex)
+                {
+                    ErrorHelper.LogException(ex);
+                }
             }
         }
 
@@ -234,7 +242,7 @@ namespace FrameworkLibrary
                 var isAssemblyObject = false;
                 object value = to;
 
-                if (!to.ToString().Contains(".Enumerable") && !to.ToString().Contains(".List") && (to.GetType() != typeof(System.String)))
+                if (to.GetType().GetInterface("IEnumerable") == null && (to.GetType() != typeof(System.String)))
                 {
                     value = property.GetValue(to, null) ?? "";
 
@@ -247,7 +255,7 @@ namespace FrameworkLibrary
                             if (assemblyClass.ToString() == value.ToString())
                                 return true;
 
-                            if (value.ToString().Contains("Enumerable"))
+                            if (value.GetType().GetInterface("IEnumerable") != null)
                             {
                                 foreach (var tmp in (IEnumerable)value)
                                 {
@@ -277,7 +285,7 @@ namespace FrameworkLibrary
                 }
                 else
                 {
-                    if ((value.ToString().Contains(".Enumerable") || value.ToString().Contains(".List")) && (to.GetType() != typeof(String)))
+                    if (value.GetType().GetInterface("IEnumerable") != null)
                     {
                         var dynValue = (dynamic)value;
                         int max = 0;
@@ -303,6 +311,7 @@ namespace FrameworkLibrary
                             {
                                 foreach (var item in dynValue)
                                 {
+                                    //tmpJson += ObjectExtentions.ToJson(item, depthCount);
                                     if (item.GetType().GetInterface("IEnumerator") != null)
                                     {
                                         tmpJson += ObjectExtentions.ToJson(item, depthCount);
@@ -335,7 +344,7 @@ namespace FrameworkLibrary
                             if (depthCount < maxDepthAllowed)
                             {
                                 depthCount = depthCount + 1;
-                                value = "\"" + _ToJson(value, depthCount) + "\"";
+                                value = _ToJson(value, depthCount);
                             }
                             else
                             {

@@ -145,6 +145,11 @@ namespace FrameworkLibrary
             return null;            
         }
 
+        public IMediaDetail GetNearestParentWhichContainsFieldCode(string FieldCode)
+        {
+            return MediaDetailsMapper.GetParentsWhichContainsFieldCode(this, Language, FieldCode).FirstOrDefault();
+        }
+
         public IMediaDetail GetNextMediaDetail()
         {
             var children = this.Media?.ParentMedia?.GetLiveMediaDetail()?.ChildMediaDetails?.ToList();
@@ -627,6 +632,16 @@ namespace FrameworkLibrary
             contextPageTitle = pageTitle;
 
             return contextPageTitle;
+        }
+
+        public IEnumerable<IMediaDetail> GetParentsWhichContainsFieldCode(string fieldCode)
+        {
+            return MediaDetailsMapper.GetParentsWhichContainsFieldCode(this, Language, fieldCode);
+        }
+
+        public IEnumerable<IMediaDetail> GetParentMediaDetails()
+        {
+            return MediaDetailsMapper.GetAllParentMediaDetails(this, Language).Reverse().ToList();
         }
 
         public bool HasDraft

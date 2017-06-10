@@ -712,6 +712,19 @@ namespace FrameworkLibrary
             return virtualPath;
         }
 
+        public static IMediaDetail GetNearestParentWhichContainsFieldCode(IMediaDetail item, Language language, string FieldCode)
+        {
+            return GetParentsWhichContainsFieldCode(item, language, FieldCode).FirstOrDefault();
+        }
+
+        public static IEnumerable<IMediaDetail> GetParentsWhichContainsFieldCode(IMediaDetail item, Language language, string FieldCode)
+        {
+            var parents = GetAllParentMediaDetails(item, language);
+            var parentsWithField = parents.Where(i => i.ID != item.ID && i.Fields.Any(j => j.FieldCode == FieldCode));
+
+            return parentsWithField.Reverse();
+        }
+
         public static IEnumerable<IMediaDetail> GetAllParentMediaDetails(IMediaDetail item, Language language)
         {
             var items = new List<IMediaDetail>();
@@ -982,6 +995,12 @@ namespace FrameworkLibrary
                 }                
             }
 
+            if (!byPassEditorCheck && arguments.ContainsKey("GetPathFromHtml"))
+            {
+                mediaField.ShowFrontEndFieldEditor = false;
+                parsedValue = StringHelper.GetPathFromHtml(parsedValue);
+            }
+
             if (mediaField.ShowFrontEndFieldEditor && includeFieldWrapper)
             {
                 parsedValue = $"<div class='field' data-fieldid='{mediaField.ID}' data-fieldcode='{mediaField.FieldCode}' data-arguments='{StringHelper.ObjectToJson(arguments)}'>{parsedValue}</div>";
@@ -1107,7 +1126,17 @@ namespace FrameworkLibrary
                         }
                     }
 
-                    var mediaField = mediaDetail.Fields.FirstOrDefault(i => i.FieldCode == fieldCode);
+                    long fieldId = 0;
+                    Field mediaField = null;
+
+                    if (long.TryParse(fieldCode, out fieldId))
+                    {
+                        mediaField = BaseMapper.GetDataModel().Fields.FirstOrDefault(i=>i.ID == fieldId);
+                    }
+                    else
+                    {
+                        mediaField = mediaDetail.Fields.FirstOrDefault(i => i.FieldCode == fieldCode);
+                    }
 
                     if (mediaField == null)
                         continue;

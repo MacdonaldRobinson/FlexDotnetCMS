@@ -90,6 +90,7 @@ namespace WebApplication.Admin.Controls.Editors
                 var oldFieldCode = mediaTypeField.FieldCode;
 
                 UpdatedObjectFromFields(mediaTypeField);
+
                 foreach (var mediaDetailField in mediaTypeField.MediaDetailFields)
                 {
                     var mediaDetailFieldValue = mediaDetailField.FieldValue;
@@ -117,10 +118,12 @@ namespace WebApplication.Admin.Controls.Editors
             {
                 Bind();
 
-                foreach (var item in mediaType.MediaDetails)
+                /*var liveMediaDetails = mediaType.MediaDetails.Where(i => i.HistoryVersionNumber == 0);
+
+                foreach (var item in liveMediaDetails)
                 {
                     item.RemoveFromCache();
-                }
+                }*/
 
             }
             else
@@ -205,6 +208,18 @@ namespace WebApplication.Admin.Controls.Editors
 
                 foreach (var mediaDetailField in mediaDetailFields)
                 {
+                    var fieldAssociations = mediaDetailField.FieldAssociations.ToList();
+                    foreach (var item in fieldAssociations)
+                    {
+                        if(!item.MediaDetail.MediaType.ShowInSiteTree)
+                        {
+                            var media = item.MediaDetail.Media;
+
+                            MediaDetailsMapper.ClearObjectRelations(item.MediaDetail);                                                       
+                            BaseMapper.DeleteObjectFromContext(item.MediaDetail);                            
+                        }
+                    }
+
                     BaseMapper.DeleteObjectFromContext(mediaDetailField);
                 }*/
 

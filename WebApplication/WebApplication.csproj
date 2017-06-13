@@ -29,7 +29,7 @@
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>1.7</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.2</TypeScriptToolsVersion>
     <UseGlobalApplicationHostFile />
     <IsCompassProject>True</IsCompassProject>
   </PropertyGroup>

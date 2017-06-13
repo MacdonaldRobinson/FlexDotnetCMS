@@ -84,7 +84,7 @@
 
             }
             .field.hide .edit{
-                display:none;
+                display:none !important;
             }
 
             .field.hover {

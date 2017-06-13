@@ -97,8 +97,16 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor
             if (control is WebApplication.Admin.Controls.Fields.IFieldControl)
             {
                 var ctrl = ((WebApplication.Admin.Controls.Fields.IFieldControl)control);
-                ctrl.SetValue(ctrl.GetValue());
-                Field.FieldValue = ctrl.GetValue().ToString();
+                var value = ctrl.GetValue();
+
+                if(value is string)
+                {
+                    var str = value.ToString();
+                    str = MediaDetailsMapper.ConvertATagsToShortCodes(str);
+                    Field.FieldValue = str;
+                }
+
+                ctrl.SetValue(value);
             }
             else
             {

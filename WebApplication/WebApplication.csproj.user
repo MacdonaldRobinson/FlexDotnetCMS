@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ProjectView>ShowAllFiles</ProjectView>
     <NameOfLastUsedPublishProfile>WebDeploymentPackage</NameOfLastUsedPublishProfile>
-    <ToolsVersionPromptShown>2.1</ToolsVersionPromptShown>
+    <ToolsVersionPromptShown>2.2</ToolsVersionPromptShown>
     <UseIISExpress>true</UseIISExpress>
   </PropertyGroup>
   <ProjectExtensions>

@@ -7,7 +7,7 @@ namespace WebApplication.Controls.OnLogin
     {
         protected void Page_PreRender(object sender, EventArgs e)
         {
-            if (this.BasePage.CurrentUser != null)
+            /*if (this.BasePage.CurrentUser != null)
             {
                 if (this.BasePage.CurrentUser.HasPermission(PermissionsEnum.AccessCMS))
                     AccessCMSPermissionsPanel.Visible = true;
@@ -25,13 +25,13 @@ namespace WebApplication.Controls.OnLogin
             else
             {
                 LoggedInHeaderPanel.Visible = false;
-            }
+            }*/
         }
 
-        protected void EditCurrentPage_OnClick(object sender, EventArgs e)
+        /*protected void EditCurrentPage_OnClick(object sender, EventArgs e)
         {
             WebApplication.BasePage.RedirectToAdminUrl(this.BasePage.CurrentMediaDetail);
-        }
+        }*/
 
         public string CurrentMediaDetailAdminUrl
         {

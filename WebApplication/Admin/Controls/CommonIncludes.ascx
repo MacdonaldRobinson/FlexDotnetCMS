@@ -63,8 +63,9 @@
 </script>
 
 <script>
-    $(document).ajaxStop(function () {
-        $('#<%= UpdateProgress1.ClientID%>').hide();
+    var loadingOverlay = null;
+    $(document).ajaxStop(function () {        
+        loadingOverlay.hide();
     });
 
     function BindActiveTabs()
@@ -84,6 +85,8 @@
     }
 
     $(document).ready(function () {
+        loadingOverlay = $('#<%= UpdateProgress1.ClientID%>');
+
         $(document).on("click", ".tabs li a", function () {
             var tabUl = $(this).parents("ul");
             var tabUlIndex = $(".tabs > ul").index(tabUl);

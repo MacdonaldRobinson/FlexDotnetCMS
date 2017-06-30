@@ -106,7 +106,8 @@ namespace FrameworkLibrary
         public void ReorderChildren()
         {
             var index = 0;
-            foreach (var mediaItem in ChildMedias.OrderBy(i => i.OrderIndex))
+            var childMedias = ChildMedias.Where(i=> i.MediaDetails.Any() && i.MediaDetails.ElementAt(0).MediaType.ShowInSiteTree).OrderBy(i => i.OrderIndex).ToList();
+            foreach (var mediaItem in childMedias)
             {
                 var context = BaseMapper.GetObjectFromContext(mediaItem);
 

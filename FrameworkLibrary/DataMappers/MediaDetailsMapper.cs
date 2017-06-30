@@ -98,8 +98,18 @@ namespace FrameworkLibrary
 
         public static string ConvertATagsToShortCodes(string content)
         {
-            if (!content.Contains("<a"))
+            if (!content.Contains("/"))
                 return content;
+
+            if (!content.Contains("<a"))
+            {
+                var mediaDetail = MediaDetailsMapper.GetByVirtualPath(URIHelper.ConvertAbsUrlToTilda(content));
+
+                if (mediaDetail != null)
+                    return mediaDetail.Media.PermaShortCodeLink;
+
+                return content;
+            }
 
             string pattern = @"/[/a-zA-Z0-9-.]{3,}";
             var newString = Regex.Replace(content, pattern, match => {

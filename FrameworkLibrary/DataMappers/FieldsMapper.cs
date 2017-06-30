@@ -17,8 +17,8 @@ namespace FrameworkLibrary
 
         public static Field GetByID(long id)
         {
-            var allItems = GetAll();
-            return allItems.FirstOrDefault(item => item.ID == id);
+            //var allItems = GetAll();
+            return BaseMapper.GetDataModel().Fields.FirstOrDefault(item => item.ID == id);
         }
 
         public static Return Update(IField obj)

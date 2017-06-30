@@ -114,6 +114,22 @@ namespace WebApplication.Services
         }
 
         [WebMethod]
+        public void CanAccessFrontEndEditorForMediaDetail(long id)
+        {
+            var returnObj = new Return();
+            var mediaDetail = MediaDetailsMapper.GetByID(id);
+
+            if(mediaDetail != null && FrameworkSettings.CurrentUser != null)
+            {
+                returnObj = MediaDetailsMapper.CanAccessMediaDetail(mediaDetail, FrameworkSettings.CurrentUser);
+                WriteJSON(StringHelper.ObjectToJson(returnObj));
+            }
+
+            returnObj = new Return() { Error = new Elmah.Error(new Exception("Cannot access")) };
+            WriteJSON(StringHelper.ObjectToJson(returnObj));
+        }
+
+        [WebMethod]
         public void ClearCache(long id)
         {
             if (id != 0)

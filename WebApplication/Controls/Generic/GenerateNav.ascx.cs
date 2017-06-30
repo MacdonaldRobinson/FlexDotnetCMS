@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using System.Web.UI;
 
 namespace WebApplication.Controls
 {
@@ -37,30 +38,80 @@ namespace WebApplication.Controls
             if (rootMedia != null)
                 BindRootMedia(rootMedia);
         }
-
         private void BindRootMedia(Media rootMedia)
         {
-            /*var items = MediaDetailsMapper.GetDataModel().MediaDetails.AsNoTracking().Where(i => i.Media.ParentMediaID == rootMedia.ID && i.HistoryVersionNumber == 0 && i.LanguageID == currentLanguage.ID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex); //rootMedia.ChildMedias.SelectMany(m => m.MediaDetails.Where(i => i.HistoryVersionNumber == 0 && (i.ShowInMenu || i.RenderInFooter) && !i.IsDeleted && i.PostPublishDate <= DateTime.Now && (i.PostExpiryDate == null || i.PostExpiryDate > DateTime.Now))).OrderBy(i => i.Media.OrderIndex);
-            Bind(items);*/
+            var cache = FileCacheHelper.GetGenerateNavCache();
 
-            //var mediaDetail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.MediaID == rootMedia.ID && i.LanguageID == BasePage.CurrentLanguage.ID);
+            if (!cache.IsError)
+            {
+                var cacheData = cache.GetRawData<string>();
 
-            var mediaDetail = rootMedia.GetLiveMediaDetail();
+                if (cacheData != "")
+                {
+                    return;
+                }
+            }
 
-            if (mediaDetail == null || mediaDetail.MediaType == null)
+            var items = new List<IMediaDetail>();
+
+            var itemsCacheKey = $"{rootMedia.ID}_Items";
+            var itemsCacheData = (List<IMediaDetail>)ContextHelper.GetFromCache(itemsCacheKey);
+
+            if (itemsCacheData != null)
+            {
                 return;
+            }
+            else
+            {
+                /*var items = MediaDetailsMapper.GetDataModel().MediaDetails.AsNoTracking().Where(i => i.Media.ParentMediaID == rootMedia.ID && i.HistoryVersionNumber == 0 && i.LanguageID == currentLanguage.ID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex); //rootMedia.ChildMedias.SelectMany(m => m.MediaDetails.Where(i => i.HistoryVersionNumber == 0 && (i.ShowInMenu || i.RenderInFooter) && !i.IsDeleted && i.PostPublishDate <= DateTime.Now && (i.PostExpiryDate == null || i.PostExpiryDate > DateTime.Now))).OrderBy(i => i.Media.OrderIndex);
+                Bind(items);*/
 
-            if (mediaDetail.MediaType.Name == MediaTypeEnum.RootPage.ToString())
-                rootMedia = WebsitesMapper.GetWebsite().Media;
+                //var mediaDetail = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.MediaID == rootMedia.ID && i.LanguageID == BasePage.CurrentLanguage.ID);
 
-            //var items = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == rootMedia.ID && i.HistoryVersionNumber == 0 && i.LanguageID == currentLanguage.ID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex); //rootMedia.ChildMedias.SelectMany(m => m.MediaDetails.Where(i => i.HistoryVersionNumber == 0 && (i.ShowInMenu || i.RenderInFooter) && !i.IsDeleted && i.PostPublishDate <= DateTime.Now && (i.PostExpiryDate == null || i.PostExpiryDate > DateTime.Now))).OrderBy(i => i.Media.OrderIndex);
-            var items = mediaDetail.ChildMediaDetails;
+                var mediaDetail = rootMedia.GetLiveMediaDetail();
+
+                if (mediaDetail == null || mediaDetail.MediaType == null)
+                    return;
+
+                if (mediaDetail.MediaType.Name == MediaTypeEnum.RootPage.ToString())
+                    rootMedia = WebsitesMapper.GetWebsite().Media;
+
+                //var items = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == rootMedia.ID && i.HistoryVersionNumber == 0 && i.LanguageID == currentLanguage.ID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex); //rootMedia.ChildMedias.SelectMany(m => m.MediaDetails.Where(i => i.HistoryVersionNumber == 0 && (i.ShowInMenu || i.RenderInFooter) && !i.IsDeleted && i.PostPublishDate <= DateTime.Now && (i.PostExpiryDate == null || i.PostExpiryDate > DateTime.Now))).OrderBy(i => i.Media.OrderIndex);
+                items = mediaDetail.ChildMediaDetails.ToList();
+
+                ContextHelper.SetToCache(itemsCacheKey, itemsCacheData);
+            }
+
             Bind(items);
         }
 
         public void BindItems(IEnumerable<IMediaDetail> items)
         {
             Bind(items);
+        }
+
+        public override void RenderControl(HtmlTextWriter writer)
+        {
+            var cache = FileCacheHelper.GetGenerateNavCache();
+
+            if(!cache.IsError)
+            {
+                var cacheData = cache.GetRawData<string>();
+                writer.Write(cacheData);
+            }
+            else
+            {
+                System.IO.StringWriter str = new System.IO.StringWriter();
+                HtmlTextWriter wrt = new HtmlTextWriter(str);
+
+                base.RenderControl(wrt);
+
+                string html = str.ToString();
+
+                FileCacheHelper.SaveGenerateToNav(html);
+
+                writer.Write(html);
+            }            
         }
 
         private void Bind(IEnumerable<IMediaDetail> items)
@@ -186,6 +237,11 @@ namespace WebApplication.Controls
                         path = path.Remove(path.Length - 1);
                 }
 
+                if(detail.RedirectToFirstChild)
+                {
+                    path = detail.ChildMediaDetails.ElementAt(0).AbsoluteUrl;
+                }
+
                 Link.NavigateUrl = path;
 
                 if (IsBreadCrumbMenu)
@@ -227,7 +283,8 @@ namespace WebApplication.Controls
 
                 if ((rootMedia != null) && (detail.MediaID != rootMedia.ID))
                 {
-                    childItems = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == detail.Media.ID && i.HistoryVersionNumber == 0 && i.LanguageID == detail.LanguageID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex);
+                    childItems = detail.ChildMediaDetails;
+                    //childItems = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == detail.Media.ID && i.HistoryVersionNumber == 0 && i.LanguageID == detail.LanguageID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex);
                     //childItems = details.Media.ChildMedias.SelectMany(i => i.MediaDetails.Where(j => j.HistoryVersionNumber == 0 && !j.IsDeleted && j.PostPublishDate <= DateTime.Now && j.LanguageID == details.LanguageID));
                     //childItems = MediaDetailsMapper.FilterOutDeletedAndArchived(MediaDetailsMapper.GetAllChildMediaDetails(details.Media, details.Language));
 
@@ -235,7 +292,7 @@ namespace WebApplication.Controls
                         childItems = childItems.Where(i => i.ShowInMenu || i.RenderInFooter);
                 }
 
-                if(!detail.CssClasses.Contains("NoChildren"))
+                if(!detail.CssClasses.Contains("NoChildren") && childItems.Any())
                 {
                     if ((currentDepth < renderDepth) || (renderDepth == -1))
                     {

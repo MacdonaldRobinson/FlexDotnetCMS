@@ -667,11 +667,14 @@ namespace WebApplication.Admin.MediaArticle
                 }
 
                 selectedItem.RemoveFromCache();
+                FileCacheHelper.DeleteGenerateNavCache();
 
                 if (oldVirtualPath != selectedItem.VirtualPath || canRender != selectedItem.CanRender || oldLinkTitle != selectedItem.LinkTitle)
                 {
                     ContextHelper.Clear(ContextType.Cache);
-                    FileCacheHelper.ClearAllCache();
+                    //FileCacheHelper.ClearCacheDir("generatenav");
+
+                    //FileCacheHelper.ClearAllCache();
 
                     selectedItem.ClearAutoCalculatedVirtualPathCache();
 

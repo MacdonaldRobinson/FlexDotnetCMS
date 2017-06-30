@@ -335,7 +335,7 @@ namespace WebApplication.Admin.Views.MasterPages
 
                 HandleDeletePermanentlyRecursive(detail.Media);
                 ContextHelper.ClearAllMemoryCache();
-                FileCacheHelper.ClearAllCache();
+                detail.RemoveFromCache();
             }
         }
 
@@ -522,7 +522,7 @@ namespace WebApplication.Admin.Views.MasterPages
             else
             {
                 ContextHelper.ClearAllMemoryCache();
-                FileCacheHelper.ClearAllCache();
+                FileCacheHelper.ClearCacheDir("generatenav");
             }
         }
 
@@ -641,7 +641,7 @@ namespace WebApplication.Admin.Views.MasterPages
                 if (!returnObj.IsError)
                 {
                     ContextHelper.ClearAllMemoryCache();
-                    FileCacheHelper.ClearAllCache();
+                    detail.RemoveFromCache();
                 }
             }
         }
@@ -783,7 +783,8 @@ namespace WebApplication.Admin.Views.MasterPages
             else
             {
                 ContextHelper.ClearAllMemoryCache();
-                FileCacheHelper.ClearAllCache();
+                detail.RemoveFromCache();                
+                FileCacheHelper.ClearCacheDir("generatenav");
             }
         }
 

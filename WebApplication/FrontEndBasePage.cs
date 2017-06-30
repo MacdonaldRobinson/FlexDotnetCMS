@@ -235,6 +235,12 @@ namespace WebApplication
 
             string html = str.ToString();
 
+            if(IsAjaxRequest)
+            {
+                writer.Write(html);
+                return;
+            }
+
             /*if (CurrentMediaDetail != null && !html.Contains("<html"))
             {
                 var masterPage = CurrentMediaDetail.GetMasterPage();
@@ -328,7 +334,7 @@ namespace WebApplication
             {
                 if (!IsAjaxRequest)
                 {
-                    if (CurrentUser == null && AppSettings.EnableOutputCaching && CurrentMediaDetail.EnableCaching && CurrentMediaDetail.CanRender)
+                    if (AppSettings.EnableOutputCaching && CurrentMediaDetail.EnableCaching && CurrentMediaDetail.CanRender)
                     {
                         if (AppSettings.EnableLevel1MemoryCaching)
                         {

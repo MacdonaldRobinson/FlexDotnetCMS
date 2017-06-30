@@ -173,11 +173,13 @@ function getParameterByName(name) {
 var BaseWebserverUrl = BaseUrl + "Admin/Views/MasterPages/Webservice.asmx";
 
 function HandleContextMenuClick(action, target, node) {
+
     var mediaDetailId = target.parent().attr("mediadetailid");
     var targetText = target.text();    
 
     switch (action) {
         case "CreateChild":
+            loadingOverlay.show();
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/CreateChild",
@@ -194,6 +196,7 @@ function HandleContextMenuClick(action, target, node) {
             });
             break;
         case "Delete":
+            loadingOverlay.show();
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/Delete",
@@ -212,6 +215,7 @@ function HandleContextMenuClick(action, target, node) {
             });
             break;
         case "UnDelete":
+            loadingOverlay.show();
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/UnDelete",
@@ -231,6 +235,7 @@ function HandleContextMenuClick(action, target, node) {
             break;
         case "Duplicate":
             var newName = prompt("Enter a new name for the page");
+            loadingOverlay.show();
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/Duplicate",
@@ -249,6 +254,7 @@ function HandleContextMenuClick(action, target, node) {
             break;
         case "DuplicateIncludingAllChildren":
             var newName = prompt("Enter a new name for the page");
+            loadingOverlay.show();
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/Duplicate",
@@ -266,6 +272,7 @@ function HandleContextMenuClick(action, target, node) {
             });
             break;
         case "ShowInMenu":
+            loadingOverlay.show();
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/ShowInMenu",
@@ -284,6 +291,7 @@ function HandleContextMenuClick(action, target, node) {
             });
             break;
         case "HideFromMenu":
+            loadingOverlay.show();
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/HideFromMenu",
@@ -295,6 +303,7 @@ function HandleContextMenuClick(action, target, node) {
                     //window.location.reload();
                     //RefreshSiteTreeViewAjaxPanel();
                     RefreshSiteTreeNodeById(node.parent);
+                    loadingOverlay.hide();
                 },
                 error: function (xhr, status, error) {
                     DisplayJsonException(xhr);
@@ -302,6 +311,7 @@ function HandleContextMenuClick(action, target, node) {
             });
             break;
         case "MoveUp":
+            loadingOverlay.show();
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/MoveUp",
@@ -320,6 +330,7 @@ function HandleContextMenuClick(action, target, node) {
             });
             break;
         case "MoveDown":
+            loadingOverlay.show();
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/MoveDown",
@@ -341,6 +352,8 @@ function HandleContextMenuClick(action, target, node) {
             var areYouSure = confirm('Are you sure you want to permanently delete the item "' + targetText + '" and all its associations, including ALL its child items and history if any? NOTE: This action is irreversible');
 
             if (areYouSure) {
+                loadingOverlay.show();
+
                 jQuery.ajax({
                     type: "POST",
                     url: BaseWebserverUrl + "/DeletePermanently",
@@ -360,6 +373,7 @@ function HandleContextMenuClick(action, target, node) {
             }
             break;
         case "ClearCache":
+            loadingOverlay.show();
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/ClearCache",
@@ -806,6 +820,7 @@ function initTinyMCE()
         convert_urls: false,
         remove_script_host: false,
         verify_html: false,
+        valid_children: '+a[div|p|ul|ol|li|h1|span|h2|h3|h4|h5|h5|h6]',
         extended_valid_elements: 'span[*],a[*]',
         custom_shortcuts: false,
         setup: function (editor) {

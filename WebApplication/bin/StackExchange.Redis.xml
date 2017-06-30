@@ -1467,26 +1467,6 @@
             By default this may do a sweep for dead profiling contexts, you can disable this by passing "allowCleanupSweep: false".
             </summary>
         </member>
-        <member name="M:StackExchange.Redis.ConnectionMultiplexer.GetResultBoxAllocationCount">
-            <summary>
-            Gets how many result-box instances were allocated
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.ConnectionMultiplexer.GetAsyncCompletionWorkerCount">
-            <summary>
-            Gets how many async completion workers were queueud
-            </summary>
-        </member>
-        <member name="P:StackExchange.Redis.ConnectionMultiplexer.AllowConnect">
-            <summary>
-            For debugging; when not enabled, servers cannot connect
-            </summary>
-        </member>
-        <member name="P:StackExchange.Redis.ConnectionMultiplexer.IgnoreConnect">
-            <summary>
-            For debugging; when not enabled, end-connect is silently ignored (to simulate a long-running connect)
-            </summary>
-        </member>
         <member name="T:StackExchange.Redis.ConnectionType">
             <summary>
             The type of a connection
@@ -1505,702 +1485,6 @@
         <member name="F:StackExchange.Redis.ConnectionType.Subscription">
             <summary>
             A subscriber connection recieves unsolicted messages from the server as pub/sub events occur
-            </summary>
-        </member>
-        <member name="T:StackExchange.Redis.IServer">
-            <summary>
-            Provides configuration controls of a redis server
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ListPending(System.Int32)">
-            <summary>
-            Show what is in the pending (unsent) queue
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.StringGet(System.Int32,StackExchange.Redis.RedisKey,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Get the value of key. If the key does not exist the special value nil is returned. An error is returned if the value stored at key is not a string, because GET only handles string values.
-            </summary>
-            <returns>the value of key, or nil when key does not exist.</returns>
-            <remarks>http://redis.io/commands/get</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.StringGetAsync(System.Int32,StackExchange.Redis.RedisKey,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Get the value of key. If the key does not exist the special value nil is returned. An error is returned if the value stored at key is not a string, because GET only handles string values.
-            </summary>
-            <returns>the value of key, or nil when key does not exist.</returns>
-            <remarks>http://redis.io/commands/get</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SimulateConnectionFailure">
-            <summary>
-            Break the connection without mercy or thought
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.Crash">
-            <summary>
-            DEBUG SEGFAULT performs an invalid memory access that crashes Redis. It is used to simulate bugs during the development.
-            </summary>
-            <remarks>http://redis.io/commands/debug-segfault</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.Hang(System.TimeSpan,StackExchange.Redis.CommandFlags)">
-            <summary>
-            CLIENT PAUSE is a connections control command able to suspend all the Redis clients for the specified amount of time (in milliseconds).
-            </summary>
-            <remarks>http://redis.io/commands/client-pause</remarks>
-        </member>
-        <member name="P:StackExchange.Redis.IServer.ClusterConfiguration">
-            <summary>
-            Gets the cluster configuration associated with this server, if known
-            </summary>
-        </member>
-        <member name="P:StackExchange.Redis.IServer.EndPoint">
-            <summary>
-            Gets the address of the connected server
-            </summary>
-        </member>
-        <member name="P:StackExchange.Redis.IServer.Features">
-            <summary>
-            Gets the features available to the connected server
-            </summary>
-        </member>
-        <member name="P:StackExchange.Redis.IServer.IsConnected">
-            <summary>
-            Gets whether the connection to the server is active and usable
-            </summary>
-        </member>
-        <member name="P:StackExchange.Redis.IServer.IsSlave">
-            <summary>
-            Gets whether the connected server is a replica / slave
-            </summary>
-        </member>
-        <member name="P:StackExchange.Redis.IServer.AllowSlaveWrites">
-            <summary>
-            Explicitly opt in for slave writes on writable slaves
-            </summary>
-        </member>
-        <member name="P:StackExchange.Redis.IServer.ServerType">
-            <summary>
-            Gets the operating mode of the connected server
-            </summary>
-        </member>
-        <member name="P:StackExchange.Redis.IServer.Version">
-            <summary>
-            Gets the version of the connected server
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ClientKill(System.Net.EndPoint,StackExchange.Redis.CommandFlags)">
-            <summary>
-            The CLIENT KILL command closes a given client connection identified by ip:port.
-            The ip:port should match a line returned by the CLIENT LIST command.
-            Due to the single-treaded nature of Redis, it is not possible to kill a client connection while it is executing a command.From the client point of view, the connection can never be closed in the middle of the execution of a command.However, the client will notice the connection has been closed only when the next command is sent (and results in network error).
-            </summary>
-            <remarks>http://redis.io/commands/client-kill</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ClientKillAsync(System.Net.EndPoint,StackExchange.Redis.CommandFlags)">
-            <summary>
-            The CLIENT KILL command closes a given client connection identified by ip:port.
-            The ip:port should match a line returned by the CLIENT LIST command.
-            Due to the single-treaded nature of Redis, it is not possible to kill a client connection while it is executing a command.From the client point of view, the connection can never be closed in the middle of the execution of a command.However, the client will notice the connection has been closed only when the next command is sent (and results in network error).
-            </summary>
-            <remarks>http://redis.io/commands/client-kill</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ClientKill(System.Nullable{System.Int64},System.Nullable{StackExchange.Redis.ClientType},System.Net.EndPoint,System.Boolean,StackExchange.Redis.CommandFlags)">
-            <summary>
-            The CLIENT KILL command closes multiple connections that match the specified filters
-            </summary>
-            <returns>the number of clients killed.</returns>
-            <remarks>http://redis.io/commands/client-kill</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ClientKillAsync(System.Nullable{System.Int64},System.Nullable{StackExchange.Redis.ClientType},System.Net.EndPoint,System.Boolean,StackExchange.Redis.CommandFlags)">
-            <summary>
-            The CLIENT KILL command closes multiple connections that match the specified filters
-            </summary>
-            <returns>the number of clients killed.</returns>
-            <remarks>http://redis.io/commands/client-kill</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ClientList(StackExchange.Redis.CommandFlags)">
-            <summary>
-            The CLIENT LIST command returns information and statistics about the client connections server in a mostly human readable format.
-            </summary>
-            <remarks>http://redis.io/commands/client-list</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ClientListAsync(StackExchange.Redis.CommandFlags)">
-            <summary>
-            The CLIENT LIST command returns information and statistics about the client connections server in a mostly human readable format.
-            </summary>
-            <remarks>http://redis.io/commands/client-list</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ClusterNodes(StackExchange.Redis.CommandFlags)">
-            <summary>
-            Obtains the current CLUSTER NODES output from a cluster server
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ClusterNodesAsync(StackExchange.Redis.CommandFlags)">
-            <summary>
-            Obtains the current CLUSTER NODES output from a cluster server
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ClusterNodesRaw(StackExchange.Redis.CommandFlags)">
-            <summary>
-            Obtains the current raw CLUSTER NODES output from a cluster server
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ClusterNodesRawAsync(StackExchange.Redis.CommandFlags)">
-            <summary>
-            Obtains the current raw CLUSTER NODES output from a cluster server
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ConfigGet(StackExchange.Redis.RedisValue,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Get all configuration parameters matching the specified pattern.
-            </summary>
-            <returns>All matching configuration parameters.</returns>
-            <remarks>http://redis.io/commands/config-get</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ConfigGetAsync(StackExchange.Redis.RedisValue,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Get all configuration parameters matching the specified pattern.
-            </summary>
-            <returns>All matching configuration parameters.</returns>
-            <remarks>http://redis.io/commands/config-get</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ConfigResetStatistics(StackExchange.Redis.CommandFlags)">
-            <summary>
-            Resets the statistics reported by Redis using the INFO command.
-            </summary>
-            <remarks>http://redis.io/commands/config-resetstat</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ConfigResetStatisticsAsync(StackExchange.Redis.CommandFlags)">
-            <summary>
-            Resets the statistics reported by Redis using the INFO command.
-            </summary>
-            <remarks>http://redis.io/commands/config-resetstat</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ConfigRewrite(StackExchange.Redis.CommandFlags)">
-            <summary>
-            The CONFIG REWRITE command rewrites the redis.conf file the server was started with, applying the minimal changes needed to make it reflecting the configuration currently used by the server, that may be different compared to the original one because of the use of the CONFIG SET command.
-            </summary>
-            <remarks>http://redis.io/commands/config-rewrite</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ConfigRewriteAsync(StackExchange.Redis.CommandFlags)">
-            <summary>
-            The CONFIG REWRITE command rewrites the redis.conf file the server was started with, applying the minimal changes needed to make it reflecting the configuration currently used by the server, that may be different compared to the original one because of the use of the CONFIG SET command.
-            </summary>
-            <remarks>http://redis.io/commands/config-rewrite</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ConfigSet(StackExchange.Redis.RedisValue,StackExchange.Redis.RedisValue,StackExchange.Redis.CommandFlags)">
-            <summary>
-            The CONFIG SET command is used in order to reconfigure the server at runtime without the need to restart Redis. You can change both trivial parameters or switch from one to another persistence option using this command.
-            </summary>
-            <remarks>http://redis.io/commands/config-set</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ConfigSetAsync(StackExchange.Redis.RedisValue,StackExchange.Redis.RedisValue,StackExchange.Redis.CommandFlags)">
-            <summary>
-            The CONFIG SET command is used in order to reconfigure the server at runtime without the need to restart Redis. You can change both trivial parameters or switch from one to another persistence option using this command.
-            </summary>
-            <remarks>http://redis.io/commands/config-set</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.DatabaseSize(System.Int32,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Return the number of keys in the database.
-            </summary>
-            <remarks>http://redis.io/commands/dbsize</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.DatabaseSizeAsync(System.Int32,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Return the number of keys in the database.
-            </summary>
-            <remarks>http://redis.io/commands/dbsize</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.Echo(StackExchange.Redis.RedisValue,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Return the same message passed in
-            </summary>
-            <remarks>http://redis.io/commands/echo</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.EchoAsync(StackExchange.Redis.RedisValue,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Return the same message passed in
-            </summary>
-            <remarks>http://redis.io/commands/echo</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.FlushAllDatabases(StackExchange.Redis.CommandFlags)">
-            <summary>
-            Delete all the keys of all databases on the server.
-            </summary>
-            <remarks>http://redis.io/commands/flushall</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.FlushAllDatabasesAsync(StackExchange.Redis.CommandFlags)">
-            <summary>
-            Delete all the keys of all databases on the server.
-            </summary>
-            <remarks>http://redis.io/commands/flushall</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.FlushDatabase(System.Int32,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Delete all the keys of the database.
-            </summary>
-            <remarks>http://redis.io/commands/flushdb</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.FlushDatabaseAsync(System.Int32,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Delete all the keys of the database.
-            </summary>
-            <remarks>http://redis.io/commands/flushdb</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.GetCounters">
-            <summary>
-            Get summary statistics associates with this server
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.Info(StackExchange.Redis.RedisValue,StackExchange.Redis.CommandFlags)">
-            <summary>
-            The INFO command returns information and statistics about the server in a format that is simple to parse by computers and easy to read by humans.
-            </summary>
-            <remarks>http://redis.io/commands/info</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.InfoAsync(StackExchange.Redis.RedisValue,StackExchange.Redis.CommandFlags)">
-            <summary>
-            The INFO command returns information and statistics about the server in a format that is simple to parse by computers and easy to read by humans.
-            </summary>
-            <remarks>http://redis.io/commands/info</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.InfoRaw(StackExchange.Redis.RedisValue,StackExchange.Redis.CommandFlags)">
-            <summary>
-            The INFO command returns information and statistics about the server in a format that is simple to parse by computers and easy to read by humans.
-            </summary>
-            <remarks>http://redis.io/commands/info</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.InfoRawAsync(StackExchange.Redis.RedisValue,StackExchange.Redis.CommandFlags)">
-            <summary>
-            The INFO command returns information and statistics about the server in a format that is simple to parse by computers and easy to read by humans.
-            </summary>
-            <remarks>http://redis.io/commands/info</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.Keys(System.Int32,StackExchange.Redis.RedisValue,System.Int32,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Returns all keys matching pattern; the KEYS or SCAN commands will be used based on the server capabilities.
-            </summary>
-            <remarks>Warning: consider KEYS as a command that should only be used in production environments with extreme care.</remarks>
-            <remarks>http://redis.io/commands/keys</remarks>
-            <remarks>http://redis.io/commands/scan</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.Keys(System.Int32,StackExchange.Redis.RedisValue,System.Int32,System.Int64,System.Int32,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Returns all keys matching pattern; the KEYS or SCAN commands will be used based on the server capabilities; note: to resume an iteration via <i>cursor</i>, cast the original enumerable or enumerator to <i>IScanningCursor</i>.
-            </summary>
-            <remarks>Warning: consider KEYS as a command that should only be used in production environments with extreme care.</remarks>
-            <remarks>http://redis.io/commands/keys</remarks>
-            <remarks>http://redis.io/commands/scan</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.LastSave(StackExchange.Redis.CommandFlags)">
-            <summary>
-            Return the time of the last DB save executed with success. A client may check if a BGSAVE command succeeded reading the LASTSAVE value, then issuing a BGSAVE command and checking at regular intervals every N seconds if LASTSAVE changed.
-            </summary>
-            <remarks>http://redis.io/commands/lastsave</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.LastSaveAsync(StackExchange.Redis.CommandFlags)">
-            <summary>
-            Return the time of the last DB save executed with success. A client may check if a BGSAVE command succeeded reading the LASTSAVE value, then issuing a BGSAVE command and checking at regular intervals every N seconds if LASTSAVE changed.
-            </summary>
-            <remarks>http://redis.io/commands/lastsave</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.MakeMaster(StackExchange.Redis.ReplicationChangeOptions,System.IO.TextWriter)">
-            <summary>
-            Promote the selected node to be master
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.Save(StackExchange.Redis.SaveType,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Explicitly request the database to persist the current state to disk
-            </summary>
-            <remarks>http://redis.io/commands/bgrewriteaof</remarks>
-            <remarks>http://redis.io/commands/bgsave</remarks>
-            <remarks>http://redis.io/commands/save</remarks>
-            <remarks>http://redis.io/topics/persistence</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SaveAsync(StackExchange.Redis.SaveType,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Explicitly request the database to persist the current state to disk
-            </summary>
-            <remarks>http://redis.io/commands/bgrewriteaof</remarks>
-            <remarks>http://redis.io/commands/bgsave</remarks>
-            <remarks>http://redis.io/commands/save</remarks>
-            <remarks>http://redis.io/topics/persistence</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ScriptExists(System.String,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Inidicates whether the specified script is defined on the server
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ScriptExists(System.Byte[],StackExchange.Redis.CommandFlags)">
-            <summary>
-            Inidicates whether the specified script hash is defined on the server
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ScriptExistsAsync(System.String,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Inidicates whether the specified script is defined on the server
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ScriptExistsAsync(System.Byte[],StackExchange.Redis.CommandFlags)">
-            <summary>
-            Inidicates whether the specified script hash is defined on the server
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ScriptFlush(StackExchange.Redis.CommandFlags)">
-            <summary>
-            Removes all cached scripts on this server
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ScriptFlushAsync(StackExchange.Redis.CommandFlags)">
-            <summary>
-            Removes all cached scripts on this server
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ScriptLoad(System.String,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Explicitly defines a script on the server
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ScriptLoad(StackExchange.Redis.LuaScript,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Explicitly defines a script on the server
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ScriptLoadAsync(System.String,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Explicitly defines a script on the server
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.ScriptLoadAsync(StackExchange.Redis.LuaScript,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Explicitly defines a script on the server
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.Shutdown(StackExchange.Redis.ShutdownMode,StackExchange.Redis.CommandFlags)">
-            <summary>Asks the redis server to shutdown, killing all connections. Please FULLY read the notes on the SHUTDOWN command.</summary>
-            <remarks>http://redis.io/commands/shutdown</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SlaveOf(System.Net.EndPoint,StackExchange.Redis.CommandFlags)">
-            <summary>
-            The SLAVEOF command can change the replication settings of a slave on the fly. If a Redis server is already acting as slave, specifying a null master will turn off the replication, turning the Redis server into a MASTER. Specifying a non-null master will make the server a slave of another server listening at the specified hostname and port.
-            </summary>
-            <remarks>http://redis.io/commands/slaveof</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SlaveOfAsync(System.Net.EndPoint,StackExchange.Redis.CommandFlags)">
-            <summary>
-            The SLAVEOF command can change the replication settings of a slave on the fly. If a Redis server is already acting as slave, specifying a null master will turn off the replication, turning the Redis server into a MASTER. Specifying a non-null master will make the server a slave of another server listening at the specified hostname and port.
-            </summary>
-            <remarks>http://redis.io/commands/slaveof</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SlowlogGet(System.Int32,StackExchange.Redis.CommandFlags)">
-            <summary>
-            To read the slow log the SLOWLOG GET command is used, that returns every entry in the slow log. It is possible to return only the N most recent entries passing an additional argument to the command (for instance SLOWLOG GET 10).
-            </summary>
-            <remarks>http://redis.io/commands/slowlog</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SlowlogGetAsync(System.Int32,StackExchange.Redis.CommandFlags)">
-            <summary>
-            To read the slow log the SLOWLOG GET command is used, that returns every entry in the slow log. It is possible to return only the N most recent entries passing an additional argument to the command (for instance SLOWLOG GET 10).
-            </summary>
-            <remarks>http://redis.io/commands/slowlog</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SlowlogReset(StackExchange.Redis.CommandFlags)">
-            <summary>
-            You can reset the slow log using the SLOWLOG RESET command. Once deleted the information is lost forever.
-            </summary>
-            <remarks>http://redis.io/commands/slowlog</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SlowlogResetAsync(StackExchange.Redis.CommandFlags)">
-            <summary>
-            You can reset the slow log using the SLOWLOG RESET command. Once deleted the information is lost forever.
-            </summary>
-            <remarks>http://redis.io/commands/slowlog</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SubscriptionChannels(StackExchange.Redis.RedisChannel,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Lists the currently active channels. An active channel is a Pub/Sub channel with one ore more subscribers (not including clients subscribed to patterns).
-            </summary>
-            <returns> a list of active channels, optionally matching the specified pattern.</returns>
-            <remarks>http://redis.io/commands/pubsub</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SubscriptionChannelsAsync(StackExchange.Redis.RedisChannel,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Lists the currently active channels. An active channel is a Pub/Sub channel with one ore more subscribers (not including clients subscribed to patterns).
-            </summary>
-            <returns> a list of active channels, optionally matching the specified pattern.</returns>
-            <remarks>http://redis.io/commands/pubsub</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SubscriptionPatternCount(StackExchange.Redis.CommandFlags)">
-            <summary>
-            Returns the number of subscriptions to patterns (that are performed using the PSUBSCRIBE command). Note that this is not just the count of clients subscribed to patterns but the total number of patterns all the clients are subscribed to.
-            </summary>
-            <returns>the number of patterns all the clients are subscribed to.</returns>
-            <remarks>http://redis.io/commands/pubsub</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SubscriptionPatternCountAsync(StackExchange.Redis.CommandFlags)">
-            <summary>
-            Returns the number of subscriptions to patterns (that are performed using the PSUBSCRIBE command). Note that this is not just the count of clients subscribed to patterns but the total number of patterns all the clients are subscribed to.
-            </summary>
-            <returns>the number of patterns all the clients are subscribed to.</returns>
-            <remarks>http://redis.io/commands/pubsub</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SubscriptionSubscriberCount(StackExchange.Redis.RedisChannel,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Returns the number of subscribers (not counting clients subscribed to patterns) for the specified channel.
-            </summary>
-            <remarks>http://redis.io/commands/pubsub</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SubscriptionSubscriberCountAsync(StackExchange.Redis.RedisChannel,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Returns the number of subscribers (not counting clients subscribed to patterns) for the specified channel.
-            </summary>
-            <remarks>http://redis.io/commands/pubsub</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.Time(StackExchange.Redis.CommandFlags)">
-            <summary>
-            The TIME command returns the current server time.
-            </summary>
-            <returns>The server's current time.</returns>
-            <remarks>http://redis.io/commands/time</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.TimeAsync(StackExchange.Redis.CommandFlags)">
-            <summary>
-            The TIME command returns the current server time.
-            </summary>
-            <returns>The server's current time.</returns>
-            <remarks>http://redis.io/commands/time</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SentinelGetMasterAddressByName(System.String,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Returns the ip and port number of the master with that name. 
-            If a failover is in progress or terminated successfully for this master it returns the address and port of the promoted slave.
-            </summary>
-            <param name="serviceName">the sentinel service name</param>
-            <param name="flags"></param>
-            <returns>the master ip and port</returns>
-            <remarks>http://redis.io/topics/sentinel</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SentinelGetMasterAddressByNameAsync(System.String,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Returns the ip and port number of the master with that name. 
-            If a failover is in progress or terminated successfully for this master it returns the address and port of the promoted slave.
-            </summary>
-            <param name="serviceName">the sentinel service name</param>
-            <param name="flags"></param>
-            <returns>the master ip and port</returns>
-            <remarks>http://redis.io/topics/sentinel</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SentinelMaster(System.String,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Show the state and info of the specified master.
-            </summary>
-            <param name="serviceName">the sentinel service name</param>
-            <param name="flags"></param>
-            <returns>the master state as KeyValuePairs</returns>
-            <remarks>http://redis.io/topics/sentinel</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SentinelMasterAsync(System.String,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Force a failover as if the master was not reachable, and without asking for agreement to other Sentinels 
-            (however a new version of the configuration will be published so that the other Sentinels will update their configurations).
-            </summary>
-            <param name="serviceName">the sentinel service name</param>
-            <param name="flags"></param>
-            <returns>the master state as KeyValuePairs</returns>
-            <remarks>http://redis.io/topics/sentinel</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SentinelMasters(StackExchange.Redis.CommandFlags)">
-            <summary>
-            Show a list of monitored masters and their state.
-            </summary>
-            <param name="flags"></param>
-            <returns>an array of master state KeyValuePair arrays</returns>
-            <remarks>http://redis.io/topics/sentinel</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SentinelMastersAsync(StackExchange.Redis.CommandFlags)">
-            <summary>
-            Show a list of monitored masters and their state.
-            </summary>
-            <param name="flags"></param>
-            <returns>an array of master state KeyValuePair arrays</returns>
-            <remarks>http://redis.io/topics/sentinel</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SentinelSlaves(System.String,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Show a list of slaves for this master, and their state.
-            </summary>
-            <param name="serviceName">the sentinel service name</param>
-            <param name="flags"></param>
-            <returns>an array of slave state KeyValuePair arrays</returns>
-            <remarks>http://redis.io/topics/sentinel</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SentinelSlavesAsync(System.String,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Show a list of slaves for this master, and their state.
-            </summary>
-            <param name="serviceName">the sentinel service name</param>
-            <param name="flags"></param>
-            <returns>an array of slave state KeyValuePair arrays</returns>
-            <remarks>http://redis.io/topics/sentinel</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SentinelFailover(System.String,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Force a failover as if the master was not reachable, and without asking for agreement to other Sentinels 
-            (however a new version of the configuration will be published so that the other Sentinels will update their configurations).
-            </summary>
-            <param name="serviceName">the sentinel service name</param>
-            <param name="flags"></param>
-            <remarks>http://redis.io/topics/sentinel</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IServer.SentinelFailoverAsync(System.String,StackExchange.Redis.CommandFlags)">
-            <summary>
-            Force a failover as if the master was not reachable, and without asking for agreement to other Sentinels 
-            (however a new version of the configuration will be published so that the other Sentinels will update their configurations).
-            </summary>
-            <param name="serviceName">the sentinel service name</param>
-            <param name="flags"></param>
-            <remarks>http://redis.io/topics/sentinel</remarks>
-        </member>
-        <member name="T:StackExchange.Redis.IRedis">
-            <summary>
-            Common operations available to all redis connections
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IRedis.ClientGetName(StackExchange.Redis.CommandFlags)">
-            <summary>
-            The CLIENT GETNAME returns the name of the current connection as set by CLIENT SETNAME. Since every new connection starts without an associated name, if no name was assigned a null string is returned.
-            </summary>
-            <remarks>http://redis.io/commands/client-getname</remarks>
-            <returns>The connection name, or a null string if no name is set.</returns>
-        </member>
-        <member name="M:StackExchange.Redis.IRedis.Quit(StackExchange.Redis.CommandFlags)">
-            <summary>
-            Ask the server to close the connection. The connection is closed as soon as all pending replies have been written to the client.
-            </summary>
-            <remarks>http://redis.io/commands/quit</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IRedis.Ping(StackExchange.Redis.CommandFlags)">
-            <summary>
-            This command is often used to test if a connection is still alive, or to measure latency.
-            </summary>
-            <returns>The observed latency.</returns>
-            <remarks>http://redis.io/commands/ping</remarks>
-        </member>
-        <member name="T:StackExchange.Redis.IRedisAsync">
-            <summary>
-            Common operations available to all redis connections
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IRedisAsync.ClientGetNameAsync(StackExchange.Redis.CommandFlags)">
-            <summary>
-            The CLIENT GETNAME returns the name of the current connection as set by CLIENT SETNAME. Since every new connection starts without an associated name, if no name was assigned a null string is returned.
-            </summary>
-            <remarks>http://redis.io/commands/client-getname</remarks>
-            <returns>The connection name, or a null string if no name is set.</returns>
-        </member>
-        <member name="P:StackExchange.Redis.IRedisAsync.Multiplexer">
-            <summary>
-            Gets the multiplexer that created this instance
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IRedisAsync.PingAsync(StackExchange.Redis.CommandFlags)">
-            <summary>
-            This command is often used to test if a connection is still alive, or to measure latency.
-            </summary>
-            <returns>The observed latency.</returns>
-            <remarks>http://redis.io/commands/ping</remarks>
-        </member>
-        <member name="M:StackExchange.Redis.IRedisAsync.TryWait(System.Threading.Tasks.Task)">
-            <summary>
-            Wait for a given asynchronous operation to complete (or timeout), reporting which
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IRedisAsync.Wait(System.Threading.Tasks.Task)">
-            <summary>
-            Wait for a given asynchronous operation to complete (or timeout)
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IRedisAsync.Wait``1(System.Threading.Tasks.Task{``0})">
-            <summary>
-            Wait for a given asynchronous operation to complete (or timeout)
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.IRedisAsync.WaitAll(System.Threading.Tasks.Task[])">
-            <summary>
-            Wait for the given asynchronous operations to complete (or timeout)
-            </summary>
-        </member>
-        <member name="T:StackExchange.Redis.SocketManager">
-            <summary>
-            A SocketManager monitors multiple sockets for availability of data; this is done using
-            the Socket.Select API and a dedicated reader-thread, which allows for fast responses
-            even when the system is under ambient load. 
-            </summary>
-        </member>
-        <member name="P:StackExchange.Redis.SocketManager.ConnectCompletionType">
-            <summary>
-            Completion type for BeginConnect call
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.SocketManager.#ctor(System.String)">
-            <summary>
-            Creates a new (optionally named) SocketManager instance
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.SocketManager.#ctor(System.String,System.Boolean)">
-            <summary>
-            Creates a new SocketManager instance
-            </summary>
-        </member>
-        <member name="P:StackExchange.Redis.SocketManager.Name">
-            <summary>
-            Gets the name of this SocketManager instance
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.SocketManager.Dispose">
-            <summary>
-            Releases all resources associated with this instance
-            </summary>
-        </member>
-        <member name="T:StackExchange.Redis.ISocketCallback">
-            <summary>
-            Allows callbacks from SocketManager as work is discovered
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.ISocketCallback.Connected(System.IO.Stream,System.IO.TextWriter)">
-            <summary>
-            Indicates that a socket has connected
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.ISocketCallback.Error">
-            <summary>
-            Indicates that the socket has signalled an error condition
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.ISocketCallback.Read">
-            <summary>
-            Indicates that data is available on the socket, and that the consumer should read synchronously from the socket while there is data
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.ISocketCallback.StartReading">
-            <summary>
-            Indicates that we cannot know whether data is available, and that the consume should commence reading asynchronously
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.MessageQueue.DequeueUnsentPing(System.Int32@)">
-            <summary>
-            Checks both high-pri and regular queues to see if the next item is a PING, and if so: dequeues it and returns it
-            </summary>
-        </member>
-        <member name="M:StackExchange.Redis.PhysicalBridge.WriteMessageDirect(StackExchange.Redis.PhysicalConnection,StackExchange.Redis.Message)">
-            <summary>
-            This writes a message **directly** to the output stream; note
-            that this ignores the queue, so should only be used *either*
-            from the regular dequeue loop, *or* from the "I've just
-            connected" handshake (when there is no dequeue loop) - otherwise,
-            you can pretty much assume you're going to destroy the stream
             </summary>
         </member>
         <member name="T:StackExchange.Redis.CompletionType">
@@ -2725,16 +2009,6 @@
         <member name="T:StackExchange.Redis.IConnectionMultiplexer">
             <summary>
             Represents the abstract multiplexer API
-            </summary>
-        </member>
-        <member name="P:StackExchange.Redis.IConnectionMultiplexer.AllowConnect">
-            <summary>
-            For debugging; when not enabled, servers cannot connect
-            </summary>
-        </member>
-        <member name="P:StackExchange.Redis.IConnectionMultiplexer.IgnoreConnect">
-            <summary>
-            For debugging; when not enabled, end-connect is silently ignored (to simulate a long-running connect)
             </summary>
         </member>
         <member name="P:StackExchange.Redis.IConnectionMultiplexer.ClientName">
@@ -5186,6 +4460,18 @@
             <param name="currentRetryCount">The number of times reconnect retries have already been made by the multiplexer while it was in connecting state</param>
             <param name="timeElapsedMillisecondsSinceLastRetry">Total time elapsed in milliseconds since the last reconnect retry was made</param>
         </member>
+        <member name="T:StackExchange.Redis.IRedis">
+            <summary>
+            Common operations available to all redis connections
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IRedis.Ping(StackExchange.Redis.CommandFlags)">
+            <summary>
+            This command is often used to test if a connection is still alive, or to measure latency.
+            </summary>
+            <returns>The observed latency.</returns>
+            <remarks>http://redis.io/commands/ping</remarks>
+        </member>
         <member name="T:StackExchange.Redis.IScanningCursor">
             <summary>
             Represents a resumable, cursor-based scanning operation
@@ -5205,6 +4491,563 @@
             <summary>
             The offset into the current page
             </summary>
+        </member>
+        <member name="T:StackExchange.Redis.IRedisAsync">
+            <summary>
+            Common operations available to all redis connections
+            </summary>
+        </member>
+        <member name="P:StackExchange.Redis.IRedisAsync.Multiplexer">
+            <summary>
+            Gets the multiplexer that created this instance
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IRedisAsync.PingAsync(StackExchange.Redis.CommandFlags)">
+            <summary>
+            This command is often used to test if a connection is still alive, or to measure latency.
+            </summary>
+            <returns>The observed latency.</returns>
+            <remarks>http://redis.io/commands/ping</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IRedisAsync.TryWait(System.Threading.Tasks.Task)">
+            <summary>
+            Wait for a given asynchronous operation to complete (or timeout), reporting which
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IRedisAsync.Wait(System.Threading.Tasks.Task)">
+            <summary>
+            Wait for a given asynchronous operation to complete (or timeout)
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IRedisAsync.Wait``1(System.Threading.Tasks.Task{``0})">
+            <summary>
+            Wait for a given asynchronous operation to complete (or timeout)
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IRedisAsync.WaitAll(System.Threading.Tasks.Task[])">
+            <summary>
+            Wait for the given asynchronous operations to complete (or timeout)
+            </summary>
+        </member>
+        <member name="T:StackExchange.Redis.IServer">
+            <summary>
+            Provides configuration controls of a redis server
+            </summary>
+        </member>
+        <member name="P:StackExchange.Redis.IServer.ClusterConfiguration">
+            <summary>
+            Gets the cluster configuration associated with this server, if known
+            </summary>
+        </member>
+        <member name="P:StackExchange.Redis.IServer.EndPoint">
+            <summary>
+            Gets the address of the connected server
+            </summary>
+        </member>
+        <member name="P:StackExchange.Redis.IServer.Features">
+            <summary>
+            Gets the features available to the connected server
+            </summary>
+        </member>
+        <member name="P:StackExchange.Redis.IServer.IsConnected">
+            <summary>
+            Gets whether the connection to the server is active and usable
+            </summary>
+        </member>
+        <member name="P:StackExchange.Redis.IServer.IsSlave">
+            <summary>
+            Gets whether the connected server is a replica / slave
+            </summary>
+        </member>
+        <member name="P:StackExchange.Redis.IServer.AllowSlaveWrites">
+            <summary>
+            Explicitly opt in for slave writes on writable slaves
+            </summary>
+        </member>
+        <member name="P:StackExchange.Redis.IServer.ServerType">
+            <summary>
+            Gets the operating mode of the connected server
+            </summary>
+        </member>
+        <member name="P:StackExchange.Redis.IServer.Version">
+            <summary>
+            Gets the version of the connected server
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ClientKill(System.Net.EndPoint,StackExchange.Redis.CommandFlags)">
+            <summary>
+            The CLIENT KILL command closes a given client connection identified by ip:port.
+            The ip:port should match a line returned by the CLIENT LIST command.
+            Due to the single-treaded nature of Redis, it is not possible to kill a client connection while it is executing a command.From the client point of view, the connection can never be closed in the middle of the execution of a command.However, the client will notice the connection has been closed only when the next command is sent (and results in network error).
+            </summary>
+            <remarks>http://redis.io/commands/client-kill</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ClientKillAsync(System.Net.EndPoint,StackExchange.Redis.CommandFlags)">
+            <summary>
+            The CLIENT KILL command closes a given client connection identified by ip:port.
+            The ip:port should match a line returned by the CLIENT LIST command.
+            Due to the single-treaded nature of Redis, it is not possible to kill a client connection while it is executing a command.From the client point of view, the connection can never be closed in the middle of the execution of a command.However, the client will notice the connection has been closed only when the next command is sent (and results in network error).
+            </summary>
+            <remarks>http://redis.io/commands/client-kill</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ClientKill(System.Nullable{System.Int64},System.Nullable{StackExchange.Redis.ClientType},System.Net.EndPoint,System.Boolean,StackExchange.Redis.CommandFlags)">
+            <summary>
+            The CLIENT KILL command closes multiple connections that match the specified filters
+            </summary>
+            <returns>the number of clients killed.</returns>
+            <remarks>http://redis.io/commands/client-kill</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ClientKillAsync(System.Nullable{System.Int64},System.Nullable{StackExchange.Redis.ClientType},System.Net.EndPoint,System.Boolean,StackExchange.Redis.CommandFlags)">
+            <summary>
+            The CLIENT KILL command closes multiple connections that match the specified filters
+            </summary>
+            <returns>the number of clients killed.</returns>
+            <remarks>http://redis.io/commands/client-kill</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ClientList(StackExchange.Redis.CommandFlags)">
+            <summary>
+            The CLIENT LIST command returns information and statistics about the client connections server in a mostly human readable format.
+            </summary>
+            <remarks>http://redis.io/commands/client-list</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ClientListAsync(StackExchange.Redis.CommandFlags)">
+            <summary>
+            The CLIENT LIST command returns information and statistics about the client connections server in a mostly human readable format.
+            </summary>
+            <remarks>http://redis.io/commands/client-list</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ClusterNodes(StackExchange.Redis.CommandFlags)">
+            <summary>
+            Obtains the current CLUSTER NODES output from a cluster server
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ClusterNodesAsync(StackExchange.Redis.CommandFlags)">
+            <summary>
+            Obtains the current CLUSTER NODES output from a cluster server
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ClusterNodesRaw(StackExchange.Redis.CommandFlags)">
+            <summary>
+            Obtains the current raw CLUSTER NODES output from a cluster server
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ClusterNodesRawAsync(StackExchange.Redis.CommandFlags)">
+            <summary>
+            Obtains the current raw CLUSTER NODES output from a cluster server
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ConfigGet(StackExchange.Redis.RedisValue,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Get all configuration parameters matching the specified pattern.
+            </summary>
+            <returns>All matching configuration parameters.</returns>
+            <remarks>http://redis.io/commands/config-get</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ConfigGetAsync(StackExchange.Redis.RedisValue,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Get all configuration parameters matching the specified pattern.
+            </summary>
+            <returns>All matching configuration parameters.</returns>
+            <remarks>http://redis.io/commands/config-get</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ConfigResetStatistics(StackExchange.Redis.CommandFlags)">
+            <summary>
+            Resets the statistics reported by Redis using the INFO command.
+            </summary>
+            <remarks>http://redis.io/commands/config-resetstat</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ConfigResetStatisticsAsync(StackExchange.Redis.CommandFlags)">
+            <summary>
+            Resets the statistics reported by Redis using the INFO command.
+            </summary>
+            <remarks>http://redis.io/commands/config-resetstat</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ConfigRewrite(StackExchange.Redis.CommandFlags)">
+            <summary>
+            The CONFIG REWRITE command rewrites the redis.conf file the server was started with, applying the minimal changes needed to make it reflecting the configuration currently used by the server, that may be different compared to the original one because of the use of the CONFIG SET command.
+            </summary>
+            <remarks>http://redis.io/commands/config-rewrite</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ConfigRewriteAsync(StackExchange.Redis.CommandFlags)">
+            <summary>
+            The CONFIG REWRITE command rewrites the redis.conf file the server was started with, applying the minimal changes needed to make it reflecting the configuration currently used by the server, that may be different compared to the original one because of the use of the CONFIG SET command.
+            </summary>
+            <remarks>http://redis.io/commands/config-rewrite</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ConfigSet(StackExchange.Redis.RedisValue,StackExchange.Redis.RedisValue,StackExchange.Redis.CommandFlags)">
+            <summary>
+            The CONFIG SET command is used in order to reconfigure the server at runtime without the need to restart Redis. You can change both trivial parameters or switch from one to another persistence option using this command.
+            </summary>
+            <remarks>http://redis.io/commands/config-set</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ConfigSetAsync(StackExchange.Redis.RedisValue,StackExchange.Redis.RedisValue,StackExchange.Redis.CommandFlags)">
+            <summary>
+            The CONFIG SET command is used in order to reconfigure the server at runtime without the need to restart Redis. You can change both trivial parameters or switch from one to another persistence option using this command.
+            </summary>
+            <remarks>http://redis.io/commands/config-set</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.DatabaseSize(System.Int32,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Return the number of keys in the database.
+            </summary>
+            <remarks>http://redis.io/commands/dbsize</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.DatabaseSizeAsync(System.Int32,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Return the number of keys in the database.
+            </summary>
+            <remarks>http://redis.io/commands/dbsize</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.Echo(StackExchange.Redis.RedisValue,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Return the same message passed in
+            </summary>
+            <remarks>http://redis.io/commands/echo</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.EchoAsync(StackExchange.Redis.RedisValue,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Return the same message passed in
+            </summary>
+            <remarks>http://redis.io/commands/echo</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.FlushAllDatabases(StackExchange.Redis.CommandFlags)">
+            <summary>
+            Delete all the keys of all databases on the server.
+            </summary>
+            <remarks>http://redis.io/commands/flushall</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.FlushAllDatabasesAsync(StackExchange.Redis.CommandFlags)">
+            <summary>
+            Delete all the keys of all databases on the server.
+            </summary>
+            <remarks>http://redis.io/commands/flushall</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.FlushDatabase(System.Int32,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Delete all the keys of the database.
+            </summary>
+            <remarks>http://redis.io/commands/flushdb</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.FlushDatabaseAsync(System.Int32,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Delete all the keys of the database.
+            </summary>
+            <remarks>http://redis.io/commands/flushdb</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.GetCounters">
+            <summary>
+            Get summary statistics associates with this server
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.Info(StackExchange.Redis.RedisValue,StackExchange.Redis.CommandFlags)">
+            <summary>
+            The INFO command returns information and statistics about the server in a format that is simple to parse by computers and easy to read by humans.
+            </summary>
+            <remarks>http://redis.io/commands/info</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.InfoAsync(StackExchange.Redis.RedisValue,StackExchange.Redis.CommandFlags)">
+            <summary>
+            The INFO command returns information and statistics about the server in a format that is simple to parse by computers and easy to read by humans.
+            </summary>
+            <remarks>http://redis.io/commands/info</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.InfoRaw(StackExchange.Redis.RedisValue,StackExchange.Redis.CommandFlags)">
+            <summary>
+            The INFO command returns information and statistics about the server in a format that is simple to parse by computers and easy to read by humans.
+            </summary>
+            <remarks>http://redis.io/commands/info</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.InfoRawAsync(StackExchange.Redis.RedisValue,StackExchange.Redis.CommandFlags)">
+            <summary>
+            The INFO command returns information and statistics about the server in a format that is simple to parse by computers and easy to read by humans.
+            </summary>
+            <remarks>http://redis.io/commands/info</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.Keys(System.Int32,StackExchange.Redis.RedisValue,System.Int32,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Returns all keys matching pattern; the KEYS or SCAN commands will be used based on the server capabilities.
+            </summary>
+            <remarks>Warning: consider KEYS as a command that should only be used in production environments with extreme care.</remarks>
+            <remarks>http://redis.io/commands/keys</remarks>
+            <remarks>http://redis.io/commands/scan</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.Keys(System.Int32,StackExchange.Redis.RedisValue,System.Int32,System.Int64,System.Int32,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Returns all keys matching pattern; the KEYS or SCAN commands will be used based on the server capabilities; note: to resume an iteration via <i>cursor</i>, cast the original enumerable or enumerator to <i>IScanningCursor</i>.
+            </summary>
+            <remarks>Warning: consider KEYS as a command that should only be used in production environments with extreme care.</remarks>
+            <remarks>http://redis.io/commands/keys</remarks>
+            <remarks>http://redis.io/commands/scan</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.LastSave(StackExchange.Redis.CommandFlags)">
+            <summary>
+            Return the time of the last DB save executed with success. A client may check if a BGSAVE command succeeded reading the LASTSAVE value, then issuing a BGSAVE command and checking at regular intervals every N seconds if LASTSAVE changed.
+            </summary>
+            <remarks>http://redis.io/commands/lastsave</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.LastSaveAsync(StackExchange.Redis.CommandFlags)">
+            <summary>
+            Return the time of the last DB save executed with success. A client may check if a BGSAVE command succeeded reading the LASTSAVE value, then issuing a BGSAVE command and checking at regular intervals every N seconds if LASTSAVE changed.
+            </summary>
+            <remarks>http://redis.io/commands/lastsave</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.MakeMaster(StackExchange.Redis.ReplicationChangeOptions,System.IO.TextWriter)">
+            <summary>
+            Promote the selected node to be master
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.Save(StackExchange.Redis.SaveType,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Explicitly request the database to persist the current state to disk
+            </summary>
+            <remarks>http://redis.io/commands/bgrewriteaof</remarks>
+            <remarks>http://redis.io/commands/bgsave</remarks>
+            <remarks>http://redis.io/commands/save</remarks>
+            <remarks>http://redis.io/topics/persistence</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SaveAsync(StackExchange.Redis.SaveType,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Explicitly request the database to persist the current state to disk
+            </summary>
+            <remarks>http://redis.io/commands/bgrewriteaof</remarks>
+            <remarks>http://redis.io/commands/bgsave</remarks>
+            <remarks>http://redis.io/commands/save</remarks>
+            <remarks>http://redis.io/topics/persistence</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ScriptExists(System.String,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Inidicates whether the specified script is defined on the server
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ScriptExists(System.Byte[],StackExchange.Redis.CommandFlags)">
+            <summary>
+            Inidicates whether the specified script hash is defined on the server
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ScriptExistsAsync(System.String,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Inidicates whether the specified script is defined on the server
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ScriptExistsAsync(System.Byte[],StackExchange.Redis.CommandFlags)">
+            <summary>
+            Inidicates whether the specified script hash is defined on the server
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ScriptFlush(StackExchange.Redis.CommandFlags)">
+            <summary>
+            Removes all cached scripts on this server
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ScriptFlushAsync(StackExchange.Redis.CommandFlags)">
+            <summary>
+            Removes all cached scripts on this server
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ScriptLoad(System.String,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Explicitly defines a script on the server
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ScriptLoad(StackExchange.Redis.LuaScript,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Explicitly defines a script on the server
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ScriptLoadAsync(System.String,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Explicitly defines a script on the server
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.ScriptLoadAsync(StackExchange.Redis.LuaScript,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Explicitly defines a script on the server
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.Shutdown(StackExchange.Redis.ShutdownMode,StackExchange.Redis.CommandFlags)">
+            <summary>Asks the redis server to shutdown, killing all connections. Please FULLY read the notes on the SHUTDOWN command.</summary>
+            <remarks>http://redis.io/commands/shutdown</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SlaveOf(System.Net.EndPoint,StackExchange.Redis.CommandFlags)">
+            <summary>
+            The SLAVEOF command can change the replication settings of a slave on the fly. If a Redis server is already acting as slave, specifying a null master will turn off the replication, turning the Redis server into a MASTER. Specifying a non-null master will make the server a slave of another server listening at the specified hostname and port.
+            </summary>
+            <remarks>http://redis.io/commands/slaveof</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SlaveOfAsync(System.Net.EndPoint,StackExchange.Redis.CommandFlags)">
+            <summary>
+            The SLAVEOF command can change the replication settings of a slave on the fly. If a Redis server is already acting as slave, specifying a null master will turn off the replication, turning the Redis server into a MASTER. Specifying a non-null master will make the server a slave of another server listening at the specified hostname and port.
+            </summary>
+            <remarks>http://redis.io/commands/slaveof</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SlowlogGet(System.Int32,StackExchange.Redis.CommandFlags)">
+            <summary>
+            To read the slow log the SLOWLOG GET command is used, that returns every entry in the slow log. It is possible to return only the N most recent entries passing an additional argument to the command (for instance SLOWLOG GET 10).
+            </summary>
+            <remarks>http://redis.io/commands/slowlog</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SlowlogGetAsync(System.Int32,StackExchange.Redis.CommandFlags)">
+            <summary>
+            To read the slow log the SLOWLOG GET command is used, that returns every entry in the slow log. It is possible to return only the N most recent entries passing an additional argument to the command (for instance SLOWLOG GET 10).
+            </summary>
+            <remarks>http://redis.io/commands/slowlog</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SlowlogReset(StackExchange.Redis.CommandFlags)">
+            <summary>
+            You can reset the slow log using the SLOWLOG RESET command. Once deleted the information is lost forever.
+            </summary>
+            <remarks>http://redis.io/commands/slowlog</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SlowlogResetAsync(StackExchange.Redis.CommandFlags)">
+            <summary>
+            You can reset the slow log using the SLOWLOG RESET command. Once deleted the information is lost forever.
+            </summary>
+            <remarks>http://redis.io/commands/slowlog</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SubscriptionChannels(StackExchange.Redis.RedisChannel,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Lists the currently active channels. An active channel is a Pub/Sub channel with one ore more subscribers (not including clients subscribed to patterns).
+            </summary>
+            <returns> a list of active channels, optionally matching the specified pattern.</returns>
+            <remarks>http://redis.io/commands/pubsub</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SubscriptionChannelsAsync(StackExchange.Redis.RedisChannel,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Lists the currently active channels. An active channel is a Pub/Sub channel with one ore more subscribers (not including clients subscribed to patterns).
+            </summary>
+            <returns> a list of active channels, optionally matching the specified pattern.</returns>
+            <remarks>http://redis.io/commands/pubsub</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SubscriptionPatternCount(StackExchange.Redis.CommandFlags)">
+            <summary>
+            Returns the number of subscriptions to patterns (that are performed using the PSUBSCRIBE command). Note that this is not just the count of clients subscribed to patterns but the total number of patterns all the clients are subscribed to.
+            </summary>
+            <returns>the number of patterns all the clients are subscribed to.</returns>
+            <remarks>http://redis.io/commands/pubsub</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SubscriptionPatternCountAsync(StackExchange.Redis.CommandFlags)">
+            <summary>
+            Returns the number of subscriptions to patterns (that are performed using the PSUBSCRIBE command). Note that this is not just the count of clients subscribed to patterns but the total number of patterns all the clients are subscribed to.
+            </summary>
+            <returns>the number of patterns all the clients are subscribed to.</returns>
+            <remarks>http://redis.io/commands/pubsub</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SubscriptionSubscriberCount(StackExchange.Redis.RedisChannel,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Returns the number of subscribers (not counting clients subscribed to patterns) for the specified channel.
+            </summary>
+            <remarks>http://redis.io/commands/pubsub</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SubscriptionSubscriberCountAsync(StackExchange.Redis.RedisChannel,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Returns the number of subscribers (not counting clients subscribed to patterns) for the specified channel.
+            </summary>
+            <remarks>http://redis.io/commands/pubsub</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.Time(StackExchange.Redis.CommandFlags)">
+            <summary>
+            The TIME command returns the current server time.
+            </summary>
+            <returns>The server's current time.</returns>
+            <remarks>http://redis.io/commands/time</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.TimeAsync(StackExchange.Redis.CommandFlags)">
+            <summary>
+            The TIME command returns the current server time.
+            </summary>
+            <returns>The server's current time.</returns>
+            <remarks>http://redis.io/commands/time</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SentinelGetMasterAddressByName(System.String,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Returns the ip and port number of the master with that name. 
+            If a failover is in progress or terminated successfully for this master it returns the address and port of the promoted slave.
+            </summary>
+            <param name="serviceName">the sentinel service name</param>
+            <param name="flags"></param>
+            <returns>the master ip and port</returns>
+            <remarks>http://redis.io/topics/sentinel</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SentinelGetMasterAddressByNameAsync(System.String,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Returns the ip and port number of the master with that name. 
+            If a failover is in progress or terminated successfully for this master it returns the address and port of the promoted slave.
+            </summary>
+            <param name="serviceName">the sentinel service name</param>
+            <param name="flags"></param>
+            <returns>the master ip and port</returns>
+            <remarks>http://redis.io/topics/sentinel</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SentinelMaster(System.String,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Show the state and info of the specified master.
+            </summary>
+            <param name="serviceName">the sentinel service name</param>
+            <param name="flags"></param>
+            <returns>the master state as KeyValuePairs</returns>
+            <remarks>http://redis.io/topics/sentinel</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SentinelMasterAsync(System.String,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Force a failover as if the master was not reachable, and without asking for agreement to other Sentinels 
+            (however a new version of the configuration will be published so that the other Sentinels will update their configurations).
+            </summary>
+            <param name="serviceName">the sentinel service name</param>
+            <param name="flags"></param>
+            <returns>the master state as KeyValuePairs</returns>
+            <remarks>http://redis.io/topics/sentinel</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SentinelMasters(StackExchange.Redis.CommandFlags)">
+            <summary>
+            Show a list of monitored masters and their state.
+            </summary>
+            <param name="flags"></param>
+            <returns>an array of master state KeyValuePair arrays</returns>
+            <remarks>http://redis.io/topics/sentinel</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SentinelMastersAsync(StackExchange.Redis.CommandFlags)">
+            <summary>
+            Show a list of monitored masters and their state.
+            </summary>
+            <param name="flags"></param>
+            <returns>an array of master state KeyValuePair arrays</returns>
+            <remarks>http://redis.io/topics/sentinel</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SentinelSlaves(System.String,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Show a list of slaves for this master, and their state.
+            </summary>
+            <param name="serviceName">the sentinel service name</param>
+            <param name="flags"></param>
+            <returns>an array of slave state KeyValuePair arrays</returns>
+            <remarks>http://redis.io/topics/sentinel</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SentinelSlavesAsync(System.String,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Show a list of slaves for this master, and their state.
+            </summary>
+            <param name="serviceName">the sentinel service name</param>
+            <param name="flags"></param>
+            <returns>an array of slave state KeyValuePair arrays</returns>
+            <remarks>http://redis.io/topics/sentinel</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SentinelFailover(System.String,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Force a failover as if the master was not reachable, and without asking for agreement to other Sentinels 
+            (however a new version of the configuration will be published so that the other Sentinels will update their configurations).
+            </summary>
+            <param name="serviceName">the sentinel service name</param>
+            <param name="flags"></param>
+            <remarks>http://redis.io/topics/sentinel</remarks>
+        </member>
+        <member name="M:StackExchange.Redis.IServer.SentinelFailoverAsync(System.String,StackExchange.Redis.CommandFlags)">
+            <summary>
+            Force a failover as if the master was not reachable, and without asking for agreement to other Sentinels 
+            (however a new version of the configuration will be published so that the other Sentinels will update their configurations).
+            </summary>
+            <param name="serviceName">the sentinel service name</param>
+            <param name="flags"></param>
+            <remarks>http://redis.io/topics/sentinel</remarks>
         </member>
         <member name="T:StackExchange.Redis.ISubscriber">
             <summary>
@@ -5565,6 +5408,11 @@
             3: it disables non-pref logging, as it is usually server-targeted
             </summary>
         </member>
+        <member name="M:StackExchange.Redis.MessageQueue.DequeueUnsentPing(System.Int32@)">
+            <summary>
+            Checks both high-pri and regular queues to see if the next item is a PING, and if so: dequeues it and returns it
+            </summary>
+        </member>
         <member name="T:StackExchange.Redis.MigrateOptions">
             <summary>
             Additional options for the MIGRATE command
@@ -5598,6 +5446,15 @@
         <member name="F:StackExchange.Redis.Order.Descending">
             <summary>
             Ordered from high values to low values
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.PhysicalBridge.WriteMessageDirect(StackExchange.Redis.PhysicalConnection,StackExchange.Redis.Message)">
+            <summary>
+            This writes a message **directly** to the output stream; note
+            that this ignores the queue, so should only be used *either*
+            from the regular dequeue loop, *or* from the "I've just
+            connected" handshake (when there is no dequeue loop) - otherwise,
+            you can pretty much assume you're going to destroy the stream
             </summary>
         </member>
         <member name="T:StackExchange.Redis.ProfileContextTracker">
@@ -6598,6 +6455,58 @@
         <member name="F:StackExchange.Redis.ShutdownMode.Always">
             <summary>
             The data is persisted even if save points are NOT configured
+            </summary>
+        </member>
+        <member name="T:StackExchange.Redis.ISocketCallback">
+            <summary>
+            Allows callbacks from SocketManager as work is discovered
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.ISocketCallback.Connected(System.IO.Stream,System.IO.TextWriter)">
+            <summary>
+            Indicates that a socket has connected
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.ISocketCallback.Error">
+            <summary>
+            Indicates that the socket has signalled an error condition
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.ISocketCallback.Read">
+            <summary>
+            Indicates that data is available on the socket, and that the consumer should read synchronously from the socket while there is data
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.ISocketCallback.StartReading">
+            <summary>
+            Indicates that we cannot know whether data is available, and that the consume should commence reading asynchronously
+            </summary>
+        </member>
+        <member name="T:StackExchange.Redis.SocketManager">
+            <summary>
+            A SocketManager monitors multiple sockets for availability of data; this is done using
+            the Socket.Select API and a dedicated reader-thread, which allows for fast responses
+            even when the system is under ambient load. 
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.SocketManager.#ctor(System.String)">
+            <summary>
+            Creates a new (optionally named) SocketManager instance
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.SocketManager.#ctor(System.String,System.Boolean)">
+            <summary>
+            Creates a new SocketManager instance
+            </summary>
+        </member>
+        <member name="P:StackExchange.Redis.SocketManager.Name">
+            <summary>
+            Gets the name of this SocketManager instance
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.SocketManager.Dispose">
+            <summary>
+            Releases all resources associated with this instance
             </summary>
         </member>
         <member name="T:StackExchange.Redis.SortedSetEntry">

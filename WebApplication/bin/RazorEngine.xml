@@ -5133,6 +5133,20 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:RazorEngine.Templating.ITemplateRunner`1">
+            <summary>
+            Defines the required contract for implementing a typed, runnable template reference.
+            </summary>
+            <typeparam name="TModel">The model type</typeparam>
+        </member>
+        <member name="M:RazorEngine.Templating.ITemplateRunner`1.Run(`0,System.IO.TextWriter,RazorEngine.Templating.DynamicViewBag)">
+            <summary>
+            Runs the template using the specified <paramref name="model"/>.
+            </summary>
+            <param name="model"></param>
+            <param name="textWriter"></param>
+            <param name="viewBag"></param>
+        </member>
         <member name="T:RazorEngine.Templating.ReferencesListForDynamicAssemblyResolution">
             <summary>
             Manages the current list of assemblies, used for dynamic assembly resolution.
@@ -5287,6 +5301,41 @@
             </summary>
             <param name="message">The message.</param>
             <param name="inner">The root cause.</param>
+        </member>
+        <member name="T:RazorEngine.Templating.TemplateRunnerExtensions">
+            <summary>
+            Extensions for the <see cref="T:RazorEngine.Templating.ITemplateRunner`1"/>.
+            </summary>
+        </member>
+        <member name="M:RazorEngine.Templating.TemplateRunnerExtensions.Run``1(RazorEngine.Templating.ITemplateRunner{``0},``0,RazorEngine.Templating.DynamicViewBag)">
+            <summary>
+            Runs the template using the specified <paramref name="model"/>.
+            </summary>
+            <param name="templateRunner"></param>
+            <param name="model"></param>
+            <param name="viewBag"></param>
+            <returns></returns>
+        </member>
+        <member name="T:RazorEngine.Templating.TemplateRunner`1">
+            <summary>
+            Typed, runnable template reference.
+            </summary>
+            <typeparam name="TModel">The model type</typeparam>
+        </member>
+        <member name="M:RazorEngine.Templating.TemplateRunner`1.#ctor(RazorEngine.Templating.IRazorEngineService,RazorEngine.Templating.ITemplateKey)">
+            <summary>
+            Initialises a new instance of <see cref="T:RazorEngine.Templating.TemplateRunner`1"/>.
+            </summary>
+            <param name="service"></param>
+            <param name="key"></param>
+        </member>
+        <member name="M:RazorEngine.Templating.TemplateRunner`1.Run(`0,System.IO.TextWriter,RazorEngine.Templating.DynamicViewBag)">
+            <summary>
+            Runs the template using the specified <paramref name="model"/>.
+            </summary>
+            <param name="model"></param>
+            <param name="textWriter"></param>
+            <param name="viewBag"></param>
         </member>
         <member name="T:RazorEngine.Templating.WatchingResolvePathTemplateManager">
             <summary>
@@ -7664,6 +7713,25 @@
             <param name="modelType"></param>
             <param name="model"></param>
             <param name="viewBag"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RazorEngine.Templating.RazorEngineServiceExtensions.CompileRunner``1(RazorEngine.Templating.IRazorEngineService,System.String)">
+            <summary>
+            Adds and compiles a new template using the specified <paramref name="templateSource"/> and returns a <see cref="T:RazorEngine.Templating.TemplateRunner`1"/>.
+            </summary>
+            <typeparam name="TModel">The model type</typeparam>
+            <param name="service"></param>
+            <param name="templateSource"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RazorEngine.Templating.RazorEngineServiceExtensions.CompileRunner``1(RazorEngine.Templating.IRazorEngineService,System.String,System.String)">
+            <summary>
+            Adds and compiles a new template using the specified <paramref name="templateSource"/> and returns a <see cref="T:RazorEngine.Templating.TemplateRunner`1"/>.
+            </summary>
+            <typeparam name="TModel">The model type</typeparam>
+            <param name="service"></param>
+            <param name="templateSource"></param>
+            <param name="name"></param>
             <returns></returns>
         </member>
         <member name="T:RazorEngine.Templating.LoadedTemplateSource">

@@ -33,7 +33,7 @@ namespace WebApplication.Handlers
                 URIHelper.ForceSSL();
             }
 
-            if (FrameworkSettings.CurrentUser == null && Request.HttpMethod == "GET" && (!(bool)BaseMapper.CanConnectToDB || AppSettings.EnableOutputCaching))
+            if (Request.HttpMethod == "GET" && (!(bool)BaseMapper.CanConnectToDB || AppSettings.EnableOutputCaching))
             {
                 var userSelectedVersion = RenderVersion.HTML;
 
@@ -52,10 +52,15 @@ namespace WebApplication.Handlers
 
                 if (AppSettings.EnableLevel2FileCaching)
                 {
-                    var cacheData = FileCacheHelper.GetFromCache(cacheKey);
+                    var cache = FileCacheHelper.GetFromCache(cacheKey);
 
-                    if (!string.IsNullOrEmpty(cacheData))
-                        BaseService.WriteHtml(cacheData + "<!-- Loaded from level 2 - File Cache -->");
+                    if(!cache.IsError)
+                    {
+                        var cacheData = cache.GetRawData<string>();
+
+                        if (!string.IsNullOrEmpty(cacheData))
+                            BaseService.WriteHtml(cacheData + "<!-- Loaded from level 2 - File Cache -->");
+                    }
                 }
 
                 if (AppSettings.EnableLevel3RedisCaching)

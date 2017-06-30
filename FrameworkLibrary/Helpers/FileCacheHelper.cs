@@ -9,6 +9,14 @@ namespace FrameworkLibrary
         private static string baseDir = "";
         private static string htmlFileName = "index.html";
 
+        public static string BaseCacheDir
+        {
+            get
+            {
+                return baseDir;
+            }
+        }
+
         public static void SetFileSystemCacheDirPath(string dirPath)
         {
             baseDir = dirPath;
@@ -26,6 +34,7 @@ namespace FrameworkLibrary
         {
             try
             {
+                //return new Return();
                 var fileInfo = GetFileInfoFromUrl(url);
 
                 if (!fileInfo.Directory.Exists)
@@ -34,13 +43,93 @@ namespace FrameworkLibrary
                 }
                 else
                 {
-                    if ((CacheDurationInSeconds != null) && (DateTime.Now < fileInfo.LastWriteTime.AddSeconds((double)CacheDurationInSeconds)))
+                    /*if ((CacheDurationInSeconds != null) && (DateTime.Now < fileInfo.LastWriteTime.AddSeconds((double)CacheDurationInSeconds)))
                     {
-                        return new Return() { Error = ErrorHelper.CreateError("Cash hasn't expired yet") };
-                    }
+                        return new Return() { Error = ErrorHelper.CreateError("Cache hasn't expired yet") };
+                    }*/
 
                     //File.Delete(fileInfo.FullName);
-                    File.WriteAllText(fileInfo.FullName, html);
+                }
+                File.WriteAllText(fileInfo.FullName, html);
+                //ContextHelper.SetToCache(url, html);                
+
+                return new Return();
+            }
+            catch (Exception ex)
+            {
+                var error = ErrorHelper.CreateError($"Error Creating FileSystem Cache: '{url}", ex.Message);
+
+                ErrorHelper.LogException(error.Exception);
+
+                return new Return(ex, error);
+            }
+        }
+
+        public static FileInfo GetFileInfoFromUrl(string url)
+        {
+            var invalid = Path.GetInvalidPathChars().ToList();
+
+            foreach (var c in invalid)
+            {
+                if (url.Contains(c))
+                    url = url.Replace(c.ToString(), "_");
+            }
+
+            url = url.Replace("?", "_");
+            url = url.Replace(":", "-");
+
+            var absPath = URIHelper.ConvertToAbsPath($"{baseDir}{url.ToLower()}-{htmlFileName}");
+            var fileInfo = new FileInfo(absPath);
+
+            return fileInfo;
+        }
+
+        public static void SaveGenerateToNav(string html)
+        {
+            FileCacheHelper.SaveToCache("generatenav", html);
+        }
+
+        public static Return GetGenerateNavCache()
+        {
+            return FileCacheHelper.GetFromCache("generatenav");
+        }
+
+        public static void DeleteGenerateNavCache()
+        {
+            FileCacheHelper.ClearCacheDir("generatenav");
+        }
+
+        public static void SaveSettingsCache(string setting, string html)
+        {
+            FileCacheHelper.SaveToCache("settings/"+ setting, html);
+        }
+
+        public static Return GetSettingsCache(string setting)
+        {
+            return FileCacheHelper.GetFromCache("settings/"+ setting);
+        }
+
+        public static void DeleteSettingsCache()
+        {
+            FileCacheHelper.ClearCacheDir("settings");
+        }
+        
+        public static void DeleteHTMLCache()
+        {
+            FileCacheHelper.ClearCacheDir("html_");            
+        }
+
+        public static Return ClearCacheDir(string url)
+        {
+            try
+            {
+                url = url + "/";
+                var fileInfo = GetFileInfoFromUrl(url);
+
+                if (fileInfo.Directory.Exists)
+                {                    
+                    Directory.Delete(fileInfo.Directory.FullName, true);
+                    ContextHelper.ClearAllMemoryCache();
                 }
 
                 return new Return();
@@ -53,21 +142,6 @@ namespace FrameworkLibrary
             }
         }
 
-        private static FileInfo GetFileInfoFromUrl(string url)
-        {
-            var invalid = Path.GetInvalidPathChars().ToList();
-
-            foreach (var c in invalid)
-            {
-                if (url.Contains(c))
-                    url = url.Replace(c.ToString(), "_");
-            }
-
-            url = url.Replace("?", "_");
-
-            return new FileInfo(URIHelper.ConvertToAbsPath(baseDir + url.ToLower() + htmlFileName));
-        }
-
         public static Return ClearCache(string url)
         {
             try
@@ -77,6 +151,7 @@ namespace FrameworkLibrary
                 if (fileInfo.Exists)
                 {
                     File.Delete(fileInfo.FullName);
+                    ContextHelper.RemoveFromCache(url);
                 }
 
                 return new Return();
@@ -94,6 +169,10 @@ namespace FrameworkLibrary
             if (string.IsNullOrEmpty(baseDir))
                 return new Return();
 
+            //FileCacheHelper.DeleteGenerateNav();
+            //FileCacheHelper.DeleteSettings();
+            //FileCacheHelper.DeleteHTMLCache();
+
             var directoryInfo = new DirectoryInfo(URIHelper.ConvertToAbsPath(baseDir));
 
             var subDirectories = directoryInfo.GetDirectories();
@@ -105,7 +184,7 @@ namespace FrameworkLibrary
                 {
                     File.Delete(file.FullName);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     ErrorHelper.LogException(ex);
                 }
@@ -117,19 +196,30 @@ namespace FrameworkLibrary
                 {
                     Directory.Delete(directory.FullName, true);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     ErrorHelper.LogException(ex);
                 }
             }
 
+            ContextHelper.ClearAllMemoryCache();
+
             return new Return();
         }
 
-        public static string GetFromCache(string url)
+        public static Return GetFromCache(string url)
         {
+            var returnObj = new Return();
             try
             {
+                //var inContext = (string)ContextHelper.GetFromCache(url);
+
+                //if (inContext != null && inContext != "")
+                //{                    
+                //    returnObj.SetRawData(inContext);
+
+                //    return returnObj;
+                //}
                 var fileInfo = GetFileInfoFromUrl(url);
 
                 if (fileInfo.Exists)
@@ -137,7 +227,8 @@ namespace FrameworkLibrary
                     if ((CacheDurationInSeconds != null) && (DateTime.Now > fileInfo.LastWriteTime.AddSeconds((double)CacheDurationInSeconds)))
                     {
                         File.Delete(fileInfo.FullName);
-                        return "";
+                        returnObj.Error = new Elmah.Error(new Exception("Cache has expired"));                        
+                        return returnObj;
                     }
 
                     using (FileStream fs = new FileStream(fileInfo.FullName,
@@ -147,18 +238,24 @@ namespace FrameworkLibrary
                     {
                         using (StreamReader sr = new StreamReader(fs))
                         {
-                            return sr.ReadToEnd();
+                            var data = sr.ReadToEnd();
+                            returnObj.SetRawData(data);
+                            return returnObj;
                         }
                     }
+                }        
+                else
+                {
+                    returnObj.Error = new Elmah.Error(new Exception("Cache does not exist"));
+                    return returnObj;
                 }
-
-                return "";
             }
             catch (Exception ex)
             {
                 ErrorHelper.LogException(ex);
 
-                return "";
+                returnObj.Error = new Elmah.Error(ex);
+                return returnObj;
             }
         }
     }

@@ -234,12 +234,12 @@ namespace FrameworkLibrary
             var cacheKey = GetCacheKey(renderVersion);
             var cache = FileCacheHelper.GetFromCache(cacheKey);
 
-            if (string.IsNullOrEmpty(queryString) && string.IsNullOrEmpty(cache))
+            if (string.IsNullOrEmpty(queryString) && cache.IsError)
             {
                 FileCacheHelper.SaveToCache(cacheKey, html);
                 FileCacheHelper.SaveToCache(cacheKey + "?version=0", html);
             }
-            else if (string.IsNullOrEmpty(cache))
+            else if (cache.IsError)
             {
                 var items = HttpUtility.ParseQueryString(queryString);
 

@@ -57,7 +57,13 @@ namespace FrameworkLibrary
             if (language != null)
                 return (Language)language;
 
-            language = SettingsMapper.GetSettings()?.DefaultLanguage;
+            var settings = SettingsMapper.GetSettings();
+            language = settings.DefaultLanguage;
+
+            if(language == null && settings.DefaultLanguageID > 0)
+            {
+                language = LanguagesMapper.GetByID(settings.DefaultLanguageID);
+            }
 
             ContextHelper.SetToRequestContext("GetDefaultLanguage", language);
 

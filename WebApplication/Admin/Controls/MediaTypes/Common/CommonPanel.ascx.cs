@@ -281,7 +281,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
                                 valAsString = valAsString.Replace(URIHelper.BaseUrl, "{BaseUrl}");
                         }
 
-                        dataItem.FieldValue = valAsString;
+                        dataItem.FieldValue = MediaDetailsMapper.ConvertATagsToShortCodes(valAsString);
                     }
                     else
                     {

@@ -13,24 +13,6 @@ namespace WebApplication.Admin.Views.PageHandlers.Settings {
     public partial class Default {
         
         /// <summary>
-        /// DefaultLanguageSelector control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DefaultLanguageSelector;
-        
-        /// <summary>
-        /// DefaultMasterPageSelector control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DefaultMasterPageSelector;
-        
-        /// <summary>
         /// GlobalCodeInHead control.
         /// </summary>
         /// <remarks>
@@ -47,6 +29,24 @@ namespace WebApplication.Admin.Views.PageHandlers.Settings {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox GlobalCodeInBody;
+        
+        /// <summary>
+        /// DefaultLanguageSelector control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DefaultLanguageSelector;
+        
+        /// <summary>
+        /// DefaultMasterPageSelector control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DefaultMasterPageSelector;
         
         /// <summary>
         /// MaxUploadFileSizePerFileInMB control.

@@ -1,18 +1,11 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LoggedInHeader.ascx.cs" Inherits="WebApplication.Controls.OnLogin.LoggedInHeader" %>
 
-<style>
-    .field {        
-        position: relative;
-        /*padding-top: 25px;*/
-        display: inline-block !important;
-    }
-</style>
-<asp:Panel runat="server" ID="LoggedInHeaderPanel" ClientIDMode="Static" Visible="false">        
+<asp:Panel runat="server" ID="LoggedInHeaderPanel" ClientIDMode="Static">        
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
     <a id="SlideTab"><i class="fa fa-arrow-down" aria-hidden="true"></i>CMS Shortcuts</a>
-    <asp:Panel ID="AccessCMSPermissionsPanel" runat="server" Visible="false" ClientIDMode="Static">
+    <asp:Panel ID="AccessCMSPermissionsPanel" runat="server" Visible="true" ClientIDMode="Static">
         <div>                        
             <a ID="QuickEditCurrentPage" class="colorbox iframe button" data-OnColorboxClose="window.location.reload()" href="<%= CurrentMediaDetailAdminUrl %>&masterFilePath=~/Admin/Views/MasterPages/Popup.Master"><i class="fa fa-pencil"></i>&nbsp;Edit Page</a>                
             <div id="AdminPanel" runat="server">
@@ -46,6 +39,7 @@
             position: fixed;
             bottom:0;
             z-index:999999;
+            display:none;
         }
 
         #AccessCMSPermissionsPanel a.button{
@@ -75,6 +69,12 @@
 
         .floatRight {
             float: right;
+        }
+
+        .field {        
+            position: relative;
+            /*padding-top: 25px;*/
+            display: block !important;
         }
 
             .field.hide {
@@ -110,6 +110,10 @@
                 margin-top: -30px;
                 z-index: 999999;
                 float: left;
+                display: none;
+            }
+            .field .edit.show {
+                display: block;
             }
 
             .field .field .edit {
@@ -119,115 +123,119 @@
     </style>
 
     <script type="text/javascript">
+        
 
         function HideFieldsEditor() {
             $(".field").addClass("hide");
+            $(".field .edit").removeClass("show");
         }
 
         function ShowFieldsEditor() {
             $(".field").removeClass("hide");
+            $(".field .edit").addClass("show");
         }
 
         $(document).ready(function () {        
 
-            function UpdateSliderTabIcon()
-            {                
-                if ($("#AccessCMSPermissionsPanel").is(":visible"))
+            $.get("/WebServices/IMediaDetails.asmx/CanAccessFrontEndEditorForMediaDetail?id=<%= BasePage.CurrentMediaDetail.ID %>", function (data) {
+                if (data.IsError)
                 {                    
-                    $("#SlideTab .fa").removeClass("fa-arrow-up");
-                    $("#SlideTab .fa").addClass("fa-arrow-down");
-                }
-                else
-                {                    
-                    $("#SlideTab .fa").removeClass("fa-arrow-down");
-                    $("#SlideTab .fa").addClass("fa-arrow-up");
-                }
-            }
-
-            CreateFieldsEditor();            
-            
-            if (GetCMSShortcutsVisibility() == "true")
-            {                
-                $("#AccessCMSPermissionsPanel").show(0, function () {
-                    UpdateSliderTabIcon();                    
-                });                
-            }
-            else if (GetCMSShortcutsVisibility() == "false")
-            {
-                setTimeout(function () {
-                    HideFieldsEditor();
-                }, 100);
-
-                $("#AccessCMSPermissionsPanel").hide(0, function () {                    
-                    UpdateSliderTabIcon();                     
-                });                
-            }
-
-            function CreateFieldsEditor() {
-                $("[data-fieldid]").each(function () {
-                    var fieldId = $(this).attr("data-fieldid");
-                    var fieldcode = $(this).attr("data-fieldcode");
-
-                    $(this).prepend("<a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='window.location.reload()' data-width='60%' data-height='80%'>Edit - {Field:" + fieldcode+"}</a><div class='clear'></div>");
-                });
-
-                $(document).on("click", ".field .edit", function () {
-                    $(".field .edit").hide();
-                });
-
-                $(document).on("mouseenter", ".field .edit", function () {
-                    $(this).parent().addClass("hover");
-                });
-
-                $(document).on("mouseleave", ".field .edit", function () {
-                    $(this).parent().removeClass("hover");
-                });
-            }    
-
-            if (window.top != window) {
-                $("#LoggedInHeaderPanel").hide();
-                HideFieldsEditor();
-            }
-            else
-            {            
-                ShowFieldsEditor();
-            }
-
-            $("#SlideTab").on("click", function () {
-                $("#AccessCMSPermissionsPanel").slideToggle(function () {                        
-                    SetCMSShortcutsVisibility($(this).is(":visible"));               
-                });
-            });
-
-            function GetCMSShortcutsVisibility()
-            {
-                var visibility = $.cookie('CMSShortcutsVisibility');
-
-                if (visibility == undefined)
-                {
-                    visibility = $("#AccessCMSPermissionsPanel").is(":visible");
-                    SetCMSShortcutsVisibility(visibility);                    
-                }
-
-                return visibility;
-            }
-
-            function SetCMSShortcutsVisibility(val) {                
-                var visibility = $.cookie('CMSShortcutsVisibility', val);
-                UpdateSliderTabIcon(); 
-
-                if (val)
-                {
-                    ShowFieldsEditor();
+                    return;
                 }
                 else
                 {
-                    HideFieldsEditor();
+                    $("#LoggedInHeaderPanel").show();
+
+                    function UpdateSliderTabIcon() {
+                        if ($("#AccessCMSPermissionsPanel").is(":visible")) {
+                            $("#SlideTab .fa").removeClass("fa-arrow-up");
+                            $("#SlideTab .fa").addClass("fa-arrow-down");
+                        }
+                        else {
+                            $("#SlideTab .fa").removeClass("fa-arrow-down");
+                            $("#SlideTab .fa").addClass("fa-arrow-up");
+                        }
+                    }
+
+                    CreateFieldsEditor();
+
+                    if (GetCMSShortcutsVisibility() == "true") {
+                        $("#AccessCMSPermissionsPanel").show(0, function () {
+                            UpdateSliderTabIcon();
+                        });
+                    }
+                    else if (GetCMSShortcutsVisibility() == "false") {
+                        setTimeout(function () {
+                            HideFieldsEditor();
+                        }, 100);
+
+                        $("#AccessCMSPermissionsPanel").hide(0, function () {
+                            UpdateSliderTabIcon();
+                        });
+                    }
+
+                    function CreateFieldsEditor() {
+                        $("[data-fieldid]").each(function () {
+                            var fieldId = $(this).attr("data-fieldid");
+                            var fieldcode = $(this).attr("data-fieldcode");
+
+                            $(this).prepend("<a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='window.location.reload()' data-width='60%' data-height='80%'>Edit - {Field:" + fieldcode + "}</a><div class='clear'></div>");
+                        });
+
+                        $(document).on("click", ".field .edit", function () {
+                            $(".field .edit").hide();
+                        });
+
+                        $(document).on("mouseenter", ".field .edit", function () {
+                            $(this).parent().addClass("hover");
+                        });
+
+                        $(document).on("mouseleave", ".field .edit", function () {
+                            $(this).parent().removeClass("hover");
+                        });
+                    }
+
+                    if (window.top != window) {
+                        $("#LoggedInHeaderPanel").hide();
+                        HideFieldsEditor();
+                    }
+                    else {
+                        ShowFieldsEditor();
+                    }
+
+                    $("#SlideTab").on("click", function () {
+                        $("#AccessCMSPermissionsPanel").slideToggle(function () {
+                            SetCMSShortcutsVisibility($(this).is(":visible"));
+                        });
+                    });
+
+                    function GetCMSShortcutsVisibility() {
+                        var visibility = $.cookie('CMSShortcutsVisibility');
+
+                        if (visibility == undefined) {
+                            visibility = $("#AccessCMSPermissionsPanel").is(":visible");
+                            SetCMSShortcutsVisibility(visibility);
+                        }
+
+                        return visibility;
+                    }
+
+                    function SetCMSShortcutsVisibility(val) {
+                        var visibility = $.cookie('CMSShortcutsVisibility', val);
+                        UpdateSliderTabIcon();
+
+                        if (val) {
+                            ShowFieldsEditor();
+                        }
+                        else {
+                            HideFieldsEditor();
+                        }
+
+                        return visibility;
+                    }
+
                 }
-
-                return visibility;
-            }
-
+            });       
         });
     </script>
 </asp:Panel>

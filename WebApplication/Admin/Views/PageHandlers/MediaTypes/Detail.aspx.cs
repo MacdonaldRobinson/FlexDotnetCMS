@@ -105,7 +105,16 @@ namespace WebApplication.Admin.Views.PageHandlers.MediaTypes
             if (returnObj.IsError)
                 DisplayErrorMessage("Error Saving Item", returnObj.Error);
             else
+            {
+                var mediaDetails = selectedItem.MediaDetails.Where(i => i.HistoryForMediaDetail == null);
+
+                foreach (var mediaDetail in mediaDetails)
+                {
+                    mediaDetail.RemoveFromCache();
+                }
+
                 DisplaySuccessMessage("Successfully Saved Item");
+            }
         }
     }
 }

@@ -410,7 +410,7 @@ namespace WebApplication
         {
             if (rssItems == null)
             {
-                rssItems = MediaDetailsMapper.GetRssItems(MediaDetailsMapper.GetAllChildMediaDetails(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMedia.ID, FrameworkSettings.CurrentFrameworkBaseMedia.CurrentLanguage.ID).Where(i=>i.CanRender));
+                rssItems = MediaDetailsMapper.GetRssItems(MediaDetailsMapper.GetAllChildMediaDetails(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMedia.ID, FrameworkSettings.CurrentFrameworkBaseMedia.CurrentLanguage.ID).Where(i=>i.CanRender && i.ShowInMenu));
             }
 
             if (rssLink == "")

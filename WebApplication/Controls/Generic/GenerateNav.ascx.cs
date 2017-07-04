@@ -108,7 +108,7 @@ namespace WebApplication.Controls
 
                 string html = str.ToString();
 
-                FileCacheHelper.SaveGenerateToNav(html);
+                //FileCacheHelper.SaveGenerateToNav(html);
 
                 writer.Write(html);
             }            

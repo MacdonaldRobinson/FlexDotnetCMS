@@ -40,7 +40,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.UrlRedirectRule
         {
             var selectedItem = (FrameworkLibrary.UrlRedirectRule)SelectedItem;
             VirtualPathToRedirect.Text = selectedItem.VirtualPathToRedirect;
-            RedirectToUrl.Text = selectedItem.RedirectToUrl;
+            RedirectToUrl.Text = MediaDetailsMapper.ConvertUrlsToShortCodes(selectedItem.RedirectToUrl);
             Is301Redirect.Checked = selectedItem.Is301Redirect;
 
             CommonPanel.UpdateFieldsFromObject();

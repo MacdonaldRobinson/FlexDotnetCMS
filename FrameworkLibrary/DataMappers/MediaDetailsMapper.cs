@@ -96,7 +96,7 @@ namespace FrameworkLibrary
         }
 
 
-        public static string ConvertATagsToShortCodes(string content)
+        public static string ConvertUrlsToShortCodes(string content)
         {
             if (!content.Contains("/"))
                 return content;

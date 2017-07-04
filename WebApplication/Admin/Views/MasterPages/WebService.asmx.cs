@@ -333,9 +333,10 @@ namespace WebApplication.Admin.Views.MasterPages
             {
                 UserMustHaveAccessTo(detail);
 
-                HandleDeletePermanentlyRecursive(detail.Media);
-                ContextHelper.ClearAllMemoryCache();
                 detail.RemoveFromCache();
+
+                HandleDeletePermanentlyRecursive(detail.Media);                                
+                ContextHelper.ClearAllMemoryCache();
             }
         }
 

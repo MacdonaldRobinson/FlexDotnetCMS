@@ -31,9 +31,9 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
 
         public void UpdateObjectFromFields()
         {
-            selectedItem.MainLayout = MediaDetailsMapper.ConvertATagsToShortCodes(MainLayout.Text);
-            selectedItem.SummaryLayout = MediaDetailsMapper.ConvertATagsToShortCodes(SummaryLayout.Text);
-            selectedItem.FeaturedLayout = MediaDetailsMapper.ConvertATagsToShortCodes(FeaturedLayout.Text);
+            selectedItem.MainLayout = MediaDetailsMapper.ConvertUrlsToShortCodes(MainLayout.Text);
+            selectedItem.SummaryLayout = MediaDetailsMapper.ConvertUrlsToShortCodes(SummaryLayout.Text);
+            selectedItem.FeaturedLayout = MediaDetailsMapper.ConvertUrlsToShortCodes(FeaturedLayout.Text);
             selectedItem.UseMediaTypeLayouts = UseMediaTypeLayouts.Checked;
             selectedItem.UseDefaultLanguageLayouts = UseDefaultLanguageLayouts.Checked;
         }

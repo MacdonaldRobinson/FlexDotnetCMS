@@ -4,77 +4,33 @@ namespace FrameworkLibrary
 {
     public class RssItem
     {
-        private string title;
-        private string link;
-        private string author;
-        private string description;
-        private DateTime pubDate;
-        private object objectReference;
-
         public RssItem(string title, string description, string link, string author, DateTime pubDate, object objectReference)
         {
-            this.title = title;
-            this.author = author;
-            this.description = description;
-            this.link = link;
-            this.pubDate = pubDate;
-            this.objectReference = objectReference;
+            this.Title = title;
+            this.Author = author;
+            this.Description = description;
+            this.Link = link;
+            this.PubDate = pubDate.ToString("r");
+            this.ObjectReference = objectReference;
         }
 
-        public string Title
+        public RssItem(IMediaDetail mediaDetail)
         {
-            get
-            {
-                return title;
-            }
+            this.Title = mediaDetail.SectionTitle;
+            this.Author = mediaDetail.CreatedByUser.UserName;
+            this.Description = mediaDetail.ShortDescription;
+            this.Link = mediaDetail.AbsoluteUrl;
+            this.PubDate = ((DateTime)mediaDetail.PublishDate).ToString("r");
+            this.ObjectReference = mediaDetail;
+            this.Updated = mediaDetail.DateLastModified.ToString("r");
         }
 
-        public string Author
-        {
-            get
-            {
-                return author;
-            }
-        }
-
-        public string Description
-        {
-            get
-            {
-                return description;
-            }
-        }
-
-        public string Link
-        {
-            get
-            {
-                return link;
-            }
-        }
-
-        public object ObjectReference
-        {
-            get
-            {
-                return objectReference;
-            }
-        }
-
-        public string PubDate
-        {
-            get
-            {
-                return pubDate.ToString("r");
-            }
-        }
-
-        public string PubDateISO8601
-        {
-            get
-            {
-                return pubDate.ToString("yyyy-MM-ddTHH:mm:ss");
-            }
-        }
+        public string Title { get; private set; }
+        public string Author { get; private set; }
+        public string Description { get; private set; }
+        public string Link { get; private set; }
+        public object ObjectReference { get; private set; }
+        public string PubDate { get; private set; }
+        public string Updated { get; private set; }
     }
 }

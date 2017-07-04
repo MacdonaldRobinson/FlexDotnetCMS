@@ -198,7 +198,14 @@ namespace FrameworkLibrary
             RedisCacheHelper.ClearCache(mobileCacheKey + "?version=0");
             ContextHelper.RemoveFromCache(mobileCacheKey + "?version=0");
 
-            var parents = MediaDetailsMapper.GetAllParentMediaDetails(this, this.Language).Where(i=>i.ID != this.ID);
+            var language = this.Language;
+
+            if(language == null && this.LanguageID > 0)
+            {
+                language = LanguagesMapper.GetByID(this.LanguageID);
+            }
+
+            var parents = MediaDetailsMapper.GetAllParentMediaDetails(this, language).Where(i=>i.ID != this.ID);
 
             foreach (var item in parents)
             {
@@ -551,7 +558,7 @@ namespace FrameworkLibrary
 
         public RssItem GetRssItem()
         {
-            return PublishDate != null ? new RssItem(Title, GetMetaDescription(), AutoCalculatedVirtualPath, CreatedByUser.UserName, (DateTime)PublishDate, this) : null;
+            return PublishDate != null ? new RssItem(this) : null;
         }
 
         private string contextMetaDescription { get; set; } = "";

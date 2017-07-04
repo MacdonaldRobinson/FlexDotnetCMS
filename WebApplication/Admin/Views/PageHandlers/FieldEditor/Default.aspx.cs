@@ -102,7 +102,7 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor
                 if(value is string)
                 {
                     var str = value.ToString();
-                    str = MediaDetailsMapper.ConvertATagsToShortCodes(str);
+                    str = MediaDetailsMapper.ConvertUrlsToShortCodes(str);
                     Field.FieldValue = str;
                 }
 

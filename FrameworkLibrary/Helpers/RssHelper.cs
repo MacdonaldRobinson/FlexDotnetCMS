@@ -91,6 +91,7 @@ namespace FrameworkLibrary
             writer.WriteElementString("description", shortDesc);
             writer.WriteElementString("author", rssItem.Author);
             writer.WriteElementString("pubDate", rssItem.PubDate);
+            writer.WriteElementString("updated", rssItem.Updated);
             writer.WriteEndElement();
         }
 

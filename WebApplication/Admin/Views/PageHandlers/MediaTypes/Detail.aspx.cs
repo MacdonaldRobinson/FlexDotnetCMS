@@ -53,9 +53,9 @@ namespace WebApplication.Admin.Views.PageHandlers.MediaTypes
             selectedItem.EnableCaching = EnableCaching.Checked;
             selectedItem.AddRoles(MultiRoleSelector.GetSelectedRoles());
             selectedItem.AddChildMediaTypes(MultiMediaTypeSelector.GetSelectedMediaTypes());
-            selectedItem.MainLayout = MediaDetailsMapper.ConvertATagsToShortCodes(MainLayout.Text);
-            selectedItem.SummaryLayout = MediaDetailsMapper.ConvertATagsToShortCodes(SummaryLayout.Text);
-            selectedItem.FeaturedLayout = MediaDetailsMapper.ConvertATagsToShortCodes(FeaturedLayout.Text);
+            selectedItem.MainLayout = MediaDetailsMapper.ConvertUrlsToShortCodes(MainLayout.Text);
+            selectedItem.SummaryLayout = MediaDetailsMapper.ConvertUrlsToShortCodes(SummaryLayout.Text);
+            selectedItem.FeaturedLayout = MediaDetailsMapper.ConvertUrlsToShortCodes(FeaturedLayout.Text);
             selectedItem.UseMediaTypeLayouts = UseMediaTypeLayouts.Checked;
         }
 

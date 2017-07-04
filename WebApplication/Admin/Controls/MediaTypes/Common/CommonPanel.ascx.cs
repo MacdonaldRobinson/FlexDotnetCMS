@@ -275,13 +275,13 @@ namespace WebApplication.Admin.Controls.MediaTypes
 
                         if (!string.IsNullOrEmpty(valAsString))
                         {
-                            valAsString = MediaDetailsMapper.ConvertATagsToShortCodes(valAsString);
+                            valAsString = MediaDetailsMapper.ConvertUrlsToShortCodes(valAsString);
 
                             if(valAsString.Contains(URIHelper.BaseUrl))
                                 valAsString = valAsString.Replace(URIHelper.BaseUrl, "{BaseUrl}");
                         }
 
-                        dataItem.FieldValue = MediaDetailsMapper.ConvertATagsToShortCodes(valAsString);
+                        dataItem.FieldValue = MediaDetailsMapper.ConvertUrlsToShortCodes(valAsString);
                     }
                     else
                     {
@@ -298,7 +298,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
 
                         if (fieldValue != "{" + dataItem.GetAdminControlValue + "}")
                         {
-                            fieldValue = MediaDetailsMapper.ConvertATagsToShortCodes(fieldValue);
+                            fieldValue = MediaDetailsMapper.ConvertUrlsToShortCodes(fieldValue);
                             dataItem.FieldValue = fieldValue.Replace(URIHelper.BaseUrl, "{BaseUrl}");
                         }
                     }

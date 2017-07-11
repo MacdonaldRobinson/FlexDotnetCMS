@@ -1,17 +1,15 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin/Views/MasterPages/Popup.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="WebApplication.Admin.Views.PageHandlers.FieldEditor.Default" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">    
+
     <link href="<%= URIHelper.BaseUrl %>Admin/Styles/mediaDetails.css" rel="stylesheet" />
-
-
     <script type="text/javascript">  
         MasterPage = "FieldEditor";
         $(document).ready(function () {
             $("#tabs").tabs();                        
         });
-
-
     </script>
 
     <div class="buttons floatRight">

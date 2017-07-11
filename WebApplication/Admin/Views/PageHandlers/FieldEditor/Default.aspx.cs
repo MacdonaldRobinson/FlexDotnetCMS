@@ -30,7 +30,7 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor
                 if (field != null && field is MediaDetailField)
                 {
                     Field = field as MediaDetailField;
-                    LoadField();
+                    LoadField();                    
                 }
             }
         }

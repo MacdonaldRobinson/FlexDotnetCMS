@@ -1262,6 +1262,11 @@ namespace FrameworkLibrary
                     customCode = "";
             }
 
+            if(propertyName == "{UseMainLayout}" && customCode != propertyName)
+            {
+                customCode = "<div class='UseMainLayout' data-mediadetailid='"+mediaDetail.ID+"'>"+ customCode + "</div>";
+            }
+
             return customCode;
         }
     }

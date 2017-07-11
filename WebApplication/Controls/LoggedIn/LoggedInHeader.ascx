@@ -1,6 +1,10 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LoggedInHeader.ascx.cs" Inherits="WebApplication.Controls.OnLogin.LoggedInHeader" %>
+<%@ Register Src="~/Controls/LoggedIn/VisualLayoutEditor.ascx" TagPrefix="Admin" TagName="VisualLayoutEditor" %>
 
-<asp:Panel runat="server" ID="LoggedInHeaderPanel" ClientIDMode="Static">        
+<%--<Admin:VisualLayoutEditor runat="server" id="VisualLayoutEditor" />--%>
+
+<asp:Panel runat="server" ID="LoggedInHeaderPanel" ClientIDMode="Static">      
+    
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 

@@ -74,6 +74,15 @@
         });
     }
 
+    function UpdateVisualEditor(source)
+    {        
+        var code = "{Field:" + $(source).attr("data-fieldcode") + "}";
+        $('.AddField.clicked', window.parent.document).closest(".col").append(code);
+        parent.jQuery.colorbox.close();
+
+        //$('.AddField.clicked', window.parent.document).closest(".col").append(code);        
+    }
+
 </script>
 
 <style type="text/css">
@@ -99,7 +108,8 @@
                     <asp:TemplateField HeaderText="">
                         <ItemTemplate>
                             <asp:LinkButton ID="Edit" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="Edit_Click">Edit</asp:LinkButton> |
-                            <asp:LinkButton ID="Delete" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="Delete_Click" OnClientClick="return confirm('Are you sure you want to perminently delete this field? you will loose all data that has been assigned to this field.')">Delete</asp:LinkButton>
+                            <asp:LinkButton ID="Delete" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="Delete_Click" OnClientClick="return confirm('Are you sure you want to perminently delete this field? you will loose all data that has been assigned to this field.')">Delete</asp:LinkButton> |
+                            <asp:LinkButton ID="Select" runat="server" OnClientClick='UpdateVisualEditor(this)' data-fieldcode='<%# Eval("FieldCode") %>'>Select</asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
@@ -119,7 +129,7 @@
                     <asp:HiddenField ID="FieldID" runat="server" Value="0" />
                 <div>
                     <label for="<%# FieldCode.ClientID %>">Field Code:</label>
-                    <asp:TextBox runat="server" ID="FieldCode" />
+                    <asp:TextBox runat="server" ID="FieldCode"/>
                 </div>
                 <div>
                     <label for="<%# FieldLabel.ClientID %>">Field Label:</label>

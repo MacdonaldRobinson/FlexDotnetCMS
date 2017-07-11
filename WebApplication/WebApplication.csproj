@@ -162,6 +162,7 @@
     <Content Include="Admin\Controls\Fields\AssociationAutoSuggest.ascx" />
     <Content Include="Admin\Controls\Editors\DeletedItemsEditor.ascx" />
     <Content Include="Admin\Controls\Editors\MediaDetailRolesAssociationEditor.ascx" />
+    <Content Include="Admin\Controls\Selectors\FieldTypeSelector.ascx" />
     <Content Include="Admin\Controls\Selectors\FlickerPhotoSetSelector.ascx" />
     <Content Include="Admin\Controls\Selectors\Generic\PermissionsSelector.ascx" />
     <Content Include="Admin\Controls\Selectors\WebService.asmx" />
@@ -175,6 +176,7 @@
     <Content Include="Admin\Views\PageHandlers\Chat\AdminChat.asmx" />
     <Content Include="Admin\Views\PageHandlers\Chat\Default.aspx" />
     <Content Include="Admin\Views\PageHandlers\FieldEditor\Default.aspx" />
+    <Content Include="Admin\Views\PageHandlers\FieldSelector\Default.aspx" />
     <Content Include="Admin\Views\PageHandlers\FieldTypes\Default.aspx" />
     <Content Include="Admin\Views\PageHandlers\FieldTypes\Detail.aspx" />
     <Content Include="Admin\Views\PageHandlers\FieldTypes\ItemServices.asmx" />
@@ -225,6 +227,7 @@
     <Content Include="Controls\Generic\ShareThis.ascx" />
     <Content Include="Controls\Lists\CommentsList.ascx" />
     <Content Include="Controls\Lists\TwitterFeedList.ascx" />
+    <Content Include="Controls\LoggedIn\VisualLayoutEditor.ascx" />
     <Content Include="Controls\MasterPageSelector.ascx" />
     <Content Include="Admin\Controls\Selectors\MultiSelectors\MultiMediaTypeRoleSelector.ascx" />
     <Content Include="Admin\Controls\Selectors\MultiSelectors\MultiMediaTypeSelector.ascx" />
@@ -888,6 +891,13 @@
     <Compile Include="Admin\Controls\Editors\MediaDetailRolesAssociationEditor.ascx.designer.cs">
       <DependentUpon>MediaDetailRolesAssociationEditor.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\Controls\Selectors\FieldTypeSelector.ascx.cs">
+      <DependentUpon>FieldTypeSelector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Selectors\FieldTypeSelector.ascx.designer.cs">
+      <DependentUpon>FieldTypeSelector.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\Controls\Selectors\FlickerPhotoSetSelector.ascx.cs">
       <DependentUpon>FlickerPhotoSetSelector.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -932,6 +942,13 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Admin\Views\PageHandlers\FieldEditor\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\FieldSelector\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\FieldSelector\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Views\PageHandlers\FieldTypes\Default.aspx.cs">
@@ -1057,6 +1074,13 @@
     </Compile>
     <Compile Include="Controls\Lists\TwitterFeedList.ascx.designer.cs">
       <DependentUpon>TwitterFeedList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LoggedIn\VisualLayoutEditor.ascx.cs">
+      <DependentUpon>VisualLayoutEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\LoggedIn\VisualLayoutEditor.ascx.designer.cs">
+      <DependentUpon>VisualLayoutEditor.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controls\MasterPageSelector.ascx.cs">
       <DependentUpon>MasterPageSelector.ascx</DependentUpon>

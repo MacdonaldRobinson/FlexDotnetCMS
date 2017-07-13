@@ -142,10 +142,12 @@
             $(".AddField").removeClass("clicked");
             $(this).addClass("clicked");
 
+            var mediaDetailId = $(this).closest(".UseMainLayout").attr("data-mediadetailid");
+
             var source = this;
 
             $.colorbox({
-                href: "/Admin/Views/PageHandlers/FieldSelector/Default.aspx?mediaDetailId=3",
+                href: "/Admin/Views/PageHandlers/FieldSelector/Default.aspx?mediaDetailId=" + mediaDetailId,
                 width: colorBoxWidth,
                 height: colorBoxHeight,
                 iframe: true,

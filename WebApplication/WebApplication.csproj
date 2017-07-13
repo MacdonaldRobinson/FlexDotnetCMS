@@ -228,6 +228,7 @@
     <Content Include="Controls\Lists\CommentsList.ascx" />
     <Content Include="Controls\Lists\TwitterFeedList.ascx" />
     <Content Include="Controls\LoggedIn\VisualLayoutEditor.ascx" />
+    <Content Include="Controls\LoggedIn\css\VisualLayoutEditor.css" />
     <Content Include="Controls\MasterPageSelector.ascx" />
     <Content Include="Admin\Controls\Selectors\MultiSelectors\MultiMediaTypeRoleSelector.ascx" />
     <Content Include="Admin\Controls\Selectors\MultiSelectors\MultiMediaTypeSelector.ascx" />

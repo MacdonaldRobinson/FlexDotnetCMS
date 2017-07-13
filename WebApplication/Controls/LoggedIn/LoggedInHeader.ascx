@@ -1,9 +1,9 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LoggedInHeader.ascx.cs" Inherits="WebApplication.Controls.OnLogin.LoggedInHeader" %>
 <%@ Register Src="~/Controls/LoggedIn/VisualLayoutEditor.ascx" TagPrefix="Admin" TagName="VisualLayoutEditor" %>
 
-<%--<Admin:VisualLayoutEditor runat="server" id="VisualLayoutEditor" />--%>
-
 <asp:Panel runat="server" ID="LoggedInHeaderPanel" ClientIDMode="Static">      
+
+    <Admin:VisualLayoutEditor runat="server" id="VisualLayoutEditor" />
     
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
@@ -77,7 +77,7 @@
 
         .field {        
             position: relative;
-            /*padding-top: 25px;*/
+            padding-top: 25px;
             display: block !important;
         }
 
@@ -139,15 +139,41 @@
             $(".field .edit").addClass("show");
         }
 
+        function CreateFieldsEditor() {
+            $("[data-fieldid]").each(function () {
+                var fieldId = $(this).attr("data-fieldid");
+                var fieldcode = $(this).attr("data-fieldcode");
+
+                $(this).prepend("<a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='window.location.reload()' data-width='60%' data-height='80%'>Edit - {Field:" + fieldcode + "}</a><div class='clear'></div>");
+            });
+
+            $(document).on("click", ".field .edit", function () {
+                $(".field .edit").hide();
+            });
+
+            $(document).on("mouseenter", ".field .edit", function () {
+                $(this).parent().addClass("hover");
+            });
+
+            $(document).on("mouseleave", ".field .edit", function () {
+                $(this).parent().removeClass("hover");
+            });
+        }
+
+        var IsLoggedIn = false;
         $(document).ready(function () {        
 
             $.get("/WebServices/IMediaDetails.asmx/CanAccessFrontEndEditorForMediaDetail?id=<%= BasePage.CurrentMediaDetail.ID %>", function (data) {
                 if (data.IsError)
-                {                    
+                {                                        
                     return;
                 }
                 else
                 {
+                    IsLoggedIn = true;
+
+                    initVisualLayoutEditor();
+
                     $("#LoggedInHeaderPanel").show();
 
                     function UpdateSliderTabIcon() {
@@ -175,27 +201,6 @@
 
                         $("#AccessCMSPermissionsPanel").hide(0, function () {
                             UpdateSliderTabIcon();
-                        });
-                    }
-
-                    function CreateFieldsEditor() {
-                        $("[data-fieldid]").each(function () {
-                            var fieldId = $(this).attr("data-fieldid");
-                            var fieldcode = $(this).attr("data-fieldcode");
-
-                            $(this).prepend("<a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='window.location.reload()' data-width='60%' data-height='80%'>Edit - {Field:" + fieldcode + "}</a><div class='clear'></div>");
-                        });
-
-                        $(document).on("click", ".field .edit", function () {
-                            $(".field .edit").hide();
-                        });
-
-                        $(document).on("mouseenter", ".field .edit", function () {
-                            $(this).parent().addClass("hover");
-                        });
-
-                        $(document).on("mouseleave", ".field .edit", function () {
-                            $(this).parent().removeClass("hover");
                         });
                     }
 

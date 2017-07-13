@@ -173,6 +173,20 @@ namespace WebApplication.Admin.Views.MasterPages
         }
 
         [WebMethod(EnableSession = true)]
+        public void RenderField(long fieldId)
+        {
+            var field = FieldsMapper.GetByID(fieldId);
+            
+            if (field is MediaDetailField)
+            {
+                var mediaDetailField = field as MediaDetailField;
+                var html = mediaDetailField.MediaDetail.RenderField(fieldId, true);
+
+                WriteHtml(html);
+            }
+        }
+
+        [WebMethod(EnableSession = true)]
         public void GetRootNodes()
         {
             var rootNode = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetail == null && i.Media.ParentMedia == null);

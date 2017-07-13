@@ -11,17 +11,24 @@
 
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js"></script>
-<script src="/Scripts/tinymce/js/tinymce/tinymce.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headjs/1.0.3/head.min.js"></script>
+
 <script>
 
     function CleanHtml() {
-        $(".row, .col, .UseMainLayout").sortable("destroy");
+        $(".row[class~=ui-sortable], .col[class~=ui-sortable], .UseMainLayout[class~=ui-sortable]").sortable("destroy");
     }
 
-    $(function () {                
+    function initVisualLayoutEditor()
+    {
+        head.ready(function () {
+            head.load("/Controls/LoggedIn/css/VisualLayoutEditor.css", function () {
+                initEvents();
+            });
+        });
+    }    
 
+    function initEvents() {                
         $(".UseMainLayout").each(function () {
             if ($(this).children(".ToolBar").length == 0) {
                 var toolBar = $("#ToolBarTemplate").clone();
@@ -99,7 +106,8 @@
 
         $(document).on("click", ".AddRow", function () {
             var toolBar = $("#ToolBarTemplate").clone();
-            toolBar.find(".AddRow").css("display", "none");            
+            toolBar.find(".AddRow").css("display", "none"); 
+            toolBar.find(".AddField").css("display", "none");
             toolBar.find(".DeleteRow").css("display", "inline");
 
             var row = $("<div class='row'></div>");
@@ -143,7 +151,8 @@
                 iframe: true,
                 fixed: true,
                 onClosed: function () {
-                    console.log(source);
+                    CreateFieldsEditor();
+                    ShowFieldsEditor();                    
                 }                
             });
         });
@@ -225,68 +234,12 @@
 
             wrapper.attr("class", updatedClasses); 
 
-        });
-
-    });
+        });        
+    }
 </script>
 
-<style>
-    .UseMainLayout {
-        padding: 30px;
-        padding-top: 25px;
-    }
-    .row, .col {
-        padding: 30px;        
-    }
-
-    .UseMainLayout, .row, .col {
-        border: 1px dotted;
-        position:relative;
-    }
-
-    #ToolBarTemplate {
-        display: none;
-    }
-
-    .ToolBar a{
-        padding: 5px;
-    }
-
-    .ToolBar {
-        top:0;
-    }
-
-    .ToolBar {
-        position: absolute;              
-        border: 1px solid;
-        background-color: yellow;
-        display:none;
-        z-index: 999;
-    }
-
-    .DeleteRow, .DeleteColumn, .IncreaseColumnSize, .DecreaseColumnSize, .UpdateClasses {
-        display: none;
-    }
-
-    .UseMainLayout > .Handle {
-        display: none;
-    }
-
-    .Handle {
-        position: absolute;
-        cursor:move;
-        left:0;
-        top: 0;
-    }
-
-    .ace_editor div {
-        font: inherit!important
-    }
-
-</style>
-
-<div id="ToolBarTemplate">    
-    <a href="javascript:void(0)" class="Handle">Handle</a>
+<div id="ToolBarTemplate" style="display:none;">    
+    <a href="javascript:void(0)" class="Handle"><i class="fa fa-arrows" aria-hidden="true"></i></a>
     <div class="ToolBar">                
         <a href="javascript:void(0)" class="AddRow">Add Row</a>
         <a href="javascript:void(0)" class="AddColumn">Add Column</a>
@@ -298,3 +251,40 @@
         <input type="text" class="UpdateClasses" />
     </div>
 </div>
+
+<script>
+
+    $(document).ready(function () {
+        $(document).on("click", "#SaveLayout", function () {
+            SaveLayout();
+        });
+    });
+
+    function SaveLayout()
+    {
+        $(".UseMainLayout").each(function () {
+            var mediaDetailId = $(this).attr("data-mediadetailid");
+            var clone = $(this).clone();
+
+            clone.find(".ToolBar, .Handle").remove();
+            clone.find(".ui-sortable").removeClass(".ui-sortable");
+            clone.find(".field").each(function () {                
+                var fieldCode = $(this).attr("data-fieldcode")
+                var shortCode = "{Field:" + fieldCode + "}";
+
+                $(this).after(shortCode);
+                $(this).remove();                
+            });
+
+            var newHtml = clone.html().trim();
+            newHtml = newHtml.replace(/\s+/g, " ");            
+
+            $.post("/WebServices/IMediaDetails.asmx/SaveUseMainLayout", { mediaDetailId: mediaDetailId, html: escape(newHtml) }, function (data) {
+                window.location.reload();
+            });
+
+        });
+    }
+</script>
+
+<a href="javascript:void(0)" id="SaveLayout">Save Layout</a>

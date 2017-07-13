@@ -114,6 +114,33 @@ namespace WebApplication.Services
         }
 
         [WebMethod]
+        public void SaveUseMainLayout(long mediaDetailId, string html)
+        {
+            var mediaDetail = (MediaDetail)MediaDetailsMapper.GetByID(mediaDetailId);
+
+            if(mediaDetail != null)
+            {
+                if(mediaDetail.UseMediaTypeLayouts)
+                {
+                    mediaDetail.MediaType.MainLayout = Uri.UnescapeDataString(html);
+                }                
+                else
+                {
+                    mediaDetail.MainLayout = Uri.UnescapeDataString(html);
+                }
+
+                var returnObj = MediaDetailsMapper.Update(mediaDetail);
+
+                WriteJSON(returnObj.ToJson());
+            }
+            else
+            {
+                WriteJSON(new Return() { Error = new Elmah.Error() { Message = $"MediaDetail with the ID '{mediaDetailId}' was not found" } }.ToJson());
+            }            
+        }
+
+
+        [WebMethod]
         public void CanAccessFrontEndEditorForMediaDetail(long id)
         {
             var returnObj = new Return();

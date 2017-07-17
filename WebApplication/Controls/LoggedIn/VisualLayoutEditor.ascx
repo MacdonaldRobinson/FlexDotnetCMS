@@ -306,4 +306,4 @@
     }
 </script>
 
-<a href="javascript:void(0)" id="SaveLayout">Save Layout</a>
+<a href="javascript:void(0)" id="SaveLayout" class="button">Save Layout</a>

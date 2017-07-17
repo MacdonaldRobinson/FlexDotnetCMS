@@ -48,7 +48,7 @@
             display:none;
         }
 
-        #AccessCMSPermissionsPanel a.button{
+        #LoggedInHeaderPanel a.button{
             display: block;
             color: #fff;                
             border: 1px solid #fff;
@@ -57,11 +57,11 @@
             text-decoration: none;
         }
 
-        #AccessCMSPermissionsPanel a.button:hover{
+        #LoggedInHeaderPanel a.button:hover{
             background-color: red;
         }
 
-        #AccessCMSPermissionsPanel:after {
+        #LoggedInHeaderPanel:after {
             clear: both;
         }
 

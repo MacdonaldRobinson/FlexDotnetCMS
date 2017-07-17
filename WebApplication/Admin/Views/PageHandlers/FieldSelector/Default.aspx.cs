@@ -21,16 +21,27 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldSelector
 
                 if (mediaDetail != null)
                 {
-                    FieldsTab.SetObject(mediaDetail);
+                    if(mediaDetail.UseMediaTypeLayouts)
+                    {
+                        MediaTypeFieldsEditorWrapper.Visible = true;
+                        MediaTypeFieldsEditor.SetItems(mediaDetail.MediaType);
+                    }
+                    else
+                    {
+                        MediaDetailFieldsEditorWrapper.Visible = true;
+                        FieldsTab.SetObject(mediaDetail);
+                    }
                 }
                 else
                 {
-                    FieldsTab.Visible = false;
+                    MediaDetailFieldsEditorWrapper.Visible = false;
+                    MediaDetailFieldsEditorWrapper.Visible = false;
                 }
             }
             else
             {
-                FieldsTab.Visible = false;
+                MediaDetailFieldsEditorWrapper.Visible = false;
+                MediaDetailFieldsEditorWrapper.Visible = false;
             }
         }
     }

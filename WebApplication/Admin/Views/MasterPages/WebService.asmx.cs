@@ -173,15 +173,13 @@ namespace WebApplication.Admin.Views.MasterPages
         }
 
         [WebMethod(EnableSession = true)]
-        public void RenderField(long fieldId)
+        public void RenderField(long mediaDetailId, string fieldCode)
         {
-            var field = FieldsMapper.GetByID(fieldId);
+            var mediaDetail = MediaDetailsMapper.GetByID(mediaDetailId);
             
-            if (field is MediaDetailField)
+            if(mediaDetail != null)
             {
-                var mediaDetailField = field as MediaDetailField;
-                var html = mediaDetailField.MediaDetail.RenderField(fieldId, true);
-
+                var html = mediaDetail.RenderField(fieldCode, true);
                 WriteHtml(html);
             }
         }

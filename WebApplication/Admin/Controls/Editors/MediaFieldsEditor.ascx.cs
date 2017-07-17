@@ -30,6 +30,9 @@ namespace WebApplication.Admin.Controls.Editors
 
         private void BindItemList()
         {
+            if (mediaDetail == null)
+                return;
+
             ItemList.DataSource = mediaDetail.Fields.OrderBy(i => i.OrderIndex).ToList();
             ItemList.DataBind();
         }

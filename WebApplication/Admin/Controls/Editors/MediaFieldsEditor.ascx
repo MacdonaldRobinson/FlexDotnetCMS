@@ -83,16 +83,14 @@
         });
     }
 
-    function UpdateVisualEditor(source)
-    {        
-        var fieldId = $(source).attr("data-fieldid");   
+    function UpdateVisualEditor(source) {
+        var fieldCode = $(source).attr("data-fieldcode");
 
-        $.get("/Admin/Views/MasterPages/WebService.asmx/RenderField?fieldId=" + fieldId, function (data) {
-            try {                
+        $.get("/Admin/Views/MasterPages/WebService.asmx/RenderField?mediaDetailId=<%=Request["mediaDetailId"]%>&fieldCode=" + fieldCode, function (data) {
+            try {
                 $('.AddField.clicked', window.parent.document).closest(".col").append(data);
             }
-            catch (ex)
-            {
+            catch (ex) {
 
             }
             parent.SaveLayout();
@@ -127,7 +125,7 @@
                         <ItemTemplate>
                             <asp:LinkButton ID="Edit" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="Edit_Click">Edit</asp:LinkButton> |
                             <asp:LinkButton ID="Delete" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="Delete_Click" OnClientClick="return confirm('Are you sure you want to perminently delete this field? you will loose all data that has been assigned to this field.')">Delete</asp:LinkButton> |
-                            <asp:LinkButton ID="Select" runat="server" OnClientClick='UpdateVisualEditor(this)' data-fieldid='<%# Eval("ID") %>'>Select</asp:LinkButton>
+                            <asp:LinkButton ID="Select" runat="server" OnClientClick='UpdateVisualEditor(this)' data-fieldCode='<%# Eval("FieldCode") %>'>Select</asp:LinkButton>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

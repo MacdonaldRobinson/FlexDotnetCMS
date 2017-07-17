@@ -1,13 +1,13 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="VisualLayoutEditor.ascx.cs" Inherits="WebApplication.Controls.LoggedIn.VisualLayoutEditor" %>
 
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" data-visual-layout-editor="true">
 
 <!-- Optional theme -->
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" data-visual-layout-editor="true">
 
 <!-- Latest compiled and minified JavaScript -->
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" data-visual-layout-editor="true"></script>
 
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -63,7 +63,7 @@
             if ($(this).children(".ToolBar").length == 0) {
                 var toolBar = $("#ToolBarTemplate").clone();
                 toolBar.find(".ToolBar").css("display", "block");
-                toolBar.find(".AddRow").css("display", "none");
+                toolBar.find(".AddRow").css("display", "inline");
                 toolBar.find(".AddColumn").css("display", "none");
                 toolBar.find(".DeleteColumn").css("display", "inline");
                 toolBar.find(".IncreaseColumnSize").css("display", "inline");
@@ -77,10 +77,27 @@
         BindDragDrop();
 
         function BindDragDrop()
-        {          
-            $(".UseMainLayout, .row, .col").sortable({
-                handle: ".Handle"
-            });                                      
+        {
+            $(".UseMainLayout").sortable({
+                tolerance: "pointer",
+                handle: ".Handle",
+                revert: true
+            });     
+
+            $(".row").sortable({
+                tolerance: "pointer",
+                handle: ".Handle",
+                revert: true,
+                connectWith: '.row'
+            });
+
+            $(".col").sortable({
+                tolerance: "pointer",
+                handle: ".Handle",
+                revert: true,
+                connectWith: '.col'
+            });
+
         }
 
         $(document).on("mouseover", ".UseMainLayout, .row, .col", function () {
@@ -153,8 +170,8 @@
                 iframe: true,
                 fixed: true,
                 onClosed: function () {
-                    CreateFieldsEditor();
-                    ShowFieldsEditor();                    
+                    //CreateFieldsEditor();
+                    //ShowFieldsEditor();                    
                 }                
             });
         });

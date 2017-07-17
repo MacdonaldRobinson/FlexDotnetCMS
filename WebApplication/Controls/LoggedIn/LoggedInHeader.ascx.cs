@@ -1,5 +1,6 @@
 ﻿using FrameworkLibrary;
 using System;
+using System.Linq;
 
 namespace WebApplication.Controls.OnLogin
 {
@@ -7,6 +8,11 @@ namespace WebApplication.Controls.OnLogin
     {
         protected void Page_PreRender(object sender, EventArgs e)
         {
+            if(Request["VisualLayoutEditor"] != null && Request["VisualLayoutEditor"] == "true")
+            {
+                VisualLayoutEditor.Visible = true;
+            }
+
             /*if (this.BasePage.CurrentUser != null)
             {
                 if (this.BasePage.CurrentUser.HasPermission(PermissionsEnum.AccessCMS))

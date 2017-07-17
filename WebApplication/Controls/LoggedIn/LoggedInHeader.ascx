@@ -3,7 +3,7 @@
 
 <asp:Panel runat="server" ID="LoggedInHeaderPanel" ClientIDMode="Static">      
 
-    <Admin:VisualLayoutEditor runat="server" id="VisualLayoutEditor" />
+    <Admin:VisualLayoutEditor runat="server" id="VisualLayoutEditor" Visible="false"/>
     
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
@@ -13,7 +13,8 @@
         <div>                        
             <a ID="QuickEditCurrentPage" class="colorbox iframe button" data-OnColorboxClose="window.location.reload()" href="<%= CurrentMediaDetailAdminUrl %>&masterFilePath=~/Admin/Views/MasterPages/Popup.Master"><i class="fa fa-pencil"></i>&nbsp;Edit Page</a>                
             <div id="AdminPanel" runat="server">
-                <a ID="EditSettings" class="colorbox iframe button" data-OnColorboxClose="window.location.reload()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Settings/Default.aspx?masterFilePath=~/Admin/Views/MasterPages/Popup.Master"><i class="fa fa-wrench"></i>&nbsp;Edit Settings</a>
+                <a ID="ToggleVisualEditor" class="button" href="javascript:void(0)" onclick="ToggleVisualEditor()"><i class="fa fa-wrench"></i>&nbsp;Toggle Visual Layout Editor</a>
+                <a ID="EdiSettings" class="colorbox iframe button" data-OnColorboxClose="window.location.reload()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Settings/Default.aspx?masterFilePath=~/Admin/Views/MasterPages/Popup.Master"><i class="fa fa-wrench"></i>&nbsp;Edit Settings</a>
                 <a ID="EditTemplate" class="colorbox iframe button" data-OnColorboxClose="window.location.reload()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MasterPages/Detail.aspx?id=<%= BasePage.CurrentMediaDetail.GetMasterPage().ID %>"><i class="fa fa-file-code-o"></i>&nbsp;Edit Template</a>
                 <a ID="EditMediaType" class="colorbox iframe button" data-OnColorboxClose="window.location.reload()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MediaTypes/Detail.aspx?id=<%= BasePage.CurrentMediaDetail.MediaTypeID %>"><i class="fa fa-file-code-o"></i>&nbsp;Edit Media Type</a>
             </div>
@@ -42,6 +43,7 @@
             color: #fff;
             position: fixed;
             bottom:0;
+            right:0;
             z-index:999999;
             display:none;
         }
@@ -127,11 +129,35 @@
     </style>
 
     <script type="text/javascript">
-        
+
+        function ToggleVisualEditor()
+        {            
+            if (window.location.search.toLowerCase().indexOf("visuallayouteditor=true") == -1)
+            {
+                var url = window.location.href;
+
+                if (url.indexOf("?") == -1)
+                {
+                    url = url + "?";
+                }
+                else
+                {
+                    url = url + "&";
+                }
+
+                url = url + "VisualLayoutEditor=true";
+
+                window.location.href = url;
+            }
+            else
+            {
+                window.location.href = window.location.href.toLowerCase().replace("&visuallayouteditor=true", "").replace("?visuallayouteditor=true", "");
+            }
+        }
 
         function HideFieldsEditor() {
             $(".field").addClass("hide");
-            $(".field .edit").removeClass("show");
+            $(".field .edit").removeClass("show");           
         }
 
         function ShowFieldsEditor() {
@@ -172,7 +198,9 @@
                 {
                     IsLoggedIn = true;
 
-                    initVisualLayoutEditor();
+                    if (typeof initVisualLayoutEditor == 'function') {
+                        initVisualLayoutEditor();
+                    }
 
                     $("#LoggedInHeaderPanel").show();
 

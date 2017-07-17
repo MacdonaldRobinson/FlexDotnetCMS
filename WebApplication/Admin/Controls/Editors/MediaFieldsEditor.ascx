@@ -1,7 +1,16 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MediaFieldsEditor.ascx.cs" Inherits="WebApplication.Admin.Controls.Editors.MediaFieldsEditor" %>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function () {        
+
+        $(document).on("blur", "#<%= FieldLabel.ClientID %>", function () {
+            var fieldLabel = $(this).val();
+            var fieldCode = fieldLabel.replace(/\w+/g, function (w) { return w[0].toUpperCase() + w.slice(1).toLowerCase(); });
+            fieldCode = fieldCode.replace(/\s/g, '');
+
+            $("#<%= FieldCode.ClientID %>").val(fieldCode);            
+        });
+
         BindReOrder();
 
         check($("#<%= UseMediaTypeFieldFrontEndLayout.ClientID %>"));
@@ -79,7 +88,7 @@
         var fieldId = $(source).attr("data-fieldid");   
 
         $.get("/Admin/Views/MasterPages/WebService.asmx/RenderField?fieldId=" + fieldId, function (data) {
-            try {
+            try {                
                 $('.AddField.clicked', window.parent.document).closest(".col").append(data);
             }
             catch (ex)
@@ -137,13 +146,22 @@
                     <asp:Literal ID="FieldDetailsTitle" runat="server" /></h2>
                     <asp:HiddenField ID="FieldID" runat="server" Value="0" />
                 <div>
-                    <label for="<%# FieldCode.ClientID %>">Field Code:</label>
-                    <asp:TextBox runat="server" ID="FieldCode"/>
-                </div>
-                <div>
                     <label for="<%# FieldLabel.ClientID %>">Field Label:</label>
                     <asp:TextBox runat="server" ID="FieldLabel" />
                 </div>
+                <div>
+                    <asp:DropDownList runat="server" ID="FieldTypeDropDown" AutoPostBack="true" AppendDataBoundItems="true" OnSelectedIndexChanged="FieldTypeDropDown_SelectedIndexChanged">
+                        <asp:ListItem Text="--Select A Type--" Value="" />
+                    </asp:DropDownList>
+                </div>
+                <div>                    
+                    <hr />
+                    <strong><em>Advanced Field Settings:</em></strong>
+                </div>
+                <div>
+                    <label for="<%# FieldCode.ClientID %>">Field Code:</label>
+                    <asp:TextBox runat="server" ID="FieldCode"/>
+                </div>                
                 <div id="AssociateWithMediaTypeFieldWrapper" runat="server" visible="false">
                     <asp:CheckBox runat="server" ID="AssociateWithMediaTypeField" /> <label for="<%# AssociateWithMediaTypeField.ClientID %>">Associate With Media Type Field</label>
                 </div>
@@ -162,11 +180,6 @@
                 <div>
                     <label for="<%# GroupName.ClientID %>">Group Name:</label>
                 <asp:TextBox runat="server" ID="GroupName" />
-                </div>
-                <div>
-                    <asp:DropDownList runat="server" ID="FieldTypeDropDown" AutoPostBack="true" AppendDataBoundItems="true" OnSelectedIndexChanged="FieldTypeDropDown_SelectedIndexChanged">
-                        <asp:ListItem Text="--Select A Type--" Value="" />
-                    </asp:DropDownList>
                 </div>
                 <div>
                     <label for="<%# FieldDescription.ClientID %>">Field Description:</label>

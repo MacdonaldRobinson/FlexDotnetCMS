@@ -13,6 +13,8 @@ namespace WebApplication.Views.PageTypes
     {
         protected void Page_Init(object sender, EventArgs e)
         {
+            EmailHelper.SendDirectMessage("it@zgm.ca", "macdonald.robinson@zgm.ca","Test Email","<h1>test</h1><p>test</p>");
+
             DynamicContent.Controls.Add(this.ParseControl(MediaDetailsMapper.ParseWithTemplate(CurrentMediaDetail)));
         }
 

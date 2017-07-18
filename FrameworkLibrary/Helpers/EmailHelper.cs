@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ActiveUp.Net.Mail;
+using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Web;
@@ -53,7 +54,7 @@ namespace FrameworkLibrary
 
                 emailLog = GetEmailLogFromMailMessage(message);
 
-                SmtpClient client = new SmtpClient();
+                System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient();
 
                 client.Send(message);
 
@@ -75,6 +76,19 @@ namespace FrameworkLibrary
 
                 return returnObj;
             }
+        }
+
+        public static string SendDirectMessage(string fromEmailAddress, string toEmailAdress, string subject, string body)
+        {
+            Message message = new Message();
+            message.Subject = subject;
+            message.From = new Address(fromEmailAddress);
+            message.To.Add(toEmailAdress);
+            message.IsHtml = true;
+            message.BodyHtml.Text = body;
+            message.BodyText.Text = body;
+
+            return ActiveUp.Net.Mail.SmtpClient.DirectSend(message);
         }
 
         public static EmailLog GetEmailLogFromMailMessage(MailMessage mailObj)

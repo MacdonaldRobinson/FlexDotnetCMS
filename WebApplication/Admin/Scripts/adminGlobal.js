@@ -1237,12 +1237,14 @@ $(document).ready(function () {
 
 function BindSortable() {
     $(".dropZone.sortable").sortable({
+        tolerance: "pointer",
         connectWith: '.dropZone.sortable',
         update: function (event, ui) {
         }
     });
 
     $(".MultiFileUploader .sortable").sortable({
+        tolerance: "pointer",
         update: function (event, ui) {
             var arr = new Array();
             $(this).children("li").each(function () {

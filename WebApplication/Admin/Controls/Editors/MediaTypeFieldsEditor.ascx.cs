@@ -60,12 +60,20 @@ namespace WebApplication.Admin.Controls.Editors
                 BasePage.DisplayErrorMessage("You can only add fields once you have created the page");
                 return;
             }
+
+            if (FieldCode.Text == "")
+            {
+                BasePage.DisplayErrorMessage("'FieldCode' cannot be blank");
+                return;
+            }
+
             var fieldId = long.Parse(FieldID.Value);
 
             if (fieldId == 0)
             {
                 var mediaTypeField = new MediaTypeField();
                 UpdatedObjectFromFields(mediaTypeField);
+
                 mediaType.Fields.Add(mediaTypeField);                
 
                 foreach (var mediaDetail in mediaType.MediaDetails)

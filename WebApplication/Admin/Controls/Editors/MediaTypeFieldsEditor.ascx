@@ -2,6 +2,15 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+        $(document).on("blur", "#<%= FieldLabel.ClientID %>", function () {
+            var fieldLabel = $(this).val();
+            var fieldCode = fieldLabel.replace(/\w+/g, function (w) { return w[0].toUpperCase() + w.slice(1).toLowerCase(); });
+            fieldCode = fieldCode.replace(/\s/g, '');
+
+            $("#<%= FieldCode.ClientID %>").val(fieldCode);
+        });
+
         BindReOrder();
 
         OnUpdatePanelRefreshComplete(function (event) {
@@ -63,16 +72,32 @@
         </fieldset>
         <asp:Panel runat="server">
             <fieldset>
+                 <div>
+                    <div id="SaveFields" class="buttons">
+                        <asp:LinkButton Text="Save" runat="server" ID="Update" OnClick="Update_Click" CssClass="SaveFieldButton" />
+                        <asp:LinkButton Text="Cancel" runat="server" ID="Cancel" OnClick="Cancel_Click" />
+                    </div>
+                    <div class="clear"></div>
+                </div>
                 <h2>
                     <asp:Literal ID="FieldDetailsTitle" runat="server" /></h2>
                 <asp:HiddenField ID="FieldID" runat="server" Value="0" />
                 <div>
-                    <label for="<%# FieldCode.ClientID %>">Field Code:</label>
-                    <asp:TextBox runat="server" ID="FieldCode" />
-                </div>
-                <div>
                     <label for="<%# FieldLabel.ClientID %>">Field Label:</label>
                     <asp:TextBox runat="server" ID="FieldLabel" />
+                </div>
+                <div>
+                    <asp:DropDownList runat="server" ID="FieldTypeDropDown" AutoPostBack="true" AppendDataBoundItems="true" OnSelectedIndexChanged="FieldTypeDropDown_SelectedIndexChanged">
+                        <asp:ListItem Text="--Select A Type--" Value="" />
+                    </asp:DropDownList>
+                </div>
+                <div>                    
+                    <hr />
+                    <strong><em>Advanced Field Settings:</em></strong>
+                </div>
+                <div>
+                    <label for="<%# FieldCode.ClientID %>">Field Code:</label>
+                    <asp:TextBox runat="server" ID="FieldCode" />
                 </div>
                 <div>
                     <asp:CheckBox runat="server" ID="RenderLabelAfterControl" /> <label for="<%# RenderLabelAfterControl.ClientID %>">Render Label After Control</label>
@@ -83,11 +108,6 @@
                 <div>
                     <label for="<%# GroupName.ClientID %>">Group Name:</label>
                 <asp:TextBox runat="server" ID="GroupName" />
-                </div>
-                <div>
-                    <asp:DropDownList runat="server" ID="FieldTypeDropDown" AutoPostBack="true" AppendDataBoundItems="true" OnSelectedIndexChanged="FieldTypeDropDown_SelectedIndexChanged">
-                        <asp:ListItem Text="--Select A Type--" Value="" />
-                    </asp:DropDownList>
                 </div>
                 <div>
                     <label for="<%# FieldDescription.ClientID %>">Field Description:</label>
@@ -115,10 +135,6 @@
                     <div>
                         <asp:TextBox runat="server" ID="FieldValue" TextMode="MultiLine" />
                     </div>
-                </div>
-                <div class="buttons">
-                    <asp:LinkButton Text="Save" runat="server" ID="Update" OnClick="Update_Click" CssClass="SaveFieldButton"/>
-                    <asp:LinkButton Text="Cancel" runat="server" ID="Cancel" OnClick="Cancel_Click" />
                 </div>
             </fieldset>
         </asp:Panel>

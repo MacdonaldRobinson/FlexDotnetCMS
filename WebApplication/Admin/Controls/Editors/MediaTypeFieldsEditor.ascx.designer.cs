@@ -40,6 +40,24 @@ namespace WebApplication.Admin.Controls.Editors {
         protected global::System.Web.UI.WebControls.GridView ItemList;
         
         /// <summary>
+        /// Update control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton Update;
+        
+        /// <summary>
+        /// Cancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton Cancel;
+        
+        /// <summary>
         /// FieldDetailsTitle control.
         /// </summary>
         /// <remarks>
@@ -58,15 +76,6 @@ namespace WebApplication.Admin.Controls.Editors {
         protected global::System.Web.UI.WebControls.HiddenField FieldID;
         
         /// <summary>
-        /// FieldCode control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox FieldCode;
-        
-        /// <summary>
         /// FieldLabel control.
         /// </summary>
         /// <remarks>
@@ -74,6 +83,24 @@ namespace WebApplication.Admin.Controls.Editors {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox FieldLabel;
+        
+        /// <summary>
+        /// FieldTypeDropDown control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList FieldTypeDropDown;
+        
+        /// <summary>
+        /// FieldCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox FieldCode;
         
         /// <summary>
         /// RenderLabelAfterControl control.
@@ -101,15 +128,6 @@ namespace WebApplication.Admin.Controls.Editors {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox GroupName;
-        
-        /// <summary>
-        /// FieldTypeDropDown control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList FieldTypeDropDown;
         
         /// <summary>
         /// FieldDescription control.
@@ -164,23 +182,5 @@ namespace WebApplication.Admin.Controls.Editors {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox FieldValue;
-        
-        /// <summary>
-        /// Update control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Update;
-        
-        /// <summary>
-        /// Cancel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Cancel;
     }
 }

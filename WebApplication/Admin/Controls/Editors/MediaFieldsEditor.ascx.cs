@@ -111,6 +111,13 @@ namespace WebApplication.Admin.Controls.Editors
                 BasePage.DisplayErrorMessage("You can only add fields once you have created the page");
                 return;
             }
+
+            if (FieldCode.Text == "")
+            {
+                BasePage.DisplayErrorMessage("'FieldCode' cannot be blank");
+                return;
+            }
+
             var fieldId = long.Parse(FieldID.Value);
 
             MediaDetailField mediaField = null;

@@ -6,6 +6,28 @@
 
 <script>
 
+    function UpdateVisualEditor(source) {        
+        var fieldCode = $(source).attr("data-fieldcode");
+
+        var mediaDetailId = $('.AddField.clicked').closest(".UseMainLayout").attr("data-mediadetailid");
+
+        var url = "/Admin/Views/MasterPages/WebService.asmx/RenderField?mediaDetailId=" + mediaDetailId+"&fieldCode=" + fieldCode;
+
+        $.get(url, function (data) {
+            try {
+                
+                $('.AddField.clicked').closest(".col").append(data);
+            }
+            catch (ex) {
+
+            }
+
+            SaveLayout();
+        });
+
+        //$('.AddField.clicked', window.parent.document).closest(".col").append(code);        
+    }
+
     function CleanHtml() {
         $(".row[class~=ui-sortable], .col[class~=ui-sortable], .UseMainLayout[class~=ui-sortable]").sortable("destroy");
     }
@@ -82,13 +104,19 @@
                 connectWith: '.row'
             });
 
-            $(".col").sortable({
+            /*$(".col").sortable({
                 tolerance: "pointer",
                 handle: ".Handle",
                 revert: true,
                 connectWith: '.col'
-            });
+            });*/
 
+            $(".col").sortable({
+                items: "> .field",
+                tolerance: "pointer",
+                connectWith: '.col',
+                revert: true
+            });         
         }
 
         $(document).on("mouseover", ".UseMainLayout, .row, .col", function () {
@@ -274,10 +302,9 @@
     {
         $(".UseMainLayout").each(function () {
             var mediaDetailId = $(this).attr("data-mediadetailid");
-            var clone = $(this).clone();
+            var clone = $(this).clone(this);
 
             clone.find(".ToolBar, .Handle").remove();
-            clone.find(".ui-sortable").removeClass(".ui-sortable");
             clone.find(".field").each(function () {                
                 var fieldCode = $(this).attr("data-fieldcode")
                 var shortCode = "{Field:" + fieldCode + "}";
@@ -286,9 +313,14 @@
                 $(this).remove();                
             });
 
+            clone.find(".row").removeClass("ui-sortable");
+            clone.find(".col").removeClass("ui-sortable");
+            clone.find(".col").removeAttr("style");
+            clone.find(".row").removeAttr("style");
+
             var newHtml = clone.html().trim();
             newHtml = newHtml.replace(/\s+/g, " ");          
-            newHtml = html_beautify(newHtml);            
+            newHtml = html_beautify(newHtml);                        
 
             $.post("/WebServices/IMediaDetails.asmx/SaveUseMainLayout", { mediaDetailId: mediaDetailId, html: escape(newHtml) }, function (data) {
                 window.location.reload();

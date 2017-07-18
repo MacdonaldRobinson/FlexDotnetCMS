@@ -50,3 +50,9 @@
 .ace_editor div {
     font: inherit !important
 }
+
+
+.fieldWrapper {
+    border: 1px dotted #000;
+    padding: 10px;
+}

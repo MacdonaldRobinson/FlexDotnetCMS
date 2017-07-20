@@ -737,6 +737,14 @@ function BindTabs()
 
 $(document).ready(function () {
 
+    try {
+        $("select").selectmenu();
+        $("input[type=checkbox],input[type=radio]").checkboxradio();        
+    }
+    catch (ex) {
+
+    }
+
     //BindScrollMagic();    
 
     $('.tooltip').each(function () {

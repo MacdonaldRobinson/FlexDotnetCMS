@@ -261,7 +261,13 @@ namespace WebApplication.Admin.Controls.MediaTypes
 
                     if (control.Controls.Count > 0)
                     {
-                        control = control.Controls[0];
+                        foreach (Control ctrl in control.Controls)
+                        {
+                            if(!(ctrl is LiteralControl))
+                            {
+                                control = ctrl;
+                            }
+                        }                        
                     }
 
                     var adminPanel = WebFormHelper.FindControlRecursive(dynamicField, "AdminPanel");
@@ -334,7 +340,13 @@ namespace WebApplication.Admin.Controls.MediaTypes
 
                     if (control.Controls.Count > 0)
                     {
-                        control = control.Controls[0];
+                        foreach (Control ctrl in control.Controls)
+                        {
+                            if (!(ctrl is LiteralControl))
+                            {
+                                control = ctrl;
+                            }
+                        }
                     }
 
                     var adminPanel = WebFormHelper.FindControlRecursive(dynamicField, "AdminPanel");

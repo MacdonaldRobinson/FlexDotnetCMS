@@ -65,14 +65,18 @@ namespace WebApplication.Services
 
             var absPath = Request.Url.AbsolutePath.ToLower();
 
-            if ((enableCaching) && (!BasePage.IsInAdminSection))
+            /*if ((enableCaching) && (!BasePage.IsInAdminSection))
             {
                 Response.Cache.SetExpires(DateTime.Now.AddYears(30));
                 Response.Cache.SetMaxAge(TimeSpan.FromDays(365.0 * 3.0));
             }
 
             Response.Cache.SetLastModified(DateTime.Now);
-            Response.Cache.SetCacheability(HttpCacheability.ServerAndNoCache);
+            Response.Cache.SetCacheability(HttpCacheability.ServerAndNoCache);*/
+
+            Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+            Response.Cache.SetNoStore();
+            Response.Cache.SetMaxAge(TimeSpan.FromDays(0));
 
             if (HttpContext.Current.Request.HttpMethod == "POST")
                 return;

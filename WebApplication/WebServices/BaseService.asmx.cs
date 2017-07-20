@@ -74,9 +74,14 @@ namespace WebApplication.Services
             Response.Cache.SetLastModified(DateTime.Now);
             Response.Cache.SetCacheability(HttpCacheability.ServerAndNoCache);*/
 
-            Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
-            Response.Cache.SetNoStore();
-            Response.Cache.SetMaxAge(TimeSpan.FromDays(0));
+            var cache = Response.Cache;
+
+            cache.SetMaxAge(TimeSpan.FromDays(0));
+            cache.SetExpires(DateTime.UtcNow.AddDays(-1));
+            cache.SetValidUntilExpires(false);
+            cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
+            cache.SetCacheability(HttpCacheability.NoCache);
+            cache.SetNoStore();
 
             if (HttpContext.Current.Request.HttpMethod == "POST")
                 return;

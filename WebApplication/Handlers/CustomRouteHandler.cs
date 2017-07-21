@@ -1,5 +1,6 @@
 ﻿using FrameworkLibrary;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -78,7 +79,7 @@ namespace WebApplication.Handlers
         }
 
         public IHttpHandler GetHttpHandler(RequestContext requestContext)
-        {
+        {            
             RedisCacheHelper.SetRedisCacheConnectionString(AppSettings.RedisCacheConnectionString);
             FileCacheHelper.SetFileSystemCacheDirPath(AppSettings.FileSystemCacheDirPath);
 

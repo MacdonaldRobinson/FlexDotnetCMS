@@ -718,6 +718,7 @@ $(window).load(function () {
             //setTimeout(function () {
                 initAceEditors();
                 initTinyMCE();
+                BindJQueryUIControls();
             //}, 1000); 
         }
     });
@@ -735,16 +736,24 @@ function BindTabs()
     $('.tabs').tabs();
 }
 
-$(document).ready(function () {
-
+function BindJQueryUIControls()
+{
     try {
-        $("select").selectmenu();
-        $("input[type=checkbox],input[type=radio]").checkboxradio();        
+        $("select").selectmenu({
+            change: function (event, ui) {
+                $(event.target).trigger("change");
+            }
+        });
+        $("li input[type=checkbox], li input[type=radio]").checkboxradio();
+
     }
     catch (ex) {
 
     }
+}
 
+$(document).ready(function () {
+    BindJQueryUIControls();
     //BindScrollMagic();    
 
     $('.tooltip').each(function () {
@@ -1200,6 +1209,7 @@ $(document)
     });
 
 function pageLoad(sender, args) {    
+    BindJQueryUIControls();
     /*RefreshSiteTreeNodeById($("#SiteTree").jstree("get_selected")[0]);
     BindScrollMagic();
     BindDataTable();

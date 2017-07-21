@@ -10,7 +10,7 @@
         });
     </script>
 
-    <asp:CheckBoxList runat="server" ID="ItemsList">
+    <asp:CheckBoxList runat="server" ID="ItemsList" RepeatLayout="UnorderedList">
     </asp:CheckBoxList>
     <asp:HiddenField ID="Values" runat="server" />
 </asp:Panel>

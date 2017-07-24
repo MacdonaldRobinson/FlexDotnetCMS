@@ -744,6 +744,17 @@ function BindJQueryUIControls()
                 $(event.target).trigger("change");
             }
         });
+
+        //$("[class='RadioButtonList']").each(function () {
+        //    var inputItems = $(this).find("input");
+        //    var index = $("[class='RadioButtonList']").index(this);
+
+        //    var name = "RadioButtonListItem_" + index;
+
+        //    inputItems.attr("type", "radio")
+        //    inputItems.attr("name", name);
+        //});
+
         $("li input[type=checkbox], li input[type=radio]").checkboxradio();
 
     }

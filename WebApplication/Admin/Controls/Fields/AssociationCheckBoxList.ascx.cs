@@ -10,11 +10,20 @@ namespace WebApplication.Admin.Controls.Fields
 {
     public partial class AssociationCheckBoxList : BaseFieldControl
     {
+        public ListControl ItemsList { get; private set; }
+
         public void Page_Init(object sender, EventArgs e)
         {
-            if(IsRadioButtonList)
+            if (IsRadioButtonList)
             {
+                RadioButtonList.Visible = true;
+                ItemsList = RadioButtonList;
                 ItemsList.CssClass = "RadioButtonList";
+            }
+            else
+            {
+                CheckBoxList.Visible = true;
+                ItemsList = CheckBoxList;
             }
 
             BindItems();

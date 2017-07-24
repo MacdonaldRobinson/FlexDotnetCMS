@@ -22,13 +22,22 @@ namespace WebApplication.Admin.Controls.Fields {
         protected global::System.Web.UI.WebControls.Panel AdminPanel;
         
         /// <summary>
-        /// ItemsList control.
+        /// CheckBoxList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList ItemsList;
+        protected global::System.Web.UI.WebControls.CheckBoxList CheckBoxList;
+        
+        /// <summary>
+        /// RadioButtonList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList RadioButtonList;
         
         /// <summary>
         /// Values control.

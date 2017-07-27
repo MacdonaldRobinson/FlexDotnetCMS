@@ -5,6 +5,7 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 
 # Features
 - FrontEnd Editing: Every field can be edited from the frontend of the website
+- Visual Layout Editor: Once logged into the cms and browsing the frontend of the website, you can toggle the visual layout editor, which allows you to create, delete, reorder the rows, columns and fields
 - Ability to change the SEO for every page: Page title, Meta Description, Meta Keywords, Link title ( Url Segment for the page )
 - All pages automaticly get a search engine friendly URL, you have the ability to change the uri segment for the page from the CMS
 - Every time you save a page in the CMS it will automatically create a history version which you can then reload and publish LIVE again.

@@ -755,7 +755,7 @@ function BindJQueryUIControls()
         //    inputItems.attr("name", name);
         //});
 
-        $("li input[type=checkbox], li input[type=radio]").checkboxradio();
+        //$("fieldset input[type=checkbox], fieldset input[type=radio]").checkboxradio();
 
     }
     catch (ex) {
@@ -805,6 +805,8 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '.SavePageButton', function (event) {
+
+        $(".save-template").click();
 
         var text = $(".SaveFieldButton").text();
 

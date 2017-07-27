@@ -138,6 +138,7 @@
     <Content Include="Admin\Controls\Editors\MediaTypeFieldsEditor.ascx" />
     <Content Include="Admin\Controls\Fields\AssociationCheckBoxList.ascx" />
     <Content Include="Admin\Controls\Fields\AssociationDropDownList.ascx" />
+    <Content Include="Admin\Controls\Fields\FormBuilder.ascx" />
     <Content Include="Admin\Controls\Fields\MultiFileUploader.ascx" />
     <Content Include="Admin\Controls\Generic\MediaComments.ascx" />
     <Content Include="Admin\Controls\MediaTypes\Common\CommonPanel.ascx" />
@@ -643,6 +644,7 @@
     <Content Include="WebServices\ConstantContact.asmx" />
     <Content Include="WebServices\Facebook.asmx" />
     <Content Include="WebServices\Flicker.asmx" />
+    <Content Include="WebServices\Handlers.asmx" />
     <Content Include="WebServices\IMediaDetails.asmx" />
     <Content Include="WebServices\Twitter.asmx" />
     <Content Include="Styles\jquery.jgrowl.css" />
@@ -721,6 +723,13 @@
       <DependentUpon>AssociationDropDownList.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Controls\Fields\BaseFieldControl.cs" />
+    <Compile Include="Admin\Controls\Fields\FormBuilder.ascx.cs">
+      <DependentUpon>FormBuilder.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Fields\FormBuilder.ascx.designer.cs">
+      <DependentUpon>FormBuilder.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\Controls\Fields\IFieldControl.cs" />
     <Compile Include="Admin\Controls\Fields\MultiFileUploader.ascx.cs">
       <DependentUpon>MultiFileUploader.ascx</DependentUpon>
@@ -1798,6 +1807,10 @@
     </Compile>
     <Compile Include="WebServices\Flicker.asmx.cs">
       <DependentUpon>Flicker.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Handlers.asmx.cs">
+      <DependentUpon>Handlers.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServices\IMediaDetails.asmx.cs">

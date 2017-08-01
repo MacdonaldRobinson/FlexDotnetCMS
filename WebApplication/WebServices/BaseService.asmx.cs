@@ -108,6 +108,15 @@ namespace WebApplication.Services
             }
         }
 
+        public static void WriteObjectAsJSON(object obj)
+        {
+            var Response = HttpContext.Current.Response;
+
+            Response.ContentType = "application/json";
+            var json = StringHelper.ObjectToJson(obj);
+            WriteRaw(json, Response);
+        }
+
         public static void WriteJSON(string json)
         {
             var Response = HttpContext.Current.Response;
@@ -126,6 +135,17 @@ namespace WebApplication.Services
 
             var csv = Obj.ToCsv();
             WriteRaw(csv, Response);
+        }
+
+        public static void WriteRawCSV(string csvString, string filename)
+        {
+            var Response = HttpContext.Current.Response;
+
+            Response.Clear();
+            Response.ContentType = "text/csv";
+            Response.AddHeader("Content-Disposition", $"attachment; filename={filename}.csv");
+
+            WriteRaw(csvString, Response);
         }
 
         public static void WriteXML(string xmlString)

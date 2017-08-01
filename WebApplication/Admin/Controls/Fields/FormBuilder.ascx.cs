@@ -1,6 +1,7 @@
 ﻿using FrameworkLibrary;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -12,6 +13,10 @@ namespace WebApplication.Admin.Controls.Fields
     {
         protected void Page_Init(object sender, EventArgs e)
         {            
+            if(FrontEndPanel.Visible == true && IsPostBack)
+            {
+
+            }
         }       
 
         public override void RenderControlInAdmin()
@@ -32,6 +37,22 @@ namespace WebApplication.Admin.Controls.Fields
         public override void SetValue(object value)
         {
             FormBuilderData.Value = value.ToString();
+
+            var submissions = GetField().FieldFrontEndSubmissions;
+            var dataTable = StringHelper.JsonToObject<DataTable>(submissions);
+
+            FormSubmissions.DataSource = dataTable;
+            FormSubmissions.DataBind();
+        }
+
+        protected void ExportCSV_Click(object sender, EventArgs e)
+        {
+            var submissions = GetField().FieldFrontEndSubmissions;
+            var dataTable = StringHelper.JsonToObject<DataTable>(submissions);
+
+            var csv = dataTable.DataTableToCSV(',');
+
+            Services.BaseService.WriteRawCSV(csv, "Submissions");
         }
     }
 }

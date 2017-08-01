@@ -1,6 +1,13 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="FormBuilder.ascx.cs" Inherits="WebApplication.Admin.Controls.Fields.FormBuilder" %>
 
 <asp:Panel runat="server" ID="AdminPanel">
+
+<div id="tabs" class="tabs">
+  <ul>
+    <li><a href="#form-builder">Form Builder</a></li>
+    <li><a href="#form-submissions">Form Submissions</a></li>
+  </ul>
+  <div id="form-builder">
     <script src="/Scripts/formBuilder-master/dist/form-builder.min.js"></script>
     <script>
         jQuery(function ($) {
@@ -34,6 +41,14 @@
     <div id="FormBuilderWrapper" runat="server"></div>
 
     <asp:HiddenField ID="FormBuilderData" runat="server" />    
+  </div>
+  <div id="form-submissions">
+      <asp:LinkButton ID="ExportCSV" Text="Export CSV" runat="server" OnClick="ExportCSV_Click"/>
+      <asp:GridView runat="server" ID="FormSubmissions">
+      </asp:GridView>
+  </div>
+</div>
+
 
 </asp:Panel>
 <asp:Panel runat="server" ID="FrontEndPanel">

@@ -40,6 +40,24 @@ namespace WebApplication.Admin.Controls.Fields {
         protected global::System.Web.UI.WebControls.HiddenField FormBuilderData;
         
         /// <summary>
+        /// ExportCSV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ExportCSV;
+        
+        /// <summary>
+        /// FormSubmissions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView FormSubmissions;
+        
+        /// <summary>
         /// FrontEndPanel control.
         /// </summary>
         /// <remarks>

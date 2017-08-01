@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using FrameworkLibrary;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using WebApplication.Services;
 
 namespace WebApplication.WebServices
 {
@@ -14,12 +19,93 @@ namespace WebApplication.WebServices
     [System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
     [System.Web.Script.Services.ScriptService]
-    public class Handlers : System.Web.Services.WebService
+    public class Handlers : BaseService
     {
         [WebMethod]
-        public string GenericFormSubmissionHandler()
+        public Return GenericFormSubmissionHandler()
         {
-            return "Hello World";
+            var FormDictionary = new Dictionary<string, string>();
+
+            foreach (string key in HttpContext.Current.Request.Form.Keys)
+            {
+                FormDictionary.Add(key, HttpContext.Current.Request.Form[key]);
+            }
+
+            var returnObj = BaseMapper.GenerateReturn("No action performed");
+
+            var fieldId = FormDictionary["fieldId"];
+
+            if (fieldId == null)
+            {
+                returnObj = BaseMapper.GenerateReturn("'fieldId' is missing");
+                return returnObj;
+            }
+
+            var field = (MediaDetailField)FieldsMapper.GetByID(long.Parse(fieldId));
+
+            if (field == null)
+            {
+                returnObj = BaseMapper.GenerateReturn($"Cannot find field with id '{fieldId}'");
+                return returnObj;
+            }
+
+            FormDictionary.Add("DateSubmitted", StringHelper.FormatDateTime(DateTime.Now));
+
+            //var dict = HttpUtility.ParseQueryString(FormDictionary.ToString());
+            var jsonEntry = new JavaScriptSerializer().Serialize(FormDictionary);
+
+            var jObject = JObject.Parse(jsonEntry);
+
+            var currentEntries = StringHelper.JsonToObject<Newtonsoft.Json.Linq.JArray>(field.FieldFrontEndSubmissions);
+
+            var files = new Dictionary<string,List<string>>();
+            var fileIndex = 0;
+            foreach (string key in HttpContext.Current.Request.Files)
+            {
+                var postedFile = HttpContext.Current.Request.Files[fileIndex];
+
+                if(!field.UploadFolder.Exists)
+                {
+                    field.UploadFolder.Create();
+                }
+
+                var uploadFilePath = field.UploadFolder.FullName + key + "_" + postedFile.FileName;
+                postedFile.SaveAs(uploadFilePath);
+
+                var relativePath = URIHelper.ConvertAbsPathToAbsUrl(uploadFilePath);
+
+                if (files.ContainsKey(key))
+                {
+                    files[key].Add(relativePath);
+                }
+                else
+                {
+                    files.Add(key, new List<string>() { relativePath });
+                }
+
+                fileIndex++;
+            }
+
+            var jObjectUploadFiles = JObject.Parse(StringHelper.ObjectToJson(files));
+
+            jObject.Merge(jObjectUploadFiles);
+
+            if (currentEntries == null)
+            {
+                currentEntries = new JArray();                
+            }
+            else
+            {
+                currentEntries.Add(jObject);
+            }
+
+            currentEntries.Add(jObject);
+
+            field.FieldFrontEndSubmissions = currentEntries.ToString(Formatting.None);
+
+            returnObj = FieldsMapper.Update(field);
+
+            return returnObj;
         }
     }
 }

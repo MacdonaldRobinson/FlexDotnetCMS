@@ -13,6 +13,8 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
 
         public void UpdateFieldsFromObject()
         {
+            CanLimitedRolesAccessAllChildPages.Checked = selectedItem.CanLimitedRolesAccessAllChildPages;
+
             if (!IsPostBack)
             {
                 MultiRoleSelector.SetSelectedRoles(this.selectedItem.Media.RolesMedias.Select(i => i.Role).ToList());
@@ -21,6 +23,8 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
 
         public void UpdateObjectFromFields()
         {
+            selectedItem.CanLimitedRolesAccessAllChildPages = CanLimitedRolesAccessAllChildPages.Checked;
+
             var roles = MultiRoleSelector.GetSelectedRoles();
 
             if (roles == null)

@@ -86,9 +86,6 @@ namespace WebApplication
                 if (CurrentUser == null)
                     return false;
 
-                if (CurrentUser.HasPermission(PermissionsEnum.AccessProtectedSections))
-                    return true;
-
                 return false;
             }
 

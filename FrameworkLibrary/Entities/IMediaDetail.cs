@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.UI;
 
 namespace FrameworkLibrary
 {
@@ -10,6 +11,7 @@ namespace FrameworkLibrary
         string AutoCalculatedVirtualPath { get; }
         string CachedVirtualPath { get; set; }
         bool CanAddToCart { get; set; }
+        bool CanLimitedRolesAccessAllChildPages { get; set; }
         bool CanRender { get; }
         IEnumerable<IMediaDetail> ChildMediaDetails { get; }
         User CreatedByUser { get; set; }
@@ -21,10 +23,11 @@ namespace FrameworkLibrary
         bool EnableCaching { get; set; }
         DateTime? ExpiryDate { get; set; }
         string FeaturedLayout { get; set; }
-        ICollection<MediaDetailField> Fields { get; set; }
         ICollection<FieldAssociation> FieldAssociations { get; set; }
+        ICollection<MediaDetailField> Fields { get; set; }
         bool ForceSSL { get; set; }
         string Handler { get; set; }
+        bool HasDraft { get; }
         ICollection<MediaDetail> History { get; set; }
         MediaDetail HistoryForMediaDetail { get; set; }
         long? HistoryForMediaDetailID { get; set; }
@@ -52,21 +55,17 @@ namespace FrameworkLibrary
         long MediaTypeID { get; set; }
         string MetaDescription { get; set; }
         string MetaKeywords { get; set; }
-        //IMediaDetail NextPage { get; }
         long NumberOfStars { get; set; }
         long NumberOfViews { get; set; }
         bool OpenInNewWindow { get; set; }
-        //IMediaDetail ParentMediaDetail { get; }
-        //long? ParentMediaID { get; }
         string PathToFile { get; set; }
-        //IMediaDetail PreviousPage { get; }
         decimal Price { get; set; }
         DateTime? PublishDate { get; set; }
         string QRCodeVirtualPath { get; }
         long QuantityInStock { get; set; }
         string RecurringTimePeriod { get; set; }
         bool RedirectToFirstChild { get; set; }
-        bool RenderInFooter { get; set; }        
+        bool RenderInFooter { get; set; }
         string RssVirtualPath { get; }
         string SectionTitle { get; set; }
         string SefTitle { get; set; }
@@ -75,42 +74,51 @@ namespace FrameworkLibrary
         bool ShowInSearchResults { get; set; }
         string SummaryLayout { get; set; }
         string Title { get; set; }
+        bool UseDefaultLanguageLayouts { get; set; }
         bool UseDirectLink { get; set; }
         string UseFeaturedLayout { get; }
         string UseMainLayout { get; }
         bool UseMediaTypeLayouts { get; set; }
-        bool UseDefaultLanguageLayouts { get; set; }
         string UseSummaryLayout { get; }
         List<ValidationError> ValidationErrors { get; }
         string VirtualPath { get; }
-        IEnumerable<IMediaDetail> GetRelatedItems(long mediaTypeId = 0);
-        void ClearAutoCalculatedVirtualPathCache();
+
         string CalculatedVirtualPath();
         bool CanUserAccessSection(User user);
+        void ClearAutoCalculatedVirtualPathCache();
         Return GenerateValidationReturn();
         string GetCacheKey(RenderVersion renderVersion);
+        IEnumerable<IMediaDetail> GetDrafts();
+        IMediaDetail GetLatestDraft();
         MasterPage GetMasterPage();
         string GetMetaDescription();
         string GetMetaKeywords();
+        IMediaDetail GetNearestParentWhichContainsFieldCode(string FieldCode);
+        IMediaDetail GetNextMediaDetail();
         string GetPageTitle();
+        IEnumerable<IMediaDetail> GetParentMediaDetails();
+        IEnumerable<IMediaDetail> GetParentsWhichContainsFieldCode(string fieldCode);
+        IMediaDetail GetPreviousMediaDetail();
+        IEnumerable<IMediaDetail> GetRelatedItems(long mediaTypeId = 0);
+        List<Role> GetRoles();
         RssItem GetRssItem();
+        List<Control> GetTemplateTopAndBottomSegments(System.Web.UI.Page control);
         Website GetWebsite();
         bool HasAnyRoles();
         bool HasAnyUsers();
         bool HasRole(Role role);
         bool HasUser(User user);
-        bool HasDraft { get; }
-        IEnumerable<IMediaDetail> GetDrafts();
-        IMediaDetail GetLatestDraft();
-        Return PublishLive();
         Field LoadField(string fieldCode);
+        Return PublishLive();
         void RemoveFromCache();
-        string RenderShortCode(string shortCode, bool includeFieldWrapper = true);
-        string RenderField(string fieldCode, bool includeFieldWrapper = true);
         string RenderField(long fieldId, bool includeFieldWrapper = true);
-        void SaveToRedisCache(RenderVersion renderVersion, string html, string queryString = "");
+        string RenderField(string fieldCode, bool includeFieldWrapper = true);
+        string RenderMainLayout();
+        string RenderShortCode(string shortCode, bool includeFieldWrapper = true);
         void SaveToFileCache(RenderVersion renderVersion, string html, string queryString = "");
         void SaveToMemoryCache(RenderVersion renderVersion, string html, string queryString = "");
-        Return Validate();        
+        void SaveToRedisCache(RenderVersion renderVersion, string html, string queryString = "");
+        void UpdateField(string fieldCode, string newValue);
+        Return Validate();
     }
 }

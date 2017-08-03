@@ -128,9 +128,12 @@ namespace WebApplication.Admin.Views.MasterPages
             }
 
             if (detail.MediaType.GetRoles().Count > 0 || detail.Media.RolesMedias.Count > 0)
-            {
-                node.li_attr._class += " restricted";
-                nodeText += $"<small class='restrictedWrapper'><i class='fa fa-lock' aria-hidden='true'></i> Restricted</small>";
+            {                
+                if (MediaDetailsMapper.CanAccessMediaDetail(detail, FrameworkSettings.CurrentUser).IsError)
+                {
+                    node.li_attr._class += " restricted";
+                    nodeText += $"<small class='restrictedWrapper'><i class='fa fa-lock' aria-hidden='true'></i></small>";
+                }
             }
 
             node.text = nodeText;
@@ -261,7 +264,7 @@ namespace WebApplication.Admin.Views.MasterPages
                 IEnumerable<IMediaDetail> childMediaDetails = MediaDetailsMapper.GetAtleastOneChildByMedia(rootNode.Media, AdminBasePage.CurrentLanguage).Where(i => i.MediaType.ShowInSiteTree).OrderBy(i => i.Media.OrderIndex);
                 //var childMediaDetails = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.Media.ParentMediaID == rootNode.MediaID && i.ID != rootNode.ID && i.MediaType.ShowInSiteTree && i.LanguageID == AdminBasePage.CurrentLanguage.ID).OrderBy(i => i.Media.OrderIndex).ToList();
 
-                childMediaDetails = childMediaDetails.Where(i =>
+                /*childMediaDetails = childMediaDetails.Where(i =>
                 {
                     if(MediaDetailsMapper.CanAccessMediaDetail(i, FrameworkSettings.CurrentUser).IsError)
                     {
@@ -269,7 +272,7 @@ namespace WebApplication.Admin.Views.MasterPages
                     }
 
                     return true;
-                });
+                });*/
 
                 var jsTreeNodes = childMediaDetails.Select(i => GetJsTreeNode(i));
                 WriteJSON(StringHelper.ObjectToJson(jsTreeNodes));

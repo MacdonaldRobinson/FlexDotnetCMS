@@ -51,11 +51,6 @@ namespace WebApplication.WebServices
 
             FormDictionary.Add("DateSubmitted", StringHelper.FormatDateTime(DateTime.Now));
 
-            //var dict = HttpUtility.ParseQueryString(FormDictionary.ToString());
-            var jsonEntry = new JavaScriptSerializer().Serialize(FormDictionary);
-
-            var jObject = JObject.Parse(jsonEntry);
-
             var currentEntries = StringHelper.JsonToObject<Newtonsoft.Json.Linq.JArray>(field.FieldFrontEndSubmissions);
 
             var files = new Dictionary<string,List<string>>();
@@ -88,6 +83,10 @@ namespace WebApplication.WebServices
 
             var jObjectUploadFiles = JObject.Parse(StringHelper.ObjectToJson(files));
 
+            var jsonEntry = new JavaScriptSerializer().Serialize(FormDictionary);
+
+            var jObject = JObject.Parse(jsonEntry);
+
             jObject.Merge(jObjectUploadFiles);
 
             if (currentEntries == null)
@@ -98,9 +97,7 @@ namespace WebApplication.WebServices
             {
                 currentEntries.Add(jObject);
             }
-
-            currentEntries.Add(jObject);
-
+            
             field.FieldFrontEndSubmissions = currentEntries.ToString(Formatting.None);
 
             returnObj = FieldsMapper.Update(field);

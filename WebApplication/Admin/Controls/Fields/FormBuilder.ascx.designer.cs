@@ -40,6 +40,15 @@ namespace WebApplication.Admin.Controls.Fields {
         protected global::System.Web.UI.WebControls.HiddenField FormBuilderData;
         
         /// <summary>
+        /// FormSubmissionsWrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel FormSubmissionsWrapper;
+        
+        /// <summary>
         /// ExportCSV control.
         /// </summary>
         /// <remarks>
@@ -47,6 +56,15 @@ namespace WebApplication.Admin.Controls.Fields {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton ExportCSV;
+        
+        /// <summary>
+        /// ClearAllSubmissions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ClearAllSubmissions;
         
         /// <summary>
         /// FormSubmissions control.

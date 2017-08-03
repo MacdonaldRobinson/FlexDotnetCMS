@@ -1322,7 +1322,7 @@ function ScrollMagicSetup(selector)
 
     myObject.selector = selector;
     myObject.controller = controller = new ScrollMagic.Controller();
-    myObject.scene = new ScrollMagic.Scene({ offset: -45, triggerElement: selector, triggerHook: 0 })
+    myObject.scene = new ScrollMagic.Scene({ offset: -50, triggerElement: selector, triggerHook: 0 })
                         .setPin(selector)
                         .addTo(controller);
 

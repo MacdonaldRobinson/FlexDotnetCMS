@@ -9,23 +9,11 @@ namespace WebApplication
     /// </summary>
     public class AppSettings
     {
-        private static string connectionStringName = ProdConnectionKeyName;
-
-        public static ConnectionStringSettings GetConnectionSettings()
+        public enum ConnectionStringKey
         {
-            return GetConnectionSettingsByIsRunningOnDev(IsRunningOnDev);
-        }
-
-        public static string ConnectionStringName
-        {
-            get
-            {
-                return connectionStringName;
-            }
-            set
-            {
-                connectionStringName = value;
-            }
+            Dev,
+            Stage,
+            Prod
         }
 
         public static string MetaIncludesPlaceHolderID
@@ -156,19 +144,32 @@ namespace WebApplication
             }
         }
 
-        public static bool IsRunningOnDev
+        public static ConnectionStringKey CurrentConnectionStringKey
         {
             get
             {
-                return bool.Parse(ConfigurationManager.AppSettings["IsRunningOnDev"]);
+                return (ConnectionStringKey)Enum.Parse(typeof(ConnectionStringKey), ConfigurationManager.AppSettings["ConnectionStringKeyName"]);
             }
-        }
+        }        
 
         public static bool EnableMobileDetection
         {
             get
             {
                 return bool.Parse(ConfigurationManager.AppSettings["EnableMobileDetection"]);
+            }
+        }
+
+        public static bool IsRunningOnDev
+        {
+            get
+            {
+                if(CurrentConnectionStringKey == ConnectionStringKey.Dev)
+                {
+                    return true;
+                }
+
+                return false;
             }
         }
 
@@ -183,14 +184,9 @@ namespace WebApplication
             return ConfigurationManager.ConnectionStrings[name];
         }
 
-        public static ConnectionStringSettings GetConnectionSettingsByIsRunningOnDev(bool isRunningOnDev)
+        public static ConnectionStringSettings GetConnectionSettings()
         {
-            if (isRunningOnDev)
-                ConnectionStringName = DevConnectionKeyName;
-            else
-                ConnectionStringName = ProdConnectionKeyName;
-
-            string name = Convert.ToString(connectionStringName);
+            string name = Convert.ToString(CurrentConnectionStringKey);
             return ConfigurationManager.ConnectionStrings[name];
         }
 
@@ -434,22 +430,6 @@ namespace WebApplication
             }
         }
 
-        public static string DevConnectionKeyName
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings["DevConnectionKeyName"];
-            }
-        }
-
-        public static string ProdConnectionKeyName
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings["ProdConnectionKeyName"];
-            }
-        }
-
         public static string PayPalBuisnessID
         {
             get
@@ -498,11 +478,19 @@ namespace WebApplication
             }
         }
 
+        public static bool ForceWWWRedirect
+        {
+            get
+            {
+                return bool.Parse(ConfigurationManager.AppSettings["ForceWWWRedirect"]);
+            }
+        }        
+
         public static string GoogleAPIKey
         {
             get
             {
-                string googleApiKey = "GoogleAPIKey-" + FrameworkSettings.GetCurrentLanguage() + "-" + ConnectionStringName;
+                string googleApiKey = "GoogleAPIKey-" + FrameworkSettings.GetCurrentLanguage() + "-" + CurrentConnectionStringKey;
                 return ConfigurationManager.AppSettings[googleApiKey];
             }
         }

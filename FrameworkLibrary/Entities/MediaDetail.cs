@@ -94,21 +94,22 @@ namespace FrameworkLibrary
                 roles = this.MediaType.GetRoles();
             }
 
+            var parentLimitedRoles = this.GetParentMediaDetails().Where(i=>i.CanLimitedRolesAccessAllChildPages).SelectMany(i=> ((MediaDetail)i).GetRoles());
+
+            if(parentLimitedRoles.Any())
+            {
+                if(user.IsInRoles(parentLimitedRoles))
+                {
+                    return true;
+                }                
+            }
+
             if (roles.Count > 0)
             {
                 if (!user.IsInRoles(roles))
-                {
+                {                    
                     return false;
                 }
-            }
-
-            if (IsProtected)
-            {
-                if (user == null)
-                    return false;
-
-                if (!user.HasPermission(PermissionsEnum.AccessProtectedSections))
-                    return false;
             }
 
             return true;

@@ -13,10 +13,6 @@ namespace WebApplication.Admin.Controls.Fields
     {
         protected void Page_Init(object sender, EventArgs e)
         {            
-            if(FrontEndPanel.Visible == true && IsPostBack)
-            {
-
-            }
         }       
 
         public override void RenderControlInAdmin()
@@ -41,18 +37,48 @@ namespace WebApplication.Admin.Controls.Fields
             var submissions = GetField().FieldFrontEndSubmissions;
             var dataTable = StringHelper.JsonToObject<DataTable>(submissions);
 
-            FormSubmissions.DataSource = dataTable;
-            FormSubmissions.DataBind();
+            if (dataTable != null)
+            {
+                dataTable.DefaultView.Sort = "DateSubmitted DESC";
+
+                FormSubmissions.DataSource = dataTable;
+                FormSubmissions.DataBind();
+            }
         }
 
         protected void ExportCSV_Click(object sender, EventArgs e)
         {
-            var submissions = GetField().FieldFrontEndSubmissions;
-            var dataTable = StringHelper.JsonToObject<DataTable>(submissions);
+            var newDataTable = new DataTable();
+            var dataTable = (FormSubmissions.DataSource as DataTable);
 
-            var csv = dataTable.DataTableToCSV(',');
+            newDataTable = dataTable.DefaultView.ToTable();
+
+            var csv = newDataTable.DataTableToCSV(',');
 
             Services.BaseService.WriteRawCSV(csv, "Submissions");
+        }
+
+        protected void ClearAllSubmissions_Click(object sender, EventArgs e)
+        {
+            var field = GetField();
+            field.FieldFrontEndSubmissions = "";
+
+            var returnObj = FieldsMapper.Update(field);
+
+            if (!returnObj.IsError)
+            {
+                FormSubmissions.DataSource = new DataTable();
+                FormSubmissions.DataBind();
+            }
+        }
+        protected void FormSubmissions_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            FormSubmissions.PageIndex = e.NewPageIndex;
+
+            var dataTable = (FormSubmissions.DataSource as DataTable);
+
+            FormSubmissions.DataSource = dataTable;
+            FormSubmissions.DataBind();
         }
     }
 }

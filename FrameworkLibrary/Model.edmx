@@ -185,6 +185,7 @@
           <Property Name="FeaturedLayout" Type="nvarchar(max)" Nullable="false" />
           <Property Name="UseMediaTypeLayouts" Type="bit" Nullable="false" />
           <Property Name="UseDefaultLanguageLayouts" Type="bit" Nullable="false" />
+          <Property Name="CanLimitedRolesAccessAllChildPages" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="MediaDetailsFields">
           <Key>
@@ -1393,6 +1394,7 @@
           <Property Name="PublishDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="FieldAssociations" Relationship="FrameworkModel.FK_FieldAssociations_MediaDetails" FromRole="MediaDetail" ToRole="FieldsAssociation" />
           <Property Name="UseDefaultLanguageLayouts" Type="Boolean" Nullable="false" />
+          <Property Name="CanLimitedRolesAccessAllChildPages" Type="Boolean" Nullable="false" />
           </EntityType>
         <EntityType Name="Page" BaseType="FrameworkModel.MediaDetail">
         </EntityType>
@@ -2138,6 +2140,7 @@
           <EntitySetMapping Name="MediaDetails">
             <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.MediaDetail)">
               <MappingFragment StoreEntitySet="MediaDetails">
+                <ScalarProperty Name="CanLimitedRolesAccessAllChildPages" ColumnName="CanLimitedRolesAccessAllChildPages" />
                 <ScalarProperty Name="UseDefaultLanguageLayouts" ColumnName="UseDefaultLanguageLayouts" />
                 <ScalarProperty Name="PublishDate" ColumnName="PublishDate" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />

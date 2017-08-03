@@ -57,11 +57,11 @@ namespace WebApplication.Installer
             SqlFiles.DataValueField = "Name";
             SqlFiles.DataBind();
 
-            IsRunningOnDev.SelectedValue = AppSettings.IsRunningOnDev.ToString();
-            ReadConnectionStringSettings(AppSettings.IsRunningOnDev);
+            ConnectionStringKeyName.SelectedValue = AppSettings.CurrentConnectionStringKey.ToString();
+            ReadConnectionStringSettings();
         }
 
-        private void ReadConnectionStringSettings(bool isRunningOnDev)
+        private void ReadConnectionStringSettings()
         {
             try
             {
@@ -133,7 +133,7 @@ namespace WebApplication.Installer
 
         private string GetConnectionString()
         {
-            var connectionString = AppSettings.GetConnectionSettingsByIsRunningOnDev(bool.Parse(IsRunningOnDev.SelectedValue)).ConnectionString;
+            var connectionString = AppSettings.GetConnectionSettings().ConnectionString;
             return connectionString;
         }
 
@@ -316,34 +316,6 @@ namespace WebApplication.Installer
             File.SetAttributes(GetWebConfig().FullName, File.GetAttributes(GetWebConfig().FullName) & ~FileAttributes.ReadOnly);
         }
 
-        protected void IsRunningOnDev_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                SetWebconfigReadWrite();
-
-                var isRunningOnDev = bool.Parse(IsRunningOnDev.SelectedValue);
-
-                var webConfig = GetWebConfig();
-                var webConfigContent = File.ReadAllText(webConfig.FullName);
-
-                var findKey = "<add key=\"IsRunningOnDev\" value=\"" + AppSettings.IsRunningOnDev.ToString() + "\" />";
-                var replaceWithKey = "<add key=\"IsRunningOnDev\" value=\"" + isRunningOnDev.ToString() + "\" />";
-
-                webConfigContent = webConfigContent.Replace(findKey, replaceWithKey);
-
-                File.WriteAllText(webConfig.FullName, webConfigContent);
-
-                ReadConnectionStringSettings(isRunningOnDev);
-
-                SetWebconfigReadonly();
-            }
-            catch (Exception ex)
-            {
-                Messages.Text += ex.Message + "" + ex.InnerException + "<br />";
-            }
-        }
-
         protected void UpdateCMSAdminLogin_Click(object sender, EventArgs e)
         {
             var returnObj = new Return();
@@ -384,6 +356,32 @@ namespace WebApplication.Installer
 
             ExecutePanel.Visible = true;
 
+        }
+
+        protected void ConnectionStringKeyName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                SetWebconfigReadWrite();
+
+                var webConfig = GetWebConfig();
+                var webConfigContent = File.ReadAllText(webConfig.FullName);
+
+                var findKey = "<add key=\"ConnectionStringKeyName\" value=\"" + AppSettings.CurrentConnectionStringKey + "\" />";
+                var replaceWithKey = "<add key=\"IsRunningOnDev\" value=\"" + ConnectionStringKeyName.SelectedValue + "\" />";
+
+                webConfigContent = webConfigContent.Replace(findKey, replaceWithKey);
+
+                File.WriteAllText(webConfig.FullName, webConfigContent);
+
+                ReadConnectionStringSettings();
+
+                SetWebconfigReadonly();
+            }
+            catch (Exception ex)
+            {
+                Messages.Text += ex.Message + "" + ex.InnerException + "<br />";
+            }
         }
     }
 }

@@ -340,15 +340,17 @@ namespace FrameworkLibrary
             if (FrameworkSettings.CurrentUser.IsInRole(RoleEnum.Administrator))
                 return returnObj;
 
-            if (mediaType.MediaTypesRoles.Count != 0)
+            var parentLimitedRoles = mediaDetail.GetParentMediaDetails().Where(i => i.CanLimitedRolesAccessAllChildPages).SelectMany(i => i.GetRoles());
+
+            if (parentLimitedRoles.Any())
             {
-                if (!user.IsInRoles(mediaType.GetRoles()))
+                if (user.IsInRoles(parentLimitedRoles))
                 {
-                    returnObj = GenerateReturn("Cannot access item", $"The roles that you belong to do not have permissions to access this media type: '{mediaType.Name}'");
                     return returnObj;
                 }
             }
-            else if (mediaDetail.Media.RolesMedias.Count != 0)
+
+            if (mediaDetail.Media.RolesMedias.Count != 0)
             {
                 var limitedtoRoles = String.Join(",", mediaDetail.Media.RolesMedias.Select(i => i.Role.Name));
                 if (user.Roles.Count == 0)
@@ -366,8 +368,16 @@ namespace FrameworkLibrary
 
                 return returnObj;
             }
+            else if (mediaType.MediaTypesRoles.Count != 0)
+            {
+                if (!user.IsInRoles(mediaType.GetRoles()))
+                {
+                    returnObj = GenerateReturn("Cannot access item", $"The roles that you belong to do not have permissions to access this media type: '{mediaType.Name}'");
+                    return returnObj;
+                }
+            }
 
-            if(checkParents)
+            if (checkParents)
             {
                 var parentMediaDetail = mediaDetail.Media.ParentMedia?.GetLiveMediaDetail();
 

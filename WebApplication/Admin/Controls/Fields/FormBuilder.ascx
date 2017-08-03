@@ -34,7 +34,7 @@
 
             formBuilder.promise.then(formBuilder => {
                 formBuilder.actions.setData($("#<%= FormBuilderData.ClientID %>").val());
-            });            
+            });
             
         });
     </script>
@@ -43,9 +43,22 @@
     <asp:HiddenField ID="FormBuilderData" runat="server" />    
   </div>
   <div id="form-submissions">
-      <asp:LinkButton ID="ExportCSV" Text="Export CSV" runat="server" OnClick="ExportCSV_Click"/>
-      <asp:GridView runat="server" ID="FormSubmissions">
-      </asp:GridView>
+      <asp:UpdatePanel runat="server" ID="FormSubmissionsWrapper">
+          <Triggers>
+              <asp:PostBackTrigger ControlID="ExportCSV" />
+          </Triggers>
+          <ContentTemplate>
+
+              <div class="buttons">
+                <asp:LinkButton ID="ExportCSV" Text="Export CSV" runat="server" OnClick="ExportCSV_Click"/>
+                <asp:LinkButton ID="ClearAllSubmissions" Text="Clear All Submissions" runat="server" OnClick="ClearAllSubmissions_Click"/>
+                  <div class="clear"></div>
+              </div>
+              <asp:GridView runat="server" ID="FormSubmissions" PageSize="10" AllowPaging="true" OnPageIndexChanging="FormSubmissions_PageIndexChanging">
+              </asp:GridView>
+
+          </ContentTemplate>
+      </asp:UpdatePanel>
   </div>
 </div>
 

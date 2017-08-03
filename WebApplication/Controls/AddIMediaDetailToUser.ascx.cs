@@ -47,7 +47,7 @@ namespace WebApplication.Controls
             usersMediaDetails.MediaID = MediaDetailToAdd.MediaID;
             usersMediaDetails.UserID = BasePage.CurrentUser.ID;
             usersMediaDetails.DateCreated = usersMediaDetails.DateLastModified = DateTime.Now;
-            usersMediaDetails.PermissionID = PermissionsMapper.GetPermissionsFromEnum(PermissionsEnum.AccessProtectedSections).ID;
+            //usersMediaDetails.PermissionID = PermissionsMapper.GetPermissionsFromEnum(PermissionsEnum.AccessProtectedSections).ID;
 
             var currentMediaDetail = BaseMapper.GetObjectFromContext((MediaDetail)MediaDetailToAdd);
             currentMediaDetail.Media.UsersMedias.Add(usersMediaDetails);

@@ -107,17 +107,17 @@ namespace FrameworkLibrary
 
         public static string FormatOnlyDate(DateTime dateTime)
         {
-            return dateTime.ToString("MMMM dd, yyyy");
+            return dateTime.ToString("MMMM-dd-yyyy");
         }
 
         public static string FormatDateTime(DateTime dateTime)
         {
-            return dateTime.ToString("MMM dd, yyyy h:mmtt");
+            return dateTime.ToString("MMM-dd-yyyy h:mm:ss tt");
         }
 
         public static string FormatOnlyTime(DateTime dateTime)
         {
-            return dateTime.ToString("h:mmtt");
+            return dateTime.ToString("h:mm:ss tt");
         }
 
         public static string StripTag(string text, string tagName)

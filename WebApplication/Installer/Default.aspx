@@ -90,10 +90,12 @@
                         </div>
                         <div class="step">
                             <h3>Step 1: Are you installing this on the dev. server</h3>
-                            <asp:RadioButtonList runat="server" RepeatLayout="UnorderedList" ID="IsRunningOnDev" OnSelectedIndexChanged="IsRunningOnDev_SelectedIndexChanged" AutoPostBack="true">
-                                <asp:ListItem Text="Yes" Value="True" />
-                                <asp:ListItem Text="No" Value="False" />
-                            </asp:RadioButtonList>
+                            <asp:DropDownList runat="server" ID="ConnectionStringKeyName" OnSelectedIndexChanged="ConnectionStringKeyName_SelectedIndexChanged" AutoPostBack="true">
+                                <asp:ListItem Text="-- Select Server Type --" Value="" />
+                                <asp:ListItem Text="Dev" Value="Dev" />
+                                <asp:ListItem Text="Stage" Value="Stage" />
+                                <asp:ListItem Text="Prod" Value="Prod" />
+                            </asp:DropDownList>
                         </div>
                         <div class="step">
                             <h3>Step 2: Connection String Settings</h3>

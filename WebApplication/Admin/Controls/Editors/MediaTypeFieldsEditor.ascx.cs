@@ -78,11 +78,14 @@ namespace WebApplication.Admin.Controls.Editors
 
                 foreach (var mediaDetail in mediaType.MediaDetails)
                 {
-                    var mediaDetailField = new MediaDetailField();
+                    var mediaDetailField = new MediaDetailField();                    
                     mediaDetailField.CopyFrom(mediaTypeField);
                     
                     mediaDetailField.UseMediaTypeFieldFrontEndLayout = true;
-                    mediaDetailField.UseMediaTypeFieldDescription = true;                    
+                    mediaDetailField.UseMediaTypeFieldDescription = true;
+
+                    if(mediaDetailField.FrontEndSubmissions == null)
+                        mediaDetailField.FrontEndSubmissions = "";
 
                     mediaDetailField.MediaTypeField = mediaTypeField;
 

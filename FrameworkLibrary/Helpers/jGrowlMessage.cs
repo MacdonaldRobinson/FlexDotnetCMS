@@ -1,4 +1,9 @@
-﻿namespace FrameworkLibrary
+﻿using System;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace FrameworkLibrary
 {
     public class jGrowlMessage
     {
@@ -50,7 +55,21 @@
                         exception = exception?.InnerException;
 
                         if(exception != null)
-                            innerExceptionMessages = exception.Message + "<br /><br />";
+                            innerExceptionMessages += exception.Message + "<br /><br />";
+                    }
+
+                    if(error.Exception is System.Data.Entity.Validation.DbEntityValidationException)
+                    {
+                        var dbException = error.Exception as System.Data.Entity.Validation.DbEntityValidationException;
+
+                        foreach (var item in dbException.EntityValidationErrors)
+                        {
+                            foreach (var validationError in item.ValidationErrors)
+                            {
+                                innerExceptionMessages += validationError.ErrorMessage + "<br /><br />";
+                            }
+                        }                        
+
                     }
 
                     msg += "<br /><br />Inner Exception:<br />" + innerExceptionMessages;

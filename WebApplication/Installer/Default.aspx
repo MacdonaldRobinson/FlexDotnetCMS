@@ -77,6 +77,9 @@
         </asp:UpdateProgress>
 
         <asp:UpdatePanel runat="server">
+            <Triggers>
+                <asp:AsyncPostBackTrigger ControlID="ConnectionStringKeyName"  EventName="SelectedIndexChanged"/>
+            </Triggers>
             <ContentTemplate>
                 <div class="wrapper">
 
@@ -89,8 +92,8 @@
                             <i>NOTE: Please make sure that your web.config file has write permissions, after this process is complete you can remove write permissions</i>
                         </div>
                         <div class="step">
-                            <h3>Step 1: Are you installing this on the dev. server</h3>
-                            <asp:DropDownList runat="server" ID="ConnectionStringKeyName" OnSelectedIndexChanged="ConnectionStringKeyName_SelectedIndexChanged" AutoPostBack="true">
+                            <h3>Step 1: Select your server environment</h3>
+                            <asp:DropDownList runat="server" ID="ConnectionStringKeyName" AutoPostBack="true" AppendDataBoundItems="true" OnSelectedIndexChanged="ConnectionStringKeyName_SelectedIndexChanged">
                                 <asp:ListItem Text="-- Select Server Type --" Value="" />
                                 <asp:ListItem Text="Dev" Value="Dev" />
                                 <asp:ListItem Text="Stage" Value="Stage" />

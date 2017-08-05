@@ -19,5 +19,6 @@ namespace FrameworkLibrary
         string SetAdminControlValue { get; set; }
         string FieldDescription { get; set; }
         bool ShowFrontEndFieldEditor { get; set; }
+        string FrontEndSubmissions { get; set; }
     }
 }

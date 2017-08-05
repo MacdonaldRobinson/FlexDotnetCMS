@@ -22,26 +22,17 @@ namespace WebApplication.WebServices
     public class Handlers : BaseService
     {
         [WebMethod]
-        public Return GenericFormSubmissionHandler()
+        public Return FieldFrontEndFormSubmissionHandler(long fieldId)
         {
-            var FormDictionary = new Dictionary<string, string>();
+            var returnObj = BaseMapper.GenerateReturn("No action performed");            
 
-            foreach (string key in HttpContext.Current.Request.Form.Keys)
-            {
-                FormDictionary.Add(key, HttpContext.Current.Request.Form[key]);
-            }
-
-            var returnObj = BaseMapper.GenerateReturn("No action performed");
-
-            var fieldId = FormDictionary["fieldId"];
-
-            if (fieldId == null)
+            if (HttpContext.Current.Request.Form["fieldId"] == null)
             {
                 returnObj = BaseMapper.GenerateReturn("'fieldId' is missing");
                 return returnObj;
             }
 
-            var field = (MediaDetailField)FieldsMapper.GetByID(long.Parse(fieldId));
+            var field = (MediaDetailField)FieldsMapper.GetByID(fieldId);
 
             if (field == null)
             {
@@ -49,9 +40,16 @@ namespace WebApplication.WebServices
                 return returnObj;
             }
 
+            var FormDictionary = new Dictionary<string, string>();
+
+            foreach (string key in HttpContext.Current.Request.Form.Keys)
+            {
+                FormDictionary.Add(key, HttpContext.Current.Request.Form[key]);
+            }
+
             FormDictionary.Add("DateSubmitted", StringHelper.FormatDateTime(DateTime.Now));
 
-            var currentEntries = StringHelper.JsonToObject<Newtonsoft.Json.Linq.JArray>(field.FieldFrontEndSubmissions);
+            var currentEntries = StringHelper.JsonToObject<Newtonsoft.Json.Linq.JArray>(field.FrontEndSubmissions);
 
             var files = new Dictionary<string,List<string>>();
             var fileIndex = 0;
@@ -91,14 +89,15 @@ namespace WebApplication.WebServices
 
             if (currentEntries == null)
             {
-                currentEntries = new JArray();                
+                currentEntries = new JArray();
+                currentEntries.Add(jObject);
             }
             else
             {
                 currentEntries.Add(jObject);
             }
             
-            field.FieldFrontEndSubmissions = currentEntries.ToString(Formatting.None);
+            field.FrontEndSubmissions = currentEntries.ToString(Formatting.None);
 
             returnObj = FieldsMapper.Update(field);
 

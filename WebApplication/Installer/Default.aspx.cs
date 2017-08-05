@@ -1,11 +1,13 @@
 ﻿using FrameworkLibrary;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -14,6 +16,9 @@ namespace WebApplication.Installer
     public partial class Default : System.Web.UI.Page
     {
         private PageStatePersister pageStatePersister;
+
+        private Configuration WebConfig = WebConfigurationManager.OpenWebConfiguration("~/");
+        private string AppSettingsConnectionStringKeyName = "ConnectionStringKeyName";
 
         protected override PageStatePersister PageStatePersister
         {
@@ -57,8 +62,11 @@ namespace WebApplication.Installer
             SqlFiles.DataValueField = "Name";
             SqlFiles.DataBind();
 
-            ConnectionStringKeyName.SelectedValue = AppSettings.CurrentConnectionStringKey.ToString();
-            ReadConnectionStringSettings();
+            if(!IsPostBack)
+            {
+                ConnectionStringKeyName.SelectedValue = AppSettings.CurrentConnectionStringKey.ToString();
+                ReadConnectionStringSettings();
+            }
         }
 
         private void ReadConnectionStringSettings()
@@ -126,14 +134,9 @@ namespace WebApplication.Installer
             return new DirectoryInfo(URIHelper.ConvertToAbsPath("~/App_Data/Installer/"));
         }
 
-        private FileInfo GetWebConfig()
-        {
-            return new FileInfo(Server.MapPath("~/Web.config"));
-        }
-
         private string GetConnectionString()
         {
-            var connectionString = AppSettings.GetConnectionSettings().ConnectionString;
+            var connectionString = WebConfig.ConnectionStrings.ConnectionStrings[ConnectionStringKeyName.Text].ConnectionString;
             return connectionString;
         }
 
@@ -239,13 +242,6 @@ namespace WebApplication.Installer
         {
             try
             {
-                SetWebconfigReadWrite();
-
-                var connectionString = GetConnectionString();
-
-                var webConfig = GetWebConfig();
-                var webConfigContent = File.ReadAllText(webConfig.FullName);
-
                 var connectionStringBuilder = new SqlConnectionStringBuilder();
                 connectionStringBuilder.DataSource = DataSource.Text;
 
@@ -266,11 +262,9 @@ namespace WebApplication.Installer
 
                 var newConnectionString = connectionStringBuilder.ConnectionString;
 
-                webConfigContent = webConfigContent.Replace(connectionString, newConnectionString);
-
-                File.WriteAllText(webConfig.FullName, webConfigContent);
-
-                SetWebconfigReadonly();
+                WebConfig.AppSettings.Settings[AppSettingsConnectionStringKeyName].Value = ConnectionStringKeyName.Text;
+                WebConfig.ConnectionStrings.ConnectionStrings[ConnectionStringKeyName.Text].ConnectionString = newConnectionString;
+                WebConfig.Save();                                
 
                 Messages.Text += "Successfully saved connection string settings<br />";
             }
@@ -284,19 +278,9 @@ namespace WebApplication.Installer
         {
             try
             {
-                SetWebconfigReadWrite();
+                WebConfig.AppSettings.Settings["EnableInstaller"].Value = false.ToString();
 
-                var webConfig = GetWebConfig();
-                var webConfigContent = File.ReadAllText(webConfig.FullName);
-
-                var installerKey = "key=\"EnableInstaller\" value=\"True\"";
-                var disableInstallerKey = "key=\"EnableInstaller\" value=\"False\"";
-
-                webConfigContent = webConfigContent.Replace(installerKey, disableInstallerKey);
-
-                File.WriteAllText(webConfig.FullName, webConfigContent);
-
-                SetWebconfigReadonly();
+                WebConfig.Save();
 
                 Response.Redirect("~/admin/", false);
             }
@@ -304,16 +288,6 @@ namespace WebApplication.Installer
             {
                 Messages.Text += ex.Message + "" + ex.InnerException + "<br />";
             }
-        }
-
-        private void SetWebconfigReadonly()
-        {
-            File.SetAttributes(GetWebConfig().FullName, File.GetAttributes(GetWebConfig().FullName) | FileAttributes.ReadOnly);
-        }
-
-        private void SetWebconfigReadWrite()
-        {
-            File.SetAttributes(GetWebConfig().FullName, File.GetAttributes(GetWebConfig().FullName) & ~FileAttributes.ReadOnly);
         }
 
         protected void UpdateCMSAdminLogin_Click(object sender, EventArgs e)
@@ -360,23 +334,12 @@ namespace WebApplication.Installer
 
         protected void ConnectionStringKeyName_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (Request.Form["__EVENTTARGET"] != "ConnectionStringKeyName")
+                return;
+
             try
             {
-                SetWebconfigReadWrite();
-
-                var webConfig = GetWebConfig();
-                var webConfigContent = File.ReadAllText(webConfig.FullName);
-
-                var findKey = "<add key=\"ConnectionStringKeyName\" value=\"" + AppSettings.CurrentConnectionStringKey + "\" />";
-                var replaceWithKey = "<add key=\"IsRunningOnDev\" value=\"" + ConnectionStringKeyName.SelectedValue + "\" />";
-
-                webConfigContent = webConfigContent.Replace(findKey, replaceWithKey);
-
-                File.WriteAllText(webConfig.FullName, webConfigContent);
-
                 ReadConnectionStringSettings();
-
-                SetWebconfigReadonly();
             }
             catch (Exception ex)
             {

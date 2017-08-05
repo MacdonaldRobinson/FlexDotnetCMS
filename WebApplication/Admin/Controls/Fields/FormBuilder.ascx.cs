@@ -34,10 +34,10 @@ namespace WebApplication.Admin.Controls.Fields
         {
             FormBuilderData.Value = value.ToString();
 
-            var submissions = GetField().FieldFrontEndSubmissions;
+            var submissions = GetField().FrontEndSubmissions;
             var dataTable = StringHelper.JsonToObject<DataTable>(submissions);
 
-            if (dataTable != null)
+            if (dataTable != null && dataTable.Columns.Count > 0)
             {
                 dataTable.DefaultView.Sort = "DateSubmitted DESC";
 
@@ -61,7 +61,7 @@ namespace WebApplication.Admin.Controls.Fields
         protected void ClearAllSubmissions_Click(object sender, EventArgs e)
         {
             var field = GetField();
-            field.FieldFrontEndSubmissions = "";
+            field.FrontEndSubmissions = "";
 
             var returnObj = FieldsMapper.Update(field);
 

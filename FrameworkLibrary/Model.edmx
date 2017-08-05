@@ -33,13 +33,13 @@
           <Property Name="RenderLabelAfterControl" Type="bit" Nullable="false" />
           <Property Name="AdminControl" Type="nvarchar(max)" Nullable="false" />
           <Property Name="FieldValue" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="FieldFrontEndSubmissions" Type="nvarchar(max)" Nullable="false" />
           <Property Name="GetAdminControlValue" Type="nvarchar(max)" Nullable="false" />
           <Property Name="SetAdminControlValue" Type="nvarchar(max)" Nullable="false" />
           <Property Name="OrderIndex" Type="bigint" Nullable="false" />
           <Property Name="GroupName" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="FrontEndLayout" Type="nvarchar(max)" />
           <Property Name="ShowFrontEndFieldEditor" Type="bit" Nullable="false" />
+          <Property Name="FrontEndSubmissions" Type="nvarchar(max)" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateLastModified" Type="datetime" Nullable="false" />
         </EntityType>
@@ -1812,7 +1812,7 @@
           <Property Name="SetAdminControlValue" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FieldDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ShowFrontEndFieldEditor" Type="Boolean" Nullable="false" />
-          <Property Name="FieldFrontEndSubmissions" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FrontEndSubmissions" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MediaDetailField" BaseType="FrameworkModel.Field">
           <Property Name="MediaDetailID" Type="Int64" Nullable="false" />
@@ -2415,7 +2415,7 @@
           <EntitySetMapping Name="Fields">
             <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.Field)">
               <MappingFragment StoreEntitySet="Fields">
-                <ScalarProperty Name="FieldFrontEndSubmissions" ColumnName="FieldFrontEndSubmissions" />
+                <ScalarProperty Name="FrontEndSubmissions" ColumnName="FrontEndSubmissions" />
                 <ScalarProperty Name="ShowFrontEndFieldEditor" ColumnName="ShowFrontEndFieldEditor" />
                 <ScalarProperty Name="FieldDescription" ColumnName="FieldDescription" />
                 <ScalarProperty Name="SetAdminControlValue" ColumnName="SetAdminControlValue" />
@@ -2547,7 +2547,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model" ZoomLevel="83">
+      <Diagram Name="Model" ZoomLevel="74">
         <EntityTypeShape EntityType="FrameworkModel.EmailLog" Width="1.5" PointX="10.25" PointY="11.5" Height="3.1340950520833282" />
         <EntityTypeShape EntityType="FrameworkModel.Language" Width="1.5" PointX="1.375" PointY="7.375" Height="2.9417936197916674" />
         <EntityTypeShape EntityType="FrameworkModel.Media" Width="1.5" PointX="2.75" PointY="3.375" Height="2.3648893229166665" />

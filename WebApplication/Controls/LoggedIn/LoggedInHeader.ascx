@@ -26,16 +26,16 @@
     <a id="SlideTab"><i class="fa fa-arrow-down" aria-hidden="true"></i>CMS Shortcuts</a>
     <asp:Panel ID="AccessCMSPermissionsPanel" runat="server" Visible="true" ClientIDMode="Static">
         <div>                        
-            <a ID="QuickEditCurrentPage" class="colorbox iframe button" data-OnColorboxClose="window.location.reload()" href="<%= CurrentMediaDetailAdminUrl %>&masterFilePath=~/Admin/Views/MasterPages/Popup.Master"><i class="fa fa-pencil"></i>&nbsp;Edit Page</a>                
+            <a ID="QuickEditCurrentPage" class="colorbox iframe button" data-OnColorboxClose="RefreshPage()" href="<%= CurrentMediaDetailAdminUrl %>&masterFilePath=~/Admin/Views/MasterPages/Popup.Master"><i class="fa fa-pencil"></i>&nbsp;Edit Page</a>                
             <div id="AdminPanel" runat="server">
                 <a ID="ToggleVisualEditor" class="button" href="javascript:void(0)" onclick="ToggleVisualEditor()"><i class="fa fa-wrench"></i>&nbsp;Toggle Visual Layout Editor</a>
-                <a ID="EdiSettings" class="colorbox iframe button" data-OnColorboxClose="window.location.reload()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Settings/Default.aspx?masterFilePath=~/Admin/Views/MasterPages/Popup.Master"><i class="fa fa-wrench"></i>&nbsp;Edit Settings</a>
-                <a ID="EditTemplate" class="colorbox iframe button" data-OnColorboxClose="window.location.reload()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MasterPages/Detail.aspx?id=<%= BasePage.CurrentMediaDetail.GetMasterPage().ID %>"><i class="fa fa-file-code-o"></i>&nbsp;Edit Template</a>
-                <a ID="EditMediaType" class="colorbox iframe button" data-OnColorboxClose="window.location.reload()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MediaTypes/Detail.aspx?id=<%= BasePage.CurrentMediaDetail.MediaTypeID %>"><i class="fa fa-file-code-o"></i>&nbsp;Edit Media Type</a>
+                <a ID="EdiSettings" class="colorbox iframe button" data-OnColorboxClose="RefreshPage()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Settings/Default.aspx?masterFilePath=~/Admin/Views/MasterPages/Popup.Master"><i class="fa fa-wrench"></i>&nbsp;Edit Settings</a>
+                <a ID="EditTemplate" class="colorbox iframe button" data-OnColorboxClose="RefreshPage()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MasterPages/Detail.aspx?id=<%= BasePage.CurrentMediaDetail.GetMasterPage().ID %>"><i class="fa fa-file-code-o"></i>&nbsp;Edit Template</a>
+                <a ID="EditMediaType" class="colorbox iframe button" data-OnColorboxClose="RefreshPage()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MediaTypes/Detail.aspx?id=<%= BasePage.CurrentMediaDetail.MediaTypeID %>"><i class="fa fa-file-code-o"></i>&nbsp;Edit Media Type</a>
             </div>
         </div>
         <div> 
-            <a ID="EditCurrentPage" Target="_blank" class="button" data-OnColorboxClose="window.location.reload()" href="<%= CurrentMediaDetailAdminUrl %>"><i class="fa fa-external-link"></i>&nbsp;Edit in CMS</a>
+            <a ID="EditCurrentPage" Target="_blank" class="button" data-OnColorboxClose="RefreshPage()" href="<%= CurrentMediaDetailAdminUrl %>"><i class="fa fa-external-link"></i>&nbsp;Edit in CMS</a>
         </div>
         <div class="clear"></div>
     </asp:Panel>
@@ -104,46 +104,48 @@
                 border:none !important;                
 
             }
-            .field.hide .edit{
+            .field.hide .fieldControls{
                 display:none !important;
             }
 
             .field.hover {
                 outline: 2px dashed rgba(0,0,0, 0.5)!important;
             }
-            .field .edit:hover {
+            .field .fieldControls a:hover {
                 background-color: red !important;  
                 opacity: 1;
             }
-            .field .edit {
-                content: 'Edit';
-                position: static;
-                top: 0px;
-                left: 0px;                    
-                background-color: #000 !important;
-                color: #fff !important;
-                cursor: pointer;
-                padding: 2px 5px;
-                font-size: 12px;
-                font-style: normal;   
-                opacity: 0.3;
-                white-space: nowrap;
-                margin-top: -30px;
-                z-index: 999999;
+            .field .fieldControls a {
                 float: left;
-                display: none;
+                background-color: #000;
+                color: #fff;
+                margin-right: 10px;
+                padding: 1px 3px;
+                opacity: .5;
+                font-size: 12px;
+                font-weight: bold;
             }
-            .field .edit.show {
+                .field .fieldControls a.remove {
+                    display:none;
+                }
+
+            .field .fieldControls.show {
                 display: block;
             }
 
-            .field .field .edit {
+            .field .field .fieldControls {
                 margin-top: -5px;
             }
 
     </style>
 
     <script type="text/javascript">
+
+        function RefreshPage()
+        {
+            console.log("rab");
+            window.location.href = window.location.href;
+        }
 
         function ToggleVisualEditor()
         {            
@@ -172,33 +174,43 @@
 
         function HideFieldsEditor() {
             $(".field").addClass("hide");
-            $(".field .edit").removeClass("show");           
+            $(".field .fieldControls").removeClass("show");           
         }
 
         function ShowFieldsEditor() {
             $(".field").removeClass("hide");
-            $(".field .edit").addClass("show");
+            $(".field .fieldControls").addClass("show");
         }
 
         function CreateFieldsEditor() {
             $("[data-fieldid]").each(function () {
                 var fieldId = $(this).attr("data-fieldid");
                 var fieldcode = $(this).attr("data-fieldcode");
+                var removeField = "";
 
-                $(this).prepend("<a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='window.location.reload()' data-width='60%' data-height='80%'>Edit - {Field:" + fieldcode + "}</a><div class='clear'></div>");
+                if ($(this).parents(".field").length == 0)
+                {
+                    removeField ="<a class='remove' href='javascript:void(0)'>Remove Field</a>"
+                }
+
+                $(this).prepend("<div class='fieldControls'><a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='RefreshPage()' data-width='60%' data-height='80%'>Edit - {Field:" + fieldcode + "}</a>"+removeField+"<div class='clear'></div></div>");
             });
 
             $(document).on("click", ".field .edit", function () {
                 $(".field .edit").hide();
             });
 
-            $(document).on("mouseenter", ".field .edit", function () {
-                $(this).parent().addClass("hover");
+            $(document).on("click", ".fieldControls .remove", function () {
+                $(this).closest(".field").remove();
             });
 
-            $(document).on("mouseleave", ".field .edit", function () {
-                $(this).parent().removeClass("hover");
+            $(document).on("mouseenter", ".fieldControls a", function () {
+                $(this).closest(".field").addClass("hover");
             });
+
+            $(document).on("mouseleave", ".fieldControls a", function () {
+                $(this).closest(".field").removeClass("hover");
+            });            
         }
 
         var IsLoggedIn = false;

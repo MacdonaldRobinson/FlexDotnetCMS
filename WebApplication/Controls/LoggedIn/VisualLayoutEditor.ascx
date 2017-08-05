@@ -41,7 +41,10 @@
         });
     }    
 
-    function initEvents() {                
+    function initEvents() {    
+
+        $(".fieldControls a.remove").show();
+
         $(".UseMainLayout").each(function () {
             if ($(this).children(".ToolBar").length == 0) {
                 var toolBar = $("#ToolBarTemplate").clone();

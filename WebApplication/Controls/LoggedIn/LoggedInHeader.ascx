@@ -142,8 +142,7 @@
     <script type="text/javascript">
 
         function RefreshPage()
-        {
-            console.log("rab");
+        {            
             window.location.href = window.location.href;
         }
 
@@ -201,7 +200,12 @@
             });
 
             $(document).on("click", ".fieldControls .remove", function () {
-                $(this).closest(".field").remove();
+                var canRemove = confirm("Are you sure you want to remove this field?");
+
+                if (canRemove)
+                {
+                    $(this).closest(".field").remove();
+                }
             });
 
             $(document).on("mouseenter", ".fieldControls a", function () {

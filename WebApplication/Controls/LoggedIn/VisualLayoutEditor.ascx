@@ -199,11 +199,21 @@
         });
 
         $(document).on("click", ".DeleteRow", function () {
-            $(this).closest(".row").remove();
+            var canRemove = confirm("Are you sure you want to remove this row?");
+
+            if (canRemove)
+            {
+                $(this).closest(".row").remove();
+            }
         });
 
         $(document).on("click", ".DeleteColumn", function () {
-            $(this).closest(".col").remove();
+            var canRemove = confirm("Are you sure you want to remove this column?");
+
+            if (canRemove)
+            {
+                $(this).closest(".col").remove();
+            }
         });
 
 

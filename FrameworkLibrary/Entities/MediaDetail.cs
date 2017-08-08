@@ -738,6 +738,8 @@ namespace FrameworkLibrary
                     fieldAssociation.MediaDetail.HistoryForMediaDetail = null;
                     fieldAssociation.MediaDetail.HistoryVersionNumber = 0;
                 }
+
+                field.FrontEndSubmissions = liveVersion.LoadField(field.FieldCode)?.FrontEndSubmissions;
             }
 
             foreach (var mediaTypeField in selectedItem.MediaType.Fields)
@@ -782,7 +784,9 @@ namespace FrameworkLibrary
 
             if (!returnObj.IsError)
             {
-                liveVersion.HistoryForMediaDetailID = selectedItem.ID;
+                liveVersion.HistoryForMediaDetailID = selectedItem.ID;                
+
+
                 returnObj = MediaDetailsMapper.Update(liveVersion);
 
                 if (!returnObj.IsError)

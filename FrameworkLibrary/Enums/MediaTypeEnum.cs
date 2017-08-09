@@ -7,6 +7,6 @@
         UrlRedirectRule,
         UrlRedirectRuleList,
         Website,
-        NoTemplatePage
+        Include
     }
 }

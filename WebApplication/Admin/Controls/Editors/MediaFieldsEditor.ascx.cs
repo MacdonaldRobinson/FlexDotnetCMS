@@ -177,6 +177,9 @@ namespace WebApplication.Admin.Controls.Editors
             mediaField.UseMediaTypeFieldDescription = UseMediaTypeFieldDescription.Checked;                    
             mediaField.ShowFrontEndFieldEditor = ShowFrontEndFieldEditor.Checked;
 
+            if(mediaField.FrontEndSubmissions == null)
+                mediaField.FrontEndSubmissions = "";
+
 
             var mediaTypeField = mediaDetail.MediaType.Fields.SingleOrDefault(i => i.FieldCode == mediaField.FieldCode);
 

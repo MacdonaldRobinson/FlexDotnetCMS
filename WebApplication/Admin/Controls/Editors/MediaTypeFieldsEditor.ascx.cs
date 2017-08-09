@@ -157,6 +157,7 @@ namespace WebApplication.Admin.Controls.Editors
             mediaTypeField.SetAdminControlValue = SetAdminControlValue.Text;
             mediaTypeField.ShowFrontEndFieldEditor = ShowFrontEndFieldEditor.Checked;
             mediaTypeField.FieldValue = FieldValue.Text;
+            mediaTypeField.FrontEndSubmissions = "";
             mediaTypeField.DateCreated = DateTime.Now;
             mediaTypeField.DateLastModified = DateTime.Now;
             mediaTypeField.Instructions = "";

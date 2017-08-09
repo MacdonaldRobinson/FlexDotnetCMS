@@ -43,6 +43,23 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldSelector
                 MediaDetailFieldsEditorWrapper.Visible = false;
                 MediaDetailFieldsEditorWrapper.Visible = false;
             }
+
+            BindCommonFields();
+        }
+
+        public void BindCommonFields()
+        {
+            var includeName = MediaTypeEnum.Include.ToString();
+            var includes = BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.Name == includeName && i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0);
+
+            CommonFields.DataSource = includes.SelectMany(i => i.Fields).ToList();
+            CommonFields.DataBind();
+        }
+
+        protected void ItemList_PageIndexChanging(object sender, System.Web.UI.WebControls.GridViewPageEventArgs e)
+        {
+            CommonFields.PageIndex = e.NewPageIndex;
+            CommonFields.DataBind();
         }
     }
 }

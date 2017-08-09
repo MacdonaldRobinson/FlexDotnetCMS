@@ -992,10 +992,12 @@ namespace FrameworkLibrary
         public static string ReplaceFieldWithParsedValue(string originalText, string textToReplace, IField mediaField, string parsedValue, bool includeFieldWrapper, Dictionary<string, string> arguments)
         {
             var byPassEditorCheck = false;
+            var mediaId = "";
             if(mediaField is MediaDetailField && FrameworkSettings.CurrentUser != null)
             {
                 var mediaDetailField = mediaField as MediaDetailField;
                 var mediaDetail = (mediaDetailField.MediaDetail != null) ? mediaDetailField.MediaDetail : MediaDetailsMapper.GetByID(mediaDetailField.MediaDetailID);
+                mediaId = mediaDetailField.MediaDetail.MediaID.ToString();
 
                 var returnObj = CanAccessMediaDetail(mediaDetail, FrameworkSettings.CurrentUser);
 
@@ -1023,7 +1025,7 @@ namespace FrameworkLibrary
 
             if (mediaField.ShowFrontEndFieldEditor && includeFieldWrapper)
             {
-                parsedValue = $"<div class='field' data-fieldid='{mediaField.ID}' data-fieldcode='{mediaField.FieldCode}' data-arguments='{StringHelper.ObjectToJson(arguments)}'>{parsedValue}</div>";
+                parsedValue = $"<div class='field' data-fieldid='{mediaField.ID}' data-mediaid='{mediaId}' data-fieldcode='{mediaField.FieldCode}' data-arguments='{StringHelper.ObjectToJson(arguments)}'>{parsedValue}</div>";
             }
 
             return originalText.Replace(textToReplace, parsedValue);
@@ -1274,7 +1276,7 @@ namespace FrameworkLibrary
 
             if( mediaDetail.ShowInMenu && propertyName == "{UseMainLayout}" && customCode != propertyName)
             {
-                customCode = "<div class='UseMainLayout' data-mediadetailid='"+mediaDetail.ID+"'>"+ customCode + "</div>";
+                customCode = "<div class='UseMainLayout' data-mediadetailid='"+mediaDetail.ID+ "' data-mediaid='" + mediaDetail.MediaID + "'>" + customCode + "</div>";
             }
 
             return customCode;

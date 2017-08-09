@@ -8,8 +8,13 @@
 
     function UpdateVisualEditor(source) {        
         var fieldCode = $(source).attr("data-fieldcode");
+        var mediaDetailId = $(source).attr("data-mediadetailid");
 
-        var mediaDetailId = $('.AddField.clicked').closest(".UseMainLayout").attr("data-mediadetailid");
+        console.log(mediaDetailId);
+
+        if (mediaDetailId == "" || mediaDetailId == undefined) {
+            mediaDetailId = $('.AddField.clicked').closest(".UseMainLayout").attr("data-mediadetailid");
+        }
 
         var url = "/Admin/Views/MasterPages/WebService.asmx/RenderField?mediaDetailId=" + mediaDetailId+"&fieldCode=" + fieldCode;
 
@@ -315,12 +320,21 @@
     {
         $(".UseMainLayout").each(function () {
             var mediaDetailId = $(this).attr("data-mediadetailid");
+            var rootMediaId = $(this).attr("data-mediaid");
+
             var clone = $(this).clone(this);
 
             clone.find(".ToolBar, .Handle").remove();
             clone.find(".field").each(function () {                
                 var fieldCode = $(this).attr("data-fieldcode")
+                var mediaId = $(this).attr("data-mediaid")
+
                 var shortCode = "{Field:" + fieldCode + "}";
+
+                if (rootMediaId != mediaId)
+                {
+                    shortCode = "{{Load:" + mediaId + "}.Field:" + fieldCode + "}";
+                }                
 
                 $(this).after(shortCode);
                 $(this).remove();                

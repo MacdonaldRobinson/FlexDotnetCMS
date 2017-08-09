@@ -9,13 +9,22 @@ using System.Web.UI.WebControls;
 namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
 {
     public partial class FieldsTab : BaseTab, ITab
-    {
+    {        
         public void SetObject(IMediaDetail selectedItem)
         {
             this.selectedItem = selectedItem;
-            MediaFieldsEditor.SetItems(selectedItem);
+
+            if (MediaFieldsEditor != null)
+            {
+                Bind();
+            }
         }
 
+        public void Bind()
+        {
+            MediaFieldsEditor.SetItems(selectedItem);
+        }
+        
         public void UpdateFieldsFromObject()
         {
         }

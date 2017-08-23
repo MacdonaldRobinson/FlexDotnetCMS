@@ -997,7 +997,7 @@ namespace FrameworkLibrary
             {
                 var mediaDetailField = mediaField as MediaDetailField;
                 var mediaDetail = (mediaDetailField.MediaDetail != null) ? mediaDetailField.MediaDetail : MediaDetailsMapper.GetByID(mediaDetailField.MediaDetailID);
-                mediaId = mediaDetailField.MediaDetail.MediaID.ToString();
+                mediaId = mediaDetail.MediaID.ToString();
 
                 var returnObj = CanAccessMediaDetail(mediaDetail, FrameworkSettings.CurrentUser);
 

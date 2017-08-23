@@ -13,6 +13,30 @@ namespace FrameworkLibrary
             return MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.Name == name); //return FilterByMediaType(MediaDetailsMapper.GetAll(), MediaTypeEnum.UrlRedirectRule);
         }
 
+        public static UrlRedirectRule CreateUrlRedirect(string fromVirtualPath, string toVirtualPath)
+        {
+            var currentLanuageId = FrameworkSettings.GetCurrentLanguage().ID;
+            var urlRedirectList = MediaDetailsMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.MediaType.Name == MediaTypeEnum.UrlRedirectRuleList.ToString() && i.HistoryVersionNumber == 0 && i.LanguageID == currentLanuageId);
+            var mediaType = MediaDetailsMapper.GetDataModel().MediaTypes.FirstOrDefault(i => i.Name == MediaTypeEnum.UrlRedirectRule.ToString());
+
+            if (urlRedirectList != null && mediaType != null)
+            {
+                fromVirtualPath = fromVirtualPath.Replace("~", "");
+                toVirtualPath = toVirtualPath.Replace("~", "");
+
+                var urlRewrite = (UrlRedirectRule)MediaDetailsMapper.CreateObject(mediaType.ID, null, urlRedirectList.Media);
+                urlRewrite.Is301Redirect = true;
+                urlRewrite.VirtualPathToRedirect = fromVirtualPath;
+                urlRewrite.RedirectToUrl = toVirtualPath;
+                urlRewrite.LinkTitle = urlRewrite.SectionTitle = urlRewrite.Title = urlRewrite.VirtualPathToRedirect + " -> " + urlRewrite.RedirectToUrl;
+                urlRewrite.PublishDate = DateTime.Now;
+
+                return urlRewrite;
+            }
+
+            return null;
+        }
+
         public static IEnumerable<IMediaDetail> GetAllActive()
         {
             return FilterByIsHistoryStatus(FilterOutDeletedAndArchived(FilterByCanRenderStatus(GetAll(), true)), false);

@@ -224,6 +224,20 @@ namespace WebApplication.Handlers
                     else
                         URIHelper.ForceNonSSL();
                 }
+                else
+                {
+                    var currentLanguageId = FrameworkSettings.GetCurrentLanguage().ID;
+
+                    var historyVersion = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.LanguageID == currentLanguageId && i.CachedVirtualPath == virtualPath && i.MediaType.ShowInSiteTree && i.HistoryVersionNumber != 0 && i.HistoryForMediaDetail != null);
+
+                    if (historyVersion != null)
+                    {
+                        var urlRedirectRule = UrlRedirectRulesMapper.CreateUrlRedirect(virtualPath, historyVersion.HistoryForMediaDetail.CachedVirtualPath);
+                        var returnObj = UrlRedirectRulesMapper.Insert(urlRedirectRule);
+
+                        HttpContext.Current.Response.RedirectPermanent(urlRedirectRule.RedirectToUrl);
+                    }
+                }
 
                 if (cmsSettings != null)
                 {

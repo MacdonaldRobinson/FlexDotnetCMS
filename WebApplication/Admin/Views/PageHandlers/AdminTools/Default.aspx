@@ -15,7 +15,7 @@
                 <div class="clear"></div>
             </div>
         </div>
-        <div>
+<%--        <div>
             <h3>Clear All Cache & Delete All History Versions</h3>
             This tool will delete all history versions currently saved in the database and will clear all the cache at the same time<br />
             <div class="buttons">
@@ -24,12 +24,51 @@
                 Delete any saved Drafts as well
                 <div class="clear"></div>
             </div>
-        </div>
+        </div>--%>
     </fieldset>
 
     <fieldset>
-        <legend>Database Tools</legend>
-        <p>
+        <legend>Deployment Tools</legend>
+        <label><strong>Select the remote environment:</strong></label>
+
+        <asp:UpdatePanel runat="server">
+            <ContentTemplate>
+                <asp:DropDownList runat="server" ID="DeployToEnvironment">
+                </asp:DropDownList>
+
+                <asp:LinkButton Text="Check" runat="server" ID="Deploy" OnClick="Deploy_Click" />  
+        
+                <asp:ListView runat="server" ItemType="" ID="DeployMessages">
+                    <LayoutTemplate>
+                        <ul id="DeployMessages">
+                            <asp:PlaceHolder runat="server" ID="itemPlaceHolder" />
+                        </ul>
+                    </LayoutTemplate>
+                    <ItemTemplate>
+                        <li>                            
+                            <strong><%# Eval("Key") %></strong>
+
+                        <asp:ListView runat="server" ItemType="FrameworkLibrary.Return" ID="Messages" DataSource='<%# Eval("Value") %>'>
+                            <LayoutTemplate>
+                                <ul class="SubMessage">
+                                    <asp:PlaceHolder runat="server" ID="itemPlaceHolder" />
+                                </ul>
+                            </LayoutTemplate>
+                            <ItemTemplate>
+                                <li>                                    
+                                    <%# Eval("Error.Exception.Message") %>
+                                </li>
+                            </ItemTemplate>
+                        </asp:ListView>
+
+
+                        </li>
+                    </ItemTemplate>
+                </asp:ListView>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+
+        <!--<p>
             <h3>Backup Database</h3>
             This tool will create a backup of the current database an place it under (
             <asp:Literal ID="DBBackupPath" runat="server"></asp:Literal>
@@ -37,7 +76,7 @@
             <div class="buttons">
                 <asp:LinkButton ID="BackupNow" runat="server" Text="Backup Now" OnClick="BackupNow_OnClick" />
             </div>
-        </p>
+        </p>-->
     </fieldset>
 
 <%--    <fieldset>

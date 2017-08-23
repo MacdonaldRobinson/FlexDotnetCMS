@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity.Validation;
 using System.Linq;
@@ -191,13 +192,20 @@ namespace FrameworkLibrary
             }
         }
 
-        public static Entities GetDataModel(bool forceNew = false, bool generateProxies = true)
+        public static Entities GetDataModel(bool forceNew = false, bool generateProxies = true, ConnectionStringSettings connectionStringSettings = null)
         {
             Entities context;
 
-            if ((ContextHelper.Get(DataModelKey, dataContextStorageContext) == null) || (forceNew))
+            var cachedContext = (Entities)ContextHelper.Get(DataModelKey, dataContextStorageContext);        
+
+            if ((cachedContext == null) || (forceNew))
             {
-                context = new Entities(FrameworkBaseMedia.ConnectionSettings.ConnectionString);
+                if(connectionStringSettings == null)
+                {
+                    connectionStringSettings = FrameworkBaseMedia.ConnectionSettings;
+                }
+
+                context = new Entities(connectionStringSettings.ConnectionString);
 
                 if (!CanConnectToDBUsingEntities(context))
                     return null;
@@ -213,18 +221,24 @@ namespace FrameworkLibrary
                     context.Configuration.ProxyCreationEnabled = false;
                 }
 
-                ContextHelper.Set(DataModelKey, context, dataContextStorageContext);
+                if(!forceNew)
+                {
+                    if (FrameworkBaseMedia.ConnectionSettings.ConnectionString.Contains(context.Database.Connection.ConnectionString))
+                    {
+                        ContextHelper.Set(DataModelKey, context, dataContextStorageContext);
+                    }
+                }
 
                 return context;
             }
-            context = (Entities)ContextHelper.Get(DataModelKey, dataContextStorageContext);
-            if (context.Database.Connection.State == ConnectionState.Broken)
+
+            if (cachedContext.Database.Connection.State == ConnectionState.Broken)
             {
-                context.Database.Connection.Close();
-                context.Database.Connection.Open();
+                cachedContext.Database.Connection.Close();
+                cachedContext.Database.Connection.Open();
             }
 
-            return context;
+            return cachedContext;
         }
 
         private static bool CurrentUserHasPermissions(PermissionsEnum permissionsEnum)

@@ -47,12 +47,22 @@ public class FrameworkBaseMedia
         return new FrameworkBaseMedia(mediaDetail);
     }
 
-    public static void InitConnectionSettings(ConnectionStringSettings connectionStringSettings)
+    public static ConnectionStringSettings PrepareConnectionSettings(ConnectionStringSettings connectionStringSettings)
     {
         if (connectionStringSettings != null)
         {
             string connectionString = "metadata=res://*/Model.csdl|res://*/Model.ssdl|res://*/Model.msl;provider=" + connectionStringSettings.ProviderName + ";provider connection string=\"" + connectionStringSettings.ConnectionString + ";MultipleActiveResultSets=True\"";
-            connectionSettings = new ConnectionStringSettings(connectionStringSettings.Name, connectionString, connectionStringSettings.ProviderName);
+            return new ConnectionStringSettings(connectionStringSettings.Name, connectionString, connectionStringSettings.ProviderName);
+        }
+
+        return null;
+    }
+
+    public static void InitConnectionSettings(ConnectionStringSettings connectionStringSettings)
+    {
+        if (connectionStringSettings != null)
+        {
+            connectionSettings = PrepareConnectionSettings(connectionStringSettings);
         }
     }
 

@@ -8,9 +8,7 @@
 
     function UpdateVisualEditor(source) {        
         var fieldCode = $(source).attr("data-fieldcode");
-        var mediaDetailId = $(source).attr("data-mediadetailid");
-
-        console.log(mediaDetailId);
+        var mediaDetailId = $(source).attr("data-mediadetailid");        
 
         if (mediaDetailId == "" || mediaDetailId == undefined) {
             mediaDetailId = $('.AddField.clicked').closest(".UseMainLayout").attr("data-mediadetailid");

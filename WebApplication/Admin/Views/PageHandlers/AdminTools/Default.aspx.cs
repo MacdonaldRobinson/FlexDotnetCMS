@@ -194,6 +194,18 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
 
         private void CompareLocalAndRemoteMediaDetail(MediaDetail localMediaDetail, MediaDetail remoteMediaDetail)
         {
+            if (localMediaDetail.CachedVirtualPath != remoteMediaDetail.CachedVirtualPath)
+            {
+                if(localMediaDetail.ShowInMenu)
+                {
+                    AddMessage("Url's are different - Show In Menu", $"Local: '{localMediaDetail.CachedVirtualPath}' | Remote: '{remoteMediaDetail.CachedVirtualPath}'");
+                }
+                else
+                {
+                    AddMessage("Url's are different", $"Local: '{localMediaDetail.CachedVirtualPath}' | Remote: '{remoteMediaDetail.CachedVirtualPath}'");
+                }
+            }
+
             if (localMediaDetail.UseMediaTypeLayouts != remoteMediaDetail.UseMediaTypeLayouts)
             {
                 AddMessage("UseMediaTypeLayouts values are different", $"Local: '{localMediaDetail.CachedVirtualPath}' is <strong>'{localMediaDetail.UseMediaTypeLayouts}'</strong> | Remote: '{remoteMediaDetail.CachedVirtualPath}' is <strong>'{remoteMediaDetail.UseMediaTypeLayouts}'</strong>");
@@ -227,7 +239,7 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
 
                     if(remoteParent != null)
                     {                        
-                        AddMessage("Moved Pages", $"Parent of the local page is {localMediaDetail.Media.ParentMedia.GetLiveMediaDetail().CachedVirtualPath} | remote parent is '{remoteParent.CachedVirtualPath}'");
+                        AddMessage("Moved Pages", $"Parent of the local page is {localMediaDetail.Media.ParentMedia?.GetLiveMediaDetail().CachedVirtualPath} | remote parent is '{remoteParent.CachedVirtualPath}'");
                     }
                 }
 
@@ -289,54 +301,47 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
             var remoteConnectionStringSetting = FrameworkBaseMedia.PrepareConnectionSettings(WebConfigurationManager.ConnectionStrings[DeployToEnvironment.SelectedValue]);
             //var localConnectionStringSetting = FrameworkBaseMedia.PrepareConnectionSettings(AppSettings.GetConnectionSettings());
 
-            try
+            var localDataModel = BaseMapper.GetDataModel();
+            var remoteDataModel = BaseMapper.GetDataModel(true, true, remoteConnectionStringSetting);
+
+            var localMediaDetails = localDataModel.MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && i.MediaType.Name != MediaTypeEnum.RootPage.ToString()).ToList();
+            var remoteMediaDetails = remoteDataModel.MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && i.MediaType.Name != MediaTypeEnum.RootPage.ToString()).ToList();
+
+            var localSettings = localDataModel.AllSettings.FirstOrDefault();
+            var remoteSettings = remoteDataModel.AllSettings.FirstOrDefault();
+
+            if (localSettings.GlobalCodeInBody != remoteSettings.GlobalCodeInBody)
             {
-                var localDataModel = BaseMapper.GetDataModel();
-                var remoteDataModel = BaseMapper.GetDataModel(true, true, remoteConnectionStringSetting);
+                AddMessage("Settings", $"The setting: 'GlobalCodeInBody' is different");
+            }
 
-                var localMediaDetails = localDataModel.MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && i.MediaType.Name != MediaTypeEnum.RootPage.ToString()).ToList();
-                var remoteMediaDetails = remoteDataModel.MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && i.MediaType.Name != MediaTypeEnum.RootPage.ToString()).ToList();
+            if (localSettings.GlobalCodeInHead != remoteSettings.GlobalCodeInHead)
+            {
+                AddMessage("Settings", $"The setting: 'GlobalCodeInHead' is different");
+            }
 
-                var localSettings = localDataModel.AllSettings.FirstOrDefault();
-                var remoteSettings = remoteDataModel.AllSettings.FirstOrDefault();
+            foreach (var localMediaDetail in localMediaDetails)
+            {
+                var remoteMediaDetail = remoteMediaDetails.FirstOrDefault(i => i.MediaID == localMediaDetail.MediaID && i.LanguageID == localMediaDetail.LanguageID);
 
-                if (localSettings.GlobalCodeInBody != remoteSettings.GlobalCodeInBody)
+                if (remoteMediaDetail != null)
                 {
-                    AddMessage("Settings", $"The setting: 'GlobalCodeInBody' is different");
+                    CompareLocalAndRemoteMediaDetail(localMediaDetail, remoteMediaDetail);
                 }
-
-                if (localSettings.GlobalCodeInHead != remoteSettings.GlobalCodeInHead)
+                else
                 {
-                    AddMessage("Settings", $"The setting: 'GlobalCodeInHead' is different");
-                }
+                    var found = remoteMediaDetails.FirstOrDefault(i => i.CachedVirtualPath == localMediaDetail.CachedVirtualPath && i.LanguageID == localMediaDetail.LanguageID);
 
-                foreach (var localMediaDetail in localMediaDetails)
-                {
-                    var remoteMediaDetail = remoteMediaDetails.FirstOrDefault(i => i.MediaID == localMediaDetail.MediaID && i.LanguageID == localMediaDetail.LanguageID);
-
-                    if (remoteMediaDetail != null)
+                    if(found != null)
                     {
-                        CompareLocalAndRemoteMediaDetail(localMediaDetail, remoteMediaDetail);
+                        //AddMessage("Different MediaID's but the same cached virtual path", $"Local: {localMediaDetail.CachedVirtualPath} is '{localMediaDetail.MediaID}' | Remote: {found.CachedVirtualPath}  is '{found.MediaID}'");
+                        CompareLocalAndRemoteMediaDetail(localMediaDetail, found);                        
                     }
                     else
                     {
-                        var found = remoteMediaDetails.FirstOrDefault(i => i.CachedVirtualPath == localMediaDetail.CachedVirtualPath && i.LanguageID == localMediaDetail.LanguageID);
-
-                        if (found != null)
-                        {
-                            //AddMessage("Different MediaID's but the same cached virtual path", $"Local: {localMediaDetail.CachedVirtualPath} is '{localMediaDetail.MediaID}' | Remote: {found.CachedVirtualPath}  is '{found.MediaID}'");
-                            CompareLocalAndRemoteMediaDetail(localMediaDetail, found);
-                        }
-                        else
-                        {
-                            AddMessage("Does not exist on remote", $"{localMediaDetail.CachedVirtualPath}");
-                        }
+                        AddMessage("Does not exist on remote", $"{localMediaDetail.CachedVirtualPath}");
                     }
                 }
-            }
-            catch(Exception ex)
-            {
-                AddMessage("Error", ex.Message+" | "+ex.InnerException?.Message);
             }
 
             DeployMessages.DataSource = _deployMessages;

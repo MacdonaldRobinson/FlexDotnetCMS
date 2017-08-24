@@ -88,7 +88,16 @@ namespace FrameworkLibrary
             message.BodyHtml.Text = body;
             message.BodyText.Text = body;
 
-            return ActiveUp.Net.Mail.SmtpClient.DirectSend(message);
+            try
+            {
+                var returnStr = ActiveUp.Net.Mail.SmtpClient.DirectSend(message);
+                return returnStr;
+            }
+            catch(Exception ex)
+            {
+                ErrorHelper.LogException(ex);
+                return null;
+            }            
         }
 
         public static EmailLog GetEmailLogFromMailMessage(MailMessage mailObj)

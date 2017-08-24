@@ -6,8 +6,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">          
     <fieldset>
-        <legend>Common Fields</legend>
-        <asp:GridView runat="server" ID="CommonFields" AutoGenerateColumns="false" AllowPaging="true" CssClass="DragDropGrid" OnPageIndexChanging="ItemList_PageIndexChanging" PageSize="10">
+        <legend>Global Fields</legend>
+        <asp:GridView runat="server" ID="GlobalFields" AutoGenerateColumns="false" AllowPaging="true" CssClass="DragDropGrid" OnPageIndexChanging="ItemList_PageIndexChanging" PageSize="10">
             <Columns>
                 <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
                 <asp:BoundField DataField="OrderIndex" HeaderText="OrderIndex" SortExpression="OrderIndex" />
@@ -23,7 +23,7 @@
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
-    </fieldset>
+    </fieldset><br />
 
     <asp:Panel runat="server" ID="MediaTypeFieldsEditorWrapper" Visible="false">
         <Admin:MediaTypeFieldsEditor runat="server" id="MediaTypeFieldsEditor" />

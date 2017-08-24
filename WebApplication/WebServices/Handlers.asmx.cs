@@ -8,6 +8,7 @@ using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WebApplication.Services;
+using WebApplication.Admin.Controls.Fields;
 
 namespace WebApplication.WebServices
 {
@@ -100,6 +101,21 @@ namespace WebApplication.WebServices
             field.FrontEndSubmissions = currentEntries.ToString(Formatting.None);
 
             returnObj = FieldsMapper.Update(field);
+
+            var formFieldSettings = StringHelper.JsonToObject<FormFieldSettings>(field.FieldSettings);
+
+            if(!string.IsNullOrEmpty(formFieldSettings.EmailTemplateMediaID) && long.TryParse(formFieldSettings.EmailTemplateMediaID, out long i))
+            {
+                var media = MediasMapper.GetByID(long.Parse(formFieldSettings.EmailTemplateMediaID));
+
+                if(media != null)
+                {
+                    var layout = MediaDetailsMapper.ParseSpecialTags(media.GetLiveMediaDetail());
+                    var parsedLayout = ParserHelper.ParseData(layout, FormDictionary);
+
+                    EmailHelper.SendDirectMessage(AppSettings.SystemEmailAddress, formFieldSettings.EmailAddress, "Form Submission", parsedLayout);
+                }                
+            }            
 
             return returnObj;
         }

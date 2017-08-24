@@ -96,6 +96,9 @@
                     <strong><em>Advanced Field Settings:</em></strong>
                 </div>
                 <div>
+                    <asp:CheckBox runat="server" ID="IsGlobalField" /> <label for="<%# IsGlobalField.ClientID %>">Is Global Field</label>
+                </div>
+                <div>
                     <label for="<%# FieldCode.ClientID %>">Field Code:</label>
                     <asp:TextBox runat="server" ID="FieldCode" />
                 </div>

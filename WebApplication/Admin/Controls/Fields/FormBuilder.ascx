@@ -6,6 +6,7 @@
   <ul>
     <li><a href="#form-builder">Form Builder</a></li>
     <li><a href="#form-submissions">Form Submissions</a></li>
+      <li><a href="#form-settings">Form Settings</a></li>
   </ul>
   <div id="form-builder">
     <script src="/Scripts/formBuilder-master/dist/form-builder.min.js"></script>
@@ -60,6 +61,24 @@
           </ContentTemplate>
       </asp:UpdatePanel>
   </div>
+    <div id="form-settings">
+        <asp:UpdatePanel runat="server" ID="UpdatePanel1" class="fieldsContainer">
+            <ContentTemplate>
+                <div>
+                    <label>Email Address To Send Form Submissions To</label>
+                    <asp:TextBox runat="server" ID="EmailAddress" />
+                </div>            
+                <div>
+                    <label>Email Template Media ID</label>
+                    <asp:TextBox runat="server" ID="EmailTemplateMediaID" />
+                </div>
+                <div class="buttons">
+                    <asp:LinkButton Text="Save Settings" runat="server" ID="SaveSettings" OnClick="SaveSettings_Click"/>
+                    <div class="clear"></div>
+                </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+    </div>
 </div>
 
 

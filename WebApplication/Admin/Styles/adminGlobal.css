@@ -69,10 +69,12 @@ h1 span, h2 {
 
 .buttons {
     margin: 0;
-    z-index:100;
+    z-index: 100;
 }
 
-
+fieldset > div > .buttons {
+    margin: 5px 0 5px 0;
+}
     .buttons a {
         padding: 0.4em 1.5em 0.4em 1.5em !important;
         background-color: #99ccff !important;
@@ -173,7 +175,18 @@ fieldset {
         position: relative;
     }
 
-        fieldset > div ul {
+.fieldsContainer {
+    padding: 10px;
+}
+    .fieldsContainer > div {
+        margin-bottom: 15px;
+        position: relative;
+    }
+    .fieldsContainer > div input {
+        margin: 3px 0 3px 0;
+    }
+
+            fieldset > div ul {
             list-style-type: none;
         }
 

@@ -40,6 +40,8 @@
           <Property Name="FrontEndLayout" Type="nvarchar(max)" />
           <Property Name="ShowFrontEndFieldEditor" Type="bit" Nullable="false" />
           <Property Name="FrontEndSubmissions" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsGlobalField" Type="bit" Nullable="false" />
+          <Property Name="FieldSettings" Type="nvarchar(max)" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateLastModified" Type="datetime" Nullable="false" />
         </EntityType>
@@ -1813,6 +1815,8 @@
           <Property Name="FieldDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ShowFrontEndFieldEditor" Type="Boolean" Nullable="false" />
           <Property Name="FrontEndSubmissions" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsGlobalField" Type="Boolean" Nullable="false" />
+          <Property Name="FieldSettings" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MediaDetailField" BaseType="FrameworkModel.Field">
           <Property Name="MediaDetailID" Type="Int64" Nullable="false" />
@@ -2415,6 +2419,8 @@
           <EntitySetMapping Name="Fields">
             <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.Field)">
               <MappingFragment StoreEntitySet="Fields">
+                <ScalarProperty Name="FieldSettings" ColumnName="FieldSettings" />
+                <ScalarProperty Name="IsGlobalField" ColumnName="IsGlobalField" />
                 <ScalarProperty Name="FrontEndSubmissions" ColumnName="FrontEndSubmissions" />
                 <ScalarProperty Name="ShowFrontEndFieldEditor" ColumnName="ShowFrontEndFieldEditor" />
                 <ScalarProperty Name="FieldDescription" ColumnName="FieldDescription" />

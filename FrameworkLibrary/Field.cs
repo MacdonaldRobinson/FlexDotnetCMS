@@ -30,5 +30,7 @@ namespace FrameworkLibrary
         public string FieldDescription { get; set; }
         public bool ShowFrontEndFieldEditor { get; set; }
         public string FrontEndSubmissions { get; set; }
+        public bool IsGlobalField { get; set; }
+        public string FieldSettings { get; set; }
     }
 }

@@ -161,6 +161,7 @@ namespace WebApplication.Admin.Controls.Editors
             mediaTypeField.DateCreated = DateTime.Now;
             mediaTypeField.DateLastModified = DateTime.Now;
             mediaTypeField.Instructions = "";
+            mediaTypeField.IsGlobalField = IsGlobalField.Checked;
         }
 
         private void UpdatedFieldsFromObject(MediaTypeField mediaTypeField)
@@ -177,6 +178,7 @@ namespace WebApplication.Admin.Controls.Editors
             GetAdminControlValue.Text = mediaTypeField.GetAdminControlValue;
             SetAdminControlValue.Text = mediaTypeField.SetAdminControlValue;
             ShowFrontEndFieldEditor.Checked = mediaTypeField.ShowFrontEndFieldEditor;
+            IsGlobalField.Checked = mediaTypeField.IsGlobalField;
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

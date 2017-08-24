@@ -1014,7 +1014,7 @@ namespace FrameworkLibrary
                 {
                     bool.TryParse(arguments["editor"], out includeFieldWrapper);
                     mediaField.ShowFrontEndFieldEditor = includeFieldWrapper;
-                }                
+                }     
             }
 
             if (!byPassEditorCheck && arguments.ContainsKey("GetPathFromHtml"))

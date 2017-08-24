@@ -120,8 +120,8 @@
                     <div id="SaveFields" class="buttons">
                         <asp:LinkButton Text="Save" runat="server" ID="Update" OnClick="Update_Click" CssClass="SaveFieldButton" />
                         <asp:LinkButton Text="Cancel" runat="server" ID="Cancel" OnClick="Cancel_Click" />
-                    </div>
-                    <div class="clear"></div>
+                        <div class="clear"></div>
+                    </div>                    
                 </div>
                 <h2>
                     <asp:Literal ID="FieldDetailsTitle" runat="server" /></h2>
@@ -138,6 +138,9 @@
                 <div>                    
                     <hr />
                     <strong><em>Advanced Field Settings:</em></strong>
+                </div>
+                <div>
+                    <asp:CheckBox runat="server" ID="IsGlobalField" /> <label for="<%# IsGlobalField.ClientID %>">Is Global Field</label>
                 </div>
                 <div>
                     <label for="<%# FieldCode.ClientID %>">Field Code:</label>

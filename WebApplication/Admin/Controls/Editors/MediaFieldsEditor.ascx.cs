@@ -176,8 +176,9 @@ namespace WebApplication.Admin.Controls.Editors
             mediaField.FieldDescription = FieldDescription.GetValue().ToString();
             mediaField.UseMediaTypeFieldDescription = UseMediaTypeFieldDescription.Checked;                    
             mediaField.ShowFrontEndFieldEditor = ShowFrontEndFieldEditor.Checked;
+            mediaField.IsGlobalField = IsGlobalField.Checked;
 
-            if(mediaField.FrontEndSubmissions == null)
+            if (mediaField.FrontEndSubmissions == null)
                 mediaField.FrontEndSubmissions = "";
 
 
@@ -223,6 +224,7 @@ namespace WebApplication.Admin.Controls.Editors
             FieldDescription.SetValue(mediaField.FieldDescription);
             UseMediaTypeFieldDescription.Checked = mediaField.UseMediaTypeFieldDescription;            
             ShowFrontEndFieldEditor.Checked = mediaField.ShowFrontEndFieldEditor;
+            IsGlobalField.Checked = mediaField.IsGlobalField;
 
             BindVisibility(mediaField);
         }

@@ -9,6 +9,12 @@ using System.Web.UI.WebControls;
 
 namespace WebApplication.Admin.Controls.Fields
 {
+    public class FormFieldSettings
+    {
+        public string EmailAddress { get; set; }
+        public string EmailTemplateMediaID { get; set; }        
+    }
+
     public partial class FormBuilder : BaseFieldControl
     {
         protected void Page_Init(object sender, EventArgs e)
@@ -34,7 +40,9 @@ namespace WebApplication.Admin.Controls.Fields
         {
             FormBuilderData.Value = value.ToString();
 
-            var submissions = GetField().FrontEndSubmissions;
+            var field = GetField();
+
+            var submissions = field.FrontEndSubmissions;
             var dataTable = StringHelper.JsonToObject<DataTable>(submissions);
 
             if (dataTable != null && dataTable.Columns.Count > 0)
@@ -44,6 +52,10 @@ namespace WebApplication.Admin.Controls.Fields
                 FormSubmissions.DataSource = dataTable;
                 FormSubmissions.DataBind();
             }
+
+            var formFieldSettings = StringHelper.JsonToObject<FormFieldSettings>(field.FieldSettings);
+            EmailAddress.Text = formFieldSettings.EmailAddress;
+            EmailTemplateMediaID.Text = formFieldSettings.EmailTemplateMediaID;
         }
 
         protected void ExportCSV_Click(object sender, EventArgs e)
@@ -79,6 +91,37 @@ namespace WebApplication.Admin.Controls.Fields
 
             FormSubmissions.DataSource = dataTable;
             FormSubmissions.DataBind();
+        }
+
+        protected void SaveSettings_Click(object sender, EventArgs e)
+        {
+            var field = GetField();
+            var formFieldsSettings = new FormFieldSettings();
+            formFieldsSettings.EmailAddress = EmailAddress.Text;
+            formFieldsSettings.EmailTemplateMediaID = EmailTemplateMediaID.Text;
+
+            var jsonSettings = StringHelper.ObjectToJson(formFieldsSettings);
+            field.FieldSettings = jsonSettings;            
+
+            var returnObj = FieldsMapper.Update(field);
+
+            if (!returnObj.IsError)
+            {
+                BasePage.DisplaySuccessMessage("Successfully saved field settings");
+            }
+            else
+            {
+                BasePage.DisplayErrorMessage(returnObj.Error.Message);
+            }
+
+        }
+
+        public AdminBasePage BasePage
+        {
+            get
+            {
+                return (AdminBasePage)this.Page;
+            }
         }
     }
 }

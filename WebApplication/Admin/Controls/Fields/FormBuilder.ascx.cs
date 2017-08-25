@@ -54,8 +54,12 @@ namespace WebApplication.Admin.Controls.Fields
             }
 
             var formFieldSettings = StringHelper.JsonToObject<FormFieldSettings>(field.FieldSettings);
-            EmailAddress.Text = formFieldSettings.EmailAddress;
-            EmailTemplateMediaID.Text = formFieldSettings.EmailTemplateMediaID;
+
+            if (formFieldSettings != null)
+            {
+                EmailAddress.Text = formFieldSettings.EmailAddress;
+                EmailTemplateMediaID.Text = formFieldSettings.EmailTemplateMediaID;
+            }
         }
 
         protected void ExportCSV_Click(object sender, EventArgs e)

@@ -20,7 +20,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Website
 
         private void AddWebsiteSettingsTab()
         {
-            if (BasePage.CurrentUser.IsInRole(RoleEnum.Administrator))
+            if (BasePage.CurrentUser.IsInRole(RoleEnum.Developer))
             {
                 CommonPanel.AddTab("Website Settings", "~/Admin/Controls/MediaTypes/Website/Tabs/WebsiteSettingsTab.ascx");
             }

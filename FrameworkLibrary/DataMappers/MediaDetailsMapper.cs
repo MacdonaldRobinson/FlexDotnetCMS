@@ -337,7 +337,7 @@ namespace FrameworkLibrary
             if (mediaType == null)
                 return returnObj;
 
-            if (FrameworkSettings.CurrentUser.IsInRole(RoleEnum.Administrator))
+            if (FrameworkSettings.CurrentUser.IsInRole(RoleEnum.Developer))
                 return returnObj;
 
             var parentLimitedRoles = mediaDetail.GetParentMediaDetails().Where(i => i.CanLimitedRolesAccessAllChildPages).SelectMany(i => i.GetRoles());

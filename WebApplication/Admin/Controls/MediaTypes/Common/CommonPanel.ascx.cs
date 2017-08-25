@@ -78,7 +78,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
 
         public void AddLinkSettingsTab()
         {
-            if (BasePage.CurrentUser.IsInRole(RoleEnum.Administrator))
+            if (BasePage.CurrentUser.IsInRole(RoleEnum.Developer))
             {
                 AddTab("Link Settings", "~/Admin/Controls/MediaTypes/Common/Tabs/LinkSettingsTab.ascx");
             }
@@ -112,7 +112,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
 
         public void AddAdvancedSettingsTab()
         {
-            if (BasePage.CurrentUser.IsInRole(RoleEnum.Administrator))
+            if (BasePage.CurrentUser.IsInRole(RoleEnum.Developer))
             {
                 AddTab("Advanced Settings", "~/Admin/Controls/MediaTypes/Common/Tabs/AdvancedSettingsTab.ascx");
             }
@@ -130,7 +130,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
 
         public void AddRolesUsersTab()
         {
-            if (BasePage.CurrentUser.IsInRole(RoleEnum.Administrator))
+            if (BasePage.CurrentUser.IsInRole(RoleEnum.Developer))
             {
                 AddTab("Roles", "~/Admin/Controls/MediaTypes/Common/Tabs/RolesUsersTab.ascx");
             }
@@ -138,7 +138,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
 
         public void AddFieldsTab()
         {
-            if (BasePage.CurrentUser.IsInRole(RoleEnum.Administrator))
+            if (BasePage.CurrentUser.IsInRole(RoleEnum.Developer))
             {
                 AddTab("Fields", "~/Admin/Controls/MediaTypes/Common/Tabs/FieldsTab.ascx");
             }
@@ -146,7 +146,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
 
         public void AddLayoutsTab()
         {
-            if (BasePage.CurrentUser.IsInRole(RoleEnum.Administrator))
+            if (BasePage.CurrentUser.IsInRole(RoleEnum.Developer))
             {
                 AddTab("Layouts", "~/Admin/Controls/MediaTypes/Common/Tabs/LayoutsTab.ascx");
             }

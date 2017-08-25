@@ -4,33 +4,56 @@
 }
 
 .row, .col {
-    padding: 30px;
+    padding: 25px 0 25px 0;
 }
 
-.UseMainLayout, .row, .col {
-    border: 1px dotted;
+.UseMainLayout, .row, .col {    
     position: relative;
 }
+
+    .UseMainLayout .row {
+        border: 1px dotted;
+    }
+
+    .UseMainLayout .col {
+        border: 1px solid;
+    }
 
 #ToolBarTemplate {
     display: none;
 }
 
-.ToolBar a {
-    padding: 5px;
+.ToolBar a, .ToolBar a:link {    
+    padding: 1px 3px;
+    border: 1px solid;
+    color: #fff;
+    background-color: #000;
+    opacity: .5;
+    font-size: 12px;
+    font-weight: bold;
 }
+
+    .ToolBar a:hover {
+        background-color: red !important;
+        opacity: 1;
+    }
 
 .ToolBar {
     top: 0;
-}
-
-.ToolBar {
-    position: absolute;
-    border: 1px solid;
-    background-color: yellow;
+    position: absolute;    
     display: none;
     z-index: 999;
+    margin-left: 20px;
 }
+
+.UseMainLayout > .ToolBar {
+    margin-left: 0px;
+}
+
+.col > .ToolBar {
+    margin-left: 10px;
+}
+
 
 .DeleteRow, .DeleteColumn, .IncreaseColumnSize, .DecreaseColumnSize, .UpdateClasses {
     display: none;

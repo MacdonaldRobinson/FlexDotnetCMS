@@ -52,7 +52,8 @@
                 to view the current LIVE version<br />
             </asp:Panel>
             <h1>
-                <asp:Literal ID="SectionTitle" runat="server"></asp:Literal></h1>
+                <asp:Literal ID="SectionTitle" runat="server"></asp:Literal>                
+            </h1>
 
             <asp:PlaceHolder runat="server" ID="PanelsPlaceHolder" />
 
@@ -70,11 +71,10 @@
                         <asp:HyperLink ID="EditMediaType" runat="server" Text="Edit Media Type" Visible="false" CssClass="colorbox iframe" />
                     </ContentTemplate>
                 </asp:UpdatePanel>
-            </asp:Panel>
-
+            </asp:Panel>            
         </div>
-        <div class="split-pane-divider" id="my-divider"></div>
-        <div class="split-pane-component" id="right-component">
+        <div class="split-pane-divider" id="my-divider"></div>        
+        <div class="split-pane-component" id="right-component">            
             <iframe id="PreviewPanel" runat="server" clientidmode="Static"></iframe>
         </div>
 

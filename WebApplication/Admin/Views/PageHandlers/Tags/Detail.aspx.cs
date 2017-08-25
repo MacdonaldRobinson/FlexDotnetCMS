@@ -48,6 +48,9 @@ namespace WebApplication.Admin.Views.PageHandlers.Tags
 
         protected void Save_OnClick(object sender, EventArgs e)
         {
+            if (!canAccessSection)
+                return;
+
             if (selectedItem == null)
                 selectedItem = TagsMapper.CreateObject();
             else

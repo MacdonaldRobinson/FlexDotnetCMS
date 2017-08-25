@@ -2,6 +2,7 @@
 {
     public enum RoleEnum
     {
+        Developer,
         Administrator
     }
 }

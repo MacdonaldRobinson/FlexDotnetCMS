@@ -187,7 +187,7 @@ namespace WebApplication.Admin.MediaArticle
                 HistoryVersionNumber.Text = historyVersion.ToString();
             }
 
-            if (CurrentUser.IsInRole(RoleEnum.Administrator))
+            if (CurrentUser.IsInRole(RoleEnum.Developer))
             {
                 EditMediaType.NavigateUrl = "~/Admin/Views/PageHandlers/MediaTypes/Detail.aspx?id=" + SelectedMediaDetail.MediaTypeID;
                 EditMediaType.Visible = true;

@@ -91,6 +91,9 @@ namespace WebApplication.Admin.Views.PageHandlers.Settings
 
         protected void Save_OnClick(object sender, EventArgs e)
         {
+            if (!canAccessSection)
+                return;
+
             var settings = BaseMapper.GetObjectFromContext(SettingsMapper.GetSettings());
 
             UpdateObjectFromFields(settings);

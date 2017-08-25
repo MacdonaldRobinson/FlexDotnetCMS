@@ -807,7 +807,7 @@ namespace WebApplication.Admin.Views.MasterPages
         [WebMethod]
         public int ReOrderMediaFields(List<FrameworkLibrary.MediaDetailField> items)
         {
-            UserMustBeInRole(RoleEnum.Administrator);
+            UserMustBeInRole(RoleEnum.Developer);
 
             var index = 0;
             foreach (var item in items)

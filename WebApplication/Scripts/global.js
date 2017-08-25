@@ -2,8 +2,8 @@
 	jQuery(".tagged").attr('value', '');
 }
 
-var colorBoxWidth = "90%";
-var colorBoxHeight = "90%";
+var colorBoxWidth = "95%";
+var colorBoxHeight = "95%";
 
 function GetQueryStringParams(url) {
 	var vars = [], hash;

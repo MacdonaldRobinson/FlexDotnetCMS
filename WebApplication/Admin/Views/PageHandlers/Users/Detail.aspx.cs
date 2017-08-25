@@ -119,6 +119,9 @@ namespace WebApplication.Admin.Views.Users
 
         protected void Save_OnClick(object sender, EventArgs e)
         {
+            if (!canAccessSection)
+                return;
+
             if (SelectedItem == null)
                 SelectedItem = UsersMapper.CreateObject();
             else

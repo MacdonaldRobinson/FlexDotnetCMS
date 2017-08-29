@@ -139,6 +139,7 @@
     <Content Include="Admin\Controls\Fields\AssociationCheckBoxList.ascx" />
     <Content Include="Admin\Controls\Fields\AssociationDropDownList.ascx" />
     <Content Include="Admin\Controls\Fields\FormBuilder.ascx" />
+    <Content Include="Admin\Controls\Fields\GenerateNav.ascx" />
     <Content Include="Admin\Controls\Fields\MultiFileUploader.ascx" />
     <Content Include="Admin\Controls\Generic\MediaComments.ascx" />
     <Content Include="Admin\Controls\MediaTypes\Common\CommonPanel.ascx" />
@@ -725,10 +726,16 @@
     <Compile Include="Admin\Controls\Fields\BaseFieldControl.cs" />
     <Compile Include="Admin\Controls\Fields\FormBuilder.ascx.cs">
       <DependentUpon>FormBuilder.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Admin\Controls\Fields\FormBuilder.ascx.designer.cs">
       <DependentUpon>FormBuilder.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\Fields\GenerateNav.ascx.cs">
+      <DependentUpon>GenerateNav.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\Fields\GenerateNav.ascx.designer.cs">
+      <DependentUpon>GenerateNav.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Controls\Fields\IFieldControl.cs" />
     <Compile Include="Admin\Controls\Fields\MultiFileUploader.ascx.cs">

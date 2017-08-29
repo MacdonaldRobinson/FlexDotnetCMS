@@ -7,16 +7,24 @@
     padding: 25px 0 25px 0;
 }
 
+.row {
+    margin: 10px;
+}
+
+.UseMainLayout .row.active, .UseMainLayout .col.active {
+    border: 1px solid red;
+}
+
 .UseMainLayout, .row, .col {    
     position: relative;
 }
 
-    .UseMainLayout .row {
+    /*.row {
         border: 1px dotted;
-    }
+    }*/
 
-    .UseMainLayout .col {
-        border: 1px solid;
+    .row .col {
+        border: 1px dotted;
     }
 
 #ToolBarTemplate {

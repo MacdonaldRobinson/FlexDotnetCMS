@@ -110,27 +110,30 @@
                 connectWith: '.row'
             });
 
-            /*$(".col").sortable({
-                tolerance: "pointer",
-                handle: ".Handle",
-                revert: true,
-                connectWith: '.col'
-            });*/
-
             $(".col").sortable({
                 items: "> .field",
                 tolerance: "pointer",
                 connectWith: '.col',
                 revert: true
             });         
+
+            $(".col").sortable({
+                items: "> .row",
+                tolerance: "pointer",
+                handle: ".Handle",
+                revert: true,
+                connectWith: '.col .row'
+            });
         }
 
         $(document).on("mouseover", ".UseMainLayout, .row, .col", function () {
             $(this).children(".ToolBar").show();
+            $(this).addClass("active");
         });
 
         $(document).on("mouseout", ".UseMainLayout, .row, .col", function () {
             $(this).children(".ToolBar").hide();
+            $(this).removeClass("active");
         });
 
         function UpdateClassesFields()

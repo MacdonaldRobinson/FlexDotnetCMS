@@ -233,7 +233,11 @@ namespace WebApplication.Handlers
                     if (historyVersion != null)
                     {
                         var urlRedirectRule = UrlRedirectRulesMapper.CreateUrlRedirect(virtualPath, historyVersion.HistoryForMediaDetail.CachedVirtualPath);
-                        var returnObj = UrlRedirectRulesMapper.Insert(urlRedirectRule);
+
+                        if (urlRedirectRule != null)
+                        {
+                            var returnObj = UrlRedirectRulesMapper.Insert(urlRedirectRule);
+                        }
 
                         HttpContext.Current.Response.RedirectPermanent(urlRedirectRule.RedirectToUrl);
                     }

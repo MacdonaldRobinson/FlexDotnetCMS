@@ -128,12 +128,13 @@ namespace WebApplication.Admin.Controls.Editors
                 UpdatedObjectFromFields(mediaField);
 
                 mediaField.OrderIndex = mediaDetail.Fields.Count;
+                mediaField.FieldSettings = "";
 
                 mediaDetail.Fields.Add(mediaField);
             }
             else
             {
-                mediaField = mediaDetail.Fields.SingleOrDefault(i => i.ID == fieldId);
+                mediaField = mediaDetail.Fields.SingleOrDefault(i => i.ID == fieldId);                
 
                 var previouslyAssociateWithMediaTypeField = mediaField.MediaTypeFieldID;
 
@@ -143,7 +144,7 @@ namespace WebApplication.Admin.Controls.Editors
                 {
                     mediaField.UseMediaTypeFieldDescription = mediaField.UseMediaTypeFieldFrontEndLayout = true;
                 }
-            }
+            }            
 
             var returnObj = MediaDetailsMapper.Update(mediaDetail);
 

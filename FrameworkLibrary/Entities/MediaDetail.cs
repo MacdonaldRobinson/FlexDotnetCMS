@@ -87,6 +87,9 @@ namespace FrameworkLibrary
 
         public bool CanUserAccessSection(User user)
         {
+            if (user.IsInRole(RoleEnum.Developer))
+                return true;
+
             var roles = this.GetRoles();
 
             if (roles.Count == 0)

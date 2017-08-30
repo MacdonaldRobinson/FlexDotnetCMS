@@ -4,6 +4,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.14/beautify-css.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.14/beautify-html.min.js"></script>
 
+<style>
+    .selectable-element-placeholder {
+        border: 1px dashed;
+        background-color: lightgray;
+    }
+</style>
+
 <script>
 
     function UpdateVisualEditor(source) {        
@@ -100,30 +107,41 @@
             $(".UseMainLayout").sortable({
                 tolerance: "pointer",
                 handle: ".Handle",
-                revert: true
-            });     
+                revert: true,
+                placeholder: 'selectable-element-placeholder',
+                helper: 'clone',
+                forceHelperSize: true,
+                forcePlaceholderSize: true,
+            });
 
             $(".row").sortable({
                 tolerance: "pointer",
                 handle: ".Handle",
                 revert: true,
-                connectWith: '.row'
+                connectWith: '.row',
+                placeholder: 'selectable-element-placeholder col-md-2',
+                helper: 'clone',
+                forceHelperSize: true,
+                forcePlaceholderSize: true,
             });
+
+            /*$(".col").sortable({
+                tolerance: "pointer",
+                handle: ".Handle",
+                revert: true,
+                connectWith: '.col'
+            });*/
 
             $(".col").sortable({
                 items: "> .field",
                 tolerance: "pointer",
                 connectWith: '.col',
-                revert: true
-            });         
-
-            $(".col").sortable({
-                items: "> .row",
-                tolerance: "pointer",
-                handle: ".Handle",
                 revert: true,
-                connectWith: '.col .row'
-            });
+                placeholder: 'selectable-element-placeholder col-md-2',
+                helper: 'clone',
+                forceHelperSize: true,
+                forcePlaceholderSize: true,
+            });         
         }
 
         $(document).on("mouseover", ".UseMainLayout, .row, .col", function () {

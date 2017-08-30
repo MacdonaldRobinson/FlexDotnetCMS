@@ -36,7 +36,7 @@
                             <li><a href="<%= URIHelper.BaseUrl %>Admin/Default.aspx">Dashboard</a></li>
                             <li><a href="<%= URIHelper.BaseUrl %>Scripts/tinyfilemanager.net/dialog.aspx" class="colorbox iframe">FileManager</a></li>
                             <li id="GlossaryTermsNavItem" runat="server" visible="false"><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/GlossaryTerms/Default.aspx">Manage Glossary Terms</a></li>
-                            <%  if (BasePage.CurrentUser.IsInRole(RoleEnum.Developer))
+                            <%  if ( BasePage.CurrentUser != null && BasePage.CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions))
                                 { %>
                             <li><a href="#">Advance Options</a>
                                 <ul>

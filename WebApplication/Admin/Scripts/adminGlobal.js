@@ -235,41 +235,49 @@ function HandleContextMenuClick(action, target, node) {
             break;
         case "Duplicate":
             var newName = prompt("Enter a new name for the page");
-            loadingOverlay.show();
-            jQuery.ajax({
-                type: "POST",
-                url: BaseWebserverUrl + "/Duplicate",
-                data: "{'id':'" + mediaDetailId + "', 'duplicateChildren':false,'newName':'" + newName+"'}",
-                contentType: "application/json; charset=utf-8",
-                success:
-                function (msg) {
-                    //window.location.href = parentNode.get_navigateUrl();
-                    //RefreshSiteTreeViewAjaxPanel();
-                    RefreshSiteTreeNodeById(node.parent);
-                },
-                error: function (xhr, status, error) {
-                    DisplayJsonException(xhr);
-                }
-            });
+            newName = newName.trim();
+
+            if (newName != null) {
+                loadingOverlay.show();
+                jQuery.ajax({
+                    type: "POST",
+                    url: BaseWebserverUrl + "/Duplicate",
+                    data: "{'id':'" + mediaDetailId + "', 'duplicateChildren':false,'newName':'" + newName + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    success:
+                    function (msg) {
+                        //window.location.href = parentNode.get_navigateUrl();
+                        //RefreshSiteTreeViewAjaxPanel();
+                        RefreshSiteTreeNodeById(node.parent);
+                    },
+                    error: function (xhr, status, error) {
+                        DisplayJsonException(xhr);
+                    }
+                });
+            }
             break;
         case "DuplicateIncludingAllChildren":
             var newName = prompt("Enter a new name for the page");
-            loadingOverlay.show();
-            jQuery.ajax({
-                type: "POST",
-                url: BaseWebserverUrl + "/Duplicate",
-                data: "{'id':'" + mediaDetailId + "', 'duplicateChildren':true,'newName':'" + newName +"'}",
-                contentType: "application/json; charset=utf-8",
-                success:
-                function (msg) {
-                    //RefreshSiteTreeViewAjaxPanel();
-                    RefreshSiteTreeNodeById(node.parent);
-                    //window.location.href = msg.d.replace("~", "");
-                },
-                error: function (xhr, status, error) {
-                    DisplayJsonException(xhr);
-                }
-            });
+            newName = newName.trim();
+
+            if (newName != null) {
+                loadingOverlay.show();
+                jQuery.ajax({
+                    type: "POST",
+                    url: BaseWebserverUrl + "/Duplicate",
+                    data: "{'id':'" + mediaDetailId + "', 'duplicateChildren':true,'newName':'" + newName + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    success:
+                    function (msg) {
+                        //RefreshSiteTreeViewAjaxPanel();
+                        RefreshSiteTreeNodeById(node.parent);
+                        //window.location.href = msg.d.replace("~", "");
+                    },
+                    error: function (xhr, status, error) {
+                        DisplayJsonException(xhr);
+                    }
+                });
+            }
             break;
         case "ShowInMenu":
             loadingOverlay.show();

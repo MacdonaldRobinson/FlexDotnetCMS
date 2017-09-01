@@ -40,7 +40,8 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor
             if (Field == null)
                 return;
 
-            var dynamicField = this.ParseControl(Field.AdminControl);
+            var adminControlCode = ParserHelper.ParseData(Field.AdminControl, new RazorFieldParams { Field = Field, MediaDetail = Field.MediaDetail });
+            var dynamicField = this.ParseControl(adminControlCode);
 
             if (dynamicField.Controls.Count == 0)
                 return;

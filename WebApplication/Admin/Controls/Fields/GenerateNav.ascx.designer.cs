@@ -31,6 +31,15 @@ namespace WebApplication.Admin.Controls.Fields {
         protected global::System.Web.UI.WebControls.TextBox MediaID;
         
         /// <summary>
+        /// FieldValue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField FieldValue;
+        
+        /// <summary>
         /// RenderRootPage control.
         /// </summary>
         /// <remarks>
@@ -40,13 +49,49 @@ namespace WebApplication.Admin.Controls.Fields {
         protected global::System.Web.UI.WebControls.CheckBox RenderRootPage;
         
         /// <summary>
-        /// FieldValue control.
+        /// RenderBackButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField FieldValue;
+        protected global::System.Web.UI.WebControls.CheckBox RenderBackButton;
+        
+        /// <summary>
+        /// TopLevelAnchorClasses control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder TopLevelAnchorClasses;
+        
+        /// <summary>
+        /// SubAnchorClasses control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder SubAnchorClasses;
+        
+        /// <summary>
+        /// Sub UL Classes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder SubULClasses;
+        
+        /// <summary>
+        /// RenderParentItemInChildNav control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder RenderParentItemInChildNav;
         
         /// <summary>
         /// FrontEndPanel control.

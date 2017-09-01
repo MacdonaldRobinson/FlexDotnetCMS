@@ -87,6 +87,9 @@ namespace WebApplication.Admin.Controls.Editors
                     if(mediaDetailField.FrontEndSubmissions == null)
                         mediaDetailField.FrontEndSubmissions = "";
 
+                    if (mediaDetailField.FieldSettings == null)
+                        mediaDetailField.FieldSettings = "";
+
                     mediaDetailField.MediaTypeField = mediaTypeField;
 
                     mediaDetailField.DateCreated = mediaDetailField.DateLastModified = DateTime.Now;
@@ -157,7 +160,13 @@ namespace WebApplication.Admin.Controls.Editors
             mediaTypeField.SetAdminControlValue = SetAdminControlValue.Text;
             mediaTypeField.ShowFrontEndFieldEditor = ShowFrontEndFieldEditor.Checked;
             mediaTypeField.FieldValue = FieldValue.Text;
-            mediaTypeField.FrontEndSubmissions = "";
+
+            if(mediaTypeField.FrontEndSubmissions == null)
+                mediaTypeField.FrontEndSubmissions = "";
+
+            if (mediaTypeField.FieldSettings == null)
+                mediaTypeField.FieldSettings = "";
+
             mediaTypeField.DateCreated = DateTime.Now;
             mediaTypeField.DateLastModified = DateTime.Now;
             mediaTypeField.Instructions = "";
@@ -218,7 +227,7 @@ namespace WebApplication.Admin.Controls.Editors
             if (field!= null && field.ID != 0)
             {
                 //TODO: Only un-comment for testing
-                /*var mediaDetailFields = field.MediaDetailFields.ToList();
+                var mediaDetailFields = field.MediaDetailFields.ToList();
 
                 foreach (var mediaDetailField in mediaDetailFields)
                 {
@@ -235,7 +244,7 @@ namespace WebApplication.Admin.Controls.Editors
                     }
 
                     BaseMapper.DeleteObjectFromContext(mediaDetailField);
-                }*/
+                }
 
                 BaseMapper.DeleteObjectFromContext(field);
 

@@ -23,6 +23,48 @@ namespace WebApplication.WebServices
     public class Handlers : BaseService
     {
         [WebMethod]
+        public void FieldSettingsSubmissionHandler()
+        {
+            var returnObj = BaseMapper.GenerateReturn("No action performed");
+
+            if (HttpContext.Current.Request.Form["fieldId"] == null)
+            {
+                returnObj = BaseMapper.GenerateReturn("'fieldId' is missing");
+                WriteJSON(returnObj.ToJson());
+            }
+
+            if (!long.TryParse(HttpContext.Current.Request.Form["fieldId"], out long fieldId))
+            {
+                returnObj = BaseMapper.GenerateReturn("Invalid 'fieldId'");
+                WriteJSON(returnObj.ToJson());
+            }
+
+            var field = FieldsMapper.GetByID(fieldId);
+
+            if (field == null)
+            {
+                returnObj = BaseMapper.GenerateReturn($"Cannot find field with id '{fieldId}'");
+                WriteJSON(returnObj.ToJson());
+            }
+
+            var FormDictionary = new Dictionary<string, string>();
+
+            foreach (string key in HttpContext.Current.Request.Form.Keys)
+            {
+                FormDictionary.Add(key, HttpContext.Current.Request.Form[key]);
+            }
+
+            FormDictionary.Add("DateLastModified", StringHelper.FormatDateTime(DateTime.Now));
+
+            var jsonEntry = new JavaScriptSerializer().Serialize(FormDictionary);
+            field.FieldSettings = jsonEntry;
+
+            returnObj = FieldsMapper.Update(field);
+
+            WriteJSON(returnObj.ToJson());
+
+        }
+        
         public Return FieldFrontEndFormSubmissionHandler(long fieldId)
         {
             var returnObj = BaseMapper.GenerateReturn("No action performed");            

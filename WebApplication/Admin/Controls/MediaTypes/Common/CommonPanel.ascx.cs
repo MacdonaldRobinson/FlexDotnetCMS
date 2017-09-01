@@ -444,7 +444,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
             string code = "";
             try
             {
-                dynamicField = this.ParseControl(MediaDetailsMapper.ParseSpecialTags(SelectedItem, mediaDetailField.AdminControl, 0, new RazorFieldParams() { MediaDetail = SelectedItem }));
+                dynamicField = this.ParseControl(MediaDetailsMapper.ParseSpecialTags(SelectedItem, mediaDetailField.AdminControl, 0, new RazorFieldParams() { MediaDetail = SelectedItem, Field = mediaDetailField }));
             }
             catch (Exception ex)
             {

@@ -2,13 +2,15 @@
 
 <asp:Panel runat="server" ID="AdminPanel">
 
+<%  var uniqueId = Guid.NewGuid(); %>
+
 <div id="tabs" class="tabs">
   <ul>
-    <li><a href="#form-builder">Form Builder</a></li>
-    <li><a href="#form-submissions">Form Submissions</a></li>
-      <li><a href="#form-settings">Form Settings</a></li>
+    <li><a href="#form-builder-<%=uniqueId %>">Form Builder</a></li>
+    <li><a href="#form-submissions-<%=uniqueId %>">Form Submissions</a></li>
+      <li><a href="#form-settings-<%=uniqueId %>">Form Settings</a></li>
   </ul>
-  <div id="form-builder">
+  <div id="form-builder-<%=uniqueId %>">
     <script src="/Scripts/formBuilder-master/dist/form-builder.min.js"></script>
     <script>
         jQuery(function ($) {
@@ -43,7 +45,7 @@
 
     <asp:HiddenField ID="FormBuilderData" runat="server" />    
   </div>
-  <div id="form-submissions">
+  <div id="form-submissions-<%=uniqueId %>">
       <asp:UpdatePanel runat="server" ID="FormSubmissionsWrapper">
           <Triggers>
               <asp:PostBackTrigger ControlID="ExportCSV" />
@@ -61,7 +63,7 @@
           </ContentTemplate>
       </asp:UpdatePanel>
   </div>
-    <div id="form-settings">
+    <div id="form-settings-<%=uniqueId %>">
         <asp:UpdatePanel runat="server" ID="UpdatePanel1" class="fieldsContainer">
             <ContentTemplate>
                 <div>

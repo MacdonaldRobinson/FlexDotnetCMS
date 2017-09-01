@@ -1163,7 +1163,7 @@ namespace FrameworkLibrary
                     if (mediaField == null)
                         continue;
 
-                    var fieldType = ParserHelper.ParseData(mediaField.AdminControl, new RazorFieldParams { Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments });
+                    var fieldType = ParserHelper.ParseData(mediaField.AdminControl, new RazorFieldParams { Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments, Control = new Control() });
 
                     var parserPage = new System.Web.UI.Page();
                     parserPage.AppRelativeVirtualPath = "~/";

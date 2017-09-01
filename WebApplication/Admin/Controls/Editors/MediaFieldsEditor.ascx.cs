@@ -178,6 +178,11 @@ namespace WebApplication.Admin.Controls.Editors
             mediaField.UseMediaTypeFieldDescription = UseMediaTypeFieldDescription.Checked;                    
             mediaField.ShowFrontEndFieldEditor = ShowFrontEndFieldEditor.Checked;
             mediaField.IsGlobalField = IsGlobalField.Checked;
+            
+            if(mediaField.FieldSettings == null)
+            {
+                mediaField.FieldSettings = "";
+            }
 
             if (mediaField.FrontEndSubmissions == null)
                 mediaField.FrontEndSubmissions = "";

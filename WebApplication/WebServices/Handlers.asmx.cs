@@ -146,7 +146,7 @@ namespace WebApplication.WebServices
 
             var formFieldSettings = StringHelper.JsonToObject<FormFieldSettings>(field.FieldSettings);
 
-            if(!string.IsNullOrEmpty(formFieldSettings.EmailTemplateMediaID) && long.TryParse(formFieldSettings.EmailTemplateMediaID, out long i))
+            if(formFieldSettings != null && !string.IsNullOrEmpty(formFieldSettings.EmailTemplateMediaID) && long.TryParse(formFieldSettings.EmailTemplateMediaID, out long i))
             {
                 var media = MediasMapper.GetByID(long.Parse(formFieldSettings.EmailTemplateMediaID));
 

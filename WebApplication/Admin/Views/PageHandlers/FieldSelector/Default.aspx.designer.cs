@@ -13,15 +13,6 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldSelector {
     public partial class Default {
         
         /// <summary>
-        /// GlobalFields control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GlobalFields;
-        
-        /// <summary>
         /// MediaTypeFieldsEditorWrapper control.
         /// </summary>
         /// <remarks>
@@ -56,5 +47,14 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldSelector {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::WebApplication.Admin.Controls.MediaTypes.Common.Tabs.FieldsTab FieldsTab;
+        
+        /// <summary>
+        /// GlobalFields control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GlobalFields;
     }
 }

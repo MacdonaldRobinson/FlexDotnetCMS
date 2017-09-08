@@ -147,7 +147,8 @@
             });*/
 
             $(".col").sortable({
-                items: "> .field",
+                items: "> .field, > .row",
+                handle: ".Handle, .edit",
                 tolerance: "pointer",
                 connectWith: '.col',
                 revert: true,
@@ -156,7 +157,7 @@
                 forceHelperSize: true,
                 forcePlaceholderSize: true,
                 start: startFunction
-            });         
+            });            
         }
 
         $(document).on("mouseover", ".UseMainLayout, .row, .col", function () {

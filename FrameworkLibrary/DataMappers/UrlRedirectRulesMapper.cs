@@ -31,6 +31,13 @@ namespace FrameworkLibrary
                 urlRewrite.LinkTitle = urlRewrite.SectionTitle = urlRewrite.Title = urlRewrite.VirtualPathToRedirect + " -> " + urlRewrite.RedirectToUrl;
                 urlRewrite.PublishDate = DateTime.Now;
 
+                var user = UsersMapper.GetAllByRoleEnum(RoleEnum.Administrator).FirstOrDefault(i=>i.IsActive);
+
+                if(user != null)
+                {
+                    urlRewrite.CreatedByUser = urlRewrite.LastUpdatedByUser = user;
+                }
+
                 return urlRewrite;
             }
 

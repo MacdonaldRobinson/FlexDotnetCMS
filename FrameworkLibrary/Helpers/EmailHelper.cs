@@ -80,6 +80,9 @@ namespace FrameworkLibrary
 
         public static string SendDirectMessage(string fromEmailAddress, string toEmailAdress, string subject, string body)
         {
+            var returnObj = new Return();
+            var emailLog = new EmailLog();
+
             Message message = new Message();
             message.Subject = subject;
             message.From = new Address(fromEmailAddress);
@@ -90,12 +93,27 @@ namespace FrameworkLibrary
 
             try
             {
+                var mailMessage = new MailMessage();
+                mailMessage.CopyFrom(message);
+
                 var returnStr = ActiveUp.Net.Mail.SmtpClient.DirectSend(message);
+
+                emailLog.ServerMessage = returnObj.Error.Message;
+
+                EmailsMapper.Insert(emailLog);
+
                 return returnStr;
             }
             catch(Exception ex)
             {
                 ErrorHelper.LogException(ex);
+
+                returnObj.Error = ErrorHelper.CreateError(ex);
+
+                emailLog.ServerMessage = returnObj.Error.Message;
+
+                EmailsMapper.Insert(emailLog);
+
                 return null;
             }            
         }

@@ -16,7 +16,7 @@ namespace WebApplication.Admin
         {
             base.OnInit(e);
 
-            /*canAccessSection = CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions);
+            canAccessSection = CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions);
 
             base.OnInit(e);
 
@@ -26,7 +26,7 @@ namespace WebApplication.Admin
             Control ContentPlaceHolder1 = WebFormHelper.FindControlRecursive(Page.Master, "ContentPlaceHolder1");
 
             if ((ContentPlaceHolder1 != null) && (!canAccessSection))
-                ContentPlaceHolder1.Visible = false;*/
+                ContentPlaceHolder1.Visible = false;
         }
 
         protected void DisplayAccessError()

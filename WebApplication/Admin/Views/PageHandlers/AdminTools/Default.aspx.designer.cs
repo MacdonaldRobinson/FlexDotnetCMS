@@ -22,6 +22,24 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools {
         protected global::System.Web.UI.WebControls.LinkButton ClearAllCache;
         
         /// <summary>
+        /// DeleteAllHistoryAndClearAllCache control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton DeleteAllHistoryAndClearAllCache;
+        
+        /// <summary>
+        /// DeleteSavedDrafts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox DeleteSavedDrafts;
+        
+        /// <summary>
         /// DeployToEnvironment control.
         /// </summary>
         /// <remarks>
@@ -65,6 +83,15 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton BackupNow;
+        
+        /// <summary>
+        /// EmailLog control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView EmailLog;
         
         /// <summary>
         /// ErrorLog control.

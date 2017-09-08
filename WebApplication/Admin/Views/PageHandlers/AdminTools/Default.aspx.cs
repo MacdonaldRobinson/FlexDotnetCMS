@@ -121,7 +121,7 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
 
         }
 
-        /*protected void DeleteAllHistoryAndClearAllCache_Click(object sender, EventArgs e)
+        protected void DeleteAllHistoryAndClearAllCache_Click(object sender, EventArgs e)
         {
             try
             {
@@ -145,9 +145,9 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
 
                 DisplayErrorMessage("Error Clearing All Cache", ErrorHelper.CreateError(ex));
             }
-        }*/
+        }
 
-        /*protected void EmailLog_PageIndexChanging(object sender, System.Web.UI.WebControls.GridViewPageEventArgs e)
+        protected void EmailLog_PageIndexChanging(object sender, System.Web.UI.WebControls.GridViewPageEventArgs e)
         {
             EmailLog.PageIndex = e.NewPageIndex;
             EmailLog.DataBind();
@@ -158,7 +158,7 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
             var sortDirection = ((e.SortDirection == System.Web.UI.WebControls.SortDirection.Ascending) ? "ASC" : "DESC");
             EmailLog.DataSource = emailLogEntries.OrderBy(e.SortExpression + " " + sortDirection).ToList();
             Bind();
-        }*/
+        }
 
         protected void ErrorLog_PageIndexChanging(object sender, System.Web.UI.WebControls.GridViewPageEventArgs e)
         {

@@ -1,6 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LoggedInHeader.ascx.cs" Inherits="WebApplication.Controls.OnLogin.LoggedInHeader" %>
 <%@ Register Src="~/Controls/LoggedIn/VisualLayoutEditor.ascx" TagPrefix="Admin" TagName="VisualLayoutEditor" %>
 
+<% var canAccessVisualLayoutEditor = BasePage.CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions); %>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -19,7 +20,7 @@
 <asp:Panel runat="server" ID="LoggedInHeaderPanel" ClientIDMode="Static">      
 
     <Admin:VisualLayoutEditor runat="server" id="VisualLayoutEditor" Visible="false"/>
-    
+
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
@@ -28,7 +29,11 @@
         <div>                        
             <a ID="QuickEditCurrentPage" class="colorbox iframe button" data-OnColorboxClose="RefreshPage()" href="<%= CurrentMediaDetailAdminUrl %>&masterFilePath=~/Admin/Views/MasterPages/Popup.Master"><i class="fa fa-pencil"></i>&nbsp;Edit Page</a>                
             <div id="AdminPanel" runat="server">
+                <% if (CanAccessVisualLayoutEditor)
+                    {
+                %>
                 <a ID="ToggleVisualEditor" class="button" href="javascript:void(0)" onclick="ToggleVisualEditor()"><i class="fa fa-wrench"></i>&nbsp;Toggle Visual Layout Editor</a>
+                <%  } %>
                 <a ID="EdiSettings" class="colorbox iframe button" data-OnColorboxClose="RefreshPage()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Settings/Default.aspx?masterFilePath=~/Admin/Views/MasterPages/Popup.Master"><i class="fa fa-wrench"></i>&nbsp;Edit Settings</a>
                 <a ID="EditTemplate" class="colorbox iframe button" data-OnColorboxClose="RefreshPage()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MasterPages/Detail.aspx?id=<%= BasePage.CurrentMediaDetail.GetMasterPage().ID %>"><i class="fa fa-file-code-o"></i>&nbsp;Edit Template</a>
                 <a ID="EditMediaType" class="colorbox iframe button" data-OnColorboxClose="RefreshPage()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MediaTypes/Detail.aspx?id=<%= BasePage.CurrentMediaDetail.MediaTypeID %>"><i class="fa fa-file-code-o"></i>&nbsp;Edit Media Type</a>

@@ -47,6 +47,23 @@ namespace WebApplication.Controls.OnLogin
             }
         }        
 
+
+        public bool CanAccessVisualLayoutEditor
+        {
+            get
+            {
+                if (BasePage.CurrentUser == null)
+                    return false;
+
+                if(BasePage.CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
         public FrontEndBasePage BasePage
         {
             get

@@ -13,5 +13,13 @@ namespace WebApplication.Controls.LoggedIn
         {
 
         }
+
+        public FrontEndBasePage BasePage
+        {
+            get
+            {
+                return (FrontEndBasePage)this.Page;
+            }
+        }
     }
 }

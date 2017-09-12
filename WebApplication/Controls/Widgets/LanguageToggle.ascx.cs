@@ -14,7 +14,7 @@ namespace WebApplication.Controls.Widgets
         {
             activeLanguages = LanguagesMapper.GetAllActive();
 
-            LanguageToggleLinks.DataSource = activeLanguages;
+            LanguageToggleLinks.DataSource = activeLanguages.ToList();
             LanguageToggleLinks.DataBind();
         }
 

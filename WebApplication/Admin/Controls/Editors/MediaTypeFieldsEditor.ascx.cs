@@ -245,6 +245,7 @@ namespace WebApplication.Admin.Controls.Editors
 
                     BaseMapper.DeleteObjectFromContext(mediaDetailField);
                 }
+                // End of TODO
 
                 BaseMapper.DeleteObjectFromContext(field);
 

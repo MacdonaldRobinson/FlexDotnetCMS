@@ -80,6 +80,35 @@ namespace FrameworkLibrary
             return mediaDetails;
         }
 
+        public static Dictionary<Tag, List<MediaDetail>> GetRelatedItemsByTags(IMediaDetail item, long mediaTypeId = 0)
+        {
+            if (item == null)
+                return new Dictionary<Tag, List<MediaDetail>>();
+
+            var tags = item.Media.MediaTags.Select(k => k.Tag).ToList();
+            var tagItems = new Dictionary<Tag, List<MediaDetail>>();
+
+            foreach (var tag in tags)
+            {
+                var mediaDetails = new List<MediaDetail>();
+                if (mediaTypeId == 0)
+                {
+                    mediaDetails = BaseMapper.GetDataModel().MediaDetails.Where(i => i.ID != item.ID && i.HistoryForMediaDetail == null && !i.IsDeleted && i.Media.MediaTags.Select(j => j).Any(j => j.TagID == tag.ID)).OrderByDescending(i => (i.PublishDate == null) ? i.DateCreated : i.PublishDate).ToList();
+                }
+                else
+                {
+                    mediaDetails = BaseMapper.GetDataModel().MediaDetails.Where(i => i.ID != item.ID && i.HistoryForMediaDetail == null && i.MediaType.ID == mediaTypeId && !i.IsDeleted && i.Media.MediaTags.Select(j => j).Any(j => j.TagID == tag.ID)).OrderByDescending(i => (i.PublishDate == null) ? i.DateCreated : i.PublishDate).ToList();
+                }
+
+                if (mediaDetails.Any())
+                {
+                    tagItems.Add(tag, mediaDetails);
+                }
+            }
+
+            return tagItems;
+        }
+
         public static IEnumerable<IMediaDetail> GetAllActiveFooterItems()
         {
             return GetAllActiveMediaDetails().Where(i => i.RenderInFooter);

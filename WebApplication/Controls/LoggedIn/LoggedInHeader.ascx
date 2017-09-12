@@ -1,8 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LoggedInHeader.ascx.cs" Inherits="WebApplication.Controls.OnLogin.LoggedInHeader" %>
 <%@ Register Src="~/Controls/LoggedIn/VisualLayoutEditor.ascx" TagPrefix="Admin" TagName="VisualLayoutEditor" %>
 
-<% var canAccessVisualLayoutEditor = BasePage.CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions); %>
-
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 

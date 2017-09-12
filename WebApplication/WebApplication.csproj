@@ -196,6 +196,20 @@
     </Content>
     <Content Include="App_Data\ElmahErrorLogs\index.html" />
     <Content Include="App_Readme\Elmah.txt" />
+    <Content Include="bin\ActiveUp.Net.Common.dll" />
+    <Content Include="bin\ActiveUp.Net.Common.xml" />
+    <Content Include="bin\ActiveUp.Net.dll" />
+    <Content Include="bin\ActiveUp.Net.Dns.dll" />
+    <Content Include="bin\ActiveUp.Net.Dns.xml" />
+    <Content Include="bin\ActiveUp.Net.Groupware.dll" />
+    <Content Include="bin\ActiveUp.Net.Imap4.dll" />
+    <Content Include="bin\ActiveUp.Net.Mail.dll" />
+    <Content Include="bin\ActiveUp.Net.Nntp.dll" />
+    <Content Include="bin\ActiveUp.Net.OpenPGP.dll" />
+    <Content Include="bin\ActiveUp.Net.Pop3.dll" />
+    <Content Include="bin\ActiveUp.Net.Smtp.dll" />
+    <Content Include="bin\ActiveUp.Net.Smtp.xml" />
+    <Content Include="bin\ActiveUp.Net.WhoIs.dll" />
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\EcmaScript.NET.dll" />
     <Content Include="bin\Elmah.dll" />

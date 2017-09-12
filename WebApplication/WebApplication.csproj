@@ -216,6 +216,7 @@
     <Content Include="bin\EntityFramework.dll" />
     <Content Include="bin\EntityFramework.SqlServer.dll" />
     <Content Include="bin\FrameworkLibrary.dll" />
+    <Content Include="bin\Hash.dll" />
     <Content Include="bin\ImageProcessor.dll" />
     <Content Include="bin\ImageProcessor.Web.dll" />
     <Content Include="bin\LinqToTwitter.AspNet.dll" />

@@ -1095,6 +1095,11 @@ namespace FrameworkLibrary
 
                                 var liveMediaDetail = selectMedia.GetLiveMediaDetail();
 
+                                if (liveMediaDetail == null)
+                                {
+                                    liveMediaDetail = selectMedia.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage());
+                                }
+
                                 returnValue = ParseSpecialTags(liveMediaDetail, returnValue);
 
                                 if (replaceShortCodes)

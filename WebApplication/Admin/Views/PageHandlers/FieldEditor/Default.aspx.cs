@@ -134,6 +134,7 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor
             }
             else
             {
+                Field.MediaDetail.RemoveFromCache();
                 DisplaySuccessMessage("Successfully saved");
             }
 

@@ -1003,15 +1003,32 @@ namespace FrameworkLibrary
 
         public static string ParseWithTemplate(IMediaDetail mediaDetail)
         {
-            var html = ParseSpecialTags(mediaDetail);
+            var visualLayoutEditor = false;
+            var html = mediaDetail.UseMainLayout;
+
+            bool.TryParse(HttpContext.Current.Request["VisualLayoutEditor"], out visualLayoutEditor);
+
+            if (!visualLayoutEditor)
+            {
+                html = ParseSpecialTags(mediaDetail);
+            }
+
             var masterPage = mediaDetail.GetMasterPage();
 
             if (masterPage != null)
             {
                 if (masterPage.UseLayout)
                 {
-                    html = masterPage.Layout.Replace("{PageContent}", html);
-                    html = ParseSpecialTags(mediaDetail, html);
+                    var parseTemplateLayout = ParseSpecialTags(mediaDetail, masterPage.Layout);
+
+                    html = parseTemplateLayout.Replace("{PageContent}", $"<div id='PageContent' data-mediadetailid='{mediaDetail.ID}' data-mediaid='{mediaDetail.MediaID}'>\r\n{html}\r\n</div>");
+
+                    //html = masterPage.Layout.Replace("{PageContent}", html);
+
+                    if (!visualLayoutEditor)
+                    {
+                        html = ParseSpecialTags(mediaDetail, html);
+                    }
                 }
             }
 

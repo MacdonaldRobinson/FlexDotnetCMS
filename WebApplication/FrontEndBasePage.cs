@@ -271,7 +271,7 @@ namespace WebApplication
 
             if (CurrentMediaDetail != null)
             {
-                if (!IsAjaxRequest && !IsInAdminSection)
+                if (!IsAjaxRequest && !IsInAdminSection && Request["VisualLayoutEditor"] != "true")
                 {
                     html = MediaDetailsMapper.ParseSpecialTags(CurrentMediaDetail, html);
                 }

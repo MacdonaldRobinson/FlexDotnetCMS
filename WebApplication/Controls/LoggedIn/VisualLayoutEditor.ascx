@@ -12,6 +12,11 @@
     .selectable-element-placeholder {
         border: 1px dashed;
         background-color: lightgray;
+        opacity: .5;
+    }
+
+    #PageContent {
+        padding-top: 20px;
     }
 </style>
 
@@ -23,6 +28,11 @@
 
         if (mediaDetailId == "" || mediaDetailId == undefined) {
             mediaDetailId = $('.AddField.clicked').closest(".UseMainLayout").attr("data-mediadetailid");
+
+            if (mediaDetailId == "" || mediaDetailId == undefined) {
+                mediaDetailId = $('.AddField.clicked').closest("#PageContent").attr("data-mediadetailid");
+            }
+
         }
 
         var url = "/Admin/Views/MasterPages/WebService.asmx/RenderField?mediaDetailId=" + mediaDetailId+"&fieldCode=" + fieldCode;
@@ -59,7 +69,8 @@
 
         $(".fieldControls a.remove").show();
 
-        $(".UseMainLayout").each(function () {
+
+        $("#PageContent, .UseMainLayout").each(function () {
             if ($(this).children(".ToolBar").length == 0) {
                 var toolBar = $("#ToolBarTemplate").clone();
                 toolBar.find(".ToolBar").css("display", "block");
@@ -103,7 +114,7 @@
             }
         });
 
-        $(".UseMainLayout").addClass("container-fluid");
+        $(".UseMainLayout, #PageContent").addClass("container-fluid");
         BindDragDrop();
 
         function BindDragDrop()
@@ -116,7 +127,7 @@
                 $(placeholder).addClass($(item).attr("class"));   
             }
 
-            $(".UseMainLayout").sortable({
+            $("#PageContent, .UseMainLayout").sortable({
                 tolerance: "pointer",
                 handle: ".Handle",
                 revert: true,
@@ -222,6 +233,11 @@
             $(this).addClass("clicked");
 
             var mediaDetailId = $(this).closest(".UseMainLayout").attr("data-mediadetailid");
+
+            if (mediaDetailId == undefined)
+            {
+                mediaDetailId = $(this).closest("#PageContent").attr("data-mediadetailid");
+            }
 
             var source = this;
 
@@ -351,9 +367,53 @@
         });
     });
 
+    function htmlEncode(value) {
+        return $('<div/>').text(value).html();
+    }
+
+    function htmlDecode(value) {
+        return $('<div/>').html(value).text();
+    }
+
     function SaveLayout()
     {
-        $(".UseMainLayout").each(function () {
+        $("#PageContent").each(function () {
+            var mediaDetailId = $(this).attr("data-mediadetailid");
+            var rootMediaId = $(this).attr("data-mediaid");
+
+            var clone = $(this).clone(this);
+
+            clone.find(".ToolBar, .Handle").remove();
+            clone.find(".field").each(function () {
+                var fieldCode = $(this).attr("data-fieldcode")
+                var mediaId = $(this).attr("data-mediaid")
+
+                var shortCode = "{Field:" + fieldCode + "}";
+
+                if (rootMediaId != mediaId) {
+                    shortCode = "{{Load:" + mediaId + "}.Field:" + fieldCode + "}";
+                }
+
+                $(this).after(shortCode);
+                $(this).remove();
+            });
+
+            clone.find(".row").removeClass("ui-sortable");
+            clone.find(".col").removeClass("ui-sortable");
+            clone.find(".col").removeAttr("style");
+            clone.find(".row").removeAttr("style");
+
+            var newHtml = clone.html().trim();
+
+            newHtml = newHtml.replace(/^\s*\n/gm, '');            
+            newHtml = html_beautify(newHtml, { preserve_newlines: true });
+
+            $.post("/WebServices/IMediaDetails.asmx/SaveUseMainLayout", { mediaDetailId: mediaDetailId, html: encodeURI(newHtml) }, function (data) {                
+                window.location.reload();
+            });
+
+        });
+        /*$(".UseMainLayout").each(function () {
             var mediaDetailId = $(this).attr("data-mediadetailid");
             var rootMediaId = $(this).attr("data-mediaid");
 
@@ -388,7 +448,7 @@
                 window.location.reload();
             });
 
-        });
+        });*/
     }
 </script>
 

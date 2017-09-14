@@ -11,11 +11,11 @@
     margin: 10px;    
 }
 
-.UseMainLayout .row.active, .UseMainLayout .col.active {
+#PageContent .row.active, #PageContent .col.active {
     border: 1px solid red;
 }
 
-.UseMainLayout, .row, .col {    
+#PageContent, .row, .col {    
     position: relative;
 }
 
@@ -67,7 +67,7 @@
     display: none;
 }
 
-.UseMainLayout > .Handle {
+#PageContent > .Handle {
     display: none;
 }
 

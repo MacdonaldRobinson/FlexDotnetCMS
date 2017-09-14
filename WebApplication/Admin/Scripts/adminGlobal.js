@@ -663,9 +663,10 @@ function initAceEditors() {
                 // TODO: Format HTML
                 value = value.replace(/<[^]+/, function (match) {
 
-                    if (/@for|@if|@[\s]?{|Helper.|!=|List</.test(match)) {
+                    /*if (/@for|@if|@[\s]?{|Helper.|!=|List</.test(match)) {
                         return match;
-                    }
+                    }*/
+
                     match = html_beautify(match);
                     return match;
                 });

@@ -237,9 +237,16 @@ namespace WebApplication.Handlers
                         if (urlRedirectRule != null)
                         {
                             var returnObj = UrlRedirectRulesMapper.Insert(urlRedirectRule);
+                            HttpContext.Current.Response.RedirectPermanent(urlRedirectRule.RedirectToUrl);
                         }
-
-                        HttpContext.Current.Response.RedirectPermanent(urlRedirectRule.RedirectToUrl);
+                        else
+                        {
+                            HttpContext.Current.Response.RedirectPermanent("/");
+                        }
+                    }
+                    else
+                    {
+                        HttpContext.Current.Response.RedirectPermanent("/");
                     }
                 }
 

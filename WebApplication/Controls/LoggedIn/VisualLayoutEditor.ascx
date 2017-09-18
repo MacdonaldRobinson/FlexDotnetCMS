@@ -8,6 +8,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.14/beautify-css.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.14/beautify-html.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.6/jquery.jgrowl.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.6/jquery.jgrowl.min.css" />
+
+<script type="text/javascript" src="/Scripts/tinymce/js/tinymce/tinymce.min.js"></script>
+
 <style>
     .selectable-element-placeholder {
         border: 1px dashed;
@@ -65,9 +70,56 @@
         });
     }    
 
-    function initEvents() {    
+    function initTinyMCE() {
+        tinymce.editors = [];
+        tfm_path = BaseUrl + "Scripts/tinyfilemanager.net";
+        tinymce.init({
+            selector: ".editor",
+            content_css: BaseUrl + "Views/MasterPages/SiteTemplates/css/main.css, " + BaseUrl + "Admin/Styles/editor.css",
+            menubar: false,
+            plugins: [
+                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars fullscreen',
+                'insertdatetime media youtube nonbreaking save table contextmenu directionality',
+                'emoticons template paste textcolor colorpicker textpattern imagetools ace imgmap table'
+            ],
+            toolbar1: 'file undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | insert table link image imgmap media youtube ace',
+            templates: [
+            ],
+            image_advtab: true,
+            relative_urls: false,
+            convert_urls: false,
+            remove_script_host: false,
+            verify_html: false,
+            valid_children: '+a[div|p|ul|ol|li|h1|span|h2|h3|h4|h5|h5|h6]',
+            extended_valid_elements: 'span[*],a[*]',
+            custom_shortcuts: false,
+            setup: function (editor) {
+                editor.on('change', function () {
+                    editor.save();
+                });
 
-        $(".fieldControls a.remove").show();
+                editor.on('keydown', function (event) {
+                    if (event.ctrlKey || event.metaKey) {
+                        switch (String.fromCharCode(event.which).toLowerCase()) {
+                            case 's':
+                                $('.SavePageButton')[0].click();
+                                event.preventDefault();
+
+                                break;
+                        }
+                    }
+                });
+
+            }
+        });
+    }
+
+    function initEvents() {                    
+
+        $(".fieldControls a.remove").show();        
+
+        initTinyMCE();
 
 
         $("#PageContent, .UseMainLayout").each(function () {
@@ -409,7 +461,7 @@
             newHtml = html_beautify(newHtml, { preserve_newlines: true });
 
             $.post("/WebServices/IMediaDetails.asmx/SaveUseMainLayout", { mediaDetailId: mediaDetailId, html: encodeURI(newHtml) }, function (data) {                
-                window.location.reload();
+                window.location.reload();                
             });
 
         });

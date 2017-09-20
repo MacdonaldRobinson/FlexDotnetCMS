@@ -626,7 +626,7 @@ namespace FrameworkLibrary
                 return new List<IMediaDetail>();
             }
 
-            return children.OrderBy(i => i.Media.OrderIndex);
+            return children.OrderBy(i => i.Media.OrderIndex).ToList();
         }
 
         public static IMediaDetail CreateObject(long mediaTypeId, Media mediaItem, Media parentMedia, bool createMediaTypeFields = true)

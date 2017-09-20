@@ -75,6 +75,7 @@
         tfm_path = BaseUrl + "Scripts/tinyfilemanager.net";
         tinymce.init({
             selector: ".editor",
+            inline: true,
             content_css: BaseUrl + "Views/MasterPages/SiteTemplates/css/main.css, " + BaseUrl + "Admin/Styles/editor.css",
             menubar: false,
             plugins: [
@@ -117,10 +118,11 @@
 
     function initEvents() {                    
 
+        $(".col").addClass("editor");
+
+        //initTinyMCE();
+
         $(".fieldControls a.remove").show();        
-
-        initTinyMCE();
-
 
         $("#PageContent, .UseMainLayout").each(function () {
             if ($(this).children(".ToolBar").length == 0) {
@@ -434,6 +436,10 @@
             var rootMediaId = $(this).attr("data-mediaid");
 
             var clone = $(this).clone(this);
+            
+            clone.find(".editor").removeAttr("contenteditable");
+            clone.find(".editor").removeAttr("spellcheck");
+            //clone.find(".editor").removeClass("editor");
 
             clone.find(".ToolBar, .Handle").remove();
             clone.find(".field").each(function () {

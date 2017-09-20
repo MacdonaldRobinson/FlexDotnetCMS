@@ -368,16 +368,19 @@ namespace FrameworkLibrary
             return website;*/
         }
 
-        IEnumerable<IMediaDetail> _childMediaDetails = null;
-
         public IEnumerable<IMediaDetail> ChildMediaDetails
         {
             get
             {
+                var key = this.ID + "_ChildMediaDetails";
+                var _childMediaDetails = (IEnumerable<IMediaDetail>)ContextHelper.GetFromRequestContext(key);
+
                 if (_childMediaDetails != null)
                     return _childMediaDetails;
 
                 _childMediaDetails = MediaDetailsMapper.GetAllChildMediaDetails(MediaID, LanguageID);
+
+                ContextHelper.SetToRequestContext(key, _childMediaDetails);
 
                 return _childMediaDetails;
             }

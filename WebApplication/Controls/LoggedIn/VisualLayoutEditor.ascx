@@ -118,7 +118,7 @@
 
     function initEvents() {                    
 
-        $(".col").addClass("editor");
+        //$(".col").addClass("editor");
 
         //initTinyMCE();
 

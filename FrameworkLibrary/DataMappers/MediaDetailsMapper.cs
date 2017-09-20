@@ -1023,10 +1023,10 @@ namespace FrameworkLibrary
 
                     //html = masterPage.Layout.Replace("{PageContent}", html);
 
-                    if (!visualLayoutEditor)
-                    {
+                    /*if (!visualLayoutEditor)
+                    {*/
                         html = ParseSpecialTags(mediaDetail, html);
-                    }
+                    //}
                 }
             }
 

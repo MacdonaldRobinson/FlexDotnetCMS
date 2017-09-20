@@ -619,16 +619,14 @@ namespace FrameworkLibrary
             if (languageId == 0)
                 languageId = LanguagesMapper.GetDefaultLanguage().ID;
 
-            var children = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryForMediaDetailID == null && i.Media.ParentMediaID == mediaId && i.LanguageID == languageId && i.MediaType.ShowInSiteTree);
+            var children = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryForMediaDetailID == null && i.Media.ParentMediaID == mediaId && i.HistoryVersionNumber == 0 && i.LanguageID == languageId && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now));
 
-            if (children.Count() > 0)
-            {
-                return children.OrderBy(i => i.Media.OrderIndex);
-            }
-            else
+            if (!children.Any())
             {
                 return new List<IMediaDetail>();
             }
+
+            return children.OrderBy(i => i.Media.OrderIndex);
         }
 
         public static IMediaDetail CreateObject(long mediaTypeId, Media mediaItem, Media parentMedia, bool createMediaTypeFields = true)

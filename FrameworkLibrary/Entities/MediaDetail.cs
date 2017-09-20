@@ -368,11 +368,18 @@ namespace FrameworkLibrary
             return website;*/
         }
 
+        IEnumerable<IMediaDetail> _childMediaDetails = null;
+
         public IEnumerable<IMediaDetail> ChildMediaDetails
         {
             get
             {
-                return MediaDetailsMapper.GetAllChildMediaDetails(MediaID, LanguageID).Where(i=>!i.IsDeleted && i.IsPublished);
+                if (_childMediaDetails != null)
+                    return _childMediaDetails;
+
+                _childMediaDetails = MediaDetailsMapper.GetAllChildMediaDetails(MediaID, LanguageID);
+
+                return _childMediaDetails;
             }
         }
 

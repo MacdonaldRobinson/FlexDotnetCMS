@@ -851,7 +851,7 @@ function initTinyMCE()
           'insertdatetime media youtube nonbreaking save table contextmenu directionality',
           'emoticons template paste textcolor colorpicker textpattern imagetools ace imgmap table map'
         ],
-        toolbar1: 'file undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | insert table link image imgmap media youtube ace map',
+        toolbar1: 'undo redo | paste pastetext | bold italic underline strikethrough superscript subscript charmap emoticons | formatselect blockquote | alignleft aligncenter alignright alignjustify outdent indent | bullist numlist | insert table | anchor link image imgmap media youtube map | visualblocks ace',
         templates: [
         ],
         image_advtab: true,

@@ -849,9 +849,9 @@ function initTinyMCE()
           'advlist autolink lists link image charmap print preview hr anchor pagebreak',
           'searchreplace wordcount visualblocks visualchars fullscreen',
           'insertdatetime media youtube nonbreaking save table contextmenu directionality',
-          'emoticons template paste textcolor colorpicker textpattern imagetools ace imgmap table'
+          'emoticons template paste textcolor colorpicker textpattern imagetools ace imgmap table map'
         ],
-        toolbar1: 'file undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | insert table link image imgmap media youtube ace',
+        toolbar1: 'file undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | insert table link image imgmap media youtube ace map',
         templates: [
         ],
         image_advtab: true,
@@ -860,7 +860,7 @@ function initTinyMCE()
         remove_script_host: false,
         verify_html: false,
         valid_children: '+a[div|p|ul|ol|li|h1|span|h2|h3|h4|h5|h5|h6]',
-        extended_valid_elements: 'span[*],a[*]',
+        extended_valid_elements: 'span[*],a[*],+iframe[src|width|height|name|align|class]',
         custom_shortcuts: false,
         setup: function (editor) {
             editor.on('change', function () {

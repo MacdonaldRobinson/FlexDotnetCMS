@@ -57,13 +57,28 @@ namespace FrameworkLibrary
         public static UrlRedirectRule GetRuleForUrl(string virtualPath)
         {
             if (virtualPath.StartsWith("~"))
-                virtualPath = virtualPath.Replace("~","");
+                virtualPath = virtualPath.Replace("~", "");
 
             var enumName = MediaTypeEnum.UrlRedirectRule.ToString();
 
             var rule = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate >= DateTime.Now) && i.MediaType.Name == enumName && (i as UrlRedirectRule).VirtualPathToRedirect == virtualPath);
 
-            return (UrlRedirectRule)rule;
+            if (rule != null)
+            {
+                var urlredirectrule = rule as UrlRedirectRule;
+
+                var toUrl = urlredirectrule.RedirectToUrl;
+
+                if (toUrl.Contains("{"))
+                {
+                    toUrl = MediaDetailsMapper.ParseSpecialTags(rule, urlredirectrule.RedirectToUrl);
+                }
+
+                if (!toUrl.EndsWith(virtualPath))
+                    return urlredirectrule;
+            }
+
+            return null;
         }
     }
 }

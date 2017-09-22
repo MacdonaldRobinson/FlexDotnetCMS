@@ -8,9 +8,12 @@ namespace WebApplication.Controls.OnLogin
     {
         protected void Page_PreRender(object sender, EventArgs e)
         {
-            if(Request["VisualLayoutEditor"] != null && Request["VisualLayoutEditor"] == "true")
+            if (CanAccessVisualLayoutEditor)
             {
-                VisualLayoutEditor.Visible = true;
+                if (Request["VisualLayoutEditor"] != null && Request["VisualLayoutEditor"] == "true")
+                {
+                    VisualLayoutEditor.Visible = true;
+                }
             }
 
             /*if (this.BasePage.CurrentUser != null)
@@ -47,7 +50,6 @@ namespace WebApplication.Controls.OnLogin
             }
         }        
 
-
         public bool CanAccessVisualLayoutEditor
         {
             get
@@ -55,10 +57,11 @@ namespace WebApplication.Controls.OnLogin
                 if (BasePage.CurrentUser == null)
                     return false;
 
-                if(BasePage.CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions))
-                {
+                if (BasePage.CurrentMediaDetail.UseMainLayout.Contains("@{") || BasePage.CurrentMediaDetail.UseMainLayout.Contains("@ {"))
+                    return false;
+
+                if (BasePage.CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions))
                     return true;
-                }
 
                 return false;
             }

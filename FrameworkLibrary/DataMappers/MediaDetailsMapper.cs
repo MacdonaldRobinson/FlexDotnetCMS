@@ -619,7 +619,7 @@ namespace FrameworkLibrary
             if (languageId == 0)
                 languageId = LanguagesMapper.GetDefaultLanguage().ID;
 
-            var children = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryForMediaDetailID == null && i.Media.ParentMediaID == mediaId && i.HistoryVersionNumber == 0 && i.LanguageID == languageId && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now));
+            var children = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryForMediaDetailID == null && i.ShowInMenu && i.Media.ParentMediaID == mediaId && i.HistoryVersionNumber == 0 && i.LanguageID == languageId && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now));
 
             if (!children.Any())
             {

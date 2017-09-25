@@ -246,7 +246,7 @@ namespace WebApplication.Controls
 
                 if(detail.RedirectToFirstChild)
                 {
-                    path = detail.ChildMediaDetails.ElementAt(0).AbsoluteUrl;
+                    path = detail.ChildMediaDetails.Where(i => i.ShowInMenu).ElementAt(0).AbsoluteUrl;
                 }
 
                 Link.NavigateUrl = path;
@@ -290,7 +290,7 @@ namespace WebApplication.Controls
 
                 if ((rootMedia != null) && (detail.MediaID != rootMedia.ID))
                 {
-                    childItems = detail.ChildMediaDetails;
+                    childItems = detail.ChildMediaDetails.Where(i=>i.ShowInMenu);
                     //childItems = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == detail.Media.ID && i.HistoryVersionNumber == 0 && i.LanguageID == detail.LanguageID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex);
                     //childItems = details.Media.ChildMedias.SelectMany(i => i.MediaDetails.Where(j => j.HistoryVersionNumber == 0 && !j.IsDeleted && j.PostPublishDate <= DateTime.Now && j.LanguageID == details.LanguageID));
                     //childItems = MediaDetailsMapper.FilterOutDeletedAndArchived(MediaDetailsMapper.GetAllChildMediaDetails(details.Media, details.Language));

@@ -121,7 +121,7 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
 
         }
 
-        protected void DeleteAllHistoryAndClearAllCache_Click(object sender, EventArgs e)
+        protected void DeleteAllHistory_Click(object sender, EventArgs e)
         {
             try
             {
@@ -132,12 +132,14 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
                 else
                     historyMediaDetails = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber > 0 && !i.IsDraft);
 
+                historyMediaDetails = historyMediaDetails.ToList();
+
                 foreach (var item in historyMediaDetails)
                 {
                     var returnObj = MediaDetailsMapper.DeletePermanently((MediaDetail)item);
                 }
 
-                ClearAllCache_OnClick(sender, e);
+                //ClearAllCache_OnClick(sender, e);
             }
             catch (Exception ex)
             {

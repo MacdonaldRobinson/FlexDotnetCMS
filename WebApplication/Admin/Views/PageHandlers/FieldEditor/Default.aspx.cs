@@ -42,11 +42,12 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor
 
             var adminControlCode = ParserHelper.ParseData(Field.AdminControl, new RazorFieldParams { Field = Field, MediaDetail = Field.MediaDetail });
             var dynamicField = this.ParseControl(adminControlCode);
+            Control control = null;
 
-            if (dynamicField.Controls.Count == 0)
-                return;
-
-            var control = dynamicField.Controls[0];
+            if (dynamicField.Controls.Count != 0)
+            {
+                control = dynamicField.Controls[0];
+            }
 
             var fieldValue = Field.FieldValue.Replace("{BaseUrl}", URIHelper.BaseUrl);
 
@@ -56,7 +57,7 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor
                 ctrl.FieldID = Field.ID;
                 ctrl.SetValue(fieldValue);
             }
-            else
+            else if(control != null)
             {
                 if (Field.FieldValue != "{" + Field.SetAdminControlValue + "}")
                 {
@@ -78,7 +79,10 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor
                 }
             }
 
-            DynamicField.Controls.Add(control);
+            if(control != null)
+            {
+                DynamicField.Controls.Add(control);
+            }
 
             var frontEndLayout = Field.FrontEndLayout;
 

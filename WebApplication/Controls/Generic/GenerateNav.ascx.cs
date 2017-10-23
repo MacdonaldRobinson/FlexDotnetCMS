@@ -23,7 +23,7 @@ namespace WebApplication.Controls
         private bool isFooterManu = false;
         private bool displayProtectedSections = false;
         private bool renderFooterMenuItems = false;
-        private string rootUlClasses = "";
+        private string rootULClasses = "";
         private string currentVirtualPath = URIHelper.GetCurrentVirtualPath();
         private Language currentLanguage = FrameworkSettings.GetCurrentLanguage();
 
@@ -78,8 +78,13 @@ namespace WebApplication.Controls
                     if (mediaDetail.MediaType.Name == MediaTypeEnum.RootPage.ToString())
                         rootMedia = WebsitesMapper.GetWebsite().Media;
 
-                    //var items = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == rootMedia.ID && i.HistoryVersionNumber == 0 && i.LanguageID == currentLanguage.ID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex); //rootMedia.ChildMedias.SelectMany(m => m.MediaDetails.Where(i => i.HistoryVersionNumber == 0 && (i.ShowInMenu || i.RenderInFooter) && !i.IsDeleted && i.PostPublishDate <= DateTime.Now && (i.PostExpiryDate == null || i.PostExpiryDate > DateTime.Now))).OrderBy(i => i.Media.OrderIndex);
-                    items = mediaDetail.ChildMediaDetails.ToList();
+                    //var items = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == rootMedia.ID && i.HistoryVersionNumber == 0 && i.LanguageID == currentLanguage.ID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex); //rootMedia.ChildMedias.SelectMany(m => m.MediaDetails.Where(i => i.HistoryVersionNumber == 0 && (i.ShowInMenu || i.RenderInFooter) && !i.IsDeleted && i.PostPublishDate <= DateTime.Now && (i.PostExpiryDate == null || i.PostExpiryDate > DateTime.Now))).OrderBy(i => i.Media.OrderIndex);                    
+                    items = mediaDetail.ChildMediaDetails.Where(i=>i.ShowInMenu).ToList();
+
+                    if(!items.Any() && RenderParentNavIfNoChildren)
+                    {
+                        items = mediaDetail.Media.ParentMedia.GetLiveMediaDetail(mediaDetail.Language).ChildMediaDetails.Where(i => i.ShowInMenu).ToList();
+                    }
 
                     ContextHelper.SetToCache(itemsCacheKey, itemsCacheData);
                 }
@@ -125,10 +130,13 @@ namespace WebApplication.Controls
         {
             if (!IsBreadCrumbMenu)
             {
-                if (IsFooterMenu)
-                    items = items.Where(i => i.RenderInFooter);
-                else
-                    items = items.Where(i => i.ShowInMenu);
+                if(!RenderHiddenPages)
+                {
+                    if (IsFooterMenu)
+                        items = items.Where(i => i.RenderInFooter);
+                    else
+                        items = items.Where(i => i.ShowInMenu);
+                }
 
                 if (!renderHiddenMediaTypes)
                     items = items.Where(i => i.MediaType.ShowInMenu);
@@ -148,7 +156,12 @@ namespace WebApplication.Controls
                 }
             }
 
-            this.ItemsList.DataSource = items.Where(i=>i.ShowInMenu);
+            if(!RenderHiddenPages)
+            {
+                items = items.Where(i => i.ShowInMenu);
+            }
+
+            this.ItemsList.DataSource = items;
             this.ItemsList.DataBind();
         }
 
@@ -173,7 +186,7 @@ namespace WebApplication.Controls
 
             if (currentDepth == 0)
             {
-                ul.Attributes["class"] += " " + RootUlClasses;
+                ul.Attributes["class"] += " " + RootULClasses;
             }
             else
             {
@@ -284,6 +297,11 @@ namespace WebApplication.Controls
                 if (!string.IsNullOrEmpty(detail.CssClasses))
                     li.Attributes["class"] += " " + detail.CssClasses;
 
+                if(!string.IsNullOrEmpty(SubLIClasses))
+                {
+                    li.Attributes["class"] += " " + SubLIClasses;                    
+                }
+
                 li.Attributes["class"] = li.Attributes["class"].Trim();
 
                 IEnumerable<IMediaDetail> childItems = new List<IMediaDetail>();
@@ -336,9 +354,10 @@ namespace WebApplication.Controls
                             ChildList.DataSource = list;
                             ChildList.DataBind();
                         }
+
+                        currentDepth = currentDepth - 1;
                     }
 
-                    currentDepth = currentDepth - 1;
                 }
             }
         }
@@ -396,20 +415,21 @@ namespace WebApplication.Controls
             }
         }
 
-        public string RootUlClasses
+        public string RootULClasses
         {
             get
             {
-                return rootUlClasses;
+                return rootULClasses;
             }
             set
             {
-                rootUlClasses = value;
+                rootULClasses = value;
             }
         }
 
         public string TopLevelAnchorClasses { get; set; }
         public string SubAnchorClasses { get; set; }
+        public string SubLIClasses { get; set; }
         public string SubULClasses { get; set; }
         public bool RenderBackButton { get; set; }
 
@@ -449,7 +469,9 @@ namespace WebApplication.Controls
             }
         }
 
-        public string DividerString { get; set; }
+        public string DividerString { get; set; }        
+
+        public bool RenderHiddenPages { get; set; }
 
         public bool RenderHiddenMediaTypes
         {
@@ -476,6 +498,7 @@ namespace WebApplication.Controls
         }
 
         public bool RenderParentItemInChildNav { get; set; }
+        public bool RenderParentNavIfNoChildren { get; set; }        
 
         private BasePage BasePage
         {

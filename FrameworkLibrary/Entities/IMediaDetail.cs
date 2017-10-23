@@ -12,6 +12,8 @@ namespace FrameworkLibrary
         string CachedVirtualPath { get; set; }
         bool CanAddToCart { get; set; }
         bool CanLimitedRolesAccessAllChildPages { get; set; }
+        bool EnforceRoleLimitationsOnFrontEnd { get; set; }
+        bool CheckEnforceRoleLimitationsOnFrontEnd();
         bool CanRender { get; }
         IEnumerable<IMediaDetail> ChildMediaDetails { get; }
         User CreatedByUser { get; set; }

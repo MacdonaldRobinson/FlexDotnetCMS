@@ -16,10 +16,10 @@
             </div>
         </div>
         <div>
-            <h3>Clear All Cache & Delete All History Versions</h3>
-            This tool will delete all history versions currently saved in the database and will clear all the cache at the same time<br />
+            <h3>Delete All History Versions</h3>
+            This tool will delete all history versions currently saved in the database<br />
             <div class="buttons">
-                <asp:LinkButton ID="DeleteAllHistoryAndClearAllCache" runat="server" Text="Delete All History And Clear All Cache" OnClick="DeleteAllHistoryAndClearAllCache_Click" />
+                <asp:LinkButton ID="DeleteAllHistory" runat="server" Text="Delete All History" OnClick="DeleteAllHistory_Click" />
                 <asp:CheckBox ID="DeleteSavedDrafts" runat="server" />
                 Delete any saved Drafts as well
                 <div class="clear"></div>

@@ -8,4 +8,9 @@
         <asp:CheckBox ID="CanLimitedRolesAccessAllChildPages" runat="server" /> Allow users belonging to these roles to access child pages as well.
     </div>
 
+        <div>
+        <asp:CheckBox ID="EnforceRoleLimitationOnFrontEnd" runat="server" /> Enforce Role Limitation on the front end as well.
+    </div>
+    
+
 </fieldset>

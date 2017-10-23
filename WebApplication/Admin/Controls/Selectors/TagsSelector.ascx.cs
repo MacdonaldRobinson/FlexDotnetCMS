@@ -45,14 +45,16 @@ namespace WebApplication.Admin.Controls
         public IEnumerable<Tag> GetTags()
         {
             var items = new List<Tag>();
-            IEnumerable<string> values = TagValues.Value.Trim().ToLower().Split(',').Distinct();
+            IEnumerable<string> values = TagValues.Value.Trim().Split(',').Distinct();
 
             var count = 0;
             foreach (string value in values)
             {
-                var tagName = value.Trim().ToLower();
+                var tagName = value.Trim();
 
-                if ((tagName == "") || (items.Any(i => i.Name == tagName)))
+                var lowerCaseTagName = tagName.ToLower();
+
+                if ((tagName == "") || (items.Any(i => i.Name.ToLower() == lowerCaseTagName)))
                     continue;
 
                 long id;

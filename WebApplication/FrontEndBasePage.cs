@@ -333,7 +333,7 @@ namespace WebApplication
             if (CurrentMediaDetail != null)
             {
                 if (!IsAjaxRequest)
-                {
+                {                    
                     if (AppSettings.EnableOutputCaching && CurrentMediaDetail.EnableCaching && CurrentMediaDetail.CanRender)
                     {
                         if (AppSettings.EnableLevel1MemoryCaching)

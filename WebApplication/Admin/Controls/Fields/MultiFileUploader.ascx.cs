@@ -174,7 +174,8 @@ namespace WebApplication.Admin.Controls.Fields
             fieldAssociation.MediaDetail.PublishDate = DateTime.Now;
             fieldAssociation.MediaDetail.CreatedByUserID = fieldAssociation.MediaDetail.LastUpdatedByUserID = FrameworkSettings.CurrentUser.ID;
             fieldAssociation.MediaDetail.CachedVirtualPath = fieldAssociation.MediaDetail.CalculatedVirtualPath();
-            fieldAssociation.MediaDetail.LanguageID = SettingsMapper.GetSettings().DefaultLanguage.ID;
+            fieldAssociation.MediaDetail.LanguageID = AdminBasePage.CurrentLanguage.ID;
+            fieldAssociation.MediaDetail.UseDefaultLanguageLayouts = false;
 
             var mediaType = MediaTypesMapper.GetByID(fieldAssociation.MediaDetail.MediaTypeID);
 

@@ -605,7 +605,13 @@ namespace WebApplication.Admin.Views.MasterPages
             {
                 if (duplicateChildren)
                 {
-                    foreach (var child in detail.Media.ChildMedias)
+                    var childMediaDetails = detail.ChildMediaDetails;
+                    foreach (var childDetail in childMediaDetails)
+                    {
+                        HandleDuplicate(childDetail, duplicatedItem.Media);
+                    }
+
+                    /*foreach (var child in detail.Media.ChildMedias)
                     {
                         var mediaDetailsToCopy = child.MediaDetails.Where(i => !i.IsDraft && !i.IsHistory);
 
@@ -613,7 +619,7 @@ namespace WebApplication.Admin.Views.MasterPages
                         {
                             HandleDuplicate(childDetail, duplicatedItem.Media);
                         }
-                    }
+                    }*/
                 }
             }
 

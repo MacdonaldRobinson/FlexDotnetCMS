@@ -14,6 +14,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
         public void UpdateFieldsFromObject()
         {
             CanLimitedRolesAccessAllChildPages.Checked = selectedItem.CanLimitedRolesAccessAllChildPages;
+            EnforceRoleLimitationOnFrontEnd.Checked = selectedItem.EnforceRoleLimitationsOnFrontEnd;            
 
             if (!IsPostBack)
             {
@@ -24,6 +25,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
         public void UpdateObjectFromFields()
         {
             selectedItem.CanLimitedRolesAccessAllChildPages = CanLimitedRolesAccessAllChildPages.Checked;
+            selectedItem.EnforceRoleLimitationsOnFrontEnd = EnforceRoleLimitationOnFrontEnd.Checked;
 
             var roles = MultiRoleSelector.GetSelectedRoles();
 

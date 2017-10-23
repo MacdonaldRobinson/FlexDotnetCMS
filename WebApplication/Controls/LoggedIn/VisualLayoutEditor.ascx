@@ -122,7 +122,7 @@
 
         //initTinyMCE();
 
-        $(".fieldControls a.remove").show();        
+        $("#PageContent .fieldControls a.remove").show();        
 
         $("#PageContent, .UseMainLayout").each(function () {
             if ($(this).children(".ToolBar").length == 0) {
@@ -138,7 +138,7 @@
             }
         });
 
-        $(".row").each(function () {
+        $("#PageContent .row").each(function () {
             if ($(this).children(".ToolBar").length == 0) {
                 var toolBar = $("#ToolBarTemplate").clone();
                 toolBar.find(".ToolBar").css("display", "block");
@@ -154,7 +154,7 @@
             }
         });
 
-        $(".col").each(function () {
+        $("#PageContent .col").each(function () {
             if ($(this).children(".ToolBar").length == 0) {
                 var toolBar = $("#ToolBarTemplate").clone();
                 toolBar.find(".ToolBar").css("display", "block");
@@ -192,7 +192,7 @@
                 start: startFunction
             });
 
-            $(".row").sortable({
+            $("#PageContent .row").sortable({
                 tolerance: "pointer",
                 handle: ".Handle",
                 revert: true,
@@ -211,7 +211,7 @@
                 connectWith: '.col'
             });*/
 
-            $(".col").sortable({
+            $("#PageContent .col").sortable({
                 items: "> .field, > .row",
                 handle: ".Handle, .edit",
                 tolerance: "pointer",

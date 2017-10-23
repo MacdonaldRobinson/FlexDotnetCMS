@@ -38,7 +38,9 @@ namespace FrameworkLibrary
         public static Tag GetByName(string name)
         {
             var allItems = GetAll();
-            return allItems.FirstOrDefault(item => item.Name == name);
+            name = name.ToLower();
+
+            return allItems.FirstOrDefault(item => item.Name.ToLower() == name);
         }
 
         public static Tag GetBySefTitle(string sefTitle)

@@ -1082,9 +1082,15 @@ namespace FrameworkLibrary
 
             var customCode = propertyName;
 
+
             if (customCode.Contains("{{Load"))
             {
-                var loadMediaDetailsProperty = Regex.Matches(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:).?&}]+");
+                if (customCode.Contains("@"))
+                {
+                    customCode = ParserHelper.ParseData(customCode, new RazorFieldParams { MediaDetail = mediaDetail });
+                }
+
+                var loadMediaDetailsProperty = Regex.Matches(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:@).?&}]+");
 
                 foreach (var item in loadMediaDetailsProperty)
                 {

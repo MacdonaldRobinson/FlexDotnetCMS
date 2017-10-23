@@ -303,7 +303,8 @@ namespace FrameworkLibrary
                 {
                     if (Engine.Razor.IsTemplateCached(key, null))
                     {
-                        return Engine.Razor.Run(key, null, obj);
+                        var returnVal = Engine.Razor.Run(key, null, obj);
+                        return returnVal;
                     }
 
                     var result = Engine.Razor.RunCompile(code, key, null, obj);

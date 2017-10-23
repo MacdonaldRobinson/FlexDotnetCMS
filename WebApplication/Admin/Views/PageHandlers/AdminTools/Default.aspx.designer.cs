@@ -22,13 +22,13 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools {
         protected global::System.Web.UI.WebControls.LinkButton ClearAllCache;
         
         /// <summary>
-        /// DeleteAllHistoryAndClearAllCache control.
+        /// DeleteAllHistory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton DeleteAllHistoryAndClearAllCache;
+        protected global::System.Web.UI.WebControls.LinkButton DeleteAllHistory;
         
         /// <summary>
         /// DeleteSavedDrafts control.

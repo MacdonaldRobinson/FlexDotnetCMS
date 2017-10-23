@@ -663,10 +663,9 @@ function initAceEditors() {
                 // TODO: Format HTML
                 value = value.replace(/<[^]+/, function (match) {
 
-                    /*if (/@for|@if|@[\s]?{|Helper.|!=|List</.test(match)) {
+                    if (/@for|@if|@[\s]?{|Helper.|!=|List</.test(match)) {
                         return match;
-                    }*/
-
+                    }
                     match = html_beautify(match);
                     return match;
                 });
@@ -843,7 +842,7 @@ function initTinyMCE()
     tfm_path = BaseUrl + "Scripts/tinyfilemanager.net";
     tinymce.init({
         selector: ".editor",
-        content_css: BaseUrl + "Views/MasterPages/SiteTemplates/css/main.css, " + BaseUrl + "Admin/Styles/editor.css",
+        content_css: BaseUrl + "FrontEnd/styles/css/main.css, " + BaseUrl + "Admin/Styles/editor.css",
         menubar: false,
         plugins: [
           'advlist autolink lists link image charmap print preview hr anchor pagebreak',

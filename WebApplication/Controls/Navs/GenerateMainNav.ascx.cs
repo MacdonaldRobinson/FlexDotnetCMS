@@ -18,8 +18,8 @@ namespace WebApplication.Controls
 
         public string RootUlClasses
         {
-            get { return GenerateNav.RootUlClasses; }
-            set { GenerateNav.RootUlClasses = value; }
+            get { return GenerateNav.RootULClasses; }
+            set { GenerateNav.RootULClasses = value; }
         }
 
         public bool IsFooterMenu

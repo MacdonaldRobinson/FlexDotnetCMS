@@ -69,6 +69,7 @@ namespace FrameworkLibrary
         public Nullable<System.DateTime> PublishDate { get; set; }
         public bool UseDefaultLanguageLayouts { get; set; }
         public bool CanLimitedRolesAccessAllChildPages { get; set; }
+        public bool EnforceRoleLimitationsOnFrontEnd { get; set; }
     
         public virtual Language Language { get; set; }
         public virtual Media Media { get; set; }

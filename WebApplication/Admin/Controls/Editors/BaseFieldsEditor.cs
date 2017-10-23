@@ -27,6 +27,10 @@ namespace WebApplication.Admin.Controls.Editors
 
         public void BindFieldTypeDropDown(DropDownList fieldTypeDropDown)
         {
+            var firstItem = fieldTypeDropDown.Items.FindByValue("");
+            fieldTypeDropDown.Items.Clear();
+            fieldTypeDropDown.Items.Add(firstItem);
+
             foreach (var FieldType in FieldTypes)
             {
                 var listItem = fieldTypeDropDown.Items.FindByValue(FieldType.Name);

@@ -46,10 +46,14 @@ namespace FrameworkLibrary
                 if (this.UseDefaultLanguageLayouts && this.LanguageID != defaultLanguage.ID)
                     return this.Media.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage())?.UseMainLayout;
 
+                var layout = "";
+
                 if (this.UseMediaTypeLayouts)
-                    return this.MediaType?.MainLayout;
+                    layout = this.MediaType?.MainLayout;
                 else
-                    return this.MainLayout;
+                    layout = this.MainLayout;
+
+                return layout; //MediaDetailsMapper.ParseSpecialTags(this, layout);
             }
         }
 
@@ -62,10 +66,14 @@ namespace FrameworkLibrary
                 if (this.UseDefaultLanguageLayouts && this.LanguageID != defaultLanguage.ID)
                     return this.Media.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage())?.UseSummaryLayout;
 
+                var layout = "";
+
                 if (this.UseMediaTypeLayouts)
-                    return this.MediaType?.SummaryLayout;
+                    layout = this.MediaType?.SummaryLayout;
                 else
-                    return this.SummaryLayout;
+                    layout = this.SummaryLayout;
+
+                return layout; //MediaDetailsMapper.ParseSpecialTags(this, layout);
             }
         }
 
@@ -78,15 +86,22 @@ namespace FrameworkLibrary
                 if (this.UseDefaultLanguageLayouts && this.LanguageID != defaultLanguage.ID)
                     return this.Media.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage())?.UseSummaryLayout;
 
+                var layout = "";
+
                 if (this.UseMediaTypeLayouts)
-                    return this.MediaType?.FeaturedLayout;
+                    layout = this.MediaType?.FeaturedLayout;
                 else
-                    return this.FeaturedLayout;
+                    layout = this.FeaturedLayout;
+
+                return layout; //MediaDetailsMapper.ParseSpecialTags(this, layout);
             }
         }
-
+        
         public bool CanUserAccessSection(User user)
         {
+            if (user == null)
+                return false;
+
             if (user.IsInRole(RoleEnum.Developer))
                 return true;
 
@@ -101,9 +116,9 @@ namespace FrameworkLibrary
 
             if(parentLimitedRoles.Any())
             {
-                if(user.IsInRoles(parentLimitedRoles))
+                if(!user.IsInRoles(parentLimitedRoles))
                 {
-                    return true;
+                    return false;
                 }                
             }
 
@@ -305,25 +320,37 @@ namespace FrameworkLibrary
 
         public string RenderShortCode(string shortCode, bool includeFieldWrapper = true)
         {
+            shortCode = "{" + shortCode + "}";
             return MediaDetailsMapper.ParseSpecialTags(this, shortCode, includeFieldWrapper: includeFieldWrapper);
         }
 
         public string RenderField(string fieldCode, bool includeFieldWrapper = true)
         {
-            var shortCode = "{Field:"+fieldCode+"}";
+            var shortCode = "Field:"+fieldCode;
             return RenderShortCode(shortCode, includeFieldWrapper);
         }
 
         public string RenderField(long fieldId, bool includeFieldWrapper = true)
         {
-            var shortCode = "{Field:" + fieldId + "}";
+            var shortCode = "Field:" + fieldId;
             return RenderShortCode(shortCode, includeFieldWrapper);
         }
 
         public string RenderMainLayout()
         {
-            return RenderShortCode("{UseMainLayout}");
+            return RenderShortCode("UseMainLayout");
         }
+
+        public string RenderSummaryLayout()
+        {
+            return RenderShortCode("UseSummaryLayout");
+        }
+
+        public string RenderFeaturedLayout()
+        {
+            return RenderShortCode("UseFeaturedLayout");
+        }
+
         public MasterPage GetMasterPage()
         {
             if (this.MasterPage != null)
@@ -833,6 +860,16 @@ namespace FrameworkLibrary
         public bool HasRole(Role role)
         {
             return Media.RolesMedias.Where(i => i.ID == role.ID).Any();
+        }
+
+        public bool CheckEnforceRoleLimitationsOnFrontEnd()
+        {
+            if (this.EnforceRoleLimitationsOnFrontEnd)
+                return true;
+
+            var enforceRoleLimitationOnFrontEnds = this.GetParentMediaDetails().Any(i => i.EnforceRoleLimitationsOnFrontEnd);
+
+            return enforceRoleLimitationOnFrontEnds;
         }
 
         public List<Role> GetRoles()

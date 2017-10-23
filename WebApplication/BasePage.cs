@@ -80,13 +80,10 @@ namespace WebApplication
         }
 
         public bool CanAccessSection()
-        {
-            if (CurrentMediaDetail.IsProtected)
+        {            
+            if (CurrentMediaDetail.CheckEnforceRoleLimitationsOnFrontEnd())
             {
-                if (CurrentUser == null)
-                    return false;
-
-                return false;
+                return CurrentMediaDetail.CanUserAccessSection(FrameworkSettings.CurrentUser);                
             }
 
             return true;

@@ -128,12 +128,20 @@ namespace WebApplication.Admin.Views.MasterPages
             }
 
             if (detail.MediaType.GetRoles().Count > 0 || detail.Media.RolesMedias.Count > 0)
-            {                
+            {
+                var fontAwsomeClasses = "fa";
+
+                node.li_attr._class += " restricted";
                 if (MediaDetailsMapper.CanAccessMediaDetail(detail, FrameworkSettings.CurrentUser).IsError)
                 {
-                    node.li_attr._class += " restricted";
-                    nodeText += $"<small class='restrictedWrapper'><i class='fa fa-lock' aria-hidden='true'></i></small>";
+                    fontAwsomeClasses += " fa-lock";
                 }
+                else
+                {
+                    fontAwsomeClasses += " fa-unlock";                    
+                }
+
+                nodeText += $"<small class='restrictedWrapper'><i class='fa {fontAwsomeClasses}' aria-hidden='true'></i></small>";
             }
 
             node.text = nodeText;

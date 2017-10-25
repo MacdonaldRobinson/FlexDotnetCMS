@@ -15,7 +15,7 @@ namespace FrameworkLibrary
 
             _settings = GetDataModel()?.AllSettings.FirstOrDefault();
 
-            if (_settings.DefaultLanguage == null && _settings.DefaultLanguageID > 0)
+            if (_settings != null && _settings.DefaultLanguage == null && _settings.DefaultLanguageID > 0)
             {
                 _settings.DefaultLanguage = LanguagesMapper.GetByID(_settings.DefaultLanguageID);
             }

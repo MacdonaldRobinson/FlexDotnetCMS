@@ -123,11 +123,13 @@ namespace WebApplication.Admin.MediaArticle
 
                 selectedItem.UseMediaTypeLayouts = mediaType.UseMediaTypeLayouts;
 
-                var fields = selectedItem.Media.GetLiveMediaDetail()?.Fields.Where(i=>i.MediaTypeFieldID == null);
+                var allFields = selectedItem.Media.GetLiveMediaDetail()?.Fields;
 
-                if (fields != null)
+                var fieldsNotInMediaType = allFields.Where(i=>i.MediaTypeFieldID == null);
+
+                if (fieldsNotInMediaType != null)
                 {
-                    foreach (var field in fields)
+                    foreach (var field in fieldsNotInMediaType)
                     {
                         var newField = new MediaDetailField();
                         newField.CopyFrom(field);
@@ -145,6 +147,19 @@ namespace WebApplication.Admin.MediaArticle
                 }
 
                 selectedItem.CopyFrom(selectedItem.Media?.GetLiveMediaDetail());
+
+
+                var fieldsThatCanBeCopied = allFields.Where(i => !i.FieldAssociations.Any());
+
+                foreach (var field in fieldsThatCanBeCopied)
+                {
+                    var foundField = selectedItem.Fields.FirstOrDefault(i => i.FieldCode == field.FieldCode);
+
+                    if (foundField != null)
+                    {
+                        foundField.CopyFrom(field);
+                    }
+                }
             }
             else
             {

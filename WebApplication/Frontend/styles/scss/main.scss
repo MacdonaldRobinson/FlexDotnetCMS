@@ -1,0 +1,8 @@
+// lib
+@import '../../lib/bootstrap-4/scss/bootstrap';
+
+// importing sass maps with sass-globbing
+@import 'baseMap';
+@import 'componentsMap';
+@import 'layoutMap';
+@import 'partialsMap';

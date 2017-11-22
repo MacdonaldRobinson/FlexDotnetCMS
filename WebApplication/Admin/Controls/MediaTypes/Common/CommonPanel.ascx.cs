@@ -307,6 +307,10 @@ namespace WebApplication.Admin.Controls.MediaTypes
                             fieldValue = MediaDetailsMapper.ConvertUrlsToShortCodes(fieldValue);
                             dataItem.FieldValue = fieldValue.Replace(URIHelper.BaseUrl, "{BaseUrl}");
                         }
+                        else
+                        {
+                            dataItem.FieldValue = "";
+                        }
                     }
                 }
             }

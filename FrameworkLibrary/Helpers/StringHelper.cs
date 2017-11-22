@@ -107,7 +107,7 @@ namespace FrameworkLibrary
 
         public static string FormatOnlyDate(DateTime dateTime)
         {
-            return dateTime.ToString("MMMM-dd-yyyy");
+            return dateTime.ToString("MMMM dd, yyyy");
         }
 
         public static string FormatDateTime(DateTime dateTime)

@@ -10,6 +10,11 @@
             });
         });
     </script>
+    <style>
+        .SelectedImage {
+            background-color: lightgray;
+        }
+    </style>
 
     <asp:UpdatePanel runat="server">
         <ContentTemplate>
@@ -18,7 +23,7 @@
                 <asp:TextBox ID="SelectedFile" runat="server" CssClass="Control"></asp:TextBox>
             </div>
             <div>
-                <asp:Image ID="SelectedImage" runat="server" CssClass="size-200"/>
+                <asp:Image ID="SelectedImage" runat="server" CssClass="size-200 SelectedImage"/>
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>

@@ -1,0 +1,51 @@
+$primary-font: "proxima-nova", sans-serif;
+$secondary-font: "proxima-soft", sans-serif;
+@mixin header-font-style {
+  font-family   : $primary-font;
+  font-weight   : 700;
+  text-transform: capitalize;
+}
+
+body {
+  font-family: $secondary-font, sans-serif; // set brand font family
+  font-size  : 18px; // set base font size
+}
+
+h1 {
+  font-size     : 34px;
+  font-weight   : bold;
+  font-family   : $secondary-font;
+  font-weight   : 700;
+  text-transform: capitalize;
+  color         : $blue;
+  margin-bottom : 1em;
+}
+
+h2 {
+  font-size  : 34px;
+  font-family: $secondary-font, sans-serif; // set brand font family
+  color      : $grey-dark;
+}
+
+h3 {
+  font-size  : 20px;
+  font-weight: 600;
+  font-family: $secondary-font, sans-serif; // set brand font family
+  color      : $grey-dark;
+}
+
+p,
+ul {
+  font-size: 18px;
+  color    : $grey-dark;
+
+  &.deck {
+    font-size: 22px;
+  }
+}
+
+a,
+a:active,
+a:hover {
+  text-decoration: none;
+}

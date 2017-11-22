@@ -447,9 +447,7 @@ namespace WebApplication
         {
             var templateVars = new Dictionary<string, string>();
 
-            if (LanguagesMapper.GetAllActive().Count() > 1)
-                templateVars["BaseUrlWithLanguage"] = URIHelper.BaseUrlWithLanguage;
-
+            templateVars["BaseUrlWithLanguage"] = URIHelper.BaseUrlWithLanguage;
             templateVars["BaseUrl"] = URIHelper.BaseUrl;
 
             //templateVars["CurrentUrl"] = URIHelper.ConvertToAbsUrl(URIHelper.GetCurrentVirtualPath());

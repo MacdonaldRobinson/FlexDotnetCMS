@@ -1,0 +1,145 @@
+footer {
+  background: $navy;
+  color     : white;
+  padding   : 2em 0;
+  @include mobile {
+    padding: 1em 0;
+  }
+
+  p,
+  ul {
+    color: white;
+  }
+
+  .footer-logos {
+    @include mobile {
+      margin-bottom: 1em;
+    }
+
+    img,
+    svg {
+      max-width: 150px;
+    }
+  }
+
+  .footer-links {
+    display        : flex;
+    justify-content: center;
+
+    a {
+      font-size: 15px;
+      color    : white;
+      margin   : 0 10px;
+    }
+  }
+
+  .footer-social {
+    @include mobile {
+      margin    : 1em;
+      text-align: center;
+    }
+
+    p {
+      display      : block;
+      width        : 100%;
+      margin-bottom: 0;
+    }
+
+    .footer-social-icons {
+      display        : flex;
+      flex-flow      : row nowrap;
+      justify-content: flex-start;
+      @include mobile {
+        justify-content: center;
+      }
+
+      .icon-container {
+        background   : $grey;
+        width        : 30px;
+        height       : 30px;
+        border-radius: 50%;
+        margin       : 5px;
+        text-align   : center;
+        position     : relative;
+        transition   : all .33s ease;
+
+        &:hover {
+          background: $grey-light;
+        }
+
+        &:first-child {
+          margin-left: 0;
+          @include mobile {
+            margin-left: 5px;
+          }
+        }
+
+        .fa {
+          color    : $navy;
+          position : absolute;
+          top      : 50%;
+          left     : 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+  }
+
+  .footer-newsletter {
+    p {
+      margin-bottom: 10px;
+      @include mobile {
+        text-align: center;
+      }
+    }
+
+    .vr-signup-form {
+      display  : flex;
+      flex-flow: row wrap;
+      @include mobile {
+        justify-content: center;
+        margin-bottom  : 2em;
+      }
+
+      input[type="email"] {
+        //background-color: $navy;
+        color      : #044154;
+        font-weight: bold;
+        border     : none;
+        font-family: $secondary-font;
+      }
+
+      input[type="email"]::-webkit-input-placeholder {
+        /* Chrome/Opera/Safari */
+        color: rgba($navy, 0.6)!important;
+      }
+
+      input[type="email"]::-moz-placeholder {
+        /* Firefox 19+ */
+        color: rgba($navy, 0.6)!important;
+      }
+
+      input[type="email"]::-ms-input-placeholder {
+        /* IE 10+ */
+        color: rgba($navy, 0.6)!important;
+      }
+
+      input[type="email"]::-moz-placeholder {
+        /* Firefox 18- */
+        color: rgba($navy, 0.6)!important;
+      }
+
+      input[type="email"]::placeholder {
+        color: rgba($navy, 0.6)!important;
+      }
+    }
+
+    .button {
+      margin-left: 10px;
+      font-size  : 14px;
+      min-width  : 0;
+      border     : none;
+      cursor     : pointer;
+    }
+  }
+}

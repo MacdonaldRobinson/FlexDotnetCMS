@@ -1,0 +1,22 @@
+.chosen-container {
+  font-size: 16px;
+  &.chosen-single {
+    padding: 8px;
+  }
+}
+
+select, input, textarea {
+padding: 2px 8px;
+}
+
+input[type="number"] {
+  max-width: 68px;
+}
+
+input[type="radio"] {
+  margin: 0 12px;
+}
+
+label {
+  padding: 0 0.3em;
+}

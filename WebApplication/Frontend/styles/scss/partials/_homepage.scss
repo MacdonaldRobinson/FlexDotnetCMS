@@ -1,0 +1,253 @@
+.homepage {
+  // .container {
+  //   padding: 2em 0;
+  //
+  //   .row {
+  //     max-width: 100%;
+  //   }
+  // }
+  .home-callouts {
+    max-width  : 100%;
+    display    : flex;
+    flex-flow  : row wrap;
+    align-items: stretch;
+
+    .callout-box {
+      display        : flex;
+      justify-content: center;
+      align-items    : center;
+      width          : 25%;
+      padding        : 2em;
+      min-width      : 200px;
+      flex-grow      : 1;
+      transition     : all .5s ease;
+      @include tablet {
+        width: 50%;
+      }
+      @include mobile {
+        width  : 100%;
+        padding: 2em 1em;
+      }
+
+      p {
+        font-size  : 26px;
+        color      : white;
+        font-family: $secondary-font;
+        font-weight: 600;
+        text-align : center;
+        max-width  : 255px;
+        line-height: 1.33;
+        margin     : 0;
+        @include mobile {
+          max-width: none;
+          font-size: 20px;
+        }
+      }
+
+      &:nth-child(1) {
+        background-color: $purple;
+
+        &:hover {
+          background-color: darken($purple, 10%);
+        }
+      }
+
+      &:nth-child(2) {
+        background-color: $grey-dark;
+
+        &:hover {
+          background-color: darken($grey-dark, 10%);
+        }
+      }
+
+      &:nth-child(3) {
+        background-color: $blue;
+
+        &:hover {
+          background-color: darken($blue, 10%);
+        }
+      }
+
+      &:nth-child(4) {
+        background-color: $aqua;
+
+        &:hover {
+          background-color: darken($aqua, 10%);
+        }
+      }
+    }
+  }
+
+  .home-recent-news {
+    display            : block;
+    width              : 100%;
+    max-width          : 100%;
+    background-image   : url("/media/images/bg/OADC-5923.jpg");
+    background-size    : cover;
+    background-position: center;
+    padding-left       : 1em;
+    padding-right      : 1em;
+
+    .news-card {
+      display      : flex;
+      align-items  : center;
+      background   : white;
+      //padding      : 2em;
+      border-radius: 15px;
+      max-width    : 800px;
+      margin       : 1em 0;
+      @include mobile {
+        margin: 1em;
+      }
+      // &:not(:nth-child(-n + 3)) {
+      //   display: none;
+      // }
+      .img-container {
+        text-align: center;
+        @include mobile {
+          display: none;
+        }
+      }
+
+      .news-card-content {
+        padding: 1.5em 0;
+        @include mobile {
+          padding: 1.5em;
+        }
+
+        h2 {
+          color        : $teal;
+          font-size    : 20px;
+          line-height  : 1;
+          margin-bottom: 0;
+        }
+
+        span {
+          font-size  : 14px;
+          color      : $grey;
+          font-weight: 500;
+        }
+
+        p {
+          margin: 10px 0 .5em;
+        }
+      }
+
+      .bubble-right {
+        transform: rotatez(-90deg);
+
+        path {
+          fill: $grey-light;
+        }
+      }
+
+      &:nth-child(2n) {
+        .bubble-right {
+          path {
+            fill: $purple;
+          }
+        }
+      }
+
+      &:nth-child(3n) {
+        .bubble-right {
+          path {
+            fill: $aqua;
+          }
+        }
+      }
+    }
+
+    .news-more {
+      margin: 1em 0;
+    }
+  }
+
+  .banner-container {
+    @include mobile {
+      min-height: 50vh;
+    }
+
+    .banner-content {
+      @include mobile {
+        margin: 2em auto;
+      }
+
+      p.headline {
+        max-width: 600px;
+      }
+
+      .banner-cta-container {
+        display        : flex;
+        flex-flow      : row nowrap;
+        justify-content: space-around;
+        width          : 100%;
+        max-width      : 600px;
+        margin-top     : 3em;
+        @include mobile {
+          padding: 0 1em;
+        }
+
+        .banner-cta {
+          text-align: center;
+
+          p {
+            color: white;
+          }
+
+          .icon-container {
+            display      : block;
+            width        : 108px;
+            height       : 100px;
+            margin       : 0 auto 1em;
+            border       : 2px solid rgba($white, 0.4);
+            border-radius: 15px;
+            position     : relative;
+            @include mobile {
+              background-color: $purple-light;
+              width           : calc(108px * .8);
+              height          : calc(100px * .8);
+            }
+
+            img {
+              position : absolute;
+              top      : 50%;
+              left     : 50%;
+              transform: translate(-50%, -50%);
+
+              &.phone {
+                max-width: 36px;
+              }
+
+              &.bubble {
+                max-width: 60px;
+              }
+
+              &.envelope {
+                max-width: 65px;
+              }
+            }
+          }
+
+          p {
+            display       : block;
+            text-transform: uppercase;
+            font-weight   : 500;
+            @include mobile {
+              font-size: 16px;
+            }
+
+            span {
+              font-weight   : 200;
+              display       : block;
+              text-transform: none;
+              @include mobile {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

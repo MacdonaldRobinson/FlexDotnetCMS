@@ -88,8 +88,7 @@
                 <div class="clear">
                 </div>
             </div>
-        </div>
-        <Site:Chat runat="server" ChatRoomMode="Public" />
+        </div>        
     </form>
 </body>
 </html>

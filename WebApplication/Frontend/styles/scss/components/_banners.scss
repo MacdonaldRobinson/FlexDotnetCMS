@@ -1,0 +1,165 @@
+.banner-container {
+  display        : flex;
+  flex-flow      : column nowrap;
+  justify-content: center;
+  align-items    : center;
+  width          : 100%;
+  min-height     : 75vh;
+  background     : linear-gradient($blue 65%, $aqua 120%);
+  position       : relative;
+  @include mobile {
+    min-height: 40vh;
+  }
+  //opacity   : .9;
+  &:before {
+    display              : block;
+    content              : "";
+    position             : absolute;
+    top                  : 0;
+    right                : 0;
+    bottom               : 0;
+    left                 : 0;
+    z-index              : 1;
+    background-color     : $blue;
+    background           : url("/media/images/bg/texture.svg");
+    //background           : url("/media/images/bg/header-overlay-full.png");
+    background-size      : cover;
+    background-repeat    : repeat-x;
+    background-position-y: 50%;
+    opacity              : .06;
+  }
+
+  .banner-content {
+    display: block;
+    z-index: 5;
+
+    p {
+      &.headline {
+        color        : $white;
+        font-size    : 70px;
+        // max-width    : 550px;
+        text-align   : center;
+        line-height  : 1;
+        font-weight  : 300;
+        margin-bottom: .25em;
+        @include mobile {
+          font-size: 55px;
+        }
+
+        span {
+          font-weight: 500;
+        }
+
+        &.headline-teal {
+          color: teal;
+        }
+      }
+      // &.subtitle {
+      //   font-size: 1.5rem;
+      //   display  : block;
+      // }
+      &.subhead {
+        font-size  : 26px;
+        color      : $white;
+        //max-width  : 550px;
+        text-align : center;
+        line-height: .8;
+        font-weight: 500;
+
+        &.subhead-teal {
+          color: $teal;
+        }
+      }
+    }
+  }
+}
+
+.svg-texture {
+  .cls-1 {
+    fill: $blue;
+  }
+
+  .cls-2 {
+    fill: $blue;
+  }
+
+  .cls-3 {
+    fill: $blue;
+  }
+
+  .cls-4 {
+    fill: $blue;
+  }
+
+  .cls-5 {
+    fill: $blue;
+  }
+
+  .cls-6 {
+    fill: $blue;
+  }
+
+  .cls-7 {
+    fill: $blue;
+  }
+
+  .cls-8 {
+    fill: $blue;
+  }
+
+  .cls-9 {
+    fill: $blue;
+  }
+
+  .cls-10 {
+    fill: $blue;
+  }
+
+  .cls-11 {
+    fill: $blue;
+  }
+
+  .cls-12 {
+    fill: $blue;
+  }
+
+  .cls-13 {
+    fill: $blue;
+  }
+
+  .cls-14 {
+    fill: $blue;
+  }
+
+  .cls-15 {
+    fill: $blue;
+  }
+
+  .cls-16 {
+    fill: $blue;
+  }
+
+  .cls-17 {
+    fill: $blue;
+  }
+
+  .cls-18 {
+    fill: $blue;
+  }
+
+  .cls-19 {
+    fill: $blue;
+  }
+
+  .cls-20 {
+    fill: $blue;
+  }
+
+  .cls-21 {
+    fill: $blue;
+  }
+
+  .cls-22 {
+    fill: $blue;
+  }
+}

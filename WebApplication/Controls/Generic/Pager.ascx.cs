@@ -24,13 +24,16 @@ namespace WebApplication.Controls.Generic
         {
             dataPager.SetPageProperties(e.StartRowIndex, e.MaximumRows, false);
 
-            dataPager.PageSize = PageSize;
+            if (PageSize > 0)
+                dataPager.PageSize = PageSize;
+
             list.DataBind();
         }
 
         public void Page_PreRender(object sender, EventArgs e)
         {
-            dataPager.PageSize = PageSize;
+            if (PageSize > 0)
+                dataPager.PageSize = PageSize;
 
             list.DataBind();
         }

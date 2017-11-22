@@ -35,7 +35,9 @@ namespace WebApplication.Controls.RenderChildren
                         children = mediaDetail.ChildMediaDetails;
 
                     if (!string.IsNullOrEmpty(OrderBy))
+                    {
                         children = children.OrderBy(OrderBy);
+                    }                        
 
                     if (Take > 0)
                         children = children.Take(Take);
@@ -51,13 +53,13 @@ namespace WebApplication.Controls.RenderChildren
             Pager.ShowDataPager = ShowPager;
 
             if (PageSize == null)
-                PageSize = Take;
+                PageSize = 0;
 
             if (!ShowPager)
             {
-                PageSize = Take;
-                Pager.Visible = false;
-                Pager.ShowDataPager = false;
+                PageSize = 0;
+                //Pager.Visible = false;
+                //Pager.ShowDataPager = false;
                 Children.DataBind();
             }
 
@@ -88,6 +90,21 @@ namespace WebApplication.Controls.RenderChildren
         public bool ShowPager { get; set; }
 
         public int Take { get; set; }
+
+        private Dictionary<string, string> _arguments { get; set; }
+        
+        public string Arguments
+        {
+            set
+            {
+                _arguments = StringHelper.JsonToObject<Dictionary<string, string>>(value);
+
+                foreach (var item in _arguments)
+                {
+                    ParserHelper.SetValue(this, item.Key, item.Value);
+                }                
+            }
+        }
 
         public BasePage BasePage
         {

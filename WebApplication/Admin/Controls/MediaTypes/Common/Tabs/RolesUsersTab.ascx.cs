@@ -32,18 +32,23 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
             if (roles == null)
                 return;
 
-            var existingRoles = selectedItem.Media.RolesMedias.ToList();
+            /*var existingRoles = selectedItem.Media.RolesMedias.ToList();
 
             foreach (var existingRole in existingRoles)
             {
                 BaseMapper.GetDataModel().RolesMedias.Remove(existingRole);
-            }
+            }*/
+
+            selectedItem.Media.RolesMedias.Clear();
 
             foreach (var role in roles)
             {
                 var contextRole = BaseMapper.GetObjectFromContext(role);
+                var newMediaRole = new RoleMedia() { Media = selectedItem.Media, Role = contextRole, DateCreated = DateTime.Now, DateLastModified = DateTime.Now };
 
-                BaseMapper.GetDataModel().RolesMedias.Add(new RoleMedia() { Media = selectedItem.Media, Role = contextRole, DateCreated = DateTime.Now, DateLastModified = DateTime.Now });
+                selectedItem.Media.RolesMedias.Add(newMediaRole);
+
+                //BaseMapper.GetDataModel().RolesMedias.Add();
                 //this.selectedItem.RolesMediaDetails.Add(new RoleMediaDetail() { Role = contextRole, DateCreated = DateTime.Now, DateLastModified = DateTime.Now });
             }
         }

@@ -405,7 +405,7 @@ namespace FrameworkLibrary
                 if (_childMediaDetails != null)
                     return _childMediaDetails;
 
-                _childMediaDetails = MediaDetailsMapper.GetAllChildMediaDetails(MediaID, LanguageID);
+                _childMediaDetails = MediaDetailsMapper.GetAllChildMediaDetails(MediaID, LanguageID).Where(i=>i.MediaType.ShowInSiteTree);
 
                 ContextHelper.SetToRequestContext(key, _childMediaDetails);
 

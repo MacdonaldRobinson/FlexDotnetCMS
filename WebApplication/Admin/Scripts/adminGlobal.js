@@ -882,7 +882,7 @@ function initTinyMCE()
     });
 }
 
-function BindGridViewSortable(CssSelector, WebserviceUrl, UpdatePanelClientId, OnAfterRefreshFunction) {
+function BindGridViewSortable(CssSelector, WebserviceUrl, UpdatePanelClientId, OnAfterRefreshFunction) {    
     var DragDropGridSortable = $(CssSelector).sortable({
         items: 'tr:not(tr:first-child)',
         cursor: 'crosshair',
@@ -1231,6 +1231,8 @@ $(document)
 
 function pageLoad(sender, args) {    
     BindJQueryUIControls();
+    BindSortable();
+
     /*RefreshSiteTreeNodeById($("#SiteTree").jstree("get_selected")[0]);
     BindScrollMagic();
     BindDataTable();

@@ -3,7 +3,8 @@
     public enum PermissionsEnum
     {
         AccessCMS,
-        AccessAdvanceOptions,        
+        AccessAdvanceOptions,
+        FrontEndEditor,
         Create,
         Save,
         Delete,

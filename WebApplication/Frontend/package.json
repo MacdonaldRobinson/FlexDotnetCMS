@@ -1,0 +1,18 @@
+{
+  "name": "suicide-prevention",
+  "devDependencies": {
+    "browserslist": "last 2 versions",
+    "grunt": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-postcss": "^0.9.0",
+    "grunt-sass": "^2.0.0",
+    "grunt-sass-globbing": "^1.5.1",
+    "postcss-normalize": "^4.0.0"
+  },
+  "dependencies": {
+    "autoprefixer": "^7.1.6",
+    "cssnano": "^3.10.0",
+    "grunt-contrib-uglify": "^3.1.0",
+    "postcss-flexbugs-fixes": "^3.2.0"
+  }
+}

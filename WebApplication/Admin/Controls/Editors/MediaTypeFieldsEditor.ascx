@@ -58,8 +58,8 @@
                     <asp:BoundField DataField="FieldCode" HeaderText="FieldCode" SortExpression="FieldCode" />
                     <asp:BoundField DataField="FieldLabel" HeaderText="FieldLabel" SortExpression="FieldLabel" />
                     <asp:BoundField DataField="GroupName" HeaderText="GroupName" SortExpression="GroupName" />
-                    <asp:BoundField DataField="DateCreated" HeaderText="DateCreated" SortExpression="DateCreated" />
-                    <asp:BoundField DataField="DateLastModified" HeaderText="DateLastModified" SortExpression="DateLastModified" />
+<%--                    <asp:BoundField DataField="DateCreated" HeaderText="DateCreated" SortExpression="DateCreated" DataFormatString="{0:MM/dd/yyyy hh:mm tt}" HtmlEncode="false"/>
+                    <asp:BoundField DataField="DateLastModified" HeaderText="DateLastModified" SortExpression="DateLastModified" DataFormatString="{0:MM/dd/yyyy hh:mm tt}" />--%>
                     <asp:TemplateField HeaderText="">
                         <ItemTemplate>
                             <asp:LinkButton ID="Edit" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="Edit_Click">Edit</asp:LinkButton> |

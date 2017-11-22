@@ -19,6 +19,7 @@
 /WebApplication/App_Data/*.mdf
 /WebApplication/App_Data/*.ldf
 /WebApplication/Views/MasterPages/SiteTemplates/node_modules/*
+/WebApplication/Frontend/node_modules/*
 /WebApplication/Views/MasterPages/SiteTemplates/.sass-cache/*
 /WebApplication/media/uploads/fields
 /packages

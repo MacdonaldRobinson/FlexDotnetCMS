@@ -2,7 +2,7 @@
 
 <asp:Panel runat="server" ID="AdminPanel" CssClass="MultiFileUploader">
 
-    <script>
+    <script>        
         $(document).ready(function () {            
             BindReOrder();            
 
@@ -13,13 +13,13 @@
             OnUpdatePanelRefreshComplete(function (event) {
                 BindReOrder();
             });
+        });
 
-            function BindReOrder()
-            {                
-                BindGridViewSortable("#<%=AdminUpdatePanel.ClientID %> .FieldItems", "", "<%= AdminUpdatePanel.ClientID%>", function () {     
+        function BindReOrder() {
+            BindGridViewSortable("#<%=AdminUpdatePanel.ClientID %> .FieldItems", "", "<%= AdminUpdatePanel.ClientID%>", function () {
 
                     var ReorderItems = $("#<%=AdminUpdatePanel.ClientID%> .FieldItems .item").parents(".MultiFileUploader").find(".ReorderItems");
-                    
+
                     var arr = new Array();
                     $("#<%=AdminUpdatePanel.ClientID%> .FieldItems .item").each(function () {
                         var id = $(this).attr("data-id");
@@ -31,8 +31,6 @@
                     return false;
                 });
             }
-
-        });
 
     </script>
 

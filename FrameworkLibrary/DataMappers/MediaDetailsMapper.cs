@@ -946,12 +946,12 @@ namespace FrameworkLibrary
                 GetDataModel().Fields.Remove(item);
             }
 
-            var roleMedia = obj.Media.RolesMedias.ToList();
+            /*var roleMedia = obj.Media.RolesMedias.ToList();
 
             foreach (RoleMedia item in roleMedia)
             {
                 GetDataModel().RolesMedias.Remove(item);
-            }
+            }*/
 
             var fieldAssociations = obj.FieldAssociations.ToList();
             foreach (var item in fieldAssociations)
@@ -1090,7 +1090,7 @@ namespace FrameworkLibrary
                     customCode = ParserHelper.ParseData(customCode, new RazorFieldParams { MediaDetail = mediaDetail });
                 }
 
-                var loadMediaDetailsProperty = Regex.Matches(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:@).?&}]+");
+                var loadMediaDetailsProperty = Regex.Matches(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:@).?&' }]+");
 
                 foreach (var item in loadMediaDetailsProperty)
                 {
@@ -1105,8 +1105,8 @@ namespace FrameworkLibrary
 
                         var property = itemAsString.Replace(loadMediaSegment.ToString() + ".", "");
 
-                        if (mediaDetail.Media.ParentMediaID != id)
-                        {
+                        /*if (mediaDetail.Media.ParentMediaID != id)
+                        {*/
                             var selectMedia = MediasMapper.GetByID(id);
 
                             if (selectMedia != null)
@@ -1134,7 +1134,7 @@ namespace FrameworkLibrary
 
                                 customCode = customCode.Replace(itemAsString, returnValue);
                             }
-                        }
+                        /*}*/
                     }
                 }
             }
@@ -1180,7 +1180,7 @@ namespace FrameworkLibrary
 
             if (customCode.Contains("{Field:"))
             {
-                var fields = Regex.Matches(customCode, "{Field:[a-zA-Z0-9&?=]+}");
+                var fields = Regex.Matches(customCode, "{Field:[a-zA-Z0-9&?=' ]+}");
 
                 foreach (var field in fields)
                 {
@@ -1198,7 +1198,7 @@ namespace FrameworkLibrary
                             var argumentArray = argumentString.Split('=');
                             if (argumentArray.Count() > 1)
                             {                                
-                                arguments.Add(argumentArray[0].ToString(), argumentArray[1].ToString());                                
+                                arguments.Add(argumentArray[0].ToString(), argumentArray[1].ToString().Replace("'",""));                                
                             }
                         }
                     }

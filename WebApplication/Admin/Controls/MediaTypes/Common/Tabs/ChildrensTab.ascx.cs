@@ -34,7 +34,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
             }
             else
             {
-                listItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == mediaId && i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0 && i.SectionTitle.Contains(searchText)).OrderByDescending(i => i.DateLastModified).ToList<IMediaDetail>();
+                listItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == mediaId && i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0 && i.LinkTitle.Contains(searchText)).OrderByDescending(i => i.DateLastModified).ToList<IMediaDetail>();
             }
 
             if(listItems.Count > 0)

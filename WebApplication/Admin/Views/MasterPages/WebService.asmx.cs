@@ -74,7 +74,7 @@ namespace WebApplication.Admin.Views.MasterPages
 
             if (detail.LanguageID != AdminBasePage.CurrentLanguage.ID)
             {
-                nodeText = detail.LinkTitle + " - " + LanguagesMapper.GetByID(detail.Language.ID).Name;
+                nodeText = $"{detail.LinkTitle} - {LanguagesMapper.GetByID(detail.Language.ID).Name} ({node.id})";
                 node.li_attr._class = "doesNotExistInLanguage";
             }
             else
@@ -557,7 +557,8 @@ namespace WebApplication.Admin.Views.MasterPages
 
             if (newName != "")
             {
-                duplicatedItem.LinkTitle = newName;
+                duplicatedItem.Title = duplicatedItem.LinkTitle = newName;
+
             }
 
             duplicatedItem.CachedVirtualPath = duplicatedItem.CalculatedVirtualPath();

@@ -85,11 +85,11 @@ namespace WebApplication.Handlers
 
             virtualPath = URIHelper.GetCurrentVirtualPath().ToLower();
 
-            if ((virtualPath != "~/") && (!virtualPath.EndsWith("/")))
+            if (!Request.Path.EndsWith("/") || ((virtualPath != "~/") && (!virtualPath.EndsWith("/"))))
             {
                 var queryString = HttpContext.Current.Request.QueryString.ToString();
 
-                var path = virtualPath + "/";
+                var path = Request.Path + "/";
 
                 if (!string.IsNullOrEmpty(queryString))
                     path = path + "?" + queryString;
@@ -141,7 +141,8 @@ namespace WebApplication.Handlers
 
                 var language = LanguagesMapper.GetAllActive().SingleOrDefault(i => i.UriSegment == firstSegment);
 
-                FrameworkSettings.SetCurrentLanguage(language);
+                if(language != null)
+                    FrameworkSettings.SetCurrentLanguage(language);
             }
 
             if (!isAttemptingAdminLogin && AppSettings.EnableUrlRedirectRules)

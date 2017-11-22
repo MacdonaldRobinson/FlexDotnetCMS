@@ -276,6 +276,28 @@ namespace WebApplication.Admin.Controls.Editors
                     mediaTypeField.DateCreated = mediaTypeField.DateLastModified = DateTime.Now;
 
                     mediaType.Fields.Add(mediaTypeField);
+
+                    foreach (var mediaDetail in mediaType.MediaDetails)
+                    {
+                        var mediaDetailField = new MediaDetailField();
+                        mediaDetailField.CopyFrom(mediaTypeField);
+
+                        mediaDetailField.UseMediaTypeFieldFrontEndLayout = true;
+                        mediaDetailField.UseMediaTypeFieldDescription = true;
+
+                        if (mediaDetailField.FrontEndSubmissions == null)
+                            mediaDetailField.FrontEndSubmissions = "";
+
+                        if (mediaDetailField.FieldSettings == null)
+                            mediaDetailField.FieldSettings = "";
+
+                        mediaDetailField.MediaTypeField = mediaTypeField;
+
+                        mediaDetailField.DateCreated = mediaDetailField.DateLastModified = DateTime.Now;
+
+                        mediaDetailField.OrderIndex = mediaDetail.Fields.Count;
+                        mediaDetail.Fields.Add(mediaDetailField);
+                    }
                 }
             }
 

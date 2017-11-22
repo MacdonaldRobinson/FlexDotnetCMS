@@ -123,41 +123,43 @@ namespace WebApplication.Admin.MediaArticle
 
                 selectedItem.UseMediaTypeLayouts = mediaType.UseMediaTypeLayouts;
 
-                var allFields = selectedItem.Media.GetLiveMediaDetail()?.Fields;
+                var liveMediaDetail = selectedItem.Media?.GetLiveMediaDetail();
 
-                var fieldsNotInMediaType = allFields.Where(i=>i.MediaTypeFieldID == null);
-
-                if (fieldsNotInMediaType != null)
+                if (liveMediaDetail != null)
                 {
-                    foreach (var field in fieldsNotInMediaType)
+                    selectedItem.CopyFrom(liveMediaDetail);
+
+                    var fieldsNotInMediaType = liveMediaDetail.Fields.Where(i => i.MediaTypeFieldID == null);
+
+                    if (fieldsNotInMediaType != null)
                     {
-                        var newField = new MediaDetailField();
-                        newField.CopyFrom(field);
+                        foreach (var field in fieldsNotInMediaType)
+                        {
+                            var newField = new MediaDetailField();
+                            newField.CopyFrom(field);
 
-                        if (field.FieldAssociations.Count > 0)
-                            newField.FieldValue = "";
-                        else
-                            newField.FieldValue = field.FieldValue;
+                            if (field.FieldAssociations.Count > 0)
+                                newField.FieldValue = "";
+                            else
+                                newField.FieldValue = field.FieldValue;
 
-                        newField.DateCreated = DateTime.Now;
-                        newField.DateLastModified = DateTime.Now;
+                            newField.DateCreated = DateTime.Now;
+                            newField.DateLastModified = DateTime.Now;
 
-                        selectedItem.Fields.Add(newField);
+                            selectedItem.Fields.Add(newField);
+                        }
                     }
-                }
 
-                selectedItem.CopyFrom(selectedItem.Media?.GetLiveMediaDetail());
+                    var fieldsThatCanBeCopied = liveMediaDetail.Fields.Where(i => !i.FieldAssociations.Any());
 
-
-                var fieldsThatCanBeCopied = allFields.Where(i => !i.FieldAssociations.Any());
-
-                foreach (var field in fieldsThatCanBeCopied)
-                {
-                    var foundField = selectedItem.Fields.FirstOrDefault(i => i.FieldCode == field.FieldCode);
-
-                    if (foundField != null)
+                    foreach (var field in fieldsThatCanBeCopied)
                     {
-                        foundField.CopyFrom(field);
+                        var foundField = selectedItem.Fields.FirstOrDefault(i => i.FieldCode == field.FieldCode);
+
+                        if (foundField != null)
+                        {
+                            foundField.CopyFrom(field);
+                        }
                     }
                 }
             }

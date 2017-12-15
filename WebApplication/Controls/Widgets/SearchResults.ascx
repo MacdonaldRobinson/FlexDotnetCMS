@@ -1,15 +1,17 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="SearchResults.ascx.cs" Inherits="WebApplication.Controls.SearchResults" %>
 
-<script>
-    (function () {
-        var cx = '[GET_IT]';
-        var gcse = document.createElement('script');
-        gcse.type = 'text/javascript';
-        gcse.async = true;
-        gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-            '//cse.google.com/cse.js?cx=' + cx;
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(gcse, s);
-    })();
-</script>
-<gcse:searchresults-only></gcse:searchresults-only>
+<asp:ListView runat="server" ID="Results" ItemType="FrameworkLibrary.MediaDetail">
+    <LayoutTemplate>
+        <ul>
+            <asp:PlaceHolder runat="server" ID="itemPlaceHolder" />
+        </ul>
+    </LayoutTemplate>
+    <ItemTemplate>
+        <li>
+            <a href="<%# Item.AbsoluteUrl %>"><%# Item.SectionTitle %></a>
+            <p>
+                <%# Item.GetMetaDescription() %>
+            </p>
+        </li>
+    </ItemTemplate>
+</asp:ListView>

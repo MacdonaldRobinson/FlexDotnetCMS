@@ -1,10 +1,32 @@
 // interior page breadcrumb navigation
+
 .wh-breadcrumb {
-  font-size : 16px;
-  padding   : 0;
   background: none;
-  a {
-    font-weight: 700;
-    color      : $grey;
+  font-size: 16px;
+  padding: 0;
+
+  @include media-breakpoint-down(md) {
+    margin-bottom: 2rem;
   }
+
+  .breadcrumb-item {
+    a {
+      color: $grey;
+      font-weight: 700;
+    }
+  }
+
+  li {
+    padding: 0;
+  }
+}
+
+.breadcrumb-item+.breadcrumb-item:before {
+  @include media-breakpoint-down(md) {
+    padding-right: 0;
+    padding-left: 0.4rem;
+    font-family: 'FontAwesome';
+    content: '\f105';
+  }
+
 }

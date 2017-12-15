@@ -61,7 +61,7 @@ namespace FrameworkLibrary
 
             var enumName = MediaTypeEnum.UrlRedirectRule.ToString();
 
-            var rule = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate >= DateTime.Now) && i.MediaType.Name == enumName && (i as UrlRedirectRule).VirtualPathToRedirect == virtualPath);
+            var rule = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate >= DateTime.Now) && i.MediaType.Name == enumName && ((i as UrlRedirectRule).VirtualPathToRedirect.ToLower() == virtualPath || (i as UrlRedirectRule).VirtualPathToRedirect.ToLower() == virtualPath+"/"));
 
             if (rule != null)
             {

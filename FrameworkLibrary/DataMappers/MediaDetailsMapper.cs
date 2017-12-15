@@ -198,36 +198,30 @@ namespace FrameworkLibrary
             if (string.IsNullOrEmpty(searchTerm) || searchTerm.Length < 3)
                 return new List<IMediaDetail>();
 
-            searchTerm = searchTerm.ToLower();
-            var allActiveMediaDetails = GetAllActiveMediaDetails();
-            //var rootMediaDetail = FrameworkSettings.RootMediaDetail;
             var currentLanguage = FrameworkSettings.GetCurrentLanguage();
 
-            var items = (IEnumerable<IMediaDetail>)allActiveMediaDetails.Where(i => StringHelper.ContainsWord(i.Title, searchTerm) || (StringHelper.ContainsWord(i.ShortDescription, searchTerm)) || (StringHelper.ContainsWord(i.MainContent, searchTerm))).AsEnumerable();
+            searchTerm = searchTerm.ToLower().Trim();
+            var foundItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ShowInSiteTree &&
+                                                                            i.ShowInMenu &&
+                                                                            !i.IsDeleted &&
+                                                                            i.HistoryVersionNumber == 0 &&
+                                                                            i.LanguageID == currentLanguage.ID &&
+                                                                            (i.MediaID.ToString() == searchTerm ||
+                                                                                i.Fields.FirstOrDefault(j => j.FieldCode == "MainContent").FieldValue.ToLower().Contains(searchTerm) ||
+                                                                                i.Fields.FirstOrDefault(j => j.FieldCode == "ShortDescription").FieldValue.ToLower().Contains(searchTerm) ||
+                                                                                i.Fields.FirstOrDefault(j => j.FieldCode == "SectionTitle").FieldValue.ToLower().Contains(searchTerm) ||
+                                                                                i.MainLayout.ToLower().Contains(searchTerm) ||
+                                                                                i.MediaType.MainLayout.ToLower().Contains(searchTerm) ||
+                                                                                i.Fields.Any(j => (j.FieldAssociations.Count == 0 && j.FieldValue.ToLower().Contains(searchTerm)) ||
+                                                                                                j.FieldAssociations.Any(k => !k.MediaDetail.MediaType.ShowInSiteTree &&
+                                                                                                                            (k.MediaDetail.Fields.FirstOrDefault(l => l.FieldCode == "SectionTitle").FieldValue.ToLower().Contains(searchTerm) ||
+                                                                                                                            k.MediaDetail.Fields.FirstOrDefault(l => l.FieldCode == "MainContent").FieldValue.ToLower().Contains(searchTerm) ||
+                                                                                                                            k.MediaDetail.Fields.FirstOrDefault(l => l.FieldCode == "MainLayout").FieldValue.ToLower().Contains(searchTerm))
+                                                                                                                        ))
+                                                                            )).ToList();
 
-            items = FilterByShowInSearchResultsStatus(FilterByLanguage(FilterByCanRenderStatus(FilterByIsHistoryStatus(items, false), true), currentLanguage), true);
 
-            var filteredItems = new List<IMediaDetail>();
-
-            var tagMatches = (IEnumerable<IMediaDetail>)allActiveMediaDetails.Where(i => i.Media.MediaTags.Any(j => StringHelper.ContainsWord(j.Tag.Name, searchTerm)));
-            tagMatches = FilterByShowInSearchResultsStatus(FilterByLanguage(FilterByCanRenderStatus(FilterByIsHistoryStatus(tagMatches, false), true), currentLanguage), true);
-
-            filteredItems.AddRange(tagMatches);
-            var maxResults = 10;
-
-            if (filteredItems.Count < maxResults)
-            {
-                foreach (var item in items)
-                {
-                    if (filteredItems.Count >= maxResults)
-                        break;
-
-                    if (!filteredItems.Contains(item))
-                        filteredItems.Add(item);
-                }
-            }
-
-            return filteredItems;
+            return foundItems;
         }
 
         public static IEnumerable<IMediaDetail> FilterByIsDraftStatus(IEnumerable<IMediaDetail> items, bool isDraft)
@@ -437,6 +431,18 @@ namespace FrameworkLibrary
                 DeletePermanently((MediaDetail)mediaDetail);
 
             return newItem;
+        }
+        
+        public static IEnumerable<IMediaDetail> GetByMediaTypeAndLanguage(long mediaTypeId, Language language = null)
+        {
+            if(language == null)
+            {
+                language = FrameworkSettings.GetCurrentLanguage();
+            }
+
+            var mediaDetails =  MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ID == mediaTypeId && i.LanguageID == language.ID && i.HistoryVersionNumber == 0).ToList().Where(i=>i.CanRender);
+
+            return mediaDetails;
         }
 
         public static IEnumerable<IMediaDetail> GetByMediaType(MediaType mediaType)
@@ -1037,13 +1043,22 @@ namespace FrameworkLibrary
         {
             var byPassEditorCheck = false;
             var mediaId = "";
-            if(mediaField is MediaDetailField && FrameworkSettings.CurrentUser != null)
+            var returnObj = BaseMapper.GenerateReturn();
+
+            if (mediaField is MediaDetailField && FrameworkSettings.CurrentUser != null)
             {
                 var mediaDetailField = mediaField as MediaDetailField;
                 var mediaDetail = (mediaDetailField.MediaDetail != null) ? mediaDetailField.MediaDetail : MediaDetailsMapper.GetByID(mediaDetailField.MediaDetailID);
-                mediaId = mediaDetail.MediaID.ToString();
 
-                var returnObj = CanAccessMediaDetail(mediaDetail, FrameworkSettings.CurrentUser);
+                if (mediaDetail != null)
+                {
+                    mediaId = mediaDetail.MediaID.ToString();
+                    returnObj = CanAccessMediaDetail(mediaDetail, FrameworkSettings.CurrentUser);
+                }
+                else
+                {
+                    returnObj = BaseMapper.GenerateReturn("Cannot get media detail");
+                }
 
                 if(returnObj.IsError)
                 {

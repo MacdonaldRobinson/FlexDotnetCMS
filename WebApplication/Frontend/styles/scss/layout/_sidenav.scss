@@ -1,0 +1,60 @@
+// navigation for interior pages on the side
+
+.wh-sidenav {
+  @include media-breakpoint-down(md) {
+    display: none;
+  }
+  max-width: 280px;
+
+  li,
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul {
+    li:first-child {
+      border-top: 2.5px solid $peach;
+    }
+  }
+
+  .nav-link {
+    padding: 18px 14px;
+    background: rgba($green-olive,0.35);
+    border-left: 2.5px solid $peach;
+    border-right: 2.5px solid $peach;
+    border-bottom: 2.5px solid $peach;
+    border-top: none;
+    color: lighten($green-dark,5%);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.1em;
+    letter-spacing: 0.05em;
+    @include media-breakpoint-down(lg) {
+      font-size: 16px;
+    }
+    @include height-breakpoint {
+      padding: 10px 14px;
+      font-size: 15px;
+    }
+
+    &:hover {
+      background: rgba($green-olive,0.65);
+    }
+  }
+}
+
+.wh-sidenav .current .nav-link {
+  background: darken($green-olive,5%);
+  color: white;
+}
+
+.blog-sidenav {
+  max-width: 280px;
+  @include media-breakpoint-down(sm) {
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    margin-top: 0;
+  }
+}

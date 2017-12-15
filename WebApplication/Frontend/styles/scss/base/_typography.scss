@@ -1,51 +1,171 @@
-$primary-font: "proxima-nova", sans-serif;
-$secondary-font: "proxima-soft", sans-serif;
+$brand-font: 'Work Sans', sans-serif;
+$secondary-font: 'Bitter', serif;
 @mixin header-font-style {
-  font-family   : $primary-font;
-  font-weight   : 700;
-  text-transform: capitalize;
+  font-family: $brand-font;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
-body {
-  font-family: $secondary-font, sans-serif; // set brand font family
-  font-size  : 18px; // set base font size
+body,
+html {
+  font-size: 18px; // set base font size
+  font-family: $brand-font, arial, sans-serif; // set brand font family
+  color: $grey;
 }
 
 h1 {
-  font-size     : 34px;
-  font-weight   : bold;
-  font-family   : $secondary-font;
-  font-weight   : 700;
-  text-transform: capitalize;
-  color         : $blue;
-  margin-bottom : 1em;
+  @include header-font-style;
+  font-size: 3rem;
+  @include media-breakpoint-down(md) {
+    font-size: 1.95rem;
+  }
 }
 
 h2 {
-  font-size  : 34px;
-  font-family: $secondary-font, sans-serif; // set brand font family
-  color      : $grey-dark;
+  @include header-font-style;
+  font-size: 2rem;
+  color: $green;
+  @include media-breakpoint-down(md) {
+    font-size: 1.75rem;
+  }
 }
 
 h3 {
-  font-size  : 20px;
-  font-weight: 600;
-  font-family: $secondary-font, sans-serif; // set brand font family
-  color      : $grey-dark;
+  @include header-font-style;
+  font-size: 1.6rem;
+  @include media-breakpoint-down(md) {
+    font-size: 1.3rem;
+  }
 }
 
-p,
-ul {
-  font-size: 18px;
-  color    : $grey-dark;
+h4 {
+  @include header-font-style;
+  font-size: 1.4rem;
+}
+
+h5 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+p {
+  font-size: 1rem;
 
   &.deck {
-    font-size: 22px;
+    font-size: 1.3em;
   }
+}
+
+.subtitle {
+  display: block;
+  font-size: 1.5rem;
 }
 
 a,
 a:active,
 a:hover {
   text-decoration: none;
+}
+// type on specific components like banners and interior pages. For even more specific type styles, check partials.
+main {
+  h2 {
+    position: relative;
+    padding-bottom: 0.55em;
+    margin-bottom: 0.75em;
+    @include media-breakpoint-down(md) {
+      text-align: center;
+    }
+    // horizontal line after h2 headers
+    &:after {
+      content: '';
+      border-bottom: 4px solid rgba($grey,0.25);
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 120px;
+      @include media-breakpoint-down(md) {
+        // on smaller screens, move to centered
+        left: calc(50% - 60px);
+      }
+    }
+  }
+
+  h3 {
+    margin-top: 1.25em;
+  }
+
+  p {
+    color: darken($grey,5%);
+  }
+
+  a,
+  a:active {
+    color: $orange;
+    font-weight: 500;
+    text-decoration: none;
+
+    &:hover {
+      color: $grey;
+    }
+  }
+
+  a:not(.button) {
+    // not sure why this isn't working...
+    border-bottom: 1px solid rgba($grey,0.25);
+    transition: all 0.2s ease-in-out;
+    padding-bottom: 2px;
+
+    &:hover {
+      color: $grey;
+      border-bottom: 1px solid $green-olive;
+      transition: all 0.2s ease;
+    }
+  }
+
+  ul {
+    li {
+      line-height: inherit;
+      padding-bottom: 1em;
+    }
+  }
+}
+
+.wh-interior-header .header-content {
+  // h1 {
+  //   font-size: 40px;
+  // }
+}
+// Blog Article Typography
+.blog-details {
+  h1 {
+    text-transform: none;
+    text-align: center;
+    position: relative;
+    padding-bottom: 0.75em;
+    margin-bottom: 0.5em;
+    // horizontal line
+    &:after {
+      content: '';
+      border-bottom: 4px solid rgba($grey,0.25);
+      position: absolute;
+      left: calc(50% - 60px);
+      bottom: 0;
+      width: 120px;
+    }
+    @include media-breakpoint-down(md) {
+      font-size: 1.85rem;
+    }
+  }
+
+  .blog-date, .blog-author {
+    display: block;
+    text-align: center;
+    font-size: 0.9em;
+    padding: 0.1em 0;
+  }
+  .blog-date {
+    font-weight: 600;
+    color: darken($orange,5%);
+  }
+
 }

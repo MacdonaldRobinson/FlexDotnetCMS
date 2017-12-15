@@ -12,12 +12,17 @@ namespace WebApplication.Controls
 {
     public partial class Login : System.Web.UI.UserControl
     {
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            ErrorPanel.Visible = false;
+        }
+
         protected void Submit_Click(object sender, EventArgs e)
         {
             var user = UsersMapper.GetUserByCredentials(Username.Text, Password.Text);
 
             if(user != null)
-            {
+            {                
                 FormsAuthentication.SetAuthCookie(user.UserName, false);
 
                 FrameworkSettings.CurrentUser = user;
@@ -25,6 +30,10 @@ namespace WebApplication.Controls
                 var returnUrl = (Request["ReturnUrl"] != null) ? Request["ReturnUrl"] : "~/admin/";
 
                 Response.Redirect(returnUrl);
+            }
+            else
+            {
+                ErrorPanel.Visible = true;
             }
         }
     }

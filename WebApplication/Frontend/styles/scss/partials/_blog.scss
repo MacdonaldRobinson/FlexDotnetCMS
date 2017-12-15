@@ -1,0 +1,131 @@
+.blog-categories {
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      padding: 0;
+
+      a {
+        color: $grey;
+        font-weight: 500;
+        padding: 0.75rem 0.25em;
+        display: block;
+        font-size: 0.9rem;
+        border-bottom: 2px solid $peach;
+        transition: all 0.25s ease-in-out;
+        position: relative;
+
+        &:hover {
+          border-bottom: 2px solid $orange;
+          transition: all 0.2s ease;
+        }
+
+        &.current {
+          border-bottom: 2px solid $orange;
+
+          &:after {
+            font-family: 'FontAwesome';
+            content: '\f061';
+            position: absolute;
+            right: 0;
+            top: 28%;
+            color: $orange;
+          }
+        }
+      }
+    }
+  }
+}
+// summary card on blog parent page
+
+.blog-post-card {
+  padding: 1.6em;
+  background: $peach;
+  border-radius: $rounded-corner-size;
+
+  h4 {
+    padding: 1em 0 0.8em;
+    position: relative;
+
+    &:after {
+      content: '';
+      border-bottom: 4px solid rgba($grey,0.25);
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 80px;
+    }
+  }
+
+  h4 a {
+    color: $green;
+    text-transform: none;
+    font-weight: 600;
+  }
+
+  img {
+    border-radius: $rounded-corner-size;
+  }
+
+  span.blog-metadata {
+    color: rgba($grey,0.7);
+    font-weight: 600;
+    display: block;
+    padding: 0.4em 0;
+  }
+}
+// blog full article page
+
+.blog-details {
+  color: darken($grey,15%);
+
+  .blog-feature-image {
+    border-radius: $rounded-corner-size;
+    margin: 1.6rem 0;
+    object-fit: cover;
+    width: 100%;
+    height: 300px;
+  }
+}
+
+.pagination {
+  padding: 1.75em 0;
+
+  .page-link {
+    display: inline-block;
+    color: darken($orange, 4%);
+    background-color: $peach;
+    border-bottom: 2px solid transparent;
+
+    &:hover {
+      color: $orange;
+      border-bottom: 2px solid $orange;
+    }
+  }
+
+  span {
+    font-weight: 600;
+    display: inline-block;
+    padding: 0 1em;
+  }
+}
+
+.related-blog-posts {
+   h3 {
+     color: $green;
+     text-align: center;
+     position: relative;
+     margin-bottom: 1em;
+     padding-bottom: 1em;
+     &:after {
+       content: '';
+       border-bottom: 4px solid rgba($grey,0.25);
+       position: absolute;
+       left: calc(100% / 2 - 40px);
+       bottom: 0;
+       width: 80px;
+     }
+   }
+}

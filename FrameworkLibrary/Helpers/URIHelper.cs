@@ -43,8 +43,7 @@ namespace FrameworkLibrary
 
         public static string ConvertAbsPathToAbsUrl(string absPath)
         {
-            var basePath = HttpContext.Current.Server.MapPath("~/");
-            var absUrl = ConvertToAbsUrl(absPath.Replace(basePath, "~/"));
+            var absUrl = ConvertToAbsUrl(absPath.Replace(BasePath, "~/"));
 
             return absUrl;
         }
@@ -187,6 +186,15 @@ namespace FrameworkLibrary
                 url = url.Substring(0, url.Length - 1);
             }
 
+            if (url.StartsWith("//"))
+            {
+                url = url.Substring(2);
+            }
+            else if(url.StartsWith("/"))
+            {
+                url = url.Substring(1);
+            }
+
             return url;
         }
 
@@ -278,17 +286,24 @@ namespace FrameworkLibrary
 
             return false;
         }
-
+        private static string _basePath = "";
         public static string BasePath
         {
             get
             {
-                string appPath = AppDomain.CurrentDomain.BaseDirectory;
+                /*string appPath = AppDomain.CurrentDomain.BaseDirectory;
 
                 if (!appPath.EndsWith("/"))
                     appPath = appPath + "/";
 
-                return appPath;
+                return appPath;*/
+
+                if (!string.IsNullOrEmpty(_basePath))
+                    return _basePath;
+
+                _basePath = HttpContext.Current.Server.MapPath("~/");
+
+                return _basePath;
             }
         }
 

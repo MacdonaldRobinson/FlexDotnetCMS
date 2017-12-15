@@ -447,7 +447,9 @@ namespace WebApplication
         {
             var templateVars = new Dictionary<string, string>();
 
-            templateVars["BaseUrlWithLanguage"] = URIHelper.BaseUrlWithLanguage;
+            if (LanguagesMapper.GetAllActive().Count() > 1)
+                templateVars["BaseUrlWithLanguage"] = URIHelper.BaseUrlWithLanguage;
+
             templateVars["BaseUrl"] = URIHelper.BaseUrl;
 
             //templateVars["CurrentUrl"] = URIHelper.ConvertToAbsUrl(URIHelper.GetCurrentVirtualPath());
@@ -597,12 +599,12 @@ namespace WebApplication
             foreach (User user in users)
                 emails += user.EmailAddress + ";";
 
-            return EmailHelper.Send(EmailHelper.GetMailAddressesFromString(emails), subject, message, AppSettings.SystemName, AppSettings.SystemEmailAddress);
+            return EmailHelper.Send(AppSettings.SystemEmailAddress, EmailHelper.GetMailAddressesFromString(emails), subject, message);
         }
 
         public Return SendEmailToUser(User user, string message, string subject)
         {
-            return EmailHelper.Send(EmailHelper.GetMailAddressesFromString(user.EmailAddress), subject, message, AppSettings.SystemName, AppSettings.SystemEmailAddress);
+            return EmailHelper.Send(AppSettings.SystemEmailAddress, EmailHelper.GetMailAddressesFromString(user.EmailAddress), subject, message);
         }
 
         public string CommentReplyToMessage(Comment reply)
@@ -622,7 +624,7 @@ namespace WebApplication
             var address = new List<MailAddress>();
             address.Add(new MailAddress(replyToComment.Email, replyToComment.Name));
 
-            EmailHelper.Send(address, "There was a reply made to your comment", CommentReplyToMessage(newComment), AppSettings.SystemName, AppSettings.SystemEmailAddress);
+            EmailHelper.Send(AppSettings.SystemEmailAddress, address, "There was a reply made to your comment", CommentReplyToMessage(newComment));
         }
 
         public void SendMediaCommentApprovalRequest(Media obj)

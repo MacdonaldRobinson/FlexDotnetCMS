@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿/*$(document).ready(function () {
 
     if ($("form").length > 0)
     {
@@ -27,6 +27,8 @@
             }
         });
     }
+
+    $(".chosen-select").chosen({ disable_search_threshold: 10 });
   
     $.get(BaseUrl + "WebServices/IMediaDetails.asmx/GetGlossaryTerms", function (data) {
         $(data).each(function () {
@@ -52,4 +54,4 @@
         });
     });
 
-});
+});*/

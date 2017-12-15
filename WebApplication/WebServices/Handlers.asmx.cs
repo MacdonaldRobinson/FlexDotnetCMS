@@ -105,7 +105,9 @@ namespace WebApplication.WebServices
                     field.UploadFolder.Create();
                 }
 
-                var uploadFilePath = field.UploadFolder.FullName + key + "_" + postedFile.FileName;
+                var fieldName = postedFile.FileName.ToLower().Replace(" ", "-");
+
+                var uploadFilePath = field.UploadFolder.FullName + key + "_" + fieldName;
                 postedFile.SaveAs(uploadFilePath);
 
                 var relativePath = URIHelper.ConvertAbsPathToAbsUrl(uploadFilePath);
@@ -121,6 +123,7 @@ namespace WebApplication.WebServices
 
                 fileIndex++;
             }
+            
 
             var jObjectUploadFiles = JObject.Parse(StringHelper.ObjectToJson(files));
 
@@ -153,9 +156,9 @@ namespace WebApplication.WebServices
                 if(media != null)
                 {
                     var layout = MediaDetailsMapper.ParseSpecialTags(media.GetLiveMediaDetail());
-                    var parsedLayout = ParserHelper.ParseData(layout, FormDictionary);
+                    var parsedLayout = ParserHelper.ParseData(layout, jObject);
 
-                    EmailHelper.SendDirectMessage(AppSettings.SystemEmailAddress, formFieldSettings.EmailAddress, "Form Submission", parsedLayout);
+                    EmailHelper.Send(AppSettings.SystemEmailAddress, EmailHelper.GetMailAddressesFromString(formFieldSettings.EmailAddress), formFieldSettings.Subject, parsedLayout, AppSettings.AttemptSMTPMailer);
                 }                
             }            
 

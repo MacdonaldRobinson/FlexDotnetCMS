@@ -39,7 +39,7 @@ namespace WebApplication.Controls.Widgets
                 return;
             }
 
-            languageLink.NavigateUrl = item.AutoCalculatedVirtualPath;
+            languageLink.NavigateUrl = URIHelper.ConvertToAbsUrl(item.AutoCalculatedVirtualPath);
         }
 
         public FrontEndBasePage BasePage

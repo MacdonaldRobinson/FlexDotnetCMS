@@ -1,124 +1,82 @@
-img {
-  display  : block;
-  width    : 100%;
-  height   : auto;
-  max-width: 100%;
+main {
+  background: $beige;
 }
 
-hr {
-  width     : 100%;
-  border-top: 2px solid rgba(0,0,0,.1);
-  margin    : 4em auto;
+section {
+  padding-top: 24px;
+  padding-bottom: 24px;
 }
 
-.container {
-  //max-width: 1200px;
-  &.image-content-split {
-    padding  : 5em 0;
-    max-width: 1200px;
-    @include mobile {
-      padding: 1em 0;
-    }
+.related-content {
+  padding: 20px 0;
+  margin-top: 120px;
+  border-top: 4px solid rgba($grey,0.25);
 
-    .bubble-container {
-      p {
-        &.headline {
-          color        : $white;
-          font-size    : 70px;
-          max-width    : 550px;
-          text-align   : center;
-          line-height  : 1;
-          font-weight  : 300;
-          margin-bottom: .25em;
-          @include mobile {
-            font-size: 55px;
-          }
+  span.related-content-title {
+    color: $grey;
+    font-weight: 700;
+    display: block;
+    position: relative;
+    padding-bottom: 0.75em;
+    margin-bottom: 40px;
 
-          span {
-            font-weight: 500;
-          }
-
-          &.headline-teal {
-            color: teal;
-          }
-        }
-        // &.subtitle {
-        //   font-size: 1.5rem;
-        //   display  : block;
-        // }
-        &.subhead {
-          font-size  : 26px;
-          color      : $white;
-          //max-width  : 550px;
-          text-align : center;
-          line-height: .8;
-          font-weight: 500;
-
-          &.subhead-teal {
-            color: $teal;
-          }
-        }
-      }
-      @include mobile {
-        margin: 2em auto;
-        order : 2;
-      }
-    }
-
-    .img-container {
-      display  : block;
-      width    : 100%;
-      max-width: 100%;
-      height   : auto;
-      @include mobile {
-        margin: 2em auto;
-      }
-    }
-
-    .content-container {
-      @include mobile {
-        padding   : 1em 2em;
-        text-align: center;
-      }
+    &:after {
+      content: '';
+      border-bottom: 4px solid rgba($grey,0.25);
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 120px;
     }
   }
 
-  &.border-top {
-    border-top: 2px solid $grey-light;
+  h4 {
+    color: $green;
+  }
+
+  .related-item {
+    @include media-breakpoint-down(md) {
+      padding: 20px 0;
+    }
   }
 }
 
-.has-separator-above {
-  padding-top: 75px;
-}
-
-.separator-bottom {
-  position : absolute;
-  transform: rotate(180deg);
-  @include mobile {
-    height: 40px;
-  }
-
-  &.fill-white {
-    fill: $white;
-  }
-
-  &.fill-blue {
-    fill: $blue;
+.subpage-boxes {
+  // to pull in subpage boxes similar to those of Services on home page. Example: How You Can Help page contains these.
+  .wh-box {
+    .wh-box-content {
+      span {
+        font-size: 20px;
+        line-height: 1em;
+      }
+      @include media-breakpoint-down(md) {
+        height: auto;
+      }
+    }
   }
 }
 
-.bubble-bg {
-  background-position: center;
-  background-repeat  : no-repeat;
-  background-size    : contain;
-  padding-bottom     : .25em;
-
-  &.bubble-bg-bot-teal {
-    background-image: url("/media/images/shapes/bubble-bot-teal.png");
+.board-members {
+  .image {
+    img {
+      width: 100%;
+      margin: 0 auto;
+      display: block;
+      border-radius: $rounded-corner-size;
+    }
   }
+  .description {
+    text-align: center;
+    padding-top: 12px;
+  }
+}
 
-  &.bubble-bg-bot-teal-light {
-    background-image: url("/media/images/shapes/bubble-bot-teal-light.png");
+.related-item {
+  .related-item-image {
+    border-radius: $rounded-corner-size;
+    margin: 18px 0;
+    object-fit: cover;
+    height: 220px;
+    width: 100%;
   }
 }

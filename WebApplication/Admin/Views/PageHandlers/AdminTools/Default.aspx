@@ -28,6 +28,13 @@
     </fieldset>
 
     <fieldset>
+
+        <style>
+            #DeployMessages li > ul{
+                margin-left: 30px;
+            }
+        </style>
+
         <legend>Deployment Tools</legend>
         <label><strong>Select the remote environment:</strong></label>
 

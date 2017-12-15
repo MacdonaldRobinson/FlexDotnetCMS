@@ -330,29 +330,32 @@ namespace WebApplication
 
             html = ParserHelper.ParseData(html, TemplateVars);
 
-            if (CurrentMediaDetail != null)
+            if (FrameworkSettings.CurrentUser == null)
             {
-                if (!IsAjaxRequest)
-                {                    
-                    if (AppSettings.EnableOutputCaching && CurrentMediaDetail.EnableCaching && CurrentMediaDetail.CanRender)
+                if (CurrentMediaDetail != null)
+                {
+                    if (!IsAjaxRequest)
                     {
-                        if (AppSettings.EnableLevel1MemoryCaching)
+                        if (AppSettings.EnableOutputCaching && CurrentMediaDetail.EnableCaching && CurrentMediaDetail.CanRender)
                         {
-                            CurrentMediaDetail.SaveToMemoryCache(UserSelectedVersion, html, Request.Url.Query);
+                            if (AppSettings.EnableLevel1MemoryCaching)
+                            {
+                                CurrentMediaDetail.SaveToMemoryCache(UserSelectedVersion, html, Request.Url.Query);
+                            }
+
+                            if (AppSettings.EnableLevel2FileCaching)
+                            {
+                                CurrentMediaDetail.SaveToFileCache(UserSelectedVersion, html, Request.Url.Query);
+                            }
+
+                            if (AppSettings.EnableLevel3RedisCaching)
+                            {
+                                CurrentMediaDetail.SaveToRedisCache(UserSelectedVersion, html, Request.Url.Query);
+                            }
                         }
 
-                        if (AppSettings.EnableLevel2FileCaching)
-                        {
-                            CurrentMediaDetail.SaveToFileCache(UserSelectedVersion, html, Request.Url.Query);
-                        }
-
-                        if (AppSettings.EnableLevel3RedisCaching)
-                        {
-                            CurrentMediaDetail.SaveToRedisCache(UserSelectedVersion, html, Request.Url.Query);
-                        }
+                        ContextHelper.SetToSession("CurrentMediaDetail", CurrentMediaDetail);
                     }
-
-                    ContextHelper.SetToSession("CurrentMediaDetail", CurrentMediaDetail);
                 }
             }
 

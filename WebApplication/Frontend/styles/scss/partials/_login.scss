@@ -1,0 +1,17 @@
+.login-page-container {
+  font-size: 18px;
+  font-weight: 500;
+  a {
+    @extend .button;
+    background: $green-dark;
+    &:hover {
+      background: $green;
+      transition: all 0.2s ease-in-out;
+    }
+  }
+  input {
+    width: 100%;
+    display:block;
+    margin-bottom: 20px;
+  }
+}

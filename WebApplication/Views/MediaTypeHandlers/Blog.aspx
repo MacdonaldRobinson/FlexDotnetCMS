@@ -3,15 +3,18 @@
 
 <asp:PlaceHolder runat="server" ID="TemplateTopSegment" />
 
-<div class="blog">
 
+<form runat="server">
+    <div class="row">
     <asp:ListView runat="server" ID="BlogCategories" ItemType="FrameworkLibrary.Page">
         <LayoutTemplate>
-            <div class="blog-categories">
-                <h3>Categories</h3>
+            <div class="col-md-3 px-2 blog-categories">
+                <div class="nav flex-column blog-sidenav" role="navigation" data-sticky data-margin-top="100">
+                <h3>Blog Categories</h3>
                 <ul>
                     <asp:PlaceHolder runat="server" ID="itemPlaceHolder" />
                 </ul>
+                    </div>
             </div>
         </LayoutTemplate>
         <ItemTemplate>
@@ -23,25 +26,33 @@
 
     <asp:ListView runat="server" ID="BlogPosts" ItemType="FrameworkLibrary.Page">
         <LayoutTemplate>
-            <div class="blog-post-list">
-                <ul>
+            <div class="col-md-9 px-2 blog-post-list">
+                <div class="row">
                     <asp:PlaceHolder runat="server" ID="itemPlaceHolder" />
-                </ul>
+                </div>
             </div>
         </LayoutTemplate>
         <ItemTemplate>
-            <li>
-                <h3><a href="<%# Item.AbsoluteUrl %>"><%# Item.RenderField("SectionTitle") %></a></h3>
-                <em><%# Item.RenderField("ArticlePublishDate") %></em>
+            <div class="col-lg-6 p-2">
+                <div class="blog-post-card">
+                 <img class="img-fluid" src="<%# Item.RenderField("SectionImage") %>" />
+                <h4><a href="<%# Item.AbsoluteUrl %>"><%# Item.RenderField("SectionTitle") %></a></h4>
+                <em><%# (Item.PublishDate != null)? StringHelper.FormatOnlyDate((DateTime)Item.PublishDate) : "" %></em>
                 <%# Item.RenderField("ShortDescription") %>
-                <a class="btn aqua no-margin" href="<%# Item.AbsoluteUrl %>">Read More</a>
-            </li>
+                    <a class="button micro green alt-icon" title="Mental Health Concerns" href="<%# Item.AbsoluteUrl %>">Read more <span class="fa fa-arrow-right" aria-hidden="true"></span></a>
+                    </div>
+            </div>
         </ItemTemplate>
     </asp:ListView>
-
-</div>
-<div class="blog-pager">
+    </div>
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-9 offset-md-3 offset-sm-0">
+<nav aria-label="Blog Navigation">
     <Site:Pager runat="server" PageSize="10" PagedControlID="BlogPosts" />
-</div>
+</nav>
+    </div>
+    </div>
 
+    </form>
 <asp:PlaceHolder runat="server" ID="TemplateBottomSegment" />

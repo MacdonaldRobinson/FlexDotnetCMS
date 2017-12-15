@@ -1,12 +1,30 @@
 .chosen-container {
   font-size: 16px;
-  &.chosen-single {
+  text-align: left;
+  @include media-breakpoint-down(md) {
+    display: block;
+     width: 100% !important;
+  }
+
+  .chosen-single {
+    height: auto;
     padding: 8px;
+    background: white;
   }
 }
 
-select, input, textarea {
-padding: 2px 8px;
+.chosen-container-single .chosen-single div b {
+  background-position: 0 10px;
+}
+
+.chosen-container-active.chosen-with-drop .chosen-single div b {
+  background-position: -16px 10px;
+}
+
+input,
+select,
+textarea {
+  padding: 2px 8px;
 }
 
 input[type="number"] {
@@ -14,7 +32,7 @@ input[type="number"] {
 }
 
 input[type="radio"] {
-  margin: 0 12px;
+  margin: 0 4px;
 }
 
 label {

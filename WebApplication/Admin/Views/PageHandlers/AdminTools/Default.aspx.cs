@@ -258,6 +258,16 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
                         if (localField.FrontEndLayout != remoteField.FrontEndLayout)
                         {
                             AddMessage(localMediaDetail.CachedVirtualPath, $"<strong>Field</strong> {localField.FieldCode} has a <strong>different FrontEndLayout</strong>");
+                        }                        
+
+                        if (localField.FieldValue != remoteField.FieldValue)
+                        {
+                            AddMessage(localMediaDetail.CachedVirtualPath, $"<strong>Field</strong> {localField.FieldCode} has a <strong>different Field Value</strong>");
+                        }
+
+                        if (localField.FieldSettings != remoteField.FieldSettings)
+                        {
+                            AddMessage(localMediaDetail.CachedVirtualPath, $"<strong>Field</strong> {localField.FieldCode} has a <strong>different Field FieldSettings</strong>");
                         }
                     }
                 }
@@ -292,6 +302,16 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
                         if (localField.FrontEndLayout != remoteField.FrontEndLayout)
                         {
                             AddMessage("MediaType Fields", $"MediaType <strong>'{localMediaDetail.MediaType.Name}'</strong> Media Type Field <strong>'{localField.FieldCode}'</strong> has a <strong>different FrontEndLayout</strong>");
+                        }
+
+                        if (localField.FieldValue != remoteField.FieldValue)
+                        {
+                            AddMessage("MediaType Fields", $"MediaType <strong>'{localMediaDetail.MediaType.Name}'</strong> Media Type Field <strong>{localField.FieldCode}</strong> has a <strong>different Field Value</strong>");
+                        }
+
+                        if (localField.FieldSettings != remoteField.FieldSettings)
+                        {
+                            AddMessage("MediaType Fields", $"MediaType <strong>'{localMediaDetail.MediaType.Name}'</strong> Media Type Field <strong>{localField.FieldCode}</strong> has a <strong>different Field FieldSettings</strong>");
                         }
                     }
                 }

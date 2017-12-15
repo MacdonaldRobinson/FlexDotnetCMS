@@ -1,0 +1,80 @@
+// faq accordions
+
+.ui-accordion-header {
+  &:before {
+    font-family: 'FontAwesome';
+    content: '\f0fe';
+    color: $orange-light;
+    position: absolute;
+    top: 34%;
+    left: 0;
+  }
+}
+.ui-accordion-header-active {
+  &:before {
+    font-family: 'FontAwesome';
+    content: '\f146';
+  }
+}
+
+.accordion {
+  h3 {
+    text-transform: none;
+    font-weight: 500;
+    border: none;
+    outline: none;
+    padding: 1em 0 1em 2em;
+    border-bottom: 2px solid rgba($grey,0.15);
+    border-radius: 0;
+  }
+
+  p {
+    color: darken($grey,5%);
+    line-height: 1.5em;
+  }
+
+  .ui-widget-content {
+    border: 0;
+    background: none;
+  }
+}
+
+.faq-item {
+  padding: 10px;
+
+  &:nth-child(odd) {
+    background: $peach;
+  }
+
+  & > a {
+    color: $grey;
+    font-weight: 600;
+    font-size: 1.15em;
+    position: relative;
+    display: block;
+    width: 100%;
+    padding-right: 28px;
+
+    &.collapsed {
+      &:after {
+        content: '\f067';
+      }
+    }
+
+    &:after {
+      font-family: 'FontAwesome';
+      content: '\f068';
+      color: $green-olive;
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+    @include media-breakpoint-down(md) {
+      font-size: 1em;
+    }
+  }
+
+  & > div {
+    padding-top: 18px;
+  }
+}

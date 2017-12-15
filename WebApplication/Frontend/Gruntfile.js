@@ -1,6 +1,5 @@
 module.exports = function(grunt) {
 
-  // All configuration goes here
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
@@ -34,13 +33,15 @@ module.exports = function(grunt) {
     },
 
     uglify: {
-      all_src: {
+      dev: {
         options: {
-          sourceMap: true,
-          sourceMapName: 'sourceMap.map'
+          mangle: {
+            reserved: ['jQuery']
+          }
         },
-        src: 'scripts/**/*.js',
-        dest: 'scripts/main.min.js'
+        files: [{
+          'scripts/js/main.min.js': ['scripts/js/main.js']
+        }]
       }
     },
 

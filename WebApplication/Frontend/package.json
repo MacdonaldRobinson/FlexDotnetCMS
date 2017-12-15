@@ -1,5 +1,5 @@
 {
-  "name": "suicide-prevention",
+  "name": "Wood's Homes",
   "devDependencies": {
     "browserslist": "last 2 versions",
     "grunt": "^1.0.1",
@@ -10,9 +10,6 @@
     "postcss-normalize": "^4.0.0"
   },
   "dependencies": {
-    "autoprefixer": "^7.1.6",
-    "cssnano": "^3.10.0",
-    "grunt-contrib-uglify": "^3.1.0",
-    "postcss-flexbugs-fixes": "^3.2.0"
+    "autoprefixer": "^7.1.2"
   }
 }

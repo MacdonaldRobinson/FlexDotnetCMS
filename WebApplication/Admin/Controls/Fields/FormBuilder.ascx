@@ -74,6 +74,10 @@
                     <label>Email Template Media ID</label>
                     <asp:TextBox runat="server" ID="EmailTemplateMediaID" />
                 </div>
+                <div>
+                    <label>Subject</label>
+                    <asp:TextBox runat="server" ID="Subject" />
+                </div>
                 <div class="buttons">
                     <asp:LinkButton Text="Save Settings" runat="server" ID="SaveSettings" OnClick="SaveSettings_Click"/>
                     <div class="clear"></div>

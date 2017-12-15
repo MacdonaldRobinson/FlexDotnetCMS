@@ -419,7 +419,7 @@ namespace WebApplication.Admin.MediaArticle
 
                 foreach (var field in fromItem.Fields)
                 {
-                    var newField = new MediaDetailField();
+                    var newField = new MediaDetailField();                    
                     newField.CopyFrom(field);
 
                     foreach (var fieldAssociation in field.FieldAssociations)

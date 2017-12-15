@@ -38,7 +38,13 @@ namespace WebApplication.Controls
 
         private void Bind()
         {
-            //RssListView.Items = SearchResultItems;
+            var searchTerm = Request["q"];
+
+            if(searchTerm != null && searchTerm !="")
+            {
+                Results.DataSource = MediaDetailsMapper.SearchForTerm(searchTerm);
+                Results.DataBind();
+            }
         }
     }
 }

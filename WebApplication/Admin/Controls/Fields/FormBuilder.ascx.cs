@@ -12,7 +12,8 @@ namespace WebApplication.Admin.Controls.Fields
     public class FormFieldSettings
     {
         public string EmailAddress { get; set; }
-        public string EmailTemplateMediaID { get; set; }        
+        public string EmailTemplateMediaID { get; set; }
+        public string Subject { get; set; }
     }
 
     public partial class FormBuilder : BaseFieldControl
@@ -43,23 +44,32 @@ namespace WebApplication.Admin.Controls.Fields
             var field = GetField();
 
             var submissions = field.FrontEndSubmissions;
-            var dataTable = StringHelper.JsonToObject<DataTable>(submissions);
 
-            if (dataTable != null && dataTable.Columns.Count > 0)
+            if (submissions != null)
             {
-                dataTable.DefaultView.Sort = "DateSubmitted DESC";
+                var dataTable = StringHelper.JsonToObject<DataTable>(submissions);
 
-                FormSubmissions.DataSource = dataTable;
-                FormSubmissions.DataBind();
+                if (dataTable != null && dataTable.Columns.Count > 0)
+                {
+                    dataTable.DefaultView.Sort = "DateSubmitted DESC";
+
+                    FormSubmissions.DataSource = dataTable;
+                    FormSubmissions.DataBind();
+                }
             }
 
-            var formFieldSettings = StringHelper.JsonToObject<FormFieldSettings>(field.FieldSettings);
-
-            if (formFieldSettings != null)
+            if (field.FieldSettings != null)
             {
-                EmailAddress.Text = formFieldSettings.EmailAddress;
-                EmailTemplateMediaID.Text = formFieldSettings.EmailTemplateMediaID;
+                var formFieldSettings = StringHelper.JsonToObject<FormFieldSettings>(field.FieldSettings);
+
+                if (formFieldSettings != null)
+                {
+                    EmailAddress.Text = formFieldSettings.EmailAddress;
+                    EmailTemplateMediaID.Text = formFieldSettings.EmailTemplateMediaID;
+                    Subject.Text = formFieldSettings.Subject;
+                }
             }
+
         }
 
         protected void ExportCSV_Click(object sender, EventArgs e)
@@ -103,6 +113,7 @@ namespace WebApplication.Admin.Controls.Fields
             var formFieldsSettings = new FormFieldSettings();
             formFieldsSettings.EmailAddress = EmailAddress.Text;
             formFieldsSettings.EmailTemplateMediaID = EmailTemplateMediaID.Text;
+            formFieldsSettings.Subject = Subject.Text;
 
             var jsonSettings = StringHelper.ObjectToJson(formFieldsSettings);
             field.FieldSettings = jsonSettings;            

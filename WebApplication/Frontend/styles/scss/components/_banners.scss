@@ -1,165 +1,166 @@
-.banner-container {
-  display        : flex;
-  flex-flow      : column nowrap;
+// height breakpoint for shorter viewport
+@mixin height-breakpoint {
+  @media only screen and (max-height:800px) {
+    @content;
+  }
+}
+// page header banners
+
+header {
+  box-sizing: border-box;
+  background: $green;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  z-index: 0;
+  height: 40vh;
+  display: flex;
+  align-items: flex-end;
   justify-content: center;
-  align-items    : center;
-  width          : 100%;
-  min-height     : 75vh;
-  background     : linear-gradient($blue 65%, $aqua 120%);
-  position       : relative;
-  @include mobile {
-    min-height: 40vh;
-  }
-  //opacity   : .9;
-  &:before {
-    display              : block;
-    content              : "";
-    position             : absolute;
-    top                  : 0;
-    right                : 0;
-    bottom               : 0;
-    left                 : 0;
-    z-index              : 1;
-    background-color     : $blue;
-    background           : url("/media/images/bg/texture.svg");
-    //background           : url("/media/images/bg/header-overlay-full.png");
-    background-size      : cover;
-    background-repeat    : repeat-x;
-    background-position-y: 50%;
-    opacity              : .06;
+  position: relative;
+
+  @include media-breakpoint-down(md) {
+    height: 200px;
   }
 
-  .banner-content {
-    display: block;
-    z-index: 5;
+  &:after {
+    content: '';
+    z-index: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,rgba($green,0.75) 10%, transparent);
+  }
 
-    p {
-      &.headline {
-        color        : $white;
-        font-size    : 70px;
-        // max-width    : 550px;
-        text-align   : center;
-        line-height  : 1;
-        font-weight  : 300;
-        margin-bottom: .25em;
-        @include mobile {
-          font-size: 55px;
-        }
+  .header-content {
+    z-index: 2;
+    color: white;
+    padding-bottom: 20px;
 
-        span {
-          font-weight: 500;
-        }
+    .action,
+    .action-icon {
+      display: block;
+      text-align: center;
+      margin: 0 auto;
+    }
 
-        &.headline-teal {
-          color: teal;
-        }
+    .action-icon {
+      max-height: 96px;
+      @include height-breakpoint {
+        max-height: 60px;
       }
-      // &.subtitle {
-      //   font-size: 1.5rem;
-      //   display  : block;
-      // }
-      &.subhead {
-        font-size  : 26px;
-        color      : $white;
-        //max-width  : 550px;
-        text-align : center;
-        line-height: .8;
-        font-weight: 500;
+      @include media-breakpoint-down(md) {
+        max-height: 60px;
+      }
+    }
 
-        &.subhead-teal {
-          color: $teal;
+    span {
+      letter-spacing: 0.03em;
+      display: block;
+      font-size: 16px;
+      padding: 6px 0 0;
+      line-height: 1em;
+      @include media-breakpoint-down(md) {
+        font-size: 14px;
+      }
+
+      &.action {
+        @include header-font-style;
+        font-size: 24px;
+        @include height-breakpoint {
+          font-size: 18px;
+        }
+        @include media-breakpoint-down(md) {
+          font-size: 14px;
         }
       }
     }
   }
 }
+// homepage header banner
 
-.svg-texture {
-  .cls-1 {
-    fill: $blue;
+.wh-homepage-header {
+  height: 75vh;
+  align-items: center;
+  @include height-breakpoint {
+    height: 480px;
   }
 
-  .cls-2 {
-    fill: $blue;
+  &:after {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg,rgba($green,0.4) 30%, transparent);
   }
 
-  .cls-3 {
-    fill: $blue;
+  .header-content {
+    text-align: center;
+    h1 {
+      @include media-breakpoint-down(md) {
+        font-size: 42px;
+      }
+    }
   }
 
-  .cls-4 {
-    fill: $blue;
-  }
+  .action-container {
+    display: block;
+    z-index: 6;
+    color: white;
 
-  .cls-5 {
-    fill: $blue;
+    &:hover {
+      cursor: pointer;
+    }
+    @include media-breakpoint-down(md) {
+      background: $orange;
+      padding: 10px;
+      border-radius: 6px;
+      border: 2px solid $beige;
+      width: 100%;
+      height: 100%;
+    }
   }
+}
+// tagline on homepage header banner
 
-  .cls-6 {
-    fill: $blue;
+.wh-homepage-header-tagline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba($green,0.6);
+  padding: 30px;
+  border-bottom: 10px solid rgba($green,0.6);
+  z-index: 1;
+
+  .tagline-content {
+    text-align: center;
+    color: white;
+
+    p {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.2em;
+    }
   }
+  @include height-breakpoint {
+    padding: 12px;
 
-  .cls-7 {
-    fill: $blue;
+    .tagline-content {
+      p {
+        font-size: 18px;
+      }
+    }
   }
+}
 
-  .cls-8 {
-    fill: $blue;
-  }
-
-  .cls-9 {
-    fill: $blue;
-  }
-
-  .cls-10 {
-    fill: $blue;
-  }
-
-  .cls-11 {
-    fill: $blue;
-  }
-
-  .cls-12 {
-    fill: $blue;
-  }
-
-  .cls-13 {
-    fill: $blue;
-  }
-
-  .cls-14 {
-    fill: $blue;
-  }
-
-  .cls-15 {
-    fill: $blue;
-  }
-
-  .cls-16 {
-    fill: $blue;
-  }
-
-  .cls-17 {
-    fill: $blue;
-  }
-
-  .cls-18 {
-    fill: $blue;
-  }
-
-  .cls-19 {
-    fill: $blue;
-  }
-
-  .cls-20 {
-    fill: $blue;
-  }
-
-  .cls-21 {
-    fill: $blue;
-  }
-
-  .cls-22 {
-    fill: $blue;
+// blog header
+.blog-header{
+  height: 120px;
+  h1 a {
+    color: white;
   }
 }

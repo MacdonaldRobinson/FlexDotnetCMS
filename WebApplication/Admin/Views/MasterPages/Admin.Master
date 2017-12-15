@@ -40,17 +40,20 @@
                                 { %>
                             <li><a href="#">Advance Options</a>
                                 <ul>
-                                    <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Tags/Default.aspx">Manage Tags</a></li>
-                                    <%--<li><a href="/Admin/Views/PageHandlers/FieldFiles/Default.aspx">Manage Field Files</a></li>--%>
-                                    <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Settings/Default.aspx">Manage Settings</a></li>
                                     <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Users/Default.aspx">Manage Users</a></li>
-                                    <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Roles/Default.aspx">Manage Roles</a></li>
-                                    <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Permissions/Default.aspx">Manage Permissions</a></li>
-                                    <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Languages/Default.aspx">Manage Languages</a></li>
-                                    <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MediaTypes/Default.aspx">Manage MediaTypes</a></li>
-                                    <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/FieldTypes/Default.aspx">Manage Field Types</a></li>
-                                    <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MasterPages/Default.aspx">Manage Templates</a></li>
-                                    <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/AdminTools/Default.aspx">Admin Tools</a></li>
+                                <%  if ( BasePage.CurrentUser != null && BasePage.CurrentUser.IsInRole(RoleEnum.Developer))
+                                    { %>
+                                        <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Tags/Default.aspx">Manage Tags</a></li>
+                                        <%--<li><a href="/Admin/Views/PageHandlers/FieldFiles/Default.aspx">Manage Field Files</a></li>--%>
+                                        <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Settings/Default.aspx">Manage Settings</a></li>
+                                        <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Roles/Default.aspx">Manage Roles</a></li>
+                                        <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Permissions/Default.aspx">Manage Permissions</a></li>
+                                        <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Languages/Default.aspx">Manage Languages</a></li>
+                                        <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MediaTypes/Default.aspx">Manage MediaTypes</a></li>
+                                        <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/FieldTypes/Default.aspx">Manage Field Types</a></li>
+                                        <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MasterPages/Default.aspx">Manage Templates</a></li>
+                                        <li><a href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/AdminTools/Default.aspx">Admin Tools</a></li>
+                                <% } %>
                                 </ul>
                             </li>
                             <% } %>

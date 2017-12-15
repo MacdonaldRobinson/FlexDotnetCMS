@@ -7,26 +7,28 @@ namespace FrameworkLibrary
     {
         private static string mapperKey = "SettingsMapperKey";
 
-        private static Settings _settings = null;
         public static Settings GetSettings()
         {
-            if (_settings != null)
-                return _settings;
+            var settings = (Settings)ContextHelper.GetFromRequestContext("SettingsMapper_GetSettings");
 
-            _settings = GetDataModel()?.AllSettings.FirstOrDefault();
+            if (settings != null)
+                return settings;
 
-            if (_settings != null && _settings.DefaultLanguage == null && _settings.DefaultLanguageID > 0)
+            settings = GetDataModel()?.AllSettings.FirstOrDefault();
+
+            if (settings != null && settings.DefaultLanguage == null && settings.DefaultLanguageID > 0)
             {
-                _settings.DefaultLanguage = LanguagesMapper.GetByID(_settings.DefaultLanguageID);
+                settings.DefaultLanguage = LanguagesMapper.GetByID(settings.DefaultLanguageID);
             }
 
-            return _settings;
+            ContextHelper.SetToRequestContext("SettingsMapper_GetSettings", settings);
+
+            return settings;
         }
 
         public static void ClearCache()
         {
-            ContextHelper.Remove(mapperKey, mapperStorageContext);
-            _settings = null;
+            ContextHelper.Remove(mapperKey, mapperStorageContext);            
         }
 
         public static Return Update(Settings obj)

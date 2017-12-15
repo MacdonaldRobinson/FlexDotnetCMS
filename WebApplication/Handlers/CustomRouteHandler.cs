@@ -34,42 +34,45 @@ namespace WebApplication.Handlers
                 URIHelper.ForceSSL();
             }
 
-            if (Request.HttpMethod == "GET" && (!(bool)BaseMapper.CanConnectToDB || AppSettings.EnableOutputCaching))
+            if (FrameworkSettings.CurrentUser == null)
             {
-                var userSelectedVersion = RenderVersion.HTML;
-
-                if (BasePage.IsMobile)
-                    userSelectedVersion = RenderVersion.Mobile;
-
-                var cacheKey = (userSelectedVersion.ToString() + "_" + Request.Url.PathAndQuery).ToLower();
-
-                if (AppSettings.EnableLevel1MemoryCaching)
+                if (Request.HttpMethod == "GET" && (!(bool)BaseMapper.CanConnectToDB || AppSettings.EnableOutputCaching))
                 {
-                    var cacheData = (string)ContextHelper.GetFromCache(cacheKey);
+                    var userSelectedVersion = RenderVersion.HTML;
 
-                    if (!string.IsNullOrEmpty(cacheData))
-                        BaseService.WriteHtml(cacheData + "<!-- Loaded from level 1 - Memory Cache -->");
-                }
+                    if (BasePage.IsMobile)
+                        userSelectedVersion = RenderVersion.Mobile;
 
-                if (AppSettings.EnableLevel2FileCaching)
-                {
-                    var cache = FileCacheHelper.GetFromCache(cacheKey);
+                    var cacheKey = (userSelectedVersion.ToString() + "_" + Request.Url.PathAndQuery).ToLower();
 
-                    if(!cache.IsError)
+                    if (AppSettings.EnableLevel1MemoryCaching)
                     {
-                        var cacheData = cache.GetRawData<string>();
+                        var cacheData = (string)ContextHelper.GetFromCache(cacheKey);
 
                         if (!string.IsNullOrEmpty(cacheData))
-                            BaseService.WriteHtml(cacheData + "<!-- Loaded from level 2 - File Cache -->");
+                            BaseService.WriteHtml(cacheData + "<!-- Loaded from level 1 - Memory Cache -->");
                     }
-                }
 
-                if (AppSettings.EnableLevel3RedisCaching)
-                {
-                    var cacheData = RedisCacheHelper.GetFromCache(cacheKey);
+                    if (AppSettings.EnableLevel2FileCaching)
+                    {
+                        var cache = FileCacheHelper.GetFromCache(cacheKey);
 
-                    if (!string.IsNullOrEmpty(cacheData))
-                        BaseService.WriteHtml(cacheData + "<!-- Loaded from level 3 - Redis Cache -->");
+                        if (!cache.IsError)
+                        {
+                            var cacheData = cache.GetRawData<string>();
+
+                            if (!string.IsNullOrEmpty(cacheData))
+                                BaseService.WriteHtml($"{cacheData} <!-- Loaded from level 2 - File Cache -->");
+                        }
+                    }
+
+                    if (AppSettings.EnableLevel3RedisCaching)
+                    {
+                        var cacheData = RedisCacheHelper.GetFromCache(cacheKey);
+
+                        if (!string.IsNullOrEmpty(cacheData))
+                            BaseService.WriteHtml(cacheData + "<!-- Loaded from level 3 - Redis Cache -->");
+                    }
                 }
 
                 if(!(bool)BaseMapper.CanConnectToDB)
@@ -85,10 +88,10 @@ namespace WebApplication.Handlers
 
             virtualPath = URIHelper.GetCurrentVirtualPath().ToLower();
 
+            var queryString = HttpContext.Current.Request.QueryString.ToString();
+
             if (!Request.Path.EndsWith("/") || ((virtualPath != "~/") && (!virtualPath.EndsWith("/"))))
             {
-                var queryString = HttpContext.Current.Request.QueryString.ToString();
-
                 var path = Request.Path + "/";
 
                 if (!string.IsNullOrEmpty(queryString))
@@ -147,7 +150,12 @@ namespace WebApplication.Handlers
 
             if (!isAttemptingAdminLogin && AppSettings.EnableUrlRedirectRules)
             {
-                var redirectRule = UrlRedirectRulesMapper.GetRuleForUrl(virtualPath);
+                var path = virtualPath;
+
+                if (!string.IsNullOrEmpty(queryString))
+                    path = path + "?" + queryString;
+
+                var redirectRule = UrlRedirectRulesMapper.GetRuleForUrl(path);
 
                 if (redirectRule != null)
                 {
@@ -245,10 +253,6 @@ namespace WebApplication.Handlers
                             HttpContext.Current.Response.RedirectPermanent("/");
                         }
                     }
-                    else
-                    {
-                        HttpContext.Current.Response.RedirectPermanent("/");
-                    }
                 }
 
                 if (cmsSettings != null)
@@ -264,7 +268,7 @@ namespace WebApplication.Handlers
 
                             ErrorHelper.LogException(new Exception($"Page Not Found: {virtualPath}"));
 
-                            Response.StatusCode = 404;
+                            //Response.StatusCode = 301;
                         }
                     }
                 }

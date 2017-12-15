@@ -41,9 +41,12 @@ namespace FrameworkLibrary
         {
             get
             {
-                var defaultLanguage = LanguagesMapper.GetDefaultLanguage();
+                var currentLanguage = FrameworkSettings.GetCurrentLanguage();
 
-                if (this.UseDefaultLanguageLayouts && this.LanguageID != defaultLanguage.ID)
+                if (currentLanguage == null)
+                    currentLanguage = LanguagesMapper.GetDefaultLanguage();
+
+                if (this.UseDefaultLanguageLayouts && this.LanguageID != currentLanguage.ID)
                     return this.Media.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage())?.UseMainLayout;
 
                 var layout = "";
@@ -61,9 +64,12 @@ namespace FrameworkLibrary
         {
             get
             {
-                var defaultLanguage = LanguagesMapper.GetDefaultLanguage();
+                var currentLanguage = FrameworkSettings.GetCurrentLanguage();
 
-                if (this.UseDefaultLanguageLayouts && this.LanguageID != defaultLanguage.ID)
+                if (currentLanguage == null)
+                    currentLanguage = LanguagesMapper.GetDefaultLanguage();
+
+                if (this.UseDefaultLanguageLayouts && this.LanguageID != currentLanguage.ID)
                     return this.Media.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage())?.UseSummaryLayout;
 
                 var layout = "";
@@ -81,9 +87,12 @@ namespace FrameworkLibrary
         {
             get
             {
-                var defaultLanguage = LanguagesMapper.GetDefaultLanguage();
+                var currentLanguage = FrameworkSettings.GetCurrentLanguage();
 
-                if (this.UseDefaultLanguageLayouts && this.LanguageID != defaultLanguage.ID)
+                if(currentLanguage == null)
+                    currentLanguage = LanguagesMapper.GetDefaultLanguage();
+
+                if (this.UseDefaultLanguageLayouts && this.LanguageID != currentLanguage.ID)
                     return this.Media.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage())?.UseSummaryLayout;
 
                 var layout = "";
@@ -315,7 +324,7 @@ namespace FrameworkLibrary
 
         public Field LoadField(string fieldCode)
         {
-            return Fields.SingleOrDefault(i => i.FieldCode == fieldCode);
+            return Fields.FirstOrDefault(i => i.FieldCode == fieldCode);
         }
 
         public string RenderShortCode(string shortCode, bool includeFieldWrapper = true)
@@ -424,8 +433,8 @@ namespace FrameworkLibrary
 
                 if (topAndBottomSegments.Length > 1)
                 {
-                    templateTopAndBottomSegments.Add(control.ParseControl(topAndBottomSegments.ElementAt(0)));
-                    templateTopAndBottomSegments.Add(control.ParseControl(topAndBottomSegments.ElementAt(1)));
+                    templateTopAndBottomSegments.Add(control.ParseControl(MediaDetailsMapper.ParseSpecialTags(this, topAndBottomSegments.ElementAt(0))));
+                    templateTopAndBottomSegments.Add(control.ParseControl(MediaDetailsMapper.ParseSpecialTags(this, topAndBottomSegments.ElementAt(1))));
 
                     return templateTopAndBottomSegments;
                 }
@@ -960,7 +969,7 @@ namespace FrameworkLibrary
 
                 if(pathToFile.Contains("<"))
                 {
-                    var match = System.Text.RegularExpressions.Regex.Match(pathToFile, "/[/a-zA-Z0-9-.]+");
+                    var match = System.Text.RegularExpressions.Regex.Match(pathToFile, "/[/a-zA-Z0-9-._]+");
                     pathToFile = match.Value.Replace("\"", "").Replace("'","");
                 }
                 

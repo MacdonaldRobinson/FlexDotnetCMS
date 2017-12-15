@@ -8,6 +8,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Web;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace FrameworkLibrary
 {
@@ -79,7 +81,7 @@ namespace FrameworkLibrary
                         PropertyInfo tempPropertyInfo = null;
                         MethodInfo tempMethodInfo = null;
 
-                        var matchParams = Regex.Matches(nestedProperty, "([a-zA-Z0-9]+)");
+                        var matchParams = Regex.Matches(nestedProperty, "([a-zA-Z0-9-_]+)");
 
                         var methodParamsMatches = new List<string>();
                         
@@ -111,8 +113,27 @@ namespace FrameworkLibrary
                             if (queryParamsSplit.Count() > 1)
                                 prop = queryParamsSplit.ElementAt(0);
 
+                            if (tempNestedProperty is JObject)
+                            {
+                                var val = (tempNestedProperty as JObject).GetValue(prop);
 
-                            tempPropertyInfo = tempNestedProperty.GetType().GetProperty(prop);
+                                if(val is JArray)
+                                {
+                                    tempNestedProperty = String.Join(",", val as JArray);
+                                }
+                                else
+                                {
+                                    if (val != null)
+                                    {
+                                        tempNestedProperty = val.ToString();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                tempPropertyInfo = tempNestedProperty.GetType().GetProperty(prop);
+                            }
+
                         }
 
                         if (tempPropertyInfo != null || tempMethodInfo != null)

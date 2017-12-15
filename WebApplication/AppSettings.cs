@@ -462,6 +462,14 @@ namespace WebApplication
             }
         }
 
+        public static bool AttemptSMTPMailer
+        {
+            get
+            {
+                return bool.Parse(ConfigurationManager.AppSettings["AttemptSMTPMailer"]);
+            }
+        }
+
         public static bool EnableInstaller
         {
             get

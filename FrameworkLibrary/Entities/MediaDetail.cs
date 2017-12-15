@@ -624,7 +624,22 @@ namespace FrameworkLibrary
                 description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(this.ShortDescription));
             }
 
+            if(description.Length < 100)
+            {                
+                var mainContent = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(this.MainContent));
+
+                if (mainContent.Length > description.Length)
+                {
+                    description = mainContent;
+                }
+            }
+
             description = StringHelper.StripHtmlTags(description);
+
+            if(description.Length > 255)
+            {
+                description = description.Substring(0, 255) + " ...";
+            }
 
             /*if ((description == "") || (description == LinkTitle))
             {
@@ -634,7 +649,7 @@ namespace FrameworkLibrary
                     description = description.Substring(0, 255) + " ...";
             }*/
 
-            contextMetaDescription = StringHelper.StripHtmlTags(description);
+            contextMetaDescription = description;
 
             return contextMetaDescription;
         }
@@ -647,10 +662,10 @@ namespace FrameworkLibrary
 
             var metaKeywords = MetaKeywords.Trim();
 
-            if (MetaKeywords.Trim() == "")
-                contextMetaKeywords = GetPageTitle();
-            else
-                contextMetaKeywords = metaKeywords;
+            if (string.IsNullOrEmpty(metaKeywords) || metaKeywords.Length < 30)
+                metaKeywords = GetPageTitle();
+
+            contextMetaKeywords = metaKeywords;
 
             return contextMetaKeywords;
         }

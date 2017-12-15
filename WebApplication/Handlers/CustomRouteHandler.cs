@@ -261,12 +261,16 @@ namespace WebApplication.Handlers
                     {
                         if (!string.IsNullOrEmpty(cmsSettings.PageNotFoundUrl))
                         {
-                            FrameworkSettings.CurrentFrameworkBaseMedia = null;
+                            ErrorHelper.LogException(new Exception($"Page Not Found: {virtualPath}"));
+
+                            Response.Redirect(cmsSettings.PageNotFoundUrl);
+
+                            /*FrameworkSettings.CurrentFrameworkBaseMedia = null;
 
                             FrameworkSettings.CurrentFrameworkBaseMedia = FrameworkBaseMedia.GetInstanceByVirtualPath(cmsSettings.PageNotFoundUrl, true);
                             detail = (MediaDetail)FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail;
 
-                            ErrorHelper.LogException(new Exception($"Page Not Found: {virtualPath}"));
+                            ErrorHelper.LogException(new Exception($"Page Not Found: {virtualPath}"));*/
 
                             //Response.StatusCode = 301;
                         }

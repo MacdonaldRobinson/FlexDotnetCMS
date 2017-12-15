@@ -18,6 +18,23 @@ namespace FrameworkLibrary
             }
         }
 
+        public bool CanCache
+        {
+            get
+            {
+                if (!this.CanRender)
+                    return false;
+
+                if (!this.EnableCaching)
+                    return false;
+
+                if(this.CheckEnforceRoleLimitationsOnFrontEnd())
+                    return false;
+
+                return true;
+            }
+        }
+
         public bool IsHistory
         {
             get
@@ -621,12 +638,25 @@ namespace FrameworkLibrary
 
             if (string.IsNullOrEmpty(description))
             {
-                description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(this.ShortDescription));
+                description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(this.ShortDescription)).Trim();
             }
 
             if(description.Length < 100)
-            {                
-                var mainContent = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(this.MainContent));
+            {
+                var mainContent = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(this.MainContent)).Trim();
+
+                if (mainContent.Contains("<script") || mainContent.Contains("<style"))
+                {
+                    var htmlDocument = new HtmlAgilityPack.HtmlDocument();
+                    htmlDocument.LoadHtml(this.MainContent);
+
+                    htmlDocument.DocumentNode.Descendants()
+                                    .Where(n => n.Name == "script" || n.Name == "style" || n.NodeType == HtmlAgilityPack.HtmlNodeType.Comment)
+                                    .ToList()
+                                    .ForEach(n => n.Remove());
+
+                    mainContent = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(StringHelper.StripHtmlTags(htmlDocument.DocumentNode.InnerText.Trim())));
+                }
 
                 if (mainContent.Length > description.Length)
                 {
@@ -634,11 +664,16 @@ namespace FrameworkLibrary
                 }
             }
 
-            description = StringHelper.StripHtmlTags(description);
+            description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(StringHelper.StripHtmlTags(description)));
 
             if(description.Length > 255)
             {
                 description = description.Substring(0, 255) + " ...";
+            }
+
+            if(string.IsNullOrEmpty(description))
+            {
+                description = GetPageTitle();
             }
 
             /*if ((description == "") || (description == LinkTitle))

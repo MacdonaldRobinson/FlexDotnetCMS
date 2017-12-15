@@ -15,6 +15,7 @@ namespace FrameworkLibrary
         bool EnforceRoleLimitationsOnFrontEnd { get; set; }
         bool CheckEnforceRoleLimitationsOnFrontEnd();
         bool CanRender { get; }
+        bool CanCache { get; }
         IEnumerable<IMediaDetail> ChildMediaDetails { get; }
         User CreatedByUser { get; set; }
         long CreatedByUserID { get; set; }

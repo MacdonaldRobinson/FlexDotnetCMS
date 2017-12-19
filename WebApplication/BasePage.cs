@@ -449,6 +449,8 @@ namespace WebApplication
 
             if (LanguagesMapper.GetAllActive().Count() > 1)
                 templateVars["BaseUrlWithLanguage"] = URIHelper.BaseUrlWithLanguage;
+            else
+                templateVars["BaseUrlWithLanguage"] = URIHelper.BaseUrl;
 
             templateVars["BaseUrl"] = URIHelper.BaseUrl;
 

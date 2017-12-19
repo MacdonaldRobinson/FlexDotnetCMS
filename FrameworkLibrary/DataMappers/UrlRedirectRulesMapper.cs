@@ -74,8 +74,8 @@ namespace FrameworkLibrary
                     toUrl = MediaDetailsMapper.ParseSpecialTags(rule, urlredirectrule.RedirectToUrl);
                 }
 
-                if (!toUrl.EndsWith(virtualPath))
-                    return urlredirectrule;
+                //if (!toUrl.EndsWith(virtualPath))
+                return urlredirectrule;
             }
 
             return null;

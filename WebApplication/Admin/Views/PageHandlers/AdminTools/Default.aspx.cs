@@ -218,6 +218,33 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
                 AddMessage("Media Types are different", $"Local: '{localMediaDetail.CachedVirtualPath}' is <strong>'{localMediaDetail.MediaType.Name}'</strong> | Remote: '{remoteMediaDetail.CachedVirtualPath}' is <strong>'{remoteMediaDetail.MediaType.Name}'</strong>");
             }
 
+            foreach (var localField in localMediaDetail.Fields)
+            {
+                var remoteField = remoteMediaDetail.Fields.FirstOrDefault(i => i.FieldCode == localField.FieldCode);
+
+                if (remoteField == null)
+                {
+                    AddMessage(localMediaDetail.CachedVirtualPath, $"<strong>Missing Field:</strong> {localField.FieldCode}");
+                }
+                else
+                {
+                    if (localField.FrontEndLayout != remoteField.FrontEndLayout)
+                    {
+                        AddMessage(localMediaDetail.CachedVirtualPath, $"<strong>Field</strong> {localField.FieldCode} has a <strong>different FrontEndLayout</strong>");
+                    }
+
+                    if (localField.FieldValue != remoteField.FieldValue)
+                    {
+                        AddMessage(localMediaDetail.CachedVirtualPath, $"<strong>Field</strong> {localField.FieldCode} has a <strong>different Field Value</strong>");
+                    }
+
+                    if (localField.FieldSettings != remoteField.FieldSettings)
+                    {
+                        AddMessage(localMediaDetail.CachedVirtualPath, $"<strong>Field</strong> {localField.FieldCode} has a <strong>different Field FieldSettings</strong>");
+                    }
+                }
+            }
+
             if (!localMediaDetail.UseMediaTypeLayouts)
             {
                 if (localMediaDetail.MainLayout != remoteMediaDetail.MainLayout)
@@ -242,33 +269,6 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
                     if(remoteParent != null)
                     {                        
                         AddMessage("Moved Pages", $"Parent of the local page is {localMediaDetail.Media.ParentMedia?.GetLiveMediaDetail().CachedVirtualPath} | remote parent is '{remoteParent.CachedVirtualPath}'");
-                    }
-                }
-
-                foreach (var localField in localMediaDetail.Fields)
-                {
-                    var remoteField = remoteMediaDetail.Fields.FirstOrDefault(i => i.FieldCode == localField.FieldCode);
-
-                    if (remoteField == null)
-                    {
-                        AddMessage(localMediaDetail.CachedVirtualPath, $"<strong>Missing Field:</strong> {localField.FieldCode}");
-                    }
-                    else
-                    {
-                        if (localField.FrontEndLayout != remoteField.FrontEndLayout)
-                        {
-                            AddMessage(localMediaDetail.CachedVirtualPath, $"<strong>Field</strong> {localField.FieldCode} has a <strong>different FrontEndLayout</strong>");
-                        }                        
-
-                        if (localField.FieldValue != remoteField.FieldValue)
-                        {
-                            AddMessage(localMediaDetail.CachedVirtualPath, $"<strong>Field</strong> {localField.FieldCode} has a <strong>different Field Value</strong>");
-                        }
-
-                        if (localField.FieldSettings != remoteField.FieldSettings)
-                        {
-                            AddMessage(localMediaDetail.CachedVirtualPath, $"<strong>Field</strong> {localField.FieldCode} has a <strong>different Field FieldSettings</strong>");
-                        }
                     }
                 }
             }

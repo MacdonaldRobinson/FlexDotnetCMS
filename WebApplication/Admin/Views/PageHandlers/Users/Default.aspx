@@ -10,7 +10,7 @@
         <ContentTemplate>
             <a href="javascript:void(0);" onclick="executeAction('Create','', '<%= UpdatePanel.ClientID %>');">Create New</a>
             <%-- <a href="javascript:void(0);" onclick="executeAction('TakeOwnership','', '<%= UpdatePanel.ClientID %>');">TakeOwnership</a> --%>
-            <asp:GridView runat="server" ID="ItemList" AutoGenerateColumns="false" AllowPaging="true" OnPageIndexChanging="ItemList_PageIndexChanging" OnSorting="ItemList_Sorting">
+            <asp:GridView class="DataTable" runat="server" ID="ItemList" AutoGenerateColumns="false" AllowPaging="false" OnPageIndexChanging="ItemList_PageIndexChanging" OnSorting="ItemList_Sorting" OnDataBound="ItemList_DataBound">
                 <Columns>
                     <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
                     <asp:BoundField DataField="Username" HeaderText="Username" SortExpression="Username" />

@@ -33,10 +33,9 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/css/tooltipster.min.css" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/tooltipster/3.3.0/js/jquery.tooltipster.min.js"></script>
 
-<script type="text/javascript" src="<%= URIHelper.BaseUrl %>Admin/Scripts/adminGlobal.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.0/b-html5-1.5.0/rr-1.2.3/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.0/b-html5-1.5.0/rr-1.2.3/datatables.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/buttons/1.1.2/css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/themes/default/style.min.css" />
 <link rel="stylesheet" href="<%= URIHelper.BaseUrl %>Admin/Styles/autoSuggest.css" />
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.5/jquery.jgrowl.min.css" />
@@ -46,6 +45,12 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.css" />
 <link rel="stylesheet" href="<%= URIHelper.BaseUrl %>Scripts/split-pane-master/split-pane.css" />
 <link rel="stylesheet" href="<%= URIHelper.BaseUrl %>Admin/Styles/adminGlobal.css" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.2/chosen.jquery.min.js"></script>
+
+
+<script type="text/javascript" src="<%= URIHelper.BaseUrl %>Admin/Scripts/adminGlobal.js"></script>
 
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

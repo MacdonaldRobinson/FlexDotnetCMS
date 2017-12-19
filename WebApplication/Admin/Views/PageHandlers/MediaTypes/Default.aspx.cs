@@ -34,6 +34,15 @@ namespace WebApplication.Admin.Views.PageHandlers.MediaTypes
             ItemList.DataBind();
         }
 
+        protected void ItemList_DataBound(object sender, EventArgs e)
+        {
+            ItemList.UseAccessibleHeader = true;
+            if (ItemList.HeaderRow != null)
+            {
+                ItemList.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+        }
+
         protected void ItemList_PageIndexChanging(object sender, System.Web.UI.WebControls.GridViewPageEventArgs e)
         {
             ItemList.PageIndex = e.NewPageIndex;

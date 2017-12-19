@@ -820,7 +820,7 @@ namespace WebApplication.Admin.Views.MasterPages
         }
 
         [WebMethod]
-        public int ReOrderMediaFields(List<FrameworkLibrary.MediaDetailField> items)
+        public void ReOrderMediaFields(List<FrameworkLibrary.MediaDetailField> items)
         {
             UserMustBeInRole(RoleEnum.Developer);
 
@@ -847,7 +847,10 @@ namespace WebApplication.Admin.Views.MasterPages
                 }
             }
 
-            return BaseMapper.GetDataModel().SaveChanges();
+            var returnObj = BaseMapper.SaveDataModel();
+            var json = returnObj.ToJson();
+
+            WriteJSON(json);
         }
     }
 }

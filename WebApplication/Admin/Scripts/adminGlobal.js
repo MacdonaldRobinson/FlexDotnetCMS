@@ -726,7 +726,7 @@ $(window).load(function () {
             //setTimeout(function () {
                 initAceEditors();
                 initTinyMCE();
-                BindJQueryUIControls();
+                BindJQueryUIControls();                
             //}, 1000); 
         }
     });
@@ -747,11 +747,14 @@ function BindTabs()
 function BindJQueryUIControls()
 {
     try {
-        $("select").selectmenu({
+
+        /*$("select").selectmenu({
             change: function (event, ui) {
                 $(event.target).trigger("change");
             }
-        });
+        });*/
+
+        //$("select").chosen({width: "20%", no_results_text: "Oops, nothing found!" });
 
         //$("[class='RadioButtonList']").each(function () {
         //    var inputItems = $(this).find("input");
@@ -884,7 +887,7 @@ function initTinyMCE()
 
 function BindGridViewSortable(CssSelector, WebserviceUrl, UpdatePanelClientId, OnAfterRefreshFunction) {    
     var DragDropGridSortable = $(CssSelector).sortable({
-        items: 'tr:not(tr:first-child)',
+        items: 'tbody tr',
         cursor: 'crosshair',
         connectWith: '.DragDropGrid',
         axis: 'y',
@@ -894,7 +897,7 @@ function BindGridViewSortable(CssSelector, WebserviceUrl, UpdatePanelClientId, O
         },
         update: function (event, ui) {
             var ths = $(this).find("th");
-            var trs = $(this).find("tr:not(tr:first-child)");
+            var trs = $(this).find("tbody tr");
 
             var cols = [];
             var entries = {};
@@ -942,11 +945,18 @@ function BindGridViewSortable(CssSelector, WebserviceUrl, UpdatePanelClientId, O
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (msg) {
+                        
                         var isFunc = jQuery.isFunction(OnAfterRefreshFunction);
 
                         RefreshUpdatePanel(UpdatePanelClientId, function () { BindGridViewSortable(CssSelector, WebserviceUrl, UpdatePanelClientId); if (isFunc) { OnAfterRefreshFunction(); } });
                     },
                     error: function (xhr, status, error) {
+
+                        var isFunc = jQuery.isFunction(OnAfterRefreshFunction);
+                        if (isFunc)
+                        {
+                            OnAfterRefreshFunction();
+                        }
                     }
                 });
             }
@@ -1232,6 +1242,7 @@ $(document)
 function pageLoad(sender, args) {    
     BindJQueryUIControls();
     BindSortable();
+    BindDataTable();
 
     /*RefreshSiteTreeNodeById($("#SiteTree").jstree("get_selected")[0]);
     BindScrollMagic();
@@ -1253,15 +1264,20 @@ function pageLoad(sender, args) {
 }
 
 function BindDataTable() {
-    //$('.DataTable').DataTable({
-    //    dom: 'Bfrtip',
-    //    buttons: [
-    //        {
-    //            extend: 'csvHtml5',
-    //            title: 'Data export'
-    //        }
-    //    ]
-    //});
+    $('table').DataTable({
+        "paging": true,
+        "ordering": true,
+        "info": true,
+        "lengthChange": true,
+        //rowReorder: true
+        /*dom: 'Bfrtip',
+        buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+        ]*/
+    });
 }
 
 function RefreshAdminUpdatePanel(elem) {
@@ -1273,7 +1289,7 @@ function RefreshAdminUpdatePanel(elem) {
 
 $(document).ready(function () {
     init();
-    BindMultiFileUploaderImageLoadError();
+    BindMultiFileUploaderImageLoadError();   
 });
 
 function BindSortable() {
@@ -1419,6 +1435,7 @@ function init() {
     BindTree();
     BindSortable();
     BindScrollMagic();
+    //BindDataTable();
 
     $("#Filter").on("keyup", function (e) {
         var code = e.keyCode || e.which;

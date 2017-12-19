@@ -79,8 +79,10 @@
     });
 
     function BindReOrder()
-    {        
+    {
+        //console.log("rab");
         BindGridViewSortable("#<%=ItemList.ClientID%>", "/Admin/Views/MasterPages/Webservice.asmx/ReOrderMediaFields", "<%= MediaFieldsUpdatePanel.ClientID%>", function () {
+            console.log("rab");
             window.location.href = window.location.href;
         });
     }
@@ -96,7 +98,7 @@
     <ContentTemplate>
         <fieldset>
             <legend>Currently Created Fields</legend>
-            <asp:GridView runat="server" ID="ItemList" AutoGenerateColumns="false" AllowPaging="true" CssClass="DragDropGrid" OnPageIndexChanging="ItemList_PageIndexChanging" PageSize="10">
+            <asp:GridView runat="server" ID="ItemList" AutoGenerateColumns="false" AllowPaging="false" CssClass="DragDropGrid" OnPageIndexChanging="ItemList_PageIndexChanging" PageSize="10" OnDataBound="ItemList_DataBound">
                 <Columns>
                     <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
                     <asp:BoundField DataField="OrderIndex" HeaderText="OrderIndex" SortExpression="OrderIndex" />
@@ -108,9 +110,11 @@
                     <asp:BoundField DataField="DateLastModified" HeaderText="DateLastModified" SortExpression="DateLastModified" />--%>
                     <asp:TemplateField HeaderText="">
                         <ItemTemplate>
-                            <asp:LinkButton ID="Edit" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="Edit_Click">Edit</asp:LinkButton> |
-                            <asp:LinkButton ID="Delete" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="Delete_Click" OnClientClick="return confirm('Are you sure you want to perminently delete this field? you will loose all data that has been assigned to this field.')">Delete</asp:LinkButton> |
-                            <asp:LinkButton ID="Select" runat="server" OnClientClick='parent.UpdateVisualEditor(this)' data-fieldCode='<%# Eval("FieldCode") %>'>Select</asp:LinkButton>
+                            <div style="width:150px">
+                                <asp:LinkButton ID="Edit" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="Edit_Click">Edit</asp:LinkButton> |
+                                <asp:LinkButton ID="Delete" runat="server" CommandArgument='<%# Eval("ID") %>' OnClick="Delete_Click" OnClientClick="return confirm('Are you sure you want to perminently delete this field? you will loose all data that has been assigned to this field.')">Delete</asp:LinkButton> |
+                                <asp:LinkButton ID="Select" runat="server" OnClientClick='parent.UpdateVisualEditor(this)' data-fieldCode='<%# Eval("FieldCode") %>'>Select</asp:LinkButton>
+                            </div>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

@@ -312,5 +312,14 @@ namespace WebApplication.Admin.Controls.Editors
                 BasePage.DisplayErrorMessage("Error", returnObj.Error);
             }
         }
+
+        protected void ItemList_DataBound(object sender, EventArgs e)
+        {
+            ItemList.UseAccessibleHeader = true;
+            if (ItemList.HeaderRow != null)
+            {
+                ItemList.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+        }
     }
 }

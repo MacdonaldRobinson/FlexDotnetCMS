@@ -51,7 +51,7 @@
         </fieldset><br>
         <fieldset>
             <legend>Currently Created Fields</legend>
-            <asp:GridView runat="server" ID="ItemList" CssClass="DragDropGrid" AutoGenerateColumns="false" AllowPaging="true" OnPageIndexChanging="ItemList_PageIndexChanging" PageSize="20">
+            <asp:GridView runat="server" ID="ItemList" CssClass="DragDropGrid" AutoGenerateColumns="false" AllowPaging="false" OnPageIndexChanging="ItemList_PageIndexChanging" PageSize="20" OnDataBound="ItemList_DataBound">
                 <Columns>
                     <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
                     <asp:BoundField DataField="OrderIndex" HeaderText="OrderIndex" SortExpression="OrderIndex" />

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
+using System.Web.UI.WebControls;
 
 namespace WebApplication.Admin.Users
 {
@@ -34,6 +35,15 @@ namespace WebApplication.Admin.Users
         {
             ItemList.DataSource = Items;
             ItemList.DataBind();
+        }
+
+        protected void ItemList_DataBound(object sender, EventArgs e)
+        {
+            ItemList.UseAccessibleHeader = true;
+            if (ItemList.HeaderRow != null)
+            {
+                ItemList.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
         }
 
         protected void ItemList_PageIndexChanging(object sender, System.Web.UI.WebControls.GridViewPageEventArgs e)

@@ -747,7 +747,7 @@ function BindTabs()
 function BindJQueryUIControls()
 {
     try {
-
+        $("select.chosen").chosen({ width: "100%", no_results_text: "Oops, nothing found!" });
         /*$("select").selectmenu({
             change: function (event, ui) {
                 $(event.target).trigger("change");
@@ -1242,7 +1242,7 @@ $(document)
 function pageLoad(sender, args) {    
     BindJQueryUIControls();
     BindSortable();
-    BindDataTable();
+    //BindDataTable();
 
     /*RefreshSiteTreeNodeById($("#SiteTree").jstree("get_selected")[0]);
     BindScrollMagic();
@@ -1264,6 +1264,13 @@ function pageLoad(sender, args) {
 }
 
 function BindDataTable() {
+
+    var tables = $.fn.dataTable.fnTables(true);
+
+    $(tables).each(function () {
+        $(this).dataTable().fnDestroy();
+    });
+
     $('table').DataTable({
         "paging": true,
         "ordering": true,

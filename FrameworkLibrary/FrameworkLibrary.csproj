@@ -49,72 +49,98 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ActiveUp.Net, Version=2.1.34.0, Culture=neutral, PublicKeyToken=2ff270728258992b, processorArchitecture=MSIL">
-      <HintPath>..\packages\MailSystem.Net-trunk.2.1.34\lib\net40\ActiveUp.Net.dll</HintPath>
+    <Reference Include="ActiveUp.Net, Version=2.1.41.0, Culture=neutral, PublicKeyToken=2ff270728258992b, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailSystem.Net-trunk.2.1.41\lib\net40\ActiveUp.Net.dll</HintPath>
     </Reference>
-    <Reference Include="ActiveUp.Net.Common, Version=2.1.34.0, Culture=neutral, PublicKeyToken=6cceae6a4844c51b, processorArchitecture=MSIL">
-      <HintPath>..\packages\MailSystem.Net-trunk.2.1.34\lib\net40\ActiveUp.Net.Common.dll</HintPath>
+    <Reference Include="ActiveUp.Net.Common, Version=2.1.41.0, Culture=neutral, PublicKeyToken=6cceae6a4844c51b, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailSystem.Net-trunk.2.1.41\lib\net40\ActiveUp.Net.Common.dll</HintPath>
     </Reference>
-    <Reference Include="ActiveUp.Net.Dns, Version=2.1.34.0, Culture=neutral, PublicKeyToken=6fc67824e0089991, processorArchitecture=MSIL">
-      <HintPath>..\packages\MailSystem.Net-trunk.2.1.34\lib\net40\ActiveUp.Net.Dns.dll</HintPath>
+    <Reference Include="ActiveUp.Net.Dns, Version=2.1.41.0, Culture=neutral, PublicKeyToken=6fc67824e0089991, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailSystem.Net-trunk.2.1.41\lib\net40\ActiveUp.Net.Dns.dll</HintPath>
     </Reference>
-    <Reference Include="ActiveUp.Net.Groupware, Version=2.1.34.0, Culture=neutral, PublicKeyToken=db51b95d57ebfe25, processorArchitecture=MSIL">
-      <HintPath>..\packages\MailSystem.Net-trunk.2.1.34\lib\net40\ActiveUp.Net.Groupware.dll</HintPath>
+    <Reference Include="ActiveUp.Net.Groupware, Version=2.1.41.0, Culture=neutral, PublicKeyToken=db51b95d57ebfe25, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailSystem.Net-trunk.2.1.41\lib\net40\ActiveUp.Net.Groupware.dll</HintPath>
     </Reference>
-    <Reference Include="ActiveUp.Net.Imap4, Version=2.1.34.0, Culture=neutral, PublicKeyToken=9d424b1770e92b68, processorArchitecture=MSIL">
-      <HintPath>..\packages\MailSystem.Net-trunk.2.1.34\lib\net40\ActiveUp.Net.Imap4.dll</HintPath>
+    <Reference Include="ActiveUp.Net.Imap4, Version=2.1.41.0, Culture=neutral, PublicKeyToken=9d424b1770e92b68, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailSystem.Net-trunk.2.1.41\lib\net40\ActiveUp.Net.Imap4.dll</HintPath>
     </Reference>
-    <Reference Include="ActiveUp.Net.Mail, Version=2.1.34.0, Culture=neutral, PublicKeyToken=851b9e39ef2572fb, processorArchitecture=MSIL">
-      <HintPath>..\packages\MailSystem.Net-trunk.2.1.34\lib\net40\ActiveUp.Net.Mail.dll</HintPath>
+    <Reference Include="ActiveUp.Net.Mail, Version=2.1.41.0, Culture=neutral, PublicKeyToken=851b9e39ef2572fb, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailSystem.Net-trunk.2.1.41\lib\net40\ActiveUp.Net.Mail.dll</HintPath>
     </Reference>
-    <Reference Include="ActiveUp.Net.Nntp, Version=2.1.34.0, Culture=neutral, PublicKeyToken=01416978360a49a1, processorArchitecture=MSIL">
-      <HintPath>..\packages\MailSystem.Net-trunk.2.1.34\lib\net40\ActiveUp.Net.Nntp.dll</HintPath>
+    <Reference Include="ActiveUp.Net.Nntp, Version=2.1.41.0, Culture=neutral, PublicKeyToken=01416978360a49a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailSystem.Net-trunk.2.1.41\lib\net40\ActiveUp.Net.Nntp.dll</HintPath>
     </Reference>
-    <Reference Include="ActiveUp.Net.OpenPGP, Version=2.1.34.0, Culture=neutral, PublicKeyToken=0e094b86584219e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\MailSystem.Net-trunk.2.1.34\lib\net40\ActiveUp.Net.OpenPGP.dll</HintPath>
+    <Reference Include="ActiveUp.Net.OpenPGP, Version=2.1.41.0, Culture=neutral, PublicKeyToken=0e094b86584219e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailSystem.Net-trunk.2.1.41\lib\net40\ActiveUp.Net.OpenPGP.dll</HintPath>
     </Reference>
-    <Reference Include="ActiveUp.Net.Pop3, Version=2.1.34.0, Culture=neutral, PublicKeyToken=962567372c07b9fe, processorArchitecture=MSIL">
-      <HintPath>..\packages\MailSystem.Net-trunk.2.1.34\lib\net40\ActiveUp.Net.Pop3.dll</HintPath>
+    <Reference Include="ActiveUp.Net.Pop3, Version=2.1.41.0, Culture=neutral, PublicKeyToken=962567372c07b9fe, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailSystem.Net-trunk.2.1.41\lib\net40\ActiveUp.Net.Pop3.dll</HintPath>
     </Reference>
-    <Reference Include="ActiveUp.Net.Smtp, Version=2.1.34.0, Culture=neutral, PublicKeyToken=366752d00f09ae34, processorArchitecture=MSIL">
-      <HintPath>..\packages\MailSystem.Net-trunk.2.1.34\lib\net40\ActiveUp.Net.Smtp.dll</HintPath>
+    <Reference Include="ActiveUp.Net.Smtp, Version=2.1.41.0, Culture=neutral, PublicKeyToken=366752d00f09ae34, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailSystem.Net-trunk.2.1.41\lib\net40\ActiveUp.Net.Smtp.dll</HintPath>
     </Reference>
-    <Reference Include="ActiveUp.Net.WhoIs, Version=2.1.34.0, Culture=neutral, PublicKeyToken=6b9afb81c1de5ed4, processorArchitecture=MSIL">
-      <HintPath>..\packages\MailSystem.Net-trunk.2.1.34\lib\net40\ActiveUp.Net.WhoIs.dll</HintPath>
+    <Reference Include="ActiveUp.Net.WhoIs, Version=2.1.41.0, Culture=neutral, PublicKeyToken=6b9afb81c1de5ed4, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailSystem.Net-trunk.2.1.41\lib\net40\ActiveUp.Net.WhoIs.dll</HintPath>
     </Reference>
     <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\WebApplication\bin\HtmlAgilityPack.dll</HintPath>
     </Reference>
-    <Reference Include="LinqToTwitter.AspNet, Version=3.2.0.30483, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\linqtotwitter.4.1.0\lib\net45\LinqToTwitter.AspNet.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="LinqToTwitter.AspNet, Version=4.2.1.41314, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\linqtotwitter.4.2.1\lib\net45\LinqToTwitter.AspNet.dll</HintPath>
     </Reference>
-    <Reference Include="LinqToTwitter.net, Version=4.0.0.0, Culture=neutral, PublicKeyToken=957107be965c25d9, processorArchitecture=MSIL">
-      <HintPath>..\packages\linqtotwitter.4.1.0\lib\net45\LinqToTwitter.net.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="LinqToTwitter.net, Version=4.2.1.41313, Culture=neutral, PublicKeyToken=957107be965c25d9, processorArchitecture=MSIL">
+      <HintPath>..\packages\linqtotwitter.4.2.1\lib\net45\LinqToTwitter.net.dll</HintPath>
     </Reference>
-    <Reference Include="MailChimp.Net.V3, Version=2.0.0.0, Culture=neutral, PublicKeyToken=37d26d538413c581, processorArchitecture=MSIL">
-      <HintPath>..\packages\MailChimp.Net.V3.2.0.0.0\lib\net45\MailChimp.Net.V3.dll</HintPath>
+    <Reference Include="MailChimp.Net, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37d26d538413c581, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailChimp.Net.V3.3.0.0\lib\net451\MailChimp.Net.dll</HintPath>
     </Reference>
     <Reference Include="MaxMind.Db, Version=2.0.0.0, Culture=neutral, PublicKeyToken=66afa4cc5ae853ac, processorArchitecture=MSIL">
-      <HintPath>..\packages\MaxMind.Db.2.2.0\lib\net45\MaxMind.Db.dll</HintPath>
+      <HintPath>..\packages\MaxMind.Db.2.3.0\lib\net45\MaxMind.Db.dll</HintPath>
     </Reference>
     <Reference Include="MaxMind.GeoIP2, Version=2.6.0.0, Culture=neutral, PublicKeyToken=66afa4cc5ae853ac, processorArchitecture=MSIL">
-      <HintPath>..\packages\MaxMind.GeoIP2.2.8.0\lib\net45\MaxMind.GeoIP2.dll</HintPath>
+      <HintPath>..\packages\MaxMind.GeoIP2.2.9.0\lib\net45\MaxMind.GeoIP2.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.Configuration, Version=1.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.1.1.2\lib\netstandard1.1\Microsoft.Extensions.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=1.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.1.1.2\lib\netstandard1.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.FileExtensions, Version=1.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.FileExtensions.1.1.2\lib\net451\Microsoft.Extensions.Configuration.FileExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Json, Version=1.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Json.1.1.2\lib\net451\Microsoft.Extensions.Configuration.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.1.1\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Abstractions, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Abstractions.1.1.1\lib\netstandard1.0\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Physical, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Physical.1.1.1\lib\net451\Microsoft.Extensions.FileProviders.Physical.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileSystemGlobbing, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileSystemGlobbing.1.1.1\lib\net45\Microsoft.Extensions.FileSystemGlobbing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=1.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.1.1.2\lib\netstandard1.0\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.1.1.1\lib\netstandard1.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Shared.Management.Objects.for.SQL.Server.2012.SP1.11.0.3000.0\lib\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
       <Private>True</Private>
@@ -161,8 +187,8 @@
     <Reference Include="RazorEngine, Version=3.10.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
       <HintPath>..\packages\RazorEngine.3.10.0\lib\net45\RazorEngine.dll</HintPath>
     </Reference>
-    <Reference Include="StackExchange.Redis, Version=1.2.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\StackExchange.Redis.1.2.4\lib\net45\StackExchange.Redis.dll</HintPath>
+    <Reference Include="StackExchange.Redis, Version=1.2.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\StackExchange.Redis.1.2.6\lib\net45\StackExchange.Redis.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -204,6 +230,12 @@
     <Reference Include="System.Reactive.PlatformServices">
       <HintPath>..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.3.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -216,6 +248,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Chat\ChatManager.cs" />

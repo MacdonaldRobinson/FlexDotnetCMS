@@ -3557,6 +3557,7 @@
             Parses the MIME part.
             </summary>
             <param name="binaryData">The data.</param>
+            <param name="message">Message object to update</param>
             <returns></returns>
         </member>
         <member name="M:ActiveUp.Net.Mail.Parser.ParseHeader(System.String)">
@@ -4407,51 +4408,6 @@
             <summary>
             Detect encoded words as stated by RFC2047
             </summary>
-        </member>
-        <member name="M:ActiveUp.Net.Common.Rfc2184ContentParameterParser.Add(System.String)">
-            <summary>
-            Add new string parameter to process list.
-            </summary>
-            <param name="simpleParameter"></param>
-        </member>
-        <member name="M:ActiveUp.Net.Common.Rfc2184ContentParameterParser.Parse">
-            <summary>
-            Parse all parameter line strings received.
-            </summary>
-        </member>
-        <member name="M:ActiveUp.Net.Common.Rfc2184ContentParameterParser.RecoverMultiLineParameters">
-            <summary>
-            Process all identified Multi-line itens to parameter collection.
-            </summary>
-        </member>
-        <member name="M:ActiveUp.Net.Common.Rfc2184ContentParameterParser.AddMultiLineParameter(ActiveUp.Net.Common.Rfc2184ItemParser)">
-            <summary>
-            Add identified multiline item to future process.
-            </summary>
-            <param name="actualItemParser">Parsed item.</param>
-        </member>
-        <member name="M:ActiveUp.Net.Common.Rfc2184ContentParameterParser.AddSingleLineParameter(ActiveUp.Net.Common.Rfc2184ItemParser)">
-            <summary>
-            Add singleline item to final parameter list.
-            </summary>
-            <param name="actualItemParser"></param>
-        </member>
-        <member name="T:ActiveUp.Net.Common.Rfc2184ItemParser">
-            <summary>
-            Parse line with RFC2184 rules (https://tools.ietf.org/html/rfc2184)
-            </summary>
-        </member>
-        <member name="M:ActiveUp.Net.Common.Rfc2184ItemParser.ExtractNameData(System.String)">
-            <summary>
-            Extract all information about FieldName.
-            </summary>
-            <param name="fieldName">String of fieldName.</param>
-        </member>
-        <member name="M:ActiveUp.Net.Common.Rfc2184ItemParser.ExtractValueData(System.String)">
-            <summary>
-            Extract all information about FieldValue.
-            </summary>
-            <param name="fieldValue">Value string to extract information.</param>
         </member>
     </members>
 </doc>

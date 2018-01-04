@@ -5357,6 +5357,11 @@
             Indicates the time allotted for a command or operation has expired.
             </summary>
         </member>
+        <member name="M:StackExchange.Redis.RedisTimeoutException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Serialization implementation; not intended for general usage
+            </summary>
+        </member>
         <member name="P:StackExchange.Redis.RedisTimeoutException.Commandstatus">
             <summary>
             status of the command while communicating with Redis
@@ -5365,6 +5370,11 @@
         <member name="T:StackExchange.Redis.RedisConnectionException">
             <summary>
             Indicates a connection fault when communicating with redis
+            </summary>
+        </member>
+        <member name="M:StackExchange.Redis.RedisConnectionException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Serialization implementation; not intended for general usage
             </summary>
         </member>
         <member name="P:StackExchange.Redis.RedisConnectionException.FailureType">
@@ -5382,7 +5392,7 @@
             Indicates an issue communicating with redis
             </summary>
         </member>
-        <member name="M:StackExchange.Redis.RedisException.#ctor(System.String)">
+        <member name="M:StackExchange.Redis.RedisException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Deserialization constructor; not intended for general usage
             </summary>

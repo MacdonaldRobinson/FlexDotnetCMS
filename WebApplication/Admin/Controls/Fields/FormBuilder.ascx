@@ -54,7 +54,7 @@
 
               <div class="buttons">
                 <asp:LinkButton ID="ExportCSV" Text="Export CSV" runat="server" OnClick="ExportCSV_Click"/>
-                <asp:LinkButton ID="ClearAllSubmissions" Text="Clear All Submissions" runat="server" OnClick="ClearAllSubmissions_Click"/>
+                <asp:LinkButton ID="ClearAllSubmissions" Text="Clear All Submissions" runat="server" OnClick="ClearAllSubmissions_Click" OnClientClick="return confirm('Are you sure? There is no way to revert this action.')"/>
                   <div class="clear"></div>
               </div>
               <asp:GridView runat="server" ID="FormSubmissions" PageSize="10" AllowPaging="true" OnPageIndexChanging="FormSubmissions_PageIndexChanging">

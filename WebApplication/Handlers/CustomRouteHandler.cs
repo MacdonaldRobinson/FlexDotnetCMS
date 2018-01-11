@@ -239,19 +239,28 @@ namespace WebApplication.Handlers
 
                     var historyVersion = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.LanguageID == currentLanguageId && i.CachedVirtualPath == virtualPath && i.MediaType.ShowInSiteTree && i.HistoryVersionNumber != 0 && i.HistoryForMediaDetail != null);
 
-                    if (historyVersion != null)
+                    if (historyVersion != null && historyVersion.VirtualPath != historyVersion.HistoryForMediaDetail.VirtualPath)
                     {
-                        var urlRedirectRule = UrlRedirectRulesMapper.CreateUrlRedirect(virtualPath, historyVersion.HistoryForMediaDetail.CachedVirtualPath);
+                        var foundRedirectUrl = UrlRedirectRulesMapper.GetRuleForUrl(virtualPath);
 
-                        if (urlRedirectRule != null)
+                        if (foundRedirectUrl == null)
                         {
-                            var returnObj = UrlRedirectRulesMapper.Insert(urlRedirectRule);
-                            HttpContext.Current.Response.RedirectPermanent(urlRedirectRule.RedirectToUrl);
+                            var urlRedirectRule = UrlRedirectRulesMapper.CreateUrlRedirect(virtualPath, historyVersion.HistoryForMediaDetail.CachedVirtualPath);
+
+                            if (urlRedirectRule != null)
+                            {
+                                var returnObj = UrlRedirectRulesMapper.Insert(urlRedirectRule);
+                                HttpContext.Current.Response.RedirectPermanent(historyVersion.HistoryForMediaDetail.CachedVirtualPath);
+                            }
+                            else
+                            {
+                                HttpContext.Current.Response.RedirectPermanent("/");
+                            }
                         }
-                        else
-                        {
-                            HttpContext.Current.Response.RedirectPermanent("/");
-                        }
+                    }
+                    else
+                    {
+                        HttpContext.Current.Response.RedirectPermanent("/");
                     }
                 }
 

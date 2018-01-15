@@ -76,7 +76,7 @@ namespace FrameworkLibrary
 
         public static IEnumerable<User> GetAllByRole(Role role, IEnumerable<User> ommitUsers = null)
         {
-            return GetDataModel().Users.Where(item => IsUserInRole(item, role)).Where(item => (ommitUsers == null) || (ommitUsers.Where(i => i.ID == item.ID).Count() == 0));
+            return GetDataModel().Users.ToList().Where(item => IsUserInRole(item, role)).Where(item => (ommitUsers == null) || (ommitUsers.Where(i => i.ID == item.ID).Count() == 0));
         }
 
         public static IEnumerable<User> GetAllByRoles(IEnumerable<Role> roles, IEnumerable<User> ommitUsers = null)

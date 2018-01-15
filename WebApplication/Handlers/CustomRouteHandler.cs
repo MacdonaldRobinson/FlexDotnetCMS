@@ -167,6 +167,22 @@ namespace WebApplication.Handlers
                     }
 
                     newUrl = URIHelper.ConvertToAbsUrl(newUrl);
+                    
+                    var possibleLoopRules = UrlRedirectRulesMapper.GetRulesFromUrl(URIHelper.ConvertAbsUrlToTilda(newUrl));
+                    var foundActiveVirtualPath = MediaDetailsMapper.GetByVirtualPath(path);
+
+                    if (possibleLoopRules.Any())
+                    {
+                        foreach (var rule in possibleLoopRules)
+                        {
+                            var returnObj = MediaDetailsMapper.DeletePermanently(rule);
+                        }
+                    }
+
+                    if(foundActiveVirtualPath != null)
+                    {
+                        var returnObj = MediaDetailsMapper.DeletePermanently(redirectRule);
+                    }
 
                     if (Request.QueryString.Count > 0)
                         newUrl += "?" + Request.QueryString;
@@ -245,7 +261,7 @@ namespace WebApplication.Handlers
 
                         if (foundRedirectUrl == null)
                         {
-                            var urlRedirectRule = UrlRedirectRulesMapper.CreateUrlRedirect(virtualPath, historyVersion.HistoryForMediaDetail.CachedVirtualPath);
+                            var urlRedirectRule = UrlRedirectRulesMapper.CreateUrlRedirect(virtualPath, historyVersion.HistoryForMediaDetail.Media);
 
                             if (urlRedirectRule != null)
                             {

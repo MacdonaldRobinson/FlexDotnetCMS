@@ -13,7 +13,7 @@ namespace FrameworkLibrary
             return MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.Name == name); //return FilterByMediaType(MediaDetailsMapper.GetAll(), MediaTypeEnum.UrlRedirectRule);
         }
 
-        public static UrlRedirectRule CreateUrlRedirect(string fromVirtualPath, string toVirtualPath)
+        public static UrlRedirectRule CreateUrlRedirect(string fromVirtualPath, Media toMedia)
         {
             var currentLanuageId = FrameworkSettings.GetCurrentLanguage().ID;
             var urlRedirectList = MediaDetailsMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.MediaType.Name == MediaTypeEnum.UrlRedirectRuleList.ToString() && i.HistoryVersionNumber == 0 && i.LanguageID == currentLanuageId);
@@ -21,13 +21,12 @@ namespace FrameworkLibrary
 
             if (urlRedirectList != null && mediaType != null)
             {
-                fromVirtualPath = fromVirtualPath.Replace("~", "");
-                toVirtualPath = toVirtualPath.Replace("~", "");
+                fromVirtualPath = fromVirtualPath.Replace("~", "");                
 
                 var urlRewrite = (UrlRedirectRule)MediaDetailsMapper.CreateObject(mediaType.ID, null, urlRedirectList.Media);
                 urlRewrite.Is301Redirect = true;
                 urlRewrite.VirtualPathToRedirect = fromVirtualPath;
-                urlRewrite.RedirectToUrl = toVirtualPath;
+                urlRewrite.RedirectToUrl = toMedia.PermaShortCodeLink;
                 urlRewrite.LinkTitle = urlRewrite.SectionTitle = urlRewrite.Title = urlRewrite.VirtualPathToRedirect + " -> " + urlRewrite.RedirectToUrl;
                 urlRewrite.PublishDate = DateTime.Now;
 
@@ -52,6 +51,18 @@ namespace FrameworkLibrary
         public static IEnumerable<IMediaDetail> GetAllActiveByParent(IMediaDetail parent)
         {
             return GetAllActive().Where(i => i.VirtualPath.StartsWith(parent.VirtualPath));
+        }
+
+        public static List<UrlRedirectRule> GetRulesFromUrl(string virtualPath)
+        {
+            if (virtualPath.StartsWith("~"))
+                virtualPath = virtualPath.Replace("~", "");
+
+            var enumName = MediaTypeEnum.UrlRedirectRule.ToString();
+
+            var rules = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate >= DateTime.Now) && i.MediaType.Name == enumName && ((i as UrlRedirectRule).VirtualPathToRedirect.ToLower() == virtualPath || (i as UrlRedirectRule).VirtualPathToRedirect.ToLower() == virtualPath + "/")).ToList().Cast<UrlRedirectRule>().ToList();
+
+            return rules;
         }
 
         public static UrlRedirectRule GetRuleForUrl(string virtualPath)

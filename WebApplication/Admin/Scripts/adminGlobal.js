@@ -1271,7 +1271,7 @@ function BindDataTable() {
         $(this).dataTable().fnDestroy();
     });
 
-    $('table').DataTable({
+    $('table.DataTable').DataTable({
         "paging": true,
         "ordering": true,
         "info": true,
@@ -1442,7 +1442,7 @@ function init() {
     BindTree();
     BindSortable();
     BindScrollMagic();
-    //BindDataTable();
+    BindDataTable();
 
     $("#Filter").on("keyup", function (e) {
         var code = e.keyCode || e.which;

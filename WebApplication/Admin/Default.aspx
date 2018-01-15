@@ -16,21 +16,23 @@
         <div class="fixedMinSize">
             <div class="floatLeft recentEdits">
                 <h2>Recent Edits</h2>
-                <asp:ListView runat="server" ID="RecentEditsList" OnItemDataBound="RecentEditsList_ItemDataBound">
-                    <LayoutTemplate>
-                        <ul>
-                            <asp:PlaceHolder runat="server" ID="itemPlaceHolder"></asp:PlaceHolder>
-                        </ul>
-                    </LayoutTemplate>
-                    <ItemTemplate>
-                        <li>
-                            <a href='javascript:void(0);' runat="server" id="HyperLink"><%# Eval("Title") %></a><br />
-                            <span>
-                                <%# StringHelper.FormatDateTime((DateTime)Eval("DateLastModified"))%>
-                            </span>
-                        </li>
-                    </ItemTemplate>
-                </asp:ListView>
+
+                <asp:GridView runat="server" ID="RecentEditsList" AutoGenerateColumns="false" CssClass="DataTable" OnDataBound="RecentEditsList_DataBound">
+                    <Columns>
+                        <asp:BoundField DataField="LinkTitle" HeaderText="Title"/>
+                        <asp:BoundField DataField="DateLastModified" HeaderText="Date Last Modified"/>
+                       <asp:TemplateField HeaderText="Usename">
+                            <ItemTemplate>
+                                <%# ((IMediaDetail)Container.DataItem).LastUpdatedByUser.UserName %>
+                            </ItemTemplate>
+                        </asp:TemplateField>                        
+                        <asp:TemplateField HeaderText="">
+                            <ItemTemplate>
+                                <a href="<%# GetAdminUrl( (IMediaDetail)Container.DataItem ) %>">Edit This Page</a>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
             </div>
             <div class="floatLeft feeds">
             </div>

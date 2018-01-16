@@ -81,15 +81,15 @@ fieldset > div > .buttons {
         color: #000000 !important;
         text-decoration: none !important;
         text-transform: uppercase;
-        border: 0px !important;
-        cursor: hand !important;
+        border: 1px solid !important;
+        cursor: pointer !important;
         float: left;
         margin-right: 10px;
         font-weight: bold;
     }
 
         .buttons a:hover {
-            background-color: lightblue !important;
+            background-color: #e78f08 !important;
         }
 
 #ContentPlaceHolder1_Main {
@@ -278,8 +278,12 @@ fieldset {
 }
 
 a, a:active, a:link, a:visited {
-    color: #99ccff;
+    color: #99ccff;    
 }
+
+    a:hover {
+        color: #e78f08;
+    }
 
 .box {
     background-color: #fff;

@@ -120,11 +120,11 @@ namespace WebApplication
             }
         }
 
-        public static string GzipUriRequestPatterns
+        public static string CompressUriRequestPatterns
         {
             get
             {
-                return ConfigurationManager.AppSettings["GzipUriRequestPatterns"];
+                return ConfigurationManager.AppSettings["CompressUriRequestPatterns"];
             }
         }
 
@@ -136,11 +136,11 @@ namespace WebApplication
             }
         }
 
-        public static bool AttemptGzipCompression
+        public static bool AttemptCompression
         {
             get
             {
-                return bool.Parse(ConfigurationManager.AppSettings["AttemptGZIPCompression"]);
+                return bool.Parse(ConfigurationManager.AppSettings["AttemptCompression"]);
             }
         }
 

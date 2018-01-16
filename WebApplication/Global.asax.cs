@@ -64,6 +64,8 @@ namespace WebApplication
 
         private void Application_Error(object sender, EventArgs e)
         {
+            // Remove any special filtering especially GZip filtering
+            Response.Filter = null;
             // Code that runs when an unhandled error occurs
             ErrorHelper.LogException(Server.GetLastError());
         }

@@ -75,7 +75,7 @@
         BindReOrder();
         BindScrollMagic();
         initAceEditors();
-        initAccordians();
+        initAccordians();        
     });
 
     function BindReOrder()

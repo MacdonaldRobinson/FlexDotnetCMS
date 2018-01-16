@@ -1,8 +1,7 @@
 ﻿/// <reference path="../Views/MasterPages/WebService.asmx" />
 /// <reference path="../Views/MasterPages/WebService.asmx" />
 window.onerror = function (e) {
-    if(e.indexOf("UpdatePanel") !=-1)
-    {
+    if (e.indexOf("UpdatePanel") != -1) {
         window.location.reload();
     }
 }
@@ -1242,7 +1241,7 @@ $(document)
 function pageLoad(sender, args) {    
     BindJQueryUIControls();
     BindSortable();
-    //BindDataTable();
+    BindDataTable();
 
     /*RefreshSiteTreeNodeById($("#SiteTree").jstree("get_selected")[0]);
     BindScrollMagic();
@@ -1271,19 +1270,36 @@ function BindDataTable() {
         $(this).dataTable().fnDestroy();
     });
 
-    $('table.DataTable').DataTable({
-        "paging": true,
-        "ordering": true,
-        "info": true,
-        "lengthChange": true,
-        //rowReorder: true
-        /*dom: 'Bfrtip',
-        buttons: [
-            'copyHtml5',
-            'excelHtml5',
-            'csvHtml5',
-            'pdfHtml5'
-        ]*/
+    $('table.DataTable').each(function () {
+
+        var options = {
+            "paging": true,
+            "ordering": true,
+            "info": true,
+            "lengthChange": true,     
+            destroy: true,
+            //rowReorder: true
+            /*dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ]*/
+        }
+
+        var extraOptions = $(this).attr("data-datatable-options");
+
+        if (extraOptions != undefined && extraOptions != "") {
+
+            var extraOptionsJson = JSON.parse(extraOptions);
+
+            $.extend(options, options, extraOptionsJson);
+
+            console.log(options);
+        }
+
+        $(this).DataTable(options);        
     });
 }
 

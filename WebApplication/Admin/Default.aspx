@@ -17,11 +17,11 @@
             <div class="floatLeft recentEdits">
                 <h2>Recent Edits</h2>
 
-                <asp:GridView runat="server" ID="RecentEditsList" AutoGenerateColumns="false" CssClass="DataTable" OnDataBound="RecentEditsList_DataBound">
+                <asp:GridView runat="server" ID="RecentEditsList" AutoGenerateColumns="false" CssClass="DataTable" data-datatable-options='{"order": [[ 1, "desc" ]]}' OnDataBound="RecentEditsList_DataBound">
                     <Columns>
                         <asp:BoundField DataField="LinkTitle" HeaderText="Title"/>
                         <asp:BoundField DataField="DateLastModified" HeaderText="Date Last Modified"/>
-                       <asp:TemplateField HeaderText="Usename">
+                       <asp:TemplateField HeaderText="Username">
                             <ItemTemplate>
                                 <%# ((IMediaDetail)Container.DataItem).LastUpdatedByUser.UserName %>
                             </ItemTemplate>

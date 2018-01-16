@@ -14,3 +14,6 @@ Disallow: /Scripts/
 Disallow: /Styles/
 Disallow: /Views/
 Disallow: /WebServices/
+
+#NOTE: Change the path to absolute
+Sitemap: /Webservices/Generators.asmx/GoogleSiteMap

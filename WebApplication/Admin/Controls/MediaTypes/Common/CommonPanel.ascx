@@ -94,7 +94,7 @@
                     Link Title</label>
                 <asp:TextBox ID="LinkTitle" runat="server" CssClass="LinkTitle"></asp:TextBox>
             </div>
-            <div id="TagsHolder" style="display:none;">
+            <div id="TagsHolder">
                 <label>Tags</label>
                 <Admin:TagsSelector ID="TagsSelector" runat="server"/>
             </div>

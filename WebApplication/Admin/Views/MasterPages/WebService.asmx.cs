@@ -575,6 +575,8 @@ namespace WebApplication.Admin.Views.MasterPages
 
             duplicatedItem.Media.OrderIndex = parentMedia.ChildMedias.Count(i => i.ID != 0);
 
+            duplicatedItem.PublishDate = duplicatedItem.DateCreated = duplicatedItem.DateLastModified = DateTime.Now;
+
             foreach (var item in detail.Fields)
             {
                 var mediaDetailField = new MediaDetailField();

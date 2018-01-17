@@ -163,3 +163,7 @@ fieldset table td a {
 .ui-tabs .ui-tabs-panel {
     padding: 5px;
 }
+
+p {
+    margin-bottom:10px;
+}

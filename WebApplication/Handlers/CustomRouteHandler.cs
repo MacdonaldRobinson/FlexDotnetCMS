@@ -89,6 +89,8 @@ namespace WebApplication.Handlers
             virtualPath = URIHelper.GetCurrentVirtualPath().ToLower();
 
             var queryString = HttpContext.Current.Request.QueryString.ToString();
+            queryString = System.Web.HttpUtility.UrlDecode(queryString);
+
 
             if (!Request.Path.EndsWith("/") || ((virtualPath != "~/") && (!virtualPath.EndsWith("/"))))
             {

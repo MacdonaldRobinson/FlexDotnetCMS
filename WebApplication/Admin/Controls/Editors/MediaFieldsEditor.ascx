@@ -79,10 +79,8 @@
     });
 
     function BindReOrder()
-    {
-        //console.log("rab");
+    {        
         BindGridViewSortable("#<%=ItemList.ClientID%>", "/Admin/Views/MasterPages/Webservice.asmx/ReOrderMediaFields", "<%= MediaFieldsUpdatePanel.ClientID%>", function () {
-            console.log("rab");
             window.location.href = window.location.href;
         });
     }

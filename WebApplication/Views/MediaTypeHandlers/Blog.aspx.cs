@@ -31,7 +31,7 @@ namespace WebApplication.Views.MediaTypeHandlers
                 blogPosts = blogPosts.Where(i => i.Media.ParentMediaID == CurrentMediaDetail.MediaID);
             }
 
-            BlogPosts.DataSource = blogPosts.OrderBy(i => i.DateCreated).ToList().Where(i => i.CanRender).ToList();
+            BlogPosts.DataSource = blogPosts.ToList().Where(i => i.CanRender).OrderByDescending(i => i.PublishDate).ToList();
             BlogPosts.DataBind();
         }
 

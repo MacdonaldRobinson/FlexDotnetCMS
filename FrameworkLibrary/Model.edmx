@@ -33,6 +33,7 @@
           <Property Name="RenderLabelAfterControl" Type="bit" Nullable="false" />
           <Property Name="AdminControl" Type="nvarchar(max)" Nullable="false" />
           <Property Name="FieldValue" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UsageExample" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="GetAdminControlValue" Type="nvarchar(max)" Nullable="false" />
           <Property Name="SetAdminControlValue" Type="nvarchar(max)" Nullable="false" />
           <Property Name="OrderIndex" Type="bigint" Nullable="false" />
@@ -1819,6 +1820,7 @@
           <Property Name="FrontEndSubmissions" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsGlobalField" Type="Boolean" Nullable="false" />
           <Property Name="FieldSettings" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UsageExample" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MediaDetailField" BaseType="FrameworkModel.Field">
           <Property Name="MediaDetailID" Type="Int64" Nullable="false" />
@@ -2422,6 +2424,7 @@
           <EntitySetMapping Name="Fields">
             <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.Field)">
               <MappingFragment StoreEntitySet="Fields">
+                <ScalarProperty Name="UsageExample" ColumnName="UsageExample" />
                 <ScalarProperty Name="FieldSettings" ColumnName="FieldSettings" />
                 <ScalarProperty Name="IsGlobalField" ColumnName="IsGlobalField" />
                 <ScalarProperty Name="FrontEndSubmissions" ColumnName="FrontEndSubmissions" />

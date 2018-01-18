@@ -3,15 +3,19 @@
 <script type="text/javascript">
     $(document).ready(function () {        
 
-        $(document).on("blur", "#<%= FieldLabel.ClientID %>", function () {
-            var fieldLabel = $(this).val();
-            var fieldCode = fieldLabel.replace(/\w+/g, function (w) {                
+        $(document).on("blur", "#<%= FieldLabel.ClientID %>", function () {            
+            $("#<%= FieldCode.ClientID %>").val(getfieldCodeFromLabel());
+        });
+
+        function getfieldCodeFromLabel() {
+            var fieldLabel = $("#<%= FieldLabel.ClientID %>").val();
+            var fieldCode = fieldLabel.replace(/\w+/g, function (w) {
                 return w[0].toUpperCase() + w.slice(1).toLowerCase();
             });
             fieldCode = fieldCode.replace(/\s/g, '');
 
-            $("#<%= FieldCode.ClientID %>").val(fieldCode);            
-        });
+            return fieldCode;
+        }
 
         BindReOrder();
 
@@ -150,6 +154,10 @@
                     <label for="<%# FieldCode.ClientID %>">Field Code:</label>
                     <asp:TextBox runat="server" ID="FieldCode"/>
                 </div>                
+                <div>
+                    <label for="<%# UsageExample.ClientID %>">Usage Example:</label>
+                    <asp:TextBox runat="server" ID="UsageExample"/>
+                </div>   
                 <div id="AssociateWithMediaTypeFieldWrapper" runat="server" visible="false">
                     <asp:CheckBox runat="server" ID="AssociateWithMediaTypeField" /> <label for="<%# AssociateWithMediaTypeField.ClientID %>">Associate With Media Type Field</label>
                 </div>

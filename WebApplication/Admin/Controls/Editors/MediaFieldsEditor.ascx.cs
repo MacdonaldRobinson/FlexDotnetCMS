@@ -178,8 +178,24 @@ namespace WebApplication.Admin.Controls.Editors
             mediaField.UseMediaTypeFieldDescription = UseMediaTypeFieldDescription.Checked;                    
             mediaField.ShowFrontEndFieldEditor = ShowFrontEndFieldEditor.Checked;
             mediaField.IsGlobalField = IsGlobalField.Checked;
-            
-            if(mediaField.FieldSettings == null)
+
+            if (string.IsNullOrEmpty(UsageExample.Text))
+            {
+                if (mediaField.MediaDetail == null && mediaField.MediaDetailID != 0)
+                {
+                    mediaField.MediaDetail = (MediaDetail)MediaDetailsMapper.GetByID(mediaField.MediaDetailID);
+                }
+
+                if (mediaField.MediaDetail != null)
+                {
+                    UsageExample.Text = "{Field:" + mediaField.FieldCode + "} OR {{Load:" + mediaField.MediaDetail.MediaID + "}.Field:" + mediaField.FieldCode + "}";
+                }
+            }
+
+            mediaField.UsageExample = UsageExample.Text;            
+
+
+            if (mediaField.FieldSettings == null)
             {
                 mediaField.FieldSettings = "";
             }
@@ -231,6 +247,7 @@ namespace WebApplication.Admin.Controls.Editors
             UseMediaTypeFieldDescription.Checked = mediaField.UseMediaTypeFieldDescription;            
             ShowFrontEndFieldEditor.Checked = mediaField.ShowFrontEndFieldEditor;
             IsGlobalField.Checked = mediaField.IsGlobalField;
+            UsageExample.Text = mediaField.UsageExample;            
 
             BindVisibility(mediaField);
         }

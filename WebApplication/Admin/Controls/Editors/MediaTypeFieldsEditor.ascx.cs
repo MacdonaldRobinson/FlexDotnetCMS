@@ -80,6 +80,11 @@ namespace WebApplication.Admin.Controls.Editors
                 {
                     var mediaDetailField = new MediaDetailField();                    
                     mediaDetailField.CopyFrom(mediaTypeField);
+
+                    if(string.IsNullOrEmpty(mediaDetailField.UsageExample))
+                    {
+                        mediaDetailField.UsageExample = "{Field:" + mediaDetailField.FieldCode + "} OR {{Load:" + mediaDetail.MediaID + "}.Field:" + mediaDetailField.FieldCode + "}";
+                    }
                     
                     mediaDetailField.UseMediaTypeFieldFrontEndLayout = true;
                     mediaDetailField.UseMediaTypeFieldDescription = true;
@@ -109,6 +114,11 @@ namespace WebApplication.Admin.Controls.Editors
                 {
                     var mediaDetailFieldValue = mediaDetailField.FieldValue;
                     mediaDetailField.CopyFrom(mediaTypeField);
+
+                    if (string.IsNullOrEmpty(mediaDetailField.UsageExample))
+                    {
+                        mediaDetailField.UsageExample = "{Field:" + mediaDetailField.FieldCode + "} OR {{Load:" + mediaDetailField.MediaDetail.MediaID + "}.Field:" + mediaDetailField.FieldCode + "}";
+                    }
 
                     if (mediaDetailField.UseMediaTypeFieldDescription)
                         mediaDetailField.FieldDescription = mediaTypeField.FieldDescription;
@@ -160,8 +170,9 @@ namespace WebApplication.Admin.Controls.Editors
             mediaTypeField.SetAdminControlValue = SetAdminControlValue.Text;
             mediaTypeField.ShowFrontEndFieldEditor = ShowFrontEndFieldEditor.Checked;
             mediaTypeField.FieldValue = FieldValue.Text;
+            mediaTypeField.UsageExample = UsageExample.Text;
 
-            if(mediaTypeField.FrontEndSubmissions == null)
+            if (mediaTypeField.FrontEndSubmissions == null)
                 mediaTypeField.FrontEndSubmissions = "";
 
             if (mediaTypeField.FieldSettings == null)
@@ -188,6 +199,7 @@ namespace WebApplication.Admin.Controls.Editors
             SetAdminControlValue.Text = mediaTypeField.SetAdminControlValue;
             ShowFrontEndFieldEditor.Checked = mediaTypeField.ShowFrontEndFieldEditor;
             IsGlobalField.Checked = mediaTypeField.IsGlobalField;
+            UsageExample.Text = mediaTypeField.UsageExample;
         }
 
         protected void Cancel_Click(object sender, EventArgs e)
@@ -281,6 +293,11 @@ namespace WebApplication.Admin.Controls.Editors
                     {
                         var mediaDetailField = new MediaDetailField();
                         mediaDetailField.CopyFrom(mediaTypeField);
+
+                        if (string.IsNullOrEmpty(mediaDetailField.UsageExample))
+                        {
+                            mediaDetailField.UsageExample = "{Field:" + mediaDetailField.FieldCode + "} OR {{Load:" + mediaDetail.MediaID + "}.Field:" + mediaDetailField.FieldCode + "}";
+                        }
 
                         mediaDetailField.UseMediaTypeFieldFrontEndLayout = true;
                         mediaDetailField.UseMediaTypeFieldDescription = true;

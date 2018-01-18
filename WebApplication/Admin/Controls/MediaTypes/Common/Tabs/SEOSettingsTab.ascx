@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="SEOSettingsTab.ascx.cs"
     Inherits="WebApplication.Admin.Controls.MediaTypes.Common.Tabs.SEOSettingsTab" %>
-
+<fieldset>
     <div>
         <label for="<%= PageTitle.ClientID %>">
             Page Title</label>
@@ -15,3 +15,4 @@
         <label>Meta Keywords</label>
         <asp:TextBox runat="server" ID="MetaKeywords"></asp:TextBox>
     </div>
+</fieldset>

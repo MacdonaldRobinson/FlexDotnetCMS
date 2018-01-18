@@ -207,6 +207,7 @@ fieldset {
         fieldset > div label {
             font-weight: bold;
             padding-bottom: 2px;
+            display: inline-block;
         }
 
 .RadEditor textarea {

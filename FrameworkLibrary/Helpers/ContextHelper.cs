@@ -56,7 +56,7 @@ namespace FrameworkLibrary
                     break;
 
                 case ContextType.Cache:
-                    return SetToCache(key, value);
+                    return SaveToCache(key, value);
                     break;
             }
 
@@ -181,7 +181,7 @@ namespace FrameworkLibrary
             HttpContext.Current.Items.Remove(key);
         }
 
-        public static bool SetToCache(string key, object value, DateTime? expiryDateTime = null)
+        public static bool SaveToCache(string key, object value, DateTime? expiryDateTime = null)
         {
             key = key.ToLower();
 

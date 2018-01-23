@@ -63,7 +63,7 @@ namespace FrameworkLibrary
             }
         }
 
-        public static Return ClearCache(string url)
+        public static Return RemoveFromCache(string url)
         {
             try
             {

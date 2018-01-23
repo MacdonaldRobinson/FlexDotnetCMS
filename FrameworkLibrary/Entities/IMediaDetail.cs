@@ -118,9 +118,9 @@ namespace FrameworkLibrary
         string RenderField(string fieldCode, bool includeFieldWrapper = true);
         string RenderMainLayout();
         string RenderShortCode(string shortCode, bool includeFieldWrapper = true);
-        void SaveToFileCache(RenderVersion renderVersion, string html, string queryString = "");
-        void SaveToMemoryCache(RenderVersion renderVersion, string html, string queryString = "");
-        void SaveToRedisCache(RenderVersion renderVersion, string html, string queryString = "");
+        void SaveToFileCache(RenderVersion renderVersion, string html);
+        void SaveToMemoryCache(RenderVersion renderVersion, string html);
+        void SaveToRedisCache(RenderVersion renderVersion, string html);
         void UpdateField(string fieldCode, string newValue);
         Return Validate();
     }

@@ -78,7 +78,10 @@ namespace FrameworkLibrary
             url = url.Replace("?", "_");
             url = url.Replace(":", "-");
 
-            var absPath = URIHelper.ConvertToAbsPath($"{baseDir}{url.ToLower()}-{htmlFileName}");
+            if (!url.EndsWith("/"))
+                url = url + "/";
+
+            var absPath = URIHelper.ConvertToAbsPath($"{baseDir}{url.ToLower()}{htmlFileName}");
             var fileInfo = new FileInfo(absPath);
 
             return fileInfo;
@@ -142,7 +145,7 @@ namespace FrameworkLibrary
             }
         }
 
-        public static Return ClearCache(string url)
+        public static Return RemoveFromCache(string url)
         {
             try
             {
@@ -152,6 +155,8 @@ namespace FrameworkLibrary
                 {
                     File.Delete(fileInfo.FullName);
                     ContextHelper.RemoveFromCache(url);
+
+                    fileInfo.Directory.Delete(true);
                 }
 
                 return new Return();

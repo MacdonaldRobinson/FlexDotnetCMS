@@ -71,7 +71,7 @@ namespace FrameworkLibrary
 
             if (enableCaching)
             {
-                ContextHelper.SetToCache(absUrl, data, DateTime.Now.AddSeconds(cacheDurationInSeconds));
+                ContextHelper.SaveToCache(absUrl, data, DateTime.Now.AddSeconds(cacheDurationInSeconds));
             }
 
             return data;

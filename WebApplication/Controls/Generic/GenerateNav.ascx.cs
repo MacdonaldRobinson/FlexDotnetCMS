@@ -86,7 +86,7 @@ namespace WebApplication.Controls
                         items = mediaDetail.Media.ParentMedia.GetLiveMediaDetail(mediaDetail.Language).ChildMediaDetails.Where(i => i.ShowInMenu).ToList();
                     }
 
-                    ContextHelper.SetToCache(itemsCacheKey, itemsCacheData);
+                    ContextHelper.SaveToCache(itemsCacheKey, itemsCacheData);
                 }
             }
             else

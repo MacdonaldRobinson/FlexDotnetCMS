@@ -507,7 +507,7 @@ namespace FrameworkLibrary
 
             var versionNumber = 0;
 
-            if ((FrameworkSettings.CurrentUser != null) && (HttpContext.Current.Request["version"] != null) && (virtualPath != "~/"))
+            if ((HttpContext.Current.Request["version"] != null) && (virtualPath != "~/"))
             {
                 versionNumber = int.Parse(HttpContext.Current.Request["version"]);
             }
@@ -853,10 +853,17 @@ namespace FrameworkLibrary
 
         public static Return Insert(IMediaDetail obj)
         {
+            var currentUser = FrameworkSettings.CurrentUser;
+
+            if (currentUser == null)
+            {
+                currentUser = UsersMapper.GetAllByRoleEnum(RoleEnum.Developer).ElementAt(0);
+            }
+
             obj.DateCreated = DateTime.Now;
             obj.DateLastModified = DateTime.Now;
-            obj.CreatedByUserID = FrameworkSettings.CurrentUser.ID;
-            obj.LastUpdatedByUserID = FrameworkSettings.CurrentUser.ID;
+            obj.CreatedByUserID = currentUser.ID;
+            obj.LastUpdatedByUserID = currentUser.ID;
             obj.DateCreated = obj.DateLastModified = DateTime.Now;
             ((MediaDetail)obj).CachedVirtualPath = obj.CalculatedVirtualPath();
 

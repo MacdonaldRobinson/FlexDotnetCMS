@@ -161,7 +161,7 @@ namespace FrameworkLibrary
 
         public string GetCacheKey(RenderVersion renderVersion)
         {
-            return renderVersion.ToString() + "_" + this.AutoCalculatedVirtualPath.Replace("~", "");
+            return renderVersion.ToString() + this.AutoCalculatedVirtualPath.Replace("~", "");
         }
 
         public IMediaDetail GetPreviousMediaDetail()
@@ -228,20 +228,13 @@ namespace FrameworkLibrary
             var htmlCacheKey = GetCacheKey(RenderVersion.HTML);
             var mobileCacheKey = GetCacheKey(RenderVersion.Mobile);
 
-            FileCacheHelper.ClearCache(htmlCacheKey);
-            RedisCacheHelper.ClearCache(htmlCacheKey);
+            FileCacheHelper.RemoveFromCache(htmlCacheKey);
+            RedisCacheHelper.RemoveFromCache(htmlCacheKey);
             ContextHelper.RemoveFromCache(htmlCacheKey);
 
-            FileCacheHelper.ClearCache(mobileCacheKey);
+            RedisCacheHelper.RemoveFromCache(mobileCacheKey);
+            FileCacheHelper.RemoveFromCache(mobileCacheKey);
             ContextHelper.RemoveFromCache(mobileCacheKey);
-
-            FileCacheHelper.ClearCache(htmlCacheKey + "?version=0");
-            RedisCacheHelper.ClearCache(htmlCacheKey + "?version=0");
-            ContextHelper.RemoveFromCache(htmlCacheKey + "?version=0");
-
-            FileCacheHelper.ClearCache(mobileCacheKey + "?version=0");
-            RedisCacheHelper.ClearCache(mobileCacheKey + "?version=0");
-            ContextHelper.RemoveFromCache(mobileCacheKey + "?version=0");
 
             var language = this.Language;
 
@@ -259,84 +252,31 @@ namespace FrameworkLibrary
 
         }
 
-        public void SaveToMemoryCache(RenderVersion renderVersion, string html, string queryString = "")
+        public void SaveToMemoryCache(RenderVersion renderVersion, string html)
         {
             if (HasDraft)
                 return;
 
-            var key = GetCacheKey(renderVersion);
-
-            if (string.IsNullOrEmpty(queryString))
-            {
-                ContextHelper.SetToCache(key, html);
-                ContextHelper.SetToCache(key + "?version=0", html);
-            }
-            else
-            {
-                ContextHelper.SetToCache(key + queryString, html);
-            }
-
+            var key = GetCacheKey(renderVersion);            
+            ContextHelper.SaveToCache(key, html);
         }
 
-        public void SaveToFileCache(RenderVersion renderVersion, string html, string queryString = "")
+        public void SaveToFileCache(RenderVersion renderVersion, string html)
         {
             if (HasDraft)
                 return;
 
             var cacheKey = GetCacheKey(renderVersion);
-            var cache = FileCacheHelper.GetFromCache(cacheKey);
-
-            if (string.IsNullOrEmpty(queryString) && cache.IsError)
-            {
-                FileCacheHelper.SaveToCache(cacheKey, html);
-                FileCacheHelper.SaveToCache(cacheKey + "?version=0", html);
-            }
-            else if (cache.IsError)
-            {
-                var items = HttpUtility.ParseQueryString(queryString);
-
-                foreach (var item in items)
-                {
-                    var str = item + "=" + items[item.ToString()];
-
-                    cacheKey = cacheKey.Replace(str, "");
-                }
-
-                cacheKey = cacheKey + queryString;
-                cacheKey = cacheKey.Replace("?&", "?").Replace("??", "?").ToLower();
-
-                FileCacheHelper.SaveToCache(cacheKey, html);
-            }
+            FileCacheHelper.SaveToCache(cacheKey, html);
         }
 
-        public void SaveToRedisCache(RenderVersion renderVersion, string html, string queryString = "")
+        public void SaveToRedisCache(RenderVersion renderVersion, string html)
         {
             if (HasDraft)
                 return;
 
             var cacheKey = GetCacheKey(renderVersion);
-
-            if (string.IsNullOrEmpty(queryString))
-            {
-                RedisCacheHelper.SaveToCache(cacheKey, html);
-                RedisCacheHelper.SaveToCache(cacheKey + "?version=0", html);
-            }
-            else
-            {
-                var items = HttpUtility.ParseQueryString(queryString);
-
-                foreach (var item in items)
-                {
-                    var str = item + "=" + items[item.ToString()];
-
-                    cacheKey = cacheKey.Replace(str, "");
-                }
-
-                cacheKey = cacheKey + queryString;
-                cacheKey = cacheKey.Replace("?&", "?").Replace("??", "?").ToLower();
-
-                RedisCacheHelper.SaveToCache(cacheKey, html);
-            }
+            RedisCacheHelper.SaveToCache(cacheKey, html);                
         }
 
         public Field LoadField(string fieldCode)

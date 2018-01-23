@@ -62,8 +62,8 @@ namespace FrameworkLibrary
 
                 var queryResultsList = queryResults.ToList();
 
-                ContextHelper.SetToCache(key, queryResultsList, DateTime.Now.AddMinutes(10));
-                ContextHelper.SetToCache(rawResultsKey, twitterContext.RawResult, DateTime.Now.AddMinutes(10));
+                ContextHelper.SaveToCache(key, queryResultsList, DateTime.Now.AddMinutes(10));
+                ContextHelper.SaveToCache(rawResultsKey, twitterContext.RawResult, DateTime.Now.AddMinutes(10));
 
                 if (returnRawResults)
                     return twitterContext.RawResult;

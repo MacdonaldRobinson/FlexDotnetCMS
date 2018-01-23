@@ -34,7 +34,7 @@ namespace WebApplication.Handlers
                 URIHelper.ForceSSL();
             }
 
-            if (FrameworkSettings.CurrentUser == null)
+            if (FrameworkSettings.CurrentUser == null && Request.QueryString.Count == 0)
             {
                 if (Request.HttpMethod == "GET" && (!(bool)BaseMapper.CanConnectToDB || AppSettings.EnableOutputCaching))
                 {

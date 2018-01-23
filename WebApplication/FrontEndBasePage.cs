@@ -330,7 +330,7 @@ namespace WebApplication
 
             html = ParserHelper.ParseData(html, TemplateVars);
 
-            if (FrameworkSettings.CurrentUser == null)
+            if (FrameworkSettings.CurrentUser == null && Request.QueryString.Count == 0)
             {
                 if (CurrentMediaDetail != null)
                 {
@@ -340,17 +340,17 @@ namespace WebApplication
                         {
                             if (AppSettings.EnableLevel1MemoryCaching)
                             {
-                                CurrentMediaDetail.SaveToMemoryCache(UserSelectedVersion, html, Request.Url.Query);
+                                CurrentMediaDetail.SaveToMemoryCache(UserSelectedVersion, html);
                             }
 
                             if (AppSettings.EnableLevel2FileCaching)
                             {
-                                CurrentMediaDetail.SaveToFileCache(UserSelectedVersion, html, Request.Url.Query);
+                                CurrentMediaDetail.SaveToFileCache(UserSelectedVersion, html);
                             }
 
                             if (AppSettings.EnableLevel3RedisCaching)
                             {
-                                CurrentMediaDetail.SaveToRedisCache(UserSelectedVersion, html, Request.Url.Query);
+                                CurrentMediaDetail.SaveToRedisCache(UserSelectedVersion, html);
                             }
                         }
 

@@ -254,7 +254,7 @@ namespace FrameworkLibrary
 
         public void SaveToMemoryCache(RenderVersion renderVersion, string html)
         {
-            if (HasDraft)
+            if (HasDraft || HistoryVersionNumber != 0)
                 return;
 
             var key = GetCacheKey(renderVersion);            
@@ -263,7 +263,7 @@ namespace FrameworkLibrary
 
         public void SaveToFileCache(RenderVersion renderVersion, string html)
         {
-            if (HasDraft)
+            if (HasDraft || HistoryVersionNumber != 0)
                 return;
 
             var cacheKey = GetCacheKey(renderVersion);
@@ -272,7 +272,7 @@ namespace FrameworkLibrary
 
         public void SaveToRedisCache(RenderVersion renderVersion, string html)
         {
-            if (HasDraft)
+            if (HasDraft || HistoryVersionNumber != 0)
                 return;
 
             var cacheKey = GetCacheKey(renderVersion);

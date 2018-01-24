@@ -161,7 +161,7 @@ namespace FrameworkLibrary
 
         public string GetCacheKey(RenderVersion renderVersion)
         {
-            return renderVersion.ToString() + this.AutoCalculatedVirtualPath.Replace("~", "");
+            return (renderVersion.ToString() + this.AutoCalculatedVirtualPath.Replace("~", "")).ToLower();
         }
 
         public IMediaDetail GetPreviousMediaDetail()

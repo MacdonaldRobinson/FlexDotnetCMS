@@ -43,7 +43,7 @@ namespace WebApplication.Handlers
                     if (BasePage.IsMobile)
                         userSelectedVersion = RenderVersion.Mobile;
 
-                    var cacheKey = (userSelectedVersion.ToString() + "_" + Request.Url.PathAndQuery).ToLower();
+                    var cacheKey = (userSelectedVersion.ToString() + Request.Url.PathAndQuery).ToLower();
 
                     if (AppSettings.EnableLevel1MemoryCaching)
                     {

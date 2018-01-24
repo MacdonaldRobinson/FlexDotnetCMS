@@ -546,7 +546,7 @@ namespace WebApplication.Admin.Views.MasterPages
             else
             {
                 ContextHelper.ClearAllMemoryCache();
-                FileCacheHelper.ClearCacheDir("generatenav");
+                FileCacheHelper.DeleteCacheDir("generatenav");
             }
         }
 
@@ -817,7 +817,7 @@ namespace WebApplication.Admin.Views.MasterPages
             {
                 ContextHelper.ClearAllMemoryCache();
                 detail.RemoveFromCache();                
-                FileCacheHelper.ClearCacheDir("generatenav");
+                FileCacheHelper.DeleteCacheDir("generatenav");
             }
         }
 

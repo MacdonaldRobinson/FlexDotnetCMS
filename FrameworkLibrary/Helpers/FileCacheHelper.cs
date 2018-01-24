@@ -99,7 +99,7 @@ namespace FrameworkLibrary
 
         public static void DeleteGenerateNavCache()
         {
-            FileCacheHelper.ClearCacheDir("generatenav");
+            FileCacheHelper.DeleteCacheDir("generatenav");
         }
 
         public static void SaveSettingsCache(string setting, string html)
@@ -114,15 +114,15 @@ namespace FrameworkLibrary
 
         public static void DeleteSettingsCache()
         {
-            FileCacheHelper.ClearCacheDir("settings");
+            FileCacheHelper.DeleteCacheDir("settings");
         }
         
-        public static void DeleteHTMLCache()
+        public static void DeleteAllCache()
         {
-            FileCacheHelper.ClearCacheDir("html_");            
+            FileCacheHelper.DeleteCacheDir("html");            
         }
 
-        public static Return ClearCacheDir(string url)
+        public static Return DeleteCacheDir(string url)
         {
             try
             {

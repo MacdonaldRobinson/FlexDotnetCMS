@@ -123,7 +123,7 @@
                                         <asp:HiddenField ID="FieldID" Value="0" runat="server" />
                                         <%# (!Item.RenderLabelAfterControl) ? "<label data-fieldcode='" + Item.FieldCode + "' data-fieldid=" + Item.ID + ">" + Item.FieldLabel + "</label> <i class='fa fa-question-circle tooltip' aria-hidden='true' title='" + Item.FieldDescription + "<p>Usage Example:</p><p>"+ Item.UsageExample +"</p>'></i>" : "" %>
                                             <asp:PlaceHolder runat="server" ID="DynamicField" />
-                                        <%# (Item.RenderLabelAfterControl) ? "<label data-fieldcode='"+Item.FieldCode+"' data-fieldid="+Item.ID+">"+Item.FieldLabel+"</label> <i class='fa fa-question-circle tooltip' aria-hidden='true' title='"+Item.FieldDescription+"'></i><p>Usage Example:</p><p>"+ Item.UsageExample +"</p>'" : "" %>
+                                        <%# (Item.RenderLabelAfterControl) ? "<label data-fieldcode='" + Item.FieldCode + "' data-fieldid=" + Item.ID + ">" + Item.FieldLabel + "</label> <i class='fa fa-question-circle tooltip' aria-hidden='true' title='" + Item.FieldDescription + "<p>Usage Example:</p><p>"+ Item.UsageExample +"</p>'></i>" : "" %>
                                     </asp:Panel>
                                 </ItemTemplate>
                             </asp:ListView>

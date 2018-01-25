@@ -121,9 +121,9 @@
                                 <ItemTemplate>
                                     <asp:Panel runat="server" CssClass="field" ID="FieldWrapper">
                                         <asp:HiddenField ID="FieldID" Value="0" runat="server" />
-                                        <%# (!Item.RenderLabelAfterControl) ? "<label data-fieldcode='" + Item.FieldCode + "' data-fieldid=" + Item.ID + ">" + Item.FieldLabel + "</label> <i class='fa fa-question-circle tooltip' aria-hidden='true' title='" + Item.FieldDescription + "<p>Usage Example:</p><p>"+ Item.UsageExample +"</p>'></i>" : "" %>
+                                        <%# (!Item.RenderLabelAfterControl) ? "<label data-fieldcode='" + Item.FieldCode + "' data-fieldid=" + Item.ID + ">" + Item.FieldLabel + "</label> <i class='fa fa-question-circle tooltip' aria-hidden='true' title='" + Item.FieldDescription + "<p>Usage Example:</p><p>"+ Item.GetUsageExample() +"</p>'></i>" : "" %>
                                             <asp:PlaceHolder runat="server" ID="DynamicField" />
-                                        <%# (Item.RenderLabelAfterControl) ? "<label data-fieldcode='" + Item.FieldCode + "' data-fieldid=" + Item.ID + ">" + Item.FieldLabel + "</label> <i class='fa fa-question-circle tooltip' aria-hidden='true' title='" + Item.FieldDescription + "<p>Usage Example:</p><p>"+ Item.UsageExample +"</p>'></i>" : "" %>
+                                        <%# (Item.RenderLabelAfterControl) ? "<label data-fieldcode='" + Item.FieldCode + "' data-fieldid=" + Item.ID + ">" + Item.FieldLabel + "</label> <i class='fa fa-question-circle tooltip' aria-hidden='true' title='" + Item.FieldDescription + "<p>Usage Example:</p><p>"+ Item.GetUsageExample() +"</p>'></i>" : "" %>
                                     </asp:Panel>
                                 </ItemTemplate>
                             </asp:ListView>

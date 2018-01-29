@@ -47,6 +47,13 @@ namespace FrameworkLibrary
             return returnObj;
         }
 
+        public static Return GenerateReturn(Exception exception)
+        {
+            var returnObj = new Return { Error = ErrorHelper.CreateError(exception) };
+
+            return returnObj;
+        }
+
         /// <summary>
         /// Attempts to update the DB with all the changes made to the current DataContext
         /// </summary>

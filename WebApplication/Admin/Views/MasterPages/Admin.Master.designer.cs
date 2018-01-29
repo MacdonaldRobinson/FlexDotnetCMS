@@ -67,6 +67,15 @@ namespace WebApplication.Admin {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl GlossaryTermsNavItem;
         
         /// <summary>
+        /// ClearAllCache control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ClearAllCache;
+        
+        /// <summary>
         /// LanguageSwitcher control.
         /// </summary>
         /// <remarks>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
+using System.IO;
 
 namespace FrameworkLibrary
 {
@@ -1104,7 +1105,6 @@ namespace FrameworkLibrary
 
             var customCode = propertyName;
 
-
             if (customCode.Contains("{{Load"))
             {
                 if (customCode.Contains("@"))
@@ -1157,6 +1157,24 @@ namespace FrameworkLibrary
                                 customCode = customCode.Replace(itemAsString, returnValue);
                             }
                         /*}*/
+                    }
+                }
+            }
+
+            if (customCode.Contains("{Include:"))
+            {
+                var loadFileMatches = Regex.Matches(customCode, "{Include:.*}");
+
+                foreach (var item in loadFileMatches)
+                {
+                    var path = item.ToString().Replace("{Include:", "").Replace("}", "").Replace("'","");
+
+                    var absPath = HttpContext.Current.Server.MapPath(path);
+
+                    if(File.Exists(absPath))
+                    {
+                        var fileContent = File.ReadAllText(absPath);
+                        customCode = customCode.Replace(item.ToString().ToString(), fileContent);
                     }
                 }
             }

@@ -89,35 +89,12 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
 
         protected void ClearAllCache_OnClick(object sender, EventArgs e)
         {
-            var webserviceRequests = FrameworkLibrary.WebserviceRequestsMapper.GetAll();
+            var returnObj = CacheHelper.ClearAllCache();
 
-            foreach (var item in webserviceRequests)
-            {
-                var context = BaseMapper.GetObjectFromContext(item);
-
-                if (context != null)
-                    BaseMapper.DeleteObjectFromContext(context);
-            }
-
-            try
-            {
-                BaseMapper.SaveDataModel();
-                DisplaySuccessMessage("Successfully Cleared All Cache");
-            }
-            catch (Exception ex)
-            {
-                DisplayErrorMessage("Error Clearing All Cache", ErrorHelper.CreateError(ex));
-            }
-
-            ContextHelper.ClearAllMemoryCache();
-            FileCacheHelper.ClearAllCache();
-
-            var mediaDetails = MediaDetailsMapper.GetAllActiveMediaDetails().Where(i => i.MediaType.ShowInSiteTree && i.EnableCaching && i.MediaType.EnableCaching && i.CanRender);
-
-            foreach (IMediaDetail mediaDetail in mediaDetails)
-            {
-                mediaDetail.RemoveFromCache();
-            }
+            if (returnObj.IsError)
+                DisplayErrorMessage("Error clearing cache", returnObj.Error);
+            else
+                DisplaySuccessMessage("Successfully cleared all cache");
 
         }
 

@@ -382,7 +382,7 @@ namespace TinyFileManager.NET
                         this.objFItem.strClassType = "dir";
                         if (this.objConfig.boolAllowDeleteFolder)
                         {
-                            this.objFItem.strDeleteLink = "<a href=\"" + this.strCurrLink + "&cmd=delfolder&folder=" + this.objFItem.strPath + "&currpath=" + this.strCurrPath + "\" class=\"btn erase-button top-right\" onclick=\"return confirm('Are you sure to delete the folder and all the objects in it?');\" title=\"Erase\"><i class=\"icon-trash\"></i></a>";
+                            this.objFItem.strDeleteLink = "<a href=\"" + this.strCurrLink + "&cmd=delfolder&folder=" + this.objFItem.strPath + "&currpath=" + this.strCurrPath + "\" class=\"btn erase-button top-right\" onclick=\"return confirm('Are you sure you want to delete this folder? NOTE: All the subfolders and files under this folder will also be deleted and there is no way of getting them back.');\" title=\"Erase\"><i class=\"icon-trash\"></i></a>";
                             this.objFItem.strDeleteLink = this.objFItem.strDeleteLink + renameLink;
                         }
                         else
@@ -444,7 +444,7 @@ namespace TinyFileManager.NET
                             // get delete link
                             if (this.objConfig.boolAllowDeleteFile)
                             {
-                                this.objFItem.strDeleteLink = "<a href=\"" + this.strCurrLink + "&cmd=delfile&file=" + this.objFItem.strPath + "&currpath=" + this.strCurrPath + "\" class=\"btn erase-button\" onclick=\"return confirm('Are you sure to delete this file?');\" title=\"Erase\"><i class=\"icon-trash\"></i></a>";
+                                this.objFItem.strDeleteLink = "<a href=\"" + this.strCurrLink + "&cmd=delfile&file=" + this.objFItem.strPath + "&currpath=" + this.strCurrPath + "\" class=\"btn erase-button\" onclick=\"return confirm('Are you sure you want to delete this file? NOTE: There is no way to get this file back once you delete it');\" title=\"Erase\"><i class=\"icon-trash\"></i></a>";
                             }
                             else
                             {

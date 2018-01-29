@@ -47,5 +47,15 @@ namespace WebApplication.Admin
         {
             this.BasePage.CheckInAll();
         }
+
+        protected void ClearAllCache_Click(object sender, EventArgs e)
+        {
+            var returnObj = CacheHelper.ClearAllCache();
+
+            if (returnObj.IsError)
+                BasePage.DisplayErrorMessage("Error clearing cache", returnObj.Error);
+            else
+                BasePage.DisplaySuccessMessage("Successfully cleared all cache");
+        }
     }
 }

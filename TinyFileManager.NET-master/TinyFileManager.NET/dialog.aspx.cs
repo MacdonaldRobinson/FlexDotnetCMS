@@ -64,9 +64,24 @@ namespace TinyFileManager.NET
                 var protocal = (Request.IsSecureConnection) ? "https://" : "http://";
 
                 baseUrl = protocal + Request.Url.Authority;
-            }            
+            }
 
-            if ((strCurrPath == "") || strCurrPath.Contains("//") || (!Directory.Exists(Server.MapPath(strCurrPath))))
+            if (File.Exists(Server.MapPath(strCurrPath)))
+            {
+                var fileInfo = new FileInfo(Server.MapPath(strCurrPath));
+                var dir = fileInfo.Directory.FullName;
+
+                var absUrl = URIHelper.ConvertAbsPathToAbsUrl(dir);                
+
+                strCurrPath = URIHelper.ConvertAbsUrlToTilda(absUrl);
+            }
+
+            if(strCurrPath.StartsWith("~/"))
+            {
+                strCurrPath = strCurrPath.Replace("~/", "/");
+            }
+
+            if ((strCurrPath == "") || strCurrPath.Contains("//") || !Directory.Exists(Server.MapPath(strCurrPath)))
                 strCurrPath = defaultRootPath;            
 
             if (strCurrPath.Contains(baseUrl))

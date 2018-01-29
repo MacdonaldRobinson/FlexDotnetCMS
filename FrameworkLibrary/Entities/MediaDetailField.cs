@@ -12,14 +12,9 @@ namespace FrameworkLibrary
 {
     public partial class MediaDetailField : IMustContainID, IField
     {
-        public DirectoryInfo UploadFolder
+        public static DirectoryInfo GetUploadFolder(MediaDetailField field, string baseUploadFolder = "~/media/uploads/")
         {
-            get
-            {
-                var baseUploadFolder = "~/media/uploads/";
-
-                return new DirectoryInfo(FrameworkLibrary.URIHelper.ConvertToAbsPath(baseUploadFolder + "fields/" + this.ID + "/"));
-            }
+            return new DirectoryInfo(FrameworkLibrary.URIHelper.ConvertToAbsPath(baseUploadFolder + "medias/"+ field.MediaDetail.MediaID + "/media-details/" + field.MediaDetail.ID + "/fields/" + field.ID + "/"));
         }
 
         public string GetUsageExample()

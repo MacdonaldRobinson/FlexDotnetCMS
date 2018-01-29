@@ -41,9 +41,14 @@ namespace WebApplication.Admin.Controls.Fields
             var folderPath = SaveToFolder;
 
             if (folderPath == "")
-                folderPath = "~/media/uploads/";
+            {
+                return MediaDetailField.GetUploadFolder(field);
+            }       
+            else
+            {
 
-            return new DirectoryInfo(FrameworkLibrary.URIHelper.ConvertToAbsPath(folderPath + "fields/" + field.ID + "/"));
+                return MediaDetailField.GetUploadFolder(field, folderPath);
+            }
         }
 
         public override void SetValue(object value)

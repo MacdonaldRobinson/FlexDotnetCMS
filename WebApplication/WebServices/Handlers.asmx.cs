@@ -100,14 +100,16 @@ namespace WebApplication.WebServices
             {
                 var postedFile = HttpContext.Current.Request.Files[fileIndex];
 
-                if(!field.UploadFolder.Exists)
+                var uploadFolder = MediaDetailField.GetUploadFolder(field);
+
+                if (!uploadFolder.Exists)
                 {
-                    field.UploadFolder.Create();
+                    uploadFolder.Create();
                 }
 
                 var fieldName = postedFile.FileName.ToLower().Replace(" ", "-");
 
-                var uploadFilePath = field.UploadFolder.FullName + key + "_" + fieldName;
+                var uploadFilePath = uploadFolder.FullName + key + "_" + fieldName;
                 postedFile.SaveAs(uploadFilePath);
 
                 var relativePath = URIHelper.ConvertAbsPathToAbsUrl(uploadFilePath);

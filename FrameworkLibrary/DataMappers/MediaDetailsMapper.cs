@@ -1161,13 +1161,13 @@ namespace FrameworkLibrary
                 }
             }
 
-            if (customCode.Contains("{Include:"))
+            if (customCode.Contains("{IncludeFile:"))
             {
-                var loadFileMatches = Regex.Matches(customCode, "{Include:.*}");
+                var loadFileMatches = Regex.Matches(customCode, "{IncludeFile:.*}");
 
                 foreach (var item in loadFileMatches)
                 {
-                    var path = item.ToString().Replace("{Include:", "").Replace("}", "").Replace("'","");
+                    var path = item.ToString().Replace("{IncludeFile:", "").Replace("}", "").Replace("'","");
 
                     var absPath = HttpContext.Current.Server.MapPath(path);
 

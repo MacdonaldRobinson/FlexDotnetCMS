@@ -352,6 +352,7 @@
     <Content Include="Controls\WeatherWidget.ascx" />
     <Content Include="favicon.ico" />
     <Content Include="FlashVersion\Default.aspx" />
+    <Content Include="Frontend\test.cshtml" />
     <Content Include="Global.asax" />
     <Content Include="Installer\Default.aspx" />
     <Content Include="Installer\Images\loading-gear.gif" />

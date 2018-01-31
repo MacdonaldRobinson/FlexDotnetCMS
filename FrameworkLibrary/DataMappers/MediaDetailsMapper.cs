@@ -434,17 +434,59 @@ namespace FrameworkLibrary
             return newItem;
         }
         
-        public static IEnumerable<IMediaDetail> GetByMediaTypeAndLanguage(long mediaTypeId, Language language = null)
+        public static IEnumerable<IMediaDetail> GetItemsByMediaTypeAndLanguage(long mediaTypeId, long languageId = 0)
         {
-            if(language == null)
+            if(languageId == 0)
             {
-                language = FrameworkSettings.GetCurrentLanguage();
+                languageId = FrameworkSettings.GetCurrentLanguage().ID;
             }
 
-            var mediaDetails =  MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ID == mediaTypeId && i.LanguageID == language.ID && i.HistoryVersionNumber == 0).ToList().Where(i=>i.CanRender);
-
-            return mediaDetails;
+            return MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ID == mediaTypeId && i.LanguageID == languageId && i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now));            
         }
+
+        public static IEnumerable<IMediaDetail> GetItemsWhereFieldAssociationsAreTheSame(long mediaId, List<string> fieldCodes, long mediaTypeId, int take = -1)
+        {
+            var mediaDetail = MediasMapper.GetByID(mediaId)?.GetLiveMediaDetail();
+
+            if (mediaDetail == null)
+                return new List<IMediaDetail>();
+
+            var fieldCodeMediaIds = new Dictionary<string, List<long>>();
+
+            foreach (var fieldCode in fieldCodes)
+            {
+                var fieldAssociations = ((MediaDetailField)mediaDetail.LoadField(fieldCode))?.FieldAssociations;
+                var mediaIds = new List<long>();
+
+                if (fieldAssociations != null)
+                {
+                    foreach (var association in fieldAssociations)
+                    {
+                        mediaIds.Add(association.MediaDetail.MediaID);
+                    }
+                }
+
+                fieldCodeMediaIds.Add(fieldCode, mediaIds);
+            }
+            
+            //return MediaDetailsMapper.GetItemsByMediaTypeAndLanguage(mediaTypeId, mediaDetail.LanguageID).Where(i => i.Fields.Any(j => j.FieldCode == FieldCode && j.FieldAssociations.Any(k => mediaIds.Contains(k.MediaDetail.MediaID)))).ToList();
+            var items =  MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ID == mediaTypeId && i.LanguageID == mediaDetail.LanguageID && i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderByDescending(i=>i.DateCreated).ToList().Where(i=> 
+                                                                                    i.Fields.Any(j => fieldCodeMediaIds.Keys.Contains(j.FieldCode) && 
+                                                                                                    j.FieldAssociations.Any(k => fieldCodeMediaIds[j.FieldCode].Contains(k.MediaDetail.MediaID))
+                                                                                    ));
+
+            if(take > 0)
+            {
+                items = items.Take(take).ToList();
+            }
+            else
+            {
+                items = items.ToList();
+            }
+
+            return items;
+
+        }        
 
         public static IEnumerable<IMediaDetail> GetByMediaType(MediaType mediaType)
         {
@@ -520,7 +562,11 @@ namespace FrameworkLibrary
             if (virtualPathByCurrentHost.Contains(".aspx"))
                 return null;
 
-            var item = BaseMapper.GetDataModel().MediaDetails.Where(i => (i.CachedVirtualPath == virtualPathByCurrentHost || i.CachedVirtualPath == virtualPath) && i.LanguageID == currentLanguage.ID && i.HistoryVersionNumber == versionNumber && i.MediaType.ShowInSiteTree).ToList().Where(i => i.CanRender || HttpContext.Current.Request["version"] != null).OrderByDescending(i => i.DateLastModified).FirstOrDefault();
+            //var item = BaseMapper.GetDataModel().MediaDetails.Where(i => i.LanguageID == currentLanguage.ID && i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now) && (i.CachedVirtualPath == virtualPathByCurrentHost || i.CachedVirtualPath == virtualPath) && i.LanguageID == currentLanguage.ID && i.HistoryVersionNumber == versionNumber && i.MediaType.ShowInSiteTree).ToList().Where(i => i.CanRender || HttpContext.Current.Request["version"] != null).OrderByDescending(i => i.DateLastModified).FirstOrDefault();
+
+            var item = BaseMapper.GetDataModel().MediaDetails.Where(i => i.LanguageID == currentLanguage.ID && i.HistoryVersionNumber == versionNumber && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now) &&
+                                                                i.MediaType.ShowInSiteTree && (i.CachedVirtualPath == virtualPathByCurrentHost || i.CachedVirtualPath == virtualPath)
+                                                        ).OrderByDescending(i => i.DateLastModified).FirstOrDefault();
 
             if (item != null)
                 return item;

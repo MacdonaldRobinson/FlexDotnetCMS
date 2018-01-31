@@ -286,7 +286,11 @@ namespace FrameworkLibrary
 
         public string RenderShortCode(string shortCode, bool includeFieldWrapper = true)
         {
-            shortCode = "{" + shortCode + "}";
+            if (!(shortCode.StartsWith("{") && shortCode.EndsWith("}")))
+            {
+                shortCode = "{" + shortCode + "}";
+            }
+
             return MediaDetailsMapper.ParseSpecialTags(this, shortCode, includeFieldWrapper: includeFieldWrapper);
         }
 
@@ -436,6 +440,18 @@ namespace FrameworkLibrary
         public IEnumerable<IMediaDetail> GetRelatedItems(long mediaTypeId = 0)
         {
             var relatedItems = MediaDetailsMapper.GetRelatedItems(this, mediaTypeId);
+
+            return relatedItems;
+        }
+
+        public IEnumerable<IMediaDetail> GetItemsWhereFieldAssociationsAreTheSame(List<string> fieldCodes, long mediaTypeId, int take = -1)
+        {
+            return MediaDetailsMapper.GetItemsWhereFieldAssociationsAreTheSame(this.MediaID, fieldCodes, mediaTypeId, take);
+        }
+
+        public Dictionary<Tag, List<MediaDetail>> GetRelatedItemsByTags(long mediaTypeId = 0)
+        {
+            var relatedItems = MediaDetailsMapper.GetRelatedItemsByTags(this, mediaTypeId);
 
             return relatedItems;
         }

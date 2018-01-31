@@ -307,6 +307,7 @@ namespace FrameworkLibrary
 
         public static string RunOrCompileRazorCode(string tag, string code, object obj, bool compileRazor)
         {
+            //Only UnComment to debug Razor code, make sure to comment it again because it extremely slows down rendering
             /*var config = new TemplateServiceConfiguration();
             config.Debug = true;
 

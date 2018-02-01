@@ -83,5 +83,25 @@ namespace FrameworkLibrary
                 return new Return(ex, ErrorHelper.CreateError(ex));
             }
         }
+
+        public static Return ClearAllCache()
+        {
+            try
+            {
+                var endpoints = Connection.GetEndPoints(true);
+                foreach (var endpoint in endpoints)
+                {
+                    var server = Connection.GetServer(endpoint);
+                    server.FlushAllDatabases();
+                }
+
+                return new Return();
+            }
+            catch (Exception ex)
+            {
+                ErrorHelper.LogException(ex);
+                return new Return(ex, ErrorHelper.CreateError(ex));
+            }
+        }
     }
 }

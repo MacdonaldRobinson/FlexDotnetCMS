@@ -10,11 +10,11 @@ namespace FrameworkLibrary
     {
         public static Return ClearAllCache()
         {
-
             try
             {
                 ContextHelper.ClearAllMemoryCache();
                 FileCacheHelper.ClearAllCache();
+                RedisCacheHelper.ClearAllCache();
 
                 var webserviceRequests = FrameworkLibrary.WebserviceRequestsMapper.GetAll();
 
@@ -24,13 +24,6 @@ namespace FrameworkLibrary
 
                     if (context != null)
                         BaseMapper.DeleteObjectFromContext(context);
-                }
-
-                var mediaDetails = MediaDetailsMapper.GetAllActiveMediaDetails().Where(i => i.MediaType.ShowInSiteTree && i.EnableCaching && i.MediaType.EnableCaching && i.CanRender);
-
-                foreach (IMediaDetail mediaDetail in mediaDetails)
-                {
-                    mediaDetail.RemoveFromCache();
                 }
 
                 var returnObj = BaseMapper.SaveDataModel();

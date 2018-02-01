@@ -504,8 +504,8 @@ namespace WebApplication.Admin.MediaArticle
                 }
             }
 
-            if (history.MainContent.Trim() == "")
-                history.MainContent = "TBD";
+            /*if (history.MainContent.Trim() == "")
+                history.MainContent = "TBD";*/
 
             return MediaDetailsMapper.Insert(history);
         }

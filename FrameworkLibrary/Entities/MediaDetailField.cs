@@ -19,6 +19,9 @@ namespace FrameworkLibrary
 
         public string GetUsageExample()
         {
+            if (MediaDetail == null)
+                return "Please save first";
+
             var usageExample = (!string.IsNullOrEmpty(UsageExample)) ? UsageExample : "{Field:" + FieldCode + "} OR {{Load:" + MediaDetail.MediaID + "}.Field:" + FieldCode + "}";
 
             return usageExample;

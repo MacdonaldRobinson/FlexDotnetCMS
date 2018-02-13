@@ -884,6 +884,24 @@ function initTinyMCE()
     });
 }
 
+function BindReOrderMultiUploader(AdminUpdatePanel) {
+
+    BindGridViewSortable("#" + AdminUpdatePanel + " .FieldItems", "", AdminUpdatePanel, function () {
+
+        var ReorderItems = $("#" + AdminUpdatePanel + " .FieldItems .item").parents(".MultiFileUploader").find(".ReorderItems");
+
+        var arr = new Array();
+        $("#" + AdminUpdatePanel + " .FieldItems .item").each(function () {
+            var id = $(this).attr("data-id");
+            arr.push(id);
+        });
+
+        ReorderItems.val(JSON.stringify(arr));
+
+        return false;
+    });
+}
+
 function BindGridViewSortable(CssSelector, WebserviceUrl, UpdatePanelClientId, OnAfterRefreshFunction) {    
     var DragDropGridSortable = $(CssSelector).sortable({
         items: 'tbody tr',

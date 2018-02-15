@@ -51,7 +51,22 @@
 
                 $(this).html(html);
             });
+
+
         });
+
+        initToolTips();
     });
 
-});*/
+});
+
+function initToolTips() {
+    if (navigator.appVersion.indexOf("MSIE 8.0") == -1) {
+        $('[data-toggle="tooltip"]').tooltip({ track: true });
+    }
+    else {
+        $('[data-toggle="tooltip"]').addClass('apc-terms');
+    }
+}
+
+*/

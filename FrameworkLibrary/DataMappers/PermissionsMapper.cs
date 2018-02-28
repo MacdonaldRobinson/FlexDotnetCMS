@@ -11,35 +11,32 @@ namespace FrameworkLibrary
 
         public static IEnumerable<Permission> GetAll()
         {
-            return GetAll(MapperKey, () => GetDataModel().Permissions.OrderByDescending(i => i.DateCreated));
+            return GetDataModel().Permissions.OrderByDescending(i => i.DateCreated);
         }
 
         public static IEnumerable<Permission> FilterByActiveStatus(IEnumerable<Permission> items, bool isActive)
         {
-            return items.Where(item => item.IsActive == isActive);
+            return GetDataModel().Permissions.Where(item => item.IsActive == isActive);
         }
 
         public static IEnumerable<Permission> GetAllActive()
         {
-            return FilterByActiveStatus(GetAll(), true);
+            return GetDataModel().Permissions.Where(item => item.IsActive);
         }
 
         public static Permission GetByID(long id)
-        {
-            var allItems = GetAll();
-            return allItems.FirstOrDefault(item => item.ID == id);
+        {            
+            return GetDataModel().Permissions.FirstOrDefault(item => item.ID == id);
         }
 
         public static Permission GetPermissionsFromEnum(PermissionsEnum permissionsEnum)
-        {
-            var allItems = GetAll();
-            return allItems.FirstOrDefault(item => item.EnumName == permissionsEnum.ToString());
+        {            
+            return GetDataModel().Permissions.FirstOrDefault(item => item.EnumName == permissionsEnum.ToString());
         }
 
         public static IEnumerable<Permission> GetPermissionsInRole(Role role)
-        {
-            var items = GetAll();
-            var filtered = items.Where(item => role.Permissions.Where(i => i.ID == item.ID).Any());
+        {            
+            var filtered = GetDataModel().Permissions.Where(item => role.Permissions.Where(i => i.ID == item.ID).Any());
 
             return filtered.Distinct();
         }
@@ -58,9 +55,7 @@ namespace FrameworkLibrary
 
         public static IEnumerable<Permission> GetPermissionsNotInRole(Role role)
         {
-            var items = GetAll();
-
-            return items.Where(item => role.Permissions.Where(i => i.ID == item.ID).Count() == 0);
+            return GetDataModel().Permissions.Where(item => role.Permissions.Where(i => i.ID == item.ID).Count() == 0);
         }
 
         public static IEnumerable<Permission> GetUserRolesPermissions(User user)
@@ -75,10 +70,9 @@ namespace FrameworkLibrary
 
         public static IEnumerable<Permission> GetPermissionsNotInUserRoles(User user)
         {
-            var allPermissions = GetAll();
             var rolesPermissions = GetUserRolesPermissions(user);
 
-            return allPermissions.Where(item => rolesPermissions.Where(i => i.ID == item.ID).Count() == 0);
+            return GetDataModel().Permissions.Where(item => rolesPermissions.Where(i => i.ID == item.ID).Count() == 0);
         }
 
         public static IEnumerable<Permission> FilterOutList(IEnumerable<Permission> list, IEnumerable<Permission> permissionsToRemove)

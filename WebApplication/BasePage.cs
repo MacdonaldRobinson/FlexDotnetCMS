@@ -160,21 +160,22 @@ namespace WebApplication
         {
             get
             {
-                var version = ContextHelper.Get("UserSelectedVersion", ContextType.Session);
+                var version = RenderVersion.HTML;
+                /*var version = ContextHelper.Get("UserSelectedVersion", ContextType.Session);
 
                 if (version == null)
-                {
+                {*/
                     if (IsMobileDevice)
                         version = RenderVersion.Mobile;
                     else
                         version = RenderVersion.HTML;
-                }
+                //}
 
                 return (RenderVersion)version;
             }
             set
             {
-                ContextHelper.Set("UserSelectedVersion", value, ContextType.Session);
+                //ContextHelper.Set("UserSelectedVersion", value, ContextType.Session);
             }
         }
 

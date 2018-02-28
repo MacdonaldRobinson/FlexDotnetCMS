@@ -11,7 +11,7 @@ namespace FrameworkLibrary
 
         public static IEnumerable<Tag> GetAll()
         {
-            return GetAll(mapperKey, () => GetDataModel().Tags.OrderByDescending(i => i.DateCreated));
+            return GetDataModel().Tags.OrderByDescending(i => i.DateCreated);
         }
 
         public static void ClearCache()
@@ -21,8 +21,7 @@ namespace FrameworkLibrary
 
         public static Tag GetByID(long id)
         {
-            var allItems = GetAll();
-            return allItems.FirstOrDefault(item => item.ID == id);
+            return GetDataModel().Tags.FirstOrDefault(item => item.ID == id);
         }
 
         public static IEnumerable<Tag> FilterByActiveStatus(IEnumerable<Tag> items, bool isActive)
@@ -32,21 +31,19 @@ namespace FrameworkLibrary
 
         public static IEnumerable<Tag> GetAllActive()
         {
-            return FilterByActiveStatus(GetAll(), true);
+            return GetDataModel().Tags.Where(item => item.IsActive);
         }
 
         public static Tag GetByName(string name)
         {
-            var allItems = GetAll();
             name = name.ToLower();
 
-            return allItems.FirstOrDefault(item => item.Name.ToLower() == name);
+            return GetDataModel().Tags.FirstOrDefault(item => item.Name.ToLower() == name);
         }
 
         public static Tag GetBySefTitle(string sefTitle)
         {
-            var allItems = GetAll();
-            return allItems.FirstOrDefault(item => item.SefTitle == sefTitle);
+            return GetDataModel().Tags.FirstOrDefault(item => item.SefTitle == sefTitle);
         }
 
         public static Return Insert(Tag obj)

@@ -97,7 +97,7 @@ namespace WebApplication.Services
                 data = Regex.Replace(data, "url[(][\'|\"]{0,1}(?!.*http)", "${0}" + fileBaseUrl);
             }
 
-            ContextHelper.SaveToCache(Request.Url.AbsoluteUri, data, DateTime.Now.AddSeconds(AppSettings.WebRequestCacheDurationInSeconds));
+            //ContextHelper.SaveToCache(Request.Url.AbsoluteUri, data, DateTime.Now.AddSeconds(AppSettings.WebRequestCacheDurationInSeconds));
 
             BaseService.WriteRaw(data, Response);
         }

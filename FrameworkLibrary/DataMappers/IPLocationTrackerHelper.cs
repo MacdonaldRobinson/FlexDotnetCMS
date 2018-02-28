@@ -12,7 +12,7 @@ namespace FrameworkLibrary
 
         public static IEnumerable<IPLocationTrackerEntry> GetAll()
         {
-            return GetAll(MapperKey, () => GetDataModel().IPLocationTrackerEntries).OrderByDescending(b => b.DateCreated);
+            return GetDataModel().IPLocationTrackerEntries.OrderByDescending(b => b.DateCreated);
         }
 
         public static void ClearCache()
@@ -22,14 +22,12 @@ namespace FrameworkLibrary
 
         public static IPLocationTrackerEntry GetByID(long id)
         {
-            var allItems = GetAll();
-            return allItems.FirstOrDefault(item => item.ID == id);
+            return GetDataModel().IPLocationTrackerEntries.FirstOrDefault(item => item.ID == id);
         }
 
         public static IPLocationTrackerEntry GetByIP(string ip)
         {
-            var allItems = GetAll();
-            return allItems.FirstOrDefault(item => item.IPAddress == ip);
+            return GetDataModel().IPLocationTrackerEntries.FirstOrDefault(item => item.IPAddress == ip);
         }
 
         public static Return Insert(IPLocationTrackerEntry obj)

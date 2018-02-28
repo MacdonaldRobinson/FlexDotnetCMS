@@ -10,7 +10,7 @@ namespace FrameworkLibrary
 
         public static IEnumerable<GlossaryTerm> GetAll()
         {
-            return GetAll(MapperKey, () => GetDataModel().GlossaryTerms).OrderByDescending(b => b.DateCreated);
+            return GetDataModel().GlossaryTerms.OrderByDescending(b => b.DateCreated);
         }
 
         public static void ClearCache()
@@ -20,8 +20,7 @@ namespace FrameworkLibrary
 
         public static GlossaryTerm GetByID(long id)
         {
-            var allItems = GetAll();
-            return allItems.FirstOrDefault(item => item.ID == id);
+            return GetDataModel().GlossaryTerms.FirstOrDefault(item => item.ID == id);
         }
 
         public static Return Insert(GlossaryTerm obj)

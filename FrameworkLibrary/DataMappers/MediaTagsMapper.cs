@@ -9,7 +9,7 @@ namespace FrameworkLibrary
 
         public static IEnumerable<MediaTag> GetAll()
         {
-            return GetAll(MapperKey, () => GetDataModel().MediaTags.OrderBy(b => b.OrderIndex));
+            return GetDataModel().MediaTags.OrderBy(b => b.OrderIndex);
         }
 
         public static void ClearCache()
@@ -19,20 +19,17 @@ namespace FrameworkLibrary
 
         public static MediaTag GetByMediaAndTag(Media media, Tag tag)
         {
-            var allItems = GetAll();
-            return allItems.FirstOrDefault(item => item.TagID == tag.ID && item.MediaID == media.ID);
+            return GetDataModel().MediaTags.FirstOrDefault(item => item.TagID == tag.ID && item.MediaID == media.ID);
         }
 
         public static IEnumerable<MediaTag> GetByMedia(Media media)
         {
-            var allItems = GetAll();
-            return allItems.Where(item => item.MediaID == media.ID);
+            return GetDataModel().MediaTags.Where(item => item.MediaID == media.ID);
         }
 
         public static IEnumerable<MediaTag> GetByTag(Tag tag)
         {
-            var allItems = GetAll();
-            return allItems.Where(item => item.TagID == tag.ID);
+            return GetDataModel().MediaTags.Where(item => item.TagID == tag.ID);
         }
 
         public static MediaTag CreateObject()

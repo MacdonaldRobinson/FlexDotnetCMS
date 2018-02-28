@@ -11,7 +11,7 @@ namespace FrameworkLibrary
 
         public static IEnumerable<WebserviceRequest> GetAll()
         {
-            return GetAll(MapperKey, () => GetDataModel().WebserviceRequests.OrderByDescending(b => b.DateCreated));
+            return GetDataModel().WebserviceRequests.OrderByDescending(b => b.DateCreated);
         }
 
         public static void ClearCache()
@@ -21,14 +21,12 @@ namespace FrameworkLibrary
 
         public static WebserviceRequest GetByID(long id)
         {
-            var allItems = GetAll();
-            return allItems.FirstOrDefault(item => item.ID == id);
+            return GetDataModel().WebserviceRequests.FirstOrDefault(item => item.ID == id);
         }
 
         public static WebserviceRequest GetByUrl(string url)
-        {
-            var allItems = GetAll();
-            return allItems.FirstOrDefault(item => (item != null) && (item.Url == url));
+        {            
+            return GetDataModel().WebserviceRequests.FirstOrDefault(item => (item != null) && (item.Url == url));
         }
 
         public static Return Insert(WebserviceRequest obj)
@@ -38,7 +36,7 @@ namespace FrameworkLibrary
 
             GetDataModel(true);
 
-            var allItems = GetAll().OrderBy(i => i.DateCreated);
+            var allItems = GetDataModel().WebserviceRequests.OrderBy(i => i.DateCreated);
             var total = allItems.Count();
 
             if (total > MaxNumberOfLogEntries)

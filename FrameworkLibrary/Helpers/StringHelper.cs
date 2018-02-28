@@ -57,7 +57,7 @@ namespace FrameworkLibrary
             var settings = new JsonSerializerSettings
             {
                 PreserveReferencesHandling = PreserveReferencesHandling.None,
-                ReferenceLoopHandling = ReferenceLoopHandling.Error
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             };
 
             if (to is IMediaDetail)

@@ -9,15 +9,14 @@ namespace FrameworkLibrary
     {
         private const string MapperKey = "UsersMediaDetailsMapperKey";
 
-        public static IEnumerable<UserMedia> GetAll()
+        /*public static IEnumerable<UserMedia> GetAll()
         {
-            return GetAll(MapperKey, () => GetDataModel().UsersMedias.OrderByDescending(i => i.DateCreated));
-        }
+            return GetDataModel().UsersMedias.OrderByDescending(i => i.DateCreated);
+        }*/
 
         public static UserMedia GetByID(long id)
-        {
-            var allItems = GetAll();
-            return allItems.FirstOrDefault(item => item.ID == id);
+        {           
+            return GetDataModel().UsersMedias.FirstOrDefault(item => item.ID == id);
         }
 
         public static IEnumerable<User> GetUsers(IEnumerable<UserMedia> userMediaDetails)
@@ -34,9 +33,7 @@ namespace FrameworkLibrary
 
         public static IEnumerable<UserMedia> GetAllWithPermission(Permission permission)
         {
-            var items = GetAll();
-
-            return items.Where(item => item.PermissionID == permission.ID);
+            return GetDataModel().UsersMedias.Where(item => item.PermissionID == permission.ID);
         }
 
         public static IEnumerable<UserMedia> GetByUser(User user, IMediaDetail mediaDetail)

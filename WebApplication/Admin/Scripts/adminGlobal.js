@@ -733,8 +733,17 @@ $(window).load(function () {
 
 function BindMultiFileUploaderImageLoadError()
 {
-    $(".MultiFileUploader img").error(function () {
-        $(this).attr("src", BaseUrl + "media/images/icons/File.jpg");
+    $(".MultiFileUploader img:not([data-error])").error(function () {
+
+        var error = $(this).attr("data-error");
+
+        if (error != "true") {
+            $(this).attr("src", BaseUrl + "media/images/icons/File.jpg");
+            $(this).attr("data-error", "true");
+        }
+        else {
+            console.log($(this).attr("src"));
+        }
     });
 }
 
@@ -774,6 +783,7 @@ function BindJQueryUIControls()
 }
 
 $(document).ready(function () {
+    LoadTinyMCETemplates();
     BindJQueryUIControls();
     //BindScrollMagic();    
 
@@ -838,6 +848,22 @@ $(document).ready(function () {
     });
 });
 
+var tinyMCETemplates = [];
+function LoadTinyMCETemplates() {
+    if (tinyMCETemplates.length == 0) {
+        $.get("/Admin/Scripts/TinyMCETemplates.html", function (data) {
+            $(data).find(".Template").each(function (index, template) {
+                var title = $(this).attr("data-title");
+                var description = $(this).attr("data-description");
+                var content = $(template).html();
+
+                var templateObj = { title: title, description: description, content: content };
+                tinyMCETemplates.push(templateObj);
+            });
+        });
+    }    
+}
+
 function initTinyMCE()
 {
     tinymce.editors = [];
@@ -853,8 +879,7 @@ function initTinyMCE()
           'emoticons template paste textcolor colorpicker textpattern imagetools ace_beautify imgmap table map'
         ],
         toolbar1: 'undo redo | paste pastetext | bold italic underline strikethrough superscript subscript charmap emoticons | formatselect blockquote | alignleft aligncenter alignright alignjustify outdent indent | bullist numlist | insert table | anchor link image imgmap media youtube map | visualblocks ace_beautify',
-        templates: [
-        ],
+        templates: tinyMCETemplates,
         image_advtab: true,
         relative_urls: false,
         convert_urls: false,

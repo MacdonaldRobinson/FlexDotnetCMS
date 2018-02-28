@@ -468,23 +468,39 @@ namespace FrameworkLibrary
 
                 fieldCodeMediaIds.Add(fieldCode, mediaIds);
             }
-            
-            //return MediaDetailsMapper.GetItemsByMediaTypeAndLanguage(mediaTypeId, mediaDetail.LanguageID).Where(i => i.Fields.Any(j => j.FieldCode == FieldCode && j.FieldAssociations.Any(k => mediaIds.Contains(k.MediaDetail.MediaID)))).ToList();
-            var items =  MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ID == mediaTypeId && i.LanguageID == mediaDetail.LanguageID && i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderByDescending(i=>i.DateCreated).ToList().Where(i=> 
+
+            /*var foundItems = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ID == mediaTypeId && i.LanguageID == mediaDetail.LanguageID && i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now) &&
+                                                                                        i.Fields.Any(j => fieldCodeMediaIds.Contains(j.FieldCode) &&
+                                                                                                     j.FieldAssociations.Select(a=>a.MediaDetail.MediaID).All(k=>((List<long>)fieldCodeMediaIds[j.FieldCode]).Contains(k))
+                                                                                     ));*/
+
+            var foundItems = new List<IMediaDetail>();
+
+            foreach (var item in fieldCodeMediaIds)
+            {
+                var alreadyAddedMediaIds = foundItems.Select(i => i.MediaID);
+
+                var tempFoundItems = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => !alreadyAddedMediaIds.Contains(i.MediaID) && i.MediaType.ID == mediaTypeId && i.LanguageID == mediaDetail.LanguageID && i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now) &&
+                                                                                            i.Fields.Any(j => item.Key == j.FieldCode &&
+                                                                                                         j.FieldAssociations.Count >= item.Value.Count &&
+                                                                                                         j.FieldAssociations.All(k => item.Value.Contains(k.MediaDetail.MediaID))
+                                                                                         ));
+
+                foundItems.AddRange(tempFoundItems);
+            }
+
+
+            /*var items =  MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ID == mediaTypeId && i.LanguageID == mediaDetail.LanguageID && i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderByDescending(i=>i.DateCreated).ToList().Where(i=> 
                                                                                     i.Fields.Any(j => fieldCodeMediaIds.Keys.Contains(j.FieldCode) && 
                                                                                                     j.FieldAssociations.Any(k => fieldCodeMediaIds[j.FieldCode].Contains(k.MediaDetail.MediaID))
-                                                                                    ));
+                                                                                    ));*/
 
             if(take > 0)
             {
-                items = items.Take(take).ToList();
-            }
-            else
-            {
-                items = items.ToList();
+                foundItems = foundItems.Take(take).ToList();
             }
 
-            return items;
+            return foundItems;
 
         }        
 
@@ -659,7 +675,22 @@ namespace FrameworkLibrary
 
         public static IEnumerable<IMediaDetail> GetAtleastOneChildByMedia(Media media, Language language)
         {
-            return media.ChildMedias.Select(i => GetAtleastOneByMedia(i, language)).Where(i=>i != null);
+            var listMediaDetail = new List<IMediaDetail>();
+
+            var childMedias = BaseMapper.GetDataModel().AllMedia.Where(i => i.ParentMediaID == media.ID && i.MediaDetails.Any(j=>j.MediaType.ShowInSiteTree)).OrderBy(i => i.OrderIndex).ToList();
+
+            foreach (var item in childMedias)
+            {
+                var mediaDetail = GetAtleastOneByMedia(item, language);
+
+                if(mediaDetail != null)
+                {
+                    listMediaDetail.Add(mediaDetail);
+                }
+
+            }
+
+            return listMediaDetail;
         }
 
         public static IMediaDetail GetAtleastOneByMediaID(long mediaId, Language language)
@@ -672,14 +703,14 @@ namespace FrameworkLibrary
             if (languageId == 0)
                 languageId = LanguagesMapper.GetDefaultLanguage().ID;
 
-            var children = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryForMediaDetailID == null && i.Media.ParentMediaID == mediaId && i.HistoryVersionNumber == 0 && i.LanguageID == languageId && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now));
+            var children = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryForMediaDetailID == null && i.Media.ParentMediaID == mediaId && i.HistoryVersionNumber == 0 && i.LanguageID == languageId && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex).ToList();
 
             if (!children.Any())
             {
                 return new List<IMediaDetail>();
             }
 
-            return children.OrderBy(i => i.Media.OrderIndex).ToList();
+            return children;
         }
 
         public static IMediaDetail CreateObject(long mediaTypeId, Media mediaItem, Media parentMedia, bool createMediaTypeFields = true)
@@ -1061,15 +1092,15 @@ namespace FrameworkLibrary
 
         public static string ParseWithTemplate(IMediaDetail mediaDetail)
         {
-            var visualLayoutEditor = false;
-            var html = mediaDetail.UseMainLayout;
+            //var visualLayoutEditor = false;
+            //var html = mediaDetail.UseMainLayout;
 
-            bool.TryParse(HttpContext.Current.Request["VisualLayoutEditor"], out visualLayoutEditor);
+            /*bool.TryParse(HttpContext.Current.Request["VisualLayoutEditor"], out visualLayoutEditor);
 
             if (!visualLayoutEditor)
             {
                 html = ParseSpecialTags(mediaDetail);
-            }
+            }*/
 
             var masterPage = mediaDetail.GetMasterPage();
 
@@ -1077,20 +1108,22 @@ namespace FrameworkLibrary
             {
                 if (masterPage.UseLayout)
                 {
-                    var parseTemplateLayout = ParseSpecialTags(mediaDetail, masterPage.Layout);
-
-                    html = parseTemplateLayout.Replace("{PageContent}", $"<div id='PageContent' data-mediadetailid='{mediaDetail.ID}' data-mediaid='{mediaDetail.MediaID}'>\r\n{html}\r\n</div>");
+                    var html = masterPage.Layout.Replace("{PageContent}", $"<div id='PageContent' data-mediadetailid='{mediaDetail.ID}' data-mediaid='{mediaDetail.MediaID}'>\r\n{mediaDetail.UseMainLayout}\r\n</div>");
+                    
+                    var parseTemplateLayout = ParseSpecialTags(mediaDetail, html);
 
                     //html = masterPage.Layout.Replace("{PageContent}", html);
 
                     /*if (!visualLayoutEditor)
                     {*/
-                        html = ParseSpecialTags(mediaDetail, html);
+                    //html = ParseSpecialTags(mediaDetail, html);
                     //}
-                }
-            }
 
-            return html;
+                    return parseTemplateLayout;
+                }
+            }            
+
+            return mediaDetail.UseMainLayout;
         }
 
         public static string ReplaceFieldWithParsedValue(string originalText, string textToReplace, IField mediaField, string parsedValue, bool includeFieldWrapper, Dictionary<string, string> arguments)
@@ -1153,10 +1186,10 @@ namespace FrameworkLibrary
 
             if (customCode.Contains("{{Load"))
             {
-                if (customCode.Contains("@"))
+                /*if (customCode.Contains("@"))
                 {
                     customCode = ParserHelper.ParseData(customCode, new RazorFieldParams { MediaDetail = mediaDetail });
-                }
+                }*/
 
                 var loadMediaDetailsProperty = Regex.Matches(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:@).?&' }]+");
 

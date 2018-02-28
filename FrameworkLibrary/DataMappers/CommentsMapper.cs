@@ -8,21 +8,19 @@ namespace FrameworkLibrary
     {
         private const string MapperKey = "CommentsMapperKey";
 
-        public static IEnumerable<Comment> GetAll()
+        /*public static IEnumerable<Comment> GetAll()
         {
-            return GetAll(MapperKey, () => GetDataModel().Comments.OrderByDescending(c => c.DateCreated));
-        }
+            return GetDataModel().Comments.OrderByDescending(c => c.DateCreated);
+        }*/
 
         public static Comment GetByID(long id)
         {
-            var allItems = GetAll();
-            return allItems.FirstOrDefault(item => item.ID == id);
+            return GetDataModel().Comments.FirstOrDefault(item => item.ID == id);
         }
 
         public static IEnumerable<Comment> GetByStatus(StatusEnum statusEnum)
         {
-            var allItems = GetAll();
-            return allItems.Where(item => item.Status == statusEnum.ToString());
+            return GetDataModel().Comments.Where(item => item.Status == statusEnum.ToString());
         }
 
         /*public static IEnumerable<Comment> GetByMediaDetail(IMediaDetail detail)

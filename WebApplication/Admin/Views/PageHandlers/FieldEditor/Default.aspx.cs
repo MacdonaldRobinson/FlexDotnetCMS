@@ -49,11 +49,17 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor
                 control = dynamicField.Controls[0];
             }
 
+            if (control != null)
+            {
+                DynamicField.Controls.Add(control);
+            }
+
             var fieldValue = Field.FieldValue.Replace("{BaseUrl}", URIHelper.BaseUrl);
 
             if (control is WebApplication.Admin.Controls.Fields.IFieldControl)
             {
                 var ctrl = ((WebApplication.Admin.Controls.Fields.IFieldControl)control);
+
                 ctrl.FieldID = Field.ID;
                 ctrl.SetValue(fieldValue);
             }
@@ -77,11 +83,6 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldEditor
                         ParserHelper.SetValue(control, Field.SetAdminControlValue, fieldValue);
                     }
                 }
-            }
-
-            if(control != null)
-            {
-                DynamicField.Controls.Add(control);
             }
 
             var frontEndLayout = Field.FrontEndLayout;

@@ -10,10 +10,10 @@ namespace FrameworkLibrary
     {
         private const string MapperKey = "FieldsMapperKey";
 
-        public static IEnumerable<Field> GetAll()
+        /*public static IEnumerable<Field> GetAll()
         {
-            return GetAll(MapperKey, () => GetDataModel().Fields).OrderByDescending(b => b.DateCreated);
-        }
+            return GetDataModel().Fields.OrderByDescending(b => b.DateCreated);
+        }*/
 
         public static Field GetByID(long id)
         {

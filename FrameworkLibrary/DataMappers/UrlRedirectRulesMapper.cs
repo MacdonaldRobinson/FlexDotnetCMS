@@ -7,10 +7,10 @@ namespace FrameworkLibrary
 {
     public class UrlRedirectRulesMapper : MediaDetailsMapper
     {
+        private static string _mediaTypeEnum = MediaTypeEnum.UrlRedirectRule.ToString();
         public new static IEnumerable<IMediaDetail> GetAll()
-        {
-            var name = MediaTypeEnum.UrlRedirectRule.ToString();
-            return MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.Name == name); //return FilterByMediaType(MediaDetailsMapper.GetAll(), MediaTypeEnum.UrlRedirectRule);
+        {            
+            return MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.Name == _mediaTypeEnum); //return FilterByMediaType(MediaDetailsMapper.GetAll(), MediaTypeEnum.UrlRedirectRule);
         }
 
         public static UrlRedirectRule CreateUrlRedirect(string fromVirtualPath, Media toMedia)
@@ -45,12 +45,12 @@ namespace FrameworkLibrary
 
         public static IEnumerable<IMediaDetail> GetAllActive()
         {
-            return FilterByIsHistoryStatus(FilterOutDeletedAndArchived(FilterByCanRenderStatus(GetAll(), true)), false);
+            return MediaDetailsMapper.GetDataModel().MediaDetails.Where(i=> i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now));
         }
 
         public static IEnumerable<IMediaDetail> GetAllActiveByParent(IMediaDetail parent)
         {
-            return GetAllActive().Where(i => i.VirtualPath.StartsWith(parent.VirtualPath));
+            return MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now) && i.VirtualPath.StartsWith(parent.VirtualPath));
         }
 
         public static List<UrlRedirectRule> GetRulesFromUrl(string virtualPath)

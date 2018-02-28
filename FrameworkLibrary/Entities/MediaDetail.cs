@@ -369,17 +369,8 @@ namespace FrameworkLibrary
         {
             get
             {
-                var key = this.ID + "_ChildMediaDetails";
-                var _childMediaDetails = (IEnumerable<IMediaDetail>)ContextHelper.GetFromRequestContext(key);
-
-                if (_childMediaDetails != null)
-                    return _childMediaDetails;
-
-                _childMediaDetails = MediaDetailsMapper.GetAllChildMediaDetails(MediaID, LanguageID).Where(i=>i.MediaType.ShowInSiteTree);
-
-                ContextHelper.SetToRequestContext(key, _childMediaDetails);
-
-                return _childMediaDetails;
+                var children = BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ShowInSiteTree && i.HistoryForMediaDetailID == null && i.Media.ParentMediaID == MediaID && i.HistoryVersionNumber == 0 && i.LanguageID == LanguageID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex).ToList();
+                return children;
             }
         }
 
@@ -604,7 +595,7 @@ namespace FrameworkLibrary
                 if (mainContent.Contains("<script") || mainContent.Contains("<style"))
                 {
                     var htmlDocument = new HtmlAgilityPack.HtmlDocument();
-                    htmlDocument.LoadHtml(this.MainContent);
+                    htmlDocument.LoadHtml(mainContent);
 
                     htmlDocument.DocumentNode.Descendants()
                                     .Where(n => n.Name == "script" || n.Name == "style" || n.NodeType == HtmlAgilityPack.HtmlNodeType.Comment)
@@ -931,47 +922,99 @@ namespace FrameworkLibrary
             }
         }
 
+        private string _sectionTitle = "";
         public string SectionTitle
         {
             get
             {
-                return this.RenderField("SectionTitle", false);
+                if (_sectionTitle != "")
+                    return _sectionTitle;
+
+                var field = this.LoadField("SectionTitle");
+
+                if (field == null)
+                    field = this.LoadField("LinkTitle");
+
+                if (field == null)
+                    return "";
+
+                _sectionTitle = field.FieldValue;
+
+                return _sectionTitle;
             }
             set
             {
                 UpdateField("SectionTitle", value);
+                _sectionTitle = value;
             }
         }
 
+        private string _shortDescription = "";
         public string ShortDescription
         {
             get
             {
-                return this.RenderField("ShortDescription", false);
+                if (_shortDescription != "")
+                    return _shortDescription;
+
+                var field = this.LoadField("ShortDescription");
+
+                if (field == null)
+                    return "";
+
+                _shortDescription = field.FieldValue;
+
+                return _shortDescription;
             }
             set
             {
                 UpdateField("ShortDescription", value);
+                _shortDescription = value;
             }
         }
 
+        private string _mainContent = "";
         public string MainContent
         {
             get
             {
-                return this.RenderField("MainContent", false);
+                if (_mainContent != "")
+                    return _mainContent;
+
+                var field = this.LoadField("MainContent");
+
+                if (field == null)
+                    return "";
+
+                _mainContent = field.FieldValue;
+
+                return _mainContent;
             }
             set
             {
                 UpdateField("MainContent", value);
+                _mainContent = value;
             }
         }
 
+        private string _pathToFile = "";
         public string PathToFile
         {
             get
             {
-                var pathToFile = this.RenderField("PathToFile", false);
+                if (_mainContent != "")
+                    return _pathToFile;
+
+                var field = this.LoadField("PathToFile");
+
+                if (field == null)
+                    return "";
+
+                _pathToFile = field.FieldValue;
+
+                return _pathToFile;
+
+                /*var pathToFile = this.RenderField("PathToFile", false);
 
                 if(pathToFile.Contains("<"))
                 {
@@ -979,12 +1022,13 @@ namespace FrameworkLibrary
                     pathToFile = match.Value.Replace("\"", "").Replace("'","");
                 }
                 
-                return pathToFile;
+                return pathToFile;*/
             }
             set
             {
                 UpdateField("PathToFile", value);
+                _pathToFile = value;
             }
-        }        
+        }
     }
 }

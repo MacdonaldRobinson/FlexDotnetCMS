@@ -10,7 +10,7 @@ namespace FrameworkLibrary
 
         public static IEnumerable<MasterPage> GetAll()
         {
-            return GetAll(MapperKey, () => GetDataModel().MasterPages.OrderByDescending(b => b.DateCreated));
+            return GetDataModel().MasterPages.OrderByDescending(b => b.DateCreated);
         }
 
         public static void ClearCache()
@@ -20,16 +20,14 @@ namespace FrameworkLibrary
 
         public static MasterPage GetByID(long id)
         {
-            var allItems = GetAll();
-            return allItems.FirstOrDefault(item => item.ID == id);
+            return GetDataModel().MasterPages.FirstOrDefault(item => item.ID == id);
         }
 
         public static MasterPage GetByPathToFile(string pathToFile)
         {
             pathToFile = URIHelper.ConvertAbsUrlToTilda(pathToFile).ToLower();
-
-            var allItems = GetAll();
-            return allItems.FirstOrDefault(item => item.PathToFile.ToLower() == pathToFile);
+            
+            return GetDataModel().MasterPages.FirstOrDefault(item => item.PathToFile.ToLower() == pathToFile);
         }
 
         public static Return Insert(MasterPage obj)

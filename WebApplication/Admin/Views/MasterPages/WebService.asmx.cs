@@ -269,7 +269,8 @@ namespace WebApplication.Admin.Views.MasterPages
 
             if (rootNode != null)
             {
-                IEnumerable<IMediaDetail> childMediaDetails = MediaDetailsMapper.GetAtleastOneChildByMedia(rootNode.Media, AdminBasePage.CurrentLanguage).Where(i => i.MediaType.ShowInSiteTree).OrderBy(i => i.Media.OrderIndex);
+                IEnumerable<IMediaDetail> childMediaDetails = MediaDetailsMapper.GetAtleastOneChildByMedia(rootNode.Media, AdminBasePage.CurrentLanguage).ToList();
+
                 //var childMediaDetails = BaseMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.Media.ParentMediaID == rootNode.MediaID && i.ID != rootNode.ID && i.MediaType.ShowInSiteTree && i.LanguageID == AdminBasePage.CurrentLanguage.ID).OrderBy(i => i.Media.OrderIndex).ToList();
 
                 /*childMediaDetails = childMediaDetails.Where(i =>

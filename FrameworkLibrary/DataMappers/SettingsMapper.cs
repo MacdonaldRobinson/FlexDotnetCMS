@@ -9,19 +9,19 @@ namespace FrameworkLibrary
 
         public static Settings GetSettings()
         {
-            var settings = (Settings)ContextHelper.GetFromRequestContext("SettingsMapper_GetSettings");
+            /*var settings = (Settings)ContextHelper.GetFromRequestContext("SettingsMapper_GetSettings");
 
             if (settings != null)
-                return settings;
+                return settings;*/
 
-            settings = GetDataModel()?.AllSettings.FirstOrDefault();
+            var settings = GetDataModel().AllSettings.FirstOrDefault();
 
             if (settings != null && settings.DefaultLanguage == null && settings.DefaultLanguageID > 0)
             {
                 settings.DefaultLanguage = LanguagesMapper.GetByID(settings.DefaultLanguageID);
             }
 
-            ContextHelper.SetToRequestContext("SettingsMapper_GetSettings", settings);
+            //ContextHelper.SetToRequestContext("SettingsMapper_GetSettings", settings);
 
             return settings;
         }

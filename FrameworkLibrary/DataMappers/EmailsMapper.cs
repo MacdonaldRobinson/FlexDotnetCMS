@@ -8,15 +8,14 @@ namespace FrameworkLibrary
     {
         private const string MapperKey = "EmailLogsMapperKey";
 
-        public static IEnumerable<EmailLog> GetAll()
+        /*public static IEnumerable<EmailLog> GetAll()
         {
-            return GetAll(MapperKey, () => GetDataModel().EmailLogs);
-        }
+            return GetDataModel().EmailLogs;
+        }*/
 
         public static EmailLog GetByID(long id)
         {
-            var allItems = GetAll();
-            return allItems.FirstOrDefault(item => item.ID == id);
+            return GetDataModel().EmailLogs.FirstOrDefault(item => item.ID == id);
         }
 
         public static EmailLog CreateObject()

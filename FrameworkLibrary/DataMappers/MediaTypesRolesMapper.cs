@@ -12,13 +12,12 @@ namespace FrameworkLibrary
 
         public static IEnumerable<MediaTypeRole> GetAll()
         {
-            return GetAll(MapperKey, () => GetDataModel().MediaTypeRoles);
+            return GetDataModel().MediaTypeRoles;
         }
 
         public static MediaTypeRole GetByID(long id)
         {
-            var allItems = GetAll();
-            return allItems.FirstOrDefault(item => item.ID == id);
+            return GetDataModel().MediaTypeRoles.FirstOrDefault(item => item.ID == id);
         }
 
         public static Return Insert(MediaTypeRole obj)

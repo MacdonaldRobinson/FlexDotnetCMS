@@ -12,7 +12,12 @@
             <asp:GridView runat="server" ID="ItemList" AutoGenerateColumns="false" AllowPaging="false" OnPageIndexChanging="ItemList_PageIndexChanging" OnSorting="ItemList_Sorting" OnDataBound="ItemList_DataBound" class="DataTable">
                 <Columns>
                     <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
-                    <asp:BoundField DataField="Term" HeaderText="Term" SortExpression="Term" />
+                    <asp:TemplateField HeaderText="Term">
+                        <ItemTemplate>
+                            <img src="<%# (!Eval("Term").ToString().StartsWith("/")) ? "#" : Eval("Term")  %>" alt="" style='max-width:50px;<%# (Eval("Term").ToString().StartsWith("/")) ? "" : "display:none"  %>'/>
+                            <%# (!Eval("Term").ToString().StartsWith("/")) ? Eval("Term") : ""  %>
+                        </ItemTemplate>
+                    </asp:TemplateField>                    
                     <asp:BoundField DataField="Definition" HeaderText="Definition" SortExpression="Definition" />
                     <asp:BoundField DataField="DateCreated" HeaderText="DateCreated" SortExpression="DateCreated" />
                     <asp:BoundField DataField="DateLastModified" HeaderText="DateLastModified" SortExpression="DateLastModified" />

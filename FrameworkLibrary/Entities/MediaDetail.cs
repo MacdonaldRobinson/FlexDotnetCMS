@@ -278,10 +278,18 @@ namespace FrameworkLibrary
             var cacheKey = GetCacheKey(renderVersion);
             RedisCacheHelper.SaveToCache(cacheKey, html);                
         }
+        
+        //private Dictionary<string, MediaDetailField> loadedFields = new Dictionary<string, MediaDetailField>();
 
         public Field LoadField(string fieldCode)
         {
-            return Fields.FirstOrDefault(i => i.FieldCode == fieldCode);
+            /*if(loadedFields.ContainsKey(fieldCode))
+                return loadedFields[fieldCode];*/
+
+            var field = Fields.FirstOrDefault(i => i.FieldCode == fieldCode);
+            //loadedFields.Add(fieldCode, field);
+            
+            return field;
         }
 
         public string RenderShortCode(string shortCode, bool includeFieldWrapper = true)
@@ -1029,6 +1037,6 @@ namespace FrameworkLibrary
                 UpdateField("PathToFile", value);
                 _pathToFile = value;
             }
-        }
+        }        
     }
 }

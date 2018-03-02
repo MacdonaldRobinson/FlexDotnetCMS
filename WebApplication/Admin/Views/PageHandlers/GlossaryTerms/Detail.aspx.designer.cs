@@ -28,7 +28,7 @@ namespace WebApplication.Admin.Views.PageHandlers.GlossaryTerms {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Term;
+        protected global::WebApplication.Admin.Controls.Fields.FileSelector Term;
         
         /// <summary>
         /// Definition control.

@@ -124,7 +124,7 @@ namespace WebApplication.Admin.Controls.Fields
 
             SetSelectedIds(values.ToString());
 
-            if (IsPostBack)
+            if (IsPostBack || field.FieldAssociations.Count == 0)
             {
                 SaveToDB(values.ToString());
             }

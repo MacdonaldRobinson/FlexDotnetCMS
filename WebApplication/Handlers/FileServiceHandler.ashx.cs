@@ -52,7 +52,7 @@ namespace WebApplication.Services
             var Request = HttpContext.Current.Request;
             var Response = HttpContext.Current.Response;
 
-            var cacheData = (string)ContextHelper.GetFromCache(path);
+            //var cacheData = (string)ContextHelper.GetFromCache(path);
 
             bool isCss = path.EndsWith(".css");
             bool isJs = path.EndsWith(".js");

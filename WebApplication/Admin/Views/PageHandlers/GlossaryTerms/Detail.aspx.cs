@@ -32,13 +32,13 @@ namespace WebApplication.Admin.Views.PageHandlers.GlossaryTerms
 
         private void UpdateObjectFromFields()
         {
-            selectedItem.Term = Term.Text;
+            selectedItem.Term = Term.GetValue().ToString();
             selectedItem.Definition = Definition.Text;
         }
 
         private void UpdateFieldsFromObject()
         {
-            Term.Text = selectedItem.Term;
+            Term.SetValue(selectedItem.Term);
             Definition.Text = selectedItem.Definition;
         }
 

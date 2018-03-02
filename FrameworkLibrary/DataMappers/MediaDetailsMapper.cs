@@ -468,39 +468,23 @@ namespace FrameworkLibrary
 
                 fieldCodeMediaIds.Add(fieldCode, mediaIds);
             }
-
-            /*var foundItems = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ID == mediaTypeId && i.LanguageID == mediaDetail.LanguageID && i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now) &&
-                                                                                        i.Fields.Any(j => fieldCodeMediaIds.Contains(j.FieldCode) &&
-                                                                                                     j.FieldAssociations.Select(a=>a.MediaDetail.MediaID).All(k=>((List<long>)fieldCodeMediaIds[j.FieldCode]).Contains(k))
-                                                                                     ));*/
-
-            var foundItems = new List<IMediaDetail>();
-
-            foreach (var item in fieldCodeMediaIds)
-            {
-                var alreadyAddedMediaIds = foundItems.Select(i => i.MediaID);
-
-                var tempFoundItems = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => !alreadyAddedMediaIds.Contains(i.MediaID) && i.MediaType.ID == mediaTypeId && i.LanguageID == mediaDetail.LanguageID && i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now) &&
-                                                                                            i.Fields.Any(j => item.Key == j.FieldCode &&
-                                                                                                         j.FieldAssociations.Count >= item.Value.Count &&
-                                                                                                         j.FieldAssociations.All(k => item.Value.Contains(k.MediaDetail.MediaID))
-                                                                                         ));
-
-                foundItems.AddRange(tempFoundItems);
-            }
-
-
-            /*var items =  MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ID == mediaTypeId && i.LanguageID == mediaDetail.LanguageID && i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderByDescending(i=>i.DateCreated).ToList().Where(i=> 
+            
+            //return MediaDetailsMapper.GetItemsByMediaTypeAndLanguage(mediaTypeId, mediaDetail.LanguageID).Where(i => i.Fields.Any(j => j.FieldCode == FieldCode && j.FieldAssociations.Any(k => mediaIds.Contains(k.MediaDetail.MediaID)))).ToList();
+            var items =  MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ID == mediaTypeId && i.LanguageID == mediaDetail.LanguageID && i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderByDescending(i=>i.DateCreated).ToList().Where(i=> 
                                                                                     i.Fields.Any(j => fieldCodeMediaIds.Keys.Contains(j.FieldCode) && 
                                                                                                     j.FieldAssociations.Any(k => fieldCodeMediaIds[j.FieldCode].Contains(k.MediaDetail.MediaID))
-                                                                                    ));*/
+                                                                                    ));
 
             if(take > 0)
             {
-                foundItems = foundItems.Take(take).ToList();
+                items = items.Take(take).ToList();
+            }
+            else
+            {
+                items = items.ToList();
             }
 
-            return foundItems;
+            return items;
 
         }        
 

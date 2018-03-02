@@ -401,7 +401,6 @@
     <Compile Include="Language.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Libraries\Dynamic.cs" />
     <Compile Include="MasterPage.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

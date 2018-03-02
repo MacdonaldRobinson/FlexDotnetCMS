@@ -46,7 +46,6 @@ namespace WebApplication
             {
                 Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
                 Response.Cache.SetNoStore();
-
             }
 
             if (isFirstApplicationRequest)
@@ -101,7 +100,7 @@ namespace WebApplication
             routes.Ignore("{*allsvc}", new { allsvc = @".*\.svc(/.*)?" });
             routes.Ignore("{*allasmx}", new { allasmx = @".*\.asmx(/.*)?" });
 
-            routes.Ignore("{*staticfile}", new { staticfile = @".*\.(jpg|gif|jpeg|png|js|css|htc)$" });
+            routes.Ignore("{*staticfile}", new { staticfile = @".*\.(jpg|gif|jpeg|png|js|css|htc|ico)$" });
 
             routes.Add("CatchAll", new Route("{*virtualPath}", new Handlers.CustomRouteHandler()));
         }

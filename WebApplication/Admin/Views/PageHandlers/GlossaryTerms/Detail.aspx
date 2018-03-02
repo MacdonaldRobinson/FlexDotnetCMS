@@ -8,7 +8,7 @@
     <div>
         <label for="<%= Term.ClientID %>">
             Term</label>
-        <asp:TextBox ID="Term" runat="server"></asp:TextBox>
+        <Admin:FileSelector runat="server" id="Term" />        
     </div>
     <div>
         <label for="<%= Definition.ClientID %>">

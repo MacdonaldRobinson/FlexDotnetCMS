@@ -17,7 +17,7 @@ namespace WebApplication.Admin.Controls.Fields
 
         private void BindItems()
         {
-            if(ParentMediaID == 0)
+            if(ParentMediaID == 0 && MediaTypeID ==0)
             {
                 ParentMediaID = AdminBasePage.SelectedMedia.ID;
             }

@@ -26,6 +26,5 @@ namespace FrameworkLibrary
 
             return usageExample;
         }
-
     }
 }

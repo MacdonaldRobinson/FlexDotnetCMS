@@ -76,13 +76,23 @@ namespace WebApplication.Services
             if (!Directory.Exists(cityBaseDir))
                 cityBaseDir = imagesBaseDir + "others/";
 
-            var filesInDir = Directory.GetFiles(cityBaseDir);
+            var currentMonth = DateTime.Now.Month;
+
+            var subdir = "summer/";
+            if(currentMonth > 10 || currentMonth < 3)
+            {
+                subdir = "winter/";
+            }
+
+            var filesInDir = Directory.GetFiles(cityBaseDir + subdir);
 
             var randomIndex = (new Random()).Next(0, filesInDir.Length);
 
-            var filePath = filesInDir[randomIndex];
-
-            path = filePath.Replace(URIHelper.BasePath, "");
+            if (filesInDir.Length > 0)
+            {
+                var filePath = filesInDir[randomIndex];
+                path = filePath.Replace(URIHelper.BasePath, "").Replace("\\","/");
+            }
 
             WriteJSON("{\"path\":\"" + path + "\"}");
         }

@@ -316,7 +316,7 @@ namespace FrameworkLibrary
 
             Engine.Razor = service;*/
 
-            if (!string.IsNullOrEmpty(code) &&  (code.Contains("@{") || code.Contains("@using") || code.Contains("@for") || code.Contains("@Model")) && compileRazor)
+            if (!string.IsNullOrEmpty(code) && (code.Contains("@{") || code.Contains("@using") || code.Contains("@for") || code.Contains("@Model")) && compileRazor)
             {
                 code = "@using FrameworkLibrary\n@using System\n@using System.Linq\n@using System.Web\n" + code;
                 var key = "templateKey:" + code;

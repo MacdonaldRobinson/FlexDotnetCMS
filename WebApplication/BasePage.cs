@@ -161,9 +161,10 @@ namespace WebApplication
             get
             {
                 var version = RenderVersion.HTML;
-                /*var version = ContextHelper.Get("UserSelectedVersion", ContextType.Session);
 
-                if (version == null)
+                //var version = ContextHelper.Get("UserSelectedVersion", ContextType.Session);
+
+                /*if (version == null)
                 {*/
                     if (IsMobileDevice)
                         version = RenderVersion.Mobile;

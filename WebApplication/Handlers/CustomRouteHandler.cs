@@ -323,11 +323,20 @@ namespace WebApplication.Handlers
                     }
 
                     if (detail.RedirectToFirstChild)
-                    {
-                        var items = MediaDetailsMapper.GetAllChildMediaDetails(detail.MediaID, detail.LanguageID).ToList();
+                    {                        
+                        var child = detail.ChildMediaDetails.FirstOrDefault();
 
-                        if (items.Count > 0)
-                            HttpContext.Current.Response.Redirect(items[0].AutoCalculatedVirtualPath);
+                        if (child != null)
+                        {
+                            var redirectPath = child.AutoCalculatedVirtualPath;
+
+                            if(!string.IsNullOrEmpty(queryString))
+                            {
+                                redirectPath = redirectPath + "?" + queryString;
+                            }
+
+                            HttpContext.Current.Response.Redirect(redirectPath);
+                        }                            
                     }
 
                     viewPath = FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.Handler;

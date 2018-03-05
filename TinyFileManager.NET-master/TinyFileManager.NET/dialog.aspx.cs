@@ -66,7 +66,7 @@ namespace TinyFileManager.NET
                 baseUrl = protocal + Request.Url.Authority;
             }
 
-            if (File.Exists(Server.MapPath(strCurrPath)))
+            if (!strCurrPath.StartsWith("http") && File.Exists(Server.MapPath(strCurrPath)))
             {
                 var fileInfo = new FileInfo(Server.MapPath(strCurrPath));
                 var dir = fileInfo.Directory.FullName;

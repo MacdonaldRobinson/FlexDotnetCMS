@@ -1175,11 +1175,11 @@ namespace FrameworkLibrary
                     customCode = ParserHelper.ParseData(customCode, new RazorFieldParams { MediaDetail = mediaDetail });
                 }*/
 
-                var loadMediaDetailsProperty = Regex.Matches(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:@).?&' }]+");
-
-                foreach (var item in loadMediaDetailsProperty)
+                customCode = Regex.Replace(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:@).?&' }]+", me =>
                 {
-                    var itemAsString = item.ToString();
+                    var shortCode = me.Value;
+
+                    var itemAsString = me.Value;
 
                     var loadMediaSegments = Regex.Matches(itemAsString, "{Load:[0-9]+}");
 
@@ -1189,9 +1189,51 @@ namespace FrameworkLibrary
                         var id = long.Parse(prop.Split(':')[1]);
 
                         var property = itemAsString.Replace(loadMediaSegment.ToString() + ".", "");
+                        var selectMedia = MediasMapper.GetByID(id);
 
-                        /*if (mediaDetail.Media.ParentMediaID != id)
-                        {*/
+                        if (selectMedia != null)
+                        {
+                            var returnValue = property;
+                            var replaceShortCodes = returnValue.Contains("?ReplaceShortCodes");
+
+                            var liveMediaDetail = selectMedia.GetLiveMediaDetail();
+
+                            if (liveMediaDetail == null)
+                            {
+                                liveMediaDetail = selectMedia.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage());
+                            }
+
+                            returnValue = ParseSpecialTags(liveMediaDetail, returnValue);
+
+                            if (replaceShortCodes)
+                            {
+                                returnValue = ParseSpecialTags(mediaDetail, returnValue);
+                            }
+                            else
+                            {
+                                returnValue = ParseSpecialTags(liveMediaDetail, returnValue);
+                            }
+
+                            shortCode = shortCode.Replace(itemAsString, returnValue);
+                        }
+                    }
+
+                    return shortCode;
+                }, RegexOptions.IgnoreCase);
+
+                /*foreach (var item in loadMediaDetailsProperty)
+                {
+                    var itemAsString = item.ToString();
+
+                    var loadMediaSegments = Regex.Matches(itemAsString, "{Load:[0-9]+}");
+
+
+                    foreach (var loadMediaSegment in loadMediaSegments)
+                    {
+                        var prop = loadMediaSegment.ToString().Replace("{", "").Replace("}", "");
+                        var id = long.Parse(prop.Split(':')[1]);
+
+                        var property = itemAsString.Replace(loadMediaSegment.ToString() + ".", "");
                             var selectMedia = MediasMapper.GetByID(id);
 
                             if (selectMedia != null)
@@ -1219,14 +1261,30 @@ namespace FrameworkLibrary
 
                                 customCode = customCode.Replace(itemAsString, returnValue);
                             }
-                        /*}*/
                     }
-                }
+                }*/
             }
 
             if (customCode.Contains("{IncludeFile:"))
             {
-                var loadFileMatches = Regex.Matches(customCode, "{IncludeFile:.*}");
+                customCode = Regex.Replace(customCode, "{IncludeFile:.*}", me =>
+                {
+                    var shortCode = me.Value;
+
+                    var path = shortCode.Replace("{IncludeFile:", "").Replace("}", "").Replace("'", "");
+
+                    var absPath = HttpContext.Current.Server.MapPath(path);
+
+                    if (File.Exists(absPath))
+                    {
+                        var fileContent = File.ReadAllText(absPath);
+                        shortCode = shortCode.Replace(shortCode, fileContent);
+                    }
+
+                    return shortCode;
+                }, RegexOptions.IgnoreCase);
+
+                /*var loadFileMatches = Regex.Matches(customCode, "{IncludeFile:.*}");
 
                 foreach (var item in loadFileMatches)
                 {
@@ -1239,12 +1297,35 @@ namespace FrameworkLibrary
                         var fileContent = File.ReadAllText(absPath);
                         customCode = customCode.Replace(item.ToString().ToString(), fileContent);
                     }
-                }
+                }*/
             }
 
             if (customCode.Contains("{RenderChildren:"))
             {
-                var renderChildren = Regex.Matches(customCode, "{RenderChildren:.*}");
+                customCode = Regex.Replace(customCode, "{RenderChildren:.*}", me =>
+                {
+                    var shortCode = me.Value;
+
+                    var tempPropertyName = shortCode.Replace("RenderChildren:", "");
+                    var tempCode = "";
+
+                    var childMediaDetails = mediaDetail.ChildMediaDetails.OrderBy(i => i.Media.OrderIndex);
+
+                    foreach (var childMediaDetail in childMediaDetails)
+                    {
+                        tempPropertyName = tempPropertyName.Replace("{{", "{").Replace("}}", "}");
+                        var temp = ParseSpecialTags(childMediaDetail, tempPropertyName);
+
+                        if (temp != tempPropertyName)
+                            tempCode += ParseSpecialTags(childMediaDetail, temp);
+                    }
+
+                    shortCode = shortCode.Replace(shortCode, tempCode);
+
+                    return shortCode;
+                }, RegexOptions.IgnoreCase);
+
+                /*var renderChildren = Regex.Matches(customCode, "{RenderChildren:.*}");
 
                 foreach (var item in renderChildren)
                 {
@@ -1263,12 +1344,25 @@ namespace FrameworkLibrary
                     }
 
                     customCode = customCode.Replace(item.ToString().ToString(), tempCode);
-                }
+                }*/
             }
 
             if (customCode.Contains("{ParentField:"))
             {
-                var fields = Regex.Matches(customCode, "{ParentField:[a-zA-Z0-9&?=]+}");
+                customCode = Regex.Replace(customCode, "{ParentField:[a-zA-Z0-9&?=]+}", me =>
+                {
+                    var shortCode = me.Value;
+
+                    var fieldCode = shortCode.Replace("{ParentField:", "{Field:");
+
+                    var shortCodeValue = ParseSpecialTags(mediaDetail.Media.ParentMedia.GetLiveMediaDetail(), fieldCode);
+
+                    shortCode = shortCode.Replace(shortCode, shortCodeValue);
+
+                    return shortCode;
+                }, RegexOptions.IgnoreCase);
+
+                /*var fields = Regex.Matches(customCode, "{ParentField:[a-zA-Z0-9&?=]+}");
 
                 foreach (var field in fields)
                 {
@@ -1278,12 +1372,103 @@ namespace FrameworkLibrary
 
                     customCode = customCode.Replace(field.ToString(), shortCodeValue);
 
-                }
+                }*/
             }
 
             if (customCode.Contains("{Field:"))
             {
-                var fields = Regex.Matches(customCode, "{Field:[a-zA-Z0-9&?=' ]+}");
+                customCode = Regex.Replace(customCode, "{Field:[a-zA-Z0-9&?=' ]+}", me =>
+                {
+                    var shortCode = me.Value;
+
+                    var fieldCode = shortCode.Replace("{Field:", "").Replace("}", "");
+
+                    var split = fieldCode.Split('?');
+                    var arguments = new Dictionary<string, string>();
+
+                    if (split.Count() > 1)
+                    {
+                        fieldCode = split[0];
+
+                        foreach (var argumentString in split[1].Split('&'))
+                        {
+                            var argumentArray = argumentString.Split('=');
+                            if (argumentArray.Count() > 1)
+                            {
+                                arguments.Add(argumentArray[0].ToString(), argumentArray[1].ToString().Replace("'", ""));
+                            }
+                        }
+                    }
+
+                    long fieldId = 0;
+                    Field mediaField = null;
+
+                    if (long.TryParse(fieldCode, out fieldId))
+                    {
+                        mediaField = BaseMapper.GetDataModel().Fields.FirstOrDefault(i => i.ID == fieldId);
+                    }
+                    else
+                    {
+                        mediaField = mediaDetail.Fields.FirstOrDefault(i => i.FieldCode == fieldCode);
+                    }
+
+                    if (mediaField != null)
+                    {
+
+                        var fieldType = ParserHelper.ParseData(mediaField.AdminControl, new RazorFieldParams { Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments, Control = new Control() });
+
+                        var parserPage = new System.Web.UI.Page();
+                        parserPage.AppRelativeVirtualPath = "~/";
+                        var control = parserPage.ParseControl(fieldType);
+
+                        if (control?.Controls.Count > 0 && control.Controls[0].GetType().FullName.StartsWith("ASP") && mediaField.GetAdminControlValue.Contains("@"))
+                        {
+                            var tag = mediaField.AdminControl.Replace("/>", "FieldID='" + mediaField.ID.ToString() + "' />");
+                            shortCode = shortCode.Replace(shortCode, tag);
+                        }
+                        else
+                        {
+                            var frontEndLayout = mediaField.FrontEndLayout;
+
+                            if (mediaField is MediaDetailField)
+                            {
+                                var mediaDetailField = mediaField as MediaDetailField;
+                                if (mediaDetailField.MediaTypeField != null && mediaDetailField.UseMediaTypeFieldFrontEndLayout)
+                                {
+                                    frontEndLayout = mediaDetailField.MediaTypeField?.FrontEndLayout;
+                                }
+                                else
+                                {
+                                    frontEndLayout = mediaDetailField.FrontEndLayout;
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(frontEndLayout))
+                            {
+                                var parsedValue = ParseSpecialTags(mediaDetail, frontEndLayout, 0, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments });
+                                shortCode = ReplaceFieldWithParsedValue(shortCode, shortCode, mediaField, parsedValue, includeFieldWrapper, arguments);
+                            }
+                            else
+                            {
+                                if (mediaField.GetAdminControlValue.Contains("@"))
+                                {
+                                    var parsedValue = ParseSpecialTags(mediaDetail, mediaField.FieldValue, 0, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments });
+                                    shortCode = ReplaceFieldWithParsedValue(shortCode, shortCode, mediaField, parsedValue, includeFieldWrapper, arguments);
+                                    //customCode = customCode.Replace(field.ToString(), parsedValue);
+                                }
+                                else
+                                {
+                                    shortCode = ReplaceFieldWithParsedValue(shortCode, shortCode, mediaField, mediaField.FieldValue, includeFieldWrapper, arguments);
+                                    //customCode = customCode.Replace(field.ToString(), mediaField.FieldValue);
+                                }
+                            }
+                        }
+                    }
+
+                    return shortCode;
+                }, RegexOptions.IgnoreCase);
+
+                /*var fields = Regex.Matches(customCode, "{Field:[a-zA-Z0-9&?=' ]+}");
 
                 foreach (var field in fields)
                 {
@@ -1369,12 +1554,41 @@ namespace FrameworkLibrary
                             }
                         }                        
                     }
-                }
+                }*/
             }
 
             if (customCode.Contains("{Link:"))
             {
-                var linkShortCodes = Regex.Matches(customCode, "{Link:[a-zA-Z0-9:=\"\".]+}");
+                customCode = Regex.Replace(customCode, "{Link:[a-zA-Z0-9:=\"\".]+}", me =>
+                {
+                    var shortCode = me.Value;
+
+                    var mediaId = shortCode.Replace("{Link:", "").Replace("}", "");
+                    long id = 0;
+
+                    if (long.TryParse(mediaId, out id))
+                    {
+                        var media = MediasMapper.GetByID(id);
+
+                        if (media != null)
+                        {
+                            var liveMediaDetail = media.GetLiveMediaDetail();
+
+                            if (liveMediaDetail != null)
+                            {
+                                shortCode = shortCode.Replace(shortCode, liveMediaDetail.AbsoluteUrl);
+                            }
+                        }
+                        else
+                        {
+                            shortCode = shortCode.Replace(shortCode, "#");
+                        }
+                    }
+
+                    return shortCode;
+                }, RegexOptions.IgnoreCase);
+
+                /*var linkShortCodes = Regex.Matches(customCode, "{Link:[a-zA-Z0-9:=\"\".]+}");
 
                 foreach (var linkShortCode in linkShortCodes)
                 {
@@ -1399,12 +1613,24 @@ namespace FrameworkLibrary
                             customCode = customCode.Replace(linkShortCode.ToString(), "#");
                         }
                     }
-                }
+                }*/
             }
 
             if (customCode.Contains("{Settings:"))
             {
-                var settingsShortCodes = Regex.Matches(customCode, "{Settings:[a-zA-Z0-9:=\"\".]+}");
+                customCode = Regex.Replace(customCode, "{Settings:[a-zA-Z0-9:=\"\".]+}", me =>
+                {
+                    var shortCode = me.Value;
+
+                    var setting = shortCode.Replace("Settings:", "");
+                    var returnString = ParserHelper.ParseData(setting, SettingsMapper.GetSettings());
+
+                    shortCode = shortCode.Replace(shortCode, returnString);
+
+                    return shortCode;
+                }, RegexOptions.IgnoreCase);
+
+                /*var settingsShortCodes = Regex.Matches(customCode, "{Settings:[a-zA-Z0-9:=\"\".]+}");
 
                 foreach (var settingsShortCode in settingsShortCodes)
                 {
@@ -1412,7 +1638,7 @@ namespace FrameworkLibrary
                     var returnString =  ParserHelper.ParseData(setting, SettingsMapper.GetSettings());
 
                     customCode = customCode.Replace(settingsShortCode.ToString(), returnString);
-                }
+                }*/
             }
 
             if (passToParser == null)
@@ -1432,9 +1658,9 @@ namespace FrameworkLibrary
                     customCode = "";
             }
 
-            if( mediaDetail.ShowInMenu && propertyName == "{UseMainLayout}" && customCode != propertyName)
+            if (mediaDetail.ShowInMenu && propertyName == "{UseMainLayout}" && customCode != propertyName)
             {
-                customCode = "<div class='UseMainLayout' data-mediadetailid='"+mediaDetail.ID+ "' data-mediaid='" + mediaDetail.MediaID + "'>" + customCode + "</div>";
+                customCode = "<div class='UseMainLayout' data-mediadetailid='" + mediaDetail.ID + "' data-mediaid='" + mediaDetail.MediaID + "'>" + customCode + "</div>";
             }
 
             return customCode;

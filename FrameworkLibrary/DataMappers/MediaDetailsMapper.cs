@@ -1175,7 +1175,7 @@ namespace FrameworkLibrary
                     customCode = ParserHelper.ParseData(customCode, new RazorFieldParams { MediaDetail = mediaDetail });
                 }*/
 
-                customCode = Regex.Replace(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:@).?&' }]+", me =>
+                /*customCode = Regex.Replace(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:@).?&' }]+", me =>
                 {
                     var shortCode = me.Value;
 
@@ -1214,14 +1214,17 @@ namespace FrameworkLibrary
                                 returnValue = ParseSpecialTags(liveMediaDetail, returnValue);
                             }
 
-                            shortCode = shortCode.Replace(itemAsString, returnValue);
+                            //shortCode = shortCode.Replace(itemAsString, returnValue);
+                            shortCode = returnValue;
                         }
                     }
 
                     return shortCode;
-                }, RegexOptions.IgnoreCase);
+                }, RegexOptions.IgnoreCase);*/
 
-                /*foreach (var item in loadMediaDetailsProperty)
+                var loadMediaDetailsProperty = Regex.Matches(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:@).?&' }]+");
+
+                foreach (var item in loadMediaDetailsProperty)
                 {
                     var itemAsString = item.ToString();
 
@@ -1234,40 +1237,40 @@ namespace FrameworkLibrary
                         var id = long.Parse(prop.Split(':')[1]);
 
                         var property = itemAsString.Replace(loadMediaSegment.ToString() + ".", "");
-                            var selectMedia = MediasMapper.GetByID(id);
+                        var selectMedia = MediasMapper.GetByID(id);
 
-                            if (selectMedia != null)
+                        if (selectMedia != null)
+                        {
+                            var returnValue = property;
+                            var replaceShortCodes = returnValue.Contains("?ReplaceShortCodes");
+
+                            var liveMediaDetail = selectMedia.GetLiveMediaDetail();
+
+                            if (liveMediaDetail == null)
                             {
-                                var returnValue = property;
-                                var replaceShortCodes = returnValue.Contains("?ReplaceShortCodes");
-
-                                var liveMediaDetail = selectMedia.GetLiveMediaDetail();
-
-                                if (liveMediaDetail == null)
-                                {
-                                    liveMediaDetail = selectMedia.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage());
-                                }
-
-                                returnValue = ParseSpecialTags(liveMediaDetail, returnValue);
-
-                                if (replaceShortCodes)
-                                {
-                                    returnValue = ParseSpecialTags(mediaDetail, returnValue);
-                                }
-                                else
-                                {
-                                    returnValue = ParseSpecialTags(liveMediaDetail, returnValue);
-                                }
-
-                                customCode = customCode.Replace(itemAsString, returnValue);
+                                liveMediaDetail = selectMedia.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage());
                             }
+
+                            returnValue = ParseSpecialTags(liveMediaDetail, returnValue);
+
+                            if (replaceShortCodes)
+                            {
+                                returnValue = ParseSpecialTags(mediaDetail, returnValue);
+                            }
+                            else
+                            {
+                                returnValue = ParseSpecialTags(liveMediaDetail, returnValue);
+                            }
+
+                            customCode = customCode.Replace(itemAsString, returnValue);
+                        }
                     }
-                }*/
+                }
             }
 
             if (customCode.Contains("{IncludeFile:"))
             {
-                customCode = Regex.Replace(customCode, "{IncludeFile:.*}", me =>
+                /*customCode = Regex.Replace(customCode, "{IncludeFile:.*}", me =>
                 {
                     var shortCode = me.Value;
 
@@ -1278,31 +1281,32 @@ namespace FrameworkLibrary
                     if (File.Exists(absPath))
                     {
                         var fileContent = File.ReadAllText(absPath);
-                        shortCode = shortCode.Replace(shortCode, fileContent);
+                        //shortCode = shortCode.Replace(shortCode, fileContent);
+                        shortCode = fileContent;
                     }
 
                     return shortCode;
-                }, RegexOptions.IgnoreCase);
+                }, RegexOptions.IgnoreCase);*/
 
-                /*var loadFileMatches = Regex.Matches(customCode, "{IncludeFile:.*}");
+                var loadFileMatches = Regex.Matches(customCode, "{IncludeFile:.*}");
 
                 foreach (var item in loadFileMatches)
                 {
-                    var path = item.ToString().Replace("{IncludeFile:", "").Replace("}", "").Replace("'","");
+                    var path = item.ToString().Replace("{IncludeFile:", "").Replace("}", "").Replace("'", "");
 
                     var absPath = HttpContext.Current.Server.MapPath(path);
 
-                    if(File.Exists(absPath))
+                    if (File.Exists(absPath))
                     {
                         var fileContent = File.ReadAllText(absPath);
                         customCode = customCode.Replace(item.ToString().ToString(), fileContent);
                     }
-                }*/
+                }
             }
 
             if (customCode.Contains("{RenderChildren:"))
             {
-                customCode = Regex.Replace(customCode, "{RenderChildren:.*}", me =>
+                /*customCode = Regex.Replace(customCode, "{RenderChildren:.*}", me =>
                 {
                     var shortCode = me.Value;
 
@@ -1320,12 +1324,13 @@ namespace FrameworkLibrary
                             tempCode += ParseSpecialTags(childMediaDetail, temp);
                     }
 
-                    shortCode = shortCode.Replace(shortCode, tempCode);
+                    //shortCode = shortCode.Replace(shortCode, tempCode);
+                    shortCode = tempCode;
 
                     return shortCode;
-                }, RegexOptions.IgnoreCase);
+                }, RegexOptions.IgnoreCase);*/
 
-                /*var renderChildren = Regex.Matches(customCode, "{RenderChildren:.*}");
+                var renderChildren = Regex.Matches(customCode, "{RenderChildren:.*}");
 
                 foreach (var item in renderChildren)
                 {
@@ -1344,12 +1349,12 @@ namespace FrameworkLibrary
                     }
 
                     customCode = customCode.Replace(item.ToString().ToString(), tempCode);
-                }*/
+                }
             }
 
             if (customCode.Contains("{ParentField:"))
             {
-                customCode = Regex.Replace(customCode, "{ParentField:[a-zA-Z0-9&?=]+}", me =>
+                /*customCode = Regex.Replace(customCode, "{ParentField:[a-zA-Z0-9&?=]+}", me =>
                 {
                     var shortCode = me.Value;
 
@@ -1357,12 +1362,13 @@ namespace FrameworkLibrary
 
                     var shortCodeValue = ParseSpecialTags(mediaDetail.Media.ParentMedia.GetLiveMediaDetail(), fieldCode);
 
-                    shortCode = shortCode.Replace(shortCode, shortCodeValue);
+                    //shortCode = shortCode.Replace(shortCode, shortCodeValue);
+                    shortCode = shortCodeValue;
 
                     return shortCode;
-                }, RegexOptions.IgnoreCase);
+                }, RegexOptions.IgnoreCase);*/
 
-                /*var fields = Regex.Matches(customCode, "{ParentField:[a-zA-Z0-9&?=]+}");
+                var fields = Regex.Matches(customCode, "{ParentField:[a-zA-Z0-9&?=]+}");
 
                 foreach (var field in fields)
                 {
@@ -1372,12 +1378,12 @@ namespace FrameworkLibrary
 
                     customCode = customCode.Replace(field.ToString(), shortCodeValue);
 
-                }*/
+                }
             }
 
             if (customCode.Contains("{Field:"))
             {
-                customCode = Regex.Replace(customCode, "{Field:[a-zA-Z0-9&?=' ]+}", me =>
+                /*customCode = Regex.Replace(customCode, "{Field:[a-zA-Z0-9&?=' ]+}", me =>
                 {
                     var shortCode = me.Value;
 
@@ -1466,16 +1472,16 @@ namespace FrameworkLibrary
                     }
 
                     return shortCode;
-                }, RegexOptions.IgnoreCase);
+                }, RegexOptions.IgnoreCase);*/
 
-                /*var fields = Regex.Matches(customCode, "{Field:[a-zA-Z0-9&?=' ]+}");
+                var fields = Regex.Matches(customCode, "{Field:[a-zA-Z0-9&?=' ]+}");
 
                 foreach (var field in fields)
                 {
                     var fieldCode = field.ToString().Replace("{Field:", "").Replace("}", "");
 
                     var split = fieldCode.Split('?');
-                    var arguments = new Dictionary<string,string>();
+                    var arguments = new Dictionary<string, string>();
 
                     if (split.Count() > 1)
                     {
@@ -1485,8 +1491,8 @@ namespace FrameworkLibrary
                         {
                             var argumentArray = argumentString.Split('=');
                             if (argumentArray.Count() > 1)
-                            {                                
-                                arguments.Add(argumentArray[0].ToString(), argumentArray[1].ToString().Replace("'",""));                                
+                            {
+                                arguments.Add(argumentArray[0].ToString(), argumentArray[1].ToString().Replace("'", ""));
                             }
                         }
                     }
@@ -1496,7 +1502,7 @@ namespace FrameworkLibrary
 
                     if (long.TryParse(fieldCode, out fieldId))
                     {
-                        mediaField = BaseMapper.GetDataModel().Fields.FirstOrDefault(i=>i.ID == fieldId);
+                        mediaField = BaseMapper.GetDataModel().Fields.FirstOrDefault(i => i.ID == fieldId);
                     }
                     else
                     {
@@ -1552,14 +1558,14 @@ namespace FrameworkLibrary
                                 customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, mediaField.FieldValue, includeFieldWrapper, arguments);
                                 //customCode = customCode.Replace(field.ToString(), mediaField.FieldValue);
                             }
-                        }                        
+                        }
                     }
-                }*/
+                }
             }
 
             if (customCode.Contains("{Link:"))
             {
-                customCode = Regex.Replace(customCode, "{Link:[a-zA-Z0-9:=\"\".]+}", me =>
+                /*customCode = Regex.Replace(customCode, "{Link:[a-zA-Z0-9:=\"\".]+}", me =>
                 {
                     var shortCode = me.Value;
 
@@ -1576,19 +1582,21 @@ namespace FrameworkLibrary
 
                             if (liveMediaDetail != null)
                             {
-                                shortCode = shortCode.Replace(shortCode, liveMediaDetail.AbsoluteUrl);
+                                //shortCode = shortCode.Replace(shortCode, liveMediaDetail.AbsoluteUrl);
+                                shortCode = liveMediaDetail.AbsoluteUrl;
                             }
                         }
                         else
                         {
-                            shortCode = shortCode.Replace(shortCode, "#");
+                            //shortCode = shortCode.Replace(shortCode, "#");
+                            shortCode = "#";
                         }
                     }
 
                     return shortCode;
-                }, RegexOptions.IgnoreCase);
+                }, RegexOptions.IgnoreCase);*/
 
-                /*var linkShortCodes = Regex.Matches(customCode, "{Link:[a-zA-Z0-9:=\"\".]+}");
+                var linkShortCodes = Regex.Matches(customCode, "{Link:[a-zA-Z0-9:=\"\".]+}");
 
                 foreach (var linkShortCode in linkShortCodes)
                 {
@@ -1613,32 +1621,33 @@ namespace FrameworkLibrary
                             customCode = customCode.Replace(linkShortCode.ToString(), "#");
                         }
                     }
-                }*/
+                }
             }
 
             if (customCode.Contains("{Settings:"))
             {
-                customCode = Regex.Replace(customCode, "{Settings:[a-zA-Z0-9:=\"\".]+}", me =>
+                /*customCode = Regex.Replace(customCode, "{Settings:[a-zA-Z0-9:=\"\".]+}", me =>
                 {
                     var shortCode = me.Value;
 
                     var setting = shortCode.Replace("Settings:", "");
                     var returnString = ParserHelper.ParseData(setting, SettingsMapper.GetSettings());
 
-                    shortCode = shortCode.Replace(shortCode, returnString);
+                    //shortCode = shortCode.Replace(shortCode, returnString);
+                    shortCode = returnString;
 
                     return shortCode;
-                }, RegexOptions.IgnoreCase);
+                }, RegexOptions.IgnoreCase);*/
 
-                /*var settingsShortCodes = Regex.Matches(customCode, "{Settings:[a-zA-Z0-9:=\"\".]+}");
+                var settingsShortCodes = Regex.Matches(customCode, "{Settings:[a-zA-Z0-9:=\"\".]+}");
 
                 foreach (var settingsShortCode in settingsShortCodes)
                 {
                     var setting = settingsShortCode.ToString().Replace("Settings:", "");
-                    var returnString =  ParserHelper.ParseData(setting, SettingsMapper.GetSettings());
+                    var returnString = ParserHelper.ParseData(setting, SettingsMapper.GetSettings());
 
                     customCode = customCode.Replace(settingsShortCode.ToString(), returnString);
-                }*/
+                }
             }
 
             if (passToParser == null)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 
@@ -638,6 +639,8 @@ namespace FrameworkLibrary
                 if (description.Length > 255)
                     description = description.Substring(0, 255) + " ...";
             }*/
+
+            description = Regex.Replace(description, "{.*}", "");
 
             contextMetaDescription = description;
 

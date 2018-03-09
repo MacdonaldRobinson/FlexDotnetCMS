@@ -57,6 +57,7 @@ namespace WebApplication.Admin.Views.PageHandlers.MediaTypes
             selectedItem.SummaryLayout = MediaDetailsMapper.ConvertUrlsToShortCodes(SummaryLayout.Text);
             selectedItem.FeaturedLayout = MediaDetailsMapper.ConvertUrlsToShortCodes(FeaturedLayout.Text);
             selectedItem.UseMediaTypeLayouts = UseMediaTypeLayouts.Checked;
+            selectedItem.OnPublishExecuteCode = OnPublishExecuteCode.Text;
         }
 
         private void UpdateFieldsFromObject()
@@ -81,6 +82,7 @@ namespace WebApplication.Admin.Views.PageHandlers.MediaTypes
 
             MultiRoleSelector.SetSelectedRoles(selectedItem.GetRoles());
             MultiMediaTypeSelector.SetMediaTypes(selectedItem.MediaTypes.ToList());
+            OnPublishExecuteCode.Text = selectedItem.OnPublishExecuteCode;
         }
 
         protected void Save_OnClick(object sender, EventArgs e)

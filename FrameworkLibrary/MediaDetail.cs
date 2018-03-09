@@ -70,6 +70,7 @@ namespace FrameworkLibrary
         public bool UseDefaultLanguageLayouts { get; set; }
         public bool CanLimitedRolesAccessAllChildPages { get; set; }
         public bool EnforceRoleLimitationsOnFrontEnd { get; set; }
+        public string OnPublishExecuteCode { get; set; }
     
         public virtual Language Language { get; set; }
         public virtual Media Media { get; set; }

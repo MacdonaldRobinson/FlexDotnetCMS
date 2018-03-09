@@ -401,6 +401,19 @@ namespace WebApplication.Admin.MediaArticle
             }
 
             UpdateFieldsFromObject();
+
+            OnPublishExecuteCode();
+        }
+
+        private void OnPublishExecuteCode()
+        {
+            var onPublishExecuteCode = selectedItem.UseMediaTypeLayouts ? selectedItem.MediaType.OnPublishExecuteCode : selectedItem.OnPublishExecuteCode;
+
+            if (!string.IsNullOrEmpty(onPublishExecuteCode))
+            {
+                var result = MediaDetailsMapper.ParseSpecialTags(selectedItem, onPublishExecuteCode);
+                DisplayFeedbackMessage(result);
+            }
         }
 
         private IMediaDetail CreateHistory(MediaDetail fromItem, bool isDraft)
@@ -538,6 +551,8 @@ namespace WebApplication.Admin.MediaArticle
 
                 //if (selectedItem.AbsoluteUrl != liveVersion.AbsoluteUrl)
                 //    ChangeLinksForAllMediaDetails(liveVersion.AbsoluteUrl, selectedItem.AbsoluteUrl);
+
+                OnPublishExecuteCode();
 
                 RedirectToAdminUrl(selectedItem);
             }

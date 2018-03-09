@@ -63,6 +63,11 @@
             <div>
                 <asp:TextBox runat="server" ID="FeaturedLayout" TextMode="MultiLine" Height="400px" CssClass="AceEditor" />
             </div>
+
+            <h3>On Publish Execute Code</h3>
+            <div>
+                <asp:TextBox runat="server" ID="OnPublishExecuteCode" TextMode="MultiLine" Height="500px" CssClass="AceEditor" />
+            </div>
         </div>
     </div>
 

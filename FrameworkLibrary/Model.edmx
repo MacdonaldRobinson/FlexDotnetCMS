@@ -190,6 +190,7 @@
           <Property Name="UseDefaultLanguageLayouts" Type="bit" Nullable="false" />
           <Property Name="CanLimitedRolesAccessAllChildPages" Type="bit" Nullable="false" />
           <Property Name="EnforceRoleLimitationsOnFrontEnd" Type="bit" Nullable="false" />
+          <Property Name="OnPublishExecuteCode" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="MediaDetailsFields">
           <Key>
@@ -238,6 +239,7 @@
           <Property Name="SummaryLayout" Type="nvarchar(max)" Nullable="false" />
           <Property Name="FeaturedLayout" Type="nvarchar(max)" Nullable="false" />
           <Property Name="UseMediaTypeLayouts" Type="bit" Nullable="false" />
+          <Property Name="OnPublishExecuteCode" Type="nvarchar(max)" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateLastModified" Type="datetime" Nullable="false" />
         </EntityType>
@@ -1400,6 +1402,7 @@
           <Property Name="UseDefaultLanguageLayouts" Type="Boolean" Nullable="false" />
           <Property Name="CanLimitedRolesAccessAllChildPages" Type="Boolean" Nullable="false" />
           <Property Name="EnforceRoleLimitationsOnFrontEnd" Type="Boolean" Nullable="false" />
+          <Property Name="OnPublishExecuteCode" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           </EntityType>
         <EntityType Name="Page" BaseType="FrameworkModel.MediaDetail">
         </EntityType>
@@ -1514,6 +1517,7 @@
           <Property Name="UseMediaTypeLayouts" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Fields" Relationship="FrameworkModel.FK_MediaTypesFields_MediaTypes" FromRole="MediaType" ToRole="MediaTypesField" />
           <Property Name="ShowInSiteTree" Type="Boolean" Nullable="false" />
+          <Property Name="OnPublishExecuteCode" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           </EntityType>
         <Association Name="FK_MediaDetails_MediaTypeID_MediaType_ID">
           <End Type="FrameworkModel.MediaType" Multiplicity="1" Role="MediaType" />
@@ -2148,6 +2152,7 @@
           <EntitySetMapping Name="MediaDetails">
             <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.MediaDetail)">
               <MappingFragment StoreEntitySet="MediaDetails">
+                <ScalarProperty Name="OnPublishExecuteCode" ColumnName="OnPublishExecuteCode" />
                 <ScalarProperty Name="EnforceRoleLimitationsOnFrontEnd" ColumnName="EnforceRoleLimitationsOnFrontEnd" />
                 <ScalarProperty Name="CanLimitedRolesAccessAllChildPages" ColumnName="CanLimitedRolesAccessAllChildPages" />
                 <ScalarProperty Name="UseDefaultLanguageLayouts" ColumnName="UseDefaultLanguageLayouts" />
@@ -2275,6 +2280,7 @@
           <EntitySetMapping Name="MediaTypes">
             <EntityTypeMapping TypeName="FrameworkModel.MediaType">
               <MappingFragment StoreEntitySet="MediaTypes">
+                <ScalarProperty Name="OnPublishExecuteCode" ColumnName="OnPublishExecuteCode" />
                 <ScalarProperty Name="ShowInSiteTree" ColumnName="ShowInSiteTree" />
                 <ScalarProperty Name="UseMediaTypeLayouts" ColumnName="UseMediaTypeLayouts" />
                 <ScalarProperty Name="FeaturedLayout" ColumnName="FeaturedLayout" />

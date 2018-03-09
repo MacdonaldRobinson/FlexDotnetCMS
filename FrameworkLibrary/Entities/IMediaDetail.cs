@@ -123,5 +123,6 @@ namespace FrameworkLibrary
         void SaveToRedisCache(RenderVersion renderVersion, string html);
         void UpdateField(string fieldCode, string newValue);
         Return Validate();
+        string OnPublishExecuteCode { get; set; }
     }
 }

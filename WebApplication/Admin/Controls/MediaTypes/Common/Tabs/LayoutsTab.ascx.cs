@@ -27,6 +27,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
             FeaturedLayout.Text = selectedItem.FeaturedLayout;
             UseMediaTypeLayouts.Checked = selectedItem.UseMediaTypeLayouts;
             UseDefaultLanguageLayouts.Checked = selectedItem.UseDefaultLanguageLayouts;
+            OnPublishExecuteCode.Text = selectedItem.OnPublishExecuteCode;
         }
 
         public void UpdateObjectFromFields()
@@ -36,6 +37,7 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
             selectedItem.FeaturedLayout = MediaDetailsMapper.ConvertUrlsToShortCodes(FeaturedLayout.Text);
             selectedItem.UseMediaTypeLayouts = UseMediaTypeLayouts.Checked;
             selectedItem.UseDefaultLanguageLayouts = UseDefaultLanguageLayouts.Checked;
+            selectedItem.OnPublishExecuteCode = OnPublishExecuteCode.Text;
         }
     }
 }

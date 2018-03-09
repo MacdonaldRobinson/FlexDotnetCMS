@@ -373,7 +373,7 @@ namespace WebApplication.Admin.Views.MasterPages
             {
                 UserMustHaveAccessTo(detail);
 
-                var mediaDetail = HandleDuplicate(detail, detail.Media.ParentMedia, duplicateChildren, newName);
+                var mediaDetail = HandleDuplicate(detail, detail.Media.ParentMedia, duplicateChildren, newName, false);
 
                 ContextHelper.ClearAllMemoryCache();
 
@@ -551,7 +551,7 @@ namespace WebApplication.Admin.Views.MasterPages
             }
         }
 
-        public IMediaDetail HandleDuplicate(IMediaDetail detail, Media parentMedia, bool duplicateChildren = false, string newName="")
+        public IMediaDetail HandleDuplicate(IMediaDetail detail, Media parentMedia, bool duplicateChildren = false, string newName = "", bool autoPublish = true)
         {
             var duplicatedItem = MediaDetailsMapper.CreateObject(detail.MediaTypeID, null, parentMedia, false);
             duplicatedItem.CopyFrom(detail, new List<string> { "MediaID", "Media" });
@@ -607,6 +607,11 @@ namespace WebApplication.Admin.Views.MasterPages
                 }
 
                 duplicatedItem.Fields.Add(mediaDetailField);
+            }
+
+            if(!autoPublish)
+            {
+                duplicatedItem.PublishDate = null;
             }
 
             var returnObj = MediaDetailsMapper.Insert(duplicatedItem);

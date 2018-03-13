@@ -1,34 +1,4 @@
-﻿/*$(document).ready(function () {
-
-    if ($("form").length > 0)
-    {
-        $("input:submit").click(function (event) {
-
-            var mainForm = $("form")[0];
-            var dataForm = $(this).parents("div[data-form]")[0];
-
-            var hasTarget = false;
-
-            if (dataForm != null) {
-                for (var i = 0; i < dataForm.attributes.length; i++) {
-                    var attrib = dataForm.attributes[i];
-
-                    if (attrib.name == "target")
-                        hasTarget = true;
-
-                    $(mainForm).attr(attrib.name, attrib.value);
-                }
-            }
-
-            mainForm.submit();
-
-            if (hasTarget) {
-                window.reload();
-            }
-        });
-    }
-
-    $(".chosen-select").chosen({ disable_search_threshold: 10 });
+﻿$(document).ready(function () {
   
     $.get(BaseUrl + "WebServices/IMediaDetails.asmx/GetGlossaryTerms", function (data) {
         $(data).each(function () {
@@ -39,34 +9,37 @@
 
             var replacedTerm = [];
 
-            $("p:contains(" + term + "), li:contains(" + term + ")").not(".cd-nav li").each(function () {
+            $("p:contains(" + term + "), li:contains(" + term + ")").not(".cd-nav li, .accordion li").each(function () {
                 var html = $(this).html();
 
                 if ($(this).find("span[title~='" + term + "']").length > 0)
                     return false;
 
                 var html = html.replace(regex, function (match, offset, original) {
+                    //return '<span data-tooltip aria-haspopup="true" class="has- tip" data-disable-hover="false" tabindex="1" title="' + definition + '">' + match+'</span>'
                     return "<span data-toggle='tooltip' title='" + definition + "'>" + match + "</span>";
                 });
 
                 $(this).html(html);
-            });
-
+            });      
+            
+            $("img[src*='" + term + "']").not(".cd-nav li, .accordion li").each(function () {
+                $(this).attr("title", definition);
+                $(this).attr("data-toggle", "tooltip");
+            });  
 
         });
 
         initToolTips();
-    });
+    });    
 
 });
 
-function initToolTips() {
-    if (navigator.appVersion.indexOf("MSIE 8.0") == -1) {
+function initToolTips() {    
+    if (navigator.appVersion.indexOf("MSIE 8.0") == -1) {        
         $('[data-toggle="tooltip"]').tooltip({ track: true });
     }
     else {
         $('[data-toggle="tooltip"]').addClass('apc-terms');
     }
 }
-
-*/

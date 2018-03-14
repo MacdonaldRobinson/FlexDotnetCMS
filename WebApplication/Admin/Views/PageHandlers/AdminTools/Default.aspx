@@ -75,15 +75,31 @@
             </ContentTemplate>
         </asp:UpdatePanel>
 
-        <!--<p>
+        <p>
             <h3>Backup Database</h3>
             This tool will create a backup of the current database an place it under (
             <asp:Literal ID="DBBackupPath" runat="server"></asp:Literal>
             )<br />
             <div class="buttons">
                 <asp:LinkButton ID="BackupNow" runat="server" Text="Backup Now" OnClick="BackupNow_OnClick" />
+
+                <asp:GridView runat="server" ID="DbBackUps" AutoGenerateColumns="false" AllowPaging="false" Width="100%" OnDataBound="DbBackUps_DataBound" class="DataTable">
+                    <Columns>
+                        <asp:BoundField DataField="FullName" HeaderText="FullName" SortExpression="FullName" />                        
+                        <asp:TemplateField HeaderText="">
+                            <ItemTemplate>
+                                <div class="buttons">
+                                    <asp:LinkButton ID="DeleteDbBackUp" runat="server" OnClick="DeleteDbBackUp_Click" CommandArgument='<%# Eval("FullName") %>'>Delete</asp:LinkButton>
+                                    <asp:LinkButton ID="RestoreBackUp" runat="server" OnClick="RestoreBackUp_Click" CommandArgument='<%# Eval("FullName") %>'>Restore Backup</asp:LinkButton>
+                                </div>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
+
+
             </div>
-        </p>-->
+        </p>
     </fieldset>
 
     <fieldset>

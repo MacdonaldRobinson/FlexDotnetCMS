@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Web.Configuration;
+using System.Web.UI.WebControls;
 
 namespace WebApplication.Admin.Views.PageHandlers.AdminTools
 {
@@ -30,6 +32,14 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
             DeployToEnvironment.DataTextField = "Name";
             DeployToEnvironment.DataValueField = "Name";
             DeployToEnvironment.DataBind();
+
+            BindDbBackUpsList();
+        }
+
+        private void BindDbBackUpsList()
+        {
+            DbBackUps.DataSource = Directory.GetFiles(BackupHelper.DbBackupPath).Select(i => new FileInfo(i));
+            DbBackUps.DataBind();
         }
 
         protected void Page_PreRender(object sender, EventArgs e)
@@ -73,12 +83,15 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
 
             try
             {
-                Return returnObj = BackupHelper.BackupDatabase(AppSettings.GetConnectionSettings().ConnectionString);
+                Return returnObj = BackupHelper.BackupDatabase();
 
                 if (returnObj.IsError)
                     DisplayErrorMessage("Error backing up DB", returnObj.Error);
                 else
+                {
                     DisplaySuccessMessage("Successfully backed up DB");
+                    BindDbBackUpsList();
+                }
             }
             catch (Exception ex)
             {
@@ -345,6 +358,76 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
 
             DeployMessages.DataSource = _deployMessages;
             DeployMessages.DataBind();
+        }
+
+        protected void DbBackUps_DataBound(object sender, EventArgs e)
+        {
+            DbBackUps.UseAccessibleHeader = true;
+            if (DbBackUps.HeaderRow != null)
+            {
+                DbBackUps.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+        }
+
+        protected void DeleteDbBackUp_Click(object sender, EventArgs e)
+        {
+            var deleteButton = sender as LinkButton;
+
+            if(!string.IsNullOrEmpty(deleteButton.CommandArgument) && File.Exists(deleteButton.CommandArgument))
+            {
+                var returnObj = BaseMapper.GenerateReturn();
+                try
+                {
+                    File.Delete(deleteButton.CommandArgument);
+                    BindDbBackUpsList();
+                    DisplaySuccessMessage($"Successfully deleted file: ( {deleteButton.CommandArgument} )");
+                }
+                catch(Exception ex)
+                {
+                    ErrorHelper.LogException(ex);
+                    returnObj.Error = ErrorHelper.CreateError(ex);
+
+                    DisplayErrorMessage(returnObj.Error.Message, returnObj.Error);
+                }
+            }
+        }
+
+        protected void RestoreBackUp_Click(object sender, EventArgs e)
+        {
+            if (!canAccessSection)
+            {
+                DisplayAccessError();
+                return;
+            }
+
+            var restoreButton = sender as LinkButton;
+
+            if (!string.IsNullOrEmpty(restoreButton.CommandArgument) && File.Exists(restoreButton.CommandArgument))
+            {
+                var returnObj = BaseMapper.GenerateReturn();
+                try
+                {
+                    BackupNow_OnClick(sender, e);
+
+                    returnObj = BackupHelper.RestoreDatabase(restoreButton.CommandArgument);
+
+                    if (returnObj.IsError)
+                    {
+                        DisplayErrorMessage("Error restoring", returnObj.Error);
+                    }
+                    else
+                    {
+                        DisplaySuccessMessage($"Successfully restored file: ( {restoreButton.CommandArgument} )");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ErrorHelper.LogException(ex);
+                    returnObj.Error = ErrorHelper.CreateError(ex);
+
+                    DisplayErrorMessage(returnObj.Error.Message, returnObj.Error);
+                }
+            }
         }
     }
 }

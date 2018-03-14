@@ -3,6 +3,7 @@ using Microsoft.SqlServer.Management.Smo;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -10,11 +11,62 @@ namespace FrameworkLibrary
 {
     public class BackupHelper
     {
-        public static Return BackupDatabase(string connectionString)
+        public static string DbBackupPath = $@"{URIHelper.BasePath}App_Data\DBBackups\";
+
+        public static Return RestoreDatabase(string backUpFilePath)
         {
             Return returnObj = BaseMapper.GenerateReturn();
 
-            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connectionString);
+            if(!string.IsNullOrEmpty(backUpFilePath) && File.Exists(backUpFilePath))
+            {
+                var databaseName = BaseMapper.GetDataModel().Database.Connection.Database;
+
+                var sqlCommand = $@"ALTER DATABASE {databaseName} SET Single_User WITH Rollback Immediate; USE master; RESTORE DATABASE {databaseName} FROM DISK = '{backUpFilePath}'; ALTER DATABASE {databaseName} SET Multi_User";
+
+                try
+                {
+                    var result = BaseMapper.GetDataModel(true).Database.ExecuteSqlCommand(transactionalBehavior: System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, sql: sqlCommand);
+                    returnObj.SetRawData(result);
+
+                    return returnObj;
+                }
+                catch (Exception ex)
+                {
+                    ErrorHelper.LogException(ex);
+                    returnObj.Error = ErrorHelper.CreateError(ex);
+
+                    return returnObj;
+                }
+            }
+
+            return returnObj;
+        }
+
+        public static Return BackupDatabase()
+        {
+            Return returnObj = BaseMapper.GenerateReturn();
+
+            var databaseName = BaseMapper.GetDataModel().Database.Connection.Database;
+
+            var sqlCommand = $@"BACKUP DATABASE {databaseName} TO DISK = '{DbBackupPath}{DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss-tt")}-{databaseName}.bak'";
+
+            try
+            {
+                var result = BaseMapper.GetDataModel(true).Database.ExecuteSqlCommand(transactionalBehavior: System.Data.Entity.TransactionalBehavior.DoNotEnsureTransaction, sql: sqlCommand);
+                returnObj.SetRawData(result);                
+
+                return returnObj;
+            }
+            catch(Exception ex)
+            {
+                ErrorHelper.LogException(ex);
+                returnObj.Error = ErrorHelper.CreateError(ex);
+
+                return returnObj;
+            }
+
+
+            /*SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connectionString);
             string dbName = builder.InitialCatalog;
             string backUpPath = URIHelper.BasePath + "App_Data/DBBackups/" + DateTime.Now.ToString("yyyy'-'MM'-'dd-HH'-'mm'-'ss'Z'") + "-" + dbName + ".bak";
 
@@ -62,7 +114,7 @@ namespace FrameworkLibrary
 
                     return returnObj;
                 }
-            }
+            }*/                
         }
     }
 }

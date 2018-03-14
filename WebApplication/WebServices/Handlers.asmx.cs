@@ -160,7 +160,7 @@ namespace WebApplication.WebServices
                     var layout = MediaDetailsMapper.ParseSpecialTags(media.GetLiveMediaDetail());
                     var parsedLayout = ParserHelper.ParseData(layout, jObject);
 
-                    EmailHelper.Send(AppSettings.SystemEmailAddress, EmailHelper.GetMailAddressesFromString(formFieldSettings.EmailAddress), formFieldSettings.Subject, parsedLayout, AppSettings.AttemptSMTPMailer);
+                    EmailHelper.Send(AppSettings.SystemEmailAddress, EmailHelper.GetMailAddressesFromString(formFieldSettings.EmailAddress), formFieldSettings.Subject, parsedLayout, (AppSettings.AttemptSMTPMailer)? EmailHelper.EmailMode.Both : EmailHelper.EmailMode.Direct);
                 }                
             }            
 

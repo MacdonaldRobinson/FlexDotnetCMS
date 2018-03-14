@@ -35,19 +35,35 @@ namespace FrameworkLibrary
             return addresses;
         }
 
-        public static Return Send(string fromEmailAddress, IEnumerable<MailAddress> emailAddresses, string subject, string body, bool attemptSmtpMailer = true)
+        public enum EmailMode
+        {
+            Smtp,
+            Direct,
+            Both
+        }
+
+        public static Return Send(string fromEmailAddress, IEnumerable<MailAddress> emailAddresses, string subject, string body, EmailMode emailMode = EmailMode.Both, bool bcc = true)
         {
             Return returnObj = new Return();
             var emailLog = new EmailLog();
 
-            if (attemptSmtpMailer)
+            if (emailMode == EmailMode.Both || emailMode == EmailMode.Smtp)
             {
                 try
                 {
                     MailMessage message = new MailMessage();
 
                     foreach (MailAddress address in emailAddresses)
-                        message.To.Add(address);
+                    {
+                        if (bcc)
+                        {
+                            message.Bcc.Add(address);
+                        }
+                        else
+                        {
+                            message.To.Add(address);
+                        }
+                    }
 
                     message.Sender = new MailAddress(fromEmailAddress);
 
@@ -77,12 +93,15 @@ namespace FrameworkLibrary
 
                     EmailsMapper.Insert(emailLog);
 
-                    var directSentReturn = SendDirectMessage(fromEmailAddress, emailAddresses, subject, body);
+                    if (emailMode == EmailMode.Both)
+                    {
+                        var directSentReturn = SendDirectMessage(fromEmailAddress, emailAddresses, subject, body, bcc);
 
-                    if (directSentReturn.IsError)
-                        return directSentReturn;
-                    else
-                        returnObj = BaseMapper.GenerateReturn();
+                        if (directSentReturn.IsError)
+                            return directSentReturn;
+                        else
+                            returnObj = BaseMapper.GenerateReturn();
+                    }
 
                     return returnObj;
                 }
@@ -93,7 +112,7 @@ namespace FrameworkLibrary
             }
         }
 
-        private static Return SendDirectMessage(string fromEmailAddress, IEnumerable<MailAddress> emailAddresses, string subject, string body)
+        private static Return SendDirectMessage(string fromEmailAddress, IEnumerable<MailAddress> emailAddresses, string subject, string body, bool bcc = true)
         {
             var returnObj = new Return();
             var emailLog = new EmailLog();
@@ -104,13 +123,30 @@ namespace FrameworkLibrary
 
             foreach (var mailAddress in emailAddresses)
             {
-                message.To.Add(mailAddress.Address);
+                if (bcc)
+                {
+                    message.Bcc.Add(mailAddress.Address);
+                }
+                else
+                {
+                    message.To.Add(mailAddress.Address);
+                }
             }
-            
+
 
             message.IsHtml = true;
             message.BodyHtml.Text = body;
             message.BodyText.Text = body;
+
+            emailLog.FromEmailAddress = message.From.Email;
+            emailLog.SenderName = message.Sender.Name;
+            emailLog.SenderEmailAddress = message.Sender.Email;
+            emailLog.Subject = message.Subject;
+            emailLog.ToEmailAddresses = "";
+            emailLog.VisitorIP = "";
+            emailLog.RequestUrl = "";
+            emailLog.ServerMessage = "";
+            emailLog.Message = body;
 
             try
             {
@@ -119,15 +155,19 @@ namespace FrameworkLibrary
 
                 var returnStr = ActiveUp.Net.Mail.SmtpClient.DirectSend(message);
 
-                if(!string.IsNullOrEmpty(returnStr))
+                if (!string.IsNullOrEmpty(returnStr))
                 {
                     emailLog.ServerMessage = returnObj?.Error?.Message;
+
+                    if (emailLog.ServerMessage == null)
+                        emailLog.ServerMessage = "";
+
                     EmailsMapper.Insert(emailLog);
                 }
 
                 return returnObj;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ErrorHelper.LogException(ex);
 
@@ -135,10 +175,13 @@ namespace FrameworkLibrary
 
                 emailLog.ServerMessage = returnObj?.Error?.Message;
 
+                if (emailLog.ServerMessage == null)
+                    emailLog.ServerMessage = "";
+
                 EmailsMapper.Insert(emailLog);
 
                 return returnObj;
-            }            
+            }
         }
 
         public static EmailLog GetEmailLogFromMailMessage(MailMessage mailObj)

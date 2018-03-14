@@ -70,7 +70,7 @@ namespace FrameworkLibrary
                 url = url.ToLower();
                 IDatabase cache = Connection.GetDatabase();
 
-                if (cache.KeyExists(url))
+                if (cache != null && cache.KeyExists(url))
                 {
                     cache.KeyDelete(url);
                 }

@@ -1161,6 +1161,8 @@ namespace FrameworkLibrary
             return originalText.Replace(textToReplace, parsedValue);
         }
 
+        public static System.Web.UI.Page ParserPage { get; } = new System.Web.UI.Page();
+
         public static string ParseSpecialTags(IMediaDetail mediaDetail, string propertyName = "{UseMainLayout}", int previousCount = 0, object passToParser = null, bool includeFieldWrapper = true)
         {
             if (mediaDetail == null)
@@ -1514,9 +1516,9 @@ namespace FrameworkLibrary
 
                     var fieldType = ParserHelper.ParseData(mediaField.AdminControl, new RazorFieldParams { Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments, Control = new Control() });
 
-                    var parserPage = new System.Web.UI.Page();
-                    parserPage.AppRelativeVirtualPath = "~/";
-                    var control = parserPage.ParseControl(fieldType);
+                    //var parserPage = new System.Web.UI.Page();
+                    ParserPage.AppRelativeVirtualPath = "~/";
+                    var control = ParserPage.ParseControl(fieldType);
 
                     if (control?.Controls.Count > 0 && control.Controls[0].GetType().FullName.StartsWith("ASP") && mediaField.GetAdminControlValue.Contains("@"))
                     {
@@ -1641,10 +1643,12 @@ namespace FrameworkLibrary
 
                 var settingsShortCodes = Regex.Matches(customCode, "{Settings:[a-zA-Z0-9:=\"\".]+}");
 
+                var settings = SettingsMapper.GetSettings();
+
                 foreach (var settingsShortCode in settingsShortCodes)
                 {
                     var setting = settingsShortCode.ToString().Replace("Settings:", "");
-                    var returnString = ParserHelper.ParseData(setting, SettingsMapper.GetSettings());
+                    var returnString =  ParserHelper.ParseData(setting, settings);
 
                     customCode = customCode.Replace(settingsShortCode.ToString(), returnString);
                 }

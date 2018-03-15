@@ -42,6 +42,11 @@ namespace FrameworkLibrary
             Both
         }
 
+        public static Return Send(string fromEmailAddress, MailAddress emailAddress, string subject, string body, EmailMode emailMode = EmailMode.Both, bool bcc = true)
+        {
+            return Send(fromEmailAddress, new List<MailAddress>() { emailAddress }, subject, body, emailMode, bcc);
+        }
+
         public static Return Send(string fromEmailAddress, IEnumerable<MailAddress> emailAddresses, string subject, string body, EmailMode emailMode = EmailMode.Both, bool bcc = true)
         {
             Return returnObj = new Return();

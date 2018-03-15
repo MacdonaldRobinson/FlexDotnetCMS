@@ -324,7 +324,9 @@ namespace WebApplication.Installer
                     DisableInstallerPanel.Visible = true;
                     Messages.Text = "Successfully updated CMS Admin Login Credentials";
 
-                    MailChimpHelper.AddUserToFlexDotNetCMSInstallerList(admin);
+                    MailChimpHelper mailChimpHelper = new MailChimpHelper("f23d1a1ec667a40691014801ed84f096-us15");
+
+                    mailChimpHelper.AddUserToFlexDotNetCMSInstallerList(admin);
                 }
             }
 

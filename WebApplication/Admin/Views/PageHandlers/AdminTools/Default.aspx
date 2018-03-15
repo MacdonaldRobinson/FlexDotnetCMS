@@ -35,7 +35,10 @@
             }
         </style>
 
-        <legend>Deployment Tools</legend>
+        <legend>Deployment and Backup Tools</legend>
+
+        <h3>Database Compare</h3>
+        This tool allows you to compare the current site's database with the database of another environment, provided the schemas of the 2 databases are the same.<br />
         <label><strong>Select the remote environment:</strong></label>
 
         <asp:UpdatePanel runat="server">
@@ -79,7 +82,7 @@
             <h3>Backup Database</h3>
             This tool will create a backup of the current database an place it under (
             <asp:Literal ID="DBBackupPath" runat="server"></asp:Literal>
-            )<br />
+            ). This only works if both the database and the web app are on the same server<br />
             <div class="buttons">
                 <asp:LinkButton ID="BackupNow" runat="server" Text="Backup Now" OnClick="BackupNow_OnClick" />
 

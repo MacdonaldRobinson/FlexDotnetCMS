@@ -46,7 +46,7 @@ namespace FrameworkLibrary
 
             var databaseName = BaseMapper.GetDataModel().Database.Connection.Database;
 
-            var sqlCommand = $@"BACKUP DATABASE {databaseName} TO DISK = '{DbBackupPath}{DateTime.Now.ToString("yyyy-MM-dd-hh-mm-ss-tt")}-{databaseName}.bak'";
+            var sqlCommand = $@"BACKUP DATABASE {databaseName} TO DISK = '{DbBackupPath}{DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss-tt")}-{databaseName}.bak'";
 
             try
             {

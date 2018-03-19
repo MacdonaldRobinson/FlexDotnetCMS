@@ -303,5 +303,14 @@ namespace WebApplication.Admin.Controls.Fields
         protected void Page_Load(object sender, EventArgs e)
         {
         }
+
+        protected void FieldItems_DataBound(object sender, EventArgs e)
+        {
+            FieldItems.UseAccessibleHeader = true;
+            if (FieldItems.HeaderRow != null)
+            {
+                FieldItems.HeaderRow.TableSection = TableRowSection.TableHeader;
+            }
+        }
     }
 }

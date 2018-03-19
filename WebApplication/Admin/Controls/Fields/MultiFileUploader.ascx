@@ -67,7 +67,7 @@
                 <asp:TextBox runat="server" CssClass="ItemsToDelete" ID="ItemsToDelete" Text="[]" Style="display: none;" />
                 <asp:TextBox runat="server" CssClass="ReorderItems" ID="ReorderItems" Text="[]" Style="display: none;"/>
 
-                <asp:GridView runat="server" ID="FieldItems" AutoGenerateColumns="false" AllowPaging="true" CssClass="FieldItems DragDropGrid" OnPageIndexChanging="ItemList_PageIndexChanging" ItemType="FrameworkLibrary.FieldAssociation" Visible="false" Width="100%">
+                <asp:GridView runat="server" ID="FieldItems" AutoGenerateColumns="false" AllowPaging="true" CssClass="FieldItems DragDropGrid" OnPageIndexChanging="ItemList_PageIndexChanging" ItemType="FrameworkLibrary.FieldAssociation" Visible="false" Width="100%" OnDataBound="FieldItems_DataBound">
                     <Columns>                        
                         <asp:BoundField DataField="MediaDetail.SectionTitle" HeaderText="SectionTitle" SortExpression="MediaDetail.SectionTitle" />
                         <asp:BoundField DataField="MediaDetail.CreatedByUser.Username" HeaderText="CreatedByUser" SortExpression="MediaDetail.CreatedByUser.Username" />

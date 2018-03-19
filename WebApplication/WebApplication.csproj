@@ -182,6 +182,8 @@
     <Content Include="Admin\media\images\css\background.jpg" />
     <Content Include="Admin\media\images\css\leftArrow.png" />
     <Content Include="Admin\media\images\css\logo.png" />
+    <Content Include="Admin\Scripts\AceEditorAutoComplete.html" />
+    <Content Include="Admin\Scripts\TinyMCETemplates.html" />
     <Content Include="Admin\Views\MasterPages\WebService.asmx" />
     <Content Include="Admin\Views\PageHandlers\Chat\AdminChat.asmx" />
     <Content Include="Admin\Views\PageHandlers\Chat\Default.aspx" />

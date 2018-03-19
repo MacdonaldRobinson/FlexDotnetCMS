@@ -410,6 +410,7 @@ function createAutoCompleteObject(caption, value, meta)
 
 function getFieldsAutoComplete()
 {
+    LoadAceEditorAutoComplete();
     var wordsArray = [];
 
     $("#MainFields label:first-child").each(function () {
@@ -432,99 +433,11 @@ function getFieldsAutoComplete()
         wordsArray.push(createAutoCompleteObject(text, text, "custom field"));        
     });
 
-    wordsArray.push(createAutoCompleteObject(
-        '<Site:GenerateNav', 
-        '<Site:GenerateNav runat="server" \
-                RenderRootMedia="True" \
-                RootMediaID="2"\
-                RenderDepth="2"\
-                DisplayProtectedSections="false" /',
-        'user control'
-    ));
+    $(aceEditorAutoComplete).each(function () {
+        wordsArray.push(createAutoCompleteObject(this.title, this.code, this.category));
+    });
 
-    wordsArray.push(createAutoCompleteObject(
-        '<Site:RenderChildren',
-        '<Site:RenderChildren runat="server" \
-                MediaID="0" \
-                ShowPager="True" \
-                PageSize="10" \
-                ChildPropertyName="UseSummaryLayout" \
-                Where=\'MediaType.Name=="Page"\' \
-                OrderBy="DateCreated DESC" />',
-        'user control'
-    ));
-
-    wordsArray.push(createAutoCompleteObject(
-        '<Site:RenderMedia',
-        '<Site:RenderMedia runat="server" \
-                MediaID="2" \
-                PropertyName="UseSummaryLayout" />',
-        'user control'
-    ));
-
-    wordsArray.push(createAutoCompleteObject(
-        'LayoutsTab:RazorIfField', 
-        '<!-- LayoutsTab:RazorIfField: Razor Code Showing how to load a field and check its value --> \
-@{ \
-    var field = Model.RenderField("test1"); \
-        \
-    <ul>\
-    @if(field == "True")\
-    {\
-        <li>If condition is true</li>\
-    }\
-    else\
-    {\
-        <li>You entered: @Raw(field)</li>\
-    }\
-    </ul>\
-}',
-        'razor code'
-    ));
-
-
-    wordsArray.push(createAutoCompleteObject(
-        'LayoutsTab:RazorLoopAssociatedItems',
-        '<!-- LayoutsTab:RazorLoopAssociatedItems: Razor Code showing how you can load a field and loop through its associated items -->\
-@{            \
-    var field = Model.LoadField("Dropfield");\
-        \
-    <ul>\
-    @foreach(var item in field.FieldAssociations)\
-    {\
-        var detail = item.MediaDetail;\
-        <li><a href="@detail.AbsoluteUrl">@Raw(detail.RenderField("SectionTitle"))</a></li>\
-    }\
-    </ul>\
-}',
-        'razor code'
-    ));
-
-    wordsArray.push(createAutoCompleteObject(
-        'LayoutsTab:RazorRenderChildren',
-        '<!-- LayoutsTab:RazorRenderChildren: Razor Code to loop through and render child items -->\
-@{\
-    var mediaId = Model.MediaID; // You can change this to any Media ID to load the children of that page\
-    var media = MediasMapper.GetByID(mediaId);\
-    \
-    if(media != null)\
-    {\
-        var mediaDetail = media.GetLiveMediaDetail();\
-        \
-        if(mediaDetail != null)\
-        {\
-            var childItems =  mediaDetail.ChildMediaDetails;\
-            <ul>\
-            @foreach(var child in childItems)\
-            {\
-                <li><a href="@child.AbsoluteUrl">@Raw(child.RenderField("SectionTitle"))</a></li>\
-            }\
-            </ul>\
-        }\
-    }\
-}',
-        'razor code'
-    ));
+    console.log(wordsArray);
     
     return wordsArray;
         
@@ -784,6 +697,7 @@ function BindJQueryUIControls()
 
 $(document).ready(function () {
     LoadTinyMCETemplates();
+    //LoadAceEditorAutoComplete();
     BindJQueryUIControls();
     //BindScrollMagic();    
 
@@ -857,11 +771,34 @@ function LoadTinyMCETemplates() {
                 var description = $(this).attr("data-description");
                 var content = $(template).html();
 
-                var templateObj = { title: title, description: description, content: content };
+                var templateObj = { title: title, description: description, content: "<br>" + content + "<br>" };
                 tinyMCETemplates.push(templateObj);
             });
         });
     }    
+}
+
+var aceEditorAutoComplete = [];
+function LoadAceEditorAutoComplete() {    
+    if (aceEditorAutoComplete.length == 0) {
+
+        $.ajax({
+            url: "/Admin/Scripts/AceEditorAutoComplete.html",
+            type: "get",
+            async: false,
+            success: function (data) {
+                $(data).find(".Template").each(function (index, template) {
+                    var title = $(this).attr("data-title");
+                    var category = $(this).attr("data-category");
+                    var code = $(template).html();
+
+                    var templateObj = { title: title, category: category, code: code };
+                    aceEditorAutoComplete.push(templateObj);
+                });
+            }
+        });
+
+    }
 }
 
 function initTinyMCE()

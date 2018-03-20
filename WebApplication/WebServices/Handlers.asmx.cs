@@ -87,7 +87,14 @@ namespace WebApplication.WebServices
 
             foreach (string key in HttpContext.Current.Request.Form.Keys)
             {
-                FormDictionary.Add(key, HttpContext.Current.Request.Form[key]);
+                var value = HttpContext.Current.Request.Form[key];
+
+                if(value.Contains(","))
+                {
+                    value = "\"" + value + "\"";
+                }
+
+                FormDictionary.Add(key, value);
             }
 
             FormDictionary.Add("DateSubmitted", StringHelper.FormatDateTime(DateTime.Now));

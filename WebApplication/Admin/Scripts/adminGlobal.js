@@ -437,7 +437,7 @@ function getFieldsAutoComplete()
         wordsArray.push(createAutoCompleteObject(this.title, this.code, this.category));
     });
 
-    console.log(wordsArray);
+    //console.log(wordsArray);
     
     return wordsArray;
         
@@ -1276,7 +1276,7 @@ function BindDataTable() {
 
             $.extend(options, options, extraOptionsJson);
 
-            console.log(options);
+            //console.log(options);
         }
 
         $(this).DataTable(options);        

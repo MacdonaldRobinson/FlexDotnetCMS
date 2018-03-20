@@ -15,8 +15,8 @@
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.ui-contextmenu/1.13.0/jquery.ui-contextmenu.min.js"></script>
 <script type="text/javascript" src="<%= URIHelper.BaseUrl %>Scripts/split-pane-master/split-pane.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/ace/1.2.9/ace.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/ace/1.2.9/ext-language_tools.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/ace/1.3.1/ace.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/ace/1.3.1/ext-language_tools.js"></script>
 <script type="text/javascript" src="<%= URIHelper.BaseUrl %>Scripts/tinymce/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.5/jquery.jgrowl.min.js"></script>
 <script type="text/javascript" src="<%= URIHelper.BaseUrl %>Admin/Scripts/jquery.autoSuggest.packed.js"></script>

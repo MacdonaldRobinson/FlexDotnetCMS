@@ -2,16 +2,16 @@
     <div class="Template" data-title="Layout:BasicExample" data-category="razor code">
         <!-- Layout:BasicExample -->
         @{
-            var sectionTitle = Model.RenderField("SectionTitle");
-            var mainContent = Model.RenderField("MainContent");
+        var sectionTitle = Model.RenderField("SectionTitle");
+        var mainContent = Model.RenderField("MainContent");
 
-            <h3>@Raw(sectionTitle)</h3>
-            <div>@Raw(mainContent)</div>
+        <h3>@Raw(sectionTitle)</h3>
+        <div>@Raw(mainContent)</div>
 
-            if(mainContent != "")
-            {
-                @("This is a test")
-            }
+        if(mainContent != "")
+        {
+        @("This is a test")
+        }
         }
     </div>
 
@@ -19,33 +19,65 @@
         <!-- Layout:RenderFieldAndFieldAssociations -->
         @mode Page
         @{
-          var sectionTitle = Model.RenderField("SectionTitle");
-          var mainContent = Model.RenderField("MainContent");
-          var multiItemField1 = Model.LoadField("MultiItem") as MediaDetailField; // Cast to a concrete type
+        var sectionTitle = Model.RenderField("SectionTitle");
+        var mainContent = Model.RenderField("MainContent");
+        var multiItemField1 = Model.LoadField("MultiItem") as MediaDetailField; // Cast to a concrete type
 
-          var customField2 = Model.RenderField("CustomField2", false); // False for the second argument means not to display the frontend editor wrapper html
+        var customField2 = Model.RenderField("CustomField2", false); // False for the second argument means not to display the frontend editor wrapper html
 
-          <h3>@Raw(sectionTitle)</h3>
-          <div>@Raw(mainContent)</div>
+        <h3>@Raw(sectionTitle)</h3>
+        <div>@Raw(mainContent)</div>
 
-          <ul>
+        <ul>
 
-              @if(multiItemField1.FieldAssociations.Any())
-              {
-                foreach(var fieldAssociation in multiItemField1.FieldAssociations)
-                {
-                var fieldSectionTitle = fieldAssociation.MediaDetail.RenderField("SectionTitle");
-                var fieldMainContent = fieldAssociation.MediaDetail.RenderField("MainContent");
+            @if(multiItemField1.FieldAssociations.Any())
+            {
+            foreach(var fieldAssociation in multiItemField1.FieldAssociations)
+            {
+            var fieldSectionTitle = fieldAssociation.MediaDetail.RenderField("SectionTitle");
+            var fieldMainContent = fieldAssociation.MediaDetail.RenderField("MainContent");
 
-                <li>
-                    <span>@Raw(fieldSectionTitle)</span>
-                    <span>@Raw(fieldMainContent)</span>
-                </li>
-                }
-              }
+            <li>
+                <span>@Raw(fieldSectionTitle)</span>
+                <span>@Raw(fieldMainContent)</span>
+            </li>
+            }
+            }
 
-          </ul>
-          @customField2
+        </ul>
+        @customField2
         }
     </div>
+
+    <div class="Template" data-title="Layout:OnPublishExecuteCodeTab:MailChimpCampainSendTemplate" data-category="razor code">
+        <!-- Layout:OnPublishExecuteCodeTab:MailChimpCampainSendTemplate -->
+        @{
+        var mailChimpHelper = new MailChimpHelper("[MailChimpAPI]");
+
+        var emailTemplateId = 1443; // ID of the Page Who’s Layout contains the HTML for the email
+        var emailTemplateMedia = MediasMapper.GetByID(emailTemplateId); // Get the media
+        var emailMediaDetail = emailTemplateMedia.GetLiveMediaDetail(); // Get the media detail
+
+        var layout = emailMediaDetail.MainLayout; // Get the contents from the Layouts - > MainLayout
+        var parsedLayout = MediaDetailsMapper.ParseSpecialTags(Model, layout);    // This method parses the HTML and replaces the placeholders with the values from “Model” which is the current page.
+
+        var returnMessage = "On publish script was not executed";
+
+        var listId = "[MailChimpListID]";
+
+        var returnObj = mailChimpHelper.CreateAndSendCampaign(listId, "[FromName]", "[FromEmailAddress]", "Blog Post Notification", "Blog Post Notification", parsedLayout);   // This method creates a campaign using the HTML template and tells MailChimp to send the email
+
+        if(!returnObj.IsError)
+        {
+        returnMessage = "Successfully sent out email notifications to subscribers";
+        }
+        else
+        {
+        returnMessage = "Error sending email to subscribers :" + returnObj.Error;
+        }
+
+        @returnMessage // This will display the notification message in the backend
+        }
+    </div>
+
 </div>

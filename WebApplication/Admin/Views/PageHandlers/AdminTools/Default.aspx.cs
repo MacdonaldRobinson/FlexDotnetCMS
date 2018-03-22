@@ -309,55 +309,65 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
         }
 
         protected void Deploy_Click(object sender, EventArgs e)
-        {            
-            var remoteConnectionStringSetting = FrameworkBaseMedia.PrepareConnectionSettings(WebConfigurationManager.ConnectionStrings[DeployToEnvironment.SelectedValue]);
-            //var localConnectionStringSetting = FrameworkBaseMedia.PrepareConnectionSettings(AppSettings.GetConnectionSettings());
-
-            var localDataModel = BaseMapper.GetDataModel();
-            var remoteDataModel = BaseMapper.GetDataModel(true, true, remoteConnectionStringSetting);
-
-            var localMediaDetails = localDataModel.MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && i.MediaType.Name != MediaTypeEnum.RootPage.ToString()).ToList();
-            var remoteMediaDetails = remoteDataModel.MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && i.MediaType.Name != MediaTypeEnum.RootPage.ToString()).ToList();
-
-            var localSettings = localDataModel.AllSettings.FirstOrDefault();
-            var remoteSettings = remoteDataModel.AllSettings.FirstOrDefault();
-
-            if (localSettings.GlobalCodeInBody != remoteSettings.GlobalCodeInBody)
+        {
+            try
             {
-                AddMessage("Settings", $"The setting: 'GlobalCodeInBody' is different");
-            }
 
-            if (localSettings.GlobalCodeInHead != remoteSettings.GlobalCodeInHead)
-            {
-                AddMessage("Settings", $"The setting: 'GlobalCodeInHead' is different");
-            }
+                var remoteConnectionStringSetting = FrameworkBaseMedia.PrepareConnectionSettings(WebConfigurationManager.ConnectionStrings[DeployToEnvironment.SelectedValue]);
+                //var localConnectionStringSetting = FrameworkBaseMedia.PrepareConnectionSettings(AppSettings.GetConnectionSettings());
 
-            foreach (var localMediaDetail in localMediaDetails)
-            {
-                var remoteMediaDetail = remoteMediaDetails.FirstOrDefault(i => i.MediaID == localMediaDetail.MediaID && i.LanguageID == localMediaDetail.LanguageID);
+                var localDataModel = BaseMapper.GetDataModel();
+                var remoteDataModel = BaseMapper.GetDataModel(true, true, remoteConnectionStringSetting);
 
-                if (remoteMediaDetail != null)
+                var localMediaDetails = localDataModel.MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && i.MediaType.Name != MediaTypeEnum.RootPage.ToString()).ToList();
+                var remoteMediaDetails = remoteDataModel.MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && i.MediaType.Name != MediaTypeEnum.RootPage.ToString()).ToList();
+
+                var localSettings = localDataModel.AllSettings.FirstOrDefault();
+                var remoteSettings = remoteDataModel.AllSettings.FirstOrDefault();
+
+                if (localSettings.GlobalCodeInBody != remoteSettings.GlobalCodeInBody)
                 {
-                    CompareLocalAndRemoteMediaDetail(localMediaDetail, remoteMediaDetail);
+                    AddMessage("Settings", $"The setting: 'GlobalCodeInBody' is different");
                 }
-                else
-                {
-                    var found = remoteMediaDetails.FirstOrDefault(i => i.CachedVirtualPath == localMediaDetail.CachedVirtualPath && i.LanguageID == localMediaDetail.LanguageID);
 
-                    if(found != null)
+                if (localSettings.GlobalCodeInHead != remoteSettings.GlobalCodeInHead)
+                {
+                    AddMessage("Settings", $"The setting: 'GlobalCodeInHead' is different");
+                }
+
+                foreach (var localMediaDetail in localMediaDetails)
+                {
+                    var remoteMediaDetail = remoteMediaDetails.FirstOrDefault(i => i.MediaID == localMediaDetail.MediaID && i.LanguageID == localMediaDetail.LanguageID);
+
+                    if (remoteMediaDetail != null)
                     {
-                        //AddMessage("Different MediaID's but the same cached virtual path", $"Local: {localMediaDetail.CachedVirtualPath} is '{localMediaDetail.MediaID}' | Remote: {found.CachedVirtualPath}  is '{found.MediaID}'");
-                        CompareLocalAndRemoteMediaDetail(localMediaDetail, found);                        
+                        CompareLocalAndRemoteMediaDetail(localMediaDetail, remoteMediaDetail);
                     }
                     else
                     {
-                        AddMessage("Does not exist on remote", $"{localMediaDetail.CachedVirtualPath}");
+                        var found = remoteMediaDetails.FirstOrDefault(i => i.CachedVirtualPath == localMediaDetail.CachedVirtualPath && i.LanguageID == localMediaDetail.LanguageID);
+
+                        if (found != null)
+                        {
+                            //AddMessage("Different MediaID's but the same cached virtual path", $"Local: {localMediaDetail.CachedVirtualPath} is '{localMediaDetail.MediaID}' | Remote: {found.CachedVirtualPath}  is '{found.MediaID}'");
+                            CompareLocalAndRemoteMediaDetail(localMediaDetail, found);
+                        }
+                        else
+                        {
+                            AddMessage("Does not exist on remote", $"{localMediaDetail.CachedVirtualPath}");
+                        }
                     }
                 }
-            }
 
-            DeployMessages.DataSource = _deployMessages;
-            DeployMessages.DataBind();
+                DeployMessages.DataSource = _deployMessages;
+                DeployMessages.DataBind();
+            }
+            catch(Exception ex)
+            {
+                ErrorHelper.LogException(ex);
+
+                DisplayErrorMessage(ex.Message, ErrorHelper.CreateError(ex));
+            }
         }
 
         protected void DbBackUps_DataBound(object sender, EventArgs e)

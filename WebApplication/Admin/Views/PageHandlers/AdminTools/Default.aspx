@@ -79,10 +79,10 @@
         </asp:UpdatePanel>
 
         <p>
-            <h3>Backup Database</h3>
+            <h3>Backup & Restore Database</h3>
             This tool will create a backup of the current database an place it under (
             <asp:Literal ID="DBBackupPath" runat="server"></asp:Literal>
-            ). This only works if both the database and the web app are on the same server<br />
+            ), you can also restore from a previous backup. This only works if both the database and the web app are on the same server<br />
             <div class="buttons">
                 <asp:LinkButton ID="BackupNow" runat="server" Text="Backup Now" OnClick="BackupNow_OnClick" />
 

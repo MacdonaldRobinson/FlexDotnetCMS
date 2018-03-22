@@ -52,31 +52,31 @@
     <div class="Template" data-title="Layout:OnPublishExecuteCodeTab:MailChimpCampainSendTemplate" data-category="razor code">
         <!-- Layout:OnPublishExecuteCodeTab:MailChimpCampainSendTemplate -->
         @{
-        var mailChimpHelper = new MailChimpHelper("[MailChimpAPI]");
+            var mailChimpHelper = new MailChimpHelper("[MailChimpAPI]");
 
-        var emailTemplateId = 1443; // ID of the Page Who’s Layout contains the HTML for the email
-        var emailTemplateMedia = MediasMapper.GetByID(emailTemplateId); // Get the media
-        var emailMediaDetail = emailTemplateMedia.GetLiveMediaDetail(); // Get the media detail
+            var emailTemplateId = 1443; // ID of the Page Who's Layout contains the HTML for the email
+            var emailTemplateMedia = MediasMapper.GetByID(emailTemplateId); // Get the media
+            var emailMediaDetail = emailTemplateMedia.GetLiveMediaDetail(); // Get the media detail
 
-        var layout = emailMediaDetail.MainLayout; // Get the contents from the Layouts - > MainLayout
-        var parsedLayout = MediaDetailsMapper.ParseSpecialTags(Model, layout);    // This method parses the HTML and replaces the placeholders with the values from “Model” which is the current page.
+            var layout = emailMediaDetail.MainLayout; // Get the contents from the Layouts - > MainLayout
+            var parsedLayout = MediaDetailsMapper.ParseSpecialTags(Model, layout);    // This method parses the HTML and replaces the placeholders with the values from “Model” which is the current page.
 
-        var returnMessage = "On publish script was not executed";
+            var returnMessage = "On publish script was not executed";
 
-        var listId = "[MailChimpListID]";
+            var listId = "[MailChimpListID]";
 
-        var returnObj = mailChimpHelper.CreateAndSendCampaign(listId, "[FromName]", "[FromEmailAddress]", "Blog Post Notification", "Blog Post Notification", parsedLayout);   // This method creates a campaign using the HTML template and tells MailChimp to send the email
+            var returnObj = mailChimpHelper.CreateAndSendCampaign(listId, "[FromName]", "[FromEmailAddress]", "Blog Post Notification", "Blog Post Notification", parsedLayout);   // This method creates a campaign using the HTML template and tells MailChimp to send the email
 
-        if(!returnObj.IsError)
-        {
-        returnMessage = "Successfully sent out email notifications to subscribers";
-        }
-        else
-        {
-        returnMessage = "Error sending email to subscribers :" + returnObj.Error;
-        }
+            if(!returnObj.IsError)
+            {
+            returnMessage = "Successfully sent out email notifications to subscribers";
+            }
+            else
+            {
+            returnMessage = "Error sending email to subscribers :" + returnObj.Error;
+            }
 
-        @returnMessage // This will display the notification message in the backend
+            @returnMessage // This will display the notification message in the backend
         }
     </div>
 

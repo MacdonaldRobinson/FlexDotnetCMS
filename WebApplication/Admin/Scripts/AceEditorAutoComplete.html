@@ -1,83 +1,117 @@
 ﻿<div id="Templates">
     <div class="Template" data-title="Layout:BasicExample" data-category="razor code">
-        <!-- Layout:BasicExample -->
-        @{
-        var sectionTitle = Model.RenderField("SectionTitle");
-        var mainContent = Model.RenderField("MainContent");
+<!-- Layout:BasicExample -->
+@{
+    var sectionTitle = Model.RenderField("SectionTitle");
+    var mainContent = Model.RenderField("MainContent");
 
-        <h3>@Raw(sectionTitle)</h3>
-        <div>@Raw(mainContent)</div>
+    <h3>@Raw(sectionTitle)</h3>
+    <div>@Raw(mainContent)</div>
+    <a>@Model.AbsoluteUrl</a>
 
-        if(mainContent != "")
-        {
+    if(mainContent != "")
+    {
         @("This is a test")
-        }
-        }
+    }
+}
     </div>
 
     <div class="Template" data-title="Layout:RenderFieldAndFieldAssociations" data-category="razor code">
-        <!-- Layout:RenderFieldAndFieldAssociations -->
-        @mode Page
-        @{
-        var sectionTitle = Model.RenderField("SectionTitle");
-        var mainContent = Model.RenderField("MainContent");
-        var multiItemField1 = Model.LoadField("MultiItem") as MediaDetailField; // Cast to a concrete type
+<!-- Layout:RenderFieldAndFieldAssociations -->
+@mode Page
+@{
+    var sectionTitle = Model.RenderField("SectionTitle");
+    var mainContent = Model.RenderField("MainContent");
+    var multiItemField1 = Model.LoadField("MultiItem") as MediaDetailField; // Cast to a concrete type
 
-        var customField2 = Model.RenderField("CustomField2", false); // False for the second argument means not to display the frontend editor wrapper html
+    var customField2 = Model.RenderField("CustomField2", false); // False for the second argument means not to display the frontend editor wrapper html
 
-        <h3>@Raw(sectionTitle)</h3>
-        <div>@Raw(mainContent)</div>
+    <h3>@Raw(sectionTitle)</h3>
+    <div>@Raw(mainContent)</div>
 
-        <ul>
+    <ul>
 
-            @if(multiItemField1.FieldAssociations.Any())
-            {
+        @if(multiItemField1.FieldAssociations.Any())
+        {
             foreach(var fieldAssociation in multiItemField1.FieldAssociations)
             {
-            var fieldSectionTitle = fieldAssociation.MediaDetail.RenderField("SectionTitle");
-            var fieldMainContent = fieldAssociation.MediaDetail.RenderField("MainContent");
+                var fieldSectionTitle = fieldAssociation.MediaDetail.RenderField("SectionTitle");
+                var fieldMainContent = fieldAssociation.MediaDetail.RenderField("MainContent");
 
-            <li>
-                <span>@Raw(fieldSectionTitle)</span>
-                <span>@Raw(fieldMainContent)</span>
-            </li>
+                <li>
+                    <span>@Raw(fieldSectionTitle)</span>
+                    <span>@Raw(fieldMainContent)</span>
+                </li>
             }
-            }
-
-        </ul>
-        @customField2
         }
+
+    </ul>
+    @customField2
+}
     </div>
 
     <div class="Template" data-title="Layout:OnPublishExecuteCodeTab:MailChimpCampainSendTemplate" data-category="razor code">
-        <!-- Layout:OnPublishExecuteCodeTab:MailChimpCampainSendTemplate -->
-        @{
-            var mailChimpHelper = new MailChimpHelper("[MailChimpAPI]");
+<!-- Layout:OnPublishExecuteCodeTab:MailChimpCampainSendTemplate -->
+@{
+    var mailChimpHelper = new MailChimpHelper("[MailChimpAPI]");
 
-            var emailTemplateId = 1443; // ID of the Page Who's Layout contains the HTML for the email
-            var emailTemplateMedia = MediasMapper.GetByID(emailTemplateId); // Get the media
-            var emailMediaDetail = emailTemplateMedia.GetLiveMediaDetail(); // Get the media detail
+    var emailTemplateId = 1443; // ID of the Page Who's Layout contains the HTML for the email
+    var emailTemplateMedia = MediasMapper.GetByID(emailTemplateId); // Get the media
+    var emailMediaDetail = emailTemplateMedia.GetLiveMediaDetail(); // Get the media detail
 
-            var layout = emailMediaDetail.MainLayout; // Get the contents from the Layouts - > MainLayout
-            var parsedLayout = MediaDetailsMapper.ParseSpecialTags(Model, layout);    // This method parses the HTML and replaces the placeholders with the values from “Model” which is the current page.
+    var layout = emailMediaDetail.MainLayout; // Get the contents from the Layouts - > MainLayout
+    var parsedLayout = MediaDetailsMapper.ParseSpecialTags(Model, layout);    // This method parses the HTML and replaces the placeholders with the values from “Model” which is the current page.
 
-            var returnMessage = "On publish script was not executed";
+    var returnMessage = "On publish script was not executed";
 
-            var listId = "[MailChimpListID]";
+    var listId = "[MailChimpListID]";
 
-            var returnObj = mailChimpHelper.CreateAndSendCampaign(listId, "[FromName]", "[FromEmailAddress]", "Blog Post Notification", "Blog Post Notification", parsedLayout);   // This method creates a campaign using the HTML template and tells MailChimp to send the email
+    var returnObj = mailChimpHelper.CreateAndSendCampaign(listId, "[FromName]", "[FromEmailAddress]", "Blog Post Notification", "Blog Post Notification", parsedLayout);   // This method creates a campaign using the HTML template and tells MailChimp to send the email
 
-            if(!returnObj.IsError)
+    if(!returnObj.IsError)
+    {
+        returnMessage = "Successfully sent out email notifications to subscribers";
+    }
+    else
+    {
+        returnMessage = "Error sending email to subscribers :" + returnObj.Error;
+    }
+
+    @returnMessage // This will display the notification message in the backend
+}
+    </div>
+
+    <div class="Template" data-title="FieldsTab:RazorGallery" data-category="razor code">
+<!-- FieldsTab:RazorGallery: Razor Code showing how you can load a field and loop through its associated items -->
+@model RazorFieldParams
+@{
+    var field = (MediaDetailField)Model.Field;
+    var fieldAssociations = field.FieldAssociations.OrderBy(i=>i.OrderIndex);
+
+    if(fieldAssociations.Count() > 0)
+    {
+        <script>head.load(['//cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.12/jquery.bxslider.min.js','//cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.12/jquery.bxslider.min.css'], function() {
+                // Call a function when done
+                $(".bxslider:not(.updated)").each(function(){
+                    var slidesWrapper = $(this);
+                    $(this).addClass("updated");
+
+                    $(this).bxSlider({
+                        mode: 'fade',
+                        captions: true
+                    });
+                });
+            });
+        </script>
+
+        <ul class="bxslider">
+            @foreach(var item in fieldAssociations)
             {
-            returnMessage = "Successfully sent out email notifications to subscribers";
+            <li><a href='#'>@Raw(item.MediaDetail.RenderField("PathToFile"))</a></li>
             }
-            else
-            {
-            returnMessage = "Error sending email to subscribers :" + returnObj.Error;
-            }
-
-            @returnMessage // This will display the notification message in the backend
-        }
+        </ul>
+    }
+}
     </div>
 
 </div>

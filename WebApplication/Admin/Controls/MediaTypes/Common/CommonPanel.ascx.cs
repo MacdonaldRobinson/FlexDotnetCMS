@@ -78,10 +78,10 @@ namespace WebApplication.Admin.Controls.MediaTypes
 
         public void AddLinkSettingsTab()
         {
-            if (BasePage.CurrentUser.IsInRole(RoleEnum.Developer))
-            {
+            //if (BasePage.CurrentUser.IsInRole(RoleEnum.Administrator))
+            //{
                 AddTab("Link Settings", "~/Admin/Controls/MediaTypes/Common/Tabs/LinkSettingsTab.ascx");
-            }
+            //}
         }
 
         public void ChildrensTab()

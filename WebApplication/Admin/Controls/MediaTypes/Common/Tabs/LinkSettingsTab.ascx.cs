@@ -14,6 +14,9 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
             //ShowInMenu.Checked = selectedItem.ShowInMenu;
             ShowInSearchResults.Checked = selectedItem.ShowInSearchResults;
             UseDirectLink.Checked = selectedItem.UseDirectLink;
+
+            selectedItem.DirectLink = MediaDetailsMapper.ConvertUrlsToShortCodes(selectedItem.DirectLink);
+
             DirectLink.SetValue(selectedItem.DirectLink);
             OpenInNewWindow.Checked = selectedItem.OpenInNewWindow;            
             RenderInFooter.Checked = selectedItem.RenderInFooter;

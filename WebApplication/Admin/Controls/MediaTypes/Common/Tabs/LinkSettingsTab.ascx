@@ -1,21 +1,21 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LinkSettingsTab.ascx.cs" Inherits="WebApplication.Admin.Controls.MediaTypes.Common.Tabs.LinkSettings" %>
 <fieldset>
-    <div>
+    <!--<div>
         <asp:CheckBox ID="ShowInSearchResults" runat="server" Checked="true" />&nbsp;<label class="exception"
             for="<%= ShowInSearchResults.ClientID %>">Show In Search Results</label>
-    </div>
+    </div>-->
     <div>
         <p>
             <asp:CheckBox ID="RedirectToFirstChild" runat="server" /><label for="<%= RedirectToFirstChild.ClientID %>">
                 Redirect To First Child</label>
         </p>
     </div>
-    <div>
+    <!--<div>
         <p>
             <asp:CheckBox ID="IsProtected" runat="server" /><label for="<%= IsProtected.ClientID %>">
                 Is Protected Section</label>
         </p>
-    </div>
+    </div>-->
     <div>
         <asp:CheckBox ID="UseDirectLink" runat="server" Checked="false" />&nbsp;<label class="exception"
             for="<%= UseDirectLink.ClientID %>">Use Direct Link</label>
@@ -37,15 +37,15 @@
         <asp:CheckBox ID="OpenInNewWindow" runat="server" Checked="false" />&nbsp;<label class="exception"
             for="<%= OpenInNewWindow.ClientID %>">Open In New Window</label>
     </div>
-    <div>
+    <!--<div>
         <asp:CheckBox ID="ShowOnMobileVersion" runat="server" Checked="false" />&nbsp;<label class="exception"
             for="<%= ShowOnMobileVersion.ClientID %>">Show On Mobile Version</label>
-    </div>
-    <div>
+    </div>-->
+    <!--<div>
         <asp:CheckBox ID="RenderInFooter" runat="server" Checked="false" />&nbsp;<label for="<%= RenderInFooter.ClientID %>">Render In Footer</label>
-    </div>
+    </div>-->
 
-    <div>
+    <!--<div>
         <asp:CheckBox ID="ForceSSL" runat="server" Checked="false" />&nbsp;<label for="<%= ForceSSL.ClientID %>">ForceSSL</label>
-    </div>
+    </div>-->
 </fieldset>

@@ -36,6 +36,8 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.0/b-html5-1.5.0/rr-1.2.3/datatables.min.css"/>
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/b-1.5.0/b-html5-1.5.0/rr-1.2.3/datatables.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
+
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/themes/default/style.min.css" />
 <link rel="stylesheet" href="<%= URIHelper.BaseUrl %>Admin/Styles/autoSuggest.css" />
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.5/jquery.jgrowl.min.css" />
@@ -68,11 +70,21 @@
 
 </script>
 
-<script>
-    var loadingOverlay = null;
+<script>    
     $(document).ajaxStop(function () {        
-        loadingOverlay.hide();
+        UnBlockUI();
     });
+
+    function BlockUI()
+    {
+        $.blockUI({ message: 'Just a moment...</h1>' });
+    }
+
+    function UnBlockUI()
+    {
+        $.unblockUI();
+    }
+
 
     function BindActiveTabs()
     {
@@ -90,8 +102,7 @@
         }
     }
 
-    $(document).ready(function () {
-        loadingOverlay = $('#<%= UpdateProgress1.ClientID%>');
+    $(document).ready(function () {        
 
         $(document).on("click", ".tabs li a", function () {
             var tabUl = $(this).parents("ul");
@@ -137,11 +148,3 @@
 </script>
 
 <asp:HiddenField ID="SelectedTabIndexs" runat="server" />
-
-<asp:UpdateProgress ID="UpdateProgress1" runat="server">
-    <ProgressTemplate>
-        <div class='loading-panel'>
-            <div class='copy'>Loading ...</div>
-        </div>
-    </ProgressTemplate>
-</asp:UpdateProgress>

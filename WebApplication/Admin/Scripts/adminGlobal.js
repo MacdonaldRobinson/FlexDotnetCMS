@@ -177,8 +177,7 @@ function HandleContextMenuClick(action, target, node) {
     var targetText = target.text();    
 
     switch (action) {
-        case "CreateChild":
-            loadingOverlay.show();
+        case "CreateChild":            
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/CreateChild",
@@ -194,8 +193,7 @@ function HandleContextMenuClick(action, target, node) {
                 }
             });
             break;
-        case "Delete":
-            loadingOverlay.show();
+        case "Delete":            
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/Delete",
@@ -213,8 +211,7 @@ function HandleContextMenuClick(action, target, node) {
                 }
             });
             break;
-        case "UnDelete":
-            loadingOverlay.show();
+        case "UnDelete":            
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/UnDelete",
@@ -236,8 +233,7 @@ function HandleContextMenuClick(action, target, node) {
             var newName = prompt("Enter a new name for the page");
             newName = newName.trim();
 
-            if (newName != null) {
-                loadingOverlay.show();
+            if (newName != null) {                
                 jQuery.ajax({
                     type: "POST",
                     url: BaseWebserverUrl + "/Duplicate",
@@ -259,8 +255,7 @@ function HandleContextMenuClick(action, target, node) {
             var newName = prompt("Enter a new name for the page");
             newName = newName.trim();
 
-            if (newName != null) {
-                loadingOverlay.show();
+            if (newName != null) {                
                 jQuery.ajax({
                     type: "POST",
                     url: BaseWebserverUrl + "/Duplicate",
@@ -278,8 +273,7 @@ function HandleContextMenuClick(action, target, node) {
                 });
             }
             break;
-        case "ShowInMenu":
-            loadingOverlay.show();
+        case "ShowInMenu":            
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/ShowInMenu",
@@ -297,8 +291,7 @@ function HandleContextMenuClick(action, target, node) {
                 }
             });
             break;
-        case "HideFromMenu":
-            loadingOverlay.show();
+        case "HideFromMenu":            
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/HideFromMenu",
@@ -309,16 +302,14 @@ function HandleContextMenuClick(action, target, node) {
                 function (msg) {
                     //window.location.reload();
                     //RefreshSiteTreeViewAjaxPanel();
-                    RefreshSiteTreeNodeById(node.parent);
-                    loadingOverlay.hide();
+                    RefreshSiteTreeNodeById(node.parent);                    
                 },
                 error: function (xhr, status, error) {
                     DisplayJsonException(xhr);
                 }
             });
             break;
-        case "MoveUp":
-            loadingOverlay.show();
+        case "MoveUp":            
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/MoveUp",
@@ -336,8 +327,7 @@ function HandleContextMenuClick(action, target, node) {
                 }
             });
             break;
-        case "MoveDown":
-            loadingOverlay.show();
+        case "MoveDown":            
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/MoveDown",
@@ -358,8 +348,7 @@ function HandleContextMenuClick(action, target, node) {
         case "DeletePermanently":
             var areYouSure = confirm('Are you sure you want to permanently delete the item "' + targetText + '" and all its associations, including ALL its child items and history if any? NOTE: This action is irreversible');
 
-            if (areYouSure) {
-                loadingOverlay.show();
+            if (areYouSure) {                
 
                 jQuery.ajax({
                     type: "POST",
@@ -379,8 +368,7 @@ function HandleContextMenuClick(action, target, node) {
                 });
             }
             break;
-        case "ClearCache":
-            loadingOverlay.show();
+        case "ClearCache":            
             jQuery.ajax({
                 type: "POST",
                 url: BaseWebserverUrl + "/ClearCache",
@@ -1218,10 +1206,23 @@ $(document)
 
     });
 
+function AjaxEnd(sender, args) {
+    UnBlockUI();
+}
+
+function AjaxBegin(sender, args) {
+    BlockUI();
+}
+
 function pageLoad(sender, args) {    
     BindJQueryUIControls();
     BindSortable();
     BindDataTable();
+
+    if (!Sys.WebForms.PageRequestManager.getInstance().get_isInAsyncPostBack()) {
+        Sys.WebForms.PageRequestManager.getInstance().add_endRequest(AjaxEnd);
+        Sys.WebForms.PageRequestManager.getInstance().add_initializeRequest(AjaxBegin);
+    }
 
     /*RefreshSiteTreeNodeById($("#SiteTree").jstree("get_selected")[0]);
     BindScrollMagic();

@@ -24,6 +24,7 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 - You can write Razor Code in any of the layout views in the CMS
 - You can use short codes in any of the layout tabs and fields
 - If you have a more complicated layout for a page or a set of pages of a specific type, you can link to a handler file ( .aspx ) inorder to utilize the power of visual studio. You can open up the blog handler file to see how you can do so: "/Views/MediaTypeHandlers/Blog.aspx"
+- You can automatically execute some razor code when a page is published in the CMS by putting the code in the "On Publish Execute Code" Accordian tab under the Layouts tab for an individual page, or if you want to have the same code execute for all pages of the same type you can put this in the media type layouts section.
 
 
 ## Multi Language

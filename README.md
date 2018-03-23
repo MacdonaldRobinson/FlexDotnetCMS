@@ -42,19 +42,21 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 - Visual Layout Editor ( Experimental ): Once logged into the cms and browsing the frontend of the website, you can toggle the visual layout editor, which allows you to create, delete, reorder the rows, columns and fields
 - Every time you save a page in the CMS it will automatically create a history version which you can then reload and publish LIVE again.
 - The HTML structure of the page and the Content of the page are clearly seperated and both the Content and the HTML structure for the page can be edited directly in the CMS, there is no need to use a 3rd party editor or to use FTP, this speeds up the time it takes to make changes on the website.  
-- Since the HTML structure and the content are clearly seperated you do not need to worry about having the client change any of the HTML structure.
+ * Since the HTML structure and the content are clearly seperated you do not need to worry about having the client change any of the HTML structure.
 - Ability to create custom fields with their own unique layouts. You can create new Fields in the CMS directly, no need to hardcode anything in the code behind. The CMS comes with several field types already prebuilt, so you do not even need to know programming inorder to add new fields, however if you do know programming ( Razor Engine Code ) you can program it to do anything you like, you have complete freedom over the HTML that is generated.
 - Ability to modify the layout of all pages with a specific page type or unlink from a page type and create a unique layout for every page. Every page in the CMS has a type, so you can either have it so that it would use the style of the page type, or have it so that it has its own unique layout.
 - When you edit content and save it you can see how it looks right away in the browser panel instead of having to open a new window and browse to the page
 - You can resize the browser panel and see how the site looks in different sizes i.e test responsive layout directly through the cms
-- You can create draft versions for pages which you can reload and edit at anytime, you will also get a visual indicator in the site tree besides pages that have a draft version.
+- You can create draft versions for pages which you can reload and edit at anytime
+ * You will also get a visual indicator in the site tree besides pages that have a draft version.
+
 
 ## Additional Functionality  / Features
 - Built in Blog functionality, including moderated blog posts
 - Built in File Manager with the following functionality:
-  * Ability to create, rename and delete folders
-  * Ability to create, rename, preview and open files in a new window
-  * Ability to move files and folders around by dragging and dropping files and folders onto other folders
+ * Ability to create, rename and delete folders
+ * Ability to create, rename, preview and open files in a new window
+ * Ability to move files and folders around by dragging and dropping files and folders onto other folders
 - Ability to Add / Edit / Delete Glossary terms.
 - Ability to Create, Edit, Delete/Recover, Permanently Delete, Hide/Show, Duplicate and Publish/unpublish pages 
 - Ability to search for a page based on any field value in the backend for quick access

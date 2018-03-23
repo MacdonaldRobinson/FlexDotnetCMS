@@ -56,8 +56,10 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 - You can enforce the role limitations in the frontend as well, so you need to be logged in with appropriate credentials inorder to view these pages in the frontend.
 
 ## Admin Tools
-- Database Compare Tool: Allows you to compare 2 environments to see what has changed i.e New Pages, New Fields, Different Content  etc. NOTE: This will only work if the 2 environments have the same database schema.
-- Database Backup and Restore Tool: Allows you to backup the current database to a folder and displays a list of all backed up files, you can then restore from a backup file. NOTE: This only works if both the web application and the database are on the same server.
+- Database Compare Tool: Allows you to compare 2 environments to see what has changed i.e New Pages, New Fields, Different Content  etc.
+  - NOTE: This will only work if the 2 environments have the same database schema.
+- Database Backup and Restore Tool: Allows you to backup the current database to a folder and displays a list of all backed up files, you can then restore from a backup file. 
+  - NOTE: This only works if both the web application and the database are on the same server.
 - You can view the email logs from the CMS ( provided the emails were sent using the system its self )
 - You can view the error logs from the CMS 
 

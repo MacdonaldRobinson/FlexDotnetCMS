@@ -14,7 +14,7 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 - When you edit content and save it you can see how it looks right away in the browser panel instead of having to open a new window and browse to the page
 - You can resize the browser panel and see how the site looks in different sizes i.e test responsive layout directly through the cms
 - You can create draft versions for pages which you can reload and edit at anytime
- * You will also get a visual indicator in the site tree besides pages that have a draft version.
+  - You will also get a visual indicator in the site tree besides pages that have a draft version.
 
 ## Programming
 - Programming in the CMS is done using C# and using the Razor Syntax
@@ -24,6 +24,7 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 - You can write Razor Code in any of the layout views in the CMS
 - You can use short codes in any of the layout tabs and fields
 - If you have a more complicated layout for a page or a set of pages of a specific type, you can link to a handler file ( .aspx ) inorder to utilize the power of visual studio. You can open up the blog handler file to see how you can do so: "/Views/MediaTypeHandlers/Blog.aspx"
+- You can automatically execute some razor code when a page is published in the CMS by putting the code in the "On Publish Execute Code" Accordian tab under the Layouts tab for an individual page, or if you want to have the same code execute for all pages of the same type you can put this in the media type layouts section.
 
 
 ## Multi Language
@@ -33,7 +34,8 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 ## Publishing 
 - Ability to automatically publish a page live at a specified date time
 - Ability to automatically take down a page at a specified date time
-- Ability to save as draft, you can come back and make changes to the draft page later, you can even send links to the draft version of the page inorder to get approval, and then push the page LIVE once you are done. You can also set the draft version to automaticly get pushed live at a specified date time.
+- Ability to save as draft, you can come back and make changes to the draft page later, you can even send links to the draft version of the page inorder to get approval, and then push the page LIVE once you are done. 
+  - You can also set the draft version to automaticly get pushed live at a specified date time.
 
 ## SEO
 - All pages automaticly get a search engine friendly URL, you have the ability to change the uri segment for the page from the CMS
@@ -42,7 +44,7 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 
 ## Caching
 - You have 3 levels of caching: Memory Caching, File System Caching and Redis Caching
-- You have control over caching of pages. If you have set all pages to cache, the first time a visitor visits the page, it will generate a file system cache for that page and the next time the request will load from cache, drasticly speeding up performance. 
+- You have control over caching of pages. If you have set all pages to cache, the first time a visitor visits the page, it will generate a cache for that page and the next time the request will load from cache, drasticly speeding up performance. 
 - If the page is cached then it bypasses the database connection all together making the load time extreamly fast. 
 - If you have the page cached and there is an error connecting to the database, the system will attempt to load that page from cache if it exists.
 - You have the ability to clear the cache of an individual page.
@@ -55,8 +57,10 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 - You can enforce the role limitations in the frontend as well, so you need to be logged in with appropriate credentials inorder to view these pages in the frontend.
 
 ## Admin Tools
-- Database Compare Tool: Allows you to compare 2 environments to see what has changed i.e New Pages, New Fields, Different Content  etc. NOTE: This will only work if the 2 environments have the same database schema.
-- Database Backup and Restore Tool: Allows you to backup the current database to a folder and displays a list of all backed up files, you can then restore from a backup file. NOTE: This only works if both the web application and the database are on the same server.
+- Database Compare Tool: Allows you to compare 2 environments to see what has changed i.e New Pages, New Fields, Different Content  etc.
+  - NOTE: This will only work if the 2 environments have the same database schema.
+- Database Backup and Restore Tool: Allows you to backup the current database to a folder and displays a list of all backed up files, you can then restore from a backup file. 
+  - NOTE: This only works if both the web application and the database are on the same server.
 - You can view the email logs from the CMS ( provided the emails were sent using the system its self )
 - You can view the error logs from the CMS 
 

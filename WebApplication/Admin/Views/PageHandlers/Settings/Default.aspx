@@ -10,7 +10,7 @@
             <ul>
                 <li><a href="#GlobalCodeInHead">Global Code In Head</a></li>
                 <li><a href="#GlobalCodeInBody">Global Code In Body</a></li>
-                <li><a href="#Other">Other</a></li>
+                <li><a href="#DefaultsAndOthers">Defaults & Others</a></li>
             </ul>
             <div id="GlobalCodeInHead">
                 <div>
@@ -22,7 +22,7 @@
                     <asp:TextBox runat="server" ID="GlobalCodeInBody" TextMode="MultiLine" CssClass="AceEditor" Height="600px"></asp:TextBox>
                 </div>
             </div>
-            <div id="Other">
+            <div id="DefaultsAndOthers">
                 <fieldset>
                     <div>
                         <label for="<%= DefaultLanguageSelector.ClientID %>">

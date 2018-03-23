@@ -135,6 +135,7 @@
     <fieldset>
         <legend>Error Log</legend>
         <p>Recent 10 exceptions are shown here, inorder to view a full list and more details <a href="/elmah.axd" target="_blank">click here</a></p>
+        
         <asp:UpdatePanel runat="server">
             <ContentTemplate>
 
@@ -142,6 +143,7 @@
                     <Columns>
                         <asp:BoundField DataField="HostName" HeaderText="HostName" SortExpression="HostName" />
                         <asp:BoundField DataField="Type" HeaderText="Type" SortExpression="Type" />
+                        <asp:BoundField DataField="Message" HeaderText="Message" SortExpression="Message" />
                     </Columns>
                 </asp:GridView>
             </ContentTemplate>

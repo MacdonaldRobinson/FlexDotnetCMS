@@ -1649,7 +1649,7 @@ namespace FrameworkLibrary
                 {
                     var setting = settingsShortCode.ToString().Replace("Settings:", "");
                     var returnString =  ParserHelper.ParseData(setting, settings);
-
+                    
                     customCode = customCode.Replace(settingsShortCode.ToString(), returnString);
                 }
             }

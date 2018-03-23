@@ -54,6 +54,8 @@ namespace WebApplication.Admin.Controls.MediaTypes
             //AddPublishSettingsTab();
             AddAdvancedSettingsTab();
 
+            AddJavascriptAndCSSTab();
+
             //AddShoppingCartSettingsTab();
 
             if (SelectedItem.Media.Comments.Any())
@@ -80,8 +82,16 @@ namespace WebApplication.Admin.Controls.MediaTypes
         {
             //if (BasePage.CurrentUser.IsInRole(RoleEnum.Administrator))
             //{
-                AddTab("Link Settings", "~/Admin/Controls/MediaTypes/Common/Tabs/LinkSettingsTab.ascx");
+                AddTab("Link", "~/Admin/Controls/MediaTypes/Common/Tabs/LinkSettingsTab.ascx");
             //}
+        }
+
+        public void AddJavascriptAndCSSTab()
+        {
+            if (BasePage.CurrentUser.IsInRole(RoleEnum.Developer))
+            {
+                AddTab("Javascript & CSS", "~/Admin/Controls/MediaTypes/Common/Tabs/JavascriptAndCSSTab.ascx");
+            }
         }
 
         public void ChildrensTab()
@@ -114,7 +124,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
         {
             if (BasePage.CurrentUser.IsInRole(RoleEnum.Developer))
             {
-                AddTab("Advanced Settings", "~/Admin/Controls/MediaTypes/Common/Tabs/AdvancedSettingsTab.ascx");
+                AddTab("Settings", "~/Admin/Controls/MediaTypes/Common/Tabs/AdvancedSettingsTab.ascx");
             }
         }
 

@@ -663,10 +663,32 @@ namespace FrameworkLibrary
             return contextMetaKeywords;
         }
 
+
+        private string _javascript = "";
+        public string GetJS()
+        {
+            if (!string.IsNullOrEmpty(_javascript))
+                return _javascript;
+
+            _javascript = MediaDetailsMapper.ParseSpecialTags(this, Javascript);
+            return _javascript;
+        }
+
+        private string _css = "";
+        public string GetCSS()
+        {
+            if (!string.IsNullOrEmpty(_css))
+                return _css;
+
+            _css = MediaDetailsMapper.ParseSpecialTags(this, CSS);
+            return _css;
+        }
+
+
         private string contextPageTitle { get; set; } = "";
         public string GetPageTitle()
         {
-            if (FrameworkSettings.CurrentFrameworkBaseMedia == null)
+            if (FrameworkSettings.Current == null)
                 return "";
 
             if (!string.IsNullOrEmpty(contextPageTitle))

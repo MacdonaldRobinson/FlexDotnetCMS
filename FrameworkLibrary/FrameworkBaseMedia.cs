@@ -25,24 +25,24 @@ public class FrameworkBaseMedia
 
     public static FrameworkBaseMedia GetInstanceByVirtualPath(string virtualPath, bool selectParentIfPossible = false)
     {
-        if (FrameworkSettings.CurrentFrameworkBaseMedia != null)
-            return FrameworkSettings.CurrentFrameworkBaseMedia;
+        if (FrameworkSettings.Current != null)
+            return FrameworkSettings.Current;
 
         return new FrameworkBaseMedia(virtualPath);
     }
 
     public static FrameworkBaseMedia GetInstanceByMedia(Media media)
     {
-        if (FrameworkSettings.CurrentFrameworkBaseMedia != null)
-            return FrameworkSettings.CurrentFrameworkBaseMedia;
+        if (FrameworkSettings.Current != null)
+            return FrameworkSettings.Current;
 
         return new FrameworkBaseMedia(media);
     }
 
     public static FrameworkBaseMedia GetInstanceByMediaDetail(IMediaDetail mediaDetail)
     {
-        if (FrameworkSettings.CurrentFrameworkBaseMedia != null)
-            return FrameworkSettings.CurrentFrameworkBaseMedia;
+        if (FrameworkSettings.Current != null)
+            return FrameworkSettings.Current;
 
         return new FrameworkBaseMedia(mediaDetail);
     }

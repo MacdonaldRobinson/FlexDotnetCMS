@@ -145,7 +145,7 @@ namespace WebApplication
             if (currentPageVirtualPath == "")
                 currentPageVirtualPath = URIHelper.GetCurrentVirtualPath();
 
-            if (FrameworkSettings.CurrentFrameworkBaseMedia?.CurrentMediaDetail == null)
+            if (FrameworkSettings.Current?.CurrentMediaDetail == null)
                 return;
 
             if (currentPageVirtualPath == "")
@@ -166,7 +166,7 @@ namespace WebApplication
             if (URIHelper.IsSame(FormsAuthentication.LoginUrl, currentVirtualPath))
                 return;
 
-            if (FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail == null)
+            if (FrameworkSettings.Current.CurrentMediaDetail == null)
                 Response.Redirect("~/");
 
             /*if (!IsPostBack)
@@ -199,7 +199,7 @@ namespace WebApplication
 
         public void Page_PreLoad(object sender, EventArgs e)
         {
-            if ((FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail != null) && (Page != null))
+            if ((FrameworkSettings.Current.CurrentMediaDetail != null) && (Page != null))
             {
                 /*
                  * TODO: Reimplement
@@ -413,25 +413,25 @@ namespace WebApplication
         {
             if (rssItems == null)
             {
-                rssItems = MediaDetailsMapper.GetRssItems(MediaDetailsMapper.GetAllChildMediaDetails(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMedia.ID, FrameworkSettings.CurrentFrameworkBaseMedia.CurrentLanguage.ID).Where(i=>i.CanRender && i.ShowInMenu).OrderByDescending(i=>i.PublishDate));
+                rssItems = MediaDetailsMapper.GetRssItems(MediaDetailsMapper.GetAllChildMediaDetails(FrameworkSettings.Current.CurrentMedia.ID, FrameworkSettings.Current.CurrentLanguage.ID).Where(i=>i.CanRender && i.ShowInMenu).OrderByDescending(i=>i.PublishDate));
             }
 
             if (rssLink == "")
             {
-                if (FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail != null)
-                    rssLink = URIHelper.ConvertToAbsUrl(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.VirtualPath);
+                if (FrameworkSettings.Current.CurrentMediaDetail != null)
+                    rssLink = URIHelper.ConvertToAbsUrl(FrameworkSettings.Current.CurrentMediaDetail.VirtualPath);
                 else
                     rssLink = URIHelper.ConvertToAbsUrl(URIHelper.GetCurrentVirtualPath());
             }
 
             if (rssTitle == "")
             {
-                rssTitle = FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.Title;
+                rssTitle = FrameworkSettings.Current.CurrentMediaDetail.Title;
             }
 
             if (rssDescription == "")
             {
-                rssDescription = FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.GetMetaDescription();
+                rssDescription = FrameworkSettings.Current.CurrentMediaDetail.GetMetaDescription();
             }
 
             Rss rss = new Rss(rssTitle, rssLink, rssDescription);

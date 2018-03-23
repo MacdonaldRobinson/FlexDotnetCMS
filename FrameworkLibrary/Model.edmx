@@ -191,6 +191,8 @@
           <Property Name="CanLimitedRolesAccessAllChildPages" Type="bit" Nullable="false" />
           <Property Name="EnforceRoleLimitationsOnFrontEnd" Type="bit" Nullable="false" />
           <Property Name="OnPublishExecuteCode" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Javascript" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CSS" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="MediaDetailsFields">
           <Key>
@@ -1403,6 +1405,8 @@
           <Property Name="CanLimitedRolesAccessAllChildPages" Type="Boolean" Nullable="false" />
           <Property Name="EnforceRoleLimitationsOnFrontEnd" Type="Boolean" Nullable="false" />
           <Property Name="OnPublishExecuteCode" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Javascript" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CSS" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           </EntityType>
         <EntityType Name="Page" BaseType="FrameworkModel.MediaDetail">
         </EntityType>
@@ -2152,6 +2156,8 @@
           <EntitySetMapping Name="MediaDetails">
             <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.MediaDetail)">
               <MappingFragment StoreEntitySet="MediaDetails">
+                <ScalarProperty Name="CSS" ColumnName="CSS" />
+                <ScalarProperty Name="Javascript" ColumnName="Javascript" />
                 <ScalarProperty Name="OnPublishExecuteCode" ColumnName="OnPublishExecuteCode" />
                 <ScalarProperty Name="EnforceRoleLimitationsOnFrontEnd" ColumnName="EnforceRoleLimitationsOnFrontEnd" />
                 <ScalarProperty Name="CanLimitedRolesAccessAllChildPages" ColumnName="CanLimitedRolesAccessAllChildPages" />

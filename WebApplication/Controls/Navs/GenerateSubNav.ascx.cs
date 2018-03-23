@@ -48,12 +48,12 @@ namespace WebApplication.Controls
             {
                 if (value)
                 {
-                    if (FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMedia == null)
+                    if (FrameworkSettings.Current.CurrentMedia == null)
                         return;
 
                     //var children = MediaDetailsMapper.FilterByMediaTypeShowInMenuStatus(MediaDetailsMapper.FilterByShowInMenuStatus(MediaDetailsMapper.FilterByCanRenderStatus(MediaDetailsMapper.GetAllChildMediaDetails(this.BasePage.CurrentMedia, this.BasePage.CurrentLanguage), true), true), true).ToList();
 
-                    var children = FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.ChildMediaDetails;
+                    var children = FrameworkSettings.Current.CurrentMediaDetail.ChildMediaDetails;
 
                     if (!children.Any())
                         renderParentNav = true;

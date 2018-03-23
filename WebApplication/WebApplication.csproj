@@ -156,6 +156,7 @@
     <Content Include="Admin\Controls\MediaTypes\Common\Tabs\CommentsTab.ascx" />
     <Content Include="Admin\Controls\MediaTypes\Common\Tabs\FieldsTab.ascx" />
     <Content Include="Admin\Controls\MediaTypes\Common\Tabs\HistoryTab.ascx" />
+    <Content Include="Admin\Controls\MediaTypes\Common\Tabs\JavascriptAndCSSTab.ascx" />
     <Content Include="Admin\Controls\MediaTypes\Common\Tabs\LayoutsTab.ascx" />
     <Content Include="Admin\Controls\MediaTypes\Common\Tabs\LinkSettingsTab.ascx" />
     <Content Include="Admin\Controls\MediaTypes\Common\Tabs\PublishSettingsTab.ascx" />
@@ -829,6 +830,13 @@
     </Compile>
     <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\HistoryTab.ascx.designer.cs">
       <DependentUpon>HistoryTab.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\JavascriptAndCSSTab.ascx.cs">
+      <DependentUpon>JavascriptAndCSSTab.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\JavascriptAndCSSTab.ascx.designer.cs">
+      <DependentUpon>JavascriptAndCSSTab.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\LayoutsTab.ascx.cs">
       <DependentUpon>LayoutsTab.ascx</DependentUpon>

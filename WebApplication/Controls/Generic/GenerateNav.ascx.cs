@@ -374,8 +374,8 @@ namespace WebApplication.Controls
             {
                 if (value == "~/")
                 {
-                    if (FrameworkSettings.CurrentFrameworkBaseMedia.CurrentWebsite != null)
-                        value = FrameworkSettings.CurrentFrameworkBaseMedia.CurrentWebsite.VirtualPath;
+                    if (FrameworkSettings.Current.CurrentWebsite != null)
+                        value = FrameworkSettings.Current.CurrentWebsite.VirtualPath;
                 }
 
                 rootMedia = MediasMapper.GetByMediaDetail(MediaDetailsMapper.GetByVirtualPath(value));

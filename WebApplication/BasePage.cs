@@ -31,8 +31,8 @@ namespace WebApplication
 
         public BasePage()
         {
-            if (FrameworkSettings.CurrentFrameworkBaseMedia == null)
-                FrameworkSettings.CurrentFrameworkBaseMedia = FrameworkBaseMedia.GetInstanceByVirtualPath("", true);
+            if (FrameworkSettings.Current == null)
+                FrameworkSettings.Current = FrameworkBaseMedia.GetInstanceByVirtualPath("", true);
 
             AddDefaultTemplateVars();
         }
@@ -256,9 +256,9 @@ namespace WebApplication
                 return Page.MasterPageFile;
             }
 
-            if (string.IsNullOrEmpty(masterFilePath) && FrameworkSettings.CurrentFrameworkBaseMedia?.CurrentMediaDetail != null)
+            if (string.IsNullOrEmpty(masterFilePath) && FrameworkSettings.Current?.CurrentMediaDetail != null)
             {
-                var masterPage = ((MediaDetail)FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail).GetMasterPage();
+                var masterPage = ((MediaDetail)FrameworkSettings.Current.CurrentMediaDetail).GetMasterPage();
 
                 if (masterPage != null)
                 {
@@ -274,9 +274,9 @@ namespace WebApplication
                 }
                 else
                 {
-                    if ((FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.Handler == null) || (FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.Handler == ""))
+                    if ((FrameworkSettings.Current.CurrentMediaDetail.Handler == null) || (FrameworkSettings.Current.CurrentMediaDetail.Handler == ""))
                     {
-                        var mediaType = FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.MediaType;
+                        var mediaType = FrameworkSettings.Current.CurrentMediaDetail.MediaType;
 
                         if (mediaType.MasterPage == null)
                         {
@@ -325,7 +325,7 @@ namespace WebApplication
         {
             get
             {
-                return FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMedia;
+                return FrameworkSettings.Current.CurrentMedia;
             }
         }
 
@@ -333,7 +333,7 @@ namespace WebApplication
         {
             get
             {
-                return FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail;
+                return FrameworkSettings.Current.CurrentMediaDetail;
             }
         }
 
@@ -341,7 +341,7 @@ namespace WebApplication
         {
             get
             {
-                return FrameworkSettings.CurrentFrameworkBaseMedia.CurrentLanguage;
+                return FrameworkSettings.Current.CurrentLanguage;
             }
         }
 
@@ -349,11 +349,11 @@ namespace WebApplication
         {
             get
             {
-                return FrameworkSettings.CurrentFrameworkBaseMedia.CurrentUser;
+                return FrameworkSettings.Current.CurrentUser;
             }
             set
             {
-                FrameworkSettings.CurrentFrameworkBaseMedia.CurrentUser = value;
+                FrameworkSettings.Current.CurrentUser = value;
             }
         }
 
@@ -366,7 +366,7 @@ namespace WebApplication
                 if (AppSettings.EnableGeoLocation)
                 {
                     GeoLocationHelper.APIKey = AppSettings.GeoLocationAPIKey;
-                    return FrameworkSettings.CurrentFrameworkBaseMedia.CurrentVisitorLocation;
+                    return FrameworkSettings.Current.CurrentVisitorLocation;
                 }
 
                 return null;
@@ -377,7 +377,7 @@ namespace WebApplication
         {
             get
             {
-                return FrameworkSettings.CurrentFrameworkBaseMedia.CurrentVisitorIP;
+                return FrameworkSettings.Current.CurrentVisitorIP;
             }
         }
 

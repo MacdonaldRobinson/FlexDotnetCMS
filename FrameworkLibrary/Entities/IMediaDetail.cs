@@ -85,6 +85,10 @@ namespace FrameworkLibrary
         string UseSummaryLayout { get; }
         List<ValidationError> ValidationErrors { get; }
         string VirtualPath { get; }
+        string Javascript { get; set; }
+        string CSS { get; set; }
+        string GetCSS();
+        string GetJS();
 
         string CalculatedVirtualPath();
         bool CanUserAccessSection(User user);

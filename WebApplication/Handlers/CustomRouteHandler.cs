@@ -210,22 +210,22 @@ namespace WebApplication.Handlers
 
                 if (mediaDetailId == 0 && mediaId == 0)
                 {
-                    FrameworkSettings.CurrentFrameworkBaseMedia = FrameworkBaseMedia.GetInstanceByVirtualPath(virtualPath, true);
-                    detail = (MediaDetail)FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail;
+                    FrameworkSettings.Current = FrameworkBaseMedia.GetInstanceByVirtualPath(virtualPath, true);
+                    detail = (MediaDetail)FrameworkSettings.Current.CurrentMediaDetail;
                 }
                 else if (mediaDetailId != 0)
                 {
                     var mediaDetail = MediaDetailsMapper.GetByID(mediaDetailId);
 
-                    FrameworkSettings.CurrentFrameworkBaseMedia = FrameworkBaseMedia.GetInstanceByMediaDetail(mediaDetail);
-                    detail = (MediaDetail)FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail;
+                    FrameworkSettings.Current = FrameworkBaseMedia.GetInstanceByMediaDetail(mediaDetail);
+                    detail = (MediaDetail)FrameworkSettings.Current.CurrentMediaDetail;
                 }
                 else if (mediaId != 0)
                 {
                     var media = MediasMapper.GetByID(mediaId);
 
-                    FrameworkSettings.CurrentFrameworkBaseMedia = FrameworkBaseMedia.GetInstanceByMedia(media);
-                    detail = (MediaDetail)FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail;
+                    FrameworkSettings.Current = FrameworkBaseMedia.GetInstanceByMedia(media);
+                    detail = (MediaDetail)FrameworkSettings.Current.CurrentMediaDetail;
                 }
 
                 /*if (detail != null && !detail.CanUserAccessSection(FrameworkSettings.CurrentUser))
@@ -317,8 +317,8 @@ namespace WebApplication.Handlers
                             detail.RemoveFromCache();
                             draft.RemoveFromCache();
 
-                            FrameworkSettings.CurrentFrameworkBaseMedia = FrameworkBaseMedia.GetInstanceByMediaDetail(draft);
-                            detail = (MediaDetail)FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail;
+                            FrameworkSettings.Current = FrameworkBaseMedia.GetInstanceByMediaDetail(draft);
+                            detail = (MediaDetail)FrameworkSettings.Current.CurrentMediaDetail;
                         }
                     }
 
@@ -339,10 +339,10 @@ namespace WebApplication.Handlers
                         }                            
                     }
 
-                    viewPath = FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.Handler;
+                    viewPath = FrameworkSettings.Current.CurrentMediaDetail.Handler;
 
                     if ((viewPath == null) || (viewPath.Trim() == ""))
-                        viewPath = MediaTypesMapper.GetByID(FrameworkSettings.CurrentFrameworkBaseMedia.CurrentMediaDetail.MediaTypeID).MediaTypeHandler;
+                        viewPath = MediaTypesMapper.GetByID(FrameworkSettings.Current.CurrentMediaDetail.MediaTypeID).MediaTypeHandler;
 
                     viewPath = URIHelper.ConvertAbsUrlToTilda(viewPath);
 

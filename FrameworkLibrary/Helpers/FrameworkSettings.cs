@@ -54,7 +54,7 @@ namespace FrameworkLibrary
             }
         }
 
-        public static FrameworkBaseMedia CurrentFrameworkBaseMedia
+        public static FrameworkBaseMedia Current
         {
             get
             {

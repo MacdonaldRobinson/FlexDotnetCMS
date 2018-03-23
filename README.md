@@ -50,6 +50,7 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 
 ## Additional Functionality  / Features
 - Built in Blog functionality, including moderated blog posts
+- Built in File Manager which allows you to browse the uploads folder and allows you to create folders, upload and delete files etc.
 - Ability to Add / Edit / Delete Glossary terms.
 - Ability to Create, Edit, Delete/Recover, Permanently Delete, Hide/Show, Duplicate and Publish/unpublish pages 
 - Ability to search for a page based on any field value in the backend for quick access

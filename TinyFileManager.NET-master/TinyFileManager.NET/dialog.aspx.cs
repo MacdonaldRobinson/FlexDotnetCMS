@@ -479,21 +479,23 @@ namespace TinyFileManager.NET
                                 }
                             }
                             this.objFItem.strDownFormOpen = "<form action=\"dialog.aspx?cmd=download&file=" + this.objFItem.strPath + "\" method=\"post\" class=\"download-form\">";
-                            if (this.objFItem.boolIsImage)
-                            {
-                                this.objFItem.strPreviewLink = "<a class=\"btn preview\" title=\"Preview\" data-url=\"" + this.objConfig.strUploadURL + "/" + this.objFItem.strPath + "\" data-toggle=\"lightbox\" href=\"#previewLightbox\"><i class=\"icon-eye-open\"></i></a>";
-                            }
-                            else
-                            {
-                                this.objFItem.strPreviewLink = "<a class=\"btn preview disabled\" title=\"Preview\"><i class=\"icon-eye-open\"></i></a>";
-                            }
 
-                            this.objFItem.strPreviewLink = this.objFItem.strPreviewLink + renameLink;
 
-                            var path = strF.Replace(Server.MapPath("~/"), "").Replace("\\", "/").Replace("///","/");
+                            var path = strF.Replace(Server.MapPath("~/"), "").Replace("\\", "/").Replace("///", "/");
 
                             if (!path.StartsWith("/"))
                                 path = "/" + path;
+
+                            if (this.objFItem.boolIsImage)
+                            {
+                                this.objFItem.strPreviewLink = "<a class=\"btn preview\" title=\"Preview\" data-url=\"" + this.objConfig.strUploadURL + "/" + this.objFItem.strPath + "\" data-toggle=\"lightbox\" href=\"#previewLightbox\"><i class=\"icon-eye-open\"></i></a><a class='btn' href='"+ baseUrl + path + "' target='_blank'><i class='fa fa-external-link'></i></a>";
+                            }
+                            else
+                            {
+                                this.objFItem.strPreviewLink = "<a class=\"btn preview disabled\" title=\"Preview\"><i class=\"icon-eye-open\"></i></a> <a class='btn' href='" + baseUrl + path + "' target='_blank'><i class='fa fa-external-link'></i></a>";
+                            }
+
+                            this.objFItem.strPreviewLink = this.objFItem.strPreviewLink + renameLink;
                             
                             this.objFItem.strLink = "<a href=\"#\" title=\"Select\" onclick=\"" + this.strApply + "('" + baseUrl + path + "'," + this.strType + ")\";\"><img data-src=\"holder.js/140x100\" alt=\"140x100\" src=\"" + this.objFItem.strThumbImage + "\" height=\"100\"><h4>" + this.objFItem.strName + new FileInfo(this.objFItem.strPath).Extension + "</h4></a>";
 

@@ -26,7 +26,7 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 - Ability to Manage Users and Roles
 - Ability to limit access to a page or a page type ( role based ). Only people that belong to the role can access these pages in the CMS
 - Ability to automatically propigate role limitations to all child pages.
-- You can enforce the role limitations in the frontend as well, so you need to be logged in with appropriate credentails inorder to view these pages in the frontend.
+- You can enforce the role limitations in the frontend as well, so you need to be logged in with appropriate credentials inorder to view these pages in the frontend.
 
 ## Editing
 - FrontEnd Editing: Every field can be edited from the frontend of the website

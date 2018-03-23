@@ -33,7 +33,8 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 ## Publishing 
 - Ability to automatically publish a page live at a specified date time
 - Ability to automatically take down a page at a specified date time
-- Ability to save as draft, you can come back and make changes to the draft page later, you can even send links to the draft version of the page inorder to get approval, and then push the page LIVE once you are done. You can also set the draft version to automaticly get pushed live at a specified date time.
+- Ability to save as draft, you can come back and make changes to the draft page later, you can even send links to the draft version of the page inorder to get approval, and then push the page LIVE once you are done. 
+  - You can also set the draft version to automaticly get pushed live at a specified date time.
 
 ## SEO
 - All pages automaticly get a search engine friendly URL, you have the ability to change the uri segment for the page from the CMS

@@ -14,7 +14,7 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 - When you edit content and save it you can see how it looks right away in the browser panel instead of having to open a new window and browse to the page
 - You can resize the browser panel and see how the site looks in different sizes i.e test responsive layout directly through the cms
 - You can create draft versions for pages which you can reload and edit at anytime
- * You will also get a visual indicator in the site tree besides pages that have a draft version.
+  - You will also get a visual indicator in the site tree besides pages that have a draft version.
 
 ## Programming
 - Programming in the CMS is done using C# and using the Razor Syntax

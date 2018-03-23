@@ -43,7 +43,7 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 
 ## Caching
 - You have 3 levels of caching: Memory Caching, File System Caching and Redis Caching
-- You have control over caching of pages. If you have set all pages to cache, the first time a visitor visits the page, it will generate a file system cache for that page and the next time the request will load from cache, drasticly speeding up performance. 
+- You have control over caching of pages. If you have set all pages to cache, the first time a visitor visits the page, it will generate a cache for that page and the next time the request will load from cache, drasticly speeding up performance. 
 - If the page is cached then it bypasses the database connection all together making the load time extreamly fast. 
 - If you have the page cached and there is an error connecting to the database, the system will attempt to load that page from cache if it exists.
 - You have the ability to clear the cache of an individual page.

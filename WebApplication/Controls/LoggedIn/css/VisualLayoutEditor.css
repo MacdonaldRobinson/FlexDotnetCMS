@@ -34,15 +34,15 @@
 .ToolBar a, .ToolBar a:link {    
     padding: 1px 3px;
     border: 1px solid;
-    color: #fff;
-    background-color: #000;
-    opacity: .5;
+    color: #000;
+    background-color: orange;
+    opacity: 1;
     font-size: 12px;
     font-weight: bold;
 }
 
     .ToolBar a:hover {
-        background-color: red !important;
+        background-color: yellow !important;
         opacity: 1;
     }
 
@@ -56,10 +56,6 @@
 
 .UseMainLayout > .ToolBar {
     margin-left: 0px;
-}
-
-.col > .ToolBar {
-    margin-left: 10px;
 }
 
 

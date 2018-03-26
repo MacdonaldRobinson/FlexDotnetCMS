@@ -48,6 +48,12 @@ namespace WebApplication.Controls.RenderChildren
                 ErrorHelper.LogException(ex);
             }
 
+            if(MediaTypeID != null && MediaTypeID !=0)
+            {
+                children.Where(i => i.MediaTypeID == MediaTypeID);
+            }
+
+
             Children.DataSource = children.ToList();
 
             Pager.ShowDataPager = ShowPager;
@@ -86,6 +92,8 @@ namespace WebApplication.Controls.RenderChildren
         public string OrderBy { get; set; }
 
         public long? MediaID { get; set; }
+
+        public long? MediaTypeID { get; set; }
 
         public bool ShowPager { get; set; }
 

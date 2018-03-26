@@ -124,7 +124,7 @@
         </fieldset>
         <asp:Panel runat="server">
             <fieldset>
-                <div style="margin-bottom:40px;">
+                <div style="margin-bottom:50px;">
                     <div id="SaveFields" class="buttons">
                         <asp:LinkButton Text="Save" runat="server" ID="Update" OnClick="Update_Click" CssClass="SaveFieldButton" />
                         <asp:LinkButton Text="Cancel" runat="server" ID="Cancel" OnClick="Cancel_Click" />

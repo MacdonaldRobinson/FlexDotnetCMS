@@ -11,7 +11,8 @@
       <li><a href="#form-settings-<%=uniqueId %>">Form Settings</a></li>
   </ul>
   <div id="form-builder-<%=uniqueId %>">
-    <script src="/Scripts/formBuilder-master/dist/form-builder.min.js"></script>
+    <%--<script src="/Scripts/formBuilder-master/dist/form-builder.min.js"></script>--%>
+    <script src="https://cdn.jsdelivr.net/npm/formBuilder@2.9.8/dist/form-builder.min.js"></script>
     <script>
         jQuery(function ($) {
 

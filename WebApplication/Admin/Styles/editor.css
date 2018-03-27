@@ -4,8 +4,13 @@
     text-align: left;
 }
 
-ul{
+ul {
     list-style-type: disc;
+    color: #000;
+}
+
+ol {
+    color: #000;
 }
 
 p{

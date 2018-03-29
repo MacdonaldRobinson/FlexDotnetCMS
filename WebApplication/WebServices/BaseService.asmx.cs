@@ -170,6 +170,14 @@ namespace WebApplication.Services
             WriteRaw(htmlString, Response);
         }
 
+        public static void WriteText(string textString)
+        {
+            var Response = HttpContext.Current.Response;
+
+            Response.ContentType = "text/plain";
+            WriteRaw(textString, Response);
+        }
+
         public static void WriteRaw(byte[] bytes, HttpResponse Response)
         {
             Response.Write(bytes);

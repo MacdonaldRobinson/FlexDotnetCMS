@@ -44,3 +44,20 @@ h3{ font-size:14px;}
     position: absolute;
     left: 0;
 }
+
+.ui-droppable-hover {
+    box-shadow: 0 0 10px blue;    
+}
+
+.ui-droppable {
+    z-index: 0;
+}
+
+.ui-droppable:hover {
+    z-index: 9999999;
+}
+
+.thumbnail:hover {
+    box-shadow: 0 0 10px black;
+    z-index: 9999999;
+}

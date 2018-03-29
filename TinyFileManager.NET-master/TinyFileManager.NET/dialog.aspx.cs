@@ -488,7 +488,7 @@ namespace TinyFileManager.NET
 
                             if (this.objFItem.boolIsImage)
                             {
-                                this.objFItem.strPreviewLink = "<a class=\"btn preview\" title=\"Preview\" data-url=\"" + this.objConfig.strUploadURL + "/" + this.objFItem.strPath + "\" data-toggle=\"lightbox\" href=\"#previewLightbox\"><i class=\"icon-eye-open\"></i></a><a class='btn' href='"+ baseUrl + path + "' target='_blank'><i class='fa fa-external-link'></i></a>";
+                                this.objFItem.strPreviewLink = "<a class=\"btn preview\" title=\"Preview\" data-url=\"" + this.objConfig.strUploadURL + "/" + this.objFItem.strPath + "\" data-toggle=\"lightbox\" href=\"#previewLightbox\"><i class=\"icon-eye-open\"></i></a><a class='btn' href='"+ baseUrl + path + "' target='_blank'><i class='fa fa-external-link'></i></a><a class='btn' href='/Admin/Views/PageHandlers/FileEditor/Default.aspx?LoadFile=" + path + "' target='_blank'><i class='fa fa-external-link'></i></a>";
                             }
                             else
                             {

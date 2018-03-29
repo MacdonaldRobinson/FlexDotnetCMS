@@ -54,6 +54,21 @@ namespace WebApplication
                 FrameworkBaseMedia.InitConnectionSettings(AppSettings.GetConnectionSettings());
                 isFirstApplicationRequest = false;
             }
+
+            if(Request.Url.AbsolutePath.Contains("robots.txt"))
+            {
+                var absPath = URIHelper.ConvertToAbsPath(Request.Url.AbsolutePath);
+
+                if (File.Exists(absPath))
+                {
+                    var fileContent = File.ReadAllText(absPath);
+
+                    var parsedContent = ParserHelper.ParseData(fileContent, BasePage.GetDefaultTemplateVars(""));
+
+                    BaseService.WriteText(parsedContent);
+                }            
+            }
+
         }
 
         private void Application_End(object sender, EventArgs e)

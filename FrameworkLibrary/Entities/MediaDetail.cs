@@ -35,7 +35,11 @@ namespace FrameworkLibrary
 				if (this.FieldAssociations.Any(i => i.MediaDetail.PublishDate > DateTime.Now || i.MediaDetail.ExpiryDate != null))
 					return false;
 
-                return true;
+				if (this.Fields.Any(i => i.FieldAssociations.Any(j => j.MediaDetail.PublishDate > DateTime.Now || j.MediaDetail.ExpiryDate != null)))
+					return false;
+
+
+				return true;
             }
         }
 

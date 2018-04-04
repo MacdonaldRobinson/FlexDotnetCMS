@@ -69,10 +69,10 @@
 
                 <asp:GridView runat="server" ID="FieldItems" AutoGenerateColumns="false" AllowPaging="true" CssClass="FieldItems DragDropGrid" OnPageIndexChanging="ItemList_PageIndexChanging" ItemType="FrameworkLibrary.FieldAssociation" Visible="false" Width="100%" OnDataBound="FieldItems_DataBound">
                     <Columns>                        
-                        <asp:BoundField DataField="MediaDetail.SectionTitle" HeaderText="SectionTitle" SortExpression="MediaDetail.SectionTitle" />
-                        <asp:BoundField DataField="MediaDetail.CreatedByUser.Username" HeaderText="CreatedByUser" SortExpression="MediaDetail.CreatedByUser.Username" />
-                        <asp:BoundField DataField="MediaDetail.LastUpdatedByUser.Username" HeaderText="LastUpdatedByUser" SortExpression="MediaDetail.LastUpdatedByUser.Username" />
-                        <asp:BoundField DataField="MediaDetail.DateLastModified" HeaderText="DateLastModified" SortExpression="MediaDetail.DateLastModified" />
+                        <asp:BoundField DataField="MediaDetail.SectionTitle" HeaderText="Section Title" SortExpression="MediaDetail.SectionTitle" ItemStyle-HorizontalAlign="Center"/>                        
+                        <asp:BoundField DataField="MediaDetail.PublishDate" HeaderText="Publish Date" SortExpression="MediaDetail.PublishDate" ItemStyle-HorizontalAlign="Center"/>
+                        <asp:BoundField DataField="MediaDetail.ExpiryDate" HeaderText="Expiry Date" SortExpression="MediaDetail.ExpiryDate" ItemStyle-HorizontalAlign="Center"/>
+                        <asp:BoundField DataField="MediaDetail.IsPublished" HeaderText="Is Published" SortExpression="MediaDetail.IsPublished" ItemStyle-HorizontalAlign="Center"/>
                         <asp:TemplateField HeaderText="">
                             <ItemTemplate>
                                 <div class="item" data-id="<%# Item.ID %>">

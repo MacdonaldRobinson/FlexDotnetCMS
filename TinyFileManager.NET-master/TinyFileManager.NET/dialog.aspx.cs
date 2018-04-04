@@ -49,7 +49,7 @@ namespace TinyFileManager.NET
             var defaultRootPath = "/media/uploads/";
 
 
-            if (!FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.Delete))
+            if (!FrameworkSettings.CurrentUser.IsInRole(RoleEnum.Developer))
             {
                 var requestPath = URIHelper.ConvertAbsUrlToTilda(strCurrPath).Replace("\\", "/").Replace("//", "/").Replace("~/", "/");
 
@@ -370,7 +370,7 @@ namespace TinyFileManager.NET
                     //load folders
                     arrFolders = Directory.GetDirectories(this.objConfig.strUploadPath + this.strCurrPath);
 
-                    var renameLink = "<a href='javascript:void(0)' class='btn btn-rename'><i class='fa fa-pencil' aria-hidden='true'></i></a>";
+                    var renameLink = "<a href='javascript:void(0)' class='btn btn-rename'><i class='fa fa-text-width' aria-hidden='true'></i></a>";
 
                     foreach (string strF in arrFolders)
                     {
@@ -488,14 +488,14 @@ namespace TinyFileManager.NET
 
                             if (this.objFItem.boolIsImage)
                             {
-                                this.objFItem.strPreviewLink = "<a class=\"btn preview\" title=\"Preview\" data-url=\"" + this.objConfig.strUploadURL + "/" + this.objFItem.strPath + "\" data-toggle=\"lightbox\" href=\"#previewLightbox\"><i class=\"icon-eye-open\"></i></a><a class='btn' href='"+ baseUrl + path + "' target='_blank'><i class='fa fa-external-link'></i></a><a class='btn' href='/Admin/Views/PageHandlers/FileEditor/Default.aspx?LoadFile=" + path + "' target='_blank'><i class='fa fa-external-link'></i></a>";
+                                this.objFItem.strPreviewLink = "<a class=\"btn preview\" title=\"Preview\" data-url=\"" + this.objConfig.strUploadURL + "/" + this.objFItem.strPath + "\" data-toggle=\"lightbox\" href=\"#previewLightbox\"><i class=\"icon-eye-open\"></i></a><a class='btn' href='"+ baseUrl + path + "' target='_blank'><i class='fa fa-external-link'></i></a>";
                             }
                             else
                             {
                                 this.objFItem.strPreviewLink = "<a class=\"btn preview disabled\" title=\"Preview\"><i class=\"icon-eye-open\"></i></a> <a class='btn' href='" + baseUrl + path + "' target='_blank'><i class='fa fa-external-link'></i></a>";
                             }
 
-                            this.objFItem.strPreviewLink = this.objFItem.strPreviewLink + renameLink;
+                            this.objFItem.strPreviewLink = this.objFItem.strPreviewLink + renameLink + "<a class='btn' href='/Admin/Views/PageHandlers/FileEditor/Default.aspx?LoadFile=" + path + "' target='_blank'><i class='fa fa-pencil'></i></a>";
                             
                             this.objFItem.strLink = "<a href=\"#\" title=\"Select\" onclick=\"" + this.strApply + "('" + baseUrl + path + "'," + this.strType + ")\";\"><img data-src=\"holder.js/140x100\" alt=\"140x100\" src=\"" + this.objFItem.strThumbImage + "\" height=\"100\"><h4>" + this.objFItem.strName + new FileInfo(this.objFItem.strPath).Extension + "</h4></a>";
 

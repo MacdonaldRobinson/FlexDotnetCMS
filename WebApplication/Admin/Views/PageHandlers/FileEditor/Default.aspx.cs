@@ -13,7 +13,7 @@ namespace WebApplication.Admin.Views.PageHandlers.FileEditor
     {
         protected void Page_Init(object sender, EventArgs e)
         {
-            if(Request["LoadFile"] != null)
+            if(!IsPostBack && Request["LoadFile"] != null)
             {
                 FileSelector.SetValue(Request["LoadFile"].ToString());
                 LoadFile();
@@ -35,7 +35,7 @@ namespace WebApplication.Admin.Views.PageHandlers.FileEditor
                 var fileContent = File.ReadAllText(absPathToFile);
                 Editor.Text = fileContent;
 
-                DisplaySuccessMessage($"Successfully loaded file ( {absPathToFile} ) ");
+                DisplaySuccessMessage($@"Successfully loaded file ( {absPathToFile} ) ");
             }
             else
             {
@@ -52,7 +52,7 @@ namespace WebApplication.Admin.Views.PageHandlers.FileEditor
             {
                 File.WriteAllText(absPathToFile, Editor.Text);
 
-                DisplaySuccessMessage($"Successfully saved ( {absPathToFile} )");
+                DisplaySuccessMessage($@"Successfully saved ( {absPathToFile} )");
             }
             catch(Exception ex)
             {

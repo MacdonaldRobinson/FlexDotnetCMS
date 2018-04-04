@@ -23,7 +23,7 @@ namespace FrameworkLibrary
         public jGrowlMessage(string title, string message, jGrowlMessageType type, Elmah.Error error = null, long messageDisplayTime = 20000)
         {
             this.title = title;
-            this.message = message;
+            this.message = message.Replace("\\","/");
             this.type = type;
             this.messageDisplayTime = messageDisplayTime;
             this.error = error;

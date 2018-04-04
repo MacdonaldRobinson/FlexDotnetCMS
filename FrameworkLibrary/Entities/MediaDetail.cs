@@ -32,6 +32,9 @@ namespace FrameworkLibrary
                 if(this.CheckEnforceRoleLimitationsOnFrontEnd())
                     return false;
 
+				if (this.FieldAssociations.Any(i => i.MediaDetail.PublishDate > DateTime.Now || i.MediaDetail.ExpiryDate != null))
+					return false;
+
                 return true;
             }
         }
@@ -54,6 +57,7 @@ namespace FrameworkLibrary
                 return (((!IsArchive) && (PublishDate <= DateTime.Now)) && ((ExpiryDate == null) || (ExpiryDate > DateTime.Now)));
             }
         }
+
 
         public string UseMainLayout
         {
@@ -760,6 +764,11 @@ namespace FrameworkLibrary
                 return null;
 
             return drafts.OrderBy(i=>i.DateCreated).FirstOrDefault();
+        }        
+
+        public List<FieldAssociation> GetPublishedFieldAssociations()
+        {
+            return this.FieldAssociations.ToList().Where(i => i.MediaDetail.IsPublished).ToList();
         }
 
         public Return PublishLive()

@@ -89,6 +89,7 @@ namespace FrameworkLibrary
         string CSS { get; set; }
         string GetCSS();
         string GetJS();
+        List<FieldAssociation> GetPublishedFieldAssociations();
 
         string CalculatedVirtualPath();
         bool CanUserAccessSection(User user);

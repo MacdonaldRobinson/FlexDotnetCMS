@@ -27,6 +27,12 @@ namespace WebApplication.Handlers
             get { return HttpContext.Current.Response; }
         }
 
+		private void AttemptDBConnection()
+		{
+			if (!(bool)BaseMapper.CanConnectToDB)
+				BaseService.WriteHtml("Cannot connect to the database");
+		}
+
         private void AttemptToLoadFromCache()
         {
             if (AppSettings.ForceSSL && !URIHelper.IsSSL())
@@ -75,8 +81,7 @@ namespace WebApplication.Handlers
                     }
                 }
 
-                if(!(bool)BaseMapper.CanConnectToDB)
-                    BaseService.WriteHtml("Cannot connect to the database");
+                AttemptDBConnection();
 
             }
         }

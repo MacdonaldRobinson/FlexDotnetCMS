@@ -9,10 +9,13 @@ namespace FrameworkLibrary
 
         public static Settings GetSettings()
         {
-            /*var settings = (Settings)ContextHelper.GetFromRequestContext("SettingsMapper_GetSettings");
+			/*var settings = (Settings)ContextHelper.GetFromRequestContext("SettingsMapper_GetSettings");
 
             if (settings != null)
                 return settings;*/
+
+			if (CanConnectToDB is null || !(bool)CanConnectToDB)
+				return null;
 
             var settings = GetDataModel().AllSettings.FirstOrDefault();
 

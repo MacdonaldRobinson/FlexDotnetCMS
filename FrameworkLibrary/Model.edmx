@@ -152,6 +152,7 @@
           <Property Name="DirectLink" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="MetaKeywords" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="MetaDescription" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="MetaRobots" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="LanguageID" Type="bigint" Nullable="false" />
           <Property Name="NumberOfViews" Type="bigint" Nullable="false" />
           <Property Name="NumberOfStars" Type="bigint" Nullable="false" />
@@ -191,8 +192,7 @@
           <Property Name="CanLimitedRolesAccessAllChildPages" Type="bit" Nullable="false" />
           <Property Name="EnforceRoleLimitationsOnFrontEnd" Type="bit" Nullable="false" />
           <Property Name="OnPublishExecuteCode" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Javascript" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="CSS" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="InjectHtml" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="MediaDetailsFields">
           <Key>
@@ -1405,8 +1405,8 @@
           <Property Name="CanLimitedRolesAccessAllChildPages" Type="Boolean" Nullable="false" />
           <Property Name="EnforceRoleLimitationsOnFrontEnd" Type="Boolean" Nullable="false" />
           <Property Name="OnPublishExecuteCode" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Javascript" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CSS" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MetaRobots" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="InjectHtml" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           </EntityType>
         <EntityType Name="Page" BaseType="FrameworkModel.MediaDetail">
         </EntityType>
@@ -2156,8 +2156,8 @@
           <EntitySetMapping Name="MediaDetails">
             <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.MediaDetail)">
               <MappingFragment StoreEntitySet="MediaDetails">
-                <ScalarProperty Name="CSS" ColumnName="CSS" />
-                <ScalarProperty Name="Javascript" ColumnName="Javascript" />
+                <ScalarProperty Name="InjectHtml" ColumnName="InjectHtml" />
+                <ScalarProperty Name="MetaRobots" ColumnName="MetaRobots" />
                 <ScalarProperty Name="OnPublishExecuteCode" ColumnName="OnPublishExecuteCode" />
                 <ScalarProperty Name="EnforceRoleLimitationsOnFrontEnd" ColumnName="EnforceRoleLimitationsOnFrontEnd" />
                 <ScalarProperty Name="CanLimitedRolesAccessAllChildPages" ColumnName="CanLimitedRolesAccessAllChildPages" />

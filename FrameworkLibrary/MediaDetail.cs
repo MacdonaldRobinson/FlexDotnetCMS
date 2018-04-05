@@ -71,8 +71,8 @@ namespace FrameworkLibrary
         public bool CanLimitedRolesAccessAllChildPages { get; set; }
         public bool EnforceRoleLimitationsOnFrontEnd { get; set; }
         public string OnPublishExecuteCode { get; set; }
-        public string Javascript { get; set; }
-        public string CSS { get; set; }
+        public string MetaRobots { get; set; }
+        public string InjectHtml { get; set; }
     
         public virtual Language Language { get; set; }
         public virtual Media Media { get; set; }

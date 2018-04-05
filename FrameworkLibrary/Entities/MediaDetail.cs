@@ -593,6 +593,7 @@ namespace FrameworkLibrary
         }
 
         private string contextMetaDescription { get; set; } = "";
+
         public string GetMetaDescription()
         {
             if (!string.IsNullOrEmpty(contextMetaDescription))
@@ -672,24 +673,14 @@ namespace FrameworkLibrary
         }
 
 
-        private string _javascript = "";
-        public string GetJS()
+        private string _injectHtml = "";
+        public string GetInjectHtml()
         {
-            if (!string.IsNullOrEmpty(_javascript))
-                return _javascript;
+            if (!string.IsNullOrEmpty(_injectHtml))
+                return _injectHtml;
 
-            _javascript = MediaDetailsMapper.ParseSpecialTags(this, Javascript);
-            return _javascript;
-        }
-
-        private string _css = "";
-        public string GetCSS()
-        {
-            if (!string.IsNullOrEmpty(_css))
-                return _css;
-
-            _css = MediaDetailsMapper.ParseSpecialTags(this, CSS);
-            return _css;
+			_injectHtml = MediaDetailsMapper.ParseSpecialTags(this, InjectHtml);
+            return _injectHtml;
         }
 
 

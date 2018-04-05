@@ -58,7 +58,8 @@ namespace FrameworkLibrary
         long MediaTypeID { get; set; }
         string MetaDescription { get; set; }
         string MetaKeywords { get; set; }
-        long NumberOfStars { get; set; }
+		string MetaRobots { get; set; }
+		long NumberOfStars { get; set; }
         long NumberOfViews { get; set; }
         bool OpenInNewWindow { get; set; }
         string PathToFile { get; set; }
@@ -85,12 +86,10 @@ namespace FrameworkLibrary
         string UseSummaryLayout { get; }
         List<ValidationError> ValidationErrors { get; }
         string VirtualPath { get; }
-        string Javascript { get; set; }
-        string CSS { get; set; }
-        string GetCSS();
-        string GetJS();
-        List<FieldAssociation> GetPublishedFieldAssociations();
+        string InjectHtml { get; set; }
 
+		string GetInjectHtml();
+		List<FieldAssociation> GetPublishedFieldAssociations();
         string CalculatedVirtualPath();
         bool CanUserAccessSection(User user);
         void ClearAutoCalculatedVirtualPathCache();

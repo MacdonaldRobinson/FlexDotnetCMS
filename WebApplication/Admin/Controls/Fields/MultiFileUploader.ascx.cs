@@ -112,11 +112,23 @@ namespace WebApplication.Admin.Controls.Fields
         {
             UpdatePagerSize();
 
-            switch (Mode)
+			FieldItems.DataSource = GetValue();
+			FieldItems.DataBind();
+
+			if (((dynamic)FieldItems.DataSource).Count > 0)
+			{
+				SearchPanel.Visible = true;
+			}
+			else
+			{
+				SearchPanel.Visible = false;
+			}
+
+			/*switch (Mode)
             {
                 case ViewMode.GridView:
                     {
-                        MultiItemUploaderPanel.Visible = false;
+                        //MultiItemUploaderPanel.Visible = false;
                         FieldItems.Visible = true;
 
                         FieldItems.DataSource = GetValue();
@@ -135,7 +147,7 @@ namespace WebApplication.Admin.Controls.Fields
                     }
                 default:
                     {
-                        MultiItemUploaderPanel.Visible = true;
+                        //MultiItemUploaderPanel.Visible = true;
                         FieldItems.Visible = false;
 
                         Values.DataSource = GetValue();
@@ -152,19 +164,19 @@ namespace WebApplication.Admin.Controls.Fields
 
                         break;
                     }
-            }
+            }*/
 
 
-            ItemsToDelete.Text = "[]";
+			ItemsToDelete.Text = "[]";
             ReorderItems.Text = "[]";
         }
 
-        public enum ViewMode { Uploader, GridView }
+        //public enum ViewMode { Uploader, GridView }
 
         public string SaveToFolder { get; set; }
         public long MediaTypeID { get; set; }
         public int PageSize { get; set; }
-        public ViewMode Mode { get; set; }
+        //public ViewMode Mode { get; set; }
 
         protected void AddItem_Click(object sender, EventArgs e)
         {
@@ -205,39 +217,47 @@ namespace WebApplication.Admin.Controls.Fields
         {
             UpdatePagerSize();
 
-            switch (Mode)
-            {
-                case ViewMode.GridView:
-                    {
-                        if (FieldItems.DataSource != null)
-                        {
-                            var items = ((List<FieldAssociation>)FieldItems.DataSource).Where(i => i.MediaDetail.SectionTitle.Contains(SearchText.Text)).ToList();
+			if (FieldItems.DataSource != null)
+			{
+				var items = ((List<FieldAssociation>)FieldItems.DataSource).Where(i => i.MediaDetail.SectionTitle.Contains(SearchText.Text)).ToList();
 
-                            FieldItems.DataSource = items;
-                            FieldItems.DataBind();
-                        }
+				FieldItems.DataSource = items;
+				FieldItems.DataBind();
+			}
 
-                        break;
-                    }
-                default:
-                    {
-                        if (Values.DataSource != null)
-                        {
-                            var items = ((List<FieldAssociation>)Values.DataSource).Where(i => i.MediaDetail.SectionTitle.Contains(SearchText.Text)).ToList();
+			//switch (Mode)
+			//{
+			//    case ViewMode.GridView:
+			//        {
+			//            if (FieldItems.DataSource != null)
+			//            {
+			//                var items = ((List<FieldAssociation>)FieldItems.DataSource).Where(i => i.MediaDetail.SectionTitle.Contains(SearchText.Text)).ToList();
 
-                            Values.DataSource = items;
-                            Values.DataBind();
-                        }
-                        break;
-                    }
-            }
-        }
+			//                FieldItems.DataSource = items;
+			//                FieldItems.DataBind();
+			//            }
+
+			//            break;
+			//        }
+			//    default:
+			//        {
+			//            if (Values.DataSource != null)
+			//            {
+			//                var items = ((List<FieldAssociation>)Values.DataSource).Where(i => i.MediaDetail.SectionTitle.Contains(SearchText.Text)).ToList();
+
+			//                Values.DataSource = items;
+			//                Values.DataBind();
+			//            }
+			//            break;
+			//        }
+			//}
+		}
 
         private void UpdatePagerSize()
         {
             if (PageSize > 0)
             {
-                Pager.PageSize = PageSize;
+                //Pager.PageSize = PageSize;
                 FieldItems.PageSize = PageSize;
             }
         }

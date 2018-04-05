@@ -49,7 +49,9 @@ namespace FrameworkLibrary
 
         public string MakeWebRequest(string urlString, ICredentials credentialCache = null, RequestMethod method = RequestMethod.GET, string queryString = "")
         {
-            var storageItem = WebserviceRequestsMapper.GetByUrl(urlString);
+			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+			var storageItem = WebserviceRequestsMapper.GetByUrl(urlString);
             var data = "";
 
             if ((storageItem != null) && (EnableCaching) && !storageItem.Response.Contains("unavailable") && storageItem.DateLastModified.AddSeconds(CacheDurationInSeconds) > DateTime.Now)

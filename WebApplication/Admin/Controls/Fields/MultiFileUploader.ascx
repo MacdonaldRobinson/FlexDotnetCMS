@@ -27,7 +27,13 @@
                     <asp:TextBox runat="server" ID="SearchText" style="display:inline; width: 200px;" placeholder="Search ..." />
                     <asp:LinkButton ID="SearchItems" Text="Search" runat="server" OnClick="SearchItems_Click"/>
                 </asp:Panel>
-                <asp:Panel runat="server" ID="MultiItemUploaderPanel">
+                <asp:FileUpload ID="MultiFileUpload" runat="server" AllowMultiple="true" CssClass="MultiFileUpload" />
+                <div class="dvPreview" runat="server"></div>
+                <div class="buttons UploadFilesNowButtons" style="display:none;">
+                    <asp:LinkButton runat="server" ID="UploadFilesNow" OnClick="UploadFilesNow_Click" CssClass="button">Upload Now</asp:LinkButton>
+                    <div class="clear"></div>
+                </div>
+<%--                <asp:Panel runat="server" ID="MultiItemUploaderPanel">
                     <asp:FileUpload ID="MultiFileUpload" runat="server" AllowMultiple="true" CssClass="MultiFileUpload" />
                     <div class="dvPreview" runat="server"></div>
                     <div class="buttons UploadFilesNowButtons" style="display:none;">
@@ -62,13 +68,18 @@
                         </asp:ListView>
                         <Site:Pager runat="server" id="Pager" PagedControlID="Values" PageSize="12" />
                     </div>
-                </asp:Panel>
+                </asp:Panel>--%>
 
                 <asp:TextBox runat="server" CssClass="ItemsToDelete" ID="ItemsToDelete" Text="[]" Style="display: none;" />
                 <asp:TextBox runat="server" CssClass="ReorderItems" ID="ReorderItems" Text="[]" Style="display: none;"/>
 
-                <asp:GridView runat="server" ID="FieldItems" AutoGenerateColumns="false" AllowPaging="true" CssClass="FieldItems DragDropGrid" OnPageIndexChanging="ItemList_PageIndexChanging" ItemType="FrameworkLibrary.FieldAssociation" Visible="false" Width="100%" OnDataBound="FieldItems_DataBound">
-                    <Columns>                        
+                <asp:GridView runat="server" ID="FieldItems" AutoGenerateColumns="false" AllowPaging="true" CssClass="FieldItems DragDropGrid" OnPageIndexChanging="ItemList_PageIndexChanging" ItemType="FrameworkLibrary.FieldAssociation" Width="100%" OnDataBound="FieldItems_DataBound">
+                    <Columns>     
+                        <asp:TemplateField HeaderText="">
+                            <ItemTemplate>
+                                <img src="<%# Item.MediaDetail.PathToFile  %>" style="max-width:100px; max-height: 100px;"/>
+                            </ItemTemplate>
+                        </asp:TemplateField>						
                         <asp:BoundField DataField="MediaDetail.SectionTitle" HeaderText="Section Title" SortExpression="MediaDetail.SectionTitle" ItemStyle-HorizontalAlign="Center"/>                        
                         <asp:BoundField DataField="MediaDetail.PublishDate" HeaderText="Publish Date" SortExpression="MediaDetail.PublishDate" ItemStyle-HorizontalAlign="Center"/>
                         <asp:BoundField DataField="MediaDetail.ExpiryDate" HeaderText="Expiry Date" SortExpression="MediaDetail.ExpiryDate" ItemStyle-HorizontalAlign="Center"/>

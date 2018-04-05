@@ -54,7 +54,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
             //AddPublishSettingsTab();
             AddAdvancedSettingsTab();
 
-            AddJavascriptAndCSSTab();
+			AddInjectHtmlTab();
 
             //AddShoppingCartSettingsTab();
 
@@ -86,11 +86,11 @@ namespace WebApplication.Admin.Controls.MediaTypes
             //}
         }
 
-        public void AddJavascriptAndCSSTab()
+        public void AddInjectHtmlTab()
         {
             if (BasePage.CurrentUser.IsInRole(RoleEnum.Developer))
             {
-                AddTab("Javascript & CSS", "~/Admin/Controls/MediaTypes/Common/Tabs/JavascriptAndCSSTab.ascx");
+                AddTab("Inject Html", "~/Admin/Controls/MediaTypes/Common/Tabs/InjectHtmlTab.ascx");
             }
         }
 

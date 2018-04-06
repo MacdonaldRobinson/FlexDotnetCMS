@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.IO;
+using RazorEngine;
 
 namespace FrameworkLibrary
 {
@@ -1105,9 +1106,11 @@ namespace FrameworkLibrary
 
                     return parseTemplateLayout;
                 }
-            }            
+            }
 
-            return mediaDetail.UseMainLayout;
+			Engine.Razor.Dispose();
+
+			return mediaDetail.UseMainLayout;
         }
 
         public static string ReplaceFieldWithParsedValue(string originalText, string textToReplace, IField mediaField, string parsedValue, bool includeFieldWrapper, Dictionary<string, string> arguments)

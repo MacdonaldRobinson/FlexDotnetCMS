@@ -92,6 +92,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="FluentScheduler, Version=5.3.0.0, Culture=neutral, PublicKeyToken=b76503528a14ebd1, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentScheduler.5.3.0\lib\net40\FluentScheduler.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\WebApplication\bin\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -223,6 +226,8 @@
     <Compile Include="Classes\CustomIdentity.cs" />
     <Compile Include="Classes\CustomTreeView.cs" />
     <Compile Include="Classes\Gallery\Gallery.cs" />
+    <Compile Include="Classes\Job.cs" />
+    <Compile Include="Classes\JobSchedulerRegistry.cs" />
     <Compile Include="Classes\Location.cs" />
     <Compile Include="Classes\Gallery\Slide.cs" />
     <Compile Include="Classes\ShoppingCart\Cart.cs" />

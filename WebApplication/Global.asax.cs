@@ -1,10 +1,10 @@
-﻿using FrameworkLibrary;
+﻿using FluentScheduler;
+using FrameworkLibrary;
 using System;
 using System.IO;
 using System.Web;
 using System.Web.Routing;
 using WebApplication.Services;
-
 namespace WebApplication
 {
     public class Global : System.Web.HttpApplication
@@ -15,7 +15,8 @@ namespace WebApplication
         {
             // Code that runs on application startup
             RegisterRoutes(RouteTable.Routes);
-        }
+			JobManager.Initialize(new FrameworkLibrary.Classes.JobSchedulerRegistry());
+		}
 
         private void Application_BeginRequest(Object source, EventArgs e)
         {

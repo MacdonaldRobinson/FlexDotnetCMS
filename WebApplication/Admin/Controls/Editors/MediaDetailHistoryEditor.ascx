@@ -8,7 +8,7 @@
 </script>
 <asp:UpdatePanel runat="server">
     <ContentTemplate>
-        <asp:GridView runat="server" ID="ItemList" AutoGenerateColumns="false" AllowPaging="true" OnPageIndexChanging="ItemList_PageIndexChanging" PageSize="20">
+        <asp:GridView runat="server" ID="ItemList" AutoGenerateColumns="false" AllowPaging="false" OnPageIndexChanging="ItemList_PageIndexChanging" Width="100%" CssClass="DataTable" OnDataBound="ItemList_DataBound">
             <Columns>
                 <%--<asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />--%>
                 <asp:BoundField DataField="IsDraft" HeaderText="IsDraft" SortExpression="IsDraft" />

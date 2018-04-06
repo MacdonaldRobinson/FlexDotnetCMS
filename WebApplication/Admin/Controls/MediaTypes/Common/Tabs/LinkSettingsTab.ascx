@@ -6,7 +6,7 @@
     </div>-->
     <div>
         <p>
-            <asp:CheckBox ID="RedirectToFirstChild" runat="server" /><label for="<%= RedirectToFirstChild.ClientID %>">
+            <asp:CheckBox ID="RedirectToFirstChild" runat="server" />&nbsp;<label for="<%= RedirectToFirstChild.ClientID %>">
                 Redirect To First Child</label>
         </p>
     </div>

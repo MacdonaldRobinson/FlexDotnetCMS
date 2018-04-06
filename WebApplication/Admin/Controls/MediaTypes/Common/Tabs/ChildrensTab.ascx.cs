@@ -37,10 +37,10 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
                 listItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == mediaId && i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0 && i.LinkTitle.Contains(searchText)).OrderByDescending(i => i.DateLastModified).ToList<IMediaDetail>();
             }
 
-            if(listItems.Count > 0)
+            /*if(listItems.Count > 0)
             {
                 SearchPanel.Visible = true;
-            }
+            }*/
 
             ItemList.DataSource = listItems;
             ItemList.DataBind();
@@ -119,13 +119,13 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
             Bind();
         }
 
-        protected void SearchItems_Click(object sender, EventArgs e)
+        /*protected void SearchItems_Click(object sender, EventArgs e)
         {
             if(selectedItem != null)
             {
                 Bind(SearchText.Text.Trim());
             }
-        }
+        }*/
 
         protected void ItemList_RowDataBound(object sender, GridViewRowEventArgs e)
         {

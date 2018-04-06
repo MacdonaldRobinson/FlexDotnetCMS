@@ -22,33 +22,6 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs {
         protected global::System.Web.UI.UpdatePanel ChildrenUpdatePanel;
         
         /// <summary>
-        /// SearchPanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel SearchPanel;
-        
-        /// <summary>
-        /// SearchText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox SearchText;
-        
-        /// <summary>
-        /// SearchItems control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton SearchItems;
-        
-        /// <summary>
         /// ItemList control.
         /// </summary>
         /// <remarks>

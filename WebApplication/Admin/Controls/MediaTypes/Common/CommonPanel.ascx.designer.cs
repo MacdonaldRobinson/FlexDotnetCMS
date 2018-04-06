@@ -67,24 +67,6 @@ namespace WebApplication.Admin.Controls.MediaTypes {
         protected global::System.Web.UI.WebControls.ListView FieldGroupTabContents;
         
         /// <summary>
-        /// SEOSettingsTab control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::WebApplication.Admin.Controls.MediaTypes.Common.Tabs.SEOSettingsTab SEOSettingsTab;
-        
-        /// <summary>
-        /// PublishSettingsTab control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::WebApplication.Admin.Controls.MediaTypes.Common.Tabs.PublishSettingsTab PublishSettingsTab;
-        
-        /// <summary>
         /// TabPanels control.
         /// </summary>
         /// <remarks>

@@ -16,8 +16,8 @@ namespace WebApplication.Admin.Controls.MediaTypes
         public override void SetObject(IMediaDetail obj)
         {
             //base.SetObject(obj);
-            SEOSettingsTab.SetObject(obj);
-            PublishSettingsTab.SetObject(obj);
+            //SEOSettingsTab.SetObject(obj);
+            //PublishSettingsTab.SetObject(obj);
 
             BindMediaFields();
 
@@ -47,14 +47,14 @@ namespace WebApplication.Admin.Controls.MediaTypes
             AddFieldsTab();
             AddLayoutsTab();
 
-            //AddSEOSettingsTab();
             AddLinkSettingsTab();
+            AddSEOSettingsTab();
+            AddPublishSettingsTab();
 
             //AddTagsTab();
-            //AddPublishSettingsTab();
-            AddAdvancedSettingsTab();
-
+            AddSettingsTab();
 			AddInjectHtmlTab();
+
 
             //AddShoppingCartSettingsTab();
 
@@ -99,9 +99,9 @@ namespace WebApplication.Admin.Controls.MediaTypes
             AddTab("Children", "~/Admin/Controls/MediaTypes/Common/Tabs/ChildrensTab.ascx");
         }
 
-        public void AddSEOSettingsTab()
-        {
-            AddTab("SEO Settings", "~/Admin/Controls/MediaTypes/Common/Tabs/SEOSettingsTab.ascx");
+		public void AddSEOSettingsTab()
+		{
+			AddTab("SEO", "~/Admin/Controls/MediaTypes/Common/Tabs/SEOSettingsTab.ascx");
         }
 
         public void AddShoppingCartSettingsTab()
@@ -120,12 +120,12 @@ namespace WebApplication.Admin.Controls.MediaTypes
             AddTab("Comments(" + pendingComments + ")", "~/Admin/Controls/MediaTypes/Common/Tabs/CommentsTab.ascx");
         }
 
-        public void AddAdvancedSettingsTab()
+        public void AddSettingsTab()
         {
-            if (BasePage.CurrentUser.IsInRole(RoleEnum.Developer))
-            {
-                AddTab("Settings", "~/Admin/Controls/MediaTypes/Common/Tabs/AdvancedSettingsTab.ascx");
-            }
+			if (BasePage.CurrentUser.IsInRole(RoleEnum.Developer))
+			{
+				AddTab("Settings", "~/Admin/Controls/MediaTypes/Common/Tabs/SettingsTab.ascx");
+			}
         }
 
         public void AddHistoryTab()
@@ -135,7 +135,7 @@ namespace WebApplication.Admin.Controls.MediaTypes
 
         public void AddPublishSettingsTab()
         {
-            AddTab("Publish Settings", "~/Admin/Controls/MediaTypes/Common/Tabs/PublishSettingsTab.ascx");
+            AddTab("Publish", "~/Admin/Controls/MediaTypes/Common/Tabs/PublishSettingsTab.ascx");
         }
 
         public void AddRolesUsersTab()
@@ -240,8 +240,8 @@ namespace WebApplication.Admin.Controls.MediaTypes
 
             UpdateObjectFromMediaFields();
 
-            SEOSettingsTab.UpdateObjectFromFields();
-            PublishSettingsTab.UpdateObjectFromFields();
+            //SEOSettingsTab.UpdateObjectFromFields();
+            //PublishSettingsTab.UpdateObjectFromFields();
         }
 
 
@@ -432,8 +432,8 @@ namespace WebApplication.Admin.Controls.MediaTypes
 
             UpdateMediaFieldsFromObject();
 
-            SEOSettingsTab.UpdateFieldsFromObject();
-            PublishSettingsTab.UpdateFieldsFromObject();
+            //SEOSettingsTab.UpdateFieldsFromObject();
+            //PublishSettingsTab.UpdateFieldsFromObject();
         }
 
         protected void MediaFieldsList_ItemDataBound(object sender, System.Web.UI.WebControls.ListViewItemEventArgs e)

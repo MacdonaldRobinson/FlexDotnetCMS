@@ -117,7 +117,16 @@ namespace WebApplication.Admin.Controls.Editors
             }
         }
 
-        protected void DeleteHistory_Click(object sender, EventArgs e)
+		protected void ItemList_DataBound(object sender, EventArgs e)
+		{
+			ItemList.UseAccessibleHeader = true;
+			if (ItemList.HeaderRow != null)
+			{
+				ItemList.HeaderRow.TableSection = TableRowSection.TableHeader;
+			}
+		}
+
+		protected void DeleteHistory_Click(object sender, EventArgs e)
         {
             var dataItem = GetDataItemFromSender((LinkButton)sender);
 

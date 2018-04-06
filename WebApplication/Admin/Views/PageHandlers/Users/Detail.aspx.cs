@@ -50,7 +50,14 @@ namespace WebApplication.Admin.Views.Users
 
         private void BindRolesList()
         {
-            RolesList.DataSource = RolesMapper.GetAll().ToList();
+			var roles= RolesMapper.GetAll().ToList();
+
+			if (!CurrentUser.IsInRole(RoleEnum.Developer))
+			{
+				roles = roles.Where(i => i != RolesMapper.GetByEnum(RoleEnum.Developer)).ToList();
+			}
+
+			RolesList.DataSource = roles;
             RolesList.DataTextField = "Name";
             RolesList.DataValueField = "ID";
             RolesList.DataBind();

@@ -151,7 +151,7 @@
     <Content Include="Admin\Controls\Fields\MultiFileUploader.ascx" />
     <Content Include="Admin\Controls\Generic\MediaComments.ascx" />
     <Content Include="Admin\Controls\MediaTypes\Common\CommonPanel.ascx" />
-    <Content Include="Admin\Controls\MediaTypes\Common\Tabs\AdvancedSettingsTab.ascx" />
+    <Content Include="Admin\Controls\MediaTypes\Common\Tabs\SettingsTab.ascx" />
     <Content Include="Admin\Controls\MediaTypes\Common\Tabs\ChildrensTab.ascx" />
     <Content Include="Admin\Controls\MediaTypes\Common\Tabs\CommentsTab.ascx" />
     <Content Include="Admin\Controls\MediaTypes\Common\Tabs\FieldsTab.ascx" />
@@ -797,12 +797,12 @@
     <Compile Include="Admin\Controls\MediaTypes\Common\CommonPanel.ascx.designer.cs">
       <DependentUpon>CommonPanel.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\AdvancedSettingsTab.ascx.cs">
-      <DependentUpon>AdvancedSettingsTab.ascx</DependentUpon>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\SettingsTab.ascx.cs">
+      <DependentUpon>SettingsTab.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\AdvancedSettingsTab.ascx.designer.cs">
-      <DependentUpon>AdvancedSettingsTab.ascx</DependentUpon>
+    <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\SettingsTab.ascx.designer.cs">
+      <DependentUpon>SettingsTab.ascx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Controls\MediaTypes\Common\Tabs\ChildrensTab.ascx.cs">
       <DependentUpon>ChildrensTab.ascx</DependentUpon>

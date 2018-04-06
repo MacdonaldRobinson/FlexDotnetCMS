@@ -130,18 +130,6 @@
                         </div>
                     </ItemTemplate>
                 </asp:ListView>
-        <fieldset id="AccordianHolder">
-            <div class="accordian closed">
-                <h3>SEO Settings</h3>
-                <div>
-                    <Admin:SEOSettingsTab runat="server" ID="SEOSettingsTab" />
-                </div>
-                <h3>Publish Settings</h3>
-                <div>
-                    <Admin:PublishSettingsTab runat="server" ID="PublishSettingsTab" />
-                </div>
-            </div>
-        </fieldset>
 
     </div>
     <div id="TabPanelsHolder">

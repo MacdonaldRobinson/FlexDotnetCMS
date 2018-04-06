@@ -25,8 +25,17 @@ namespace WebApplication.Admin.Users
         {
             this.Section.Text = this.Page.Title = "Manage Users";
 
-            if (Items == null)
-                Items = BaseMapper.GetDataModel().Users.OrderBy(i => i.UserName).ToList();
+			if (Items == null)
+			{
+				if (CurrentUser.IsInRole(RoleEnum.Developer))
+				{
+					Items = BaseMapper.GetDataModel().Users.OrderBy(i => i.UserName).ToList();
+				}
+				else
+				{
+					Items = BaseMapper.GetDataModel().Users.OrderBy(i => i.UserName).ToList().Where(i=>!i.IsInRole(RoleEnum.Developer)).ToList();
+				}
+			}
 
             Bind();
         }

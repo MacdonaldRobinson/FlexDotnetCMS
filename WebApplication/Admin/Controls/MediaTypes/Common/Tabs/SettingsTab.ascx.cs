@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
 {
-    public partial class AdvancedSettingsTab : BaseTab, ITab
+    public partial class SettingsTab : BaseTab, ITab
     {
         public void SetObject(IMediaDetail selectedItem)
         {

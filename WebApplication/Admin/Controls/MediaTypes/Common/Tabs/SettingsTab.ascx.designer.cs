@@ -10,7 +10,7 @@
 namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs {
     
     
-    public partial class AdvancedSettingsTab {
+    public partial class SettingsTab {
         
         /// <summary>
         /// Handler control.
@@ -20,6 +20,24 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::WebApplication.Admin.Controls.Fields.FileSelector Handler;
+        
+        /// <summary>
+        /// MediaTypes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList MediaTypes;
+        
+        /// <summary>
+        /// MediaTypeChange control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton MediaTypeChange;
         
         /// <summary>
         /// MasterPageSelector control.
@@ -74,24 +92,6 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal MediaType;
-        
-        /// <summary>
-        /// MediaTypes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList MediaTypes;
-        
-        /// <summary>
-        /// MediaTypeChange control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton MediaTypeChange;
         
         /// <summary>
         /// OrderIndex control.

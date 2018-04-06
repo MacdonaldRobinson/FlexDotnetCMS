@@ -1,24 +1,31 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AdvancedSettingsTab.ascx.cs"
-    Inherits="WebApplication.Admin.Controls.MediaTypes.Common.Tabs.AdvancedSettingsTab" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="SettingsTab.ascx.cs"
+    Inherits="WebApplication.Admin.Controls.MediaTypes.Common.Tabs.SettingsTab" %>
 
 
 <fieldset>
     <div>
+        <label for="<%= Handler.ClientID %>">
+            Handler</label>
+        <Admin:FileSelector ID="Handler" runat="server" DirPath="~/Views/PageHandlers" />
+    </div>
+    <div>
         <p>
-            <label for="<%= Handler.ClientID %>">
-                Handler</label>
-            <Admin:FileSelector ID="Handler" runat="server" DirPath="~/Views/PageHandlers" />
+            <label class="exception" for="<%= MediaTypes.ClientID %>">
+                You can change this item to the following Media Types:</label><br />
+            <asp:DropDownList runat="server" ID="MediaTypes">
+            </asp:DropDownList>
+            <asp:LinkButton Text="Change" ID="MediaTypeChange" runat="server" OnClick="MediaTypeChange_Click" />
         </p>
     </div>
     <div id="MasterPageSelectorHolder">
         <label for="<%= MasterPageSelector.ClientID %>">
             Site Template:
-        </label>
+        </label><br />
         <Site:MasterPageSelector ID="MasterPageSelector" runat="server" />
     </div>
     <div>
         <p>
-            <asp:CheckBox ID="EnableCaching" runat="server" /><label for="<%= EnableCaching.ClientID %>">
+            <asp:CheckBox ID="EnableCaching" runat="server" />&nbsp;<label for="<%= EnableCaching.ClientID %>">
                 Enable Caching</label>
         </p>
     </div>
@@ -52,15 +59,6 @@
         </p>
     </div>
 
-    <div>
-        <p>
-            <label class="exception" for="<%= MediaTypes.ClientID %>">
-                You can change this item to the following Media Types:</label><br />
-            <asp:DropDownList runat="server" ID="MediaTypes">
-            </asp:DropDownList>
-            <asp:LinkButton Text="Change" ID="MediaTypeChange" runat="server" OnClick="MediaTypeChange_Click" />
-        </p>
-    </div>
 
     <div>
         <p>

@@ -14,12 +14,12 @@
         <fieldset>
             <legend>Current Children</legend>
             <div>
-                <div class="floatLeft">
+                <%--<div class="floatLeft">
                     <asp:Panel runat="server" DefaultButton="SearchItems" id="SearchPanel" Visible="false">
                         <asp:TextBox runat="server" ID="SearchText" style="display:inline; width: 200px;" placeholder="Search ..." />
                         <asp:LinkButton ID="SearchItems" Text="Search" runat="server" OnClick="SearchItems_Click"/>
                     </asp:Panel>
-                </div>
+                </div>--%>
                 <div class="buttons floatRight">
                     <a href="/Admin/Views/PageHandlers/Media/Create.aspx" id="CreateNewChildItemButton">Create a new child item</a>
                 </div>

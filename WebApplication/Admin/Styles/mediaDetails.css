@@ -96,17 +96,17 @@
     overflow: hidden;
 }
 
-    #mainArea #left-component {
-        width: 57em;
-    }
+	#mainArea #left-component {
+		width: 65em;
+	}
 
-    #mainArea #my-divider {
-        left: 57em; /* Same as left component width */
-        width: 5px;
-    }
+	#mainArea #my-divider {
+		left: 65em; /* Same as left component width */
+		width: 5px;
+	}
 
     #mainArea #right-component {
-        left: 57em; /* Same as left component width */
+        left: 65em; /* Same as left component width */
         margin-left: 5px; /* Same as divider width */
         overflow: hidden;
     }

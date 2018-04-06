@@ -48,5 +48,6 @@ namespace FrameworkLibrary
         public virtual DbSet<FieldType> FieldTypes { get; set; }
         public virtual DbSet<UserMedia> UsersMedias { get; set; }
         public virtual DbSet<RoleMedia> RolesMedias { get; set; }
+        public virtual DbSet<ScheduledTask> ScheduledTasks { get; set; }
     }
 }

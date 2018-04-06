@@ -250,6 +250,7 @@
     <Compile Include="DataMappers\PermissionsMapper.cs" />
     <Compile Include="DataMappers\RolesMapper.cs" />
     <Compile Include="DataMappers\RolesMediasMapper.cs" />
+    <Compile Include="DataMappers\ScheduledTasksMapper.cs" />
     <Compile Include="DataMappers\SettingsMapper.cs" />
     <Compile Include="DataMappers\TagsMapper.cs" />
     <Compile Include="Classes\Return.cs" />
@@ -298,6 +299,7 @@
     <Compile Include="Entities\Permission.cs" />
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\RoleMediaDetail.cs" />
+    <Compile Include="Entities\ScheduledTask.cs" />
     <Compile Include="Entities\Settings.cs" />
     <Compile Include="Entities\Tag.cs" />
     <Compile Include="Entities\User.cs">
@@ -432,6 +434,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="RootPage.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScheduledTask.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs">

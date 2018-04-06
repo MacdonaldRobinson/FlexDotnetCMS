@@ -325,6 +325,18 @@
           </Key>
           <Property Name="MediaDetailID" Type="bigint" Nullable="false" />
         </EntityType>
+        <EntityType Name="ScheduledTasks">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CodeToExecute" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastModified" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Settings">
           <Key>
             <PropertyRef Name="ID" />
@@ -956,6 +968,7 @@
           <EntitySet Name="RolesMedias" EntityType="Self.RolesMedias" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolesPermissions" EntityType="Self.RolesPermissions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RootPages" EntityType="Self.RootPages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ScheduledTasks" EntityType="Self.ScheduledTasks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UrlRedirectRules" EntityType="Self.UrlRedirectRules" Schema="dbo" store:Type="Tables" />
@@ -1293,6 +1306,7 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="RolesMedia" EntitySet="RolesMedias" />
           </AssociationSet>
+          <EntitySet Name="ScheduledTasks" EntityType="FrameworkModel.ScheduledTask" />
           </EntityContainer>
         <EntityType Name="EmailLog">
           <Key>
@@ -2105,6 +2119,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ScheduledTask">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CodeToExecute" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateLastModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2549,6 +2575,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ScheduledTasks">
+            <EntityTypeMapping TypeName="FrameworkModel.ScheduledTask">
+              <MappingFragment StoreEntitySet="ScheduledTasks">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DateLastModified" ColumnName="DateLastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CodeToExecute" ColumnName="CodeToExecute" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2794,6 +2833,7 @@
         <EntityTypeShape EntityType="FrameworkModel.RoleMedia" Width="1.5" PointX="8" PointY="14.625" />
         <AssociationConnector Association="FrameworkModel.FK_RolesMedia_Media" />
         <AssociationConnector Association="FrameworkModel.FK_RolesMedia_RoleID" />
+        <EntityTypeShape EntityType="FrameworkModel.ScheduledTask" Width="1.5" PointX="0.75" PointY="11.75" />
         </Diagram>
     </Diagrams>
   </Designer>

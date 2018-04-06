@@ -203,6 +203,9 @@
     <Content Include="Admin\Views\PageHandlers\MasterPages\Default.aspx" />
     <Content Include="Admin\Views\PageHandlers\MasterPages\Detail.aspx" />
     <Content Include="Admin\Views\PageHandlers\MasterPages\ItemServices.asmx" />
+    <Content Include="Admin\Views\PageHandlers\Scheduler\Default.aspx" />
+    <Content Include="Admin\Views\PageHandlers\Scheduler\Detail.aspx" />
+    <Content Include="Admin\Views\PageHandlers\Scheduler\ItemServices.asmx" />
     <Content Include="App_Data\Cache\index.html" />
     <Content Include="App_Data\DBBackups\index.html" />
     <Content Include="App_Data\DB\FlexDotnetCMS.mdf" />
@@ -1071,6 +1074,24 @@
       <DependentUpon>Detail.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Views\PageHandlers\MasterPages\ItemServices.asmx.cs">
+      <DependentUpon>ItemServices.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Scheduler\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Scheduler\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Scheduler\Detail.aspx.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Scheduler\Detail.aspx.designer.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Views\PageHandlers\Scheduler\ItemServices.asmx.cs">
       <DependentUpon>ItemServices.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>

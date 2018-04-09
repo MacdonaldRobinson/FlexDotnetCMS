@@ -14,6 +14,7 @@ Disallow: /Scripts/
 Disallow: /Styles/
 Disallow: /Views/
 Disallow: /WebServices/
+Disallow: /Installer/
 
 #NOTE: The 'BaseUrl' short code below will automaticly be converted to the url of the site
 Sitemap: {BaseUrl}Webservices/Generators.asmx/GoogleSiteMap

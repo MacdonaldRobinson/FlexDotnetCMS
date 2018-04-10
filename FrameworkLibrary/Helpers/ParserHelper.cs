@@ -318,7 +318,7 @@ namespace FrameworkLibrary
 
             if (!string.IsNullOrEmpty(code) && (code.Contains("@{") || code.Contains("@using") || code.Contains("@for") || code.Contains("@Model") || code.Contains("@Raw")) && compileRazor)
             {
-                code = "@using FrameworkLibrary\n@using System\n@using System.Linq\n@using System.Web\n" + code;
+                code = "@using FrameworkLibrary\n@using WebApplication\n@using System\n@using System.Linq\n@using System.Web\n" + code;
                 var key = "templateKey:" + code;
 
                 try

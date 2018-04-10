@@ -679,6 +679,7 @@
     <Content Include="WebServices\ConstantContact.asmx" />
     <Content Include="WebServices\Facebook.asmx" />
     <Content Include="WebServices\Flicker.asmx" />
+    <Content Include="WebServices\Generators.asmx" />
     <Content Include="WebServices\Handlers.asmx" />
     <Content Include="WebServices\IMediaDetails.asmx" />
     <Content Include="WebServices\Twitter.asmx" />
@@ -1887,6 +1888,10 @@
     </Compile>
     <Compile Include="WebServices\Flicker.asmx.cs">
       <DependentUpon>Flicker.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Generators.asmx.cs">
+      <DependentUpon>Generators.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServices\Handlers.asmx.cs">

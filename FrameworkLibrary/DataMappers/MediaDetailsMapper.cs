@@ -565,9 +565,9 @@ namespace FrameworkLibrary
 
             //var item = BaseMapper.GetDataModel().MediaDetails.Where(i => i.LanguageID == currentLanguage.ID && i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now) && (i.CachedVirtualPath == virtualPathByCurrentHost || i.CachedVirtualPath == virtualPath) && i.LanguageID == currentLanguage.ID && i.HistoryVersionNumber == versionNumber && i.MediaType.ShowInSiteTree).ToList().Where(i => i.CanRender || HttpContext.Current.Request["version"] != null).OrderByDescending(i => i.DateLastModified).FirstOrDefault();
 
-            var item = BaseMapper.GetDataModel().MediaDetails.Where(i => i.LanguageID == currentLanguage.ID && i.HistoryVersionNumber == versionNumber && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now) &&
+            var item = BaseMapper.GetDataModel().MediaDetails.Where(i => i.LanguageID == currentLanguage.ID && i.HistoryVersionNumber == versionNumber && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now) &&
                                                                 i.MediaType.ShowInSiteTree && (i.CachedVirtualPath == virtualPathByCurrentHost || i.CachedVirtualPath == virtualPath)
-                                                        ).OrderByDescending(i => i.DateLastModified).FirstOrDefault();
+                                                        ).ToList().Where(i=>i.CanRender).OrderByDescending(i => i.DateLastModified).FirstOrDefault();
 
             if (item != null)
                 return item;
@@ -841,7 +841,7 @@ namespace FrameworkLibrary
             return parentsWithField.Reverse();
         }
 
-        public static IEnumerable<IMediaDetail> GetAllParentMediaDetails(IMediaDetail item, Language language)
+		public static IEnumerable<IMediaDetail> GetAllParentMediaDetails(IMediaDetail item, Language language, bool ignoreCanRender = false)
         {
             var items = new List<IMediaDetail>();
             var absoluteRoot = MediasMapper.GetAbsoluteRoot();
@@ -865,7 +865,14 @@ namespace FrameworkLibrary
                 if (parentMedia == null)
                     break;
 
-                item = parentMedia.MediaDetails.FirstOrDefault(i => i.CanRender && i.LanguageID == language.ID && !i.IsHistory);
+				if (ignoreCanRender)
+				{
+					item = parentMedia.MediaDetails.FirstOrDefault(i => i.LanguageID == language.ID && !i.IsHistory);
+				}
+				else
+				{
+					item = parentMedia.MediaDetails.FirstOrDefault(i => i.CanRender && i.LanguageID == language.ID && !i.IsHistory);
+				}
 
                 if (item == null)
                     break;

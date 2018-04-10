@@ -15,7 +15,13 @@ namespace FrameworkLibrary
         {
             get
             {
-                return !IsDeleted && IsPublished;
+				if (FrameworkSettings.CurrentUser != null && FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions))
+					return true;
+
+				if (this.GetParentMediaDetails(true).Any(i => i.IsDeleted))
+					return false;
+
+				return !IsDeleted && IsPublished;
             }
         }
 
@@ -37,7 +43,6 @@ namespace FrameworkLibrary
 
 				if (this.Fields.Any(i => i.FieldAssociations.Any(j => j.MediaDetail.PublishDate > DateTime.Now || j.MediaDetail.ExpiryDate != null)))
 					return false;
-
 
 				return true;
             }
@@ -725,9 +730,9 @@ namespace FrameworkLibrary
             return MediaDetailsMapper.GetParentsWhichContainsFieldCode(this, Language, fieldCode);
         }
 
-        public IEnumerable<IMediaDetail> GetParentMediaDetails()
+        public IEnumerable<IMediaDetail> GetParentMediaDetails(bool ignoreCanRender = false)
         {
-            return MediaDetailsMapper.GetAllParentMediaDetails(this, Language).Reverse().ToList();
+            return MediaDetailsMapper.GetAllParentMediaDetails(this, Language, ignoreCanRender).Reverse().ToList();
         }
 
         public bool HasDraft

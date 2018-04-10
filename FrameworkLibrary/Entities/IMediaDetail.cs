@@ -103,7 +103,7 @@ namespace FrameworkLibrary
         IMediaDetail GetNearestParentWhichContainsFieldCode(string FieldCode);
         IMediaDetail GetNextMediaDetail();
         string GetPageTitle();
-        IEnumerable<IMediaDetail> GetParentMediaDetails();
+        IEnumerable<IMediaDetail> GetParentMediaDetails(bool ignoreCanRender = false);
         IEnumerable<IMediaDetail> GetParentsWhichContainsFieldCode(string fieldCode);
         IMediaDetail GetPreviousMediaDetail();
         IEnumerable<IMediaDetail> GetRelatedItems(long mediaTypeId = 0);

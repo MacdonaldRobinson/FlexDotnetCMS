@@ -92,7 +92,7 @@ namespace WebApplication.Controls
             }
             else
             {
-                items = MediaDetailsMapper.GetAllParentMediaDetails(this.BasePage.CurrentMediaDetail, this.BasePage.CurrentLanguage).ToList();
+                items = this.BasePage.CurrentMediaDetail.GetAllParentMediaDetails(this.BasePage.CurrentLanguage).ToList();
             }
 
             Bind(items);

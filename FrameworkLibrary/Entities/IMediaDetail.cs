@@ -88,6 +88,8 @@ namespace FrameworkLibrary
         string VirtualPath { get; }
         string InjectHtml { get; set; }
 
+		bool HasADeletedParent();
+		IEnumerable<IMediaDetail> GetAllParentMediaDetails(Language language);
 		string GetInjectHtml();
 		List<FieldAssociation> GetPublishedFieldAssociations();
         string CalculatedVirtualPath();
@@ -103,7 +105,7 @@ namespace FrameworkLibrary
         IMediaDetail GetNearestParentWhichContainsFieldCode(string FieldCode);
         IMediaDetail GetNextMediaDetail();
         string GetPageTitle();
-        IEnumerable<IMediaDetail> GetParentMediaDetails(bool ignoreCanRender = false);
+        IEnumerable<IMediaDetail> GetParentMediaDetails();
         IEnumerable<IMediaDetail> GetParentsWhichContainsFieldCode(string fieldCode);
         IMediaDetail GetPreviousMediaDetail();
         IEnumerable<IMediaDetail> GetRelatedItems(long mediaTypeId = 0);

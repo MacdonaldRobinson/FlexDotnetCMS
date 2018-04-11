@@ -35,7 +35,7 @@ namespace WebApplication
             {
                 var isSubDomain = (Request.Url.AbsoluteUri.Split('.').Length > 2);
 
-                if (!AppSettings.IsRunningOnDev && (!Request.Url.Host.StartsWith("www.") && !Request.Url.Host.StartsWith("localhost") && !isSubDomain))
+                if (!AppSettings.IsRunningOnProd && (!Request.Url.Host.StartsWith("www.") && !Request.Url.Host.StartsWith("localhost") && !isSubDomain))
                     Response.RedirectPermanent(Request.Url.AbsoluteUri.Replace("://", "://www."));
             }
 

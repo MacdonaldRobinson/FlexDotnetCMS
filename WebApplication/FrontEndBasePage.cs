@@ -35,7 +35,7 @@ namespace WebApplication
             if (Master == null)
                 return;
 
-            if (AppSettings.IsRunningOnDev)
+            if (AppSettings.IsRunningOnProd)
             {
                 this.AddNoIndexAndNoFollowMetaTag();
             }

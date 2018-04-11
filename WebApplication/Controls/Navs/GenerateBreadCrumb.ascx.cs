@@ -11,7 +11,7 @@ namespace WebApplication.Controls
             if (this.BasePage.CurrentMediaDetail == null)
                 return;
 
-            var items = MediaDetailsMapper.GetAllParentMediaDetails((MediaDetail)this.BasePage.CurrentMediaDetail, this.BasePage.CurrentLanguage);
+            var items = this.BasePage.CurrentMediaDetail.GetAllParentMediaDetails(this.BasePage.CurrentLanguage);
 
             if (items.Any())
                 GenerateNav.BindItems(items);

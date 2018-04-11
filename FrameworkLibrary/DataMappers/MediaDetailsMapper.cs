@@ -565,14 +565,28 @@ namespace FrameworkLibrary
 
             //var item = BaseMapper.GetDataModel().MediaDetails.Where(i => i.LanguageID == currentLanguage.ID && i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now) && (i.CachedVirtualPath == virtualPathByCurrentHost || i.CachedVirtualPath == virtualPath) && i.LanguageID == currentLanguage.ID && i.HistoryVersionNumber == versionNumber && i.MediaType.ShowInSiteTree).ToList().Where(i => i.CanRender || HttpContext.Current.Request["version"] != null).OrderByDescending(i => i.DateLastModified).FirstOrDefault();
 
+
+
             var item = BaseMapper.GetDataModel().MediaDetails.Where(i => i.LanguageID == currentLanguage.ID && i.HistoryVersionNumber == versionNumber && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now) &&
                                                                 i.MediaType.ShowInSiteTree && (i.CachedVirtualPath == virtualPathByCurrentHost || i.CachedVirtualPath == virtualPath)
-                                                        ).ToList().Where(i=>i.CanRender).OrderByDescending(i => i.DateLastModified).FirstOrDefault();
+                                                        ).OrderByDescending(i => i.DateLastModified).FirstOrDefault();
 
-            if (item != null)
-                return item;
+			if (item != null)
+				return item;
 
-            if (((selectParentIfPossible) || (forceSelectParent)) && virtualPath.Contains(websiteByCurrentHost.AutoCalculatedVirtualPath))
+ 			/*if (item != null && (item.HasADeletedParent() || item.CanRender))
+			{
+				if (FrameworkSettings.CurrentUser != null && FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions))
+				{
+					return item;
+				}
+				else
+				{
+					item = null;
+				}
+			}*/
+
+			if (((selectParentIfPossible) || (forceSelectParent)) && virtualPath.Contains(websiteByCurrentHost.AutoCalculatedVirtualPath))
             {
                 var segments = URIHelper.GetUriSegments(virtualPath).ToList();
 
@@ -794,7 +808,7 @@ namespace FrameworkLibrary
 
         public static string GenerateVirtualPath(MediaDetail obj, Language language)
         {
-            var details = GetAllParentMediaDetails(obj, language).ToList();
+            var details = obj.GetAllParentMediaDetails(language).ToList();
             var virtualPath = "";
 
             var counter = 0;
@@ -835,13 +849,13 @@ namespace FrameworkLibrary
 
         public static IEnumerable<IMediaDetail> GetParentsWhichContainsFieldCode(IMediaDetail item, Language language, string FieldCode)
         {
-            var parents = GetAllParentMediaDetails(item, language);
+            var parents = item.GetAllParentMediaDetails(language);
             var parentsWithField = parents.Where(i => i.ID != item.ID && i.Fields.Any(j => j.FieldCode == FieldCode));
 
             return parentsWithField.Reverse();
         }
 
-		public static IEnumerable<IMediaDetail> GetAllParentMediaDetails(IMediaDetail item, Language language, bool ignoreCanRender = false)
+		/*public static IEnumerable<IMediaDetail> GetAllParentMediaDetails(IMediaDetail item, Language language, bool ignoreCanRender = false)
         {
             var items = new List<IMediaDetail>();
             var absoluteRoot = MediasMapper.GetAbsoluteRoot();
@@ -884,7 +898,7 @@ namespace FrameworkLibrary
             items.Reverse();
 
             return items;
-        }
+        }*/
 
         public static IEnumerable<Media> GetAllParentMedias(Media item)
         {

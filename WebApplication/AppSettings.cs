@@ -160,11 +160,11 @@ namespace WebApplication
             }
         }
 
-        public static bool IsRunningOnDev
+        public static bool IsRunningOnProd
         {
             get
             {
-                if(CurrentConnectionStringKey == ConnectionStringKey.Dev)
+                if(CurrentConnectionStringKey == ConnectionStringKey.Prod)
                 {
                     return true;
                 }

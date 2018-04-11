@@ -15,15 +15,17 @@ namespace FrameworkLibrary
         {
             get
             {
-				if (FrameworkSettings.CurrentUser != null && FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions))
-					return true;
-
-				if (this.GetParentMediaDetails(true).Any(i => i.IsDeleted))
-					return false;
-
 				return !IsDeleted && IsPublished;
             }
         }
+
+		public bool HasADeletedParent()
+		{
+			if (this.GetParentMediaDetails().Any(i => i.IsDeleted))
+				return true;
+
+			return false;
+		}		
 
         public bool CanCache
         {
@@ -257,16 +259,61 @@ namespace FrameworkLibrary
                 language = LanguagesMapper.GetByID(this.LanguageID);
             }
 
-            var parents = MediaDetailsMapper.GetAllParentMediaDetails(this, language).Where(i=>i.ID != this.ID);
+            var parents = GetAllParentMediaDetails(language).Where(i=>i.ID != this.ID);
 
             foreach (var item in parents)
             {
                 item.RemoveFromCache();
             }
-
         }
 
-        public void SaveToMemoryCache(RenderVersion renderVersion, string html)
+		private Dictionary<long, IEnumerable<IMediaDetail>> _allParentMediaDetails = new Dictionary<long, IEnumerable<IMediaDetail>>();
+		public IEnumerable<IMediaDetail> GetAllParentMediaDetails(Language language)
+		{
+			if (_allParentMediaDetails.ContainsKey(language.ID))
+				return _allParentMediaDetails[language.ID];
+
+			var item = this;
+
+			var items = new List<IMediaDetail>();
+			var absoluteRoot = MediasMapper.GetAbsoluteRoot();
+
+			if ((item.Media.ParentMediaID != null) && (item.Media.ParentMediaID != absoluteRoot.ID))
+				items.Add(item);
+
+			while (true)
+			{
+				if (item == null)
+					break;
+
+				if (item.Media.ParentMediaID == null)
+					break;
+
+				var parentMedia = item.Media.ParentMedia;
+
+				if (parentMedia == null)
+					parentMedia = BaseMapper.GetDataModel().AllMedia.FirstOrDefault(i => i.ID == (long)item.Media.ParentMediaID);
+
+				if (parentMedia == null)
+					break;
+
+				item = parentMedia.MediaDetails.FirstOrDefault(i => i.LanguageID == language.ID && !i.IsHistory);
+
+				if (item == null)
+					break;
+
+				if (item.Media.ID != absoluteRoot.ID)
+					items.Add(item);
+			}
+
+			items.Reverse();
+
+			_allParentMediaDetails[language.ID] = items;
+
+			return items;
+		}
+
+		public void SaveToMemoryCache(RenderVersion renderVersion, string html)
         {
             if (HasDraft || HistoryVersionNumber != 0)
                 return;
@@ -430,7 +477,7 @@ namespace FrameworkLibrary
 
         public string CalculatedVirtualPath()
         {
-            var parents = MediaDetailsMapper.GetAllParentMediaDetails(this, LanguagesMapper.GetByID(this.LanguageID)).Reverse();
+            var parents = GetAllParentMediaDetails(this.Language).Reverse();
 
             var virtualPath = "";
 
@@ -703,7 +750,7 @@ namespace FrameworkLibrary
 
             var pageTitle = "";
 
-            var details = MediaDetailsMapper.GetAllParentMediaDetails(this, Language).Reverse().ToList();
+            var details = this.GetAllParentMediaDetails(Language).Reverse().ToList();
 
 
             if (details.Count == 0)
@@ -730,9 +777,9 @@ namespace FrameworkLibrary
             return MediaDetailsMapper.GetParentsWhichContainsFieldCode(this, Language, fieldCode);
         }
 
-        public IEnumerable<IMediaDetail> GetParentMediaDetails(bool ignoreCanRender = false)
+        public IEnumerable<IMediaDetail> GetParentMediaDetails()
         {
-            return MediaDetailsMapper.GetAllParentMediaDetails(this, Language, ignoreCanRender).Reverse().ToList();
+            return this.GetAllParentMediaDetails(Language).Reverse().ToList();
         }
 
         public bool HasDraft

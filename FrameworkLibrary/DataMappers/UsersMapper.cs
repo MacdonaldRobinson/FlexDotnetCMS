@@ -101,15 +101,17 @@ namespace FrameworkLibrary
 
         public static bool HasPermission(PermissionsEnum permissionsEnum, User user)
         {
-            var permission = PermissionsMapper.GetPermissionsFromEnum(permissionsEnum);
+			/*var permission = PermissionsMapper.GetPermissionsFromEnum(permissionsEnum);
 
             if (permission == null)
                 return false;
 
             var roles = RolesMapper.FilterWithPermission(user.Roles, permission);
 
-            return roles.Any();
-        }
+            return roles.Any();*/
+
+			return user.Roles.Any(i => i.Permissions.Any(j => j.EnumName == permissionsEnum.ToString()));
+		}
 
         public static bool IsUserInRoles(User user, IEnumerable<Role> roles)
         {

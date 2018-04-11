@@ -287,10 +287,11 @@ namespace WebApplication.Handlers
                     }
                 }
 
-                if (cmsSettings != null)
-                {
-                    if ((detail == null) || (!IsValidRequest(detail)))
-                    {
+				if ((detail == null) || (!IsValidRequest(detail)))
+				{
+					detail = null;
+					if (cmsSettings != null)
+					{
                         if (!string.IsNullOrEmpty(cmsSettings.PageNotFoundUrl))
                         {
                             ErrorHelper.LogException(new Exception($"Page Not Found: {virtualPath}"));
@@ -368,7 +369,10 @@ namespace WebApplication.Handlers
             if (detail == null)
                 return false;
 
-            if ((!detail.CanRender) && (Request["version"] == null))
+			if (FrameworkSettings.CurrentUser != null && FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions))
+				return true;
+
+            if ((!detail.CanRender || detail.HasADeletedParent()) && (Request["version"] == null))
                 return false;
 
             return true;

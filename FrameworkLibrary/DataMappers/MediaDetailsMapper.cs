@@ -808,7 +808,7 @@ namespace FrameworkLibrary
 
         public static string GenerateVirtualPath(MediaDetail obj, Language language)
         {
-            var details = obj.GetAllParentMediaDetails(language).ToList();
+            var details = obj.GetAllParentMediaDetails(language.ID).ToList();
             var virtualPath = "";
 
             var counter = 0;
@@ -849,7 +849,7 @@ namespace FrameworkLibrary
 
         public static IEnumerable<IMediaDetail> GetParentsWhichContainsFieldCode(IMediaDetail item, Language language, string FieldCode)
         {
-            var parents = item.GetAllParentMediaDetails(language);
+            var parents = item.GetAllParentMediaDetails(language.ID);
             var parentsWithField = parents.Where(i => i.ID != item.ID && i.Fields.Any(j => j.FieldCode == FieldCode));
 
             return parentsWithField.Reverse();

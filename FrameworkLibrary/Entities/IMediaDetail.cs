@@ -89,7 +89,7 @@ namespace FrameworkLibrary
         string InjectHtml { get; set; }
 
 		bool HasADeletedParent();
-		IEnumerable<IMediaDetail> GetAllParentMediaDetails(Language language);
+		IEnumerable<IMediaDetail> GetAllParentMediaDetails(long languageId);
 		string GetInjectHtml();
 		List<FieldAssociation> GetPublishedFieldAssociations();
         string CalculatedVirtualPath();

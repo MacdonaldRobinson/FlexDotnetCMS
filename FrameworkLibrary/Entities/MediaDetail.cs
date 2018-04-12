@@ -252,14 +252,14 @@ namespace FrameworkLibrary
             FileCacheHelper.RemoveFromCache(mobileCacheKey);
             ContextHelper.RemoveFromCache(mobileCacheKey);
 
-            var language = this.Language;
+            /*var language = this.Language;
 
             if(language == null && this.LanguageID > 0)
             {
                 language = LanguagesMapper.GetByID(this.LanguageID);
-            }
+            }*/
 
-            var parents = GetAllParentMediaDetails(language).Where(i=>i.ID != this.ID);
+            var parents = GetAllParentMediaDetails(this.LanguageID).Where(i=>i.ID != this.ID);
 
             foreach (var item in parents)
             {
@@ -268,10 +268,10 @@ namespace FrameworkLibrary
         }
 
 		private Dictionary<long, IEnumerable<IMediaDetail>> _allParentMediaDetails = new Dictionary<long, IEnumerable<IMediaDetail>>();
-		public IEnumerable<IMediaDetail> GetAllParentMediaDetails(Language language)
+		public IEnumerable<IMediaDetail> GetAllParentMediaDetails(long languageId)
 		{
-			if (_allParentMediaDetails.ContainsKey(language.ID))
-				return _allParentMediaDetails[language.ID];
+			if (_allParentMediaDetails.ContainsKey(languageId))
+				return _allParentMediaDetails[languageId];
 
 			var item = this;
 
@@ -297,7 +297,7 @@ namespace FrameworkLibrary
 				if (parentMedia == null)
 					break;
 
-				item = parentMedia.MediaDetails.FirstOrDefault(i => i.LanguageID == language.ID && !i.IsHistory);
+				item = parentMedia.MediaDetails.FirstOrDefault(i => i.LanguageID == languageId && !i.IsHistory);
 
 				if (item == null)
 					break;
@@ -308,7 +308,7 @@ namespace FrameworkLibrary
 
 			items.Reverse();
 
-			_allParentMediaDetails[language.ID] = items;
+			_allParentMediaDetails[languageId] = items;
 
 			return items;
 		}
@@ -477,7 +477,7 @@ namespace FrameworkLibrary
 
         public string CalculatedVirtualPath()
         {
-            var parents = GetAllParentMediaDetails(this.Language).Reverse();
+            var parents = GetAllParentMediaDetails(this.LanguageID).Reverse();
 
             var virtualPath = "";
 
@@ -750,7 +750,7 @@ namespace FrameworkLibrary
 
             var pageTitle = "";
 
-            var details = this.GetAllParentMediaDetails(Language).Reverse().ToList();
+            var details = this.GetAllParentMediaDetails(LanguageID).Reverse().ToList();
 
 
             if (details.Count == 0)
@@ -779,7 +779,7 @@ namespace FrameworkLibrary
 
         public IEnumerable<IMediaDetail> GetParentMediaDetails()
         {
-            return this.GetAllParentMediaDetails(Language).Reverse().ToList();
+            return this.GetAllParentMediaDetails(LanguageID).Reverse().ToList();
         }
 
         public bool HasDraft

@@ -372,7 +372,7 @@ namespace WebApplication.Handlers
 			if (FrameworkSettings.CurrentUser != null && FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions))
 				return true;
 
-            if ((!detail.CanRender || detail.HasADeletedParent()) && (Request["version"] == null))
+            if (!detail.CanRender || detail.HasADeletedParent())
                 return false;
 
             return true;

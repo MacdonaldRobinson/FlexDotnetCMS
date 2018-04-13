@@ -42,7 +42,11 @@ namespace FrameworkLibrary
         bool IsHistory { get; }
         bool IsProtected { get; set; }
         bool IsPublished { get; }
-        string JsonVirtualPath { get; }
+		bool WillPublish { get; }
+		bool WillExpire { get; }
+		bool HasExpired { get; }
+
+		string JsonVirtualPath { get; }
         Language Language { get; set; }
         long LanguageID { get; set; }
         User LastUpdatedByUser { get; set; }

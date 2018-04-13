@@ -131,6 +131,38 @@ html {
     margin-left: 5px;
 }
 
+#SiteTree .willPublishWrapper {
+	background-color: green;
+	color: #fff;
+	padding: 2px;
+	border-radius: 5px;
+	margin-left: 5px;
+}
+
+#SiteTree .willExpireWrapper {
+	background-color: red;
+	color: #fff;
+	padding: 2px;
+	border-radius: 5px;
+	margin-left: 5px;
+}
+
+#SiteTree .unPublishedWrapper {
+	background-color: red;
+	color: #fff;
+	padding: 2px;
+	border-radius: 5px;
+	margin-left: 5px;
+}
+
+#SiteTree .hasExpiredWrapper {
+	background-color: red;
+	color: #fff;
+	padding: 2px;
+	border-radius: 5px;
+	margin-left: 5px;
+}
+
 #SiteTree .hasPendingCommentsWrapper {
     background-color: green;
     color: #fff;

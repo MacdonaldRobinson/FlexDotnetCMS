@@ -69,8 +69,40 @@ namespace FrameworkLibrary
             }
         }
 
+		public bool WillPublish
+		{
+			get
+			{
+				if (PublishDate == null)
+					return false;
 
-        public string UseMainLayout
+				return ((!IsPublished) && (PublishDate >= DateTime.Now) && ((ExpiryDate == null) || (ExpiryDate >= DateTime.Now)));
+			}
+		}
+
+		public bool WillExpire
+		{
+			get
+			{
+				if (ExpiryDate == null)
+					return false;
+
+				return (ExpiryDate >= DateTime.Now);
+			}
+		}
+
+		public bool HasExpired
+		{
+			get
+			{
+				if (ExpiryDate == null)
+					return false;
+
+				return (ExpiryDate <= DateTime.Now);
+			}
+		}
+
+		public string UseMainLayout
         {
             get
             {

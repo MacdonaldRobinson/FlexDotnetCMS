@@ -14,8 +14,8 @@ namespace FrameworkLibrary
             if (settings != null)
                 return settings;*/
 
-			if (CanConnectToDB is null || !(bool)CanConnectToDB)
-				return null;
+			/*if (CanConnectToDB is null || !(bool)CanConnectToDB)
+				return null;*/
 
             var settings = GetDataModel().AllSettings.FirstOrDefault();
 

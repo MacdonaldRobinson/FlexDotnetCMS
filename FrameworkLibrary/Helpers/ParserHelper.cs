@@ -39,6 +39,8 @@ namespace FrameworkLibrary
 
         public static string ParseData(string data, object obj, bool compileRazor = true)
         {
+			//return data;
+
             if (obj == null)
                 return "";
 

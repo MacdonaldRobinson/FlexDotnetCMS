@@ -366,7 +366,7 @@ namespace WebApplication.Handlers
 
         private bool IsValidRequest(IMediaDetail detail)
         {
-            if (detail == null)
+			if (detail == null)
                 return false;
 
 			if (FrameworkSettings.CurrentUser != null && FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions))

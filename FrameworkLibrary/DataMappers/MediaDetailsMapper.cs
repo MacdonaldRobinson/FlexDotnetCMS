@@ -203,8 +203,7 @@ namespace FrameworkLibrary
             var currentLanguage = FrameworkSettings.GetCurrentLanguage();
 
             searchTerm = searchTerm.ToLower().Trim();
-            var foundItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ShowInSiteTree &&
-                                                                            i.ShowInMenu &&
+            var foundItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ShowInSiteTree &&                                                                            
                                                                             !i.IsDeleted &&
                                                                             i.HistoryVersionNumber == 0 &&
                                                                             i.LanguageID == currentLanguage.ID &&
@@ -220,7 +219,7 @@ namespace FrameworkLibrary
                                                                                                                             k.MediaDetail.Fields.FirstOrDefault(l => l.FieldCode == "MainContent").FieldValue.ToLower().Contains(searchTerm) ||
                                                                                                                             k.MediaDetail.Fields.FirstOrDefault(l => l.FieldCode == "MainLayout").FieldValue.ToLower().Contains(searchTerm))
                                                                                                                         ))
-                                                                            )).ToList();
+                                                                            )).OrderByDescending(i=>i.PublishDate).ToList().Where(i=>i.CanRender && !i.HasADeletedParent());
 
 
             return foundItems;
@@ -567,7 +566,7 @@ namespace FrameworkLibrary
 
 
 
-            var item = BaseMapper.GetDataModel().MediaDetails.Where(i => i.LanguageID == currentLanguage.ID && i.HistoryVersionNumber == versionNumber && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now) &&
+            var item = BaseMapper.GetDataModel().MediaDetails.Where(i => i.LanguageID == currentLanguage.ID && i.HistoryVersionNumber == versionNumber &&
                                                                 i.MediaType.ShowInSiteTree && (i.CachedVirtualPath == virtualPathByCurrentHost || i.CachedVirtualPath == virtualPath)
                                                         ).OrderByDescending(i => i.DateLastModified).FirstOrDefault();
 

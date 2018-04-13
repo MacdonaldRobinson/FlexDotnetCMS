@@ -55,45 +55,77 @@ namespace WebApplication.Admin.Views.MasterPages
 
     public class WebService : WebApplication.Services.BaseService
     {
-        private void UpdateTreeNode(JsTreeNode node, IMediaDetail detail)
-        {
-            if (detail == null)
-                return;
+		private void UpdateTreeNode(JsTreeNode node, IMediaDetail detail)
+		{
+			if (detail == null)
+				return;
 
-            node.id = detail.MediaID.ToString();
-            node.parent = (detail.Media.ParentMediaID == null) ? "#" : detail.Media.ParentMediaID.ToString();
-            node.text = detail.SectionTitle;
+			node.id = detail.MediaID.ToString();
+			node.parent = (detail.Media.ParentMediaID == null) ? "#" : detail.Media.ParentMediaID.ToString();
+			node.text = detail.SectionTitle;
 
-            //node.children =( MediaDetailsMapper.GetAtleastOneChildByMedia(detail.Media, AdminBasePage.CurrentLanguage).Where(i => i.MediaType.ShowInSiteTree).Count() > 0);
-            node.children = (BaseMapper.GetDataModel().MediaDetails.Count(i => i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0 && i.Media.ParentMediaID == detail.MediaID) > 0);
+			//node.children =( MediaDetailsMapper.GetAtleastOneChildByMedia(detail.Media, AdminBasePage.CurrentLanguage).Where(i => i.MediaType.ShowInSiteTree).Count() > 0);
+			node.children = (BaseMapper.GetDataModel().MediaDetails.Count(i => i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == 0 && i.Media.ParentMediaID == detail.MediaID) > 0);
 
-            node.text = detail.SectionTitle.ToString();
-            //node.Attributes.Add("FrontEndUrl", detail.AbsoluteUrl);
+			node.text = detail.SectionTitle.ToString();
+			//node.Attributes.Add("FrontEndUrl", detail.AbsoluteUrl);
 
-            var nodeText = "";
+			var nodeText = "";
 
-            if (detail.LanguageID != AdminBasePage.CurrentLanguage.ID)
-            {
-                nodeText = $"{detail.LinkTitle} - {LanguagesMapper.GetByID(detail.Language.ID).Name} ({node.id})";
-                node.li_attr._class = "doesNotExistInLanguage";
-            }
-            else
-            {
-                nodeText = $"{detail.LinkTitle} <small>({detail.MediaID})</small>";
-            }
+			if (detail.LanguageID != AdminBasePage.CurrentLanguage.ID)
+			{
+				nodeText = $"{detail.LinkTitle} - {LanguagesMapper.GetByID(detail.Language.ID).Name} ({node.id})";
+				node.li_attr._class = "doesNotExistInLanguage";
+			}
+			else
+			{
+				nodeText = $"{detail.LinkTitle} <small>({detail.MediaID})</small>";
+			}
 
-            if (detail.IsDeleted)
-            {
-                node.li_attr._class += " isDeleted";
-            }
+			if (detail.IsDeleted)
+			{
+				node.li_attr._class += " isDeleted";
+			}
 
-            if ((!detail.ShowInMenu) && (!detail.RenderInFooter))
-                node.li_attr._class += " isHidden";
+			if (detail.WillPublish)
+			{
+				node.li_attr._class += " willPublish";
 
-            if ((!detail.CanRender) || (!detail.IsPublished))
-                node.li_attr._class += " unPublished";
+				var autoPublishCode = $"<i class='fa fa-clock-o' aria-hidden='true' title='This page is set to auto-publish at: {detail.PublishDate}'></i> ";
 
-            if(AdminBasePage.SelectedMediaDetail != null && AdminBasePage.SelectedMediaDetail.ID == detail.ID)
+				nodeText += $"<small class='willPublishWrapper'>{autoPublishCode}Will Publish</small>";
+			}
+
+			if (detail.IsPublished && detail.WillExpire)
+			{
+				node.li_attr._class += " willExpire";
+
+				var autoPublishCode = $"<i class='fa fa-clock-o' aria-hidden='true' title='This page is set to auto-expire at: {detail.ExpiryDate}'></i> ";
+
+				nodeText += $"<small class='willExpireWrapper'>{autoPublishCode}Will Expire</small>";
+			}
+
+			if ((!detail.ShowInMenu) && (!detail.RenderInFooter))
+				node.li_attr._class += " isHidden";
+
+
+			if (detail.HasExpired)
+			{
+				node.li_attr._class += " hasExpired";
+
+				nodeText += $"<small class='hasExpiredWrapper'>Has Expired</small>";
+			}
+			else
+			{
+				if (!detail.IsPublished && !detail.WillPublish)
+				{
+					node.li_attr._class += " unPublished";
+
+					nodeText += $"<small class='unPublishedWrapper'>UnPublish</small>";
+				}
+			}
+
+			if (AdminBasePage.SelectedMediaDetail != null && AdminBasePage.SelectedMediaDetail.ID == detail.ID)
             {
                 node.li_attr._class += " selected";
             }

@@ -1192,8 +1192,13 @@ $(document)
         var isDropZone = target.hasClass("dropZone")
 
         if (isDropZone) {
-            var mediaDetailId = elem.parent().attr("mediadetailid");
-            var text = elem.text();
+			var mediaDetailId = elem.parent().attr("mediadetailid");
+			var mediaId = elem.parent().attr("id");
+
+			var tempElement = elem.clone();
+			tempElement.children().remove()
+
+			var text = tempElement.text() + " (" + mediaId+")";
 
             var href = elem.attr("href") + "&masterFilePath=~/Admin/Views/MasterPages/Popup.Master";
             var li = "<li mediadetailid='" + mediaDetailId + "'><a class='delete'>x</a><span class='text'>" + text + "</span><a class='edit colorbox iframe' href='" + href + "'>Edit</a></li>";

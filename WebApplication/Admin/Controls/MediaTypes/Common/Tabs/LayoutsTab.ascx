@@ -53,7 +53,7 @@
         <div id="ItemLayouts" class="accordian opened">
             <h3>Main Layout</h3>
             <div>
-                <asp:TextBox runat="server" ID="MainLayout" TextMode="MultiLine" Height="500px" CssClass="AceEditor CanAttachToBrowserPanel"/>
+                <asp:TextBox runat="server" ID="MainLayout" TextMode="MultiLine" Height="550px" CssClass="AceEditor CanAttachToBrowserPanel"/>
             </div>
             <h3>Summary Layout</h3>
             <div>
@@ -66,7 +66,7 @@
 
             <h3>On Publish Execute Code</h3>
             <div>
-                <asp:TextBox runat="server" ID="OnPublishExecuteCode" TextMode="MultiLine" Height="500px" CssClass="AceEditor" />
+                <asp:TextBox runat="server" ID="OnPublishExecuteCode" TextMode="MultiLine" Height="400px" CssClass="AceEditor" />
             </div>
         </div>
     </div>

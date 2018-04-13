@@ -5,7 +5,10 @@
 <script>
     function UpdateCommentsTab()
     {
-        RefreshUpdatePanel("CommentsListTabs");
+		RefreshUpdatePanel("<%= CommentsListTabs.ClientID %>", function () {
+			BindTabs();
+			ReloadPreviewPanel();
+		});
     }
 </script>
 

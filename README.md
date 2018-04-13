@@ -15,6 +15,7 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 - You can resize the browser panel and see how the site looks in different sizes i.e test responsive layout directly through the cms
 - You can create draft versions for pages which you can reload and edit at anytime
   - You will also get a visual indicator in the site tree besides pages that have a draft version.
+  - The following indicators exist: "Will Publish", "Will Expire", "UnPublished", "HasDraft" along with a clock besides them if they are set to auto publish / auto expire
 
 ## Programming
 - Programming in the CMS is done using C# and using the Razor Syntax

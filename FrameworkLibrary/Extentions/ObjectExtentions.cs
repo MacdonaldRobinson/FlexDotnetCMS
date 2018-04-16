@@ -36,40 +36,58 @@ namespace FrameworkLibrary
             ommitPropertiesBySegment.Add("CacheData");
         }
 
-        public static string DataTableToCSV(this DataTable datatable, char seperator)
-        {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < datatable.Columns.Count; i++)
-            {
-                sb.Append(datatable.Columns[i]);
-                if (i < datatable.Columns.Count - 1)
-                    sb.Append(seperator);
-            }
-            sb.AppendLine();
-            foreach (DataRow dr in datatable.Rows)
-            {
-                for (int i = 0; i < datatable.Columns.Count; i++)
-                {
-                    if (dr[i] is string[])
-                    {
-                        var list = dr[i] as string[];
-                        var val = string.Join(";", list);
-                        sb.Append(val);
-                    }
-                    else
-                    {
-                        sb.Append(dr[i].ToString());
-                    }
+		public static string DataTableToCSV(this DataTable datatable, char seperator)
+		{
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < datatable.Columns.Count; i++)
+			{
+				sb.Append(datatable.Columns[i]);
+				if (i < datatable.Columns.Count - 1)
+					sb.Append(seperator);
+			}
+			sb.AppendLine();
+			foreach (DataRow dr in datatable.Rows)
+			{
+				for (int i = 0; i < datatable.Columns.Count; i++)
+				{
+					if (dr[i] is string[])
+					{
+						var list = dr[i] as string[];
+						var val = string.Join(";", list);
 
-                    if (i < datatable.Columns.Count - 1)
-                        sb.Append(seperator);
-                }
-                sb.AppendLine();
-            }
-            return sb.ToString();
-        }
+						if (val.Contains(","))
+						{
+							val = "\"" + val + "\"";
+						}
 
-        public static void ExpandParents(this TreeNode _self)
+						sb.Append(val);
+					}
+					else
+					{
+						var value = dr[i].ToString();
+
+						if (value.Contains("\""))
+						{
+							value = value.Replace("\"", "'");
+						}
+
+						if (value.Contains(","))
+						{
+							value = "\"" + value + "\"";
+						}
+
+						sb.Append(value);
+					}
+
+					if (i < datatable.Columns.Count - 1)
+						sb.Append(seperator);
+				}
+				sb.AppendLine();
+			}
+			return sb.ToString();
+		}
+
+		public static void ExpandParents(this TreeNode _self)
         {
             if (_self != null && _self.Parent != null)
             {

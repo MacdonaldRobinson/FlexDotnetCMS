@@ -34,36 +34,17 @@ namespace WebApplication.Controls
             }
         }
 
-        public void SetReplyToComment(Comment replyToComment)
+        /*public void SetReplyToComment(Comment replyToComment)
         {
             this.ReplyToComment = replyToComment;
-        }
+        }*/
 
-        private Media CurrentMedia
-        {
-            get
-            {
-                return (Media)ViewState["CurrentMedia"];
-            }
-            set
-            {
-                ViewState["CurrentMedia"] = value;
-            }
-        }
+        private Media CurrentMedia { get; set; }
 
-        private Comment ReplyToComment
-        {
-            get
-            {
-                return (Comment)ViewState["ReplyToComment"];
-            }
-            set
-            {
-                ViewState["ReplyToComment"] = value;
-            }
-        }
+		public long ReplyToCommentID { get; set; }
 
-        protected void CommentsList_OnItemDataBound(object sender, ListViewItemEventArgs e)
+
+		protected void CommentsList_OnItemDataBound(object sender, ListViewItemEventArgs e)
         {
             if (e.Item.ItemType == ListViewItemType.DataItem)
             {
@@ -99,20 +80,29 @@ namespace WebApplication.Controls
         {
             Comment newComment = CreateFromFields();
 
-            if (this.ReplyToComment != null)
-                newComment.ReplyToCommentID = this.ReplyToComment.ID;
+			if (this.ReplyToCommentID != 0)
+			{
+				newComment.ReplyToCommentID = this.ReplyToCommentID;
+			}
 
             Return ReturnObj = CommentsMapper.Insert(newComment);
 
             if (ReturnObj != null)
             {
-                switch (ReturnObj.IsError)
-                {
-                    case false:
-                        BasePage.SendMediaCommentApprovalRequest(CurrentMedia, newComment);
+				switch (ReturnObj.IsError)
+				{
+					case false:
+						BasePage.SendMediaCommentApprovalRequest(CurrentMedia, newComment);
 
-                        if (this.ReplyToComment != null)
-                            BasePage.SendMediaReplyToComment(newComment, this.ReplyToComment);
+						if (this.ReplyToCommentID != 0)
+						{
+							var comment = CommentsMapper.GetByID(ReplyToCommentID);
+
+							if (comment != null)
+							{
+								BasePage.SendMediaReplyToComment(newComment, comment);
+							}
+						}
 
                         ServerMessage.Text = "Thank you for your feedback. This is a moderated post. Your comment has been submitted for approval";
 

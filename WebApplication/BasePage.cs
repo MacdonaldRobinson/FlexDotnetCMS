@@ -636,9 +636,9 @@ namespace WebApplication
             string message = "";
             var liveMediaDetail = obj.GetLiveMediaDetail();
             message = "There was a comment made on the page titled '" + liveMediaDetail.Title + "', click on the following link to approve or reject this comment: " + GetAdminUrl(liveMediaDetail)+ "<br>\n<br>\n";
-			message += $"Comment Details - <br>\n" +
-						$"<strong>Name:</strong> {comment.Name}<br>\n<br>\n" +
-						$"<strong>Email:</strong> {comment.Email}<br>\n<br>\n" +
+			message += $"<strong><u>Comment Details -</u></strong><br>\n<br>\n" +
+						$"<strong>Name:</strong> {comment.Name}<br>\n" +
+						$"<strong>Email:</strong> {comment.Email}<br>\n" +
 						$"<strong>Message:</strong><br>\n" +
 						$"{comment.Message}";
 

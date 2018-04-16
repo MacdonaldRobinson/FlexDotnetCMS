@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CommentsList.ascx.cs"
     Inherits="WebApplication.Controls.Lists.CommentsList" %>
 
-<asp:ListView ID="ItemsList" runat="server" OnItemDataBound="ItemsList_OnItemDataBound">
+<asp:ListView ID="ItemsList" runat="server" OnItemDataBound="ItemsList_OnItemDataBound" ItemType="FrameworkLibrary.Comment">
     <LayoutTemplate>
         <ul class="comments">
             <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
@@ -16,9 +16,9 @@
                 <span>
                     <abbr runat="server" id="datePosted" class="timeago">
                         <asp:Literal ID="date" runat="server"></asp:Literal></abbr>
-                    <asp:LinkButton ID="Reply" runat="server" OnClick="Reply_OnClick" Visible="false">Reply</asp:LinkButton>
+                    <asp:LinkButton ID="Reply" runat="server" OnClick="Reply_OnClick">Reply</asp:LinkButton>
                     <asp:Panel ID="ReplyPanel" runat="server" Visible="false">
-                        <Site:CommentsForm ID="ReplyForm" runat="server" />
+                        <Site:CommentsForm ID="ReplyForm" runat="server" ReplyToCommentID="<%# Item.ID %>"/>
                     </asp:Panel>
                 </span>
             </div>

@@ -111,7 +111,6 @@ namespace WebApplication.Controls.Lists
                 {
                     Panel ReplyPanel = (Panel)e.Item.FindControl("ReplyPanel");
                     CommentsForm ReplyForm = (CommentsForm)ReplyPanel.FindControl("ReplyForm");
-                    ReplyForm.SetReplyToComment(dataItem);
                     ReplyForm.SetMedia(dataItem.Media);
 
                     ReplyPanel.Visible = true;
@@ -139,7 +138,8 @@ namespace WebApplication.Controls.Lists
                     ChildItemsList.ItemTemplate = ItemsList.ItemTemplate;
 
                     ChildItemsList.DataSource = dataItem.ReplyToComments.OrderByDescending(i => i.DateCreated).Where(i => i.Status == dataItem.Status);
-                }
+					ChildItemsList.DataBind();
+				}
             }
         }
 
@@ -194,7 +194,7 @@ namespace WebApplication.Controls.Lists
             this.statusEnum = statusEnum;
             this.media = media;
 
-            ItemsList.DataSource = media.Comments.Where(i=>i.Status == statusEnum.ToString()).OrderByDescending(i=>i.DateLastModified).ToList();
+            ItemsList.DataSource = media.Comments.Where(i=>i.Status == statusEnum.ToString() && i.ReplyToComment == null).OrderByDescending(i=>i.DateLastModified).ToList();
             ItemsList.DataBind();
         }
 

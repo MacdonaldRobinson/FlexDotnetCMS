@@ -13,7 +13,7 @@ namespace WebApplication.Admin.Controls.Generic
     {
         protected void Page_Init(object sender, EventArgs e)
         {
-            CommentsList.DataSource = BaseMapper.GetDataModel().Comments.Where(i=>i.Status == Status.ToString() && i.LanguageID == AdminBasePage.CurrentLanguage.ID).ToList();
+            CommentsList.DataSource = BaseMapper.GetDataModel().Comments.Where(i=>i.Status == Status.ToString() && i.LanguageID == AdminBasePage.CurrentLanguage.ID).OrderByDescending(i=>i.DateCreated).ToList();
             CommentsList.DataBind();
         }
 

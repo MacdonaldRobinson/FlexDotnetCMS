@@ -631,11 +631,17 @@ namespace WebApplication
             EmailHelper.Send(AppSettings.SystemEmailAddress, address, "There was a reply made to your comment", CommentReplyToMessage(newComment));
         }
 
-        public void SendMediaCommentApprovalRequest(Media obj)
+        public void SendMediaCommentApprovalRequest(Media obj, Comment comment)
         {
             string message = "";
             var liveMediaDetail = obj.GetLiveMediaDetail();
-            message = "There was a comment made on a news article with the title '" + liveMediaDetail.Title + "', click on the following link to approve or reject this comment: " + URIHelper.BaseUrl + "admin/" + liveMediaDetail.MediaType.Name + "/Edit.aspx?id=" + obj.ID;
+            message = "There was a comment made on the page titled '" + liveMediaDetail.Title + "', click on the following link to approve or reject this comment: " + GetAdminUrl(liveMediaDetail)+ "<br>\n<br>\n";
+			message += $"Comment Details - <br>\n" +
+						$"<strong>Name:</strong> {comment.Name}<br>\n<br>\n" +
+						$"<strong>Email:</strong> {comment.Email}<br>\n<br>\n" +
+						$"<strong>Message:</strong><br>\n" +
+						$"{comment.Message}";
+
             SendEmailToUser(liveMediaDetail.CreatedByUser, message, "Comment Approval Request");
         }
     }

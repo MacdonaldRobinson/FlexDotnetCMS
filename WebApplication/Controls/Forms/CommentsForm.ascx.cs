@@ -109,7 +109,7 @@ namespace WebApplication.Controls
                 switch (ReturnObj.IsError)
                 {
                     case false:
-                        BasePage.SendMediaCommentApprovalRequest(CurrentMedia);
+                        BasePage.SendMediaCommentApprovalRequest(CurrentMedia, newComment);
 
                         if (this.ReplyToComment != null)
                             BasePage.SendMediaReplyToComment(newComment, this.ReplyToComment);

@@ -625,6 +625,9 @@ namespace WebApplication
 
         public void SendMediaReplyToComment(Comment newComment, Comment replyToComment)
         {
+			if (string.IsNullOrEmpty(replyToComment.Email))
+				return;
+
             var address = new List<MailAddress>();
             address.Add(new MailAddress(replyToComment.Email, replyToComment.Name));
 

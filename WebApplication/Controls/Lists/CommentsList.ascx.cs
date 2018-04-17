@@ -145,12 +145,14 @@ namespace WebApplication.Controls.Lists
 
         protected void Reply_OnClick(object sender, EventArgs e)
         {
-            long test = -1;
+			var linkButton = (LinkButton)sender;
+			var replyPanel = (Panel)WebFormHelper.FindControlRecursive(linkButton.Parent, "ReplyPanel");
 
-            long.TryParse(((LinkButton)sender).CommandArgument, out test);
-
-            this.replyCommentId = test;
-        }
+			if (replyPanel != null)
+			{
+				replyPanel.Visible = true;
+			}
+		}
 
         public BasePage BasePage
         {
@@ -179,14 +181,6 @@ namespace WebApplication.Controls.Lists
                 return this.ItemsList;
             }
         }
-
-        public DataPager Pager
-        {
-            get
-            {
-                return this.dataPager.DataPager;
-            }
-        }                
 
         public void SetComments(StatusEnum statusEnum, Mode mode, Media media)
         {

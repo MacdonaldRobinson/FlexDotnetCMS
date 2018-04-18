@@ -5,6 +5,7 @@
 	.comments {
 		list-style-type: none;
 	}
+
 	.comments li {		
 		padding: 10px;
 		border-top: 1px solid #000;
@@ -59,10 +60,7 @@
 							<span runat="server" id="datePosted" class="timeago">
 								<asp:Literal ID="date" runat="server"></asp:Literal>
 							</span>
-							<asp:LinkButton ID="Reply" runat="server" OnClick="Reply_OnClick">Reply</asp:LinkButton>
-							<asp:Panel ID="ReplyPanel" runat="server" Visible="false">
-								<Site:CommentsForm ID="ReplyForm" runat="server" ReplyToCommentID="<%# Item.ID %>"/>
-							</asp:Panel>
+							<asp:LinkButton ID="Reply" runat="server" OnClick="Reply_OnClick" CommandArgument="<%# Item.ID %>">Reply</asp:LinkButton>
 						</span>
 					</div>
 					<div class="comment">
@@ -76,6 +74,11 @@
 						<div class="clear">
 						</div>
 					</div>
+
+					<asp:Panel ID="ReplyPanel" runat="server" Visible="false">
+						<Site:CommentsForm ID="ReplyForm" runat="server" ReplyToCommentID="<%# Item.ID %>"/>
+					</asp:Panel>
+
 					<asp:ListView ID="ChildItemsList" runat="server" OnItemDataBound="ItemsList_OnItemDataBound">
 						<ItemTemplate></ItemTemplate>
 					</asp:ListView>

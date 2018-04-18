@@ -14,8 +14,6 @@ namespace WebApplication.Controls.Lists
         private StatusEnum statusEnum = StatusEnum.Approved;
         private Media media = null;
 
-        private long replyCommentId = -1;
-
         public enum Mode
         {
             None,
@@ -107,7 +105,7 @@ namespace WebApplication.Controls.Lists
 
                 Reply.CommandArgument = dataItem.ID.ToString();
 
-                if (this.replyCommentId == dataItem.ID)
+                if (ReplyToCommentID == dataItem.ID)
                 {
                     Panel ReplyPanel = (Panel)e.Item.FindControl("ReplyPanel");
                     CommentsForm ReplyForm = (CommentsForm)ReplyPanel.FindControl("ReplyForm");
@@ -143,10 +141,28 @@ namespace WebApplication.Controls.Lists
             }
         }
 
+		private long ReplyToCommentID
+		{
+			get
+			{
+				var replyToComment = ContextHelper.GetFromSession("ReplyToCommentID");
+
+				if (replyToComment == null)
+					return 0;
+
+				return (long)replyToComment;
+			}
+			set
+			{
+				ContextHelper.SetToSession("ReplyToCommentID", value);
+			}
+		}
+
         protected void Reply_OnClick(object sender, EventArgs e)
         {
 			var linkButton = (LinkButton)sender;
 			var replyPanel = (Panel)WebFormHelper.FindControlRecursive(linkButton.Parent, "ReplyPanel");
+			ReplyToCommentID = long.Parse(linkButton.CommandArgument);
 
 			if (replyPanel != null)
 			{
@@ -189,7 +205,7 @@ namespace WebApplication.Controls.Lists
             this.media = media;
 
             ItemsList.DataSource = media.Comments.Where(i=>i.Status == statusEnum.ToString() && i.ReplyToComment == null).OrderByDescending(i=>i.DateLastModified).ToList();
-            ItemsList.DataBind();
+			ItemsList.DataBind();
         }
 
         public IEnumerable<Comment> Comments

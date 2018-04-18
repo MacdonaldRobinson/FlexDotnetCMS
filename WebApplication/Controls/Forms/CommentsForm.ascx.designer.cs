@@ -40,13 +40,22 @@ namespace WebApplication.Controls {
         protected global::System.Web.UI.WebControls.TextBox Message;
         
         /// <summary>
+        /// ServerMessageWrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ServerMessageWrapper;
+        
+        /// <summary>
         /// ServerMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ServerMessage;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ServerMessage;
         
         /// <summary>
         /// PostComment control.

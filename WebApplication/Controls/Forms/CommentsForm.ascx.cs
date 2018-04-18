@@ -104,13 +104,19 @@ namespace WebApplication.Controls
 							}
 						}
 
-                        ServerMessage.Text = "Thank you for your feedback. This is a moderated post. Your comment has been submitted for approval";
+						ServerMessage.Visible = true;
+						ServerMessage.InnerHtml = "Thank you for your feedback. This is a moderated post. Your comment has been submitted for approval";
+						ServerMessage.Attributes["class"] += " alert alert-primary";
 
-                        break;
+
+						break;
 
                     case true:
-                        ServerMessage.Text = $"Error adding comment: {ReturnObj.Error}";
-                        Bind();
+						ServerMessage.Visible = true;
+						ServerMessage.InnerHtml = $"Error adding comment: {ReturnObj.Error}";
+						ServerMessage.Attributes["class"] += " alert alert-danger";
+
+						Bind();
                         break;
                 }
             }

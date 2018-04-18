@@ -14,8 +14,7 @@
             <div><%# Item.Message %></div>
             <asp:LinkButton ID="DeleteComment" Text="Delete" runat="server" OnClick="DeleteComment_Click" CommandArgument="<%# Item.ID %>" /> |
             <asp:LinkButton ID="ApproveComment" Text="Approve" runat="server" OnClick="ApproveComment_Click" CommandArgument="<%# Item.ID %>" /> |
-            <asp:LinkButton ID="RejectComment" Text="Reject" runat="server" OnClick="RejectComment_Click" CommandArgument="<%# Item.ID %>" />
-            <hr />
+            <asp:LinkButton ID="RejectComment" Text="Reject" runat="server" OnClick="RejectComment_Click" CommandArgument="<%# Item.ID %>" />            
         </li>
     </ItemTemplate>
 </asp:ListView>

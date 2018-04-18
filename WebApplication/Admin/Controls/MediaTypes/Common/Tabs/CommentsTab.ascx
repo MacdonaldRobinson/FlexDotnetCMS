@@ -2,6 +2,14 @@
     Inherits="WebApplication.Admin.Controls.MediaTypes.Common.Tabs.CommentsTab" %>
 
 
+<style>
+	.CommentContainer li{		
+		border: 1px solid #ccc;
+		padding: 10px;
+		margin: 5px;
+	}
+</style>
+
 <script>
     function UpdateCommentsTab()
     {

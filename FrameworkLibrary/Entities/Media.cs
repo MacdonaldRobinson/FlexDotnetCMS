@@ -16,12 +16,7 @@ namespace FrameworkLibrary
             return this.MediaDetails.SingleOrDefault(i => i.HistoryForMediaDetail == null && i.LanguageID == language.ID && ((i.MediaType != null)? i.MediaType.ShowInSiteTree : false));
         }
 
-        public string GetTagsAsString()
-        {
-            return MediaTags.Select(i => i.Tag).Aggregate("", (current, item) => current + (item.Name + ","));
-        }
-
-        public Return MoveUp()
+		public Return MoveUp()
         {
             return MoveToIndex(GetIndex() - 1);
         }

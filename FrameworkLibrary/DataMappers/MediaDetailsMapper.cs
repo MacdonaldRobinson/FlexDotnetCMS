@@ -1267,25 +1267,23 @@ namespace FrameworkLibrary
                         if (selectMedia != null)
                         {
                             var returnValue = property;
-                            var replaceShortCodes = returnValue.Contains("?ReplaceShortCodes");
 
-                            var liveMediaDetail = selectMedia.GetLiveMediaDetail();
+							var liveMediaDetail = selectMedia.GetLiveMediaDetail();
 
-                            if (liveMediaDetail == null)
-                            {
-                                liveMediaDetail = selectMedia.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage());
-                            }
+							if (liveMediaDetail == null)
+							{
+								liveMediaDetail = selectMedia.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage());
+							}
 
-                            returnValue = ParseSpecialTags(liveMediaDetail, returnValue);
-
-                            if (replaceShortCodes)
-                            {
-                                returnValue = ParseSpecialTags(mediaDetail, returnValue);
-                            }
-                            else
-                            {
-                                returnValue = ParseSpecialTags(liveMediaDetail, returnValue);
-                            }
+							if (returnValue.Contains("@"))
+							{
+								returnValue = ParseSpecialTags(mediaDetail, returnValue);
+								returnValue = ParseSpecialTags(liveMediaDetail, returnValue);
+							}
+							else
+							{
+								returnValue = ParseSpecialTags(liveMediaDetail, returnValue);
+							}
 
                             customCode = customCode.Replace(itemAsString, returnValue);
                         }

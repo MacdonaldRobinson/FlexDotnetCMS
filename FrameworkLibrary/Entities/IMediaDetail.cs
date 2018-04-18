@@ -92,6 +92,9 @@ namespace FrameworkLibrary
         string VirtualPath { get; }
         string InjectHtml { get; set; }
 
+		string GetFieldAssociationsAsString(string fieldCode, string seperator = ",", bool AsCssClasses = false);
+		IEnumerable<Tag> GetTags();
+		string GetTagNamesAsString(string seperater = ",");
 		bool HasADeletedParent();
 		IEnumerable<IMediaDetail> GetAllParentMediaDetails(long languageId);
 		string GetInjectHtml();

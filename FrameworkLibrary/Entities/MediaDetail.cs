@@ -170,8 +170,18 @@ namespace FrameworkLibrary
                 return layout; //MediaDetailsMapper.ParseSpecialTags(this, layout);
             }
         }
-        
-        public bool CanUserAccessSection(User user)
+
+		public string GetTagNamesAsString(string seperater = ",")
+		{
+			return string.Join(seperater, Media.MediaTags.Select(i => i.Tag.Name));
+		}
+
+		public IEnumerable<Tag> GetTags()
+		{
+			return Media.MediaTags.Select(i => i.Tag);
+		}
+
+		public bool CanUserAccessSection(User user)
         {
             if (user == null)
                 return false;
@@ -207,7 +217,32 @@ namespace FrameworkLibrary
             return true;
         }
 
-        public string GetCacheKey(RenderVersion renderVersion)
+		public string GetFieldAssociationsAsString(string fieldCode, string seperator = ",", bool AsCssClasses = false)
+		{
+			var fieldAssociations = (LoadField(fieldCode) as MediaDetailField)?.FieldAssociations;
+			var items = new List<string>();
+
+			if (fieldAssociations != null)
+			{
+				foreach (var fieldAssociation in fieldAssociations)
+				{
+					var name = fieldAssociation.MediaDetail.SectionTitle;
+
+					if (AsCssClasses)
+					{
+						name = StringHelper.CreateSlug(name);
+					}
+
+					items.Add(name);
+				}
+			}
+
+			var str = string.Join(seperator, items);
+
+			return str;
+		}
+
+		public string GetCacheKey(RenderVersion renderVersion)
         {
             return (renderVersion.ToString() + this.AutoCalculatedVirtualPath.Replace("~", "")).ToLower();
         }

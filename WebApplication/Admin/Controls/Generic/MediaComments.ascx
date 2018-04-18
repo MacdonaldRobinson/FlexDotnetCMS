@@ -8,6 +8,7 @@
     </LayoutTemplate>
     <ItemTemplate>
         <li>
+			<small><%# StringHelper.FormatDateTime(Item.DateCreated) %></small><br />
             <strong>Name: <%# Item.Name %></strong><br />
             <strong>Email: <%# Item.Email %></strong><br />
             <strong>Message</strong><br />

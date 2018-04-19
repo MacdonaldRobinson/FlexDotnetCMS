@@ -1406,7 +1406,7 @@ namespace FrameworkLibrary
 
             if (customCode.Contains("{Field:"))
             {
-                /*customCode = Regex.Replace(customCode, "{Field:[a-zA-Z0-9&?=' ]+}", me =>
+				/*customCode = Regex.Replace(customCode, "{Field:[a-zA-Z0-9&?=' ]+}", me =>
                 {
                     var shortCode = me.Value;
 
@@ -1497,9 +1497,9 @@ namespace FrameworkLibrary
                     return shortCode;
                 }, RegexOptions.IgnoreCase);*/
 
-                var fields = Regex.Matches(customCode, "{Field:[a-zA-Z0-9&?=' ]+}");
+				var fields = Regex.Matches(customCode, "{Field:[a-zA-Z0-9@&?=.' ]+}");
 
-                foreach (var field in fields)
+				foreach (var field in fields)
                 {
                     var fieldCode = field.ToString().Replace("{Field:", "").Replace("}", "");
 

@@ -32,7 +32,12 @@ namespace FrameworkLibrary
             return GetDataModel().MediaTags.Where(item => item.TagID == tag.ID);
         }
 
-        public static MediaTag CreateObject()
+		public static IEnumerable<IMediaDetail> GetMediaDetailsByTag(Tag tag)
+		{
+			return GetDataModel().MediaTags.Where(item => item.TagID == tag.ID).ToList().Select(i=>i.Media.GetLiveMediaDetail()).OrderByDescending(i=>i.PublishDate);
+		}
+
+		public static MediaTag CreateObject()
         {
             return GetDataModel().MediaTags.Create();
         }

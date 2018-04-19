@@ -7,18 +7,18 @@
 	}
 
 	.comments li {		
-		padding: 10px;
+		padding: 5px;
 		border-top: 1px solid #000;
 		font-size: 12px;
 		background-color:lightgray;
 	}
 	.comments li:nth-child(2n+1) {
-		background-color:linen;
+		background-color:#eee;
 	}
 
 	.timeago {
-		font-size: 12px;
-		color: red;
+		font-size: 10px;
+		color: gray;
 		font-style: italic;
 		font-weight: bold;
 	}
@@ -28,8 +28,7 @@
 	}
 
 	.who {
-		font-size: 16px;
-		color: red;
+		font-size: 16px;		
 		font-style: italic;
 	}
 
@@ -51,12 +50,11 @@
 			<ItemTemplate>
 				<li>
 					<div class="commentauthor">
-						<img src="<%# ImageHelper.GetGravatarImageURL(Item.Name + Item.Email, 50, true) %>" />
+						<img src="<%# ImageHelper.GetGravatarImageURL(Item.Name + Item.Email, 30, true) %>" />
 						<strong class="who">
 							<asp:Literal ID="name" runat="server"></asp:Literal>
 						</strong>
-						<span>
-							Said On: 
+						<span>							
 							<span runat="server" id="datePosted" class="timeago">
 								<asp:Literal ID="date" runat="server"></asp:Literal>
 							</span>

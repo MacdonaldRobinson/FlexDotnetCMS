@@ -15,6 +15,7 @@
     {
 		RefreshUpdatePanel("<%= CommentsListTabs.ClientID %>", function () {
 			BindTabs();
+			BindActiveTabs();
 			ReloadPreviewPanel();
 		});
     }

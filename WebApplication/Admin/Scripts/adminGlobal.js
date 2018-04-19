@@ -648,9 +648,9 @@ function BindMultiFileUploaderImageLoadError()
     });
 }
 
-function BindTabs()
+function BindTabs(activeIndex)
 {
-    $('.tabs').tabs();
+	$('.tabs').tabs();
 }
 
 function BindJQueryUIControls()

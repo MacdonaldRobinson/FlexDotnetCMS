@@ -21,16 +21,16 @@
 
 </style>
 
-<script>
-	$(document).ready(function () {
-		$("#<%=PostComment.ClientID%>").click(function () {
-			$("#<%=ServerMessageWrapper.ClientID%>").text("Please wait ...");
-		});
-	});
-</script>
-
 <asp:UpdatePanel runat="server">
 	<ContentTemplate>
+
+		<script>
+			$(document).ready(function () {
+				$(document).on("click", "#<%=PostComment.ClientID%>", function () {
+					$("#<%=ServerMessageWrapper.ClientID%>").text("Please wait ...");
+				});
+			});
+		</script>
 		<div class="comment-form">
 			<div>
 				<label for="Name">Username: </label>

@@ -157,7 +157,7 @@
           <Property Name="NumberOfViews" Type="bigint" Nullable="false" />
           <Property Name="NumberOfStars" Type="bigint" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
-          <Property Name="AllowCommenting" Type="bit" Nullable="false" />
+          <Property Name="CommentsAreModerated" Type="bit" Nullable="false" />
           <Property Name="ExpiryDate" Type="datetime" />
           <Property Name="PublishDate" Type="datetime" />
           <Property Name="ShowInMenu" Type="bit" Nullable="false" />
@@ -237,6 +237,7 @@
           <Property Name="ShowInSearchResults" Type="bit" Nullable="false" />
           <Property Name="ShowInSiteTree" Type="bit" Nullable="false" />
           <Property Name="EnableCaching" Type="bit" Nullable="false" />
+          <Property Name="CommentsAreModerated" Type="bit" Nullable="false" />
           <Property Name="MainLayout" Type="nvarchar(max)" Nullable="false" />
           <Property Name="SummaryLayout" Type="nvarchar(max)" Nullable="false" />
           <Property Name="FeaturedLayout" Type="nvarchar(max)" Nullable="false" />
@@ -1379,7 +1380,6 @@
           <NavigationProperty Name="Media" Relationship="FrameworkModel.FK_MediaDetails_MediaID_Media_ID" FromRole="MediaDetail" ToRole="Medium" />
           <Property Type="Int64" Name="CreatedByUserID" Nullable="false" />
           <Property Type="Int64" Name="LastUpdatedByUserID" Nullable="false" />
-          <Property Type="Boolean" Name="AllowCommenting" Nullable="false" />
           <NavigationProperty Name="MediaType" Relationship="FrameworkModel.FK_MediaDetails_MediaTypeID_MediaType_ID" FromRole="MediaDetail" ToRole="MediaType" />
           <NavigationProperty Name="CreatedByUser" Relationship="FrameworkModel.FK_MediaDetails_CreatedByUserID" FromRole="MediaDetail" ToRole="User" />
           <NavigationProperty Name="LastUpdatedByUser" Relationship="FrameworkModel.FK_MediaDetails_LastUpdatedByUserID" FromRole="MediaDetail" ToRole="User" />
@@ -1421,6 +1421,7 @@
           <Property Name="OnPublishExecuteCode" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MetaRobots" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="InjectHtml" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CommentsAreModerated" Type="Boolean" Nullable="false" />
           </EntityType>
         <EntityType Name="Page" BaseType="FrameworkModel.MediaDetail">
         </EntityType>
@@ -1536,6 +1537,7 @@
           <NavigationProperty Name="Fields" Relationship="FrameworkModel.FK_MediaTypesFields_MediaTypes" FromRole="MediaType" ToRole="MediaTypesField" />
           <Property Name="ShowInSiteTree" Type="Boolean" Nullable="false" />
           <Property Name="OnPublishExecuteCode" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CommentsAreModerated" Type="Boolean" Nullable="false" />
           </EntityType>
         <Association Name="FK_MediaDetails_MediaTypeID_MediaType_ID">
           <End Type="FrameworkModel.MediaType" Multiplicity="1" Role="MediaType" />
@@ -2182,6 +2184,7 @@
           <EntitySetMapping Name="MediaDetails">
             <EntityTypeMapping TypeName="IsTypeOf(FrameworkModel.MediaDetail)">
               <MappingFragment StoreEntitySet="MediaDetails">
+                <ScalarProperty Name="CommentsAreModerated" ColumnName="CommentsAreModerated" />
                 <ScalarProperty Name="InjectHtml" ColumnName="InjectHtml" />
                 <ScalarProperty Name="MetaRobots" ColumnName="MetaRobots" />
                 <ScalarProperty Name="OnPublishExecuteCode" ColumnName="OnPublishExecuteCode" />
@@ -2215,7 +2218,6 @@
                 <ScalarProperty Name="CanAddToCart" ColumnName="CanAddToCart" />
                 <ScalarProperty Name="HistoryVersionNumber" ColumnName="HistoryVersionNumber" />
                 <ScalarProperty Name="HistoryForMediaDetailID" ColumnName="HistoryForMediaDetailID" />
-                <ScalarProperty Name="AllowCommenting" ColumnName="AllowCommenting" />
                 <ScalarProperty Name="LastUpdatedByUserID" ColumnName="LastUpdatedByUserID" />
                 <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -2312,6 +2314,7 @@
           <EntitySetMapping Name="MediaTypes">
             <EntityTypeMapping TypeName="FrameworkModel.MediaType">
               <MappingFragment StoreEntitySet="MediaTypes">
+                <ScalarProperty Name="CommentsAreModerated" ColumnName="CommentsAreModerated" />
                 <ScalarProperty Name="OnPublishExecuteCode" ColumnName="OnPublishExecuteCode" />
                 <ScalarProperty Name="ShowInSiteTree" ColumnName="ShowInSiteTree" />
                 <ScalarProperty Name="UseMediaTypeLayouts" ColumnName="UseMediaTypeLayouts" />
@@ -2610,7 +2613,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model" ZoomLevel="74">
+      <Diagram Name="Model" ZoomLevel="91">
         <EntityTypeShape EntityType="FrameworkModel.EmailLog" Width="1.5" PointX="10.25" PointY="11.5" Height="3.1340950520833282" />
         <EntityTypeShape EntityType="FrameworkModel.Language" Width="1.5" PointX="1.375" PointY="7.375" Height="2.9417936197916674" />
         <EntityTypeShape EntityType="FrameworkModel.Media" Width="1.5" PointX="2.75" PointY="3.375" Height="2.3648893229166665" />

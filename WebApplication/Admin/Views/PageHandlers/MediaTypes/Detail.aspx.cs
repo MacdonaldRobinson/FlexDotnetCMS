@@ -51,7 +51,9 @@ namespace WebApplication.Admin.Views.PageHandlers.MediaTypes
             selectedItem.ShowInSiteTree = ShowInSiteTree.Checked;
             selectedItem.ShowInSearchResults = ShowInSearchResults.Checked;
             selectedItem.EnableCaching = EnableCaching.Checked;
-            selectedItem.AddRoles(MultiRoleSelector.GetSelectedRoles());
+			selectedItem.CommentsAreModerated = CommentsAreModerated.Checked;
+
+			selectedItem.AddRoles(MultiRoleSelector.GetSelectedRoles());
             selectedItem.AddChildMediaTypes(MultiMediaTypeSelector.GetSelectedMediaTypes());
             selectedItem.MainLayout = MediaDetailsMapper.ConvertUrlsToShortCodes(MainLayout.Text);
             selectedItem.SummaryLayout = MediaDetailsMapper.ConvertUrlsToShortCodes(SummaryLayout.Text);
@@ -72,10 +74,11 @@ namespace WebApplication.Admin.Views.PageHandlers.MediaTypes
             IsActive.Checked = selectedItem.IsActive;
             ShowInMenu.Checked = selectedItem.ShowInMenu;
             ShowInSiteTree.Checked = selectedItem.ShowInSiteTree;
-
             ShowInSearchResults.Checked = selectedItem.ShowInSearchResults;
             EnableCaching.Checked = selectedItem.EnableCaching;
-            MainLayout.Text = selectedItem.MainLayout;
+			CommentsAreModerated.Checked = selectedItem.CommentsAreModerated;
+
+			MainLayout.Text = selectedItem.MainLayout;
             SummaryLayout.Text = selectedItem.SummaryLayout;
             FeaturedLayout.Text = selectedItem.FeaturedLayout;
             UseMediaTypeLayouts.Checked = selectedItem.UseMediaTypeLayouts;

@@ -7,7 +7,6 @@ namespace FrameworkLibrary
     public interface IMediaDetail
     {
         string AbsoluteUrl { get; }
-        bool AllowCommenting { get; set; }
         string AutoCalculatedVirtualPath { get; }
         string CachedVirtualPath { get; set; }
         bool CanAddToCart { get; set; }
@@ -24,7 +23,9 @@ namespace FrameworkLibrary
         DateTime DateLastModified { get; set; }
         string DirectLink { get; set; }
         bool EnableCaching { get; set; }
-        DateTime? ExpiryDate { get; set; }
+		bool CommentsAreModerated { get; set; }
+
+		DateTime? ExpiryDate { get; set; }
         string FeaturedLayout { get; set; }
         ICollection<FieldAssociation> FieldAssociations { get; set; }
         ICollection<MediaDetailField> Fields { get; set; }

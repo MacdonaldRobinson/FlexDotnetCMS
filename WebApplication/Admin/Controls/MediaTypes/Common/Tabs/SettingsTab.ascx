@@ -29,6 +29,15 @@
                 Enable Caching</label>
         </p>
     </div>
+
+    <div>
+		<p>
+			<label for="<%= CommentsAreModerated.ClientID %>">
+				<asp:CheckBox ID="CommentsAreModerated" runat="server"></asp:CheckBox>
+				Comments Are Moderated</label>
+		</p>
+    </div>
+
     <div>
         <p>
             <label class="exception" for="<%= MediaDetailID.ClientID %>">

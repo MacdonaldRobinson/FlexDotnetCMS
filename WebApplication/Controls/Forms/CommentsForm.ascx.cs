@@ -85,6 +85,13 @@ namespace WebApplication.Controls
 				newComment.ReplyToCommentID = this.ReplyToCommentID;
 			}
 
+			var mediaDetail = CurrentMedia.GetLiveMediaDetail();
+
+			if (!mediaDetail.CommentsAreModerated)
+			{
+				newComment.Status = StatusEnum.Approved.ToString();
+			}
+
             Return ReturnObj = CommentsMapper.Insert(newComment);
 
             if (ReturnObj != null)
@@ -105,7 +112,16 @@ namespace WebApplication.Controls
 						}
 
 						ServerMessage.Visible = true;
-						ServerMessage.InnerHtml = "Thank you for your feedback. This is a moderated post. Your comment has been submitted for approval";
+
+						if (mediaDetail.CommentsAreModerated)
+						{
+							ServerMessage.InnerHtml = "Thank you for your feedback. This is a moderated post. Your comment has been submitted for approval";
+						}
+						else
+						{
+							ServerMessage.InnerHtml = "Thank you for your feedback";
+						}
+
 						ServerMessage.Attributes["class"] += " alert alert-primary";
 
 

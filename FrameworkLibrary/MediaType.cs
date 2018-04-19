@@ -40,6 +40,7 @@ namespace FrameworkLibrary
         public bool UseMediaTypeLayouts { get; set; }
         public bool ShowInSiteTree { get; set; }
         public string OnPublishExecuteCode { get; set; }
+        public bool CommentsAreModerated { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MediaDetail> MediaDetails { get; set; }

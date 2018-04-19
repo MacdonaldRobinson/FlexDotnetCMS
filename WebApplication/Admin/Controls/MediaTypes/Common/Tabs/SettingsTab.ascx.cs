@@ -46,8 +46,10 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
             MediaTypeID.Text = selectedItem.MediaTypeID.ToString();
             MediaType.Text = MediaTypesMapper.GetByID(selectedItem.MediaTypeID).Name.ToString();
             EnableCaching.Checked = selectedItem.EnableCaching;
+			CommentsAreModerated.Checked = selectedItem.CommentsAreModerated;			
 
-            if (selectedItem.LastUpdatedByUserID != 0)
+
+			if (selectedItem.LastUpdatedByUserID != 0)
                 LastModifiedByUser.Text = UsersMapper.GetByID(selectedItem.LastUpdatedByUserID).UserName;
 
             if (selectedItem.CreatedByUserID != 0)
@@ -63,8 +65,9 @@ namespace WebApplication.Admin.Controls.MediaTypes.Common.Tabs
         {
             selectedItem.Handler = Handler.GetValue().ToString();
             selectedItem.EnableCaching = EnableCaching.Checked;
+			selectedItem.CommentsAreModerated = CommentsAreModerated.Checked;
 
-            if (MasterPageSelector.SelectedValue != "")
+			if (MasterPageSelector.SelectedValue != "")
                 selectedItem.MasterPageID = long.Parse(MasterPageSelector.SelectedValue);
             else
                 selectedItem.MasterPageID = null;

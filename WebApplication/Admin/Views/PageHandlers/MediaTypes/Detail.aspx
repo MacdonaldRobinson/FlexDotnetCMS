@@ -61,6 +61,11 @@
                         Enable Caching</label>
                 </div>
                 <div>
+                    <label for="<%= CommentsAreModerated.ClientID %>">
+                        <asp:CheckBox ID="CommentsAreModerated" runat="server"></asp:CheckBox>
+                        Comments Are Moderated</label>
+                </div>
+                <div>
                     <fieldset>
                         <label for="<%= MultiRoleSelector.ClientID %>">
                             Limit roles that can access this item:

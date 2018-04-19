@@ -39,7 +39,6 @@ namespace FrameworkLibrary
         public System.DateTime DateLastModified { get; set; }
         public long CreatedByUserID { get; set; }
         public long LastUpdatedByUserID { get; set; }
-        public bool AllowCommenting { get; set; }
         public Nullable<long> HistoryForMediaDetailID { get; set; }
         public int HistoryVersionNumber { get; set; }
         public bool CanAddToCart { get; set; }
@@ -73,6 +72,7 @@ namespace FrameworkLibrary
         public string OnPublishExecuteCode { get; set; }
         public string MetaRobots { get; set; }
         public string InjectHtml { get; set; }
+        public bool CommentsAreModerated { get; set; }
     
         public virtual Language Language { get; set; }
         public virtual Media Media { get; set; }

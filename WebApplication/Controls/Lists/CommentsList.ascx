@@ -1,6 +1,30 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CommentsList.ascx.cs"
     Inherits="WebApplication.Controls.Lists.CommentsList" %>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+
+<script>
+	$(document).ready(function () {
+
+	});
+
+	function pageLoad()
+	{
+		convertToRelativeTime();
+	}
+
+	function convertToRelativeTime()
+	{
+		$(".timeago").each(function () {
+			var text = $(this).text().trim();
+			var relativeTime = moment(text).fromNow();
+
+			$(this).text(relativeTime);
+		});
+	}
+
+</script>
+
 <style>
 	.comments {
 		list-style-type: none;
@@ -41,6 +65,7 @@
 
 <asp:UpdatePanel runat="server">
 	<ContentTemplate>
+		<%--<asp:HiddenField ID="ReplyToCommentID" runat="server" />--%>
 		<asp:ListView ID="ItemsList" runat="server" OnItemDataBound="ItemsList_OnItemDataBound" ItemType="FrameworkLibrary.Comment">
 			<LayoutTemplate>
 				<ul class="comments">
@@ -75,6 +100,7 @@
 
 					<asp:Panel ID="ReplyPanel" runat="server" Visible="false">
 						<Site:CommentsForm ID="ReplyForm" runat="server" ReplyToCommentID="<%# Item.ID %>"/>
+						<asp:LinkButton runat="server" ID="CancelReply" OnClick="CancelReply_Click">Cancel</asp:LinkButton>
 					</asp:Panel>
 
 					<asp:ListView ID="ChildItemsList" runat="server" OnItemDataBound="ItemsList_OnItemDataBound">

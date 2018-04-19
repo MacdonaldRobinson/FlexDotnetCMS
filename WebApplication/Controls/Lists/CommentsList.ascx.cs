@@ -115,7 +115,7 @@ namespace WebApplication.Controls.Lists
                 }
 
                 name.Text = dataItem.Name;
-                date.Text = StringHelper.FormatDateTime(dataItem.DateCreated);
+                date.Text = dataItem.DateCreated.ToString("o");
                 message.Text = dataItem.Message;
                 abbrDate.Attributes.Add("title", date.Text);
 
@@ -144,7 +144,7 @@ namespace WebApplication.Controls.Lists
 		private long ReplyToCommentID
 		{
 			get
-			{
+			{				
 				var replyToComment = ContextHelper.GetFromSession("ReplyToCommentID");
 
 				if (replyToComment == null)
@@ -153,7 +153,7 @@ namespace WebApplication.Controls.Lists
 				return (long)replyToComment;
 			}
 			set
-			{
+			{				
 				ContextHelper.SetToSession("ReplyToCommentID", value);
 			}
 		}
@@ -162,6 +162,14 @@ namespace WebApplication.Controls.Lists
         {
 			var linkButton = (LinkButton)sender;
 			var replyPanel = (Panel)WebFormHelper.FindControlRecursive(linkButton.Parent, "ReplyPanel");
+
+			var replyPanels = WebFormHelper.FindControlsRecursive(ItemsList, "ReplyPanel");
+
+			foreach (var panel in replyPanels)
+			{
+				panel.Visible = false;
+			}
+
 			ReplyToCommentID = long.Parse(linkButton.CommandArgument);
 
 			if (replyPanel != null)
@@ -215,5 +223,12 @@ namespace WebApplication.Controls.Lists
                 return (IEnumerable<Comment>)ItemsList.DataSource;
             }
         }
-    }
+
+		protected void CancelReply_Click(object sender, EventArgs e)
+		{
+			var cancelReply = (LinkButton)sender;
+			cancelReply.Parent.Visible = false;
+			ReplyToCommentID = 0;
+		}
+	}
 }

@@ -260,7 +260,7 @@ namespace FrameworkLibrary
             return controls.Distinct();
         }
 
-        public IEnumerable<Control> FindControlsRecursive(Control root, string id)
+        public static IEnumerable<Control> FindControlsRecursive(Control root, string id)
         {
             var controls = new List<Control>();
             if (root.ID == id)

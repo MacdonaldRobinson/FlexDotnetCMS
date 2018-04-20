@@ -17,6 +17,13 @@ function DisplayJsonException(xhr) {
     }
 }
 
+function DisplayMessage(heading, message) {
+	jQuery.jGrowl(message, {
+		header: heading,
+		life: 10000
+	});
+}
+
 function executeAction(action, id, updatePanelId) {
     switch (action) {
         case "Refresh":
@@ -315,12 +322,15 @@ function HandleContextMenuClick(action, target, node) {
 				url: BaseWebserverUrl + "/Publish",
 				data: "{'id':'" + mediaDetailId + "'}",
 				contentType: "application/json; charset=utf-8",
-				dataType: "text",
+				dataType: "json",
 				success:
-					function (msg) {
+					function (msg) {						
 						//window.location.reload();
-						//RefreshSiteTreeViewAjaxPanel();
-						RefreshSiteTreeNodeById(node.parent);
+						//RefreshSiteTreeViewAjaxPanel();	
+						if (msg.d != "") {
+							DisplayMessage("Success", msg.d);
+						}
+						RefreshSiteTreeNodeById(node.parent);						
 					},
 				error: function (xhr, status, error) {
 					DisplayJsonException(xhr);
@@ -333,11 +343,15 @@ function HandleContextMenuClick(action, target, node) {
 				url: BaseWebserverUrl + "/UnPublish",
 				data: "{'id':'" + mediaDetailId + "'}",
 				contentType: "application/json; charset=utf-8",
-				dataType: "text",
+				dataType: "json",
 				success:
 					function (msg) {
 						//window.location.reload();
 						//RefreshSiteTreeViewAjaxPanel();
+						if (msg.d != "") {
+							DisplayMessage("Success", msg.d);
+						}
+
 						RefreshSiteTreeNodeById(node.parent);
 					},
 				error: function (xhr, status, error) {

@@ -124,7 +124,7 @@ namespace WebApplication.Admin.Views.MasterPages
 				{
 					node.li_attr._class += " unPublished";
 
-					nodeText += $"<small class='unPublishedWrapper'>UnPublish</small>";
+					nodeText += $"<small class='unPublishedWrapper'>UnPublished</small>";
 				}
 			}
 
@@ -438,21 +438,47 @@ namespace WebApplication.Admin.Views.MasterPages
         }
 
 		[WebMethod(EnableSession = true)]
-		public void Publish(long id)
+		public string Publish(long id)
 		{
 			var detail = MediaDetailsMapper.GetByID(id);
 			UserMustHaveAccessTo(detail);
 
-			SetPublishStatus((MediaDetail)detail, true);
+			var returnObj = SetPublishStatus((MediaDetail)detail, true);
+
+			if (returnObj.IsError)
+			{
+				return returnObj.Error.Message;
+			}
+			else
+			{
+				if (returnObj.HasInfoMessage)
+				{
+					return returnObj.InfoMessage;
+				}
+				return "";
+			}
 		}
 
 		[WebMethod(EnableSession = true)]
-		public void UnPublish(long id)
+		public string UnPublish(long id)
 		{
 			var detail = MediaDetailsMapper.GetByID(id);
 			UserMustHaveAccessTo(detail);
 
-			SetPublishStatus((MediaDetail)detail, false);
+			var returnObj = SetPublishStatus((MediaDetail)detail, false);
+
+			if (returnObj.IsError)
+			{
+				return returnObj.Error.Message;
+			}
+			else
+			{
+				if (returnObj.HasInfoMessage)
+				{
+					return returnObj.InfoMessage;
+				}
+				return "";
+			}
 		}
 
 		[WebMethod(EnableSession = true)]
@@ -604,10 +630,10 @@ namespace WebApplication.Admin.Views.MasterPages
             }
         }
 
-		private void SetPublishStatus(MediaDetail detail, bool publishStatus)
+		private Return SetPublishStatus(MediaDetail detail, bool publishStatus)
 		{
 			if ((detail == null) || (detail.IsPublished == publishStatus))
-				return;
+				return new Return();
 
 			detail = BaseMapper.GetObjectFromContext(detail);
 
@@ -623,7 +649,9 @@ namespace WebApplication.Admin.Views.MasterPages
 			Return returnObj = MediaDetailsMapper.Update(detail);
 
 			if (returnObj.IsError)
-				throw returnObj.Error.Exception;
+			{
+				return returnObj;
+			}
 			else
 			{
 				ContextHelper.ClearAllMemoryCache();
@@ -635,12 +663,10 @@ namespace WebApplication.Admin.Views.MasterPages
 
 					returnObj = detail.RunOnPublishExecuteCode();
 
-					if (returnObj.HasInfoMessage)
-					{
-						throw new Exception(returnObj.InfoMessage);
-					}
-
+					return returnObj;
 				}
+
+				return returnObj;
 			}
 		}
 

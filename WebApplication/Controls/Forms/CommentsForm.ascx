@@ -21,16 +21,16 @@
 
 </style>
 
+<script>
+	$(document).ready(function () {
+		$(document).on("click", ".PostComment", function () {			
+			$(this).parents(".comment-form").find(".ServerMessageWrapper").text("Please wait ...");
+		});
+	});
+</script>
+
 <asp:UpdatePanel runat="server">
 	<ContentTemplate>
-
-		<script>
-			$(document).ready(function () {
-				$(document).on("click", "#<%=PostComment.ClientID%>", function () {
-					$("#<%=ServerMessageWrapper.ClientID%>").text("Please wait ...");
-				});
-			});
-		</script>
 		<div class="comment-form">
 			<div>
 				<label for="Name">Username: </label>
@@ -46,11 +46,11 @@
 				<asp:TextBox ID="Message" runat="server" Rows="5" TextMode="MultiLine"></asp:TextBox>
 			</div>
 			<div id="ServerMessageWrapper" runat="server">
-				<div runat="server" ID="ServerMessage" Visible="false" class="ServerMessageWrapper">
+				<div runat="server" ID="ServerMessage" class="ServerMessageWrapper">
 				</div>
 			</div>
 			<div>
-				<asp:LinkButton ID="PostComment" Text="Post Comment" runat="server" OnClick="PostComment_OnClick" />
+				<asp:LinkButton ID="PostComment" Text="Post Comment" runat="server" OnClick="PostComment_OnClick" class="PostComment"/>
 			</div>
 		</div>
 	</ContentTemplate>

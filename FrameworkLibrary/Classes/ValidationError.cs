@@ -7,7 +7,10 @@ namespace FrameworkLibrary
     {
         private string message;
 
-        public ValidationError(string message)
+		public ValidationError()
+		{
+		}
+		public ValidationError(string message)
         {
             this.message = message;
         }

@@ -55,6 +55,9 @@ namespace WebApplication.Admin.Views.MasterPages
 
     public class WebService : WebApplication.Services.BaseService
     {
+		public WebService():base()
+		{
+		}
 		private void UpdateTreeNode(JsTreeNode node, IMediaDetail detail)
 		{
 			if (detail == null)
@@ -434,7 +437,25 @@ namespace WebApplication.Admin.Views.MasterPages
             SetShowInMenuStatus((MediaDetail)detail, false);
         }
 
-        [WebMethod(EnableSession = true)]
+		[WebMethod(EnableSession = true)]
+		public void Publish(long id)
+		{
+			var detail = MediaDetailsMapper.GetByID(id);
+			UserMustHaveAccessTo(detail);
+
+			SetPublishStatus((MediaDetail)detail, true);
+		}
+
+		[WebMethod(EnableSession = true)]
+		public void UnPublish(long id)
+		{
+			var detail = MediaDetailsMapper.GetByID(id);
+			UserMustHaveAccessTo(detail);
+
+			SetPublishStatus((MediaDetail)detail, false);
+		}
+
+		[WebMethod(EnableSession = true)]
         public void MoveUp(long id)
         {
             var detail = MediaDetailsMapper.GetByID(id);
@@ -583,7 +604,47 @@ namespace WebApplication.Admin.Views.MasterPages
             }
         }
 
-        public IMediaDetail HandleDuplicate(IMediaDetail detail, Media parentMedia, bool duplicateChildren = false, string newName = "", bool autoPublish = true)
+		private void SetPublishStatus(MediaDetail detail, bool publishStatus)
+		{
+			if ((detail == null) || (detail.IsPublished == publishStatus))
+				return;
+
+			detail = BaseMapper.GetObjectFromContext(detail);
+
+			if (publishStatus)
+			{
+				detail.PublishDate = DateTime.Now;
+			}
+			else
+			{
+				detail.PublishDate = null;
+			}
+
+			Return returnObj = MediaDetailsMapper.Update(detail);
+
+			if (returnObj.IsError)
+				throw returnObj.Error.Exception;
+			else
+			{
+				ContextHelper.ClearAllMemoryCache();
+				FileCacheHelper.DeleteCacheDir("generatenav");
+
+				if (publishStatus)
+				{
+					detail.PublishDate = DateTime.Now;
+
+					returnObj = detail.RunOnPublishExecuteCode();
+
+					if (returnObj.HasInfoMessage)
+					{
+						WriteText(returnObj.InfoMessage);
+					}
+
+				}
+			}
+		}
+
+		public IMediaDetail HandleDuplicate(IMediaDetail detail, Media parentMedia, bool duplicateChildren = false, string newName = "", bool autoPublish = true)
         {
             var duplicatedItem = MediaDetailsMapper.CreateObject(detail.MediaTypeID, null, parentMedia, false);
             duplicatedItem.CopyFrom(detail, new List<string> { "MediaID", "Media" });

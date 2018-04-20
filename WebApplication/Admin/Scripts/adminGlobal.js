@@ -308,7 +308,43 @@ function HandleContextMenuClick(action, target, node) {
                     DisplayJsonException(xhr);
                 }
             });
-            break;
+			break;
+		case "Publish":
+			jQuery.ajax({
+				type: "POST",
+				url: BaseWebserverUrl + "/Publish",
+				data: "{'id':'" + mediaDetailId + "'}",
+				contentType: "application/json; charset=utf-8",
+				dataType: "text",
+				success:
+					function (msg) {
+						//window.location.reload();
+						//RefreshSiteTreeViewAjaxPanel();
+						RefreshSiteTreeNodeById(node.parent);
+					},
+				error: function (xhr, status, error) {
+					DisplayJsonException(xhr);
+				}
+			});
+			break;
+		case "UnPublish":
+			jQuery.ajax({
+				type: "POST",
+				url: BaseWebserverUrl + "/UnPublish",
+				data: "{'id':'" + mediaDetailId + "'}",
+				contentType: "application/json; charset=utf-8",
+				dataType: "text",
+				success:
+					function (msg) {
+						//window.location.reload();
+						//RefreshSiteTreeViewAjaxPanel();
+						RefreshSiteTreeNodeById(node.parent);
+					},
+				error: function (xhr, status, error) {
+					DisplayJsonException(xhr);
+				}
+			});
+			break;
         case "MoveUp":            
             jQuery.ajax({
                 type: "POST",
@@ -1089,8 +1125,20 @@ function BindTree(filterText) {
                         "action": function (obj) {
                             HandleContextMenuClick("HideFromMenu", obj.reference, node);
                         }
-                    },
-                    "MoveUp": {
+					},
+					"Publish": {
+						"label": "Publish",
+						"action": function (obj) {
+							HandleContextMenuClick("Publish", obj.reference, node);
+						}
+					},
+					"UnPublish": {
+						"label": "UnPublish",
+						"action": function (obj) {
+							HandleContextMenuClick("UnPublish", obj.reference, node);
+						}
+					},
+                    /*"MoveUp": {
                         "label": "Move Up",
                         "action": function (obj) {
                             HandleContextMenuClick("MoveUp", obj.reference, node);
@@ -1101,7 +1149,7 @@ function BindTree(filterText) {
                         "action": function (obj) {
                             HandleContextMenuClick("MoveDown", obj.reference, node);
                         }
-                    },
+                    },*/
                     "ClearCache": {
                         "label": "Clear Cache",
                         "action": function (obj) {

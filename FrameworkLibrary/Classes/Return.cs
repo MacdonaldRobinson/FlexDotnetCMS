@@ -3,7 +3,7 @@
     public class Return
     {
         private object rawData = null;
-        private Elmah.Error error = null;
+        private Elmah.Error error = null;		
 
         public Return(object rawData, Elmah.Error error)
         {
@@ -35,6 +35,23 @@
                 return Error.Exception != null;
             }
         }
+
+		public string InfoMessage { get; set; }
+
+		public bool HasInfoMessage
+		{
+			get
+			{
+				if (string.IsNullOrEmpty(InfoMessage))
+				{
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
+		}
 
         public Elmah.Error Error
         {

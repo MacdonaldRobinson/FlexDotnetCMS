@@ -19,7 +19,7 @@
         </LayoutTemplate>
         <ItemTemplate>
             <li>
-                <a href="<%# Item.AbsoluteUrl %>" class='<%# (Item.ID == CurrentMediaDetail.ID)? "current":"" %>'><%# Item.RenderField("SectionTitle") %></a>
+                <a href="<%# Item.AbsoluteUrl %>" class='<%# (Item.ID == CurrentMediaDetail.ID)? "current":"" %>'><%# Item.RenderField("SectionTitle", false) %> ( <%# Item.ChildMediaDetails.Count() %> ) </a>
             </li>
         </ItemTemplate>
     </asp:ListView>

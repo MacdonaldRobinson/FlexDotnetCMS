@@ -885,7 +885,23 @@ namespace FrameworkLibrary
             return this.FieldAssociations.ToList().Where(i => i.MediaDetail.IsPublished).ToList();
         }
 
-        public Return PublishLive()
+		public Return RunOnPublishExecuteCode()
+		{
+			var onPublishExecuteCode = this.UseMediaTypeLayouts ? this.MediaType.OnPublishExecuteCode : this.OnPublishExecuteCode;
+			var returnObj = new Return();
+
+			if (!string.IsNullOrEmpty(onPublishExecuteCode))
+			{
+				var infoMessage = MediaDetailsMapper.ParseSpecialTags(this, onPublishExecuteCode);
+				returnObj.InfoMessage = infoMessage;
+
+				return returnObj;
+			}
+
+			return returnObj;
+		}
+
+		public Return PublishLive()
         {
             var returnObj = new Return();
             var liveVersion = BaseMapper.GetObjectFromContext((MediaDetail)this.Media.GetLiveMediaDetail());

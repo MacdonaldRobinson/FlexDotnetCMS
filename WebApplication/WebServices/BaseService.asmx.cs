@@ -21,7 +21,10 @@ namespace WebApplication.Services
     [System.Web.Script.Services.ScriptService]
     public class BaseService : System.Web.Services.WebService
     {
-        public string GetIP()
+		public BaseService()
+		{
+		}
+		public string GetIP()
         {
             var ip = HttpContext.Current.Request.ServerVariables["HTTP_X_CLUSTER_CLIENT_IP"];
 

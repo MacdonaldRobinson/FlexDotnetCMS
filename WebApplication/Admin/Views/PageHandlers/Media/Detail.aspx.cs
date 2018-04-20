@@ -405,7 +405,7 @@ namespace WebApplication.Admin.MediaArticle
             OnPublishExecuteCode();
         }
 
-        private void OnPublishExecuteCode()
+        public void OnPublishExecuteCode()
         {
             var onPublishExecuteCode = selectedItem.UseMediaTypeLayouts ? selectedItem.MediaType.OnPublishExecuteCode : selectedItem.OnPublishExecuteCode;
 

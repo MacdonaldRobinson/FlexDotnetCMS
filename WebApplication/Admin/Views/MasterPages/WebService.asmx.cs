@@ -637,7 +637,7 @@ namespace WebApplication.Admin.Views.MasterPages
 
 					if (returnObj.HasInfoMessage)
 					{
-						WriteText(returnObj.InfoMessage);
+						throw new Exception(returnObj.InfoMessage);
 					}
 
 				}

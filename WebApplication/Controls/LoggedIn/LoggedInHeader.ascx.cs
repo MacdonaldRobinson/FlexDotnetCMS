@@ -63,7 +63,7 @@ namespace WebApplication.Controls.OnLogin
                 if (BasePage.CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions))
                     return true;
 
-                return false;
+				return false;
             }
         }
 

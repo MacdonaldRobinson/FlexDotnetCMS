@@ -20,10 +20,10 @@
                     {
                 %>
                 <a ID="ToggleVisualEditor" class="button" href="javascript:void(0)" onclick="ToggleVisualEditor()"><i class="fa fa-wrench"></i>&nbsp;Toggle Visual Layout Editor</a>
+                <%  } %>
                 <a ID="EdiSettings" class="colorbox iframe button" data-OnColorboxClose="RefreshPage()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Settings/Default.aspx?masterFilePath=~/Admin/Views/MasterPages/Popup.Master"><i class="fa fa-wrench"></i>&nbsp;Edit Settings</a>
                 <a ID="EditTemplate" class="colorbox iframe button" data-OnColorboxClose="RefreshPage()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MasterPages/Detail.aspx?id=<%= BasePage.CurrentMediaDetail.GetMasterPage().ID %>"><i class="fa fa-file-code-o"></i>&nbsp;Edit Template</a>
                 <a ID="EditMediaType" class="colorbox iframe button" data-OnColorboxClose="RefreshPage()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MediaTypes/Detail.aspx?id=<%= BasePage.CurrentMediaDetail.MediaTypeID %>"><i class="fa fa-file-code-o"></i>&nbsp;Edit Media Type</a>
-                <%  } %>
             </div>
         </div>
         <div> 

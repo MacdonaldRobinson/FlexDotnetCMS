@@ -238,10 +238,12 @@ namespace FrameworkLibrary
             if (toProperty.GetSetMethod() == null) return;
             if (value != null)
             {
-                if (toProperty.Name == "EntityKey")
+				var propertyName = toProperty.Name.ToString();
+
+				if (propertyName == "EntityKey")
                     return;
 
-                if (toProperty.Name == "ID")
+                if (propertyName == "ID")
                     return;
 
                 if (value.GetType().BaseType == typeof(EntityReference))
@@ -250,7 +252,16 @@ namespace FrameworkLibrary
                 if (value.GetType().Name.Contains("EntityCollection"))
                     return;
 
-                if (value.GetType().BaseType == typeof(EntityObject))
+				if (value.GetType().Name.Contains("HashSet"))
+					return;
+
+				if (value.GetType().Name.Contains("EntityReference"))
+					return;
+
+				if (value.GetType().BaseType.ToString().Contains("FrameworkLibrary"))
+					return;
+
+				if (value.GetType().BaseType == typeof(EntityObject))
                 {
                     value = BaseMapper.GetObjectFromContext((IMustContainID)value);
                 }

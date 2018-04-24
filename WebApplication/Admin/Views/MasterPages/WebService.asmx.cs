@@ -697,7 +697,9 @@ namespace WebApplication.Admin.Views.MasterPages
 
             duplicatedItem.PublishDate = duplicatedItem.DateCreated = duplicatedItem.DateLastModified = DateTime.Now;
 
-            foreach (var item in detail.Fields)
+			//var fields = detail.Fields.ToList();
+
+			foreach (var item in detail.Fields)
             {
                 var mediaDetailField = new MediaDetailField();
                 mediaDetailField.CopyFrom(item);

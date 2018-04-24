@@ -1055,12 +1055,15 @@ namespace FrameworkLibrary
                 GetDataModel().FieldAssociations.Remove(item);
             }
 
-            var comments = obj.Media?.Comments?.ToList();
-
-			if (comments != null)
+			if (!obj.IsHistory)
 			{
-				foreach (var item in comments)
-					GetDataModel().Comments.Remove(item);
+				var comments = obj.Media?.Comments?.ToList();
+
+				if (comments != null)
+				{
+					foreach (var item in comments)
+						GetDataModel().Comments.Remove(item);
+				}
 			}
 
             return obj;
@@ -1080,7 +1083,10 @@ namespace FrameworkLibrary
 
             ClearObjectRelations(obj);
 
-            obj.Media?.Comments?.Clear();
+			if (!obj.IsHistory)
+			{
+				obj.Media?.Comments?.Clear();
+			}
 
             returnObj = Delete(MapperKey, obj);
 

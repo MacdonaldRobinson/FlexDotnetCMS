@@ -99,8 +99,11 @@ namespace WebApplication.Controls
 				switch (ReturnObj.IsError)
 				{
 					case false:
-						BasePage.SendMediaCommentApprovalRequest(CurrentMedia, newComment);
-
+						if (mediaDetail.CommentsAreModerated)
+						{
+							BasePage.SendMediaCommentApprovalRequest(CurrentMedia, newComment);
+						}
+						
 						if (this.ReplyToCommentID != 0)
 						{
 							var comment = CommentsMapper.GetByID(ReplyToCommentID);

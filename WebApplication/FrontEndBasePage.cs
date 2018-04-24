@@ -413,7 +413,7 @@ namespace WebApplication
         {
             if (rssItems == null)
             {
-                rssItems = MediaDetailsMapper.GetRssItems(MediaDetailsMapper.GetAllChildMediaDetails(FrameworkSettings.Current.CurrentMedia.ID, FrameworkSettings.Current.CurrentLanguage.ID).Where(i=>i.CanRender).OrderByDescending(i=>i.PublishDate));
+                rssItems = MediaDetailsMapper.GetRssItems(MediaDetailsMapper.GetAllChildMediaDetails(FrameworkSettings.Current.CurrentMedia.ID, FrameworkSettings.Current.CurrentLanguage.ID).Where(i=>i.CanRender && i.MediaType.ShowInSiteTree).OrderByDescending(i=>i.PublishDate));
             }
 
             if (rssLink == "")

@@ -16,13 +16,13 @@ namespace FrameworkLibrary
     {
         private static readonly List<string> ommitPropertiesBySegment = new List<string>();
         private static readonly List<string> ommitValuesBySegment = new List<string>();
-        private static int maxDepthAllowed = 5;
+        private static int maxDepthAllowed = 100;
 
         static ObjectExtentions()
         {
-            ommitValuesBySegment.Add(".EntityReference");
-            ommitValuesBySegment.Add(".EntityCollection");
-            ommitValuesBySegment.Add("FrameworkLibrary");
+            //ommitValuesBySegment.Add(".EntityReference");
+            //ommitValuesBySegment.Add(".EntityCollection");
+            //ommitValuesBySegment.Add("FrameworkLibrary");
 
             ommitPropertiesBySegment.Add("EntityKey");
             ommitPropertiesBySegment.Add("EntityState");
@@ -31,8 +31,14 @@ namespace FrameworkLibrary
             ommitPropertiesBySegment.Add("ValidationErrors");
             ommitPropertiesBySegment.Add("Count");
             ommitPropertiesBySegment.Add("Capacity");
-            ommitPropertiesBySegment.Add("LiveMediaDetail");            
-            ommitPropertiesBySegment.Add("Language");
+            ommitPropertiesBySegment.Add("LiveMediaDetail");
+			ommitPropertiesBySegment.Add("ChildMedias");
+			ommitPropertiesBySegment.Add("MediaType");
+			ommitPropertiesBySegment.Add("MediaDetail");
+			ommitPropertiesBySegment.Add("Parent");
+			//ommitPropertiesBySegment.Add("Use");
+			//ommitPropertiesBySegment.Add("Media");
+			ommitPropertiesBySegment.Add("Language");
             ommitPropertiesBySegment.Add("CacheData");
         }
 
@@ -275,14 +281,16 @@ namespace FrameworkLibrary
 
             foreach (var property in properties)
             {
-                var ommit = false;
+				var strPropertyName = property.ToString();
+
+				var ommit = false;
                 var toProperty = to.GetType().GetProperty(property.Name);
 
                 if (toProperty == null) continue;
 
                 ommit = ommitPropertiesBySegment.Any(ommitPropertySegment =>
                 {
-                    if (property.Name.Contains(ommitPropertySegment))
+                    if (property.Name.StartsWith(ommitPropertySegment) && !property.Name.Contains("ID"))
                         return true;
 
                     return false;
@@ -337,7 +345,7 @@ namespace FrameworkLibrary
                 }
                 else
                 {
-                    if (value.GetType().GetInterface("IEnumerable") != null)
+                    if (!value.GetType().ToString().Contains("String") && value.GetType().GetInterface("IEnumerable") != null)
                     {
                         var dynValue = (dynamic)value;
                         int max = 0;
@@ -356,38 +364,66 @@ namespace FrameworkLibrary
                         }
                         else
                         {
-                            var tmpJson = "[";
                             var counter = 1;
+							var tmpJson = "";
 
-                            if (depthCount < maxDepthAllowed)
+							if (depthCount < maxDepthAllowed)
                             {
-                                foreach (var item in dynValue)
-                                {
-                                    //tmpJson += ObjectExtentions.ToJson(item, depthCount);
-                                    if (item.GetType().GetInterface("IEnumerator") != null)
-                                    {
-                                        tmpJson += ObjectExtentions.ToJson(item, depthCount);
-                                    }
-                                    else
-                                    {
-                                        tmpJson += item;
-                                    }
+								if (!dynValue.GetType().ToString().Contains("String"))
+								{
+									tmpJson = "[";
 
-                                    if (counter >= max)
-                                        continue;
-                                    tmpJson += ", ";
-                                    counter++;
-                                }
-                            }
+									foreach (var item in dynValue)
+									{
+										//tmpJson += ObjectExtentions.ToJson(item, depthCount);
+										/*if (item.GetType().GetInterface("IEnumerator") != null)
+										{*/
+											tmpJson +=  ObjectExtentions.ToJson(item, depthCount);
 
-                            tmpJson += "]";
+											if (counter >= max)
+												continue;
+
+											tmpJson += ", ";											
+										/*}
+										else
+										{
+											tmpJson += "\"" + dynValue + "\"";
+
+											if (counter >= max)
+												continue;
+
+											tmpJson += ", ";
+											counter++;
+
+											continue;
+										}*/
+									}									
+
+									tmpJson += "]";
+
+									if (tmpJson.Contains("}, ]"))
+									{
+										tmpJson = tmpJson.Replace("}, ]", "}]");
+									}
+									counter++;
+								}
+								else
+								{
+									tmpJson += "\"" + dynValue + "\"";
+
+									if (counter >= max)
+										continue;
+
+									tmpJson += ", ";
+								}
+                            }														
 
                             value = tmpJson;
                         }
                     }
                     else
                     {
-                        if (value is string || value is int || value is long || value is DateTime)
+                        if (!value.GetType().BaseType.GetInterfaces().Any())
                         {
                             value = "\"" + StringHelper.JavascriptStringEncode(value.ToString().Replace(System.Environment.NewLine, "")) + "\"";
                         }
@@ -395,7 +431,7 @@ namespace FrameworkLibrary
                         {
                             if (depthCount < maxDepthAllowed)
                             {
-                                depthCount = depthCount + 1;
+                                //depthCount = depthCount + 1;
                                 value = _ToJson(value, depthCount);
                             }
                             else
@@ -413,6 +449,12 @@ namespace FrameworkLibrary
 
                 if (ommit)
                     continue;
+
+
+				if (string.IsNullOrEmpty(value.ToString()))
+				{
+					value = "\""+value.ToString()+"\"";
+				}
 
                 json += "\"" + property.Name + "\" : " + value.ToString() + ", ";
             }

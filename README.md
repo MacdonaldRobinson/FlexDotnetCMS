@@ -19,7 +19,7 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 
 ## Programming
 - Programming in the CMS is done using C# and using the Razor Syntax
-- Code is compiled and run on the fly using the Razor Engine ( http://antaris.github.io/RazorEngine/ )
+- Code is compiled and run on the fly using Razor Engine ( http://antaris.github.io/RazorEngine/ )
 - You have access to the entire framework code, so you can pretty much do anything
 - There are several Database Mappers and Helpers that are included with the framework.
 - You can write Razor Code in any of the layout views in the CMS
@@ -40,7 +40,7 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 
 ## SEO
 - All pages automaticly get a search engine friendly URL, you have the ability to change the uri segment for the page from the CMS
-- Ability to change the SEO for every page: Page title, Meta Description, Meta Keywords, Link title ( Url Segment for the page )
+- Ability to change the SEO for every page: Page title, Meta Description, Meta Keywords, Meta Robots, Link title ( Url Segment for the page )
 - Ability to create 301 or 302 redirects. You can create your own url redirect rules, you can have it so that /oldpage is redirected to /about/contact/
 
 ## Caching

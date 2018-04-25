@@ -100,34 +100,33 @@
             }
 
             .field.hover {
-                outline: 2px dashed rgba(0,0,0, 0.5)!important;				
-				background-color: rgba(1,2,3,0.25);
+                border: 1px solid;
+				background-color: rgba(1,1,1,0.1);
             }
             .field .fieldControls a:hover {
-                /*background-color: red !important;*/  
 				color: red !important;
                 opacity: 1;
             }
             .field .fieldControls a {
-                /*float: right;*/
-                /*background-color: #000;*/
                 color: #000;
-                margin-right: 10px;
-                padding: 1px 3px;
-                /*opacity: .5;*/
-                font-size: 15px;
                 font-weight: bold;
+				font-size: 15px;
             }
                 .field .fieldControls a.remove {
                     display:none;
+					margin-left: 10px;
                 }
 
             .field .fieldControls.show {
-                display: block;
+                display: block;				
+				text-align: left;
             }
 
-            .field .field .fieldControls {
-                margin-top: -5px;
+    		.col > .field  .fieldControls.show {				
+    		}
+
+            .field .field .fieldControls {		
+				float: none;
             }
 
     </style>

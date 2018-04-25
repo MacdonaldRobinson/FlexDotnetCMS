@@ -176,16 +176,23 @@
             $("[data-fieldid]").each(function () {
                 var fieldId = $(this).attr("data-fieldid");
                 var fieldcode = $(this).attr("data-fieldcode");
-                var mediaId = $(this).attr("data-mediaid");                
+				var mediaId = $(this).attr("data-mediaid");    
+				var currentMediaId = "<%= BasePage.CurrentMedia.ID %>";
 
                 var removeField = "";
 
                 if ($(this).parents(".field").length == 0)
                 {
                     removeField ="<a class='remove' href='javascript:void(0)'>Remove Field</a>"
-                }
+				}
 
-                $(this).prepend("<div class='fieldControls'><a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='RefreshPage()' data-width='60%' data-height='80%'>Edit - {{Load:" + mediaId+"}.Field:" + fieldcode + "}</a>"+removeField+"<div class='clear'></div></div>");
+				var shortCode = "{{Load:" + mediaId + "}.Field:" + fieldcode + "}";
+
+				if (mediaId == currentMediaId) {
+					var shortCode = "{Field:" + fieldcode + "}";
+				}
+
+                $(this).prepend("<div class='fieldControls'><a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='RefreshPage()' data-width='60%' data-height='80%'>Edit - "+shortCode+"</a>"+removeField+"<div class='clear'></div></div>");
             });
 
             $(document).on("click", ".field .edit", function () {

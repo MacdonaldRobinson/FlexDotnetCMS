@@ -139,7 +139,8 @@
                 var toolBar = $("#ToolBarTemplate").clone();
                 toolBar.find(".ToolBar").css("display", "block");
 				toolBar.find(".AddField").css("display", "none");				
-                toolBar.find(".AddColumn").css("display", "none");
+				toolBar.find(".AddColumn").css("display", "none");
+				toolBar.find(".FullWidthToggle").css("display", "none");
                 toolBar.find(".DeleteColumn").css("display", "none");
                 toolBar.find(".IncreaseColumnSize").css("display", "none");
                 toolBar.find(".DecreaseColumnSize").css("display", "none");
@@ -196,7 +197,7 @@
                 var placeholder = ui.placeholder[0];
                 var item = ui.item[0];
 
-				$(placeholder).addClass($(item).attr("class"));   
+				//$(placeholder).addClass($(item).attr("class"));   
 				ui.placeholder.height(ui.helper.height());
             }
 

@@ -100,7 +100,7 @@
             }
 
             .field.hover {
-                border: 1px solid;
+                border: 1px dashed;
 				background-color: rgba(1,1,1,0.1);
             }
             .field .fieldControls a:hover {
@@ -120,6 +120,7 @@
             .field .fieldControls.show {
                 display: block;				
 				text-align: left;
+				margin-left:5px;
             }
 
     		.col > .field  .fieldControls.show {				

@@ -4,16 +4,27 @@
 }
 
 .row, .col {
-    padding: 25px 0 25px 0;
+	min-height: 100px;
+	margin-top: 10px;
+	padding-top: 25px;
 }
 
 .row {
-    margin: 10px;    
+	background-color: #ccc;	
+	margin-top: 10px;	
 }
 
-#PageContent .row.active, #PageContent .col.active {
-    border: 1px solid red;
+.col {
+	background-color: #ddd;
 }
+
+.col > .field {
+	background-color: #eee;
+}
+
+	#PageContent .row.active, #PageContent .col.active {
+		border: 1px solid red;
+	}
 
 #PageContent, .row, .col {    
     position: relative;
@@ -41,26 +52,22 @@
     font-weight: bold;
 }
 
-    .ToolBar a:hover {
-        background-color: yellow !important;
-        opacity: 1;
-    }
+	.ToolBar a:hover, .ToolBar a.active {
+		background-color: yellow !important;
+		opacity: 1;
+	}
 
 .ToolBar {
-    top: 0;
+    top: -4px;
     position: absolute;    
     display: none;
-    z-index: 999;
+    z-index: 999;	
     margin-left: 20px;
-}
-
-.UseMainLayout > .ToolBar {
-    margin-left: 0px;
 }
 
 
 .DeleteRow, .DeleteColumn, .IncreaseColumnSize, .DecreaseColumnSize, .UpdateClasses {
-    display: none;
+	display: none;
 }
 
 #PageContent > .Handle {

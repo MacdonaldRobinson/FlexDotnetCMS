@@ -49,8 +49,13 @@
 
         $.get(url, function (data) {
             try {
-                
-                $('.AddField.clicked').closest(".col").append(data);
+
+				if ($('.AddField.clicked').closest(".col").length > 0) {
+					$('.AddField.clicked').closest(".col").append(data);
+				}
+				else {
+					$('.AddField.clicked').closest("#PageContent").append(data);
+				}
             }
             catch (ex) {
 
@@ -133,7 +138,7 @@
             if ($(this).children(".ToolBar").length == 0) {
                 var toolBar = $("#ToolBarTemplate").clone();
                 toolBar.find(".ToolBar").css("display", "block");
-                toolBar.find(".AddField").css("display", "none");
+				toolBar.find(".AddField").css("display", "none");				
                 toolBar.find(".AddColumn").css("display", "none");
                 toolBar.find(".DeleteColumn").css("display", "none");
                 toolBar.find(".IncreaseColumnSize").css("display", "none");
@@ -150,10 +155,14 @@
                 toolBar.find(".AddRow").css("display", "none");
                 toolBar.find(".AddField").css("display", "none");
                 toolBar.find(".DeleteRow").css("display", "inline");
-                toolBar.find(".AddColumn").css("display", "inline");
+				toolBar.find(".AddColumn").css("display", "inline");				
                 toolBar.find(".DeleteColumn").css("display", "none");
                 toolBar.find(".IncreaseColumnSize").css("display", "none");
-                toolBar.find(".DecreaseColumnSize").css("display", "none");
+				toolBar.find(".DecreaseColumnSize").css("display", "none");
+
+				if ($(this).hasClass("full-width")) {
+					toolBar.find(".FullWidthToggle").addClass("active");
+				}
 
                 $(this).prepend(toolBar.html());
             }
@@ -164,26 +173,31 @@
                 var toolBar = $("#ToolBarTemplate").clone();
                 toolBar.find(".ToolBar").css("display", "block");
                 toolBar.find(".AddRow").css("display", "inline");
-                toolBar.find(".AddColumn").css("display", "none");
+				toolBar.find(".AddColumn").css("display", "none");
                 toolBar.find(".DeleteColumn").css("display", "inline");
                 toolBar.find(".IncreaseColumnSize").css("display", "inline");
-                toolBar.find(".DecreaseColumnSize").css("display", "inline");
+				toolBar.find(".DecreaseColumnSize").css("display", "inline");
+
+				if ($(this).hasClass("full-width")) {
+					toolBar.find(".FullWidthToggle").addClass("active");
+				}
 
                 $(this).prepend(toolBar.html());
             }
         });
 
-        $(".UseMainLayout, #PageContent").addClass("container-fluid");
+        //$(".UseMainLayout, #PageContent").addClass("container-fluid");
         BindDragDrop();
 
         function BindDragDrop()
         {
-            var placeHolderClasses = "selectable-element-placeholder";
+			var placeHolderClasses = "ui-state-highlight";//"selectable-element-placeholder";
             var startFunction = function (event, ui) {
                 var placeholder = ui.placeholder[0];
                 var item = ui.item[0];
 
-                $(placeholder).addClass($(item).attr("class"));   
+				$(placeholder).addClass($(item).attr("class"));   
+				ui.placeholder.height(ui.helper.height());
             }
 
             $("#PageContent, .UseMainLayout").sortable({
@@ -236,7 +250,7 @@
         });
 
         $(document).on("mouseout", ".UseMainLayout, .row, .col", function () {
-            $(this).children(".ToolBar").hide();
+            //$(this).children(".ToolBar").hide();
             $(this).removeClass("active");
         });
 
@@ -256,13 +270,13 @@
         $(document).on("click", ".AddRow", function () {
             var toolBar = $("#ToolBarTemplate").clone();
             toolBar.find(".AddRow").css("display", "none"); 
-            toolBar.find(".AddField").css("display", "none");
+			toolBar.find(".AddField").css("display", "none");			
             toolBar.find(".DeleteRow").css("display", "inline");
 
             var row = $("<div class='row'></div>");
             row.append(toolBar.html());
 
-            $(this).closest(".col, .container-fluid").append(row);
+            $(this).closest(".col, #PageContent").append(row);
 
             UpdateClassesFields();
             BindDragDrop()                        
@@ -273,7 +287,7 @@
             var toolBar = $("#ToolBarTemplate").clone();
             toolBar.find(".AddColumn").css("display", "none");
             toolBar.find(".AddField").css("display", "inline");
-            toolBar.find(".DeleteColumn").css("display", "inline");
+			toolBar.find(".DeleteColumn").css("display", "inline");			
             toolBar.find(".IncreaseColumnSize").css("display", "inline");            
             toolBar.find(".DecreaseColumnSize").css("display", "inline");
 
@@ -284,7 +298,20 @@
 
             UpdateClassesFields();
             BindDragDrop();            
-        });
+		});
+
+		$(document).on("click", ".FullWidthToggle", function () {
+			var colOrRow = $(this).closest(".ToolBar").parent();
+
+			colOrRow.toggleClass("full-width");
+
+			if (colOrRow.hasClass("full-width")) {
+				$(this).addClass("active");
+			}
+			else {
+				$(this).removeClass("active");
+			}
+		});
 
         $(document).on("click", ".AddField", function () {
 
@@ -407,11 +434,12 @@
 <div id="ToolBarTemplate" style="display:none;">    
     <a href="javascript:void(0)" class="Handle"><i class="fa fa-arrows" aria-hidden="true"></i></a>
     <div class="ToolBar">                
-        <a href="javascript:void(0)" class="AddRow">Add Row</a>
-        <a href="javascript:void(0)" class="AddColumn">Add Column</a>
-        <a href="javascript:void(0)" class="AddField">Add Field</a>
-        <a href="javascript:void(0)" class="DeleteRow">Delete Row</a>
-        <a href="javascript:void(0)" class="DeleteColumn">Delete Column</a>
+        <a href="javascript:void(0)" class="AddRow"><i class="fa fa-plus" aria-hidden="true"></i> Row</a>
+        <a href="javascript:void(0)" class="AddColumn"><i class="fa fa-plus" aria-hidden="true"></i> Column</a>		
+        <a href="javascript:void(0)" class="AddField"><i class="fa fa-plus" aria-hidden="true"></i> Field</a>
+        <a href="javascript:void(0)" class="DeleteRow"><i class="fa fa-trash" aria-hidden="true"></i> Row</a>
+        <a href="javascript:void(0)" class="DeleteColumn"><i class="fa fa-trash" aria-hidden="true"></i> Column</a>
+		<a href="javascript:void(0)" class="FullWidthToggle"><i class="fa fa-arrows-alt" aria-hidden="true"></i> Toggle</a>
         <a href="javascript:void(0)" class="IncreaseColumnSize">+</a>
         <a href="javascript:void(0)" class="DecreaseColumnSize">-</a>
         <input type="text" class="UpdateClasses" />

@@ -1,9 +1,4 @@
-﻿.UseMainLayout {
-    padding: 30px;
-    padding-top: 25px;
-}
-
-.row, .col {
+﻿.row, .col {
 	min-height: 100px;
 	margin-top: 10px;
 	padding-top: 25px;
@@ -22,9 +17,13 @@
 	background-color: #eee;
 }
 
-	#PageContent .row.active, #PageContent .col.active {
-		border: 1px solid red;
-	}
+#PageContent {
+	margin-bottom: 20px;
+}
+
+#PageContent .row.active, #PageContent .col.active {
+	border: 1px solid red;
+}
 
 #PageContent, .row, .col {    
     position: relative;

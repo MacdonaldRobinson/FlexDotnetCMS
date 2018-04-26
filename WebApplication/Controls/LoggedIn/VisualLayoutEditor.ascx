@@ -197,7 +197,7 @@
                 var placeholder = ui.placeholder[0];
                 var item = ui.item[0];
 
-				//$(placeholder).addClass($(item).attr("class"));   
+				$(placeholder).addClass($(item).attr("class"));   
 				ui.placeholder.height(ui.helper.height());
             }
 

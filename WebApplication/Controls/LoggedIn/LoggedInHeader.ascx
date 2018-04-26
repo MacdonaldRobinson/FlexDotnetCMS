@@ -274,8 +274,10 @@
                     }
 
                     $("#SlideTab").on("click", function () {
-                        $("#AccessCMSPermissionsPanel").slideToggle(function () {
-                            SetCMSShortcutsVisibility($(this).is(":visible"));
+						$("#AccessCMSPermissionsPanel").slideToggle(function () {
+							if (window.location.search.toLowerCase().indexOf("visuallayouteditor=true") == -1) {
+								SetCMSShortcutsVisibility($(this).is(":visible"));
+							}
                         });
                     });
 

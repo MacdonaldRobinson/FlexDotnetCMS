@@ -260,7 +260,15 @@
             $(".UpdateClasses").each(function () {
                 UpdateClassesField(this);
             });
-        }
+		}
+
+		function ScrollToElement(elem, animate) {
+			$('html,body').animate({ scrollTop: elem.offset().top }, 'slow', function () {
+				if (animate) {
+					elem.effect("highlight", {}, 200);
+				}
+			});
+		}
 
         function UpdateClassesField(elem)
         {
@@ -277,7 +285,9 @@
             var row = $("<div class='row'></div>");
             row.append(toolBar.html());
 
-            $(this).closest(".col, #PageContent").append(row);
+			$(this).closest(".col, #PageContent").append(row);
+
+			ScrollToElement(row, true);
 
             UpdateClassesFields();
             BindDragDrop()                        
@@ -295,7 +305,9 @@
             var column = $("<div class='col col-md-4'></div>");
             column.append(toolBar.html());
             
-            $(this).closest(".row").append(column);
+			$(this).closest(".row").append(column);
+
+			ScrollToElement(column, false);
 
             UpdateClassesFields();
             BindDragDrop();            
@@ -435,12 +447,12 @@
 <div id="ToolBarTemplate" style="display:none;">    
     <a href="javascript:void(0)" class="Handle"><i class="fa fa-arrows" aria-hidden="true"></i></a>
     <div class="ToolBar">                
-        <a href="javascript:void(0)" class="AddRow"><i class="fa fa-plus" aria-hidden="true"></i> Row</a>
-        <a href="javascript:void(0)" class="AddColumn"><i class="fa fa-plus" aria-hidden="true"></i> Column</a>		
-        <a href="javascript:void(0)" class="AddField"><i class="fa fa-plus" aria-hidden="true"></i> Field</a>
-        <a href="javascript:void(0)" class="DeleteRow"><i class="fa fa-trash" aria-hidden="true"></i> Row</a>
-        <a href="javascript:void(0)" class="DeleteColumn"><i class="fa fa-trash" aria-hidden="true"></i> Column</a>
-		<a href="javascript:void(0)" class="FullWidthToggle"><i class="fa fa-arrows-alt" aria-hidden="true"></i> Toggle</a>
+        <a href="javascript:void(0)" class="AddRow"><i class="fa fa-plus" aria-hidden="true"></i> Add Row</a>
+        <a href="javascript:void(0)" class="AddColumn"><i class="fa fa-plus" aria-hidden="true"></i> Add Column</a>		
+        <a href="javascript:void(0)" class="AddField"><i class="fa fa-plus" aria-hidden="true"></i> Add Field</a>
+        <a href="javascript:void(0)" class="DeleteRow"><i class="fa fa-trash" aria-hidden="true"></i> Delete Row</a>
+        <a href="javascript:void(0)" class="DeleteColumn"><i class="fa fa-trash" aria-hidden="true"></i> Delete Column</a>
+		<a href="javascript:void(0)" class="FullWidthToggle"><i class="fa fa-arrows-h" aria-hidden="true"></i> Stretch</a>
         <a href="javascript:void(0)" class="IncreaseColumnSize">+</a>
         <a href="javascript:void(0)" class="DecreaseColumnSize">-</a>
         <input type="text" class="UpdateClasses" />

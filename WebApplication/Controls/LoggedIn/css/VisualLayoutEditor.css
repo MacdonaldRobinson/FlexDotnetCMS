@@ -15,6 +15,8 @@
 
 .col > .field {
 	background-color: #eee;
+	min-height: 50px;
+	margin: 5px 0;
 }
 
 #PageContent {
@@ -64,6 +66,9 @@
     margin-left: 20px;
 }
 
+.ToolBar > a{
+	width: 50px;
+}
 
 .DeleteRow, .DeleteColumn, .IncreaseColumnSize, .DecreaseColumnSize, .UpdateClasses {
 	display: none;

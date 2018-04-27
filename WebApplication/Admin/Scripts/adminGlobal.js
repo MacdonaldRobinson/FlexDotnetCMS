@@ -1338,7 +1338,9 @@ function BindDataTable() {
 
         var extraOptions = $(this).attr("data-datatable-options");
 
-        if (extraOptions != undefined && extraOptions != "") {
+		if (extraOptions != undefined && extraOptions != "") {
+
+			//console.log(extraOptions);
 
             var extraOptionsJson = JSON.parse(extraOptions);
 

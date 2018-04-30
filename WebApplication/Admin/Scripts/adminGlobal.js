@@ -494,6 +494,12 @@ function launchIntoFullscreen(element) {
     }
 }
 
+function ScrollToElement(elemId) {
+	$('html, body').animate({
+		scrollTop: $("#" + elemId).offset().top
+	}, 2000);
+}
+
 function initAceEditors() {    
     var wordList = getFieldsAutoComplete();
 
@@ -523,8 +529,7 @@ function initAceEditors() {
         }*/
 
         launchIntoFullscreen(element);                
-    });
-
+	});
 
     $(".AceEditor").each(function () {        
 
@@ -546,10 +551,11 @@ function initAceEditors() {
             }
         }
 
-        if ($("#" + id).parent().find(".AceEditorFullScreen").length == 0)
-        {
-            $("#" + id).parent().prepend("<a class='AceEditorFullScreen' href='#' data-editorid='" + editorId +"'>View Full Screen</a><br />");
-        }        
+		if (!textarea.hasClass("NoFullScreen")) {
+			if ($("#" + id).parent().find(".AceEditorFullScreen").length == 0) {
+				$("#" + id).parent().prepend("<a class='AceEditorFullScreen' href='#' data-editorid='" + editorId + "'>View Full Screen</a><br />");
+			}
+		}
 
         var style = $(this).attr("style");
 
@@ -571,7 +577,18 @@ function initAceEditors() {
 
         editor.setTheme("ace/theme/iplastic");
         editor.setValue(textarea.val(), 1);
-        session.setMode("ace/mode/html");        
+
+		var aceMode = textarea.attr("data-acemode");
+
+		if (aceMode != undefined && aceMode != "")
+		{
+			session.setMode("ace/mode/" + aceMode);
+		}
+		else {
+			session.setMode("ace/mode/html");
+		}
+
+
         editor.$blockScrolling = Infinity;
         editor.$useWorker = false;
 
@@ -637,9 +654,13 @@ function initAceEditors() {
                 if (textarea.parent().find("#AttachEditorToBrowserPanel").is(":checked")) {
                     $("#PreviewPanel")[0].contentWindow.document.body.innerHTML = value;
                 }
-            }
+			}
+		});
 
-        });
+		if (textarea.hasClass("Wrap")) {
+			editor.getSession().setUseWrapMode(true);
+		}
+
     });
 }
 

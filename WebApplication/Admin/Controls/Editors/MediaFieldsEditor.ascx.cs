@@ -247,9 +247,10 @@ namespace WebApplication.Admin.Controls.Editors
             UseMediaTypeFieldDescription.Checked = mediaField.UseMediaTypeFieldDescription;            
             ShowFrontEndFieldEditor.Checked = mediaField.ShowFrontEndFieldEditor;
             IsGlobalField.Checked = mediaField.IsGlobalField;
-            UsageExample.Text = mediaField.UsageExample;            
+            UsageExample.Text = mediaField.UsageExample;
+			FieldJson.Text = mediaField.ToJson();
 
-            BindVisibility(mediaField);
+			BindVisibility(mediaField);
         }
 
         protected void ItemList_PageIndexChanging(object sender, System.Web.UI.WebControls.GridViewPageEventArgs e)
@@ -324,5 +325,31 @@ namespace WebApplication.Admin.Controls.Editors
                 ItemList.HeaderRow.TableSection = TableRowSection.TableHeader;
             }
         }
-    }
+
+		protected void LoadFromJson_Click(object sender, EventArgs e)
+		{
+			var text = LoadJson.Text.Trim();
+
+			if (!string.IsNullOrEmpty(text))
+			{
+				try
+				{
+					var newField = StringHelper.JsonToObject<MediaDetailField>(text);
+
+					newField.ID = 0;
+					newField.FieldLabel = newField.FieldLabel + " - Copied";
+					newField.FieldCode = "";
+					newField.UsageExample = "";
+
+					UpdatedFieldsFromObject(newField);
+
+					BasePage.DisplaySuccessMessage("Successfully loaded from JSON");
+				}
+				catch (Exception ex)
+				{
+					BasePage.DisplayErrorMessage("Error loading JSON: "+ ex.Message);
+				}
+			}
+		}
+	}
 }

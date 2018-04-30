@@ -40,6 +40,24 @@ namespace WebApplication.Admin.Controls.Editors {
         protected global::System.Web.UI.WebControls.GridView ItemList;
         
         /// <summary>
+        /// LoadJson control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox LoadJson;
+        
+        /// <summary>
+        /// LoadFromJson control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LoadFromJson;
+        
+        /// <summary>
         /// Update control.
         /// </summary>
         /// <remarks>
@@ -200,5 +218,14 @@ namespace WebApplication.Admin.Controls.Editors {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox FieldValue;
+        
+        /// <summary>
+        /// FieldJson control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox FieldJson;
     }
 }

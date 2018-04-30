@@ -75,6 +75,18 @@
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>
+
+            <div class="accordian closed">
+                <h3>Create Field from JSON</h3>
+                <div>
+					<asp:TextBox runat="server" TextMode="MultiLine" ID="LoadJson" class="AceEditor NoFullScreen Wrap" data-acemode="json" Height="200" Wrap="true"></asp:TextBox>
+					<div class="buttons">
+						<asp:LinkButton runat="server" ID="LoadFromJson" OnClick="LoadFromJson_Click">Load From Json</asp:LinkButton>						
+						<div class="clear"></div>
+					</div>
+                </div>
+            </div>
+
         </fieldset>
         <asp:Panel runat="server">
             <fieldset>
@@ -148,6 +160,10 @@
                     <div>
                         <asp:TextBox runat="server" ID="FieldValue" TextMode="MultiLine" />
                     </div>
+					<h3>Field JSON</h3>
+					<div>
+						<asp:TextBox runat="server" TextMode="MultiLine" ID="FieldJson" class="AceEditor NoFullScreen Wrap" data-acemode="json" Height="200"></asp:TextBox>
+					</div>
                 </div>
             </fieldset>
         </asp:Panel>

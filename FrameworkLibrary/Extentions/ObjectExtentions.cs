@@ -436,8 +436,9 @@ namespace FrameworkLibrary
                     {
                         if (!value.GetType().BaseType.GetInterfaces().Any())
                         {
-                            value = "\"" + StringHelper.JavascriptStringEncode(value.ToString().Replace(System.Environment.NewLine, "")) + "\"";
-                        }
+							value = "\"" + StringHelper.JavascriptStringEncode(value.ToString()) + "\"";
+							//value = "\"" + value.ToString() + "\"";
+						}
                         else if (value is object)
                         {
                             if (depthCount < maxDepthAllowed)

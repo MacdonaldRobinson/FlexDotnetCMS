@@ -907,24 +907,29 @@ namespace FrameworkLibrary
             var liveVersion = BaseMapper.GetObjectFromContext((MediaDetail)this.Media.GetLiveMediaDetail());
             var selectedItem = BaseMapper.GetObjectFromContext((MediaDetail)this);
 
-            IEnumerable<MediaDetail> items = liveVersion.History.ToList();
-
-            foreach (var item in items)
-            {
-                if (item.ID != selectedItem.ID)
-                {
-                    var tmpItem = BaseMapper.GetObjectFromContext(item);
-                    item.HistoryForMediaDetailID = selectedItem.ID;
-                }
-            }
-
             selectedItem.HistoryVersionNumber = 0;
             selectedItem.HistoryForMediaDetail = null;
             selectedItem.IsDraft = false;
             selectedItem.PublishDate = DateTime.Now;
-            //selectedItem.ShowInMenu = true;
+			//selectedItem.ShowInMenu = true;
 
-            foreach (var fieldAssociation in selectedItem.FieldAssociations)
+			IEnumerable<MediaDetail> items = new List<MediaDetail>();
+
+			if (liveVersion != null)
+			{
+				items = liveVersion.History.ToList();
+
+				foreach (var item in items)
+				{
+					if (item.ID != selectedItem.ID)
+					{
+						var tmpItem = BaseMapper.GetObjectFromContext(item);
+						item.HistoryForMediaDetailID = selectedItem.ID;
+					}
+				}
+			}
+
+			foreach (var fieldAssociation in selectedItem.FieldAssociations)
             {
                 var index = 1;
                 foreach (var history in fieldAssociation.MediaDetail.History)
@@ -957,7 +962,10 @@ namespace FrameworkLibrary
                     fieldAssociation.MediaDetail.HistoryVersionNumber = 0;
                 }
 
-                field.FrontEndSubmissions = liveVersion.LoadField(field.FieldCode)?.FrontEndSubmissions;
+				if (liveVersion != null)
+				{
+					field.FrontEndSubmissions = liveVersion.LoadField(field.FieldCode)?.FrontEndSubmissions;
+				}
             }
 
             foreach (var mediaTypeField in selectedItem.MediaType.Fields)
@@ -980,32 +988,37 @@ namespace FrameworkLibrary
             }
 
 
-            if (items.Any())
-            {
-                liveVersion.HistoryVersionNumber = items.OrderByDescending(i => i.HistoryVersionNumber).FirstOrDefault().HistoryVersionNumber + 1;
-            }
-            else
-            {
-                liveVersion.HistoryVersionNumber = 1;
-            }
+			if (liveVersion != null)
+			{
+				if (items.Any())
+				{
+					liveVersion.HistoryVersionNumber = items.OrderByDescending(i => i.HistoryVersionNumber).FirstOrDefault().HistoryVersionNumber + 1;
+				}
+				else
+				{
+					liveVersion.HistoryVersionNumber = 1;
+				}
 
-            liveVersion.HistoryForMediaDetail = (MediaDetail)selectedItem;
+				liveVersion.HistoryForMediaDetail = (MediaDetail)selectedItem;
 
-            var associations = BaseMapper.GetDataModel().FieldAssociations.Where(i => i.AssociatedMediaDetailID == liveVersion.ID);
 
-            foreach (var association in associations)
-            {
-                association.MediaDetail = (MediaDetail)selectedItem;
-            }
+				var associations = BaseMapper.GetDataModel().FieldAssociations.Where(i => i.AssociatedMediaDetailID == liveVersion.ID);
+
+				foreach (var association in associations)
+				{
+					association.MediaDetail = (MediaDetail)selectedItem;
+				}
+			}
 
             returnObj = MediaDetailsMapper.Update(selectedItem);
 
             if (!returnObj.IsError)
             {
-                liveVersion.HistoryForMediaDetailID = selectedItem.ID;                
-
-
-                returnObj = MediaDetailsMapper.Update(liveVersion);
+				if (liveVersion != null)
+				{
+					liveVersion.HistoryForMediaDetailID = selectedItem.ID;
+					returnObj = MediaDetailsMapper.Update(liveVersion);
+				}
 
                 if (!returnObj.IsError)
                 {

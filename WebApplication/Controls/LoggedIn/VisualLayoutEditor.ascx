@@ -509,7 +509,9 @@
 
             var newHtml = clone.html().trim();
 
-            newHtml = newHtml.replace(/^\s*\n/gm, '');            
+            newHtml = newHtml.replace(/^\s*\n/gm, '');
+			newHtml = newHtml.replace(/}\s*</gm, '}\n<');
+			newHtml = newHtml.replace(/}\s*{/gm, '}\n{');
             newHtml = html_beautify(newHtml, { preserve_newlines: true });
 
             $.post("/WebServices/IMediaDetails.asmx/SaveUseMainLayout", { mediaDetailId: mediaDetailId, html: encodeURI(newHtml) }, function (data) {                

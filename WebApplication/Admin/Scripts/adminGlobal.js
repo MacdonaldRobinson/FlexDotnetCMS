@@ -615,7 +615,8 @@ function initAceEditors() {
 
                     if (/@for|@if|@[\s]?{|Helper.|!=|List</.test(match)) {
                         return match;
-                    }
+					}
+
                     match = html_beautify(match);
                     return match;
                 });

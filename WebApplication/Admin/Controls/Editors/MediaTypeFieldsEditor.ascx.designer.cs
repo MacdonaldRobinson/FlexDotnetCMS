@@ -31,6 +31,42 @@ namespace WebApplication.Admin.Controls.Editors {
         protected global::System.Web.UI.WebControls.Button CopyFields;
         
         /// <summary>
+        /// ExportFields control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ExportFields;
+        
+        /// <summary>
+        /// ExportImportFieldsPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel ExportImportFieldsPanel;
+        
+        /// <summary>
+        /// ExportImportFieldsJson control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox ExportImportFieldsJson;
+        
+        /// <summary>
+        /// ImportFields control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ImportFields;
+        
+        /// <summary>
         /// ItemList control.
         /// </summary>
         /// <remarks>

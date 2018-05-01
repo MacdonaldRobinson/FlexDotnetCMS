@@ -1,4 +1,5 @@
 ﻿using FrameworkLibrary;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -351,5 +352,64 @@ namespace WebApplication.Admin.Controls.Editors
 				}
 			}
 		}
+
+		protected void ExportFields_Click(object sender, EventArgs e)
+		{
+			if (mediaDetail != null)
+			{
+				var json = mediaDetail.Fields.ToJson(2);
+				var jsonObj = JObject.Parse(json);
+
+				ExportImportFieldsJson.Text = jsonObj["Comparer"].ToString();
+				ExportImportFieldsPanel.Visible = true;
+			}
+		}
+
+		protected void ImportFields_Click(object sender, EventArgs e)
+		{
+			var importFields = StringHelper.JsonToObject<List<MediaDetailField>>(ExportImportFieldsJson.Text);
+
+			foreach (var field in importFields)
+			{
+				var foundField = mediaDetail.Fields.FirstOrDefault(i => i.FieldCode == field.FieldCode);
+
+				if (foundField != null)
+					continue;
+
+				field.ID = 0;
+				field.DateCreated = field.DateLastModified = DateTime.Now;
+
+				if (field.MediaTypeField?.MediaTypeID != mediaDetail.MediaTypeID)
+				{
+					field.UseMediaTypeFieldFrontEndLayout = false;
+					field.UseMediaTypeFieldDescription = false;
+					field.MediaTypeField = null;
+					field.MediaTypeFieldID = null;
+
+					var foundMediaTypeField = mediaDetail.MediaType.Fields.FirstOrDefault(i => i.FieldCode == field.FieldCode);
+
+					if (foundMediaTypeField != null)
+					{
+						field.MediaTypeFieldID = foundMediaTypeField.ID;
+					}
+				}
+
+				mediaDetail.Fields.Add(field);
+			}
+
+			var returnObj = MediaDetailsMapper.Update(mediaDetail);
+
+			if (returnObj.IsError)
+			{
+				BasePage.DisplayErrorMessage("Error", returnObj.Error);
+			}
+			else
+			{
+				BasePage.DisplaySuccessMessage("Successfully imported fields");
+			}
+
+			BindItemList();
+		}
+
 	}
 }

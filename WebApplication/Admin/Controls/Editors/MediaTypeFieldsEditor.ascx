@@ -57,8 +57,27 @@
         </fieldset><br>
         <fieldset>
             <legend>Currently Created Fields</legend>
+
+			<div class="buttons">
+				<asp:LinkButton runat="server" ID="ExportFields" OnClick="ExportFields_Click">Export / Import Fields</asp:LinkButton>
+				<div class="clear"></div>
+			</div>
+			<asp:Panel runat="server" ID="ExportImportFieldsPanel" Visible="false">			
+				<fieldset>
+					<legend>Fields JSON</legend>					
+					<div>
+						<asp:TextBox runat="server" TextMode="MultiLine" ID="ExportImportFieldsJson" class="AceEditor NoFullScreen Wrap" data-acemode="json" Height="200" Wrap="true"></asp:TextBox>
+					</div>
+					<div class="buttons">						
+						<asp:LinkButton runat="server" ID="ImportFields" OnClick="ImportFields_Click">Import Fields</asp:LinkButton>
+						<div class="clear"></div>
+					</div>	
+				</fieldset>					
+			</asp:Panel>
+			<br />
+
             <asp:GridView runat="server" ID="ItemList" CssClass="DragDropGrid" AutoGenerateColumns="false" AllowPaging="false" OnPageIndexChanging="ItemList_PageIndexChanging" PageSize="20" OnDataBound="ItemList_DataBound">
-                <Columns>
+                <Columns>					
                     <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
                     <asp:BoundField DataField="OrderIndex" HeaderText="OrderIndex" SortExpression="OrderIndex" />
                     <asp:BoundField DataField="FieldCode" HeaderText="FieldCode" SortExpression="FieldCode" />
@@ -76,20 +95,21 @@
                 </Columns>
             </asp:GridView>
 
-            <div class="accordian closed">
-                <h3>Create Field from JSON</h3>
-                <div>
-					<asp:TextBox runat="server" TextMode="MultiLine" ID="LoadJson" class="AceEditor NoFullScreen Wrap" data-acemode="json" Height="200" Wrap="true"></asp:TextBox>
-					<div class="buttons">
-						<asp:LinkButton runat="server" ID="LoadFromJson" OnClick="LoadFromJson_Click">Load From Json</asp:LinkButton>						
-						<div class="clear"></div>
-					</div>
-                </div>
-            </div>
-
         </fieldset>
         <asp:Panel runat="server">
             <fieldset>
+				<div class="accordian closed">
+					<h3>Load JSON Field</h3>
+					<div>
+						<div>
+							<asp:TextBox runat="server" TextMode="MultiLine" ID="LoadJson" class="AceEditor NoFullScreen Wrap" data-acemode="json" Height="200" Wrap="true"></asp:TextBox>
+						</div>
+						<div class="buttons">
+							<asp:LinkButton runat="server" ID="LoadFromJson" OnClick="LoadFromJson_Click">Load From Json</asp:LinkButton>						
+							<div class="clear"></div>
+						</div>
+					</div>
+				</div>
                  <div>
                     <div id="SaveFields" class="buttons">
                         <asp:LinkButton Text="Save" runat="server" ID="Update" OnClick="Update_Click" CssClass="SaveFieldButton" />

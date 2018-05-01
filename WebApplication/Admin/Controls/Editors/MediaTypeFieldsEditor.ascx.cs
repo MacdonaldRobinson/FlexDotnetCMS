@@ -1,4 +1,5 @@
 ﻿using FrameworkLibrary;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -279,61 +280,66 @@ namespace WebApplication.Admin.Controls.Editors
         }        
 
         protected void CopyFields_Click(object sender, EventArgs e)
-        {
-            var otherMediaType = MediaTypeSelector.GetSelectedMediaType();
+		{
+			var otherMediaType = MediaTypeSelector.GetSelectedMediaType();
 
-            foreach (var otherMediaTypeField in otherMediaType.Fields)
-            {
-                if(!mediaType.Fields.Any(i=>i.FieldCode == otherMediaTypeField.FieldCode))
-                {
-                    var mediaTypeField = new MediaTypeField();
-                    mediaTypeField.CopyFrom(otherMediaTypeField);
-                    mediaTypeField.DateCreated = mediaTypeField.DateLastModified = DateTime.Now;
+			ImportNewFields(otherMediaType.Fields);
+		}
 
-                    mediaType.Fields.Add(mediaTypeField);
+		private void ImportNewFields(IEnumerable<MediaTypeField> importFields)
+		{
+			foreach (var field in importFields)
+			{
+				if (!mediaType.Fields.Any(i => i.FieldCode == field.FieldCode))
+				{
+					var mediaTypeField = new MediaTypeField();
+					mediaTypeField.CopyFrom(field);
+					mediaTypeField.DateCreated = mediaTypeField.DateLastModified = DateTime.Now;
 
-                    foreach (var mediaDetail in mediaType.MediaDetails)
-                    {
-                        var mediaDetailField = new MediaDetailField();
-                        mediaDetailField.CopyFrom(mediaTypeField);
+					mediaType.Fields.Add(mediaTypeField);
 
-                        if (string.IsNullOrEmpty(mediaDetailField.UsageExample))
-                        {
-                            mediaDetailField.UsageExample = "{Field:" + mediaDetailField.FieldCode + "} OR {{Load:" + mediaDetail.MediaID + "}.Field:" + mediaDetailField.FieldCode + "}";
-                        }
+					foreach (var mediaDetail in mediaType.MediaDetails)
+					{
+						var mediaDetailField = new MediaDetailField();
+						mediaDetailField.CopyFrom(mediaTypeField);
 
-                        mediaDetailField.UseMediaTypeFieldFrontEndLayout = true;
-                        mediaDetailField.UseMediaTypeFieldDescription = true;
+						if (string.IsNullOrEmpty(mediaDetailField.UsageExample))
+						{
+							mediaDetailField.UsageExample = "{Field:" + mediaDetailField.FieldCode + "} OR {{Load:" + mediaDetail.MediaID + "}.Field:" + mediaDetailField.FieldCode + "}";
+						}
 
-                        if (mediaDetailField.FrontEndSubmissions == null)
-                            mediaDetailField.FrontEndSubmissions = "";
+						mediaDetailField.UseMediaTypeFieldFrontEndLayout = true;
+						mediaDetailField.UseMediaTypeFieldDescription = true;
 
-                        if (mediaDetailField.FieldSettings == null)
-                            mediaDetailField.FieldSettings = "";
+						if (mediaDetailField.FrontEndSubmissions == null)
+							mediaDetailField.FrontEndSubmissions = "";
 
-                        mediaDetailField.MediaTypeField = mediaTypeField;
+						if (mediaDetailField.FieldSettings == null)
+							mediaDetailField.FieldSettings = "";
 
-                        mediaDetailField.DateCreated = mediaDetailField.DateLastModified = DateTime.Now;
+						mediaDetailField.MediaTypeField = mediaTypeField;
 
-                        mediaDetailField.OrderIndex = mediaDetail.Fields.Count;
-                        mediaDetail.Fields.Add(mediaDetailField);
-                    }
-                }
-            }
+						mediaDetailField.DateCreated = mediaDetailField.DateLastModified = DateTime.Now;
 
-            var returnObj = MediaTypesMapper.Update(mediaType);
+						mediaDetailField.OrderIndex = mediaDetail.Fields.Count;
+						mediaDetail.Fields.Add(mediaDetailField);
+					}
+				}
+			}
 
-            if (!returnObj.IsError)
-            {
-                Bind();
-            }
-            else
-            {
-                BasePage.DisplayErrorMessage("Error", returnObj.Error);
-            }
-        }
+			var returnObj = MediaTypesMapper.Update(mediaType);
 
-        protected void ItemList_DataBound(object sender, EventArgs e)
+			if (!returnObj.IsError)
+			{
+				Bind();
+			}
+			else
+			{
+				BasePage.DisplayErrorMessage("Error", returnObj.Error);
+			}
+		}
+
+		protected void ItemList_DataBound(object sender, EventArgs e)
         {
             ItemList.UseAccessibleHeader = true;
             if (ItemList.HeaderRow != null)
@@ -369,5 +375,23 @@ namespace WebApplication.Admin.Controls.Editors
 			}
 		}
 
+		protected void ExportFields_Click(object sender, EventArgs e)
+		{
+			if (mediaType != null)
+			{
+				var json = mediaType.Fields.ToJson(2);
+				var jsonObj = JObject.Parse(json);				
+
+				ExportImportFieldsJson.Text = jsonObj["Comparer"].ToString();
+				ExportImportFieldsPanel.Visible = true;
+			}
+		}
+
+		protected void ImportFields_Click(object sender, EventArgs e)
+		{
+			var importFields = StringHelper.JsonToObject<List<MediaTypeField>>(ExportImportFieldsJson.Text);
+			ImportNewFields(importFields);
+			Bind();
+		}
 	}
 }

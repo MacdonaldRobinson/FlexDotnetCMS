@@ -202,8 +202,9 @@ namespace WebApplication.Admin.Controls.Editors
             ShowFrontEndFieldEditor.Checked = mediaTypeField.ShowFrontEndFieldEditor;
             IsGlobalField.Checked = mediaTypeField.IsGlobalField;
             UsageExample.Text = mediaTypeField.UsageExample;
-			FieldJson.Text = mediaTypeField.ToJson();
 
+			var jsonObj = JObject.Parse(mediaTypeField.ToJson());
+			FieldJson.Text = jsonObj.ToString();			
 		}
 
         protected void Cancel_Click(object sender, EventArgs e)
@@ -359,10 +360,6 @@ namespace WebApplication.Admin.Controls.Editors
 					var newField = StringHelper.JsonToObject<MediaTypeField>(text);
 
 					newField.ID = 0;
-					newField.FieldLabel = newField.FieldLabel + " - Copied";
-					newField.FieldCode = "";
-					newField.UsageExample = "";
-					//newField.FrontEndLayout = newField.FrontEndLayout.Replace("/n", "//n");
 
 					UpdatedFieldsFromObject(newField);
 

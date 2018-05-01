@@ -249,7 +249,9 @@ namespace WebApplication.Admin.Controls.Editors
             ShowFrontEndFieldEditor.Checked = mediaField.ShowFrontEndFieldEditor;
             IsGlobalField.Checked = mediaField.IsGlobalField;
             UsageExample.Text = mediaField.UsageExample;
-			FieldJson.Text = mediaField.ToJson();
+			
+			var jsonObj = JObject.Parse(mediaField.ToJson());
+			FieldJson.Text = jsonObj.ToString();
 
 			BindVisibility(mediaField);
         }
@@ -338,9 +340,6 @@ namespace WebApplication.Admin.Controls.Editors
 					var newField = StringHelper.JsonToObject<MediaDetailField>(text);
 
 					newField.ID = 0;
-					newField.FieldLabel = newField.FieldLabel + " - Copied";
-					newField.FieldCode = "";
-					newField.UsageExample = "";
 
 					UpdatedFieldsFromObject(newField);
 

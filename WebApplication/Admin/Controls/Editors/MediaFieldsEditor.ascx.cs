@@ -340,6 +340,7 @@ namespace WebApplication.Admin.Controls.Editors
 					var newField = StringHelper.JsonToObject<MediaDetailField>(text);
 
 					newField.ID = 0;
+					newField.UsageExample = "";
 
 					UpdatedFieldsFromObject(newField);
 

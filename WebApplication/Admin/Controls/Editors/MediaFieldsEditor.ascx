@@ -144,7 +144,7 @@
         <asp:Panel runat="server">
             <fieldset>
 				<div class="accordian closed">
-					<h3>Load JSON Field</h3>
+					<h3>Field JSON</h3>
 					<div>
 						<div>
 							<asp:TextBox runat="server" TextMode="MultiLine" ID="LoadJson" class="AceEditor NoFullScreen Wrap" data-acemode="json" Height="200" Wrap="true"></asp:TextBox>
@@ -240,10 +240,6 @@
                     <div>
                         <asp:TextBox runat="server" ID="FieldValue" TextMode="MultiLine" />
                     </div>
-					<h3>Field JSON</h3>
-					<div>
-						<asp:TextBox runat="server" TextMode="MultiLine" ID="FieldJson" class="AceEditor NoFullScreen Wrap" data-acemode="json" Height="200"></asp:TextBox>
-					</div>
                 </div>
 
             </fieldset>

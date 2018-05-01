@@ -204,7 +204,7 @@ namespace WebApplication.Admin.Controls.Editors
             UsageExample.Text = mediaTypeField.UsageExample;
 
 			var jsonObj = JObject.Parse(mediaTypeField.ToJson());
-			FieldJson.Text = jsonObj.ToString();			
+			LoadJson.Text = jsonObj.ToString();			
 		}
 
         protected void Cancel_Click(object sender, EventArgs e)

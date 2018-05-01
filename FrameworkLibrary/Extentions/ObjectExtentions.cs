@@ -16,7 +16,7 @@ namespace FrameworkLibrary
     {
         private static readonly List<string> ommitPropertiesBySegment = new List<string>();
         private static readonly List<string> ommitValuesBySegment = new List<string>();
-        private static int maxDepthAllowed = 100;
+        private static int maxDepthAllowed = 5;
 
         static ObjectExtentions()
         {
@@ -272,14 +272,12 @@ namespace FrameworkLibrary
 
         public static string ToJson(this object to, long toDepth = 1)
         {
-            var tmpMaxDepthAllowed = maxDepthAllowed;
+            //var tmpMaxDepthAllowed = maxDepthAllowed;
 
-            if (toDepth < maxDepthAllowed)
-                maxDepthAllowed = int.Parse(toDepth.ToString());
-
+            maxDepthAllowed = int.Parse(toDepth.ToString());
             var json = _ToJson(to, 1);
 
-            maxDepthAllowed = tmpMaxDepthAllowed;
+            //maxDepthAllowed = tmpMaxDepthAllowed;
 
             return json;
         }
@@ -352,7 +350,7 @@ namespace FrameworkLibrary
 
                 if ((isAssemblyObject) && (depthCount <= maxDepthAllowed))
                 {
-                    value = value.ToJson(depthCount + 1);
+					value = value._ToJson(depthCount);
                 }
                 else
                 {
@@ -379,22 +377,23 @@ namespace FrameworkLibrary
 							var tmpJson = "";
 
 							if (depthCount < maxDepthAllowed)
-                            {
+							{
 								if (!dynValue.GetType().ToString().Contains("String"))
 								{
 									tmpJson = "[";
 
+									depthCount = depthCount + 1;
 									foreach (var item in dynValue)
 									{
 										//tmpJson += ObjectExtentions.ToJson(item, depthCount);
 										/*if (item.GetType().GetInterface("IEnumerator") != null)
 										{*/
-											tmpJson +=  ObjectExtentions.ToJson(item, depthCount);
+										tmpJson += ObjectExtentions._ToJson(item, depthCount);
 
-											if (counter >= max)
-												continue;
+										if (counter >= max)
+											continue;
 
-											tmpJson += ", ";											
+										tmpJson += ", ";
 										/*}
 										else
 										{
@@ -408,7 +407,8 @@ namespace FrameworkLibrary
 
 											continue;
 										}*/
-									}									
+									}
+									depthCount = depthCount - 1;
 
 									tmpJson += "]";
 
@@ -427,9 +427,13 @@ namespace FrameworkLibrary
 
 									tmpJson += ", ";
 								}
-                            }														
 
-                            value = tmpJson;
+								value = tmpJson;
+							}
+							else
+							{
+								value = "[]";
+							}                            
                         }
                     }
                     else
@@ -442,8 +446,7 @@ namespace FrameworkLibrary
                         else if (value is object)
                         {
                             if (depthCount < maxDepthAllowed)
-                            {
-                                //depthCount = depthCount + 1;
+                            {                                
                                 value = _ToJson(value, depthCount);
                             }
                             else

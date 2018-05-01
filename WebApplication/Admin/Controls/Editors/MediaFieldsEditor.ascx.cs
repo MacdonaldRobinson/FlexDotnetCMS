@@ -251,7 +251,7 @@ namespace WebApplication.Admin.Controls.Editors
             UsageExample.Text = mediaField.UsageExample;
 			
 			var jsonObj = JObject.Parse(mediaField.ToJson());
-			FieldJson.Text = jsonObj.ToString();
+			LoadJson.Text = jsonObj.ToString();
 
 			BindVisibility(mediaField);
         }

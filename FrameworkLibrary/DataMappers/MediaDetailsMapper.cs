@@ -1200,16 +1200,16 @@ namespace FrameworkLibrary
             if (mediaDetail == null)
                 return "";
 
-            var customCode = propertyName;
+            var customCode = propertyName;		
 
-            if (customCode.Contains("{{Load"))
+			if (customCode.Contains("{{Load"))
             {
-                /*if (customCode.Contains("@"))
-                {
-                    customCode = ParserHelper.ParseData(customCode, new RazorFieldParams { MediaDetail = mediaDetail });
-                }*/
+				/*if (customCode.Contains("@"))
+				{
+					customCode = ParserHelper.ParseData(customCode, new RazorFieldParams { MediaDetail = mediaDetail, Field = new MediaDetailField(), Control = new  Control()});
+				}*/
 
-                /*customCode = Regex.Replace(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:@).?&' }]+", me =>
+				/*customCode = Regex.Replace(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:@).?&' }]+", me =>
                 {
                     var shortCode = me.Value;
 
@@ -1256,7 +1256,7 @@ namespace FrameworkLibrary
                     return shortCode;
                 }, RegexOptions.IgnoreCase);*/
 
-                var loadMediaDetailsProperty = Regex.Matches(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:@).?&' }]+");
+				var loadMediaDetailsProperty = Regex.Matches(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:@).?&' }]+");
 
                 foreach (var item in loadMediaDetailsProperty)
                 {
@@ -1573,16 +1573,19 @@ namespace FrameworkLibrary
                         }
 
                         if (!string.IsNullOrEmpty(frontEndLayout))
-                        {
+                        {							
                             var parsedValue = ParseSpecialTags(mediaDetail, frontEndLayout, 0, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments });
-                            customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, parsedValue, includeFieldWrapper, arguments);
+							//var parsedValue = ParserHelper.ParseData(frontEndLayout, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments });
+							customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, parsedValue, includeFieldWrapper, arguments);
                         }
                         else
                         {
                             if (mediaField.GetAdminControlValue.Contains("@"))
                             {
-                                var parsedValue = ParseSpecialTags(mediaDetail, mediaField.FieldValue, 0, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments });
-                                customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, parsedValue, includeFieldWrapper, arguments);
+								var parsedValue = ParseSpecialTags(mediaDetail, mediaField.FieldValue, 0, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments });
+								//var parsedValue = ParserHelper.ParseData(mediaField.FieldValue, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments });
+
+								customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, parsedValue, includeFieldWrapper, arguments);
                                 //customCode = customCode.Replace(field.ToString(), parsedValue);
                             }
                             else

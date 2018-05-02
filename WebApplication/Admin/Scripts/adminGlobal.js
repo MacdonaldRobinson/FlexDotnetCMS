@@ -618,7 +618,7 @@ function initAceEditors() {
 
         editor.completers = [langTools.snippetCompleter, langTools.textCompleter, customCompleter]
 
-        var htmlBeautifyOptions = {
+		var htmlBeautifyOptions = {			
         };
 
         editor.commands.addCommand({
@@ -630,11 +630,11 @@ function initAceEditors() {
                 // TODO: Format HTML
                 value = value.replace(/<[^]+/, function (match) {
 
-                    if (/@for|@if|@[\s]?{|Helper.|!=|List</.test(match)) {
+                    if (/@for|@if|@[\s]?{|@{|Helper.|!=|List</.test(match)) {
                         return match;
 					}
 
-                    match = html_beautify(match);
+					match = html_beautify(match, htmlBeautifyOptions);
                     return match;
                 });
 

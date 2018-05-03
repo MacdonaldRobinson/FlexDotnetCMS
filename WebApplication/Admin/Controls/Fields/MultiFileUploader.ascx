@@ -15,7 +15,7 @@
             });
         });
 
-    </script>
+    </script>	
 
     <asp:UpdatePanel runat="server" ID="AdminUpdatePanel" class="AdminUpdatePanel MultiFileUploader">
         <ContentTemplate>
@@ -77,7 +77,9 @@
                     <Columns>     
                         <asp:TemplateField HeaderText="">
                             <ItemTemplate>
-                                <img src="<%# Item.MediaDetail.PathToFile  %>" style="max-width:100px; max-height: 100px;"/>
+								<div style="text-align: center;">
+									<img src="<%# (!string.IsNullOrEmpty(Item.MediaDetail.PathToFile)? Item.MediaDetail.PathToFile : "/media/images/icons/File.jpg")  %>" style="max-width:100px; max-height: 50px;"/>
+								</div>
                             </ItemTemplate>
                         </asp:TemplateField>						
                         <asp:BoundField DataField="MediaDetail.SectionTitle" HeaderText="Section Title" SortExpression="MediaDetail.SectionTitle" ItemStyle-HorizontalAlign="Center"/>                        

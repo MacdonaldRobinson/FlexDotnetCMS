@@ -26,5 +26,10 @@ namespace FrameworkLibrary
 
             return usageExample;
         }
-    }
+
+		public List<FieldAssociation> GetPublishedFieldAssociations()
+		{
+			return this.FieldAssociations.ToList().Where(i => i.MediaDetail.IsPublished).ToList();
+		}
+	}
 }

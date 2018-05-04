@@ -99,21 +99,23 @@
                 display:none !important;
             }
 
-            .field.hover {
+            .field:not(.hide).hover, .field:not(.hide):hover {
                 outline: 2px dotted;
 				background-color: rgba(1,1,1,0.1);
             }
+
             .field .fieldControls a:hover {				
                 opacity: 1;
+				color: red;
 				/*background-color: red;*/
             }
-            .field .fieldControls a {
+            .field .fieldControls a {				
 				color: #000;
 				font-weight: bold;
 				font-size: 12px;
 				/*background-color: #000;*/
 				padding: 2px;
-				opacity: 0.5;
+				opacity: 1;
             }
                 .field .fieldControls a.remove {
                     display:none;

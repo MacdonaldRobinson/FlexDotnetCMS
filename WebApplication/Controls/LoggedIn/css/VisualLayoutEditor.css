@@ -5,16 +5,16 @@
 }
 
 .row {
-	background-color: #ccc;	
+	/*background-color: #ccc;*/	
 	margin-top: 10px;	
 }
 
 .col {
-	background-color: #ddd;
+	/*background-color: #ddd;*/
 }
 
 .col > .field {
-	background-color: #eee;
+	/*background-color: #eee;*/
 	min-height: 50px;
 	margin: 5px 0;
 }
@@ -24,7 +24,7 @@
 }
 
 #PageContent .row.active, #PageContent .col.active {
-	border: 1px solid red;
+	/*border: 1px solid red;*/
 }
 
 #PageContent, .row, .col {    
@@ -35,9 +35,10 @@
         border: 1px dotted;
     }*/
 
-    .row .col {
-        border: 1px dotted;
-    }
+	.row .col {
+		outline: 1px dotted;
+		/*border: 1px dotted;*/
+	}
 
 #ToolBarTemplate {
     display: none;
@@ -47,7 +48,7 @@
     padding: 1px 3px;
     border: 1px solid;
     color: #000;
-    background-color: orange;
+    /*background-color: orange;*/
     opacity: 1;
     font-size: 12px;
     font-weight: bold;
@@ -61,7 +62,7 @@
 .ToolBar {
     top: -4px;
     position: absolute;    
-    display: none;
+    /*display: none;*/
     z-index: 999;	
     margin-left: 20px;
 }
@@ -91,6 +92,6 @@
 
 
 .fieldWrapper {
-    border: 1px dotted #000;
-    padding: 10px;
+    outline: 1px dotted #000;
+    /*padding: 10px;*/
 }

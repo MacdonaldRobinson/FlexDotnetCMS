@@ -100,18 +100,18 @@
             }
 
             .field.hover {
-                border: 1px dashed;
-				background-color: rgba(1,1,1,0.1);
+                outline: 1px dashed;
+				/*background-color: rgba(1,1,1,0.1);*/
             }
             .field .fieldControls a:hover {				
                 opacity: 1;
-				background-color: red;
+				/*background-color: red;*/
             }
             .field .fieldControls a {
-				color: #fff;
+				color: #000;
 				font-weight: bold;
 				font-size: 12px;
-				background-color: #000;
+				/*background-color: #000;*/
 				padding: 2px;
 				opacity: 0.5;
             }
@@ -188,7 +188,7 @@
 
                 if ($(this).parents(".field").length == 0)
                 {
-                    removeField ="<a class='remove' href='javascript:void(0)'><i class='fa fa-trash' aria-hidden='true'></i> Remove Field</a>"
+                    removeField ="<a class='remove' href='javascript:void(0)'><i class='fa fa-trash' aria-hidden='true'></i></a>"
 				}
 
 				var shortCode = "{{Load:" + mediaId + "}.Field:" + fieldcode + "}";
@@ -197,7 +197,7 @@
 					var shortCode = "{Field:" + fieldcode + "}";
 				}
 
-                $(this).prepend("<div class='fieldControls'><a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='RefreshPage()' data-width='60%' data-height='80%' title="+shortCode+"><i class='fa fa-pencil' aria-hidden='true'></i> Edit Field</a>"+removeField+"<div class='clear'></div></div>");
+                $(this).prepend("<div class='fieldControls'><a class='edit colorbox iframe' href='" + BaseUrl + "Admin/Views/PageHandlers/FieldEditor/Default.aspx?fieldId=" + fieldId + "' data-OnColorboxClose='RefreshPage()' data-width='60%' data-height='80%' title="+shortCode+"><i class='fa fa-pencil' aria-hidden='true'></i></a>"+removeField+"<div class='clear'></div></div>");
             });
 
             $(document).on("click", ".field .edit", function () {

@@ -21,7 +21,7 @@
 <style>
     .selectable-element-placeholder {
         border: 1px dashed;
-        background-color: lightgray;
+        /*background-color: lightgray;*/
         opacity: .5;
     }
 
@@ -246,7 +246,7 @@
         }
 
         $(document).on("mouseover", ".UseMainLayout, .row, .col", function () {
-            $(this).children(".ToolBar").show();
+            //$(this).children(".ToolBar").show();
             $(this).addClass("active");
         });
 

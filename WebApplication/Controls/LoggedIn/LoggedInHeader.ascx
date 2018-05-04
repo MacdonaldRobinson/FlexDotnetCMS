@@ -100,8 +100,8 @@
             }
 
             .field.hover {
-                outline: 1px dashed;
-				/*background-color: rgba(1,1,1,0.1);*/
+                outline: 2px dotted;
+				background-color: rgba(1,1,1,0.1);
             }
             .field .fieldControls a:hover {				
                 opacity: 1;

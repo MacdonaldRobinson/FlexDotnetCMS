@@ -24,8 +24,10 @@
 }
 
 #PageContent .row.active, #PageContent .col.active {
-	/*border: 1px solid red;*/
+	outline: 2px dotted;
+	background-color: rgba(1,1,1,0.1);
 }
+
 
 #PageContent, .row, .col {    
     position: relative;
@@ -36,7 +38,7 @@
     }*/
 
 	.row .col {
-		outline: 1px dotted;
+		/*outline: 1px dotted;*/
 		/*border: 1px dotted;*/
 	}
 

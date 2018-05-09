@@ -882,7 +882,7 @@ namespace FrameworkLibrary
 
         public List<FieldAssociation> GetPublishedFieldAssociations()
         {
-            return this.FieldAssociations.ToList().Where(i => i.MediaDetail.IsPublished).ToList();
+            return this.FieldAssociations.ToList().Where(i => i.MediaDetail.IsPublished).OrderBy(i=>i.OrderIndex).ToList();
         }
 
 		public Return RunOnPublishExecuteCode()

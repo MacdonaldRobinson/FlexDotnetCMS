@@ -183,12 +183,14 @@
 					toolBar.find(".FullWidthToggle").addClass("active");
 				}
 
-                $(this).prepend(toolBar.html());
+				$(this).prepend(toolBar.html());				
             }
         });
 
         //$(".UseMainLayout, #PageContent").addClass("container-fluid");
-        BindDragDrop();
+		BindDragDrop();
+
+		UpdateClassesFields();
 
         function BindDragDrop()
         {
@@ -243,7 +245,7 @@
                 forcePlaceholderSize: true,
                 start: startFunction
             });            
-        }
+		}
 
         $(document).on("mouseover", ".UseMainLayout, .row, .col", function () {
             //$(this).children(".ToolBar").show();
@@ -271,8 +273,11 @@
 		}
 
         function UpdateClassesField(elem)
-        {
-            var classes = $(elem).closest(".ToolBar").parent().attr("class");
+		{
+			var cloneElem = $(elem).closest(".ToolBar").parent().clone();
+			cloneElem.removeClass("active");
+			cloneElem.removeClass("ui-sortable");			
+            var classes = cloneElem.attr("class");
             $(elem).val(classes);
         }
 
@@ -324,6 +329,8 @@
 			else {
 				$(this).removeClass("active");
 			}
+
+			UpdateClassesFields();
 		});
 
         $(document).on("click", ".AddField", function () {
@@ -372,7 +379,13 @@
         });
 
 
-        $(document).on("keyup", ".UpdateClasses", function () {
+		$(document).on("keyup", ".UpdateClasses", function (event) {
+
+			if (event.which == 32 || event.which == 13)
+				return;
+
+			console.log(event.which);
+
             var wrapper = $(this).closest(".ToolBar").parent();
             var classes = $(this).val();
 
@@ -398,14 +411,46 @@
 
         $(document).on("click", ".IncreaseColumnSize, .DecreaseColumnSize", function () {
             var rootElement = $(this);
-            var wrapper = $(this).closest(".ToolBar").parent();
-            var classes = wrapper.attr("class").split(' ');
+			var wrapper = $(this).closest(".ToolBar").parent();
+			var classesStr = wrapper.attr("class");
+			var seperator = "-";
+			var currentWindowWidth = $(window).width();
+
+			if (currentWindowWidth < 576) {
+				seperator = "col-";
+			}
+			else if (currentWindowWidth >= 576 && currentWindowWidth < 768) {
+				seperator = "col-sm-";
+			}
+			else if (currentWindowWidth >= 768 && currentWindowWidth < 992) {
+				seperator = "col-md-";
+			}
+			else if (currentWindowWidth >= 992 && currentWindowWidth < 1200) {
+				seperator = "col-lg-";
+			}
+			else if (currentWindowWidth >= 1200) {
+				seperator = "col-xl-";
+			}
+
+			var regExpression = seperator + "[0-9]+";
+			var regEx = new RegExp(regExpression,"gi"); 
+
+			if (!regEx.test(classesStr)) {
+				classesStr = classesStr + " " + seperator+"6";
+			}
+
+			var classes = classesStr.split(' ');
 
             $(classes).each(function (index) {
-                var updateClass = false;
-                var segments = this.split('-');
-                $(segments).each(function (index) {
-                    var number = parseInt(this);
+				var updateClass = false;								
+				
+				var segments = this.split(seperator);				
+
+				$(segments).each(function (index) {
+
+					var numberStr = this.replace(seperator, "");
+					var number = parseInt(this);									
+
                     if (number == this)
                     {
                         updateClass = true;
@@ -426,9 +471,9 @@
                             segments[index] = newNumber;                        
                         }
                     }                    
-                });
+				});
 
-                var newClass = segments.join('-');
+                var newClass = segments.join(seperator);
 
                 if (this != newClass)
                 {
@@ -438,7 +483,9 @@
 
             var updatedClasses = classes.join(' ');
 
-            wrapper.attr("class", updatedClasses); 
+			wrapper.attr("class", updatedClasses); 
+
+			UpdateClassesFields();
 
         });        
     }

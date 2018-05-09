@@ -73,12 +73,17 @@
 	width: 50px;
 }
 
-.DeleteRow, .DeleteColumn, .IncreaseColumnSize, .DecreaseColumnSize, .UpdateClasses {
+.DeleteRow, .DeleteColumn, .IncreaseColumnSize, .DecreaseColumnSize {
 	display: none;
 }
 
+.UpdateClasses {
+	font-size: 10px;
+	width: 200px;
+}
+
 #PageContent > .Handle {
-    display: none;
+	display: none;
 }
 
 .Handle {

@@ -15,9 +15,11 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldSelector
             var mediaDetailIdStr = Request["mediaDetailId"];
 
             if (!string.IsNullOrEmpty(mediaDetailIdStr))
-            {                
-                var mediaDetailId = long.Parse(mediaDetailIdStr);
-                var mediaDetail = MediaDetailsMapper.GetByID(mediaDetailId);
+            {
+				long mediaDetailId = 0;
+				long.TryParse(mediaDetailIdStr, out mediaDetailId);
+
+				var mediaDetail = MediaDetailsMapper.GetByID(mediaDetailId);
 
                 if (mediaDetail != null)
                 {

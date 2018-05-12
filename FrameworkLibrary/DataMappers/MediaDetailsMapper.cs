@@ -1122,11 +1122,11 @@ namespace FrameworkLibrary
             {
                 if (masterPage.UseLayout)
                 {
-          					//var html = masterPage.Layout.Replace("{PageContent}", $"<div id='PageContent' data-mediadetailid='{mediaDetail.ID}' data-mediaid='{mediaDetail.MediaID}'>\r\n{mediaDetail.UseMainLayout}\r\n</div>");
+          			//var html = masterPage.Layout.Replace("{PageContent}", $"<div id='PageContent' data-mediadetailid='{mediaDetail.ID}' data-mediaid='{mediaDetail.MediaID}'>\r\n{mediaDetail.UseMainLayout}\r\n</div>");
           
-          					var html = masterPage.Layout.Replace("{PageContent}", $"{mediaDetail.UseMainLayout}");
+          			var html = masterPage.Layout.Replace("{PageContent}", $"{mediaDetail.UseMainLayout}");
           
-          					var parseTemplateLayout = ParseSpecialTags(mediaDetail, html);
+          			var parseTemplateLayout = ParseSpecialTags(mediaDetail, html);
 
                     //html = masterPage.Layout.Replace("{PageContent}", html);
 

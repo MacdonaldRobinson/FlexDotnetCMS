@@ -13,7 +13,7 @@ namespace WebApplication.Admin.Controls.Generic
     {
         protected void Page_Init(object sender, EventArgs e)
         {
-            CommentsList.DataSource = BaseMapper.GetDataModel().Comments.Where(i=>i.Status == Status.ToString() && i.LanguageID == AdminBasePage.CurrentLanguage.ID).OrderByDescending(i=>i.DateCreated).ToList();
+			CommentsList.DataSource = AdminBasePage.SelectedMedia.Comments.Where(i=>i.Status == Status.ToString() && i.LanguageID == AdminBasePage.CurrentLanguage.ID).OrderByDescending(i=>i.DateCreated).ToList();
             CommentsList.DataBind();
         }
 
@@ -34,7 +34,7 @@ namespace WebApplication.Admin.Controls.Generic
                 else
                 {
                     BasePage.DisplaySuccessMessage("Successfully Deleted Comment");
-                    BasePage.ExecuteRawJS("UpdateCommentsTab();");
+                    BasePage.ExecuteRawJS("UpdateCommentsTab(); RefreshSiteTreeNodeById(" + AdminBasePage.SelectedMedia.ParentMediaID + "); ReloadPreviewPanel(); ");
                 }
             }
         }
@@ -69,8 +69,8 @@ namespace WebApplication.Admin.Controls.Generic
                 else
                 {
                     BasePage.DisplaySuccessMessage("Successfully Updated Comment");
-                    BasePage.ExecuteRawJS("UpdateCommentsTab();");
-                }
+					BasePage.ExecuteRawJS("UpdateCommentsTab(); RefreshSiteTreeNodeById(" + AdminBasePage.SelectedMedia.ParentMediaID + "); ReloadPreviewPanel(); ");
+				}
             }
         }
 

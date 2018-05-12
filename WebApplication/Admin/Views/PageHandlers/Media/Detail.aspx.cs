@@ -393,6 +393,10 @@ namespace WebApplication.Admin.MediaArticle
             {
                 DisplaySuccessMessage("Successfully Published Item");
 
+				var mediaId = (selectedItem.Media.ParentMediaID != null) ? selectedItem.Media.ParentMediaID : selectedItem.MediaID;
+
+				ExecuteRawJS("RefreshSiteTreeNodeById("+ mediaId + "); ReloadPreviewPanel();");
+
                 UpdateFieldsFromObject();
 
                 PublishNow.Visible = false;

@@ -28,7 +28,146 @@
     #PageContent {
         padding-top: 20px;
     }
+
+	#OtherOptions {
+		display: none;
+	}
+
 </style>
+
+
+<div id="OtherOptions" title="Other Options">
+  <div>
+	  <label>Element Classes</label>
+	  <input type="text" id="ElementClasses" />
+  </div>
+  <div>
+	  <label>Animate CSS</label>
+	  <select id="ElementAnimateCss">
+		<option value="" selected="selected">--- No Animate Classes ---</option>
+
+        <optgroup label="Attention Seekers">
+          <option value="bounce">bounce</option>
+          <option value="flash">flash</option>
+          <option value="pulse">pulse</option>
+          <option value="rubberBand">rubberBand</option>
+          <option value="shake">shake</option>
+          <option value="swing">swing</option>
+          <option value="tada">tada</option>
+          <option value="wobble">wobble</option>
+          <option value="jello">jello</option>
+        </optgroup>
+
+        <optgroup label="Bouncing Entrances">
+          <option value="bounceIn">bounceIn</option>
+          <option value="bounceInDown">bounceInDown</option>
+          <option value="bounceInLeft">bounceInLeft</option>
+          <option value="bounceInRight">bounceInRight</option>
+          <option value="bounceInUp">bounceInUp</option>
+        </optgroup>
+
+        <optgroup label="Bouncing Exits">
+          <option value="bounceOut">bounceOut</option>
+          <option value="bounceOutDown">bounceOutDown</option>
+          <option value="bounceOutLeft">bounceOutLeft</option>
+          <option value="bounceOutRight">bounceOutRight</option>
+          <option value="bounceOutUp">bounceOutUp</option>
+        </optgroup>
+
+        <optgroup label="Fading Entrances">
+          <option value="fadeIn">fadeIn</option>
+          <option value="fadeInDown">fadeInDown</option>
+          <option value="fadeInDownBig">fadeInDownBig</option>
+          <option value="fadeInLeft">fadeInLeft</option>
+          <option value="fadeInLeftBig">fadeInLeftBig</option>
+          <option value="fadeInRight">fadeInRight</option>
+          <option value="fadeInRightBig">fadeInRightBig</option>
+          <option value="fadeInUp">fadeInUp</option>
+          <option value="fadeInUpBig">fadeInUpBig</option>
+        </optgroup>
+
+        <optgroup label="Fading Exits">
+          <option value="fadeOut">fadeOut</option>
+          <option value="fadeOutDown">fadeOutDown</option>
+          <option value="fadeOutDownBig">fadeOutDownBig</option>
+          <option value="fadeOutLeft">fadeOutLeft</option>
+          <option value="fadeOutLeftBig">fadeOutLeftBig</option>
+          <option value="fadeOutRight">fadeOutRight</option>
+          <option value="fadeOutRightBig">fadeOutRightBig</option>
+          <option value="fadeOutUp">fadeOutUp</option>
+          <option value="fadeOutUpBig">fadeOutUpBig</option>
+        </optgroup>
+
+        <optgroup label="Flippers">
+          <option value="flip">flip</option>
+          <option value="flipInX">flipInX</option>
+          <option value="flipInY">flipInY</option>
+          <option value="flipOutX">flipOutX</option>
+          <option value="flipOutY">flipOutY</option>
+        </optgroup>
+
+        <optgroup label="Lightspeed">
+          <option value="lightSpeedIn">lightSpeedIn</option>
+          <option value="lightSpeedOut">lightSpeedOut</option>
+        </optgroup>
+
+        <optgroup label="Rotating Entrances">
+          <option value="rotateIn">rotateIn</option>
+          <option value="rotateInDownLeft">rotateInDownLeft</option>
+          <option value="rotateInDownRight">rotateInDownRight</option>
+          <option value="rotateInUpLeft">rotateInUpLeft</option>
+          <option value="rotateInUpRight">rotateInUpRight</option>
+        </optgroup>
+
+        <optgroup label="Rotating Exits">
+          <option value="rotateOut">rotateOut</option>
+          <option value="rotateOutDownLeft">rotateOutDownLeft</option>
+          <option value="rotateOutDownRight">rotateOutDownRight</option>
+          <option value="rotateOutUpLeft">rotateOutUpLeft</option>
+          <option value="rotateOutUpRight">rotateOutUpRight</option>
+        </optgroup>
+
+        <optgroup label="Sliding Entrances">
+          <option value="slideInUp">slideInUp</option>
+          <option value="slideInDown">slideInDown</option>
+          <option value="slideInLeft">slideInLeft</option>
+          <option value="slideInRight">slideInRight</option>
+
+        </optgroup>
+        <optgroup label="Sliding Exits">
+          <option value="slideOutUp">slideOutUp</option>
+          <option value="slideOutDown">slideOutDown</option>
+          <option value="slideOutLeft">slideOutLeft</option>
+          <option value="slideOutRight">slideOutRight</option>
+          
+        </optgroup>
+        
+        <optgroup label="Zoom Entrances">
+          <option value="zoomIn">zoomIn</option>
+          <option value="zoomInDown">zoomInDown</option>
+          <option value="zoomInLeft">zoomInLeft</option>
+          <option value="zoomInRight">zoomInRight</option>
+          <option value="zoomInUp">zoomInUp</option>
+        </optgroup>
+        
+        <optgroup label="Zoom Exits">
+          <option value="zoomOut">zoomOut</option>
+          <option value="zoomOutDown">zoomOutDown</option>
+          <option value="zoomOutLeft">zoomOutLeft</option>
+          <option value="zoomOutRight">zoomOutRight</option>
+          <option value="zoomOutUp">zoomOutUp</option>
+        </optgroup>
+
+        <optgroup label="Specials">
+          <option value="hinge">hinge</option>
+          <option value="jackInTheBox">jackInTheBox</option>
+          <option value="rollIn">rollIn</option>
+          <option value="rollOut">rollOut</option>
+        </optgroup>
+      
+	  </select>
+  </div>
+</div>
 
 <script>
 
@@ -124,13 +263,32 @@
 
             }
         });
-    }
+	}
+
+	var otherOptionsTargetElem = null;
 
     function initEvents() {                    
 
         //$(".col").addClass("editor");
 
-        //initTinyMCE();
+        //initTinyMCE();	
+
+		$("#OtherOptions").dialog({
+		  autoOpen: false,
+		  show: {
+			effect: "slideDown",
+			duration: 200
+		  },
+		  hide: {
+			effect: "slideUp",
+			duration: 200
+		  }
+		});
+
+		$(document).on("click", ".OtherOptions", function () {						
+			UpdateClassesField(this);
+			$("#OtherOptions").dialog("open");
+		})
 
         $("#PageContent .fieldControls a.remove").show();        
 
@@ -189,8 +347,6 @@
 
         //$(".UseMainLayout, #PageContent").addClass("container-fluid");
 		BindDragDrop();
-
-		UpdateClassesFields();
 
         function BindDragDrop()
         {
@@ -257,13 +413,6 @@
             $(this).removeClass("active");
         });
 
-        function UpdateClassesFields()
-        {
-            $(".UpdateClasses").each(function () {
-                UpdateClassesField(this);
-            });
-		}
-
 		function ScrollToElement(elem, animate) {
 			$('html,body').animate({ scrollTop: elem.offset().top }, 'slow', function () {
 				if (animate) {
@@ -274,11 +423,12 @@
 
         function UpdateClassesField(elem)
 		{
-			var cloneElem = $(elem).closest(".ToolBar").parent().clone();
+			otherOptionsTargetElem = $(elem).closest(".ToolBar, .fieldControls").parent();
+			var cloneElem = otherOptionsTargetElem.clone();
 			cloneElem.removeClass("active");
 			cloneElem.removeClass("ui-sortable");			
             var classes = cloneElem.attr("class");
-            $(elem).val(classes);
+			$("#ElementClasses").val(classes);
         }
 
         $(document).on("click", ".AddRow", function () {
@@ -292,9 +442,7 @@
 
 			$(this).closest(".col, #PageContent").append(row);
 
-			ScrollToElement(row, true);
-
-            UpdateClassesFields();
+			ScrollToElement(row, true);            
             BindDragDrop()                        
 
         });
@@ -313,8 +461,7 @@
 			$(this).closest(".row").append(column);
 
 			ScrollToElement(column, false);
-
-            UpdateClassesFields();
+            
             BindDragDrop();            
 		});
 
@@ -329,8 +476,7 @@
 			else {
 				$(this).removeClass("active");
 			}
-
-			UpdateClassesFields();
+			
 		});
 
         $(document).on("click", ".AddField", function () {
@@ -379,24 +525,31 @@
         });
 
 
-		$(document).on("keyup", ".UpdateClasses", function (event) {
+		$(document).on("change", "#ElementAnimateCss", function (event) {
+
+			$("#ElementAnimateCss").find("option").each(function () {				
+				otherOptionsTargetElem.removeClass(this.value);
+			});
+
+			otherOptionsTargetElem.addClass("animated");
+			otherOptionsTargetElem.addClass(this.value);
+		});
+
+		$(document).on("keyup", "#ElementClasses", function (event) {
 
 			if (event.which == 32 || event.which == 13)
 				return;
-
-			console.log(event.which);
-
-            var wrapper = $(this).closest(".ToolBar").parent();
+            
             var classes = $(this).val();
 
-            if (wrapper.hasClass("col"))
+            if (otherOptionsTargetElem.hasClass("col"))
             {                
                 if (classes.indexOf("col ") == -1)
                 {
                     classes = "col " + classes;
                 }
             }
-            else if (wrapper.hasClass("row"))
+            else if (otherOptionsTargetElem.hasClass("row"))
             {
                 if (classes.indexOf("row ") == -1)
                 {
@@ -404,9 +557,7 @@
                 }
             }
 
-            wrapper.attr("class", classes);       
-
-            UpdateClassesField(this);
+            otherOptionsTargetElem.attr("class", classes);                   
         });        
 
         $(document).on("click", ".IncreaseColumnSize, .DecreaseColumnSize", function () {
@@ -483,9 +634,7 @@
 
             var updatedClasses = classes.join(' ');
 
-			wrapper.attr("class", updatedClasses); 
-
-			UpdateClassesFields();
+			wrapper.attr("class", updatedClasses); 			
 
         });        
     }
@@ -502,7 +651,7 @@
 		<a href="javascript:void(0)" class="FullWidthToggle"><i class="fa fa-arrows-h" aria-hidden="true"></i> Stretch</a>
         <a href="javascript:void(0)" class="IncreaseColumnSize">+</a>
         <a href="javascript:void(0)" class="DecreaseColumnSize">-</a>
-        <input type="text" class="UpdateClasses" />
+		<a href="javascript:void(0)" class="OtherOptions">Other</a>        
     </div>
 </div>
 

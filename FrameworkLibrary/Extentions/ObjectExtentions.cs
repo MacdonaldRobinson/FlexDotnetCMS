@@ -36,9 +36,10 @@ namespace FrameworkLibrary
 			ommitPropertiesBySegment.Add("MediaType");
 			ommitPropertiesBySegment.Add("MediaDetail");
 			ommitPropertiesBySegment.Add("Parent");
-			//ommitPropertiesBySegment.Add("Use");
-			//ommitPropertiesBySegment.Add("Media");
-			ommitPropertiesBySegment.Add("Language");
+            ommitPropertiesBySegment.Add("History");
+            //ommitPropertiesBySegment.Add("Use");
+            //ommitPropertiesBySegment.Add("Media");
+            ommitPropertiesBySegment.Add("Language");
             ommitPropertiesBySegment.Add("CacheData");
         }
 

@@ -1122,7 +1122,7 @@ namespace FrameworkLibrary
             {
                 if (masterPage.UseLayout)
                 {
-                    var html = masterPage.Layout.Replace("{PageContent}", $"<div id='PageContent' data-mediadetailid='{mediaDetail.ID}' data-mediaid='{mediaDetail.MediaID}'>\r\n{mediaDetail.UseMainLayout}\r\n</div>");
+                    var html = masterPage.Layout.Replace("{PageContent}", $"{mediaDetail.UseMainLayout}");
                     
                     var parseTemplateLayout = ParseSpecialTags(mediaDetail, html);
 
@@ -1694,7 +1694,7 @@ namespace FrameworkLibrary
 
             customCode = ParserHelper.ParseData(customCode, passToParser);
 
-            var matches = Regex.Matches(customCode, "{[a-zA-Z0-9:=\"\".(),\'?&]+}");
+            var matches = Regex.Matches(customCode, "{.*}");
 
             if (matches.Count > 0 && matches.Count != previousCount)
             {

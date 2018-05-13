@@ -8,5 +8,20 @@ namespace FrameworkLibrary
 {
     public partial class FieldAssociation : IMustContainID
     {
-    }
+		public long MediaID
+		{
+			get
+			{
+				return this.MediaDetail.MediaID;
+			}
+		}
+
+		public string PermaLink
+		{
+			get
+			{
+				return this.MediaDetail.Media.PermaLink;
+			}
+		}
+	}
 }

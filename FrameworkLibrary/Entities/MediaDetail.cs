@@ -11,7 +11,15 @@ namespace FrameworkLibrary
     {
         private List<ValidationError> _validationErrors = new List<ValidationError>();
 
-        public bool CanRender
+		public string PermaLink
+		{
+			get
+			{
+				return this.Media.PermaLink;
+			}
+		}
+
+		public bool CanRender
         {
             get
             {

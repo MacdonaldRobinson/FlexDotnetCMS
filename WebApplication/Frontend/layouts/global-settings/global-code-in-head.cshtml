@@ -1,0 +1,61 @@
+@{
+    var BaseUrl = URIHelper.BaseUrl;
+    //var CurrentMediaDetail = FrameworkSettings.Current.CurrentMediaDetail;    
+    
+    var CurrentMediaDetail = Model;
+    if (!AppSettings.IsRunningOnProd)
+    {
+        <meta name="robots" content="noindex, nofollow, noarchive"> 
+    } 
+}
+
+<script type="text/javascript">
+    var BaseUrl = "@BaseUrl";
+</script>
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="description" content="{CurrentMediaDetail.GetMetaDescription()}" />
+<meta name="keywords" content="{CurrentMediaDetail.GetMetaKeywords()}" />
+<meta name="robots" content="{CurrentMediaDetail.MetaRobots}" />
+
+<title>{CurrentMediaDetail.GetPageTitle()}</title>
+
+<link rel="stylesheet" href="/Scripts/colorbox-master/example3/colorbox.css" type="text/css" media="all" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
+
+<link rel="stylesheet" href="/Frontend/styles/css/main.css" />
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.colorbox/1.6.3/jquery.colorbox-min.js" type="text/javascript" charset="utf-8"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/headjs/1.0.3/head.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<script src="/Scripts/global.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="/Scripts/commonFrontEnd.js" type="text/javascript" charset="utf-8"></script>
+
+<style>
+    .row{
+        margin: 0;
+    }
+    
+    .full-width, .full-width .col{
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+</style>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {Settings:GlobalCodeInHead}
+</head>
+
+<body>
+    {Settings:GlobalCodeInBody}
+    <Site:LoggedInHeader runat="server" />
+
+    <!-- Header -->
+    {{Load:8}.UseMainLayout}
+
+    <!-- Render BreadCrumb -->
+    {{Load:195}.Field:BreadCrumb}
+
+    <!-- PageContent -->
+    {PageContent}
+
+    <!-- Footer -->
+    {{Load:9}.UseMainLayout}
+</body>
+
+</html>

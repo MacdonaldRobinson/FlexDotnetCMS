@@ -31,7 +31,26 @@
         });
 
         initToolTips();
-    });    
+	});    
+
+	if ('serviceWorker' in navigator) {
+		navigator.serviceWorker.register(BaseUrl + "service-worker.js").then(function () {
+			console.log("registered service worker")
+		}, function () {
+			console.log("error registering service worker")
+		});
+	}
+
+	//if ('serviceWorker' in navigator) {
+	//	navigator.serviceWorker.register(BaseUrl + "service-worker.js").then(function () {
+	//		console.log("registered service worker");
+	//	}, function () {
+	//		console.log("error registering service worker");
+	//	})
+	//}
+
+
+	//preloadNavItems();
 
 });
 
@@ -42,4 +61,108 @@ function initToolTips() {
     else {
         $('[data-toggle="tooltip"]').addClass('apc-terms');
     }
+}
+
+var urlCache = new Array();
+
+window.onpopstate = function (event) {
+	writeDocument(event.state);
+};
+
+function writeDocument(data) {
+
+	var newDoc = document.open("text/html", "replace");
+	newDoc.write(data);
+	newDoc.close();
+
+	//$("html").html(data);
+}
+
+
+function preloadNavItems() {
+
+	const storageKey = "urlCache";
+
+	var storedUrlCache = sessionStorage.getItem(storageKey);	
+
+	$(document).on("click", "a", function (event) {
+		console.log("clicked");
+		event.preventDefault();
+
+		var href = $(this).attr("href");
+
+		storedUrlCache = sessionStorage.getItem(storageKey);
+
+		if (storedUrlCache != null) {
+			const urlCacheObj = JSON.parse(storedUrlCache);
+
+			urlCacheObj.map(function (item) {
+				if (item.url === href) {
+
+					//console.log($.parseXML(item.cache));
+
+					//var tempDom = $("<output>").append($.parseXML(item.cache))
+
+					//var newHtml = tempDom.find("body");
+
+					//console.log(tempDom);
+
+					//$("#PageContent").html(newHtml.html());
+
+
+					//$("html").html(item.cache +"<script>alert('ran')</script>");
+
+					//console.log("ran");
+
+					history.pushState(item.cache, '', href);
+					writeDocument(item.cache);
+
+
+					/*$("#PageContent").filter('script').each(function () {
+						$.globalEval(this.text || this.textContent || this.innerHTML || '');
+					});*/
+
+					//var cloneScripts = $("script").clone();
+
+					//$("head script").remove();	
+
+					//$("#PageContent")[0].outerHTML = newHtml;
+
+					//$("head").append(cloneScripts);
+				}
+			});
+		}
+		else {
+			console.log("else");
+		}
+	});
+
+	if (storedUrlCache === null) {		
+
+		$("a").each(function () {
+
+			var url = $(this).attr("href");
+
+			//if (url === undefined) {
+			//	url = $(this).attr("src");
+			//}
+
+
+			if (url != undefined && url !== null && url !== "" ) {
+				jQuery.ajax({
+					url: url,
+					success: function (result) {
+						var obj = { url: url, cache: result };
+						urlCache.push(obj);
+					},
+					async: false
+				});
+			}
+
+		});
+		
+		sessionStorage.setItem(storageKey, JSON.stringify(urlCache));	
+
+		console.log("Saved to storage");
+	}	
 }

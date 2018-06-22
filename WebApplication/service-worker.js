@@ -19,6 +19,10 @@ function fetchAndCache(event, skipCache) {
 }
 
 function saveToCacheAndReturn(event, response) {
+
+	if (response.status !== 200 && response.status !== 0)
+		return response;
+
 	var cacheResponse = response.clone();
 
 	return caches.open(CACHE_NAME).then(function (cache) {

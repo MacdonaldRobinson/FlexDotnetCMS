@@ -86,7 +86,7 @@
             <div class="buttons">
                 <asp:LinkButton ID="BackupNow" runat="server" Text="Backup Now" OnClick="BackupNow_OnClick" />
 
-                <asp:GridView runat="server" ID="DbBackUps" AutoGenerateColumns="false" AllowPaging="false" Width="100%" OnDataBound="DbBackUps_DataBound" class="DataTable">
+                <asp:GridView runat="server" ID="DbBackUps" AutoGenerateColumns="false" AllowPaging="false" Width="100%" OnDataBound="GridView_DataBound" class="DataTable">
                     <Columns>
                         <asp:BoundField DataField="FullName" HeaderText="FullName" SortExpression="FullName" />                        
                         <asp:TemplateField HeaderText="">
@@ -106,33 +106,6 @@
     </fieldset>
 
     <fieldset>
-        <legend>Email Log</legend>
-        <p>All emails sent by the system are shown here</p>
-
-        <asp:UpdatePanel runat="server">
-            <ContentTemplate>
-
-                <asp:GridView runat="server" ID="EmailLog" AutoGenerateColumns="false" AllowPaging="true" OnPageIndexChanging="EmailLog_PageIndexChanging" OnSorting="EmailLog_Sorting">
-                    <Columns>
-                        <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
-                        <asp:BoundField DataField="SenderName" HeaderText="SenderName" SortExpression="SenderName" />
-                        <asp:BoundField DataField="SenderEmailAddress" HeaderText="SenderEmailAddress" SortExpression="SenderEmailAddress" />
-                        <asp:BoundField DataField="ToEmailAddresses" HeaderText="ToEmailAddresses" SortExpression="ToEmailAddresses" />
-                        <asp:BoundField DataField="FromEmailAddress" HeaderText="FromEmailAddress" SortExpression="FromEmailAddress" />
-                        <asp:BoundField DataField="Subject" HeaderText="Subject" SortExpression="Subject" />
-                        <asp:BoundField DataField="Message" HeaderText="Message" SortExpression="Message" />
-                        <asp:BoundField DataField="RequestUrl" HeaderText="RequestUrl" SortExpression="RequestUrl" />
-                        <asp:BoundField DataField="ServerMessage" HeaderText="ServerMessage" SortExpression="ServerMessage" />
-                        <asp:BoundField DataField="DateCreated" HeaderText="DateCreated" SortExpression="DateCreated" />
-                        <asp:BoundField DataField="DateLastModified" HeaderText="DateLastModified" SortExpression="DateLastModified" />
-                    </Columns>
-                </asp:GridView>
-
-            </ContentTemplate>
-        </asp:UpdatePanel>
-    </fieldset>
-
-    <fieldset>
         <legend>Error Log</legend>
         <p>Recent 10 exceptions are shown here, inorder to view a full list and more details <a href="/elmah.axd" target="_blank">click here</a></p>
         
@@ -146,6 +119,38 @@
                         <asp:BoundField DataField="Message" HeaderText="Message" SortExpression="Message" />
                     </Columns>
                 </asp:GridView>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+    </fieldset>
+
+    <fieldset>
+        <legend>Email Log</legend>
+        <p>All emails sent by the system are shown here</p>
+
+        <asp:UpdatePanel runat="server">
+            <ContentTemplate>
+
+                <asp:GridView runat="server" ID="EmailLog" AutoGenerateColumns="false" AllowPaging="false" OnPageIndexChanging="EmailLog_PageIndexChanging" OnSorting="EmailLog_Sorting"  class="DataTable" OnDataBound="GridView_DataBound" data-datatable-options='{"order": [[ 9, "desc" ]]}'>
+                    <Columns>
+                        <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
+                        <asp:BoundField DataField="SenderName" HeaderText="SenderName" SortExpression="SenderName" />
+                        <asp:BoundField DataField="SenderEmailAddress" HeaderText="SenderEmailAddress" SortExpression="SenderEmailAddress" />
+                        <asp:BoundField DataField="ToEmailAddresses" HeaderText="ToEmailAddresses" SortExpression="ToEmailAddresses" />
+                        <asp:BoundField DataField="FromEmailAddress" HeaderText="FromEmailAddress" SortExpression="FromEmailAddress" />
+                        <asp:BoundField DataField="Subject" HeaderText="Subject" SortExpression="Subject" />                        
+                        <asp:TemplateField HeaderText="Message">
+                            <ItemTemplate>
+								<div style="overflow:auto; max-height: 200px">
+									<%# Eval("Message") %>
+								</div>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:BoundField DataField="RequestUrl" HeaderText="RequestUrl" SortExpression="RequestUrl" />
+                        <asp:BoundField DataField="ServerMessage" HeaderText="ServerMessage" SortExpression="ServerMessage" />
+                        <asp:BoundField DataField="DateCreated" HeaderText="DateCreated" SortExpression="DateCreated" />                        
+                    </Columns>
+                </asp:GridView>
+
             </ContentTemplate>
         </asp:UpdatePanel>
     </fieldset>

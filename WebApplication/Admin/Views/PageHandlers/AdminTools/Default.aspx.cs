@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Web.Configuration;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace WebApplication.Admin.Views.PageHandlers.AdminTools
@@ -38,13 +39,16 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
 
         private void BindDbBackUpsList()
         {
-            DbBackUps.DataSource = Directory.GetFiles(BackupHelper.DbBackupPath).Select(i => new FileInfo(i));
-            DbBackUps.DataBind();
+			if (Directory.Exists(BackupHelper.DbBackupPath))
+			{
+				DbBackUps.DataSource = Directory.GetFiles(BackupHelper.DbBackupPath).Select(i => new FileInfo(i));
+				DbBackUps.DataBind();
+			}
         }
 
         protected void Page_PreRender(object sender, EventArgs e)
         {
-            //emailLogEntries = EmailsMapper.GetAll().OrderByDescending(i => i.DateCreated).ToList();
+            emailLogEntries = EmailsMapper.GetAll().OrderByDescending(i => i.DateCreated).ToList();
 
             var errors = new List<Elmah.ErrorLogEntry>();
             var newErrors = new List<Elmah.ErrorLogEntry>();
@@ -63,8 +67,8 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
 
         private void Bind()
         {
-            /*EmailLog.DataSource = emailLogEntries;
-            EmailLog.DataBind();*/
+            EmailLog.DataSource = emailLogEntries;
+            EmailLog.DataBind();
 
             ErrorLog.DataSource = errorLogEntries;
             ErrorLog.DataBind();
@@ -370,12 +374,14 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools
             }
         }
 
-        protected void DbBackUps_DataBound(object sender, EventArgs e)
+        protected void GridView_DataBound(object sender, EventArgs e)
         {
-            DbBackUps.UseAccessibleHeader = true;
+			var control = (GridView)sender;
+
+			control.UseAccessibleHeader = true;
             if (DbBackUps.HeaderRow != null)
             {
-                DbBackUps.HeaderRow.TableSection = TableRowSection.TableHeader;
+				control.HeaderRow.TableSection = TableRowSection.TableHeader;
             }
         }
 

@@ -94,15 +94,6 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools {
         protected global::System.Web.UI.WebControls.GridView DbBackUps;
         
         /// <summary>
-        /// EmailLog control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView EmailLog;
-        
-        /// <summary>
         /// ErrorLog control.
         /// </summary>
         /// <remarks>
@@ -110,5 +101,14 @@ namespace WebApplication.Admin.Views.PageHandlers.AdminTools {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView ErrorLog;
+        
+        /// <summary>
+        /// EmailLog control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView EmailLog;
     }
 }

@@ -3,6 +3,7 @@
     public enum RoleEnum
     {
         Developer,
-        Administrator
+        Administrator,
+		Member
     }
 }

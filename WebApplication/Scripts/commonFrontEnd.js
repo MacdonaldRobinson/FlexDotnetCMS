@@ -30,24 +30,16 @@
 
         });
 
-        initToolTips();
+        //initToolTips();
 	});    
 
-	if ('serviceWorker' in navigator) {
+	/*if ('serviceWorker' in navigator) {
 		navigator.serviceWorker.register(BaseUrl + "service-worker.js").then(function () {
 			console.log("registered service worker")
 		}, function () {
 			console.log("error registering service worker")
 		});
-	}
-
-	//if ('serviceWorker' in navigator) {
-	//	navigator.serviceWorker.register(BaseUrl + "service-worker.js").then(function () {
-	//		console.log("registered service worker");
-	//	}, function () {
-	//		console.log("error registering service worker");
-	//	})
-	//}
+	}*/
 
 
 	//preloadNavItems();

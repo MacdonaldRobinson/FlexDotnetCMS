@@ -7,6 +7,7 @@
         UrlRedirectRule,
         UrlRedirectRuleList,
         Website,
-        Include
+        Include,
+		Dashboard
     }
 }

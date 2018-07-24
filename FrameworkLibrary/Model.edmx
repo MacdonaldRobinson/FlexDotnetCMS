@@ -397,6 +397,8 @@
           <Property Name="AuthenticationType" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="LastLoggedInAt" Type="datetime" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="ResetCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ResetCodeIssueDate" Type="datetime" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateLastModified" Type="datetime" Nullable="false" />
         </EntityType>
@@ -1576,6 +1578,8 @@
           <Property Type="String" Name="AfterLoginStartPage" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Type="DateTime" Name="LastLoggedInAt" Precision="3" />
           <NavigationProperty Name="UsersMedias" Relationship="FrameworkModel.FK_UsersMedia_UserID" FromRole="User" ToRole="UsersMedia" />
+          <Property Name="ResetCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ResetCodeIssueDate" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_MediaDetails_CreatedByUserID">
           <End Type="FrameworkModel.User" Role="User" Multiplicity="1" />
@@ -2346,6 +2350,8 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="FrameworkModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ResetCodeIssueDate" ColumnName="ResetCodeIssueDate" />
+                <ScalarProperty Name="ResetCode" ColumnName="ResetCode" />
                 <ScalarProperty Name="LastLoggedInAt" ColumnName="LastLoggedInAt" />
                 <ScalarProperty Name="AfterLoginStartPage" ColumnName="AfterLoginStartPage" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />

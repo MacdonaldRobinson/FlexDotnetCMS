@@ -23,8 +23,8 @@ namespace WebApplication.Controls.EmailTemplates.CreateAccount
                     break;
 
                 default:
-                    return "A new account has been created for at " + URIHelper.BaseUrl;
-                    break;
+					return "Your information for " + URIHelper.BaseUrl + " is below";
+					break;
             }
         }
 
@@ -43,7 +43,7 @@ namespace WebApplication.Controls.EmailTemplates.CreateAccount
 
         public void SetParams(object[] parameters)
         {
-            this.user = (User)parameters.Where(i => i.GetType() == typeof(User)).SingleOrDefault();
+            this.user = (User)parameters.Where(i => i.GetType() == typeof(User) || i.GetType().BaseType == typeof(User) ).SingleOrDefault();
             this.mode = (AutoResponderMode)parameters.Where(i => i.GetType() == typeof(AutoResponderMode)).SingleOrDefault();
         }
     }

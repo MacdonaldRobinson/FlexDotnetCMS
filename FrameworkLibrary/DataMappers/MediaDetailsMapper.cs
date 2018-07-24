@@ -506,7 +506,15 @@ namespace FrameworkLibrary
                 return MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ID == mediaTypeId && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate >= DateTime.Now)).OrderByDescending(i => i.Media.OrderIndex);
         }
 
-        public static IMediaDetail GetByID(long id)
+		public static IEnumerable<IMediaDetail> GetAllActiveByMediaType(MediaTypeEnum mediaTypeEnum, int take = -1)
+		{
+			var mediaType = MediaTypesMapper.GetByEnum(mediaTypeEnum);
+
+			return GetAllActiveByMediaType(mediaType.ID, take);
+		}
+
+
+		public static IMediaDetail GetByID(long id)
         {
             return MediaDetailsMapper.GetDataModel().MediaDetails.FirstOrDefault(item => item.ID == id);
         }

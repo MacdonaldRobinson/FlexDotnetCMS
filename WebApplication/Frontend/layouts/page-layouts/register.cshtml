@@ -1,0 +1,31 @@
+<div class="pageWrapper">
+  <h2>Register</h2>
+  <a href="/login/">Already registered? Sign in here</a>
+
+  <Site:CreateAnAccount runat="server" />
+
+</div>
+
+<style>
+    .pageWrapper{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    form{
+        width: 30%;
+    }
+
+    input:not([type=checkbox]), textarea, select{
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+	label {
+		display:block;	
+	}
+
+
+</style>

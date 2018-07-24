@@ -78,8 +78,19 @@ namespace WebApplication.Controls
                     if (mediaDetail.MediaType.Name == MediaTypeEnum.RootPage.ToString())
                         rootMedia = WebsitesMapper.GetWebsite().Media;
 
-                    var children = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.ShowInMenu && i.Media.ParentMediaID == rootMedia.ID && i.HistoryVersionNumber == 0 && i.LanguageID == currentLanguage.ID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex).ToList(); //rootMedia.ChildMedias.SelectMany(m => m.MediaDetails.Where(i => i.HistoryVersionNumber == 0 && (i.ShowInMenu || i.RenderInFooter) && !i.IsDeleted && i.PostPublishDate <= DateTime.Now && (i.PostExpiryDate == null || i.PostExpiryDate > DateTime.Now))).OrderBy(i => i.Media.OrderIndex);                    
-                    items.AddRange(children);
+                    var children = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == rootMedia.ID && i.HistoryVersionNumber == 0 && i.MediaType.ShowInSiteTree && i.LanguageID == currentLanguage.ID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)); //rootMedia.ChildMedias.SelectMany(m => m.MediaDetails.Where(i => i.HistoryVersionNumber == 0 && (i.ShowInMenu || i.RenderInFooter) && !i.IsDeleted && i.PostPublishDate <= DateTime.Now && (i.PostExpiryDate == null || i.PostExpiryDate > DateTime.Now))).OrderBy(i => i.Media.OrderIndex);                    
+
+					if (!RenderHiddenPages)
+					{
+						children = children.Where(i => i.ShowInMenu);
+					}
+
+					children = children.Where(i=>i.MediaType.ShowInSiteTree);
+
+					children = children.OrderBy(i => i.Media.OrderIndex);
+					//children = children.Where(i => i.ShowInMenu == (true || showInMenu) && i.MediaType.ShowInMenu == (true || showInMenuMediaType)).ToList();
+
+					items.AddRange(children);
                     //items = mediaDetail.ChildMediaDetails.Where(i=>i.ShowInMenu).ToList();
 
                     if (!items.Any() && RenderParentNavIfNoChildren)
@@ -131,18 +142,15 @@ namespace WebApplication.Controls
         {
             if (!IsBreadCrumbMenu)
             {
-                if(!RenderHiddenPages)
-                {
-                    if (IsFooterMenu)
-                        items = items.Where(i => i.RenderInFooter);
-                    else
-                        items = items.Where(i => i.ShowInMenu);
-                }
+				if (IsFooterMenu)
+					items = items.Where(i => i.RenderInFooter);
 
-                if (!renderHiddenMediaTypes)
-                    items = items.Where(i => i.MediaType.ShowInMenu);
+				if (!RenderHiddenPages)
+				{
+					items = items.Where(i => i.ShowInMenu);
+				}
 
-                items = items.OrderBy(i => i.Media.OrderIndex);
+				items = items.OrderBy(i => i.Media.OrderIndex);
 
                 if (renderRootMedia)
                 {
@@ -157,12 +165,9 @@ namespace WebApplication.Controls
                 }
             }
 
-            if(!RenderHiddenPages)
-            {
-                items = items.Where(i => i.ShowInMenu);
-            }
+			items = items.Where(i => i.MediaType.ShowInSiteTree);
 
-            items = items.ToList();
+			items = items.ToList();
 
             this.ItemsList.DataSource = items;
             this.ItemsList.DataBind();
@@ -317,11 +322,13 @@ namespace WebApplication.Controls
                     //childItems = details.Media.ChildMedias.SelectMany(i => i.MediaDetails.Where(j => j.HistoryVersionNumber == 0 && !j.IsDeleted && j.PostPublishDate <= DateTime.Now && j.LanguageID == details.LanguageID));
                     //childItems = MediaDetailsMapper.FilterOutDeletedAndArchived(MediaDetailsMapper.GetAllChildMediaDetails(details.Media, details.Language));
 
-                    if (!renderHiddenMediaTypes)
-                        childItems = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.ShowInMenu && i.Media.ParentMediaID == detail.Media.ID && i.HistoryVersionNumber == 0 && i.LanguageID == detail.LanguageID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex).ToList();
+                    if (!RenderHiddenPages)
+                        childItems = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.ShowInMenu && i.Media.ParentMediaID == detail.Media.ID && i.HistoryVersionNumber == 0 && i.LanguageID == detail.LanguageID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex);
                     else
-                        childItems = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == detail.Media.ID && i.HistoryVersionNumber == 0 && i.LanguageID == detail.LanguageID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex).ToList();
-                }
+                        childItems = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == detail.Media.ID && i.HistoryVersionNumber == 0 && i.LanguageID == detail.LanguageID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex);
+
+					childItems = childItems.Where(i => i.MediaType.ShowInSiteTree);
+				}
 
                 if(!detail.CssClasses.Contains("NoChildren") && childItems.Any())
                 {
@@ -332,10 +339,15 @@ namespace WebApplication.Controls
                         ChildList.ItemDataBound += new EventHandler<ListViewItemEventArgs>(ItemsList_OnItemDataBound);
                         ChildList.LayoutCreated += new EventHandler(ItemsList_OnLayoutCreated);
 
-                        if ((childItems != null) && (IsFooterMenu))
-                            childItems = childItems.Where(i => i.RenderInFooter);
-                        else if (childItems != null)
-                            childItems = childItems.Where(i => i.ShowInMenu);
+						if ((childItems != null) && (IsFooterMenu))
+							childItems = childItems.Where(i => i.RenderInFooter);
+						else if (childItems != null)
+						{
+							if (!RenderHiddenPages)
+							{
+								childItems = childItems.Where(i => i.ShowInMenu);
+							}
+						}
 
                         if (!displayProtectedSections)
                         {
@@ -367,6 +379,14 @@ namespace WebApplication.Controls
                 }
             }
         }
+
+		public ListView ListView
+		{
+			get
+			{
+				return ItemsList;
+			}
+		}
 
         public string RootVirtualPath
         {

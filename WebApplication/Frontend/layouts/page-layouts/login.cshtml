@@ -1,0 +1,23 @@
+<div class="pageWrapper">
+    <h2>Healthy Workplaces. Healthy Employees. Together.</h2>
+    <p>Sign In</p>
+    <a href="/register/">Don't have an account yet? Sign up from here</a>
+    <form runat="server">
+        <div class="login-page-container">
+            <Site:Login ID="LoginControl" runat="server" />
+        </div>
+    </form>
+</div>
+
+<style>
+    .pageWrapper{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    form{
+        width: 30%;
+    }
+</style>

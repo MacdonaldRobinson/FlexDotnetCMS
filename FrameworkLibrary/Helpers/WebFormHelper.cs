@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -226,7 +227,35 @@ namespace FrameworkLibrary
             return null;
         }
 
-        public static IEnumerable<Control> FindControlsByCssClass(Control root, string cssClass)
+		public static Control FindParentControlWithID(Control control, string id)
+		{
+			if (control == null)
+				return null;
+
+			if (control.Parent == null)
+				return null;
+
+			if (control.Parent.ID == id)
+				return control.Parent;
+
+			return FindParentControlWithID(control.Parent, id);
+		}
+
+		public static Control FindParentControlWithType(Control control, Type type)
+		{
+			if (control == null)
+				return null;
+
+			if (control.Parent == null)
+				return null;
+
+			if (control.Parent.GetType() == type)
+				return control.Parent;
+
+			return FindParentControlWithType(control.Parent, type);
+		}
+
+		public static IEnumerable<Control> FindControlsByCssClass(Control root, string cssClass)
         {
             var controls = new List<Control>();
 

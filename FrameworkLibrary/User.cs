@@ -36,6 +36,8 @@ namespace FrameworkLibrary
         public string LastName { get; set; }
         public string AfterLoginStartPage { get; set; }
         public Nullable<System.DateTime> LastLoggedInAt { get; set; }
+        public string ResetCode { get; set; }
+        public Nullable<System.DateTime> ResetCodeIssueDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MediaDetail> CreatedMediaDetails { get; set; }

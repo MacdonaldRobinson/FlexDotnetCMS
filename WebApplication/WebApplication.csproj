@@ -254,6 +254,7 @@
     <Content Include="bin\WebGrease.dll" />
     <Content Include="Controls\AddIMediaDetailToUser.ascx" />
     <Content Include="Controls\BootStrap\BootStrapTabbedLayout.ascx" />
+    <Content Include="Controls\CreateAnAccount.ascx" />
     <Content Include="Controls\Forms\CommentsForm.ascx" />
     <Content Include="Controls\Generic\BugHerd.ascx" />
     <Content Include="Controls\EmailTemplates\CreateAccount\AutoResponder.ascx" />
@@ -1109,6 +1110,13 @@
     </Compile>
     <Compile Include="Controls\BootStrap\BootStrapTabbedLayout.ascx.designer.cs">
       <DependentUpon>BootStrapTabbedLayout.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CreateAnAccount.ascx.cs">
+      <DependentUpon>CreateAnAccount.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CreateAnAccount.ascx.designer.cs">
+      <DependentUpon>CreateAnAccount.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controls\Forms\CommentsForm.ascx.cs">
       <DependentUpon>CommentsForm.ascx</DependentUpon>

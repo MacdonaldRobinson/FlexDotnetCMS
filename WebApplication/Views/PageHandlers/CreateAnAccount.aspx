@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/MasterPages/Site.Master" AutoEventWireup="true" CodeBehind="CreateAnAccount.aspx.cs" Inherits="WebApplication.Views.PageHandlers.CreateAnAccount" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/MasterPages/SiteTemplates/Template2.Master" AutoEventWireup="true" CodeBehind="CreateAnAccount.aspx.cs" Inherits="WebApplication.Views.PageHandlers.CreateAnAccount" %>
 
-<div id="form">
+<form id="form" runat="server">
     <div>
         <label for="FirstName">First Name</label>
         <asp:TextBox runat="server" ID="FirstName" ClientIDMode="Static"></asp:TextBox>
@@ -35,4 +35,4 @@
     <div>
         <asp:Literal runat="server" ID="Message"></asp:Literal>
     </div>
-</div>
+</form>

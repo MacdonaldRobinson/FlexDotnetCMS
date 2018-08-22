@@ -1,6 +1,7 @@
 ﻿using ActiveUp.Net.Mail;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Mail;
 using System.Web;
 
@@ -49,7 +50,9 @@ namespace FrameworkLibrary
 
         public static Return Send(string fromEmailAddress, IEnumerable<MailAddress> emailAddresses, string subject, string body, EmailMode emailMode = EmailMode.Both, bool bcc = true)
         {
-            Return returnObj = new Return();
+			System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+
+			Return returnObj = new Return();
             var emailLog = new EmailLog();
 
             if (emailMode == EmailMode.Both || emailMode == EmailMode.Smtp)

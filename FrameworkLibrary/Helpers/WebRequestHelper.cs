@@ -49,7 +49,7 @@ namespace FrameworkLibrary
 
         public string MakeWebRequest(string urlString, ICredentials credentialCache = null, RequestMethod method = RequestMethod.GET, string queryString = "")
         {
-			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+			System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 
 			var storageItem = WebserviceRequestsMapper.GetByUrl(urlString);
             var data = "";

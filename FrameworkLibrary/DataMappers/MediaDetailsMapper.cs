@@ -1338,13 +1338,35 @@ namespace FrameworkLibrary
                 {
                     var path = item.ToString().Replace("{IncludeFile:", "").Replace("}", "").Replace("'", "");
 
-                    var absPath = HttpContext.Current.Server.MapPath(path);
+					var pathSplit = path.Split('?');
+					var queryString = "";
+					var queryStringObject = new Dictionary<string, string>();
+
+					if (pathSplit.Length > 1)
+					{
+						path = pathSplit[0];
+						queryString = pathSplit[1];
+
+						var tmpQueryStringObj = HttpUtility.ParseQueryString(queryString);
+
+						foreach (string key in tmpQueryStringObj.Keys)
+						{
+							queryStringObject.Add(key, tmpQueryStringObj[key]);
+						}
+					}
+
+					var absPath = HttpContext.Current.Server.MapPath(path);
 
                     if (File.Exists(absPath))
                     {
                         var fileContent = File.ReadAllText(absPath);
                         customCode = customCode.Replace(item.ToString().ToString(), fileContent);
-                    }
+
+						if (!string.IsNullOrEmpty(queryString))
+						{
+							customCode = ParserHelper.ParseData(customCode, new RazorFieldParams() { MediaDetail = mediaDetail, Arguments = queryStringObject });
+						}
+					}
                 }
             }
 

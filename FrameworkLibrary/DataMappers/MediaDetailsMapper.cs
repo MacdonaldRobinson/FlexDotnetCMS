@@ -1360,12 +1360,11 @@ namespace FrameworkLibrary
                     if (File.Exists(absPath))
                     {
                         var fileContent = File.ReadAllText(absPath);
-                        customCode = customCode.Replace(item.ToString().ToString(), fileContent);
 
-						if (!string.IsNullOrEmpty(queryString))
-						{
-							customCode = ParserHelper.ParseData(customCode, new RazorFieldParams() { MediaDetail = mediaDetail, Arguments = queryStringObject });
-						}
+						fileContent = ParserHelper.ParseData(fileContent, queryStringObject);
+						fileContent = ParserHelper.ParseData(fileContent, new RazorFieldParams() { MediaDetail = mediaDetail, Arguments = queryStringObject });
+
+						customCode = customCode.Replace(item.ToString().ToString(), fileContent);
 					}
                 }
             }

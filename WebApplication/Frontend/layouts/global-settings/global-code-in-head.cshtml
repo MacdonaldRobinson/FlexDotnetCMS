@@ -1,8 +1,7 @@
 ﻿@{
     var BaseUrl = URIHelper.BaseUrl;
-    //var CurrentMediaDetail = FrameworkSettings.Current.CurrentMediaDetail;    
+    var CurrentMediaDetail = Model.MediaDetail;    
     
-    var CurrentMediaDetail = Model;
     if (!AppSettings.IsRunningOnProd)
     {
         <meta name="robots" content="noindex, nofollow, noarchive"> 

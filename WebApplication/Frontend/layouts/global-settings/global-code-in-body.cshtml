@@ -1,12 +1,12 @@
 @{
-    //var CurrentMediaDetail = FrameworkSettings.Current.CurrentMediaDetail;
+    var CurrentMediaDetail = Model.MediaDetail;
     
-    // if(!CurrentMediaDetail.CanRender || CurrentMediaDetail.HasADeletedParent())
-    // {
-    //     <div class="alert alert-danger" role="alert">
-    //       ONLY logged in admins and developers can see this page.
-    //     </div>
-    // }
+    if(!CurrentMediaDetail.CanRender || CurrentMediaDetail.HasADeletedParent())
+    {
+        <div class="alert alert-danger" role="alert">
+          ONLY logged in admins and developers can see this page.
+        </div>
+    }
 }
 
 @Raw(CurrentMediaDetail.GetInjectHtml())

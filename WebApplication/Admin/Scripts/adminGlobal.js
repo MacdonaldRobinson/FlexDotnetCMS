@@ -1488,7 +1488,11 @@ function UpdateULFromValues(elem) {
     }*/
 
     $(json).each(function () {
-        //console.log(this);            
+		if (this.adminUrl == undefined) {
+			var mediaId = this.name.split('(')[1].split(')')[0];
+
+			this.adminUrl = "/Admin/Views/PageHandlers/Media/Detail.aspx?mediaTypeId=1&selectedMediaId=" + mediaId + "&parentMediaId=&historyVersion=0&masterFilePath=~/Admin/Views/MasterPages/Popup.Master";
+		}                  
         $(elem).append("<li mediadetailid='" + this.id + "'><a class='delete'>x</a><span class='text'>" + this.name + "</span><a class='edit colorbox iframe' href='" + this.adminUrl + "'>Edit</a></li>");
 
     });

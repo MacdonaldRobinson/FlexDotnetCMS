@@ -5,7 +5,9 @@
     { %>
 
 <asp:Panel runat="server" ID="LoggedInHeaderPanel" ClientIDMode="Static">      
-
+	<script>
+		var popCloseRefreshPage = true;
+	</script>
     <Admin:VisualLayoutEditor runat="server" id="VisualLayoutEditor" Visible="false"/>
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -21,9 +23,9 @@
                 %>
                 <a ID="ToggleVisualEditor" class="button" href="javascript:void(0)" onclick="ToggleVisualEditor()"><i class="fa fa-wrench"></i>&nbsp;Toggle Visual Layout Editor</a>
                 <%  } %>
-                <a ID="EdiSettings" class="colorbox iframe button" data-OnColorboxClose="RefreshPage()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Settings/Default.aspx?masterFilePath=~/Admin/Views/MasterPages/Popup.Master"><i class="fa fa-wrench"></i>&nbsp;Edit Settings</a>
+                <!--<a ID="EdiSettings" class="colorbox iframe button" data-OnColorboxClose="RefreshPage()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/Settings/Default.aspx?masterFilePath=~/Admin/Views/MasterPages/Popup.Master"><i class="fa fa-wrench"></i>&nbsp;Edit Settings</a>
                 <a ID="EditTemplate" class="colorbox iframe button" data-OnColorboxClose="RefreshPage()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MasterPages/Detail.aspx?id=<%= BasePage.CurrentMediaDetail.GetMasterPage().ID %>"><i class="fa fa-file-code-o"></i>&nbsp;Edit Template</a>
-                <a ID="EditMediaType" class="colorbox iframe button" data-OnColorboxClose="RefreshPage()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MediaTypes/Detail.aspx?id=<%= BasePage.CurrentMediaDetail.MediaTypeID %>"><i class="fa fa-file-code-o"></i>&nbsp;Edit Media Type</a>
+                <a ID="EditMediaType" class="colorbox iframe button" data-OnColorboxClose="RefreshPage()" href="<%= URIHelper.BaseUrl %>Admin/Views/PageHandlers/MediaTypes/Detail.aspx?id=<%= BasePage.CurrentMediaDetail.MediaTypeID %>"><i class="fa fa-file-code-o"></i>&nbsp;Edit Media Type</a>-->
             </div>
         </div>
         <div> 
@@ -140,8 +142,10 @@
     <script type="text/javascript">
 
         function RefreshPage()
-        {            
-            window.location.href = window.location.href;
+		{            
+			//if (popCloseRefreshPage) {
+				window.location.href = window.location.href;
+			//}
         }
 
         function ToggleVisualEditor()
@@ -179,19 +183,19 @@
             $(".field .fieldControls").addClass("show");
         }
 
-        function CreateFieldsEditor() {
+		function CreateFieldsEditor() {
+			$("[data-fieldid] .fieldControls").remove();
+
             $("[data-fieldid]").each(function () {
                 var fieldId = $(this).attr("data-fieldid");
                 var fieldcode = $(this).attr("data-fieldcode");
 				var mediaId = $(this).attr("data-mediaid");    
 				var currentMediaId = "<%= BasePage.CurrentMedia.ID %>";
 
-                var removeField = "";
-
                 if ($(this).parents(".field").length == 0)
                 {
                     removeField ="<a class='remove' href='javascript:void(0)'><i class='fa fa-trash' aria-hidden='true'></i></a>"
-				}
+				}				
 
 				var shortCode = "{{Load:" + mediaId + "}.Field:" + fieldcode + "}";
 
@@ -224,7 +228,8 @@
             });            
         }
 
-        var IsLoggedIn = false;
+		var IsLoggedIn = false;
+
         $(document).ready(function () {        
 
             $.get("/WebServices/IMediaDetails.asmx/CanAccessFrontEndEditorForMediaDetail?id=<%= BasePage.CurrentMediaDetail.ID %>", function (data) {
@@ -235,10 +240,6 @@
                 else
                 {
                     IsLoggedIn = true;
-
-                    if (typeof initVisualLayoutEditor == 'function') {
-                        initVisualLayoutEditor();
-                    }
 
                     $("#LoggedInHeaderPanel").show();
 
@@ -253,7 +254,11 @@
                         }
                     }
 
-                    CreateFieldsEditor();
+					CreateFieldsEditor();
+
+					if (typeof initVisualLayoutEditor == 'function') {
+						initVisualLayoutEditor(head);
+					}
 
                     if (GetCMSShortcutsVisibility() == "true") {
                         $("#AccessCMSPermissionsPanel").show(0, function () {

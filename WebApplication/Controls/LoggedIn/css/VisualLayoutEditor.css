@@ -1,10 +1,4 @@
-﻿.row, .col {
-	min-height: 100px;
-	margin-top: 10px;
-	padding-top: 25px;
-}
-
-.row {
+﻿.row {
 	/*background-color: #ccc;*/	
 	margin-top: 10px;	
 }
@@ -15,22 +9,24 @@
 
 .col > .field {
 	/*background-color: #eee;*/
-	min-height: 50px;
-	margin: 5px 0;
+	/*min-height: 50px;
+	margin: 5px 0;*/
 }
 
-#PageContent {
-	margin-bottom: 20px;
-}
 
-#PageContent .row.active, #PageContent .col.active {
+#PageContent .row, #PageContent .col, #PageContent .container, #PageContent .container-fluid, #PageContent .field, #PageContent .layout-wrapper, #PageContent .editor {
 	outline: 2px dotted;
-	background-color: rgba(1,1,1,0.1);
+	background-color: rgba(1,1,1,0.05);
+	position: relative;
+	padding-top: 30px;
 }
 
 
-#PageContent, .row, .col {    
-    position: relative;
+#PageContent, .row, .col, .container, .container-fluid, .editor {
+	position: relative;
+	min-height: 100px;
+	margin-top: 10px;
+	padding-top: 25px;
 }
 
     /*.row {

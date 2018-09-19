@@ -831,7 +831,7 @@ function LoadTinyMCETemplates() {
                 var description = $(this).attr("data-description");
                 var content = $(template).html();
 
-                var templateObj = { title: title, description: description, content: "<br>" + content + "<br>" };
+                var templateObj = { title: title, description: description, content: content };
                 tinyMCETemplates.push(templateObj);
             });
         });

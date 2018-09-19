@@ -23,16 +23,16 @@ namespace WebApplication.Admin.Views.PageHandlers.FieldSelector
 
                 if (mediaDetail != null)
                 {
-                    if(mediaDetail.UseMediaTypeLayouts)
+                    /*if(mediaDetail.UseMediaTypeLayouts)
                     {
                         MediaTypeFieldsEditorWrapper.Visible = true;
                         MediaTypeFieldsEditor.SetItems(mediaDetail.MediaType);
                     }
                     else
-                    {
+                    {*/
                         MediaDetailFieldsEditorWrapper.Visible = true;
                         FieldsTab.SetObject(mediaDetail);
-                    }
+                    //}
                 }
                 else
                 {

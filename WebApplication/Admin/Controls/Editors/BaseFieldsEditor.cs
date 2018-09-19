@@ -58,9 +58,11 @@ namespace WebApplication.Admin.Controls.Editors
                 var setAdminControlValue = (TextBox)this.FindControl("SetAdminControlValue");
                 var frontEndLayout = (TextBox)this.FindControl("FrontEndLayout");
                 var fieldDescription = (dynamic)this.FindControl("FieldDescription");
-                //var fieldValue = (TextBox)this.FindControl("FieldValue");
+				var showFrontEndFieldEditor = (CheckBox)this.FindControl("ShowFrontEndFieldEditor");
 
-                if (adminControl != null)
+				//var fieldValue = (TextBox)this.FindControl("FieldValue");
+
+				if (adminControl != null)
                 {
                     adminControl.Text = selectorFieldOption.CodeToRenderAdminControl;
                 }
@@ -85,13 +87,17 @@ namespace WebApplication.Admin.Controls.Editors
                     fieldDescription.SetValue(selectorFieldOption.FieldDescription);
                 }
 
-                /*if (fieldValue != null)
+				/*if (fieldValue != null)
                 {
                     fieldValue.Text = "";
                 }*/
-            }
 
-            fieldTypeDropDown.SelectedValue = "";
-        }
+				showFrontEndFieldEditor.Checked = true;
+
+			}
+
+            fieldTypeDropDown.SelectedValue = "";			
+
+		}
     }
 }

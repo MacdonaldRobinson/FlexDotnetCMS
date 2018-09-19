@@ -12,16 +12,23 @@
 			</asp:Panel>
 
 			<div>
-				Username: <asp:TextBox runat="server" ID="Username" required/>
+				<label>Email</label><asp:TextBox runat="server" ID="Username" required CssClass="" />
+			</div>    
+			<div class="password__con">
+				<label>Password </label>
+				<span class="password-toggle">
+					<span class="password-show">Show <i class="fa fa-eye"></i></span>
+					
+					<span class="password-hide">Hide <i class="fa fa-eye-slash"></i></span>
+				</span>
+				<asp:TextBox runat="server" ID="Password" TextMode="Password" required/>
+				
 			</div>    
 			<div>
-				Password: <asp:TextBox runat="server" ID="Password" TextMode="Password" required/>
-			</div>    
-			<div>
-				<asp:LinkButton Text="Login" runat="server" ID="LoginButton" OnClick="LoginButton_Click"/>
+				<asp:LinkButton Text="Sign in" runat="server" ID="LoginButton" OnClick="LoginButton_Click" CssClass="button button--bluedark" />
 			</div>
 			<div>				
-				<asp:LinkButton runat="server" ID="ForgotMyPassword" OnClick="ForgotMyPassword_Click">Forgot my password</asp:LinkButton>
+				<asp:LinkButton runat="server" ID="ForgotMyPassword" OnClick="ForgotMyPassword_Click" CssClass="link--grey">Forgot my password</asp:LinkButton>
 			</div>
 		</asp:Panel>
 		<asp:Panel runat="server" ID="ForgotMyPasswordPanel" Visible="false">	

@@ -3,7 +3,16 @@
 <% if(BasePage.CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions))
    { 
 %>
+<style>
+	.container, .container-fluid {
+		padding-right:15px;
+		padding-left: 15px;
+	}
+</style>
 
+<script>
+	popCloseRefreshPage = false;
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.14/beautify.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.14/beautify-css.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.14/beautify-html.min.js"></script>
@@ -15,6 +24,9 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.4.6/jquery.jgrowl.min.css" />
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/ace/1.3.1/ace.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/ace/1.3.1/ext-language_tools.js"></script>
 
 <script type="text/javascript" src="/Scripts/tinymce/js/tinymce/tinymce.min.js"></script>
 
@@ -170,9 +182,10 @@
 </div>
 
 <script>
+	
+	function UpdateVisualEditor(source) {
 
-    function UpdateVisualEditor(source) {        
-        var fieldCode = $(source).attr("data-fieldcode");
+		var fieldCode = $(source).attr("data-fieldcode");
         var mediaDetailId = $(source).attr("data-mediadetailid");        
 
         if (mediaDetailId == "" || mediaDetailId == undefined) {
@@ -186,19 +199,27 @@
 
         var url = "/Admin/Views/MasterPages/WebService.asmx/RenderField?mediaDetailId=" + mediaDetailId+"&fieldCode=" + fieldCode;
 
-        $.get(url, function (data) {
-            try {
+		$.get(url, function (data) {
 
-				if ($('.AddField.clicked').closest(".col").length > 0) {
-					$('.AddField.clicked').closest(".col").append(data);
+			try {
+
+				if ($('.AddField.clicked').closest(".col, .container, .container-fluid").length > 0) {
+					$('.AddField.clicked').closest(".col, .container, .container-fluid").append(data);
 				}
 				else {
 					$('.AddField.clicked').closest("#PageContent").append(data);
 				}
-            }
-            catch (ex) {
 
-            }
+				CreateFieldsEditor();
+
+				$("#PageContent .fieldControls a.remove").show();
+
+				$.colorbox.close();
+
+			}
+			catch (ex) {
+				console.log(ex);
+			}
 
             SaveLayout();
         });
@@ -210,16 +231,34 @@
         $(".row[class~=ui-sortable], .col[class~=ui-sortable], .UseMainLayout[class~=ui-sortable]").sortable("destroy");
     }
 
-    function initVisualLayoutEditor()
+    function initVisualLayoutEditor(head)
     {
         head.ready(function () {
             head.load("/Controls/LoggedIn/css/VisualLayoutEditor.css", function () {
                 initEvents();
             });
         });
-    }    
+	}    
+
+	var tinyMCETemplates = [];
+	function LoadTinyMCETemplates() {
+		if (tinyMCETemplates.length == 0) {
+			$.get("/Admin/Scripts/TinyMCETemplates.html", function (data) {
+				$(data).find(".Template").each(function (index, template) {
+					var title = $(this).attr("data-title");
+					var description = $(this).attr("data-description");
+					var content = $(template).html();
+
+					var templateObj = { title: title, description: description, content: content };
+					tinyMCETemplates.push(templateObj);
+				});
+			});
+		}    
+	}
 
     function initTinyMCE() {
+		LoadTinyMCETemplates();
+
         tinymce.editors = [];
         tfm_path = BaseUrl + "Scripts/tinyfilemanager.net";
         tinymce.init({
@@ -227,15 +266,17 @@
             inline: true,
             content_css: BaseUrl + "Views/MasterPages/SiteTemplates/css/main.css, " + BaseUrl + "Admin/Styles/editor.css",
             menubar: false,
-            plugins: [
-                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-                'searchreplace wordcount visualblocks visualchars fullscreen',
-                'insertdatetime media youtube nonbreaking save table contextmenu directionality',
-                'emoticons template paste textcolor colorpicker textpattern imagetools ace imgmap table'
-            ],
-            toolbar1: 'file undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | insert table link image imgmap media youtube ace',
-            templates: [
-            ],
+			content_css: BaseUrl + "FrontEnd/styles/css/main.css, " + BaseUrl + "Admin/Styles/editor.css",
+			menubar: false,
+			plugins: [
+				'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+				'searchreplace wordcount visualblocks visualchars fullscreen',
+				'insertdatetime media youtube nonbreaking save table contextmenu directionality',
+				'emoticons template paste textcolor colorpicker textpattern imagetools ace_beautify imgmap table map'
+			],
+			toolbar1: 'undo redo | paste pastetext | bold italic underline strikethrough superscript subscript charmap emoticons | formatselect blockquote',
+			toolbar2: 'alignleft aligncenter alignright alignjustify outdent indent | bullist numlist | insert table | anchor link image imgmap media youtube map | visualblocks ace_beautify',
+			templates: tinyMCETemplates,
             image_advtab: true,
             relative_urls: false,
             convert_urls: false,
@@ -267,22 +308,117 @@
 
 	var otherOptionsTargetElem = null;
 
+
+	function createToolBar(mode)
+	{
+		var toolBar = $("#ToolBarTemplate").clone();
+
+		if(mode == "Root")
+		{
+            toolBar.find(".ToolBar").css("display", "block");
+
+			toolBar.find(".AddRow").css("display", "none");
+			toolBar.find(".OtherOptions").css("display", "none");
+			toolBar.find(".DeleteSection").css("display", "none");
+			toolBar.find(".AddField").css("display", "none");				
+			toolBar.find(".AddColumn").css("display", "none");
+			toolBar.find(".FullWidthToggle").css("display", "none");
+            toolBar.find(".DeleteColumn").css("display", "none");
+            toolBar.find(".IncreaseColumnSize").css("display", "none");
+            toolBar.find(".DecreaseColumnSize").css("display", "none");
+			toolBar.find(".OtherOptions").css("display", "none");
+			toolBar.find(".FullWidthToggle").css("display", "none");
+			toolBar.find(".DeleteEditor").css("display", "none");
+			toolBar.find(".AddEditor").css("display", "none");
+		}
+		else if(mode == "AddSection")
+		{
+			toolBar.find(".AddRow").css("display", "inline"); 
+			toolBar.find(".AddSection").css("display", "none"); 
+			toolBar.find(".DeleteSection").css("display", "inline"); 
+            toolBar.find(".AddColumn").css("display", "none"); 
+			toolBar.find(".AddField").css("display", "inline");			
+            toolBar.find(".DeleteRow").css("display", "none");
+            toolBar.find(".IncreaseColumnSize").css("display", "none");            
+			toolBar.find(".DecreaseColumnSize").css("display", "none");
+			toolBar.find(".FullWidthToggle").css("display", "inline");
+			toolBar.find(".OtherOptions").css("display", "none");
+			toolBar.find(".AddEditor").css("display", "inline");
+			toolBar.find(".DeleteEditor").css("display", "none");
+		}
+		else if(mode == "AddRow")
+		{
+			toolBar.find(".AddSection").css("display", "none"); 
+			toolBar.find(".DeleteSection").css("display", "none"); 
+            toolBar.find(".AddRow").css("display", "none"); 
+			toolBar.find(".AddField").css("display", "none");			
+			toolBar.find(".DeleteRow").css("display", "inline");
+			toolBar.find(".FullWidthToggle").css("display", "none");
+			toolBar.find(".OtherOptions").css("display", "none");
+			toolBar.find(".AddEditor").css("display", "none");
+			toolBar.find(".DeleteEditor").css("display", "none");
+		}
+		else if(mode == "AddColumn")
+		{
+			toolBar.find(".AddSection").css("display", "none"); 
+			toolBar.find(".DeleteSection").css("display", "none"); 
+            toolBar.find(".AddColumn").css("display", "none");
+            toolBar.find(".AddField").css("display", "inline");
+			toolBar.find(".DeleteColumn").css("display", "inline");			
+            toolBar.find(".IncreaseColumnSize").css("display", "inline");            
+			toolBar.find(".DecreaseColumnSize").css("display", "inline");
+			toolBar.find(".FullWidthToggle").css("display", "none");
+			toolBar.find(".OtherOptions").css("display", "inline");
+			toolBar.find(".AddEditor").css("display", "inline");
+			toolBar.find(".DeleteEditor").css("display", "none");
+		}
+		else if(mode == "AddEditor")
+		{
+			toolBar.find(".AddRow").css("display", "none");
+			toolBar.find(".AddSection").css("display", "none"); 
+			toolBar.find(".DeleteSection").css("display", "none");
+			toolBar.find(".AddField").css("display", "none");				
+			toolBar.find(".AddColumn").css("display", "none");
+			toolBar.find(".FullWidthToggle").css("display", "none");
+            toolBar.find(".DeleteColumn").css("display", "none");
+            toolBar.find(".IncreaseColumnSize").css("display", "none");
+            toolBar.find(".DecreaseColumnSize").css("display", "none");
+			toolBar.find(".OtherOptions").css("display", "none");
+			toolBar.find(".FullWidthToggle").css("display", "none");
+			toolBar.find(".DeleteEditor").css("display", "inline");
+			toolBar.find(".AddEditor").css("display", "none");
+		}
+
+		return toolBar;
+	}
+
+	/*window.onbeforeunload = function () {
+		if (promptBeforeLeave) {
+			return "Are you sure that you want to exit?";
+		}
+		else {
+			return;
+		}
+	   //if we return nothing here (just calling return;) then there will be no pop-up question at all
+	   //return;
+	};*/
+
     function initEvents() {                    
 
         //$(".col").addClass("editor");
 
-        //initTinyMCE();	
+        initTinyMCE();	
 
 		$("#OtherOptions").dialog({
-		  autoOpen: false,
-		  show: {
+			autoOpen: false,
+			show: {
 			effect: "slideDown",
-			duration: 200
-		  },
-		  hide: {
-			effect: "slideUp",
-			duration: 200
-		  }
+				duration: 200
+			},
+			hide: {
+				effect: "slideUp",
+				duration: 200
+			}
 		});
 
 		$(document).on("click", ".OtherOptions", function () {						
@@ -292,32 +428,44 @@
 
         $("#PageContent .fieldControls a.remove").show();        
 
-        $("#PageContent, .UseMainLayout").each(function () {
-            if ($(this).children(".ToolBar").length == 0) {
-                var toolBar = $("#ToolBarTemplate").clone();
-                toolBar.find(".ToolBar").css("display", "block");
-				toolBar.find(".AddField").css("display", "none");				
-				toolBar.find(".AddColumn").css("display", "none");
-				toolBar.find(".FullWidthToggle").css("display", "none");
-                toolBar.find(".DeleteColumn").css("display", "none");
-                toolBar.find(".IncreaseColumnSize").css("display", "none");
-                toolBar.find(".DecreaseColumnSize").css("display", "none");
+		$("#PageContent, .UseMainLayout").each(function () {
+
+			if ($(this).children(".ToolBar").length == 0) {
+				var toolBar = createToolBar("Root");
+
 
                 $(this).prepend(toolBar.html());                
             }
         });
 
-        $("#PageContent .row").each(function () {
+		$("#PageContent .container, #PageContent .container-fluid").each(function () {
+
+			if ($(this).closest(".field").length > 0)
+				return;
+
+			if ($(this).closest(".editor").length > 0)
+				return;
+
+			if ($(this).children(".ToolBar").length == 0) {
+				var toolBar = createToolBar("AddSection");
+				
+				if ($(this).hasClass("full-width")) {
+					toolBar.find(".FullWidthToggle").addClass("active");
+				}				
+
+                $(this).prepend(toolBar.html());
+            }
+        });
+
+		$("#PageContent .row").each(function () {
+			if ($(this).closest(".field").length > 0)
+				return;
+
+			if ($(this).closest(".editor").length > 0)
+				return;
+
             if ($(this).children(".ToolBar").length == 0) {
-                var toolBar = $("#ToolBarTemplate").clone();
-                toolBar.find(".ToolBar").css("display", "block");
-                toolBar.find(".AddRow").css("display", "none");
-                toolBar.find(".AddField").css("display", "none");
-                toolBar.find(".DeleteRow").css("display", "inline");
-				toolBar.find(".AddColumn").css("display", "inline");				
-                toolBar.find(".DeleteColumn").css("display", "none");
-                toolBar.find(".IncreaseColumnSize").css("display", "none");
-				toolBar.find(".DecreaseColumnSize").css("display", "none");
+                var toolBar = createToolBar("AddRow");
 
 				if ($(this).hasClass("full-width")) {
 					toolBar.find(".FullWidthToggle").addClass("active");
@@ -327,21 +475,39 @@
             }
         });
 
-        $("#PageContent .col").each(function () {
+		$("#PageContent .col").each(function () {
+
+			if ($(this).closest(".field").length > 0)
+				return;
+
+			if ($(this).closest(".editor").length > 0)
+				return;
+
             if ($(this).children(".ToolBar").length == 0) {
-                var toolBar = $("#ToolBarTemplate").clone();
-                toolBar.find(".ToolBar").css("display", "block");
-                toolBar.find(".AddRow").css("display", "inline");
-				toolBar.find(".AddColumn").css("display", "none");
-                toolBar.find(".DeleteColumn").css("display", "inline");
-                toolBar.find(".IncreaseColumnSize").css("display", "inline");
-				toolBar.find(".DecreaseColumnSize").css("display", "inline");
+                var toolBar = createToolBar("AddColumn");
 
 				if ($(this).hasClass("full-width")) {
 					toolBar.find(".FullWidthToggle").addClass("active");
 				}
 
 				$(this).prepend(toolBar.html());				
+            }
+		});
+
+
+		$("#PageContent .editor").each(function () {
+
+			if ($(this).closest(".field").length > 0)
+				return;
+
+            if ($(this).children(".ToolBar").length == 0) {
+                var toolBar = createToolBar("AddEditor");
+
+				if ($(this).hasClass("full-width")) {
+					toolBar.find(".FullWidthToggle").addClass("active");
+				}
+
+				$(this).closest(".layout-wrapper").prepend(toolBar.html());		
             }
         });
 
@@ -382,6 +548,19 @@
                 start: startFunction
             });
 
+            $(".container, .container-fluid").sortable({
+                tolerance: "pointer",
+                handle: ".Handle",
+                revert: true,
+                connectWith: '.container, .container-fluid',
+                placeholder: placeHolderClasses,
+                helper: 'clone',
+                forceHelperSize: true,
+                forcePlaceholderSize: true,
+                start: startFunction
+			});
+
+
             /*$(".col").sortable({
                 tolerance: "pointer",
                 handle: ".Handle",
@@ -400,15 +579,28 @@
                 forceHelperSize: true,
                 forcePlaceholderSize: true,
                 start: startFunction
-            });            
+			}); 
+
+			$("#PageContent .layout-wrapper").sortable({				
+                handle: ".Handle",
+                tolerance: "pointer",
+                connectWith: '.layout-wrapper',
+                revert: true,
+                placeholder: placeHolderClasses,
+                helper: 'clone',
+                forceHelperSize: true,
+                forcePlaceholderSize: true,
+                start: startFunction
+			});
+
 		}
 
-        $(document).on("mouseover", ".UseMainLayout, .row, .col", function () {
+        $(document).on("mouseover", ".UseMainLayout, .row, .col, .container, .container-fluid", function () {
             //$(this).children(".ToolBar").show();
             $(this).addClass("active");
         });
 
-        $(document).on("mouseout", ".UseMainLayout, .row, .col", function () {
+        $(document).on("mouseout", ".UseMainLayout, .row, .col, .container, .container-fluid", function () {
             //$(this).children(".ToolBar").hide();
             $(this).removeClass("active");
         });
@@ -432,30 +624,48 @@
         }
 
         $(document).on("click", ".AddRow", function () {
-            var toolBar = $("#ToolBarTemplate").clone();
-            toolBar.find(".AddRow").css("display", "none"); 
-			toolBar.find(".AddField").css("display", "none");			
-            toolBar.find(".DeleteRow").css("display", "inline");
+			var toolBar = createToolBar("AddRow");
 
             var row = $("<div class='row'></div>");
             row.append(toolBar.html());
 
-			$(this).closest(".col, #PageContent").append(row);
+			$(this).closest(".container, .container-fluid, .col").append(row);
 
 			ScrollToElement(row, true);            
             BindDragDrop()                        
 
         });
 
-        $(document).on("click", ".AddColumn", function () {   
-            var toolBar = $("#ToolBarTemplate").clone();
-            toolBar.find(".AddColumn").css("display", "none");
-            toolBar.find(".AddField").css("display", "inline");
-			toolBar.find(".DeleteColumn").css("display", "inline");			
-            toolBar.find(".IncreaseColumnSize").css("display", "inline");            
-            toolBar.find(".DecreaseColumnSize").css("display", "inline");
+        $(document).on("click", ".AddSection", function () {
+            var toolBar = createToolBar("AddSection");
 
-            var column = $("<div class='col col-md-4'></div>");
+            var container = $("<section class='container'></section>");
+            container.append(toolBar.html());
+
+			$(this).closest("#PageContent, UseMainLayout").append(container);
+
+			ScrollToElement(container, true);            
+            BindDragDrop()                        
+
+		});
+
+        $(document).on("click", ".AddEditor", function () {
+			var toolBar = createToolBar("AddEditor");
+
+			var container = $("<div class='layout-wrapper'>" + toolBar.html() + "<div class='editor'></div></div>");			
+
+			$(this).closest(".container, .container-fluid, .col, .row").append(container);
+
+			ScrollToElement(container, true);     
+			initTinyMCE();
+            BindDragDrop()                        
+
+        });
+
+        $(document).on("click", ".AddColumn", function () {   
+            var toolBar = createToolBar("AddColumn");
+
+            var column = $("<div class='col col-xl-12'></div>");
             column.append(toolBar.html());
             
 			$(this).closest(".row").append(column);
@@ -465,15 +675,37 @@
             BindDragDrop();            
 		});
 
+		$(document).on("click", ".Duplicate", function () {
+			var elem = $(this).closest(".col, .row, .container, .container-fluid");
+			var clone = elem.clone();
+
+			elem.after(clone);
+
+			ScrollToElement(clone, false);
+            
+            BindDragDrop();    
+		});
+
 		$(document).on("click", ".FullWidthToggle", function () {
-			var colOrRow = $(this).closest(".ToolBar").parent();
+			var parent = $(this).closest(".ToolBar").parent();
 
-			colOrRow.toggleClass("full-width");
+			parent.toggleClass("full-width");
 
-			if (colOrRow.hasClass("full-width")) {
+			if (parent.hasClass("full-width")) {
 				$(this).addClass("active");
 			}
 			else {
+				$(this).removeClass("active");
+			}
+
+			if (parent.hasClass("container")) {
+				parent.addClass("container-fluid");
+				parent.removeClass("container");
+				$(this).addClass("active");
+			}
+			else if (parent.hasClass("container-fluid")) {
+				parent.addClass("container");
+				parent.removeClass("container-fluid");
 				$(this).removeClass("active");
 			}
 			
@@ -521,6 +753,25 @@
             if (canRemove)
             {
                 $(this).closest(".col").remove();
+            }
+		});
+
+        $(document).on("click", ".DeleteEditor", function () {
+            var canRemove = confirm("Are you sure you want to remove this editor?");
+
+            if (canRemove)
+			{
+				$(this).closest(".layout-wrapper").remove();
+            }
+		});
+
+        $(document).on("click", ".DeleteSection", function () {
+            var canRemove = confirm("Are you sure you want to remove this container?");
+
+            if (canRemove)
+			{
+				//console.log($(this).closest(".container, container-fluid"))
+                $(this).closest(".container, .container-fluid").remove();
             }
         });
 
@@ -643,10 +894,15 @@
 <div id="ToolBarTemplate" style="display:none;">    
     <a href="javascript:void(0)" class="Handle"><i class="fa fa-arrows" aria-hidden="true"></i></a>
     <div class="ToolBar">                
+		<a href="javascript:void(0)" class="AddSection"><i class="fa fa-plus" aria-hidden="true"></i> Add Section</a>		
+		<a href="javascript:void(0)" class="AddEditor"><i class="fa fa-plus" aria-hidden="true"></i> Add Editor</a>
         <a href="javascript:void(0)" class="AddRow"><i class="fa fa-plus" aria-hidden="true"></i> Add Row</a>
         <a href="javascript:void(0)" class="AddColumn"><i class="fa fa-plus" aria-hidden="true"></i> Add Column</a>		
-        <a href="javascript:void(0)" class="AddField"><i class="fa fa-plus" aria-hidden="true"></i> Add Field</a>
+        <a href="javascript:void(0)" class="AddField"><i class="fa fa-plus" aria-hidden="true"></i> Add Widget</a>
         <a href="javascript:void(0)" class="DeleteRow"><i class="fa fa-trash" aria-hidden="true"></i> Delete Row</a>
+		<a href="javascript:void(0)" class="DeleteEditor"><i class="fa fa-trash" aria-hidden="true"></i> Delete Editor</a>
+		<a href="javascript:void(0)" class="DeleteSection"><i class="fa fa-trash" aria-hidden="true"></i> Delete Section</a>
+		<!--<a href="javascript:void(0)" class="Duplicate"><i class="fa fa-plus" aria-hidden="true"></i> Duplicate</a>-->
         <a href="javascript:void(0)" class="DeleteColumn"><i class="fa fa-trash" aria-hidden="true"></i> Delete Column</a>
 		<a href="javascript:void(0)" class="FullWidthToggle"><i class="fa fa-arrows-h" aria-hidden="true"></i> Stretch</a>
         <a href="javascript:void(0)" class="IncreaseColumnSize">+</a>
@@ -657,8 +913,11 @@
 
 <script>
 
+	var promptBeforeLeave = true;
+
     $(document).ready(function () {
-        $(document).on("click", "#SaveLayout", function () {
+		$(document).on("click", "#SaveLayout", function () {
+			promptBeforeLeave = false;
             SaveLayout();
         });
     });
@@ -672,8 +931,20 @@
     }
 
     function SaveLayout()
-    {
-        $("#PageContent").each(function () {
+	{
+		$("#PageContent").each(function () {
+
+			if (typeof (tinyMCE) !== 'undefined') {
+				var length = tinymce.editors.length;
+				for (var i = length; i > 0; i--) {
+					var editor = tinymce.editors[i - 1];
+					var actualContent = editor.getContent();					
+
+					$(editor.bodyElement).html(actualContent);					
+
+				};
+			}
+
             var mediaDetailId = $(this).attr("data-mediadetailid");
             var rootMediaId = $(this).attr("data-mediaid");
 
@@ -697,9 +968,8 @@
                 $(this).after(shortCode);
                 $(this).remove();
             });
-
-            clone.find(".row").removeClass("ui-sortable");
-            clone.find(".col").removeClass("ui-sortable");
+            
+            clone.find(".col, .row, .container, .container-fluid, .editor, .layout-wrapper").removeClass("ui-sortable");
             clone.find(".col").removeAttr("style");
             clone.find(".row").removeAttr("style");
 

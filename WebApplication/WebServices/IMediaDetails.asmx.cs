@@ -126,18 +126,27 @@ namespace WebApplication.Services
         [WebMethod]
         public void SaveUseMainLayout(long mediaDetailId, string html)
         {
-            var mediaDetail = (MediaDetail)MediaDetailsMapper.GetByID(mediaDetailId);
+			if (FrameworkSettings.CurrentUser == null)
+			{
+				var returnObj = BaseMapper.GenerateReturn("You must be logged in");
+				WriteJSON(returnObj.ToJson());
+				return;
+			}
+
+			var mediaDetail = (MediaDetail)MediaDetailsMapper.GetByID(mediaDetailId);
+
+			if (!FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.Save))
+			{
+				var returnObj = BaseMapper.GenerateReturn("You do not have permissions to perform this operation");
+				WriteJSON(returnObj.ToJson());
+				return;
+			}
 
             if(mediaDetail != null)
             {
-                if(mediaDetail.UseMediaTypeLayouts)
-                {
-                    mediaDetail.MediaType.MainLayout = Uri.UnescapeDataString(html);
-                }                
-                else
-                {
-                    mediaDetail.MainLayout = Uri.UnescapeDataString(html);
-                }
+				mediaDetail.UseMediaTypeLayouts = false;
+
+                mediaDetail.MainLayout = Uri.UnescapeDataString(html);
 
                 var returnObj = MediaDetailsMapper.Update(mediaDetail);
 

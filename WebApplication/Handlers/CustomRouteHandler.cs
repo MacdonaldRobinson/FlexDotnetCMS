@@ -253,8 +253,6 @@ namespace WebApplication.Handlers
                 {
                     if (detail.ForceSSL || AppSettings.ForceSSL)
                         URIHelper.ForceSSL();
-                    else
-                        URIHelper.ForceNonSSL();
                 }
                 else
                 {

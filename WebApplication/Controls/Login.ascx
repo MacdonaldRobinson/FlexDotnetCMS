@@ -37,8 +37,8 @@
 				<asp:TextBox ID="EmailAddress" runat="server" />
 			</div>
 			<div>
-				<asp:LinkButton ID="LinkButton1" runat="server" OnClick="BackToLoginScreen_Click">Back</asp:LinkButton>
-				<asp:LinkButton runat="server" ID="ForgotPasswordSend" OnClick="ForgotPasswordSend_Click">Send</asp:LinkButton>
+				<asp:LinkButton ID="LinkButton1" runat="server" OnClick="BackToLoginScreen_Click" CssClass="button button--bluedark ghost">Back</asp:LinkButton>
+				<asp:LinkButton runat="server" ID="ForgotPasswordSend" OnClick="ForgotPasswordSend_Click" CssClass="button button--bluedark">Send</asp:LinkButton>
 			</div>
 			<div>
 				<asp:Literal ID="ServerMessage" runat="server"></asp:Literal>

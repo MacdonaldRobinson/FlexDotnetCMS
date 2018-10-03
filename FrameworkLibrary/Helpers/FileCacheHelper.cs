@@ -78,10 +78,20 @@ namespace FrameworkLibrary
             url = url.Replace("?", "_");
             url = url.Replace(":", "-");
 
-            if (!url.EndsWith("/"))
-                url = url + "/";
+			var absPath = "";
 
-            var absPath = URIHelper.ConvertToAbsPath($"{baseDir}{url.ToLower()}{htmlFileName}");
+			if (new FileInfo(url).Extension == "")
+			{
+				if (!url.EndsWith("/"))
+					url = url + "/";
+
+				absPath = URIHelper.ConvertToAbsPath($"{baseDir}{url.ToLower()}{htmlFileName}");
+			}
+			else
+			{
+				absPath = URIHelper.ConvertToAbsPath($"{baseDir}{url.ToLower()}");
+			}
+
             var fileInfo = new FileInfo(absPath);
 
             return fileInfo;

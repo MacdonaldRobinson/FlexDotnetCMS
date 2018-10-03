@@ -47,9 +47,9 @@ namespace FrameworkLibrary
             set { cacheDurationInSeconds = value; }
         }
 
-        public string MakeWebRequest(string urlString, ICredentials credentialCache = null, RequestMethod method = RequestMethod.GET, string queryString = "")
+        public string MakeWebRequest(string urlString, RequestMethod method = RequestMethod.GET, WebHeaderCollection headerCollection = null, string queryString = "")
         {
-			System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
 			var storageItem = WebserviceRequestsMapper.GetByUrl(urlString);
             var data = "";
@@ -68,23 +68,23 @@ namespace FrameworkLibrary
             request.QueryString = queryString;
             request.Response = "";
             request.Method = method.ToString();
-            request.UrlReferrer = "";
+            request.UrlReferrer = "";			
 
-            if (System.Web.HttpContext.Current.Request.UrlReferrer != null)
+			if (System.Web.HttpContext.Current.Request.UrlReferrer != null)
                 request.UrlReferrer = System.Web.HttpContext.Current.Request.UrlReferrer.AbsoluteUri;
 
             WebRequest webRequest = WebRequest.Create(urlString);
-            if (credentialCache != null)
-            {
-                webRequest.Credentials = credentialCache;
-                webRequest.PreAuthenticate = true;
-            }
 
-            webRequest.Method = method.ToString();
+			if (headerCollection != null)
+			{
+				webRequest.Headers = headerCollection;
+			}
+
+			webRequest.Method = method.ToString();
 
             try
             {
-                if (method == RequestMethod.POST)
+                if (method == RequestMethod.POST && !string.IsNullOrEmpty(queryString))
                 {
                     var encoding = new ASCIIEncoding();
                     byte[] bytes = encoding.GetBytes(queryString);

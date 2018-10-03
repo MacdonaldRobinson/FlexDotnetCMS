@@ -96,8 +96,11 @@ namespace WebApplication.Controls
 		}
 
 		protected void ForgotPasswordSend_Click(object sender, EventArgs e)
-		{
+		{			
 			Mode = ViewMode.Forgot;
+
+			if (string.IsNullOrEmpty(EmailAddress.Text))
+				return;
 
 			var user = UsersMapper.GetByEmailAddress(EmailAddress.Text);
 
@@ -114,21 +117,21 @@ namespace WebApplication.Controls
 
 					if (!returnObj.IsError)
 					{
-						ServerMessage.Text = "An email has been sent to: " + user.EmailAddress;
+						ServerMessage.Text = $"<div class='alert alert-success' role='alert'>An email has been sent to: {user.EmailAddress}</div>";
 					}
 					else
 					{
-						ServerMessage.Text = "Error sending email" + returnObj.Error.Message;
+						ServerMessage.Text = $"<div class='alert alert-danger' role='alert'>Error sending email{returnObj.Error.Message}</div>";
 					}
 				}
 				else
 				{
-					ServerMessage.Text = returnObj.Error.Message;
+					ServerMessage.Text = $"<div class='alert alert-danger' role='alert'>Error sending email{returnObj.Error.Message}</div>";
 				}
 			}
 			else
 			{
-				ServerMessage.Text = "Cannot find an account with the email address: " + EmailAddress.Text;
+				ServerMessage.Text = $"<div class='alert alert-danger' role='alert'>Cannot find an account with the email address: {EmailAddress.Text}</div>";
 			}
 		}
 
@@ -141,13 +144,13 @@ namespace WebApplication.Controls
 
 			if (user == null)
 			{
-				ResetServerMessage.Text = $"Cannot find an account for email address: {email}";
+				ResetServerMessage.Text = $"<div class='alert alert-danger' role='alert'>Cannot find an account for email address: {email}</div>";
 				return;
 			}
 
 			if (user.ResetCode != ResetCode.Text || user.ResetCodeIssueDate == null || ((DateTime)user.ResetCodeIssueDate).AddDays(1) < DateTime.Now)
 			{
-				ResetServerMessage.Text = $"The Reset Code you entered is incorrect or has expired";
+				ResetServerMessage.Text = $"<div class='alert alert-danger' role='alert'>The Reset Code you entered is incorrect or has expired</div>";
 				return;
 			}
 
@@ -155,7 +158,7 @@ namespace WebApplication.Controls
 
 			if (!returnObj.IsError)
 			{
-				ResetServerMessage.Text = $"Password for email address '{user.EmailAddress}' has been reset";
+				ResetServerMessage.Text = $"<div class='alert alert-success' role='alert'>Password for email address '{user.EmailAddress}' has been reset</div>";
 				EmailHelper.Send(AppSettings.SystemEmailAddress, EmailHelper.GetMailAddressesFromString(user.EmailAddress), "Password has been reset", "Your password was successfully reset for: " + URIHelper.BaseUrl);
 
 				user.ResetCode = "";

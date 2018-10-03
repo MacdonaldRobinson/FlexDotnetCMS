@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.IO;
 using RazorEngine;
+using System.Collections.Specialized;
 
 namespace FrameworkLibrary
 {
@@ -142,7 +143,10 @@ namespace FrameworkLibrary
                 return content;
             }
 
-            string pattern = @"/[/a-zA-Z0-9-.]{3,}";
+			content = content.Replace(URIHelper.BaseUrl, "{BaseUrl}");
+
+
+			/*string pattern = @"/[/a-zA-Z0-9-.]{3,}";
             var newString = Regex.Replace(content, pattern, match => {
                 var mediaDetail = MediaDetailsMapper.GetByVirtualPath(URIHelper.ConvertAbsUrlToTilda(match.Value));
 
@@ -154,9 +158,9 @@ namespace FrameworkLibrary
                 {
                     return match.Value;
                 }
-            });
+            });*/
 
-            /*var document = new HtmlAgilityPack.HtmlDocument();
+			/*var document = new HtmlAgilityPack.HtmlDocument();
             document.LoadHtml(content);
 
             var aTags = document.DocumentNode.SelectNodes("//a");
@@ -192,7 +196,7 @@ namespace FrameworkLibrary
 
             return document.DocumentNode.WriteContentTo();*/
 
-            return newString;
+			return content;
         }
 
         public static IEnumerable<IMediaDetail> SearchForTerm(string searchTerm)

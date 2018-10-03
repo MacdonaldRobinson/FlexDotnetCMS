@@ -18,7 +18,6 @@ namespace WebApplication
 
         public WebFormHelper WebFormHelper = new WebFormHelper();
 
-
         public FrontEndBasePage()
         {
             this.masterFilesDirPath = "~/Views/MasterPages/";
@@ -122,13 +121,16 @@ namespace WebApplication
 
             WebFormHelper.CombineCssAndJsIncludes = AppSettings.CombineCssAndJsIncludes;
 
-            if (Request["devAction"] != null)
+            if (Request["action"] != null)
             {
-                switch (Request["devAction"])
+                switch (Request["action"].ToLower())
                 {
-                    case "ClearAllCache":
+                    case "clearcache":
                         ContextHelper.ClearAllMemoryCache();
                         break;
+					case "logout":
+						FormsAuthentication.SignOut();
+					break;
                 }
             }
 

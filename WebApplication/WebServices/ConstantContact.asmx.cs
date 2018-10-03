@@ -30,7 +30,7 @@ namespace WebApplication.WebServices
             cacheCred.Add(address, "Basic", networkCred);
 
             var webRequestHelper = new WebRequestHelper();
-            var xmlString = webRequestHelper.MakeWebRequest(address.AbsoluteUri, networkCred);
+            var xmlString = webRequestHelper.MakeWebRequest(address.AbsoluteUri);
             WriteXML(xmlString);
         }
     }

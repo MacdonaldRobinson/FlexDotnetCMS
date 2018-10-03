@@ -868,12 +868,14 @@ function initTinyMCE()
     tinymce.init({
         selector: ".editor",
         content_css: BaseUrl + "FrontEnd/styles/css/main.css, " + BaseUrl + "Admin/Styles/editor.css",
-        menubar: false,
+		menubar: false,
+		template_popup_width: "1024",
+		template_popup_height: "600",
         plugins: [
           'advlist autolink lists link image charmap print preview hr anchor pagebreak',
           'searchreplace wordcount visualblocks visualchars fullscreen',
           'insertdatetime media youtube nonbreaking save table contextmenu directionality',
-          'emoticons template paste textcolor colorpicker textpattern imagetools ace_beautify imgmap table map'
+          'emoticons template paste textcolor colorpicker textpattern ace_beautify imgmap table map'
         ],
         toolbar1: 'undo redo | paste pastetext | bold italic underline strikethrough superscript subscript charmap emoticons | formatselect blockquote | alignleft aligncenter alignright alignjustify outdent indent | bullist numlist | insert table | anchor link image imgmap media youtube map | visualblocks ace_beautify',
         templates: tinyMCETemplates,
@@ -884,7 +886,9 @@ function initTinyMCE()
         verify_html: false,
         valid_children: '+a[div|p|ul|ol|li|h1|span|h2|h3|h4|h5|h5|h6]',
         extended_valid_elements: 'span[*],a[*],+iframe[src|width|height|name|align|class]',
-        custom_shortcuts: false,
+		custom_shortcuts: false,
+		force_br_newlines: false,
+		force_p_newlines: false,
         setup: function (editor) {
             editor.on('change', function () {
                 editor.save();

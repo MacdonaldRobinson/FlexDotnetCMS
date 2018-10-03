@@ -30,6 +30,9 @@
 
 <script type="text/javascript" src="/Scripts/tinymce/js/tinymce/tinymce.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.js"></script>
+
+
 <style>
     .selectable-element-placeholder {
         border: 1px dashed;
@@ -268,23 +271,25 @@
             menubar: false,
 			content_css: BaseUrl + "FrontEnd/styles/css/main.css, " + BaseUrl + "Admin/Styles/editor.css",
 			menubar: false,
+			template_popup_width:"1024",
+			template_popup_height: "600",
 			plugins: [
 				'advlist autolink lists link image charmap print preview hr anchor pagebreak',
 				'searchreplace wordcount visualblocks visualchars fullscreen',
 				'insertdatetime media youtube nonbreaking save table contextmenu directionality',
-				'emoticons template paste textcolor colorpicker textpattern imagetools ace_beautify imgmap table map'
+				'emoticons template paste textcolor colorpicker textpattern ace_beautify imgmap table map'
 			],
 			toolbar1: 'undo redo | paste pastetext | bold italic underline strikethrough superscript subscript charmap emoticons | formatselect blockquote',
 			toolbar2: 'alignleft aligncenter alignright alignjustify outdent indent | bullist numlist | insert table | anchor link image imgmap media youtube map | visualblocks ace_beautify',
 			templates: tinyMCETemplates,
-            image_advtab: true,
-            relative_urls: false,
-            convert_urls: false,
-            remove_script_host: false,
-            verify_html: false,
-            valid_children: '+a[div|p|ul|ol|li|h1|span|h2|h3|h4|h5|h5|h6]',
-            extended_valid_elements: 'span[*],a[*]',
-            custom_shortcuts: false,
+			image_advtab: true,
+			relative_urls: false,
+			convert_urls: false,
+			remove_script_host: false,
+			verify_html: false,
+			valid_children: '+a[div|p|ul|ol|li|h1|span|h2|h3|h4|h5|h5|h6]',
+			extended_valid_elements: 'span[*],a[*],+iframe[src|width|height|name|align|class]',
+			custom_shortcuts: false,
             setup: function (editor) {
                 editor.on('change', function () {
                     editor.save();
@@ -330,11 +335,12 @@
 			toolBar.find(".FullWidthToggle").css("display", "none");
 			toolBar.find(".DeleteEditor").css("display", "none");
 			toolBar.find(".AddEditor").css("display", "none");
+			toolBar.find(".Duplicate").css("display", "none");
 		}
 		else if(mode == "AddSection")
 		{
 			toolBar.find(".AddRow").css("display", "inline"); 
-			toolBar.find(".AddSection").css("display", "none"); 
+			toolBar.find(".AddSection").css("display", "inline"); 
 			toolBar.find(".DeleteSection").css("display", "inline"); 
             toolBar.find(".AddColumn").css("display", "none"); 
 			toolBar.find(".AddField").css("display", "inline");			
@@ -345,6 +351,7 @@
 			toolBar.find(".OtherOptions").css("display", "none");
 			toolBar.find(".AddEditor").css("display", "inline");
 			toolBar.find(".DeleteEditor").css("display", "none");
+			toolBar.find(".Duplicate").css("display", "none");
 		}
 		else if(mode == "AddRow")
 		{
@@ -357,6 +364,7 @@
 			toolBar.find(".OtherOptions").css("display", "none");
 			toolBar.find(".AddEditor").css("display", "none");
 			toolBar.find(".DeleteEditor").css("display", "none");
+			toolBar.find(".Duplicate").css("display", "none");
 		}
 		else if(mode == "AddColumn")
 		{
@@ -368,9 +376,10 @@
             toolBar.find(".IncreaseColumnSize").css("display", "inline");            
 			toolBar.find(".DecreaseColumnSize").css("display", "inline");
 			toolBar.find(".FullWidthToggle").css("display", "none");
-			toolBar.find(".OtherOptions").css("display", "inline");
+			toolBar.find(".OtherOptions").css("display", "none");
 			toolBar.find(".AddEditor").css("display", "inline");
 			toolBar.find(".DeleteEditor").css("display", "none");
+			toolBar.find(".Duplicate").css("display", "none");
 		}
 		else if(mode == "AddEditor")
 		{
@@ -387,6 +396,7 @@
 			toolBar.find(".FullWidthToggle").css("display", "none");
 			toolBar.find(".DeleteEditor").css("display", "inline");
 			toolBar.find(".AddEditor").css("display", "none");
+			toolBar.find(".Duplicate").css("display", "inline");
 		}
 
 		return toolBar;
@@ -606,7 +616,7 @@
         });
 
 		function ScrollToElement(elem, animate) {
-			$('html,body').animate({ scrollTop: elem.offset().top }, 'slow', function () {
+			$('html,body').animate({ scrollTop: elem.offset().top-300 }, 'slow', function () {
 				if (animate) {
 					elem.effect("highlight", {}, 200);
 				}
@@ -642,7 +652,15 @@
             var container = $("<section class='container'></section>");
             container.append(toolBar.html());
 
-			$(this).closest("#PageContent, UseMainLayout").append(container);
+			var siblingSelector = $(this).closest(".container, .container-fluid, section");
+			var parentSelector = $(this).closest("#PageContent, .UseMainLayout");
+
+			if (siblingSelector.length != 0) {
+				siblingSelector.after(container);
+			}
+			else {
+				parentSelector.append(container);
+			}
 
 			ScrollToElement(container, true);            
             BindDragDrop()                        
@@ -658,7 +676,7 @@
 
 			ScrollToElement(container, true);     
 			initTinyMCE();
-            BindDragDrop()                        
+			BindDragDrop();                       
 
         });
 
@@ -676,14 +694,16 @@
 		});
 
 		$(document).on("click", ".Duplicate", function () {
-			var elem = $(this).closest(".col, .row, .container, .container-fluid");
+			var elem = $(this).closest(".col, .row, .container, .container-fluid, section, .layout-wrapper");
 			var clone = elem.clone();
 
 			elem.after(clone);
 
-			ScrollToElement(clone, false);
-            
-            BindDragDrop();    
+			initTinyMCE();
+
+			ScrollToElement(clone, false);            
+			BindDragDrop();    
+
 		});
 
 		$(document).on("click", ".FullWidthToggle", function () {
@@ -894,7 +914,6 @@
 <div id="ToolBarTemplate" style="display:none;">    
     <a href="javascript:void(0)" class="Handle"><i class="fa fa-arrows" aria-hidden="true"></i></a>
     <div class="ToolBar">                
-		<a href="javascript:void(0)" class="AddSection"><i class="fa fa-plus" aria-hidden="true"></i> Add Section</a>		
 		<a href="javascript:void(0)" class="AddEditor"><i class="fa fa-plus" aria-hidden="true"></i> Add Editor</a>
         <a href="javascript:void(0)" class="AddRow"><i class="fa fa-plus" aria-hidden="true"></i> Add Row</a>
         <a href="javascript:void(0)" class="AddColumn"><i class="fa fa-plus" aria-hidden="true"></i> Add Column</a>		
@@ -902,12 +921,13 @@
         <a href="javascript:void(0)" class="DeleteRow"><i class="fa fa-trash" aria-hidden="true"></i> Delete Row</a>
 		<a href="javascript:void(0)" class="DeleteEditor"><i class="fa fa-trash" aria-hidden="true"></i> Delete Editor</a>
 		<a href="javascript:void(0)" class="DeleteSection"><i class="fa fa-trash" aria-hidden="true"></i> Delete Section</a>
-		<!--<a href="javascript:void(0)" class="Duplicate"><i class="fa fa-plus" aria-hidden="true"></i> Duplicate</a>-->
+		<a href="javascript:void(0)" class="Duplicate"><i class="fa fa-plus" aria-hidden="true"></i> Duplicate</a>
         <a href="javascript:void(0)" class="DeleteColumn"><i class="fa fa-trash" aria-hidden="true"></i> Delete Column</a>
 		<a href="javascript:void(0)" class="FullWidthToggle"><i class="fa fa-arrows-h" aria-hidden="true"></i> Stretch</a>
         <a href="javascript:void(0)" class="IncreaseColumnSize">+</a>
         <a href="javascript:void(0)" class="DecreaseColumnSize">-</a>
 		<a href="javascript:void(0)" class="OtherOptions">Other</a>        
+		<a href="javascript:void(0)" class="AddSection"><i class="fa fa-plus" aria-hidden="true"></i> Add Section</a>		
     </div>
 </div>
 
@@ -979,6 +999,8 @@
 			newHtml = newHtml.replace(/}\s*</gm, '}\n<');
 			newHtml = newHtml.replace(/}\s*{/gm, '}\n{');
             newHtml = html_beautify(newHtml, { preserve_newlines: true });
+
+			$.blockUI({ message: "Saving please wait ..." });
 
             $.post("/WebServices/IMediaDetails.asmx/SaveUseMainLayout", { mediaDetailId: mediaDetailId, html: encodeURI(newHtml) }, function (data) {                
                 window.location.reload();                

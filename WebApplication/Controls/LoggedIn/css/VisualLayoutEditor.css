@@ -13,6 +13,10 @@
 	margin: 5px 0;*/
 }
 
+.container, .container-fluid {
+	margin-bottom: 20px;
+}
+
 
 #PageContent .row, #PageContent .col, #PageContent .container, #PageContent .container-fluid, #PageContent .field, #PageContent .layout-wrapper, #PageContent .editor {
 	outline: 2px dotted;
@@ -22,11 +26,9 @@
 }
 
 
-#PageContent, .row, .col, .container, .container-fluid, .editor {
+#PageContent{
 	position: relative;
-	min-height: 100px;
-	margin-top: 10px;
-	padding-top: 25px;
+	padding-top: 40px;
 }
 
     /*.row {

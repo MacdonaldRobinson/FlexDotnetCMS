@@ -146,7 +146,12 @@ namespace WebApplication.Services
             {
 				mediaDetail.UseMediaTypeLayouts = false;
 
-                mediaDetail.MainLayout = Uri.UnescapeDataString(html);
+				html = Uri.UnescapeDataString(html);
+				//html = MediaDetailsMapper.ConvertUrlsToShortCodes(html);
+
+				html = html.Replace(URIHelper.BaseUrl, "{BaseUrl}");
+
+				mediaDetail.MainLayout = html;
 
                 var returnObj = MediaDetailsMapper.Update(mediaDetail);
 

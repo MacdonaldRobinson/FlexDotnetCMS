@@ -14,7 +14,12 @@ namespace FrameworkLibrary
 {
     public class StringHelper
     {
-        public static string StripHtmlTags(string text)
+		public static string Base64Encode(string plainText)
+		{
+			var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+			return System.Convert.ToBase64String(plainTextBytes);
+		}
+		public static string StripHtmlTags(string text)
         {
             return Regex.Replace(text, @"<(.|\n)*?>", string.Empty);
         }

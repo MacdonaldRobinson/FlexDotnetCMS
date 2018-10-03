@@ -42,55 +42,65 @@ namespace WebApplication.Controls
 		{
 			var returnObj = BaseMapper.GenerateReturn();
 
-			var user = new User();
-			user.FirstName = FirstName.Text;
-			user.LastName = LastName.Text;
-			user.UserName = user.EmailAddress = EmailAddress.Text;	
+			var foundUser = UsersMapper.GetByEmailAddress(EmailAddress.Text);
 
-			user.SetPassword(Password.Text);
-
-			user.AfterLoginStartPage = "";
-			user.AuthenticationType = AuthType.Forms.ToString();
-			user.ResetCode = "";
-
-			if (!IsValid(user))
+			if (foundUser == null)
 			{
-				returnObj = BaseMapper.GenerateReturn("Please make sure you fill out the required fields correctly");
+
+				var user = new User();
+				user.FirstName = FirstName.Text;
+				user.LastName = LastName.Text;
+				user.UserName = user.EmailAddress = EmailAddress.Text;
+
+				user.SetPassword(Password.Text);
+
+				user.AfterLoginStartPage = "";
+				user.AuthenticationType = AuthType.Forms.ToString();
+				user.ResetCode = "";
+
+				if (!IsValid(user))
+				{
+					returnObj = BaseMapper.GenerateReturn("Please make sure you fill out the required fields correctly");
+				}
+				else
+				{
+					var role = RolesMapper.GetByEnum(RoleEnum.Member);
+
+					if (role != null)
+					{
+						user.Roles.Add(role);
+
+						var dashboard = MediaDetailsMapper.GetByMediaType(MediaTypeEnum.Dashboard).FirstOrDefault();
+						/*var level = dashboard.ChildMediaDetails.FirstOrDefault(i=>i.MediaType.Name == MediaTypeEnum.Level.ToString());
+
+						if (level != null)
+						{
+							user.UnlockMedia(level.Media);
+						}*/
+
+						returnObj = UsersMapper.Insert(user);
+
+						if (!returnObj.IsError)
+						{
+							FormsAuthentication.SetAuthCookie(user.UserName, false);
+							FrameworkSettings.CurrentUser = user;
+
+							SendAutoResponderEmail(user);
+							//SendNotificationEmails(user);
+
+							if (BasePage.CurrentMediaDetail.ChildMediaDetails.Any())
+							{
+								var firstPageUrl = BasePage.CurrentMediaDetail.ChildMediaDetails.ElementAt(0).AbsoluteUrl;
+								Response.Redirect(firstPageUrl);
+							}
+
+						}
+					}
+				}
 			}
 			else
 			{
-				var role = RolesMapper.GetByEnum(RoleEnum.Member);
-
-				if (role != null)
-				{
-					user.Roles.Add(role);
-
-					var dashboard = MediaDetailsMapper.GetByMediaType(MediaTypeEnum.Dashboard).FirstOrDefault();
-					/*var level = dashboard.ChildMediaDetails.FirstOrDefault(i=>i.MediaType.Name == MediaTypeEnum.Level.ToString());
-
-					if (level != null)
-					{
-						user.UnlockMedia(level.Media);
-					}*/
-
-					returnObj = UsersMapper.Insert(user);
-
-					if (!returnObj.IsError)
-					{
-						FormsAuthentication.SetAuthCookie(user.UserName, false);
-						FrameworkSettings.CurrentUser = user;
-
-						SendAutoResponderEmail(user);
-						SendNotificationEmails(user);
-
-						if (BasePage.CurrentMediaDetail.ChildMediaDetails.Any())
-						{
-							var firstPageUrl = BasePage.CurrentMediaDetail.ChildMediaDetails.ElementAt(0).AbsoluteUrl;
-							Response.Redirect(firstPageUrl);
-						}
-
-					}
-				}
+				returnObj = BaseMapper.GenerateReturn("A user with the same email address already exists in the system.");
 			}
 
 			if (returnObj.IsError)
@@ -110,7 +120,7 @@ namespace WebApplication.Controls
 											"~/Controls/EmailTemplates/CreateAccount/AutoResponder.ascx", user, AutoResponder.AutoResponderMode.NewAccount);
 		}
 
-		public static Return SendNotificationEmails(User user)
+		/*public static Return SendNotificationEmails(User user)
 		{
 			var admins = UsersMapper.GetAllByRole(RolesMapper.GetByEnum(RoleEnum.Administrator));
 			var adminEmails = new List<MailAddress>();
@@ -121,7 +131,7 @@ namespace WebApplication.Controls
 			return EmailHelper.SendTemplate(adminEmails, "A new account was created at " + URIHelper.BaseUrl,
 											AppSettings.SystemName, AppSettings.SystemEmailAddress,
 											"~/Controls/EmailTemplates/CreateAccount/Notification.ascx", user);
-		}
+		}*/
 
 		private BasePage BasePage
 		{

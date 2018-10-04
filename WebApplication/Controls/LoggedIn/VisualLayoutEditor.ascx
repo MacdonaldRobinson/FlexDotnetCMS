@@ -683,7 +683,7 @@
         $(document).on("click", ".AddColumn", function () {   
             var toolBar = createToolBar("AddColumn");
 
-            var column = $("<div class='col col-xl-12'></div>");
+            var column = $("<div class='col col-xl-6'></div>");
             column.append(toolBar.html());
             
 			$(this).closest(".row").append(column);

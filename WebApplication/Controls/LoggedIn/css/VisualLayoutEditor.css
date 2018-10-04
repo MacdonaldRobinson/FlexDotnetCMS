@@ -15,14 +15,16 @@
 
 .container, .container-fluid {
 	margin-bottom: 20px;
+	margin-top: 20px;
 }
 
 
 #PageContent .row, #PageContent .col, #PageContent .container, #PageContent .container-fluid, #PageContent .field, #PageContent .layout-wrapper, #PageContent .editor {
-	outline: 2px dotted;
+	outline: 1px dotted;
 	background-color: rgba(1,1,1,0.05);
 	position: relative;
 	padding-top: 30px;
+	min-height: 100px;
 }
 
 

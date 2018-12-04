@@ -497,7 +497,7 @@ namespace TinyFileManager.NET
 
                             this.objFItem.strPreviewLink = this.objFItem.strPreviewLink + renameLink + "<a class='btn' href='/Admin/Views/PageHandlers/FileEditor/Default.aspx?LoadFile=" + path + "' target='_blank'><i class='fa fa-pencil'></i></a>";
                             
-                            this.objFItem.strLink = "<a href=\"#\" title=\"Select\" onclick=\"" + this.strApply + "('" + baseUrl + path + "'," + this.strType + ")\";\"><img data-src=\"holder.js/140x100\" alt=\"140x100\" src=\"" + this.objFItem.strThumbImage + "\" height=\"100\"><h4>" + this.objFItem.strName + new FileInfo(this.objFItem.strPath).Extension + "</h4></a>";
+                            this.objFItem.strLink = "<a href=\"#\" title=\"Select\" onclick=\"" + this.strApply + "('" + baseUrl + path + "'," + this.strType + ")\";\"><img data-src=\"holder.js/140x100\" alt=\"140x100\" src=\"" + this.objFItem.strThumbImage + "?width=200" + "\" height=\"100\"><h4>" + this.objFItem.strName + new FileInfo(this.objFItem.strPath).Extension + "</h4></a>";
 
                             this.arrLinks.Add(objFItem);
                         }

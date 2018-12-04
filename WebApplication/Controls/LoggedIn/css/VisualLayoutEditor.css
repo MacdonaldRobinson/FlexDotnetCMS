@@ -27,11 +27,15 @@
 	min-height: 100px;
 }
 
+	#PageContent .editor .col, #PageContent .editor .row, #PageContent .editor .container, #PageContent .editor .container-fluid {
+		padding: 0px;
+	}
 
-#PageContent{
-	position: relative;
-	padding-top: 40px;
-}
+
+	#PageContent {
+		position: relative;
+		padding-top: 40px;
+	}
 
     /*.row {
         border: 1px dotted;

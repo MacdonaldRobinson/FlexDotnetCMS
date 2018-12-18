@@ -252,10 +252,12 @@ namespace FrameworkLibrary
 
 		public string GetCacheKey(RenderVersion renderVersion)
         {
-            return (renderVersion.ToString() + this.AutoCalculatedVirtualPath.Replace("~", "")).ToLower();
-        }
+			var path = (renderVersion.ToString() + URIHelper.GetCurrentVirtualPath().Replace("~", "")).ToLower();
 
-        public IMediaDetail GetPreviousMediaDetail()
+			return path;
+		}
+
+		public IMediaDetail GetPreviousMediaDetail()
         {
             var children = this.Media?.ParentMedia?.GetLiveMediaDetail()?.ChildMediaDetails?.ToList();
 

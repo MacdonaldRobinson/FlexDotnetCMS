@@ -141,7 +141,15 @@ namespace WebApplication.Handlers
                 isAttemptingAdminLogin = true;
             }
 
-            var segments = URIHelper.GetUriSegments(virtualPath).ToList();
+			var languageSegment = FrameworkSettings.GetCurrentLanguage().UriSegment;
+
+			if (LanguagesMapper.GetAllActive().Count() > 1 && !Request.Url.PathAndQuery.Contains($"/{languageSegment}/"))
+			{
+				var url = URIHelper.ConvertToAbsUrl("/" + languageSegment + Request.Url.PathAndQuery);
+				Response.RedirectPermanent(url, true);
+			}
+
+			var segments = URIHelper.GetUriSegments(virtualPath).ToList();
 
             string firstSegment = "";
 

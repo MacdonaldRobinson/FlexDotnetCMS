@@ -687,9 +687,9 @@ namespace FrameworkLibrary
         {
             var listMediaDetail = new List<IMediaDetail>();
 
-            var childMedias = BaseMapper.GetDataModel().AllMedia.Where(i => i.ParentMediaID == media.ID && i.MediaDetails.Any(j=>j.MediaType.ShowInSiteTree)).OrderBy(i => i.OrderIndex).ToList();
+			var childMedias = BaseMapper.GetDataModel().AllMedia.Where(i => i.ParentMediaID == media.ID && i.MediaDetails.Any(j => j.HistoryVersionNumber == 0 && j.MediaType.ShowInSiteTree)).OrderBy(i => i.OrderIndex).ToList();
 
-            foreach (var item in childMedias)
+			foreach (var item in childMedias)
             {
                 var mediaDetail = GetAtleastOneByMedia(item, language);
 

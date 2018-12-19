@@ -31,15 +31,17 @@ namespace WebApplication
             }
 
 
-            if (AppSettings.ForceWWWRedirect)
-            {
-                var isSubDomain = (Request.Url.AbsoluteUri.Split('.').Length > 2);
+			if (AppSettings.IsRunningOnProd && AppSettings.ForceWWWRedirect)
+			{
+				var isSubDomain = (Request.Url.AbsoluteUri.Split('.').Length > 2);
+				var isLocalHost = Request.Url.Host.StartsWith("localhost");
 
-                if (!AppSettings.IsRunningOnProd && (!Request.Url.Host.StartsWith("www.") && !Request.Url.Host.StartsWith("localhost") && !isSubDomain))
-                    Response.RedirectPermanent(Request.Url.AbsoluteUri.Replace("://", "://www."));
-            }
+				if (!Request.Url.Host.StartsWith("www.") && !isLocalHost && !isSubDomain)
+					Response.RedirectPermanent(Request.Url.AbsoluteUri.Replace("://", "://www."));
+			}
 
-            BaseService.AddResponseHeaders();
+
+			BaseService.AddResponseHeaders();
 
             var virtualPathRequest = HttpContext.Current.Request.Path.EndsWith("/");
 

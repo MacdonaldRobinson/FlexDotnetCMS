@@ -90,11 +90,11 @@ namespace FrameworkLibrary
 
 				if (memberExists)
 				{
-					member = new Member { EmailAddress = user.EmailAddress, Status = Status.Subscribed };
+					member = new Member { EmailAddress = user.EmailAddress, Status = Status.Subscribed, StatusIfNew = Status.Pending };
 				}
 				else
 				{
-					member = new Member { EmailAddress = user.EmailAddress, StatusIfNew = Status.Subscribed };
+					member = new Member { EmailAddress = user.EmailAddress, Status = Status.Pending, StatusIfNew = Status.Pending };
 				}
 
 				foreach (var mergeField in mergeFields)

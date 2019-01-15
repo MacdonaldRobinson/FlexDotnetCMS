@@ -29,24 +29,33 @@ namespace FrameworkLibrary
             return Regex.Replace(text, @"<(.|\n)*?>", string.Empty);
         }
 
-        public static T JsonToObject<T>(string to)
-        {
-            if (to.StartsWith("{") || to.StartsWith("["))
-            {
-                try
-                {
-                    return JsonConvert.DeserializeObject<T>(to);
-                }
-                catch(Exception ex)
-                {
-                    return default(T);
-                }
-            }
+		public static void HandleDeserializationError(object sender, Newtonsoft.Json.Serialization.ErrorEventArgs errorArgs)
+		{
+			var currentError = errorArgs.ErrorContext.Error.Message;
+			errorArgs.ErrorContext.Handled = true;
+		}
 
-            return default(T);
-        }
+		public static T JsonToObject<T>(string to)
+		{
+			if (to.StartsWith("{") || to.StartsWith("["))
+			{
+				try
+				{
+					return JsonConvert.DeserializeObject<T>(to, new JsonSerializerSettings()
+					{
+						Error = HandleDeserializationError
+					});
+				}
+				catch (Exception ex)
+				{
+					return default(T);
+				}
+			}
 
-        public  static string GetPathFromHtml(string html)
+			return default(T);
+		}
+
+		public  static string GetPathFromHtml(string html)
         {
             if (html.Contains("<"))
             {

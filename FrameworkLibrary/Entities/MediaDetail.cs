@@ -7,9 +7,9 @@ using System.Web.UI;
 
 namespace FrameworkLibrary
 {
-    public partial class MediaDetail : IMustContainID, IMediaDetail
-    {
-        private List<ValidationError> _validationErrors = new List<ValidationError>();
+	public partial class MediaDetail : IMustContainID, IMediaDetail
+	{
+		private List<ValidationError> _validationErrors = new List<ValidationError>();
 
 		public string PermaLink
 		{
@@ -20,12 +20,12 @@ namespace FrameworkLibrary
 		}
 
 		public bool CanRender
-        {
-            get
-            {
+		{
+			get
+			{
 				return !IsDeleted && IsPublished;
-            }
-        }
+			}
+		}
 
 		public bool HasADeletedParent()
 		{
@@ -33,20 +33,20 @@ namespace FrameworkLibrary
 				return true;
 
 			return false;
-		}		
+		}
 
-        public bool CanCache
-        {
-            get
-            {
-                if (!this.CanRender)
-                    return false;
+		public bool CanCache
+		{
+			get
+			{
+				if (!this.CanRender)
+					return false;
 
-                if (!this.EnableCaching)
-                    return false;
+				if (!this.EnableCaching)
+					return false;
 
-                if(this.CheckEnforceRoleLimitationsOnFrontEnd())
-                    return false;
+				if (this.CheckEnforceRoleLimitationsOnFrontEnd())
+					return false;
 
 				if (this.FieldAssociations.Any(i => i.MediaDetail.PublishDate > DateTime.Now || i.MediaDetail.ExpiryDate != null))
 					return false;
@@ -55,27 +55,27 @@ namespace FrameworkLibrary
 					return false;
 
 				return true;
-            }
-        }
+			}
+		}
 
-        public bool IsHistory
-        {
-            get
-            {
-                return (HistoryVersionNumber > 0);
-            }
-        }
+		public bool IsHistory
+		{
+			get
+			{
+				return (HistoryVersionNumber > 0);
+			}
+		}
 
-        public bool IsPublished
-        {
-            get
-            {
-                if (PublishDate == null)
-                    return false;
+		public bool IsPublished
+		{
+			get
+			{
+				if (PublishDate == null)
+					return false;
 
-                return (((!IsArchive) && (PublishDate <= DateTime.Now)) && ((ExpiryDate == null) || (ExpiryDate > DateTime.Now)));
-            }
-        }
+				return (((!IsArchive) && (PublishDate <= DateTime.Now)) && ((ExpiryDate == null) || (ExpiryDate > DateTime.Now)));
+			}
+		}
 
 		public bool WillPublish
 		{
@@ -111,73 +111,80 @@ namespace FrameworkLibrary
 		}
 
 		public string UseMainLayout
-        {
-            get
-            {
-                var currentLanguage = FrameworkSettings.GetCurrentLanguage();
+		{
+			get
+			{
+				var currentLanguage = FrameworkSettings.GetCurrentLanguage();
 
-                if (currentLanguage == null)
-                    currentLanguage = LanguagesMapper.GetDefaultLanguage();
+				if (currentLanguage == null)
+					currentLanguage = LanguagesMapper.GetDefaultLanguage();
 
-                if (this.UseDefaultLanguageLayouts && this.LanguageID != currentLanguage.ID)
-                    return this.Media.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage())?.UseMainLayout;
+				if (this.UseDefaultLanguageLayouts && this.LanguageID != currentLanguage.ID)
+					return this.Media.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage())?.UseMainLayout;
 
-                var layout = "";
+				var layout = "";
 
-                if (this.UseMediaTypeLayouts)
-                    layout = this.MediaType?.MainLayout;
-                else
-                    layout = this.MainLayout;
+				if (this.UseMediaTypeLayouts)
+					layout = this.MediaType?.MainLayout;
+				else
+					layout = this.MainLayout;
 
-                return layout; //MediaDetailsMapper.ParseSpecialTags(this, layout);
-            }
-        }
+				return layout; //MediaDetailsMapper.ParseSpecialTags(this, layout);
+			}
+		}
 
-        public string UseSummaryLayout
-        {
-            get
-            {
-                var currentLanguage = FrameworkSettings.GetCurrentLanguage();
+		public string UseSummaryLayout
+		{
+			get
+			{
+				var currentLanguage = FrameworkSettings.GetCurrentLanguage();
 
-                if (currentLanguage == null)
-                    currentLanguage = LanguagesMapper.GetDefaultLanguage();
+				if (currentLanguage == null)
+					currentLanguage = LanguagesMapper.GetDefaultLanguage();
 
-                if (this.UseDefaultLanguageLayouts && this.LanguageID != currentLanguage.ID)
-                    return this.Media.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage())?.UseSummaryLayout;
+				if (this.UseDefaultLanguageLayouts && this.LanguageID != currentLanguage.ID)
+					return this.Media.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage())?.UseSummaryLayout;
 
-                var layout = "";
+				var layout = "";
 
-                if (this.UseMediaTypeLayouts)
-                    layout = this.MediaType?.SummaryLayout;
-                else
-                    layout = this.SummaryLayout;
+				if (this.UseMediaTypeLayouts)
+					layout = this.MediaType?.SummaryLayout;
+				else
+					layout = this.SummaryLayout;
 
-                return layout; //MediaDetailsMapper.ParseSpecialTags(this, layout);
-            }
-        }
+				return layout; //MediaDetailsMapper.ParseSpecialTags(this, layout);
+			}
+		}
 
-        public string UseFeaturedLayout
-        {
-            get
-            {
-                var currentLanguage = FrameworkSettings.GetCurrentLanguage();
+		public List<MediaDetailField> GetAssociatedMediaDetailFields()
+		{
+			var associatedItems = this.FieldAssociations.Where(i => i.MediaDetailField.MediaDetail.HistoryVersionNumber == 0).Select(i => i.MediaDetailField).ToList();
 
-                if(currentLanguage == null)
-                    currentLanguage = LanguagesMapper.GetDefaultLanguage();
+			return associatedItems;
+		}
 
-                if (this.UseDefaultLanguageLayouts && this.LanguageID != currentLanguage.ID)
-                    return this.Media.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage())?.UseSummaryLayout;
+		public string UseFeaturedLayout
+		{
+			get
+			{
+				var currentLanguage = FrameworkSettings.GetCurrentLanguage();
 
-                var layout = "";
+				if (currentLanguage == null)
+					currentLanguage = LanguagesMapper.GetDefaultLanguage();
 
-                if (this.UseMediaTypeLayouts)
-                    layout = this.MediaType?.FeaturedLayout;
-                else
-                    layout = this.FeaturedLayout;
+				if (this.UseDefaultLanguageLayouts && this.LanguageID != currentLanguage.ID)
+					return this.Media.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage())?.UseSummaryLayout;
 
-                return layout; //MediaDetailsMapper.ParseSpecialTags(this, layout);
-            }
-        }
+				var layout = "";
+
+				if (this.UseMediaTypeLayouts)
+					layout = this.MediaType?.FeaturedLayout;
+				else
+					layout = this.FeaturedLayout;
+
+				return layout; //MediaDetailsMapper.ParseSpecialTags(this, layout);
+			}
+		}
 
 		public string GetTagNamesAsString(string seperater = ",")
 		{
@@ -190,40 +197,40 @@ namespace FrameworkLibrary
 		}
 
 		public bool CanUserAccessSection(User user)
-        {
-            if (user == null)
-                return false;
+		{
+			if (user == null)
+				return false;
 
-            if (user.IsInRole(RoleEnum.Developer))
-                return true;
+			if (user.IsInRole(RoleEnum.Developer))
+				return true;
 
-            var roles = this.GetRoles();
+			var roles = this.GetRoles();
 
-            if (roles.Count == 0)
-            {
-                roles = this.MediaType.GetRoles();
-            }
+			if (roles.Count == 0)
+			{
+				roles = this.MediaType.GetRoles();
+			}
 
-            var parentLimitedRoles = this.GetParentMediaDetails().Where(i=>i.CanLimitedRolesAccessAllChildPages).SelectMany(i=> ((MediaDetail)i).GetRoles());
+			var parentLimitedRoles = this.GetParentMediaDetails().Where(i => i.CanLimitedRolesAccessAllChildPages).SelectMany(i => ((MediaDetail)i).GetRoles());
 
-            if(parentLimitedRoles.Any())
-            {
-                if(!user.IsInRoles(parentLimitedRoles))
-                {
-                    return false;
-                }                
-            }
+			if (parentLimitedRoles.Any())
+			{
+				if (!user.IsInRoles(parentLimitedRoles))
+				{
+					return false;
+				}
+			}
 
-            if (roles.Count > 0)
-            {
-                if (!user.IsInRoles(roles))
-                {                    
-                    return false;
-                }
-            }
+			if (roles.Count > 0)
+			{
+				if (!user.IsInRoles(roles))
+				{
+					return false;
+				}
+			}
 
-            return true;
-        }
+			return true;
+		}
 
 		public string GetFieldAssociationsAsString(string fieldCode, string seperator = ",", bool AsCssClasses = false)
 		{
@@ -251,98 +258,96 @@ namespace FrameworkLibrary
 		}
 
 		public string GetCacheKey(RenderVersion renderVersion)
-        {
-			var path = (renderVersion.ToString() + URIHelper.GetCurrentVirtualPath().Replace("~", "")).ToLower();
-
-			return path;
+		{
+			return (renderVersion.ToString() + this.AutoCalculatedVirtualPath.Replace("~", "")).ToLower();
 		}
 
 		public IMediaDetail GetPreviousMediaDetail()
-        {
-            var children = this.Media?.ParentMedia?.GetLiveMediaDetail()?.ChildMediaDetails?.ToList();
+		{
+			var children = this.Media?.ParentMedia?.GetLiveMediaDetail()?.ChildMediaDetails?.ToList();
 
-            if (children == null)
-                return null;
+			if (children == null)
+				return null;
 
-            var currentIndex = children.FindIndex(i => i.ID == this.ID);
-            var previousIndex = currentIndex - 1;
+			var currentIndex = children.FindIndex(i => i.ID == this.ID);
+			var previousIndex = currentIndex - 1;
 
-            if (previousIndex < 0)
-                previousIndex = 0;
+			if (previousIndex < 0)
+				previousIndex = 0;
 
-            if(children.Count > 0)
-            {
-                var previousMediaDetail = children[previousIndex];                
+			if (children.Count > 0)
+			{
+				var previousMediaDetail = children[previousIndex];
 
-                if (previousMediaDetail.ID == this.ID)
-                    return null;
+				if (previousMediaDetail.ID == this.ID)
+					return null;
 
-                return previousMediaDetail;
-            }
+				return previousMediaDetail;
+			}
 
-            return null;            
-        }
+			return null;
+		}
 
-        public IMediaDetail GetNearestParentWhichContainsFieldCode(string FieldCode)
-        {
-            return MediaDetailsMapper.GetParentsWhichContainsFieldCode(this, Language, FieldCode).FirstOrDefault();
-        }
+		public IMediaDetail GetNearestParentWhichContainsFieldCode(string FieldCode)
+		{
+			return MediaDetailsMapper.GetParentsWhichContainsFieldCode(this, Language, FieldCode).FirstOrDefault();
+		}
 
-        public IMediaDetail GetNextMediaDetail()
-        {
-            var children = this.Media?.ParentMedia?.GetLiveMediaDetail()?.ChildMediaDetails?.ToList();
+		public IMediaDetail GetNextMediaDetail()
+		{
+			var children = this.Media?.ParentMedia?.GetLiveMediaDetail()?.ChildMediaDetails?.ToList();
 
-            if (children == null)
-                return null;
+			if (children == null)
+				return null;
 
-            var currentIndex = children.FindIndex(i => i.ID == this.ID);
-            var nextIndex = currentIndex + 1;
+			var currentIndex = children.FindIndex(i => i.ID == this.ID);
+			var nextIndex = currentIndex + 1;
 
-            if (nextIndex >= children.Count)
-                nextIndex = 0;
+			if (nextIndex >= children.Count)
+				nextIndex = 0;
 
-            if(children.Count > 0)
-            {
-                var nextMediaDetail = children[nextIndex];
+			if (children.Count > 0)
+			{
+				var nextMediaDetail = children[nextIndex];
 
-                if (nextMediaDetail.ID == this.ID)
-                    return null;
+				if (nextMediaDetail.ID == this.ID)
+					return null;
 
-                return nextMediaDetail;
-            }
-            else
-            {
-                return null;
-            }
-        }
+				return nextMediaDetail;
+			}
+			else
+			{
+				return null;
+			}
+		}
 
-        public void RemoveFromCache()
-        {
-            var htmlCacheKey = GetCacheKey(RenderVersion.HTML);
-            var mobileCacheKey = GetCacheKey(RenderVersion.Mobile);
+		public void RemoveFromCache()
+		{
+			var htmlCacheKey = GetCacheKey(RenderVersion.HTML);
+			var mobileCacheKey = GetCacheKey(RenderVersion.Mobile);
 
-            FileCacheHelper.RemoveFromCache(htmlCacheKey);
-            RedisCacheHelper.RemoveFromCache(htmlCacheKey);
-            ContextHelper.RemoveFromCache(htmlCacheKey);
+			FileCacheHelper.RemoveFromCache(htmlCacheKey);
+			RedisCacheHelper.RemoveFromCache(htmlCacheKey);
+			ContextHelper.RemoveFromCache(htmlCacheKey);
 
-            RedisCacheHelper.RemoveFromCache(mobileCacheKey);
-            FileCacheHelper.RemoveFromCache(mobileCacheKey);
-            ContextHelper.RemoveFromCache(mobileCacheKey);
+			RedisCacheHelper.RemoveFromCache(mobileCacheKey);
+			FileCacheHelper.RemoveFromCache(mobileCacheKey);
+			ContextHelper.RemoveFromCache(mobileCacheKey);
 
-            /*var language = this.Language;
+			/*var language = this.Language;
 
             if(language == null && this.LanguageID > 0)
             {
                 language = LanguagesMapper.GetByID(this.LanguageID);
             }*/
 
-            var parents = GetAllParentMediaDetails(this.LanguageID).Where(i=>i.ID != this.ID);
+			var parents = GetAllParentMediaDetails(this.LanguageID).Where(i => i.ID != this.ID);
 
-            foreach (var item in parents)
-            {
-                item.RemoveFromCache();
-            }
-        }
+			foreach (var item in parents)
+			{
+				item.RemoveFromCache();
+			}
+		}
 
 		private Dictionary<long, IEnumerable<IMediaDetail>> _allParentMediaDetails = new Dictionary<long, IEnumerable<IMediaDetail>>();
 		public IEnumerable<IMediaDetail> GetAllParentMediaDetails(long languageId)
@@ -391,93 +396,93 @@ namespace FrameworkLibrary
 		}
 
 		public void SaveToMemoryCache(RenderVersion renderVersion, string html)
-        {
-            if (HasDraft || HistoryVersionNumber != 0)
-                return;
+		{
+			if (HasDraft || HistoryVersionNumber != 0)
+				return;
 
-            var key = GetCacheKey(renderVersion);            
-            ContextHelper.SaveToCache(key, html);
-        }
+			var key = GetCacheKey(renderVersion);
+			ContextHelper.SaveToCache(key, html);
+		}
 
-        public void SaveToFileCache(RenderVersion renderVersion, string html)
-        {
-            if (HasDraft || HistoryVersionNumber != 0)
-                return;
+		public void SaveToFileCache(RenderVersion renderVersion, string html)
+		{
+			if (HasDraft || HistoryVersionNumber != 0)
+				return;
 
-            var cacheKey = GetCacheKey(renderVersion);
-            FileCacheHelper.SaveToCache(cacheKey, html);
-        }
+			var cacheKey = GetCacheKey(renderVersion);
+			FileCacheHelper.SaveToCache(cacheKey, html);
+		}
 
-        public void SaveToRedisCache(RenderVersion renderVersion, string html)
-        {
-            if (HasDraft || HistoryVersionNumber != 0)
-                return;
+		public void SaveToRedisCache(RenderVersion renderVersion, string html)
+		{
+			if (HasDraft || HistoryVersionNumber != 0)
+				return;
 
-            var cacheKey = GetCacheKey(renderVersion);
-            RedisCacheHelper.SaveToCache(cacheKey, html);                
-        }
-        
-        //private Dictionary<string, MediaDetailField> loadedFields = new Dictionary<string, MediaDetailField>();
+			var cacheKey = GetCacheKey(renderVersion);
+			RedisCacheHelper.SaveToCache(cacheKey, html);
+		}
 
-        public Field LoadField(string fieldCode)
-        {
-            /*if(loadedFields.ContainsKey(fieldCode))
+		//private Dictionary<string, MediaDetailField> loadedFields = new Dictionary<string, MediaDetailField>();
+
+		public Field LoadField(string fieldCode)
+		{
+			/*if(loadedFields.ContainsKey(fieldCode))
                 return loadedFields[fieldCode];*/
 
-            var field = Fields.FirstOrDefault(i => i.FieldCode == fieldCode);
-            //loadedFields.Add(fieldCode, field);
-            
-            return field;
-        }
+			var field = Fields.FirstOrDefault(i => i.FieldCode == fieldCode);
+			//loadedFields.Add(fieldCode, field);
 
-        public string RenderShortCode(string shortCode, bool includeFieldWrapper = true)
-        {
-            if (!(shortCode.StartsWith("{") && shortCode.EndsWith("}")))
-            {
-                shortCode = "{" + shortCode + "}";
-            }
+			return field;
+		}
 
-            return MediaDetailsMapper.ParseSpecialTags(this, shortCode, includeFieldWrapper: includeFieldWrapper);
-        }
+		public string RenderShortCode(string shortCode, bool includeFieldWrapper = true)
+		{
+			if (!(shortCode.StartsWith("{") && shortCode.EndsWith("}")))
+			{
+				shortCode = "{" + shortCode + "}";
+			}
 
-        public string RenderField(string fieldCode, bool includeFieldWrapper = true)
-        {
-            var shortCode = "Field:"+fieldCode;
-            return RenderShortCode(shortCode, includeFieldWrapper);
-        }
+			return MediaDetailsMapper.ParseSpecialTags(this, shortCode, includeFieldWrapper: includeFieldWrapper);
+		}
 
-        public string RenderField(long fieldId, bool includeFieldWrapper = true)
-        {
-            var shortCode = "Field:" + fieldId;
-            return RenderShortCode(shortCode, includeFieldWrapper);
-        }
+		public string RenderField(string fieldCode, bool includeFieldWrapper = true)
+		{
+			var shortCode = "Field:" + fieldCode;
+			return RenderShortCode(shortCode, includeFieldWrapper);
+		}
 
-        public string RenderMainLayout()
-        {
-            return RenderShortCode("UseMainLayout");
-        }
+		public string RenderField(long fieldId, bool includeFieldWrapper = true)
+		{
+			var shortCode = "Field:" + fieldId;
+			return RenderShortCode(shortCode, includeFieldWrapper);
+		}
 
-        public string RenderSummaryLayout()
-        {
-            return RenderShortCode("UseSummaryLayout");
-        }
+		public string RenderMainLayout()
+		{
+			return RenderShortCode("UseMainLayout");
+		}
 
-        public string RenderFeaturedLayout()
-        {
-            return RenderShortCode("UseFeaturedLayout");
-        }
+		public string RenderSummaryLayout()
+		{
+			return RenderShortCode("UseSummaryLayout");
+		}
 
-        public MasterPage GetMasterPage()
-        {
-            if (this.MasterPage != null)
-                return MasterPage;
+		public string RenderFeaturedLayout()
+		{
+			return RenderShortCode("UseFeaturedLayout");
+		}
 
-            if (this.MediaType.MasterPage == null)
-                return SettingsMapper.GetSettings().DefaultMasterPage;
+		public MasterPage GetMasterPage()
+		{
+			if (this.MasterPage != null)
+				return MasterPage;
 
-            return this.MediaType.MasterPage;
+			if (this.MediaType.MasterPage == null)
+				return SettingsMapper.GetSettings().DefaultMasterPage;
 
-            /*MediaDetail currentMediaDetail = (MediaDetail)this.Media.ParentMedia?.MediaDetails.FirstOrDefault(i=>i.HistoryVersionNumber == 0 && i.LanguageID == this.LanguageID);
+			return this.MediaType.MasterPage;
+
+			/*MediaDetail currentMediaDetail = (MediaDetail)this.Media.ParentMedia?.MediaDetails.FirstOrDefault(i=>i.HistoryVersionNumber == 0 && i.LanguageID == this.LanguageID);
 
             while (currentMediaDetail != null)
             {
@@ -488,13 +493,13 @@ namespace FrameworkLibrary
             }
 
             return MasterPage;*/
-        }
+		}
 
-        public FrameworkLibrary.Website GetWebsite()
-        {
-            return WebsitesMapper.GetWebsite(0, this.Language);
+		public FrameworkLibrary.Website GetWebsite()
+		{
+			return WebsitesMapper.GetWebsite(0, this.Language);
 
-            /*var currentItem = this;
+			/*var currentItem = this;
             FrameworkLibrary.Website website = null;
 
             while (currentItem.Media.ParentMediaID != null)
@@ -509,112 +514,112 @@ namespace FrameworkLibrary
             }
 
             return website;*/
-        }
+		}
 
-        public IEnumerable<IMediaDetail> ChildMediaDetails
-        {
-            get
-            {
-                var children = BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ShowInSiteTree && i.HistoryForMediaDetailID == null && i.Media.ParentMediaID == MediaID && i.HistoryVersionNumber == 0 && i.LanguageID == LanguageID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex).ToList();
-                return children;
-            }
-        }
+		public IEnumerable<IMediaDetail> ChildMediaDetails
+		{
+			get
+			{
+				var children = BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ShowInSiteTree && i.HistoryForMediaDetailID == null && i.Media.ParentMediaID == MediaID && i.HistoryVersionNumber == 0 && i.LanguageID == LanguageID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex).ToList();
+				return children;
+			}
+		}
 
-        public List<Control> GetTemplateTopAndBottomSegments(System.Web.UI.Page control)
-        {
-            var masterPage = GetMasterPage();
-            var templateTopAndBottomSegments = new List<Control>();
+		public List<Control> GetTemplateTopAndBottomSegments(System.Web.UI.Page control)
+		{
+			var masterPage = GetMasterPage();
+			var templateTopAndBottomSegments = new List<Control>();
 
-            if (masterPage != null)
-            {
-                var topAndBottomSegments = StringHelper.SplitByString(masterPage.Layout, "{PageContent}");
+			if (masterPage != null)
+			{
+				var topAndBottomSegments = StringHelper.SplitByString(masterPage.Layout, "{PageContent}");
 
-                if (topAndBottomSegments.Length > 1)
-                {
-                    templateTopAndBottomSegments.Add(control.ParseControl(MediaDetailsMapper.ParseSpecialTags(this, topAndBottomSegments.ElementAt(0))));
-                    templateTopAndBottomSegments.Add(control.ParseControl(MediaDetailsMapper.ParseSpecialTags(this, topAndBottomSegments.ElementAt(1))));
+				if (topAndBottomSegments.Length > 1)
+				{
+					templateTopAndBottomSegments.Add(control.ParseControl(MediaDetailsMapper.ParseSpecialTags(this, topAndBottomSegments.ElementAt(0))));
+					templateTopAndBottomSegments.Add(control.ParseControl(MediaDetailsMapper.ParseSpecialTags(this, topAndBottomSegments.ElementAt(1))));
 
-                    return templateTopAndBottomSegments;
-                }
-            }
+					return templateTopAndBottomSegments;
+				}
+			}
 
-            return templateTopAndBottomSegments;
-        }
+			return templateTopAndBottomSegments;
+		}
 
-        public string VirtualPath
-        {
-            get
-            {
-                if (this.CachedVirtualPath == "")
-                    this.CachedVirtualPath = CalculatedVirtualPath();
+		public string VirtualPath
+		{
+			get
+			{
+				if (this.CachedVirtualPath == "")
+					this.CachedVirtualPath = CalculatedVirtualPath();
 
-                return this.CachedVirtualPath;
-            }
-        }
+				return this.CachedVirtualPath;
+			}
+		}
 
-        public string CalculatedVirtualPath()
-        {
-            var parents = GetAllParentMediaDetails(this.LanguageID).Reverse();
+		public string CalculatedVirtualPath()
+		{
+			var parents = GetAllParentMediaDetails(this.LanguageID).Reverse();
 
-            var virtualPath = "";
+			var virtualPath = "";
 
-            foreach (var parent in parents)
-            {
-                if (parent is RootPage || parent is Website)
-                    continue;
+			foreach (var parent in parents)
+			{
+				if (parent is RootPage || parent is Website)
+					continue;
 
-                virtualPath = StringHelper.CreateSlug(parent.LinkTitle) + "/" + virtualPath;
-            }
+				virtualPath = StringHelper.CreateSlug(parent.LinkTitle) + "/" + virtualPath;
+			}
 
-            if (virtualPath == "")
-                virtualPath = "~/";
+			if (virtualPath == "")
+				virtualPath = "~/";
 
-            virtualPath = URIHelper.ConvertAbsUrlToTilda(virtualPath);
+			virtualPath = URIHelper.ConvertAbsUrlToTilda(virtualPath);
 
-            return virtualPath;
-        }
+			return virtualPath;
+		}
 
-        public IEnumerable<IMediaDetail> GetRelatedItems(long mediaTypeId = 0)
-        {
-            var relatedItems = MediaDetailsMapper.GetRelatedItems(this, mediaTypeId);
+		public IEnumerable<IMediaDetail> GetRelatedItems(long mediaTypeId = 0)
+		{
+			var relatedItems = MediaDetailsMapper.GetRelatedItems(this, mediaTypeId);
 
-            return relatedItems;
-        }
+			return relatedItems;
+		}
 
-        public IEnumerable<IMediaDetail> GetItemsWhereFieldAssociationsAreTheSame(List<string> fieldCodes, long mediaTypeId, int take = -1)
-        {
-            return MediaDetailsMapper.GetItemsWhereFieldAssociationsAreTheSame(this.MediaID, fieldCodes, mediaTypeId, take);
-        }
+		public IEnumerable<IMediaDetail> GetItemsWhereFieldAssociationsAreTheSame(List<string> fieldCodes, long mediaTypeId, int take = -1)
+		{
+			return MediaDetailsMapper.GetItemsWhereFieldAssociationsAreTheSame(this.MediaID, fieldCodes, mediaTypeId, take);
+		}
 
-        public Dictionary<Tag, List<MediaDetail>> GetRelatedItemsByTags(long mediaTypeId = 0)
-        {
-            var relatedItems = MediaDetailsMapper.GetRelatedItemsByTags(this, mediaTypeId);
+		public Dictionary<Tag, List<MediaDetail>> GetRelatedItemsByTags(long mediaTypeId = 0)
+		{
+			var relatedItems = MediaDetailsMapper.GetRelatedItemsByTags(this, mediaTypeId);
 
-            return relatedItems;
-        }
+			return relatedItems;
+		}
 
-        public bool IsArchive
-        {
-            get
-            {
-                return ExpiryDate <= DateTime.Now;
-            }
-        }
+		public bool IsArchive
+		{
+			get
+			{
+				return ExpiryDate <= DateTime.Now;
+			}
+		}
 
-        public List<ValidationError> ValidationErrors
-        {
-            get
-            {
-                return _validationErrors;
-            }
-        }
+		public List<ValidationError> ValidationErrors
+		{
+			get
+			{
+				return _validationErrors;
+			}
+		}
 
-        public Return Validate()
-        {
-            if (_validationErrors == null)
-                _validationErrors = new List<ValidationError>();
+		public Return Validate()
+		{
+			if (_validationErrors == null)
+				_validationErrors = new List<ValidationError>();
 
-            /*if (Title.Trim() == "")
+			/*if (Title.Trim() == "")
                 _validationErrors.Add(new ValidationError("Title cannot be blank"));
 
             if (ShortDescription.Trim() == "")
@@ -623,154 +628,154 @@ namespace FrameworkLibrary
             /*if (LongDescription.Trim() == "")
                 _validationErrors.Add(new ValidationError("Long Description cannot be blank"));*/
 
-            if (LinkTitle.Trim() == "")
-                _validationErrors.Add(new ValidationError("Link Title cannot be blank"));
+			if (LinkTitle.Trim() == "")
+				_validationErrors.Add(new ValidationError("Link Title cannot be blank"));
 
-            if (ExpiryDate < PublishDate)
-                _validationErrors.Add(new ValidationError("The Publish Date of the item cannot be greater then its expiry date, please check your Publish Settings"));
+			if (ExpiryDate < PublishDate)
+				_validationErrors.Add(new ValidationError("The Publish Date of the item cannot be greater then its expiry date, please check your Publish Settings"));
 
-            return GenerateValidationReturn();
-        }
+			return GenerateValidationReturn();
+		}
 
-        public Return GenerateValidationReturn()
-        {
-            var returnObj = BaseMapper.GenerateReturn();
+		public Return GenerateValidationReturn()
+		{
+			var returnObj = BaseMapper.GenerateReturn();
 
-            if (_validationErrors.Count == 0)
-                return returnObj;
+			if (_validationErrors.Count == 0)
+				return returnObj;
 
-            var validationMessages = "";
+			var validationMessages = "";
 
-            foreach (var validationError in _validationErrors)
-                validationMessages += validationError.Message + "<br />";
+			foreach (var validationError in _validationErrors)
+				validationMessages += validationError.Message + "<br />";
 
-            returnObj.Error = ErrorHelper.CreateError(new System.Exception("Validation Error", new System.Exception(validationMessages)));
+			returnObj.Error = ErrorHelper.CreateError(new System.Exception("Validation Error", new System.Exception(validationMessages)));
 
-            return returnObj;
-        }
+			return returnObj;
+		}
 
-        private string _absoluteUrl = "";
+		private string _absoluteUrl = "";
 
-        public string AbsoluteUrl
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_absoluteUrl))
-                {
-                    _absoluteUrl = URIHelper.ConvertToAbsUrl(AutoCalculatedVirtualPath);
-                }
+		public string AbsoluteUrl
+		{
+			get
+			{
+				if (string.IsNullOrEmpty(_absoluteUrl))
+				{
+					_absoluteUrl = URIHelper.ConvertToAbsUrl(AutoCalculatedVirtualPath);
+				}
 
-                return _absoluteUrl;
-            }
-        }
+				return _absoluteUrl;
+			}
+		}
 
-        private string _autoCalculatedVirtualPath = "";
-        public void ClearAutoCalculatedVirtualPathCache()
-        {
-            _autoCalculatedVirtualPath = "";
-        }
-        public string AutoCalculatedVirtualPath
-        {
-            get
-            {
-                var websiteVirtualPaths = WebsitesMapper.GetAllWebsiteVirtualPaths();
+		private string _autoCalculatedVirtualPath = "";
+		public void ClearAutoCalculatedVirtualPathCache()
+		{
+			_autoCalculatedVirtualPath = "";
+		}
+		public string AutoCalculatedVirtualPath
+		{
+			get
+			{
+				var websiteVirtualPaths = WebsitesMapper.GetAllWebsiteVirtualPaths();
 
-                if (websiteVirtualPaths.Count == 0)
-                    return "";
+				if (websiteVirtualPaths.Count == 0)
+					return "";
 
-                if (!string.IsNullOrEmpty(_autoCalculatedVirtualPath))
-                {
-                    return _autoCalculatedVirtualPath;
-                }
+				if (!string.IsNullOrEmpty(_autoCalculatedVirtualPath))
+				{
+					return _autoCalculatedVirtualPath;
+				}
 
-                var httpContext = System.Web.HttpContext.Current;
+				var httpContext = System.Web.HttpContext.Current;
 
-                if (httpContext != null && httpContext.Request.Url.Segments.Count() >= 2 && websiteVirtualPaths.Contains(httpContext.Request.Url.Segments[1]))
-                    return this.VirtualPath;
+				if (httpContext != null && httpContext.Request.Url.Segments.Count() >= 2 && websiteVirtualPaths.Contains(httpContext.Request.Url.Segments[1]))
+					return this.VirtualPath;
 
-                if (this.VirtualPath != null)
-                {
-                    var virtualPath = this.VirtualPath;
+				if (this.VirtualPath != null)
+				{
+					var virtualPath = this.VirtualPath;
 
-                    if (websiteVirtualPaths.Count > 1)
-                    {
-                        foreach (var websiteVirtualPath in websiteVirtualPaths)
-                        {
-                            virtualPath = virtualPath.Replace(websiteVirtualPath, URIHelper.ConvertAbsUrlToTilda(URIHelper.LanguageBaseUrl(this.Language)));
-                        }
+					if (websiteVirtualPaths.Count > 1)
+					{
+						foreach (var websiteVirtualPath in websiteVirtualPaths)
+						{
+							virtualPath = virtualPath.Replace(websiteVirtualPath, URIHelper.ConvertAbsUrlToTilda(URIHelper.LanguageBaseUrl(this.Language)));
+						}
 
-                        return virtualPath;
-                    }
+						return virtualPath;
+					}
 
-                    if (LanguagesMapper.CountAllActive() == 1)
-                        virtualPath = virtualPath.Replace(websiteVirtualPaths.ElementAt(0), URIHelper.ConvertAbsUrlToTilda(URIHelper.BaseUrl.ToLower()));
-                    else
-                        virtualPath = virtualPath.Replace(websiteVirtualPaths.ElementAt(0), URIHelper.ConvertAbsUrlToTilda(URIHelper.LanguageBaseUrl(LanguagesMapper.GetByID(this.LanguageID)).ToLower()));
+					if (LanguagesMapper.CountAllActive() == 1)
+						virtualPath = virtualPath.Replace(websiteVirtualPaths.ElementAt(0), URIHelper.ConvertAbsUrlToTilda(URIHelper.BaseUrl.ToLower()));
+					else
+						virtualPath = virtualPath.Replace(websiteVirtualPaths.ElementAt(0), URIHelper.ConvertAbsUrlToTilda(URIHelper.LanguageBaseUrl(LanguagesMapper.GetByID(this.LanguageID)).ToLower()));
 
-                    _autoCalculatedVirtualPath = virtualPath;
+					_autoCalculatedVirtualPath = virtualPath;
 
-                    return _autoCalculatedVirtualPath;
-                }
+					return _autoCalculatedVirtualPath;
+				}
 
-                return "";
-            }
-        }
+				return "";
+			}
+		}
 
-        public RssItem GetRssItem()
-        {
-            return PublishDate != null ? new RssItem(this) : null;
-        }
+		public RssItem GetRssItem()
+		{
+			return PublishDate != null ? new RssItem(this) : null;
+		}
 
-        private string contextMetaDescription { get; set; } = "";
+		private string contextMetaDescription { get; set; } = "";
 
-        public string GetMetaDescription()
-        {
-            if (!string.IsNullOrEmpty(contextMetaDescription))
-                return contextMetaDescription;
+		public string GetMetaDescription()
+		{
+			if (!string.IsNullOrEmpty(contextMetaDescription))
+				return contextMetaDescription;
 
-            var description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(MetaDescription));
+			var description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(MetaDescription));
 
-            if (string.IsNullOrEmpty(description))
-            {
-                description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(this.ShortDescription)).Trim();
-            }
+			if (string.IsNullOrEmpty(description))
+			{
+				description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(this.ShortDescription)).Trim();
+			}
 
-            if(description.Length < 100)
-            {
-                var mainContent = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(this.MainContent)).Trim();
+			if (description.Length < 100)
+			{
+				var mainContent = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(this.MainContent)).Trim();
 
-                if (mainContent.Contains("<script") || mainContent.Contains("<style"))
-                {
-                    var htmlDocument = new HtmlAgilityPack.HtmlDocument();
-                    htmlDocument.LoadHtml(mainContent);
+				if (mainContent.Contains("<script") || mainContent.Contains("<style"))
+				{
+					var htmlDocument = new HtmlAgilityPack.HtmlDocument();
+					htmlDocument.LoadHtml(mainContent);
 
-                    htmlDocument.DocumentNode.Descendants()
-                                    .Where(n => n.Name == "script" || n.Name == "style" || n.NodeType == HtmlAgilityPack.HtmlNodeType.Comment)
-                                    .ToList()
-                                    .ForEach(n => n.Remove());
+					htmlDocument.DocumentNode.Descendants()
+									.Where(n => n.Name == "script" || n.Name == "style" || n.NodeType == HtmlAgilityPack.HtmlNodeType.Comment)
+									.ToList()
+									.ForEach(n => n.Remove());
 
-                    mainContent = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(StringHelper.StripHtmlTags(htmlDocument.DocumentNode.InnerText.Trim())));
-                }
+					mainContent = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(StringHelper.StripHtmlTags(htmlDocument.DocumentNode.InnerText.Trim())));
+				}
 
-                if (mainContent.Length > description.Length)
-                {
-                    description = mainContent;
-                }
-            }
+				if (mainContent.Length > description.Length)
+				{
+					description = mainContent;
+				}
+			}
 
-            description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(StringHelper.StripHtmlTags(description)));
+			description = StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(StringHelper.StripHtmlTags(description)));
 
-            if(description.Length > 255)
-            {
-                description = description.Substring(0, 255) + " ...";
-            }
+			if (description.Length > 255)
+			{
+				description = description.Substring(0, 255) + " ...";
+			}
 
-            if(string.IsNullOrEmpty(description))
-            {
-                description = GetPageTitle();
-            }
+			if (string.IsNullOrEmpty(description))
+			{
+				description = GetPageTitle();
+			}
 
-            /*if ((description == "") || (description == LinkTitle))
+			/*if ((description == "") || (description == LinkTitle))
             {
                 description = StringHelper.StripHtmlTags(StringHelper.StripExtraSpaces(StringHelper.StripExtraLines(this.MainContent)));
 
@@ -778,122 +783,122 @@ namespace FrameworkLibrary
                     description = description.Substring(0, 255) + " ...";
             }*/
 
-            description = Regex.Replace(description, "{.*}", "");
+			description = Regex.Replace(description, "{.*}", "");
 
-            contextMetaDescription = description;
+			contextMetaDescription = description;
 
-            return contextMetaDescription;
-        }
+			return contextMetaDescription;
+		}
 
-        private string contextMetaKeywords { get; set; } = "";
-        public string GetMetaKeywords()
-        {
-            if (!string.IsNullOrEmpty(contextMetaKeywords))
-                return contextMetaKeywords;
+		private string contextMetaKeywords { get; set; } = "";
+		public string GetMetaKeywords()
+		{
+			if (!string.IsNullOrEmpty(contextMetaKeywords))
+				return contextMetaKeywords;
 
-            var metaKeywords = MetaKeywords.Trim();
+			var metaKeywords = MetaKeywords.Trim();
 
-            if (string.IsNullOrEmpty(metaKeywords) || metaKeywords.Length < 30)
-                metaKeywords = GetPageTitle();
+			if (string.IsNullOrEmpty(metaKeywords) || metaKeywords.Length < 30)
+				metaKeywords = GetPageTitle();
 
-            contextMetaKeywords = metaKeywords;
+			contextMetaKeywords = metaKeywords;
 
-            return contextMetaKeywords;
-        }
+			return contextMetaKeywords;
+		}
 
 
-        private string _injectHtml = "";
-        public string GetInjectHtml()
-        {
-            if (!string.IsNullOrEmpty(_injectHtml))
-                return _injectHtml;
+		private string _injectHtml = "";
+		public string GetInjectHtml()
+		{
+			if (!string.IsNullOrEmpty(_injectHtml))
+				return _injectHtml;
 
 			_injectHtml = MediaDetailsMapper.ParseSpecialTags(this, InjectHtml);
-            return _injectHtml;
-        }
+			return _injectHtml;
+		}
 
 
-        private string contextPageTitle { get; set; } = "";
-        public string GetPageTitle()
-        {
-            if (FrameworkSettings.Current == null)
-                return "";
+		private string contextPageTitle { get; set; } = "";
+		public string GetPageTitle()
+		{
+			if (FrameworkSettings.Current == null)
+				return "";
 
-            if (!string.IsNullOrEmpty(contextPageTitle))
-                return contextPageTitle;
+			if (!string.IsNullOrEmpty(contextPageTitle))
+				return contextPageTitle;
 
-            if (this.Title != this.LinkTitle)
-                return this.Title;
+			if (this.Title != this.LinkTitle)
+				return this.Title;
 
-            var pageTitle = "";
+			var pageTitle = "";
 
-            var details = this.GetAllParentMediaDetails(LanguageID).Reverse().ToList();
+			var details = this.GetAllParentMediaDetails(LanguageID).Reverse().ToList();
 
 
-            if (details.Count == 0)
-                details.Add(WebsitesMapper.GetWebsite());
+			if (details.Count == 0)
+				details.Add(WebsitesMapper.GetWebsite());
 
-            var counter = 0;
-            foreach (MediaDetail detail in details)
-            {
-                pageTitle += detail.Title;
+			var counter = 0;
+			foreach (MediaDetail detail in details)
+			{
+				pageTitle += detail.Title;
 
-                counter++;
+				counter++;
 
-                if (counter < details.Count)
-                    pageTitle += " - ";
-            }
+				if (counter < details.Count)
+					pageTitle += " - ";
+			}
 
-            contextPageTitle = pageTitle;
+			contextPageTitle = pageTitle;
 
-            return contextPageTitle;
-        }
+			return contextPageTitle;
+		}
 
-        public IEnumerable<IMediaDetail> GetParentsWhichContainsFieldCode(string fieldCode)
-        {
-            return MediaDetailsMapper.GetParentsWhichContainsFieldCode(this, Language, fieldCode);
-        }
+		public IEnumerable<IMediaDetail> GetParentsWhichContainsFieldCode(string fieldCode)
+		{
+			return MediaDetailsMapper.GetParentsWhichContainsFieldCode(this, Language, fieldCode);
+		}
 
-        public IEnumerable<IMediaDetail> GetParentMediaDetails()
-        {
-            return this.GetAllParentMediaDetails(LanguageID).Reverse().ToList();
-        }
+		public IEnumerable<IMediaDetail> GetParentMediaDetails()
+		{
+			return this.GetAllParentMediaDetails(LanguageID).Reverse().ToList();
+		}
 
-        public bool HasDraft
-        {
-            get
-            {
-                if (this.Media == null)
-                    return false;
+		public bool HasDraft
+		{
+			get
+			{
+				if (this.Media == null)
+					return false;
 
-                return GetDrafts().Any();
-            }
-        }
+				return GetDrafts().Any();
+			}
+		}
 
-        public IEnumerable<IMediaDetail> GetDrafts()
-        {
-            var drafts = new List<IMediaDetail>();
+		public IEnumerable<IMediaDetail> GetDrafts()
+		{
+			var drafts = new List<IMediaDetail>();
 
-            if (this.Media == null)
-                return drafts;
+			if (this.Media == null)
+				return drafts;
 
-            return this.Media.MediaDetails.Where(i => i.IsDraft);
-        }
+			return this.Media.MediaDetails.Where(i => i.IsDraft);
+		}
 
-        public IMediaDetail GetLatestDraft()
-        {
-            var drafts = GetDrafts();
+		public IMediaDetail GetLatestDraft()
+		{
+			var drafts = GetDrafts();
 
-            if (!drafts.Any())
-                return null;
+			if (!drafts.Any())
+				return null;
 
-            return drafts.OrderBy(i=>i.DateCreated).FirstOrDefault();
-        }        
+			return drafts.OrderBy(i => i.DateCreated).FirstOrDefault();
+		}
 
-        public List<FieldAssociation> GetPublishedFieldAssociations()
-        {
-            return this.FieldAssociations.ToList().Where(i => i.MediaDetail.IsPublished).OrderBy(i=>i.OrderIndex).ToList();
-        }
+		public List<FieldAssociation> GetPublishedFieldAssociations()
+		{
+			return this.FieldAssociations.ToList().Where(i => i.MediaDetail.IsPublished).OrderBy(i => i.OrderIndex).ToList();
+		}
 
 		public Return RunOnPublishExecuteCode()
 		{
@@ -912,15 +917,15 @@ namespace FrameworkLibrary
 		}
 
 		public Return PublishLive()
-        {
-            var returnObj = new Return();
-            var liveVersion = BaseMapper.GetObjectFromContext((MediaDetail)this.Media.GetLiveMediaDetail());
-            var selectedItem = BaseMapper.GetObjectFromContext((MediaDetail)this);
+		{
+			var returnObj = new Return();
+			var liveVersion = BaseMapper.GetObjectFromContext((MediaDetail)this.Media.GetLiveMediaDetail());
+			var selectedItem = BaseMapper.GetObjectFromContext((MediaDetail)this);
 
-            selectedItem.HistoryVersionNumber = 0;
-            selectedItem.HistoryForMediaDetail = null;
-            selectedItem.IsDraft = false;
-            selectedItem.PublishDate = DateTime.Now;
+			selectedItem.HistoryVersionNumber = 0;
+			selectedItem.HistoryForMediaDetail = null;
+			selectedItem.IsDraft = false;
+			selectedItem.PublishDate = DateTime.Now;
 			//selectedItem.ShowInMenu = true;
 
 			IEnumerable<MediaDetail> items = new List<MediaDetail>();
@@ -940,62 +945,62 @@ namespace FrameworkLibrary
 			}
 
 			foreach (var fieldAssociation in selectedItem.FieldAssociations)
-            {
-                var index = 1;
-                foreach (var history in fieldAssociation.MediaDetail.History)
-                {
-                    history.HistoryForMediaDetail = fieldAssociation.MediaDetail;
-                    history.HistoryVersionNumber = 1;
+			{
+				var index = 1;
+				foreach (var history in fieldAssociation.MediaDetail.History)
+				{
+					history.HistoryForMediaDetail = fieldAssociation.MediaDetail;
+					history.HistoryVersionNumber = 1;
 
-                    index++;
-                }
+					index++;
+				}
 
-                fieldAssociation.MediaDetail.HistoryForMediaDetail = null;
-                fieldAssociation.MediaDetail.HistoryVersionNumber = 0;
-            }
+				fieldAssociation.MediaDetail.HistoryForMediaDetail = null;
+				fieldAssociation.MediaDetail.HistoryVersionNumber = 0;
+			}
 
-            foreach (var field in selectedItem.Fields)
-            {
-                foreach (var fieldAssociation in field.FieldAssociations)
-                {
-                    var index = 1;
+			foreach (var field in selectedItem.Fields)
+			{
+				foreach (var fieldAssociation in field.FieldAssociations)
+				{
+					var index = 1;
 
-                    foreach (var mediaDetail in fieldAssociation.MediaDetail.Media.MediaDetails)
-                    {
-                        mediaDetail.HistoryForMediaDetail = fieldAssociation.MediaDetail;
-                        mediaDetail.HistoryVersionNumber = 1;
+					foreach (var mediaDetail in fieldAssociation.MediaDetail.Media.MediaDetails)
+					{
+						mediaDetail.HistoryForMediaDetail = fieldAssociation.MediaDetail;
+						mediaDetail.HistoryVersionNumber = 1;
 
-                        index++;
-                    }
+						index++;
+					}
 
-                    fieldAssociation.MediaDetail.HistoryForMediaDetail = null;
-                    fieldAssociation.MediaDetail.HistoryVersionNumber = 0;
-                }
+					fieldAssociation.MediaDetail.HistoryForMediaDetail = null;
+					fieldAssociation.MediaDetail.HistoryVersionNumber = 0;
+				}
 
 				if (liveVersion != null)
 				{
 					field.FrontEndSubmissions = liveVersion.LoadField(field.FieldCode)?.FrontEndSubmissions;
 				}
-            }
+			}
 
-            foreach (var mediaTypeField in selectedItem.MediaType.Fields)
-            {
-                if(!selectedItem.Fields.Any(i=>i.FieldCode == mediaTypeField.FieldCode))
-                {
-                    var mediaDetailField = new MediaDetailField();
-                    mediaDetailField.CopyFrom(mediaTypeField);
-                    
-                    mediaDetailField.UseMediaTypeFieldFrontEndLayout = true;
-                    mediaDetailField.UseMediaTypeFieldDescription = true;                    
+			foreach (var mediaTypeField in selectedItem.MediaType.Fields)
+			{
+				if (!selectedItem.Fields.Any(i => i.FieldCode == mediaTypeField.FieldCode))
+				{
+					var mediaDetailField = new MediaDetailField();
+					mediaDetailField.CopyFrom(mediaTypeField);
 
-                    mediaDetailField.MediaTypeField = mediaTypeField;
+					mediaDetailField.UseMediaTypeFieldFrontEndLayout = true;
+					mediaDetailField.UseMediaTypeFieldDescription = true;
 
-                    mediaDetailField.DateCreated = mediaDetailField.DateLastModified = DateTime.Now;
+					mediaDetailField.MediaTypeField = mediaTypeField;
 
-                    mediaDetailField.OrderIndex = selectedItem.Fields.Count;
-                    selectedItem.Fields.Add(mediaDetailField);
-                }
-            }
+					mediaDetailField.DateCreated = mediaDetailField.DateLastModified = DateTime.Now;
+
+					mediaDetailField.OrderIndex = selectedItem.Fields.Count;
+					selectedItem.Fields.Add(mediaDetailField);
+				}
+			}
 
 
 			if (liveVersion != null)
@@ -1020,196 +1025,196 @@ namespace FrameworkLibrary
 				}
 			}
 
-            returnObj = MediaDetailsMapper.Update(selectedItem);
+			returnObj = MediaDetailsMapper.Update(selectedItem);
 
-            if (!returnObj.IsError)
-            {
+			if (!returnObj.IsError)
+			{
 				if (liveVersion != null)
 				{
 					liveVersion.HistoryForMediaDetailID = selectedItem.ID;
 					returnObj = MediaDetailsMapper.Update(liveVersion);
 				}
 
-                if (!returnObj.IsError)
-                {
-                    ContextHelper.Clear(ContextType.Cache);
-                    FileCacheHelper.ClearAllCache();
+				if (!returnObj.IsError)
+				{
+					ContextHelper.Clear(ContextType.Cache);
+					FileCacheHelper.ClearAllCache();
 
-                    return returnObj;
-                }
-                else
-                {
-                    return returnObj;
-                }
-            }
-            else
-            {
-                return returnObj;
-            }
-        }
+					return returnObj;
+				}
+				else
+				{
+					return returnObj;
+				}
+			}
+			else
+			{
+				return returnObj;
+			}
+		}
 
-        public bool HasAnyRoles()
-        {
-            return Media.RolesMedias.Count > 0;
-        }
+		public bool HasAnyRoles()
+		{
+			return Media.RolesMedias.Count > 0;
+		}
 
-        public bool HasAnyUsers()
-        {
-            return Media.UsersMedias.Count > 0;
-        }
+		public bool HasAnyUsers()
+		{
+			return Media.UsersMedias.Count > 0;
+		}
 
-        public bool HasRole(Role role)
-        {
-            return Media.RolesMedias.Where(i => i.ID == role.ID).Any();
-        }
+		public bool HasRole(Role role)
+		{
+			return Media.RolesMedias.Where(i => i.ID == role.ID).Any();
+		}
 
-        public bool CheckEnforceRoleLimitationsOnFrontEnd()
-        {
-            if (this.EnforceRoleLimitationsOnFrontEnd)
-                return true;
+		public bool CheckEnforceRoleLimitationsOnFrontEnd()
+		{
+			if (this.EnforceRoleLimitationsOnFrontEnd)
+				return true;
 
-            var enforceRoleLimitationOnFrontEnds = this.GetParentMediaDetails().Any(i => i.EnforceRoleLimitationsOnFrontEnd);
+			var enforceRoleLimitationOnFrontEnds = this.GetParentMediaDetails().Any(i => i.EnforceRoleLimitationsOnFrontEnd);
 
-            return enforceRoleLimitationOnFrontEnds;
-        }
+			return enforceRoleLimitationOnFrontEnds;
+		}
 
-        public List<Role> GetRoles()
-        {
-            return Media.RolesMedias.Select(i => i.Role).ToList();            
-        }
+		public List<Role> GetRoles()
+		{
+			return Media.RolesMedias.Select(i => i.Role).ToList();
+		}
 
-        public bool HasUser(User user)
-        {
-            return Media.UsersMedias.Where(i => i.UserID == user.ID).Any();
-        }
+		public bool HasUser(User user)
+		{
+			return Media.UsersMedias.Where(i => i.UserID == user.ID).Any();
+		}
 
-        public string RssVirtualPath
-        {
-            get
-            {
-                return AutoCalculatedVirtualPath + "rss/";
-            }
-        }
+		public string RssVirtualPath
+		{
+			get
+			{
+				return AutoCalculatedVirtualPath + "rss/";
+			}
+		}
 
-        public string JsonVirtualPath
-        {
-            get
-            {
-                return AutoCalculatedVirtualPath + "json/";
-            }
-        }
+		public string JsonVirtualPath
+		{
+			get
+			{
+				return AutoCalculatedVirtualPath + "json/";
+			}
+		}
 
-        public string QRCodeVirtualPath
-        {
-            get
-            {
-                return AutoCalculatedVirtualPath + "qrcode/";
-            }
-        }
+		public string QRCodeVirtualPath
+		{
+			get
+			{
+				return AutoCalculatedVirtualPath + "qrcode/";
+			}
+		}
 
-        public void UpdateField(string fieldCode, string newValue)
-        {
-            var field = this.Fields.FirstOrDefault(i => i.FieldCode == fieldCode);
+		public void UpdateField(string fieldCode, string newValue)
+		{
+			var field = this.Fields.FirstOrDefault(i => i.FieldCode == fieldCode);
 
-            if (field != null)
-            {
-                field.FieldValue = newValue;
-            }
-        }
+			if (field != null)
+			{
+				field.FieldValue = newValue;
+			}
+		}
 
-        private string _sectionTitle = "";
-        public string SectionTitle
-        {
-            get
-            {
-                if (_sectionTitle != "")
-                    return _sectionTitle;
+		private string _sectionTitle = "";
+		public string SectionTitle
+		{
+			get
+			{
+				if (_sectionTitle != "")
+					return _sectionTitle;
 
-                var field = this.LoadField("SectionTitle");
+				var field = this.LoadField("SectionTitle");
 
-                if (field == null)
-                    field = this.LoadField("LinkTitle");
+				if (field == null)
+					field = this.LoadField("LinkTitle");
 
-                if (field == null)
-                    return "";
+				if (field == null)
+					return "";
 
-                _sectionTitle = field.FieldValue;
+				_sectionTitle = field.FieldValue;
 
-                return _sectionTitle;
-            }
-            set
-            {
-                UpdateField("SectionTitle", value);
-                _sectionTitle = value;
-            }
-        }
+				return _sectionTitle;
+			}
+			set
+			{
+				UpdateField("SectionTitle", value);
+				_sectionTitle = value;
+			}
+		}
 
-        private string _shortDescription = "";
-        public string ShortDescription
-        {
-            get
-            {
-                if (_shortDescription != "")
-                    return _shortDescription;
+		private string _shortDescription = "";
+		public string ShortDescription
+		{
+			get
+			{
+				if (_shortDescription != "")
+					return _shortDescription;
 
-                var field = this.LoadField("ShortDescription");
+				var field = this.LoadField("ShortDescription");
 
-                if (field == null)
-                    return "";
+				if (field == null)
+					return "";
 
-                _shortDescription = field.FieldValue;
+				_shortDescription = field.FieldValue;
 
-                return _shortDescription;
-            }
-            set
-            {
-                UpdateField("ShortDescription", value);
-                _shortDescription = value;
-            }
-        }
+				return _shortDescription;
+			}
+			set
+			{
+				UpdateField("ShortDescription", value);
+				_shortDescription = value;
+			}
+		}
 
-        private string _mainContent = "";
-        public string MainContent
-        {
-            get
-            {
-                if (_mainContent != "")
-                    return _mainContent;
+		private string _mainContent = "";
+		public string MainContent
+		{
+			get
+			{
+				if (_mainContent != "")
+					return _mainContent;
 
-                var field = this.LoadField("MainContent");
+				var field = this.LoadField("MainContent");
 
-                if (field == null)
-                    return "";
+				if (field == null)
+					return "";
 
-                _mainContent = field.FieldValue;
+				_mainContent = field.FieldValue;
 
-                return _mainContent;
-            }
-            set
-            {
-                UpdateField("MainContent", value);
-                _mainContent = value;
-            }
-        }
+				return _mainContent;
+			}
+			set
+			{
+				UpdateField("MainContent", value);
+				_mainContent = value;
+			}
+		}
 
-        private string _pathToFile = "";
-        public string PathToFile
-        {
-            get
-            {
-                if (_mainContent != "")
-                    return _pathToFile;
+		private string _pathToFile = "";
+		public string PathToFile
+		{
+			get
+			{
+				if (_mainContent != "")
+					return _pathToFile;
 
-                var field = this.LoadField("PathToFile");
+				var field = this.LoadField("PathToFile");
 
-                if (field == null)
-                    return "";
+				if (field == null)
+					return "";
 
-                _pathToFile = field.FieldValue;
+				_pathToFile = field.FieldValue;
 
-                return _pathToFile;
+				return _pathToFile;
 
-                /*var pathToFile = this.RenderField("PathToFile", false);
+				/*var pathToFile = this.RenderField("PathToFile", false);
 
                 if(pathToFile.Contains("<"))
                 {
@@ -1218,12 +1223,12 @@ namespace FrameworkLibrary
                 }
                 
                 return pathToFile;*/
-            }
-            set
-            {
-                UpdateField("PathToFile", value);
-                _pathToFile = value;
-            }
-        }        
-    }
+			}
+			set
+			{
+				UpdateField("PathToFile", value);
+				_pathToFile = value;
+			}
+		}
+	}
 }

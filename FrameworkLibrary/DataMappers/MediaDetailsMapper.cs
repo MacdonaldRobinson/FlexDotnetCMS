@@ -534,7 +534,14 @@ namespace FrameworkLibrary
             var activeLanguages = LanguagesMapper.GetAllActive();
             var websiteByCurrentHost = WebsitesMapper.GetWebsite();
 
-            foreach (var activeLanguage in activeLanguages)
+			var versionNumber = 0;
+
+			if ((HttpContext.Current.Request["version"] != null) && (virtualPath != "~/"))
+			{
+				versionNumber = int.Parse(HttpContext.Current.Request["version"]);
+			}
+
+			foreach (var activeLanguage in activeLanguages)
             {
                 var activeLaunguageBase = URIHelper.ConvertAbsUrlToTilda(URIHelper.GetBaseUrlWithLanguage(activeLanguage));
 
@@ -546,7 +553,7 @@ namespace FrameworkLibrary
                     var website = WebsitesMapper.GetWebsite(0, activeLanguage);
                     virtualPath = virtualPath.Replace(URIHelper.ConvertAbsUrlToTilda(URIHelper.BaseUrlWithLanguage), website.CachedVirtualPath);
 
-                    var mediaDetail = GetAllActiveMediaDetails().FirstOrDefault(i => i.VirtualPath == virtualPath && i.Language == activeLanguage && i.MediaType.ShowInSiteTree);
+                    var mediaDetail = GetAllActiveMediaDetails().FirstOrDefault(i => i.VirtualPath == virtualPath && i.Language == activeLanguage && i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == versionNumber);
 
                     if (mediaDetail != null)
                         return mediaDetail;
@@ -559,13 +566,6 @@ namespace FrameworkLibrary
 
             if ((virtualPath == "~/") && (activeLanguagesCount > 1))
                 virtualPath = virtualPath + LanguagesMapper.GetDefaultLanguage().CultureCode;
-
-            var versionNumber = 0;
-
-            if ((HttpContext.Current.Request["version"] != null) && (virtualPath != "~/"))
-            {
-                versionNumber = int.Parse(HttpContext.Current.Request["version"]);
-            }
 
             var currentLanguage = FrameworkSettings.GetCurrentLanguage();
 

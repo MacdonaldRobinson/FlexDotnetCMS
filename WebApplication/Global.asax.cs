@@ -1,5 +1,6 @@
 ﻿using FluentScheduler;
 using FrameworkLibrary;
+using ImageProcessor.Web.HttpModules;
 using System;
 using System.IO;
 using System.Web;
@@ -15,10 +16,17 @@ namespace WebApplication
         {
             // Code that runs on application startup
             RegisterRoutes(RouteTable.Routes);
-			JobManager.Initialize(new FrameworkLibrary.Classes.JobSchedulerRegistry());
+			//JobManager.Initialize(new FrameworkLibrary.Classes.JobSchedulerRegistry());
+
+			ImageProcessingModule.OnProcessQuerystring += ImageProcessingModule_OnProcessQuerystring;
 		}
 
-        private void Application_BeginRequest(Object source, EventArgs e)
+		private string ImageProcessingModule_OnProcessQuerystring(object sender, ImageProcessor.Web.Helpers.ProcessQueryStringEventArgs args)
+		{
+			return args.Querystring += "quality=80";
+		}
+
+		private void Application_BeginRequest(Object source, EventArgs e)
         {
             var installerPath = "~/Installer/";
             var absInstallerUrl = URIHelper.ConvertToAbsUrl(installerPath);

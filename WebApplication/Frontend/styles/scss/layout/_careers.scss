@@ -1,0 +1,70 @@
+.careers__page {
+    h2 {
+        margin-bottom: 30px;
+        @include mobile {
+            padding-left: 20px;
+        }
+    }
+    .professionals {
+        .blog__card {
+            max-width: inherit;
+            margin-bottom: 35px;
+            @include tablet {
+                max-width: 414px;
+            }
+            h2 {
+                @include mobile {
+                    padding-left: 0;
+                }
+            }
+        }
+        .grey--callouts {
+            flex-grow: 0;
+        }
+    }
+    .support {
+        .offset__inner__left {
+            margin-right: 0;
+            .grey--callouts {
+                margin-bottom: 0;
+                @include tablet-down {
+                    margin-bottom: 35px;
+                }
+            }
+        }
+        .offset__inner__right {
+            width: 100%;
+            max-width: 405px;
+            @include mobile {
+                max-width: inherit;
+            }
+        }
+        .openings__contact {
+            &__heading {
+                padding: 10px 25px;
+                background: $white;
+                p {
+                    letter-spacing: 1px;
+                    text-transform: uppercase;
+                }
+            }
+            &__info {
+                background: $red;
+                padding: 25px;
+                display: flex;
+                flex-flow: column nowrap;
+                justify-content: space-between;
+                p {
+                    margin: 0;
+                    color: $white;
+                }
+                a {
+                    color: $white;
+                }
+                .address {
+                    margin-bottom: 20px;
+                }
+            }
+        }
+    }
+}

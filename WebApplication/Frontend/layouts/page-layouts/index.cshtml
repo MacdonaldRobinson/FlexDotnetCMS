@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-xl navbar--home" id="mainNav">
+  <a class="navbar-brand img-container" href="/home/">
+      <img src="/media/uploads/images/logo-horizontal.svg" alt="Logo" />
+  </a>
+  <div class="navbar__toggles">
+    <a href="javascript:void(0)" class="search__toggle">
+        <i class="fa fa-search" aria-hidden="true"></i>
+    </button>
+    <a href="javascript:void(0)" class="menu__toggle">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+    </a>
+  </div>
+  <div class="navbar__search">
+    <i class="fa fa-times" aria-hidden="true"></i>
+    <div class="navbar-search">
+        <i class="fa fa-search" aria-hidden="true"></i>
+        <input type="text" class="searchList" placeholder="Search for practice area or lawyer" />
+    </div>
+  </div>
+  <div class="navbar__menu">
+  	<i class="fa fa-times" aria-hidden="true"></i>
+  	{{Load:8}.Field:MainMenu}
+  </div>
+</nav>
+<div id="DynamicContent"></div>
+
+<script>
+
+	$(document).ready(function () {
+
+		if (window.location.hash != "") {
+			var url = window.location.hash.replace("#", "");
+			ajaxLoadUrl(url, "#DynamicContent");
+		}
+		else {
+			ajaxLoadUrl("/home/", "#DynamicContent");
+		}
+	});
+
+</script>
+

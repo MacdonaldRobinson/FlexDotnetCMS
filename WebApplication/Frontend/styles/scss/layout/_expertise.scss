@@ -1,0 +1,15 @@
+.expertise__listings__page {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    .listings {
+        display: flex;
+        flex-flow: column wrap;
+        height: 100%;
+        max-height: 960px;
+        margin-bottom: 25px;
+        @include mobile {
+            max-height: 100%;
+        }
+    }
+}

@@ -1,0 +1,330 @@
+.header {
+    display: flex;
+    flex-flow: column nowrap;
+    margin-bottom: 90px;
+    //min-height: 1300px;
+    //background: url(/media/uploads/images/banners/banner-blue.svg) no-repeat;
+    //background-size: cover;
+    //background-position: center;
+    @include tablet-down {
+        background: none;
+        height: 100%;
+        margin-bottom: 30px;
+    }
+    .heading__container {
+        height: 90vh;
+        max-height: 770px;
+        display: flex;
+        align-items: flex-end;
+        position: relative;
+        .heading--arrow {
+            position: absolute;
+            width: 30%;
+            height: 200%;
+            display: block;
+            right: 0;
+            top: -20%;
+            overflow: hidden;
+            @include tablet-down {
+                display: none;
+            }
+            div {
+                background-position-y: center;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            // object {
+            //     position: absolute;
+            //     top: 50%;
+            //     transform: translateY(-50%);
+            // }
+        }
+    }
+    h1 {
+        margin-bottom: 100px;
+        margin-left: 8%;
+        color: $white;
+        @include tablet-down {
+            margin-bottom: 40px;
+            margin-left: 30px;
+        }
+        @include mobile {
+            width: 80%;
+        }
+    }
+    &.blue {
+        @include tablet-down {
+            background: none;
+        }
+        .heading__container {
+            background: url(/media/uploads/images/banners/banner-blue-noarrow.svg) no-repeat;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            @include tablet {
+                background: url(/media/uploads/images/banners/banner-blue-mobile.svg) no-repeat;
+                background-size: cover;
+                background-position: 100% 50%;
+                height: 40vw;
+            }
+            @include mobile {
+                background: url(/media/uploads/images/banners/banner-blue-mobile.svg) no-repeat;
+                background-size: cover;
+                background-position: top;
+                height: 270px;
+            }
+            .heading--arrow {
+                div {
+                    background: url(/media/uploads/images/banners/banner-blue-arrow.svg);
+                }
+            }
+        }
+    }
+    &.red {
+        @include tablet-down {
+            background: none;
+        }
+        .heading__container {
+            background: url(/media/uploads/images/banners/banner-red-noarrow.svg) no-repeat;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            @include tablet {
+                background: url(/media/uploads/images/banners/banner-red-mobile.svg) no-repeat;
+                background-size: cover;
+                background-position: 100% 50%;
+                height: 40vw;
+            }
+            @include mobile {
+                background: url(/media/uploads/images/banners/banner-red-mobile.svg) no-repeat;
+                background-size: cover;
+                background-position: top;
+                height: 270px;
+            }
+            h1 {
+                &:after {
+                    background: $blue-dark;
+                }
+            }
+            .heading--arrow {
+                div {
+                    background: url(/media/uploads/images/banners/banner-red-arrow.svg);
+                }
+            }
+        }
+    }
+}
+
+
+// .header {
+//     display: flex;
+//     flex-flow: column nowrap;
+
+//     min-height: 140vh;
+//     background: url(/media/uploads/images/banners/banner-blue.svg) no-repeat;
+//         background-size: 100%;
+//         background-position:center;
+//     .navbar {
+//         z-index: 10;
+//         min-height: 120px;
+//     }
+//     .red--background {
+//         position: absolute;
+//         top: 0;
+//         left: 0;
+//     }
+//     .heading__container {
+//         height: 85vh;
+//         min-height: 550px;
+//         display: flex;
+//         align-items: flex-end;
+//         h1 {
+//             margin-left: 8%;
+//             margin-bottom: 100px;
+//         }
+//     }
+// }
+
+// .header {
+//     height: 150%;
+//     .navbar {
+//         z-index: 10;
+//     }
+//     .red--background {
+//         position: absolute;
+//         top: 0;
+//         left: 0;
+//     }
+//     .heading__container {
+//         height: 71vh;
+//         display: flex;
+//         align-items: flex-end;
+//         h1 {
+//             margin-left: 8%;
+//             margin-bottom: 100px;
+//         }
+//     }
+// }
+
+.employee__header {
+    height: 100%;
+    background: url(/media/uploads/images/banners/banner-employee-red.svg) no-repeat;
+    background-size: cover;
+    background-position: 100% 100%;
+    @include mobile {
+        background-size: 85%;
+        background-position: top left;
+    }
+    .header__content {
+        padding-top: 70px;
+        display: flex;
+        flex-flow: row wrap;
+        margin-bottom: 35px;
+        @include mobile {
+            flex-flow: column nowrap;
+            align-items: center;
+        }
+        .img-container {
+            max-width: 40%;
+            @include tablet {
+                max-width: 50%;
+            }
+            @include mobile {
+                max-width: 300px;
+                margin-bottom: 1.5em;
+                flex-shrink: 0;
+            }
+        }
+        &__info {
+            width: 100%;
+            max-width: 60%;
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: flex-start;
+            justify-content: space-between;
+            @include tablet {
+                max-width: 50%;
+            }
+            @include mobile {
+                max-width: inherit;
+            }
+            .employee__heading {
+                order: 1;
+                margin-left: 65px;
+                width: 100%;
+                max-width: 550px;
+                @include tablet-down {
+                    margin: 0 auto;
+                    max-width: 300px;
+                }
+                h1 {
+                    @include tablet {
+                        font-size: 42px;
+                    }
+                }
+                p {
+                    text-transform: uppercase;
+                    letter-spacing: .07em;
+                }
+            }
+            .contact__card {
+                background: $red;
+                padding: 15px;
+                width: 100%;
+                max-width: 395px;
+                order: 3;
+                @include mobile {
+                    order: 2;
+                    max-width: inherit;
+                }
+                a {
+                    color: $white;
+                    display: block;
+                    position: relative;
+                    margin-left: 40px;
+                    padding: 5px 0;
+                    &:before {
+                        position: absolute;
+                        height: 25px;
+                        left: -40px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
+                    &.email {
+                        &:before {
+                            content: url("/media/uploads/images/icons/email-icon.png");
+                            position: absolute;
+                        }
+                    }
+                    &.phone {
+                        &:before {
+                            content: url("/media/uploads/images/icons/phone-icon.png");
+                            position: absolute;
+                        }
+                    }
+                    &.linkedin {
+                        &:before {
+                            content: url("/media/uploads/images/icons/linkedin-icon2.png");
+                            position: absolute;
+                        }
+                    }
+                    &.vcard {
+                        &:before {
+                            content: url("/media/uploads/images/icons/download-icon.png");
+                            position: absolute;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}
+            // .employee__expertise {
+            //     margin: 0 auto;
+            //     order: 2;
+            //     @include mobile {
+            //         order: 3;
+            //         margin: 0;
+            //         align-self: flex-end;
+            //     }
+            //     h5 {
+            //         color: $grey-dark;
+            //         transform: translateY(-50%);
+            //         transform-origin: bottom left;
+            //         position: absolute;
+            //         left: 16px;
+            //         top: 50%;
+            //         writing-mode: vertical-rl;
+            //         white-space: nowrap;
+            //         margin: 0;
+            //         height: auto;
+            //         text-align: center;
+            //         border-bottom: none;
+            //         padding-bottom: 0;
+            //         line-height: 1;
+            //         @include mobile {
+            //           top: 230px;
+            //         }
+            //         &:before {
+            //           content: "";
+            //           position: absolute;
+            //           border-left: 1px solid $grey-dark;
+            //           left: -15px;
+            //           height: 100%;
+            //           display: block;
+            //           @include mobile {
+            //             display: none;
+            //           }
+            //         }
+            //       }
+            //       ul {
+            //         padding: 35px 30px 35px 50px;
+            //         margin: 0;
+            //         background: $grey-light;
+            //       }
+            // }
+        

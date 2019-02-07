@@ -1,0 +1,50 @@
+.team__container {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    padding: 70px 0;
+    @include mobile {
+        padding: 35px 10px;
+        text-align: center;
+    }
+    .team__grid {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        width: 100%;
+        .employee {
+            width: calc((100% / 6) - 70px);
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: center;
+            margin: 15px 35px;
+            @include tablet {
+                width: calc((100% / 4) - 40px);
+                margin: 15px 20px;
+            }
+            @include mobile {
+                width: calc((100% / 2) - 40px);
+                margin: 15px 20px;
+            }
+            .img-container {
+                max-width: 115px;
+                margin-bottom: 0.5em;
+            }
+            &__info {
+                text-decoration: none;
+                p,
+                h6 {
+                    margin: 0;
+                    text-align: center;
+                }
+                h6 {
+                    color: $grey-dark;
+                    height: 30px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+    }
+}

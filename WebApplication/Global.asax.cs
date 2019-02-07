@@ -23,7 +23,7 @@ namespace WebApplication
 
 		private string ImageProcessingModule_OnProcessQuerystring(object sender, ImageProcessor.Web.Helpers.ProcessQueryStringEventArgs args)
 		{
-			return args.Querystring += "quality=80";
+			return args.Querystring += "&quality=80";
 		}
 
 		private void Application_BeginRequest(Object source, EventArgs e)

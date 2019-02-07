@@ -1,0 +1,38 @@
+<footer>
+    <div class="footer__contact">
+        {{Load:9}.Field:Contact}
+    </div>
+    <div class="footer__credits">
+        <div class="footer__logos">
+			@{
+				var logos = MediasMapper.GetByID(9).GetLiveMediaDetail().LoadField("Logos") as MediaDetailField;
+				if(logos != null)
+				{
+					var items = logos.GetPublishedFieldAssociations();
+					foreach(var item in items)
+					{
+						var sectionTitle = item.MediaDetail.RenderField("SectionTitle", false);
+						var link = item.MediaDetail.RenderField("Link", false);
+						var imageUrl = item.MediaDetail.RenderField("PathToFile", false);
+
+						<a href="@link" target="_blank" class="img-container">
+							<img src="@imageUrl" alt="@sectionTitle" />
+						</a>						
+					}
+				}
+			}
+            <!--<a href="http://www.lawyersworldwide.ca/" target="_blank" class="img-container">
+                <img src="/media/uploads/images/law-logo2.png" alt="Lawyers Associated Worldwide logo" />
+            </a>
+            <a href="https://bildcr.com/" target="_blank" class="img-container">
+                <img src="/media/uploads/images/bild-logo.png" alt="BILD Calgary Region Member logo" />
+            </a>-->
+        </div>
+		<p class="footer__copyright">{{Load:9}.Field:Copyright}</p>
+    </div>
+</footer>
+
+<script src="/Frontend/scripts/custom.js"></script>
+
+
+

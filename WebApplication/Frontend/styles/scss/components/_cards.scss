@@ -1,0 +1,258 @@
+.services__card {
+    width: 100%;
+    //max-width: 345px;
+    max-width: calc(50% - 30px);
+    min-height: 55px;
+    position: relative;
+    padding: 0 45px;
+    background: $grey-light;
+    margin-bottom: 10px;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: $grey-dark;
+    text-align: center;
+    @include mobile {
+        max-width: inherit;
+        width: calc(100% - 10px);
+    }
+    p {
+        margin: 0;
+        line-height: 1;
+    }
+    .arrow {
+        transition: all .33s;
+        transform: scale(1);
+        position: absolute;
+        right:0;
+        bottom:0;
+        width:55px;
+        height:55px;
+        &:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            border-bottom: 55px solid $grey;
+            border-left: 55px solid transparent;
+            transition: all .33s;
+            //transform-origin: 50% 50%;
+        }
+        &--container {
+            position: absolute;
+            right: 7px;
+            top: 27px;
+            width: 18px;
+            height: 18px;
+            overflow: hidden;
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            //justify-content: flex-end;
+            justify-content: flex-start;
+            flex-direction: row-reverse;
+            // transition: all .33s;
+            // transform: scale(1);
+            // transform-origin: 50% 50%;
+            i {
+                color: $white;
+                font-size: 30px;
+            }
+            
+        }
+    }
+    &:hover {
+        color: $grey-dark;
+        .arrow {
+            transform: scale(1.1);
+           &::before {
+            border-bottom: 55px solid $red;
+
+           }
+        }
+    }
+}
+
+.articles__section {
+    padding: 60px 0;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    &__inner {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+
+.blog__card {
+    padding: 35px 90px 35px 35px;
+    position: relative;
+    display: block;
+    cursor: pointer;
+    color: $white;
+    margin-bottom: 20px;
+    h2 {
+        position: relative;
+        margin-bottom: 30px;
+        line-height: 1;
+        &:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 35%;
+            //height: 8px;
+            background: $red;
+        }
+    }
+    .arrow {
+        transition: all .33s;
+        transform: scale(1);
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        &:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            transition: all .33s;
+        }
+        &--container {
+            position: absolute;
+            overflow: hidden;
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            //justify-content: flex-end;
+            justify-content: flex-start;
+            flex-direction: row-reverse;
+            i {
+                color: $white;
+            }
+            
+        }
+    }
+    &:hover {
+        color: $white;
+        .arrow {
+            transform: scale(1.1);
+            z-index: 5;
+        }
+    }
+    &.small {
+        width: 100%;
+        max-width: 414px;
+        min-height: 346px;
+        @include mobile {
+            width: calc(100% - 30px);
+            max-width: inherit;
+            margin: 15px 15px 0;
+            min-height: 0;
+        }
+        h2 {
+            font-size: 32px;
+            padding-bottom: 15px;
+            &:after {
+                height: 5px;
+            }
+        }
+        .arrow {
+            width: 105px;
+            height: 105px;
+            &--container {
+                right: 17px;
+                top: 58px;
+                width: 25px;
+                height: 25px;
+                i {
+                    font-size: 40px;
+                }
+            }
+        }
+    }
+    &.large {
+        width: 100%;
+        max-width: 544px;
+        @include mobile {
+            width: calc(100% - 30px);
+            max-width: inherit;
+            margin: 15px 15px 0;
+        }
+        h2 {
+            padding-bottom: 20px;
+            &:after {
+                height: 8px;
+            }
+        }
+        .arrow {
+            width: 150px;
+            height: 150px;
+            &--container {
+                right: 30px;
+                top: 85px;
+                width: 30px;
+                height: 30px;
+                i {
+                    font-size: 50px;
+                }
+            }
+        }
+    }
+    &.card--blue {
+        background: $blue;
+        h2,
+        p {
+            color: $white;
+        }
+        &.large {
+            .arrow {
+                &:before {
+                    border-bottom: 150px solid $red;
+                    border-left: 150px solid transparent;
+                }
+            }
+        }
+        &.small {
+            .arrow {
+                &:before {
+                    border-bottom: 105px solid $red;
+                    border-left: 105px solid transparent;
+                }
+            }
+        }
+    } 
+    &.card--grey {
+        background: $grey-light;
+        h2,
+        p {
+            color: $black;
+        }
+        &.large {
+            .arrow {
+                &:before {
+                    border-bottom: 150px solid $blue;
+                    border-left: 150px solid transparent;
+                }
+            }
+        }
+        &.small {
+            .arrow {
+                &:before {
+                    border-bottom: 105px solid $blue;
+                    border-left: 105px solid transparent;
+                }
+            }
+        }
+    }
+}

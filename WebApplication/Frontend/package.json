@@ -1,5 +1,5 @@
 {
-  "name": "Wood's Homes",
+  "name": "Carscallen",
   "devDependencies": {
     "browserslist": "last 2 versions",
     "grunt": "^1.0.1",
@@ -10,6 +10,9 @@
     "postcss-normalize": "^4.0.0"
   },
   "dependencies": {
-    "autoprefixer": "^7.1.2"
+    "autoprefixer": "^7.1.2",
+    "cssnano": "^4.1.8",
+    "grunt-contrib-uglify": "^4.0.0",
+    "postcss-flexbugs-fixes": "^4.1.0"
   }
 }

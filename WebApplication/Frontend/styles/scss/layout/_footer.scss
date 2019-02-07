@@ -1,50 +1,38 @@
-.wh-footer {
-  background: $green;
-  color: white;
-  padding: 30px 15px;
-
-  a {
-    color: white;
-  }
-
-  h6 {
-    @include media-breakpoint-down(md) {
-      text-align: center;
+footer {
+  height: 100%;
+  width: 100%;
+  padding: 35px;
+  background: $grey-dark;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  color: $white;
+  .footer__contact {
+    @include mobile {
+      margin-bottom: 30px;
     }
-  }
-
-  .social-follow, .footer-fineprint, .footer-copyright {
-    text-align: center;
-    padding: 10px 0;
-  }
-
-  .footer-fineprint {
-    font-size: 0.8em;
-    font-family: $secondary-font;
-  }
-
-  .footer-copyright {
-    font-size: 0.75em;
-    font-family: $secondary-font;
-  }
-
-  .social-follow {
+    p {
+      margin-bottom: 0;
+    }
     a {
-      display: inline-block;
-
-
-    }
-    span {
-      padding: 0.4em;
+      color: $white;
     }
   }
-
-}
-
-.return-to-top {
-  background: $beige;
-  text-align: right;
-  .button {
-    margin: 20px 0;
+  .footer__credits {
+    display: flex;
+    flex-flow: column nowrap;
+    .footer__logos {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: flex-end;
+      margin-bottom: 25px;
+      .img-container {
+        max-width: 89px;
+      }
+    }
+    p {
+      margin-bottom: 0;
+    }
   }
 }

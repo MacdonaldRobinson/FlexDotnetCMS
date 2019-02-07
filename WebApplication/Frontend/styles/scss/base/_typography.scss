@@ -1,5 +1,5 @@
-$brand-font: 'Work Sans', sans-serif;
-$secondary-font: 'Bitter', serif;
+$brand-font: 'proxima-nova', sans-serif;
+$FA: 'FontAwesome'; 
 @mixin header-font-style {
   font-family: $brand-font;
   font-weight: 700;
@@ -10,55 +10,137 @@ body,
 html {
   font-size: 18px; // set base font size
   font-family: $brand-font, arial, sans-serif; // set brand font family
-  color: $grey;
+  color: $grey-dark;
+}
+
+h2, 
+h3, 
+h4, 
+h5 {
+  color: $blue-dark;
 }
 
 h1 {
-  @include header-font-style;
-  font-size: 3rem;
-  @include media-breakpoint-down(md) {
-    font-size: 1.95rem;
+  font-size: 72px;
+  line-height: 1;
+  font-weight: 700;
+  max-width: 650px;
+  padding-bottom: 20px;
+  position: relative;
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 176px;
+    height: 8px;
+    background: $red;
+  }
+  &.employee {
+    color: $blue-dark;
+    padding-bottom: 0; 
+    &:after {
+      display: none;
+    }
+  }
+  @include tablet {
+    font-size: 50px;
+  }
+  @include mobile {
+    font-size: 32px;
+    font-weight: 600;
   }
 }
 
 h2 {
-  @include header-font-style;
-  font-size: 2rem;
-  color: $green;
-  @include media-breakpoint-down(md) {
-    font-size: 1.75rem;
+  font-size: 56px;
+  line-height: 1.2;
+  font-weight: 600;
+  @include tablet {
+    font-size: 40px;
+  }
+  @include mobile {
+    font-size: 32px;
   }
 }
 
 h3 {
-  @include header-font-style;
-  font-size: 1.6rem;
-  @include media-breakpoint-down(md) {
-    font-size: 1.3rem;
+  font-size: 40px;
+  line-height: 1.2;
+  font-weight: 600;
+  @include tablet {
+    font-size: 32px;
+  }
+  @include mobile {
+    font-size: 24px;
   }
 }
 
 h4 {
-  @include header-font-style;
-  font-size: 1.4rem;
+  font-size: 32px;
+  line-height: 1.2;
+  @include tablet {
+    font-size: 28px;
+  }
+  @include mobile {
+    font-size: 22px;
+  }
 }
 
 h5 {
-  font-size: 1.2rem;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: $grey;
+  padding-bottom: 5px;
+  border-bottom: 1px solid $grey;
+  display: inline-block;
+  letter-spacing: .07em;
+  @include tablet {
+    font-size: 18px;
+  }
+  @include mobile {
+    font-size: 16px;
+  }
+}
+h6 {
+  font-size: 14px;
   font-weight: 600;
 }
 
 p {
-  font-size: 1rem;
-
+  font-size: 18px;
+  @include tablet-down {
+    font-size: 16px;
+  }
   &.deck {
-    font-size: 1.3em;
+    font-size: 48px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: $blue-dark;
+    @include tablet-down {
+      font-size: 26px;
+    }
   }
 }
 
+.text--bold {
+  font-weight: 600;
+}
+
 .subtitle {
-  display: block;
-  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: $grey;
+  font-size: 12px;
+}
+
+.card--title {
+  font-weight: 700;
+  font-size: 55px;
+  line-height: 1.2;
+  color: $grey-dark;
 }
 
 a,
@@ -66,106 +148,43 @@ a:active,
 a:hover {
   text-decoration: none;
 }
-// type on specific components like banners and interior pages. For even more specific type styles, check partials.
-main {
-  h2 {
-    position: relative;
-    padding-bottom: 0.55em;
-    margin-bottom: 0.75em;
-    @include media-breakpoint-down(md) {
-      text-align: center;
-    }
-    // horizontal line after h2 headers
-    &:after {
-      content: '';
-      border-bottom: 4px solid rgba($grey,0.25);
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 120px;
-      @include media-breakpoint-down(md) {
-        // on smaller screens, move to centered
-        left: calc(50% - 60px);
-      }
-    }
+
+.link--white {
+  font-weight: 700;
+  color: $white;
+  border-bottom: 1px solid $white;
+  &:hover {
+    
   }
-
-  h3 {
-    margin-top: 1.25em;
-  }
-
-  p {
-    color: darken($grey,5%);
-  }
-
-  a,
-  a:active {
-    color: $orange;
-    font-weight: 500;
-    text-decoration: none;
-
-    &:hover {
-      color: $grey;
-    }
-  }
-
-  a:not(.button) {
-    // not sure why this isn't working...
-    border-bottom: 1px solid rgba($grey,0.25);
-    transition: all 0.2s ease-in-out;
-    padding-bottom: 2px;
-
-    &:hover {
-      color: $grey;
-      border-bottom: 1px solid $green-olive;
-      transition: all 0.2s ease;
-    }
-  }
-
-  ul {
-    li {
-      line-height: inherit;
-      padding-bottom: 1em;
-    }
+}
+.link--greydark {
+  font-weight: 700;
+  color: $grey-dark;
+  border-bottom: 1px solid $grey-dark;
+  &:hover {
+    color: $grey-dark;
   }
 }
 
-.wh-interior-header .header-content {
-  // h1 {
-  //   font-size: 40px;
-  // }
+li {
+  font-size: 18px;
+  @include tablet-down {
+    font-size: 16px;
+  }
 }
-// Blog Article Typography
-.blog-details {
-  h1 {
-    text-transform: none;
-    text-align: center;
+
+.arrow--list {
+  li {
+    list-style-type: none;
     position: relative;
-    padding-bottom: 0.75em;
-    margin-bottom: 0.5em;
-    // horizontal line
-    &:after {
-      content: '';
-      border-bottom: 4px solid rgba($grey,0.25);
+    margin-bottom: 10px;
+    &:before {
+      content: "\f0da";
+      font-family: $FA;
       position: absolute;
-      left: calc(50% - 60px);
-      bottom: 0;
-      width: 120px;
-    }
-    @include media-breakpoint-down(md) {
-      font-size: 1.85rem;
+      left: -25px;
+      top: 0;
+      font-size: 18px;
     }
   }
-
-  .blog-date, .blog-author {
-    display: block;
-    text-align: center;
-    font-size: 0.9em;
-    padding: 0.1em 0;
-  }
-  .blog-date {
-    font-weight: 600;
-    color: darken($orange,5%);
-  }
-
 }

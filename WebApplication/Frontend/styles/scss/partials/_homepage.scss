@@ -1,76 +1,154 @@
-// Home Header Type styles
-
-main.home {}
-// Latest News Section
-
-.latest-news {
-  background: rgba($orange-light,0.15);
-  padding: 50px 0 36px;
-
-  h2 {
-    color: $grey;
+.header__home {
+  background: url(/media/uploads/images/banners/homepage-banner.svg) no-repeat;
+  background-size: cover;
+  background-position: 50% 100%;
+  //height: 820px;
+  min-height: 820px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 120px;
+  @include mobile {
+    background: url(/media/uploads/images/banners/homepage-banner-mobile.svg) no-repeat;
+    //height: 500px;
+    min-height: 570px;
+    background-size: cover;
+    background-position: 50% 100%; 
   }
-
-  h3 {
-    color: $green;
-    margin: 0;
+  nav {
+    margin-bottom: 50px;
+    @include mobile {
+      margin: 0;
+    }
   }
-
-  .news-card {
-    &:first-child {
-      border-right: 4px solid rgba($grey,0.2);
-      @include media-breakpoint-down(md) {
-        border-right: none;
-        border-bottom: 4px solid rgba($grey,0.2);
-        padding-bottom: 20px;
-        margin-bottom: 20px;
+  &__content {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 700px;
+    text-align: center;
+    //margin: 0 auto;
+    .img-container {
+      max-width: 285px;
+      flex-shrink: 0;
+      @include mobile {
+        max-width: 206px;
+        margin-top: -35px;
+      }
+    }
+    h1 {
+      color: $white;
+      padding: 65px 10px 50px;
+      text-align: center;
+      width: 100%;
+      @include mobile {
+        padding-bottom: 30px;
+      }
+    }
+    .search__container {
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      p {
+        font-size: 30px;
+        color: $white;
+        font-weight: 600;
+        text-align: center;
+        @include mobile {
+          font-size: 22px;
+        }
+      }
+    }
+    .navbar-search {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      position: relative;
+      width: 100%;
+      max-width: 383px;
+      @include mobile {
+        width: 90%;
+      }
+      i {
+        position: absolute;
+        left: -50px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 35px;
+        color: $white;
+        @include mobile {
+          position: static;
+          font-size: 22px;
+          transform: translateY(0);
+          margin: 0 20px 0 0;
+        }
+      }
+      input {
+        border: none;
+        border-bottom: 4px solid $blue;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        box-shadow: none;
+        background: $white;
+        font-size: 16px;
+        width: 100%;
+        max-width: 383px;
+        padding: 15px 10px;
+        &::placeholder {
+          color: rgba($grey-dark, 0.6);
+        }
+        @include tablet-down {
+          background: $white;
+          padding: 15px;
+          border-bottom: 3px solid $blue;
+          border-radius: 3px;
+        }
       }
     }
   }
 }
-// Blog Section
+.easy-autocomplete {
+  width: 100%;
+  max-width: 383px;
+  @include mobile {
+    width: 75%;
+  }
+}
 
-.home-blog-posts {
-  .blog-name {
-    width: 100%;
-    padding: 20px 30px;
-    text-align: center;
-    color: white;
-    background: $orange;
-    border-bottom: 10px solid $orange-light;
-
-    h3 {
-      margin: 0;
-      padding: 0;
-      text-transform: none;
+.homepage {
+  .intro__section {
+    margin-bottom: 70px;
+    @include tablet-down {
+      margin-bottom: 0;
+      padding: 30px;
     }
   }
-
-  .blog-post-card {
-    background: none;
-    border-radius: 0;
-    border-right: 4px solid rgba($grey,0.2);
-    @include media-breakpoint-down(md) {
-      border-right: none;
-      border-bottom: 4px solid rgba($grey,0.2);
-      padding-bottom: 20px;
-      margin-bottom: 20px;
+  .about__section {
+    max-width: 900px;
+    padding: 80px 0;
+    margin: 0 auto;
+    @include tablet-down {
+      padding: 40px 10px;
     }
-
-    &:last-child {
-      border: 0;
+  }
+  .articles__section {
+    // padding: 60px 0;
+    // display: flex;
+    // flex-flow: column nowrap;
+    // align-items: center;
+    h5 {
+      margin-bottom: 25px;
     }
-
-    h4 {
-      margin: 0;
-      padding: 0 0 .8em;
-      text-transform: none;
-      a {
-        color: $grey;
-      }
-    }
-
-    span.blog-metadata {
-    }
+    // &__home {
+    //   //width: 1090px;
+    //   display: flex;
+    //   flex-flow: row wrap;
+    //   justify-content: center;
+    // }
   }
 }

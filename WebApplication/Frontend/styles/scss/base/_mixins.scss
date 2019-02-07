@@ -20,13 +20,8 @@
     @content;
   }
 }
-@mixin small-desktop {
-   @media only screen and (min-width: 1025px) and (max-width: 1399px){
-    @content;
-  }
-}
-@mixin tablet-landscape {
-   @media only screen and (max-width: 1024px){
+@mixin tablet-down {
+   @media only screen and (max-width: 1199px){
     @content;
   }
 }
@@ -36,7 +31,7 @@
   }
 }
 @mixin tablet {
-   @media only screen and (min-width: 768px) and (max-width: 1095px){
+   @media only screen and (min-width: 768px) and (max-width: 1199px){
     @content;
   }
 }

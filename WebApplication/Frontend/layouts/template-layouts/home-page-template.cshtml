@@ -3,6 +3,12 @@
 
 <head>
     {Settings:GlobalCodeInHead}
+    <script>
+        $(document).ready(function(){
+            //$("#mainNav").removeClass("interior--nav");
+            $("#mainNav").addClass("navbar--home");
+        });
+    </script>
 </head>
 
 <body>
@@ -11,7 +17,7 @@
     <Site:LoggedInHeader runat="server" />
 
     <!-- Header -->
-    {{Load:8}.UseMainLayout}
+    {IncludeFile:'/Frontend/layouts/includes/header-home.cshtml'}
 
     <!-- PageContent -->
     {PageContent}

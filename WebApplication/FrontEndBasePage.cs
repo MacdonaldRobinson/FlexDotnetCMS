@@ -237,11 +237,11 @@ namespace WebApplication
 
             string html = str.ToString();
 
-            if(IsAjaxRequest)
+            /*if(IsAjaxRequest)
             {
                 writer.Write(html);
                 return;
-            }
+            }*/
 
             /*if (CurrentMediaDetail != null && !html.Contains("<html"))
             {
@@ -336,8 +336,8 @@ namespace WebApplication
             {
                 if (CurrentMediaDetail != null)
                 {
-                    if (!IsAjaxRequest)
-                    {
+                    /*if (!IsAjaxRequest)
+                    {*/
                         if (AppSettings.EnableOutputCaching && CurrentMediaDetail.CanCache)
                         {
                             if (AppSettings.EnableLevel1MemoryCaching)
@@ -357,7 +357,7 @@ namespace WebApplication
                         }
 
                         ContextHelper.SetToSession("CurrentMediaDetail", CurrentMediaDetail);
-                    }
+                    //}
                 }
             }
 

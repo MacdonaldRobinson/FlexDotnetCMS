@@ -5,17 +5,17 @@
 	var Request = HttpContext.Current.Request;
 	var Response = HttpContext.Current.Response;
 	var Server = HttpContext.Current.Server;
-
+	
 	if(Request.Url.AbsolutePath != "/" && !BasePage.IsAjaxRequest && !Request.Url.AbsolutePath.Contains("admin") && !Request.Url.AbsolutePath.Contains("login"))
-	{
-		<!--<meta http-equiv="refresh" content="0;URL='/#@Request.Url.AbsolutePath'">-->
-		Response.Redirect("/#"+Request.Url.AbsolutePath);
+	{		
+		Response.Redirect("/#"+Request.Url.PathAndQuery);
+		<meta http-equiv="refresh" content="0;URL='/#@Request.Url.PathAndQuery'">
 	}
 
 	if (!AppSettings.IsRunningOnProd)
 	{
 		<meta name="robots" content="noindex, nofollow, noarchive">
-    }
+	}
 }
 
 <script type="text/javascript">

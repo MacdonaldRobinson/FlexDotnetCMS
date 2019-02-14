@@ -1,36 +1,63 @@
+var ajaxOptions = {
+	homePagePath: "/home/",
+	targetElement: "#DynamicContent",
+	preloadLinks: false,
+	animateIn: function (selector, html) {
+		$(selector).each(function (index, el) {
+			//$(el).html(html);
+			$(el).toggle("fade", 250, function () {
+				$(el).html(html);
+				//$(el).css("height", "100%");
+				// $("#mainNav").effect("fade");
+				$(el).toggle("fade", 400);
+				//$("body").scrollTop(0);
+			});
+		});
+	}
+}
+
+function initAjaxOptions(options) {
+	ajaxOptions = options;
+}
+
 function loadeData(selector, html) {
 	$(".nav-link").parent().removeClass("current");
 	$(".searchList").val("");
-	$(selector).each(function (index, el) {
-		//$(el).html(html);
-		$(el).toggle("fade", 250, function () {
-			$(el).html(html);
-			//$(el).css("height", "100%");
-			// $("#mainNav").effect("fade");
-			$(el).toggle("fade", 400);
-			//$("body").scrollTop(0);
-		});
-	});
+	ajaxOptions.animateIn(selector, html);
 }
 
 function preloadLinks() {
-	
+
 	$("a").each(function () {
-		var href = $(this).attr("href");		
+		var href = $(this).attr("href");
+
+		if (href == window.location.pathname)
+			return;
 
 		ajaxLoadUrl(href, "", function (el, html) {
-			console.log("Preloaded: " + href);			
+			console.log("Preloaded: " + href);
 		});
 	});
 }
 
 $(document).ready(function () {
 
-	//preloadLinks();
+	if (ajaxOptions.preloadLinks) {
+		preloadLinks();
+	}
+
+	if (window.location.hash != "") {
+		var url = window.location.hash.replace("#", "");
+		ajaxLoadUrl(url, ajaxOptions.targetElement);
+	}
+	else {
+		ajaxLoadUrl(ajaxOptions.homePagePath + window.location.search, ajaxOptions.targetElement);
+	}
 
 	window.onpopstate = function (event) {
 
-		if (event.state != null) {			
+
+		if (event.state != null) {
 
 			loadeData(lastTargetElement, event.state.html);
 			updateTitle(event.state.href, event.state.html);
@@ -41,17 +68,23 @@ $(document).ready(function () {
 		}
 	};
 
-	$(document).on("click", "a", function (event) {		
+	$(document).on("click", "a", function (event) {
 		var href = $(this).attr("href");
-		var target = $(this).attr("target");		
+		var target = $(this).attr("target");
+
 
 		if (target != "_blank" && $(this).parents(".field").length == 0 && $(this).parents("#AccessCMSPermissionsPanel").length == 0) {
-			var segment = href.replace(window.location.host, "");
-			if (segment != "") {								
+
+			var urlSegment = href.split("?")[0];
+			var segment = href.replace(window.location.origin, "");
+
+			if (segment != "") {
 
 				var loaded = ajaxLoadUrl(href, "#DynamicContent");
 
-				if (loaded) {
+				//console.log(loaded, href, segment, window.location.pathname);
+
+				if (loaded || segment == window.location.pathname || segment == href) {
 					event.preventDefault();
 				}
 			}
@@ -66,7 +99,7 @@ function updateTitle(href, bodyHtml) {
 	document.title = doc.find("title").text();
 
 	doc.find("meta").each(function (index, el) {
-		
+
 		var name = $(el).attr("name");
 		var content = $(el).attr("content");
 
@@ -103,7 +136,7 @@ function _loadData(href, el, bodyHtml, callBackFunction) {
 		trackPageView();
 
 		//preloadLinks();
-	}		
+	}
 }
 
 function trackPageView() {
@@ -116,7 +149,7 @@ function trackPageView() {
 
 		var trackingId = "";
 
-		ga.getAll().forEach(function(tracker) {
+		ga.getAll().forEach(function (tracker) {
 			trackingId = tracker.get("trackingId");
 		});
 
@@ -143,7 +176,10 @@ function trackPageView() {
 			console.log("No 'gtag' found, falling back to 'ga'");
 
 			ga('create', trackingId, 'auto');
-			ga('send', 'pageview', location.pathname);
+			ga('set', 'page', location.pathname);
+			ga('send', 'pageview');
+
+			//ga('send', 'pageview', location.pathname);
 
 			console.log("Sent PageView for - " + document.location.pathname);
 		}
@@ -161,7 +197,7 @@ var timer = null;
 function block() {
 	console.log("Ran block");
 	timer = setTimeout(function () {
-		$.blockUI({ 
+		$.blockUI({
 			message: '<div class="lds-ring"><div></div><div></div><div></div><div></div></div>',
 			css: {
 				border: 'none',
@@ -193,8 +229,8 @@ function convertHrefToPath(href) {
 }
 
 var ajaxRequests = [];
-function ajaxLoadUrl(href, targetElement, callBackFunction) {	
-	
+function ajaxLoadUrl(href, targetElement, callBackFunction) {
+
 	var urlSegment = href.split("?")[0];
 
 	if ((href != undefined && href != null && href != "" && href.toLowerCase().indexOf("@") == -1 && href.toLowerCase().indexOf("javascript") == -1 && href.indexOf("javascript") == -1 && href.indexOf("tel:") == -1 && href != "/") && (href.indexOf("http") == -1 || (href.indexOf("http") != -1 && href.indexOf(window.location.host) != -1)) || (href.charAt(0) == "/")) {

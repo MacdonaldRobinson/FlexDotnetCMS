@@ -1,3 +1,25 @@
+<script>
+var ajaxOptions = {
+    homePagePath: "/home/", // Path to the home page
+	targetElement: "#DynamicContent", // Selector to the element where the content will be injected
+	preloadLinks: true,
+	animateIn: function (selector, html) {
+		$(selector).each(function (index, el) {
+			//$(el).html(html);
+			$(el).toggle("fade", 250, function () {
+				$(el).html(html);
+				//$(el).css("height", "100%");
+				// $("#mainNav").effect("fade");
+				$(el).toggle("fade", 400);
+				//$("body").scrollTop(0);
+			});
+		});
+	}
+}
+
+initAjaxOptions(ajaxOptions);
+</script>
+
 <nav class="navbar navbar-expand-xl navbar--home" id="mainNav">
   <a class="navbar-brand img-container" href="/home/">
       <img src="/media/uploads/images/logo-horizontal.svg" alt="Logo" />
@@ -23,19 +45,3 @@
   </div>
 </nav>
 <div id="DynamicContent"></div>
-
-<script>
-
-	$(document).ready(function () {
-
-		if (window.location.hash != "") {
-			var url = window.location.hash.replace("#", "");
-			ajaxLoadUrl(url, "#DynamicContent");
-		}
-		else {
-			ajaxLoadUrl("/home/", "#DynamicContent");
-		}
-	});
-
-</script>
-

@@ -80,4 +80,67 @@
 	}
 </style>
 
+<script>
+
+	function unblockAll() {
+		$("*").unblock();
+	}
+
+	function blockError(el) {
+		$(el).block({
+			message: '<div class="submit__error"><i class="fa fa-exclamation-circle" aria-hidden="true"></i><p>There was an error submitting the form. <a href="javascript:void(0);" onclick="unblockAll();">Close</a> </p></div>',
+			css: {
+				border: 'none',
+				background: 'none'
+			}
+		});
+	}
+
+	function blockProgress(el) {
+		$(el).block({ 
+			message: '<div class="lds-ring"><div></div><div></div><div></div><div></div></div>',
+			css: {
+				border: 'none',
+				background: 'none'
+			}					
+		});
+	}
+
+	function blockError(el) {
+		$(el).block({
+			message: '<div class="submit__error"><i class="fa fa-exclamation-circle" aria-hidden="true"></i><p>There was an error submitting the form. <a href="javascript:void(0);" onclick="unblockAll();">Close</a> </p></div>',
+			css: {
+				border: 'none',
+				background: 'none'
+			}
+		});
+	}
+
+	function blockSuccess(el) {
+		$(el).block({
+			message: '<div class="submit__success"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><p><a href="javascript:void(0);" onclick="unblockAll();">Close</a></p></div>',
+			css: {
+				border: 'none',
+				background: 'none'
+			}
+		});
+	}
+
+	function getParamVal(param) {		
+		var val = "";
+
+		window.location.search.replace("?", "").split("&").forEach(function (item) {
+			var key = param + "=";
+
+			if (item.indexOf(key) != -1) {
+				val = item.replace(key, "");
+				return;
+			}
+		})
+
+		return val;
+	}
+
+</script>
+
 }

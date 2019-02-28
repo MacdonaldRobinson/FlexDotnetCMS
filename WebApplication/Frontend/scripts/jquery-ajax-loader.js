@@ -69,13 +69,14 @@ $(document).ready(function () {
 	};
 
 	$(document).on("click", "a", function (event) {
+
 		var href = $(this).attr("href");
 		var target = $(this).attr("target");
 
 		if ($(this).parents("form").length > 0)
 			return;
 
-		if (target != "_blank" && $(this).parents(".field").length == 0 && $(this).parents("#AccessCMSPermissionsPanel").length == 0) {
+		if (target != "_blank" && !$(this).hasClass("edit") && $(this).parents("#AccessCMSPermissionsPanel").length == 0) {
 
 			var urlSegment = href.split("?")[0];
 			var segment = href.replace(window.location.origin, "");
@@ -84,9 +85,9 @@ $(document).ready(function () {
 
 				var loaded = ajaxLoadUrl(href, "#DynamicContent");
 
-				//console.log(loaded, href, segment, window.location.pathname);
+				//console.log(loaded, href, segment, window.location.pathname);				
 
-				if (loaded || segment == window.location.pathname || segment == href) {
+				if (loaded || (segment == window.location.pathname || (segment == href && segment.indexOf("mailto") == -1))) {
 					event.preventDefault();
 				}
 			}
@@ -143,6 +144,7 @@ function _loadData(href, el, bodyHtml, callBackFunction) {
 
 function trackPageView() {
 	setTimeout(function () {
+
 
 		if (typeof ga == 'undefined') {
 			console.log("Google Analytics Not installed! No PageViews will be tracked!");
@@ -232,7 +234,6 @@ function convertHrefToPath(href) {
 
 var ajaxRequests = [];
 function ajaxLoadUrl(href, targetElement, callBackFunction) {
-
 	var urlSegment = href.split("?")[0];
 
 	if ((href != undefined && href != null && href != "" && href.toLowerCase().indexOf("@") == -1 && href.toLowerCase().indexOf("javascript") == -1 && href.indexOf("javascript") == -1 && href.indexOf("tel:") == -1 && href != "/") && (href.indexOf("http") == -1 || (href.indexOf("http") != -1 && href.indexOf(window.location.host) != -1)) || (href.charAt(0) == "/")) {

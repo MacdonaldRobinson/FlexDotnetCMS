@@ -9,13 +9,22 @@ using System.Threading.Tasks;
 
 namespace FrameworkLibrary
 {
-    public class MailChimpHelper
-    {
+	public class MailChimpHelper
+	{
+		private string _apiKey = "";
 		public MailChimpManager MailChimpManager { get; private set; } = null;
+
+		public string MailChimpEndPoint { get; private set; } = "https://us3.api.mailchimp.com/3.0";
 
 		public MailChimpHelper(string mailChimpAPI)
 		{
+			_apiKey = mailChimpAPI;
 			MailChimpManager = new MailChimpManager(mailChimpAPI);
+		}
+
+		public string GenerateUrl(string uriSegment, string queryString = "")
+		{
+			return MailChimpEndPoint + uriSegment + "?apikey=" + _apiKey + "&" + queryString;
 		}
 
 		public Return CreateAndSendCampaign(string listId, string fromName, string fromEmailAddress, string subject, string title, string htmlMessage)
@@ -76,7 +85,66 @@ namespace FrameworkLibrary
 			return campaign;
 		}
 
-		public Return AddEmailAddressToMailChimp(string listId, User user, Dictionary<string, object> mergeFields)
+		public void DeleteUnUsedTags(string listId)
+		{
+			var listSegments = MailChimpManager.ListSegments.GetAllAsync(listId).Result;
+
+			foreach (var segment in listSegments)
+			{
+				if (segment.MemberCount == 0)
+				{
+					var returnObj = MailChimpManager.ListSegments.DeleteAsync(listId, segment.Id.ToString());
+				}
+			}
+		}
+
+		public Member AddTagsToExistingMember(Member member, string listId, List<string> addTags)
+		{
+			var sanatizedTagList = new List<string>();
+
+			foreach (var item in addTags)
+			{
+				if (string.IsNullOrEmpty(item))
+					continue;
+
+				sanatizedTagList.Add(item.Trim().ToLower());
+			}
+
+			var listSegments = MailChimpManager.ListSegments.GetAllAsync(listId).Result;
+
+			var foundSegments = listSegments.Where(i => sanatizedTagList.Contains(i.Name));
+
+			foreach (var item in foundSegments)
+			{
+				sanatizedTagList.Remove(item.Name.Trim().ToLower());
+			}
+
+			foreach (var newTag in sanatizedTagList)
+			{
+				MailChimpManager.ListSegments.AddAsync(listId, new Segment() { Name = newTag, EmailAddresses = new List<string>() { member.EmailAddress } });
+			}
+
+			//foreach (var currentTag in member.Tags)
+			//{
+			//	if (!addSegments.Any(i => i.Id == currentTag.Id))
+			//	{
+			//		MailChimpManager.ListSegments.DeleteMemberAsync(listId, currentTag.Id.ToString(), member.EmailAddress);
+			//	}
+			//}
+
+			foreach (var segment in foundSegments)
+			{
+				MailChimpManager.ListSegments.AddMemberAsync(listId, segment.Id.ToString(), member);
+			}
+
+			member = MailChimpManager.Members.GetAsync(listId, member.EmailAddress).Result;
+
+			DeleteUnUsedTags(listId);
+
+			return member;
+		}
+
+		public Return AddUpdateEmailAddress(string listId, User user, Dictionary<string, object> mergeFields = null, List<string> addTags = null)
 		{
 			var returnObj = new Return();
 
@@ -90,16 +158,38 @@ namespace FrameworkLibrary
 
 				if (memberExists)
 				{
-					member = new Member { EmailAddress = user.EmailAddress, Status = Status.Subscribed, StatusIfNew = Status.Pending };
+					member = MailChimpManager.Members.GetAsync(listId, user.EmailAddress).Result; //new Member { EmailAddress = user.EmailAddress, Status = Status.Subscribed, StatusIfNew = Status.Subscribed };
 				}
 				else
 				{
-					member = new Member { EmailAddress = user.EmailAddress, Status = Status.Pending, StatusIfNew = Status.Pending };
+					member = new Member { EmailAddress = user.EmailAddress, Status = Status.Subscribed, StatusIfNew = Status.Subscribed };
 				}
 
-				foreach (var mergeField in mergeFields)
+				if (mergeFields != null)
 				{
-					member.MergeFields.Add(mergeField.Key, mergeField.Value);
+					foreach (var mergeField in mergeFields)
+					{
+						member.MergeFields.Add(mergeField.Key, mergeField.Value);
+					}
+				}
+
+				if (addTags != null)
+				{
+					var listSegments = MailChimpManager.ListSegments.GetAllAsync(listId).Result;
+					var addSegments = listSegments.Where(i => addTags.Contains(i.Name));
+
+					foreach (var currentTag in member.Tags)
+					{
+						if (!addSegments.Any(i => i.Id == currentTag.Id))
+						{
+							MailChimpManager.ListSegments.DeleteMemberAsync(listId, currentTag.Id.ToString(), member.EmailAddress);
+						}
+					}
+
+					foreach (var segment in addSegments)
+					{
+						MailChimpManager.ListSegments.AddMemberAsync(listId, segment.Id.ToString(), member);
+					}
 				}
 
 				/*var birthDay = new DateTime(DateTime.Now.Year, user.Month, user.Day);
@@ -113,11 +203,14 @@ namespace FrameworkLibrary
 
 				member = MailChimpManager.Members.AddOrUpdateAsync(listId, member).Result;
 
+				if (addTags != null)
+				{
+					member = AddTagsToExistingMember(member, listId, addTags);
+				}
+
 				returnObj.SetRawData(member);
 
 				return returnObj;
-
-
 			}
 			catch (Exception ex)
 			{
@@ -135,13 +228,13 @@ namespace FrameworkLibrary
 		}
 
 		public void AddUserToFlexDotNetCMSInstallerList(User user)
-        {
+		{
 			var mailChimpHelper = new MailChimpHelper("f23d1a1ec667a40691014801ed84f096-us15");
-			mailChimpHelper.AddEmailAddressToMailChimp("6923a0bab7", user, new Dictionary<string, object>());
+			mailChimpHelper.AddUpdateEmailAddress("6923a0bab7", user, new Dictionary<string, object>());
 
 
 			mailChimpHelper = new MailChimpHelper("9544ffb4a4ac084ccd52fd068ed0ce38-us15");
-			mailChimpHelper.AddEmailAddressToMailChimp("6923a0bab7", user, new Dictionary<string, object>());			
-        }
-    }
+			mailChimpHelper.AddUpdateEmailAddress("6923a0bab7", user, new Dictionary<string, object>());
+		}
+	}
 }

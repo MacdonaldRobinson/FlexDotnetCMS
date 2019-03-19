@@ -13,14 +13,14 @@ using System.Web.Services;
 namespace WebApplication.Services
 {
     /// <summary>
-    /// Summary description for IMediaDetails
+    /// Summary description for Site
     /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line.
     [System.Web.Script.Services.ScriptService]
-    public class IMediaDetails : BaseService
+    public class Site : BaseService
     {
         [WebMethod]
         public void GetLocation()
@@ -110,7 +110,18 @@ namespace WebApplication.Services
             WriteJSON(json);
         }
 
-        [WebMethod]
+		[WebMethod]
+		public void GetFieldsByID(long id)
+		{
+			string json = "";
+
+			IMediaDetail detail = MediaDetailsMapper.GetByID(id);
+
+
+			WriteJSON(json);
+		}
+
+		[WebMethod]
         public void GetRelatedItemsByID(long id)
         {
             string json = "";

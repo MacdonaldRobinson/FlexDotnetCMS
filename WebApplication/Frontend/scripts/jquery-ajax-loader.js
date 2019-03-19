@@ -68,7 +68,7 @@ $(document).ready(function () {
 		}
 	};
 
-	$(document).on("click", "a", function (event) {
+	$(document).on("click", "a:not(.not-ajax)", function (event) {
 
 		var href = $(this).attr("href");
 		var target = $(this).attr("target");
@@ -87,7 +87,7 @@ $(document).ready(function () {
 
 				//console.log(loaded, href, segment, window.location.pathname);				
 
-				if (loaded || (segment == window.location.pathname || (segment == href && segment.indexOf("mailto") == -1))) {
+				if (loaded || (segment == window.location.pathname || (segment == href && segment.indexOf("mailto") == -1 && segment.indexOf("tel") == -1))) {
 					event.preventDefault();
 				}
 			}
@@ -135,7 +135,6 @@ function _loadData(href, el, bodyHtml, callBackFunction) {
 	}
 
 	if (el != "") {
-		//window.scrollTo(0, 0);
 		trackPageView();
 
 		//preloadLinks();

@@ -232,7 +232,7 @@
 
         $(document).ready(function () {        
 
-            $.get("/WebServices/IMediaDetails.asmx/CanAccessFrontEndEditorForMediaDetail?id=<%= BasePage.CurrentMediaDetail.ID %>", function (data) {
+            $.get("/WebServices/Site.asmx/CanAccessFrontEndEditorForMediaDetail?id=<%= BasePage.CurrentMediaDetail.ID %>", function (data) {
                 if (data.IsError)
                 {                                        
                     return;

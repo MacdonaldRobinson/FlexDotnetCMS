@@ -14,7 +14,7 @@ namespace FrameworkLibrary
 		private string _apiKey = "";
 		public MailChimpManager MailChimpManager { get; private set; } = null;
 
-		public string MailChimpEndPoint { get; private set; } = "https://us3.api.mailchimp.com/3.0";
+		public string MailChimpEndPoint { get; private set; } = "https://xxx.api.mailchimp.com/3.0";
 
 		public MailChimpHelper(string mailChimpAPI)
 		{

@@ -1002,7 +1002,7 @@
 
 			$.blockUI({ message: "Saving please wait ..." });
 
-            $.post("/WebServices/IMediaDetails.asmx/SaveUseMainLayout", { mediaDetailId: mediaDetailId, html: encodeURI(newHtml) }, function (data) {                
+            $.post("/WebServices/Site.asmx/SaveUseMainLayout", { mediaDetailId: mediaDetailId, html: encodeURI(newHtml) }, function (data) {                
                 window.location.reload();                
             });
 
@@ -1038,7 +1038,7 @@
             newHtml = newHtml.replace(/\s+/g, " ");          
             newHtml = html_beautify(newHtml);                        
 
-            $.post("/WebServices/IMediaDetails.asmx/SaveUseMainLayout", { mediaDetailId: mediaDetailId, html: escape(newHtml) }, function (data) {
+            $.post("/WebServices/Site.asmx/SaveUseMainLayout", { mediaDetailId: mediaDetailId, html: escape(newHtml) }, function (data) {
                 window.location.reload();
             });
 

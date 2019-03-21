@@ -35,15 +35,15 @@ namespace WebApplication.Handlers
 
         private void AttemptToLoadFromCache()
         {
-            if (AppSettings.ForceSSL && !URIHelper.IsSSL())
+            if (!IsRunningOnLocalHost && AppSettings.ForceSSL && !URIHelper.IsSSL())
             {
                 URIHelper.ForceSSL();
             }
 
             if (FrameworkSettings.CurrentUser == null && Request.QueryString.Count == 0)
             {
-                if (Request.HttpMethod == "GET" && (!(bool)BaseMapper.CanConnectToDB || AppSettings.EnableOutputCaching))
-                {
+				if (Request.HttpMethod == "GET" && (!(bool)BaseMapper.CanConnectToDB || AppSettings.EnableOutputCaching))
+				{
                     var userSelectedVersion = RenderVersion.HTML;
 
                     if (BasePage.IsMobile)
@@ -86,14 +86,22 @@ namespace WebApplication.Handlers
             }
         }
 
-        public IHttpHandler GetHttpHandler(RequestContext requestContext)
+		public bool IsRunningOnLocalHost
+		{
+			get
+			{
+				return Request.Url.Host.StartsWith("localhost");
+			}
+		}
+
+		public IHttpHandler GetHttpHandler(RequestContext requestContext)
         {            
             RedisCacheHelper.SetRedisCacheConnectionString(AppSettings.RedisCacheConnectionString);
             FileCacheHelper.SetFileSystemCacheDirPath(AppSettings.FileSystemCacheDirPath);
 
-            virtualPath = URIHelper.GetCurrentVirtualPath().ToLower();
+            virtualPath = Request.Url.AbsolutePath.ToLower();
 
-            var queryString = HttpContext.Current.Request.QueryString.ToString();
+			var queryString = HttpContext.Current.Request.QueryString.ToString();
             queryString = System.Web.HttpUtility.UrlDecode(queryString);
 
 
@@ -104,7 +112,7 @@ namespace WebApplication.Handlers
                 if (!string.IsNullOrEmpty(queryString))
                     path = path + "?" + queryString;
 
-                HttpContext.Current.Response.RedirectPermanent(path);
+                HttpContext.Current.Response.RedirectPermanent(path, true);
             }
 
             Settings cmsSettings = null;
@@ -140,6 +148,7 @@ namespace WebApplication.Handlers
             {
                 isAttemptingAdminLogin = true;
             }
+
 
 			var languageSegment = FrameworkSettings.GetCurrentLanguage().UriSegment;
 
@@ -203,7 +212,7 @@ namespace WebApplication.Handlers
                         newUrl += "?" + Request.QueryString;
 
                     if (redirectRule.Is301Redirect)
-                        Response.RedirectPermanent(newUrl);
+                        Response.RedirectPermanent(newUrl, true);
                     else
                         Response.Redirect(newUrl);
                 }
@@ -223,7 +232,7 @@ namespace WebApplication.Handlers
 
                 if (mediaDetailId == 0 && mediaId == 0)
                 {
-                    FrameworkSettings.Current = FrameworkBaseMedia.GetInstanceByVirtualPath(virtualPath, true);
+                    FrameworkSettings.Current = FrameworkBaseMedia.GetInstanceByVirtualPath(Request.Url.AbsolutePath.ToLower(), true);
                     detail = (MediaDetail)FrameworkSettings.Current.CurrentMediaDetail;
                 }
                 else if (mediaDetailId != 0)
@@ -259,7 +268,7 @@ namespace WebApplication.Handlers
 
                 if (detail != null)
                 {
-                    if (detail.ForceSSL || AppSettings.ForceSSL)
+                    if ((!IsRunningOnLocalHost) && (detail.ForceSSL || AppSettings.ForceSSL))
                         URIHelper.ForceSSL();
                 }
                 else
@@ -279,17 +288,17 @@ namespace WebApplication.Handlers
                             if (urlRedirectRule != null)
                             {
                                 var returnObj = UrlRedirectRulesMapper.Insert(urlRedirectRule);
-                                HttpContext.Current.Response.RedirectPermanent(historyVersion.HistoryForMediaDetail.CachedVirtualPath);
+                                HttpContext.Current.Response.RedirectPermanent(historyVersion.HistoryForMediaDetail.CachedVirtualPath, true);
                             }
                             else
                             {
-                                HttpContext.Current.Response.RedirectPermanent("/");
+                                HttpContext.Current.Response.RedirectPermanent("/", true);
                             }
                         }
                     }
                     else
                     {
-                        HttpContext.Current.Response.RedirectPermanent("/");
+                        HttpContext.Current.Response.RedirectPermanent("/", true);
                     }
                 }
 

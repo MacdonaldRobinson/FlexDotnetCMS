@@ -2,11 +2,12 @@
 var ajaxOptions = {
     homePagePath: "/home/", // Path to the home page
 	targetElement: "#DynamicContent", // Selector to the element where the content will be injected
-	preloadLinks: true,
+	preloadLinks: false,
 	animateIn: function (selector, html) {
 		$(selector).each(function (index, el) {
 			//$(el).html(html);
 			$(el).toggle("fade", 250, function () {
+				window.scrollTo(0, 0);
 				$(el).html(html);
 				//$(el).css("height", "100%");
 				// $("#mainNav").effect("fade");

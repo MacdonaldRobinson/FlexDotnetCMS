@@ -553,7 +553,7 @@ namespace FrameworkLibrary
                     var website = WebsitesMapper.GetWebsite(0, activeLanguage);
                     virtualPath = virtualPath.Replace(URIHelper.ConvertAbsUrlToTilda(URIHelper.BaseUrlWithLanguage), website.CachedVirtualPath);
 
-                    var mediaDetail = GetAllActiveMediaDetails().FirstOrDefault(i => i.VirtualPath == virtualPath && i.Language == activeLanguage && i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == versionNumber);
+                    var mediaDetail = GetAllActiveMediaDetails().FirstOrDefault(i => i.VirtualPath == virtualPath && i.Language == activeLanguage && i.MediaType.ShowInSiteTree && i.HistoryVersionNumber == versionNumber && i.MediaType.Name != MediaTypeEnum.RootPage.ToString());
 
                     if (mediaDetail != null)
                         return mediaDetail;

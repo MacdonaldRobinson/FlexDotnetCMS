@@ -39,13 +39,19 @@ namespace WebApplication
             }
 
 
-			if (AppSettings.IsRunningOnProd && AppSettings.ForceWWWRedirect)
+			if (AppSettings.ForceWWWRedirect)
 			{
 				var isSubDomain = (Request.Url.AbsoluteUri.Split('.').Length > 2);
-				var isLocalHost = Request.Url.Host.StartsWith("localhost");
 
-				if (!Request.Url.Host.StartsWith("www.") && !isLocalHost && !isSubDomain)
+				if (!AppSettings.IsRunningOnProd && (!Request.Url.Host.StartsWith("www.") && !Request.Url.Host.StartsWith("localhost") && !isSubDomain))
 					Response.RedirectPermanent(Request.Url.AbsoluteUri.Replace("://", "://www."));
+			}
+			else
+			{
+				if (Request.Url.Host.StartsWith("www."))
+				{
+					Response.RedirectPermanent(Request.Url.AbsoluteUri.Replace("www.", ""));
+				}
 			}
 
 

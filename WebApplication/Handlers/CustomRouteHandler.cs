@@ -29,7 +29,7 @@ namespace WebApplication.Handlers
 
 		private void AttemptDBConnection()
 		{
-			if (!(bool)BaseMapper.CanConnectToDB)
+			if (BaseMapper.CanConnectToDB != null && !(bool)BaseMapper.CanConnectToDB)
 				BaseService.WriteHtml("Cannot connect to the database");
 		}
 
@@ -40,9 +40,9 @@ namespace WebApplication.Handlers
                 URIHelper.ForceSSL();
             }
 
-            if (FrameworkSettings.CurrentUser == null && Request.QueryString.Count == 0)
+            if (Request.QueryString.Count == 0)
             {
-				if (Request.HttpMethod == "GET" && (!(bool)BaseMapper.CanConnectToDB || AppSettings.EnableOutputCaching))
+				if (Request.HttpMethod == "GET" && ((BaseMapper.CanConnectToDB != null && !(bool)BaseMapper.CanConnectToDB) || AppSettings.EnableOutputCaching))
 				{
                     var userSelectedVersion = RenderVersion.HTML;
 
@@ -120,30 +120,32 @@ namespace WebApplication.Handlers
 
             if ((virtualPath != "~/login/") && (virtualPath != "~/admin/") && string.IsNullOrEmpty(Request.QueryString["format"]))
             {
-                cmsSettings = SettingsMapper.GetSettings();
+				AttemptToLoadFromCache();
 
-                if (cmsSettings != null)
-                {
-                    var isSiteOnline = cmsSettings.IsSiteOnline();
+				//cmsSettings = SettingsMapper.GetSettings();
 
-                    if (isSiteOnline)
-                    {
-                        if (virtualPath.Contains(cmsSettings.SiteOfflineUrl))
-                            Response.Redirect("~/");
+				//if (cmsSettings != null)
+				//{
+				//    var isSiteOnline = cmsSettings.IsSiteOnline();
 
-                        AttemptToLoadFromCache();
-                    }
-                    else
-                    {
-                        if (!virtualPath.Contains(cmsSettings.SiteOfflineUrl))
-                            Response.Redirect(cmsSettings.SiteOfflineUrl);
-                    }
-                }
-                else
-                {
-                    AttemptToLoadFromCache();
-                }
-            }
+				//    if (isSiteOnline)
+				//    {
+				//        if (virtualPath.Contains(cmsSettings.SiteOfflineUrl))
+				//            Response.Redirect("~/");
+
+				//        AttemptToLoadFromCache();
+				//    }
+				//    else
+				//    {
+				//        if (!virtualPath.Contains(cmsSettings.SiteOfflineUrl))
+				//            Response.Redirect(cmsSettings.SiteOfflineUrl);
+				//    }
+				//}
+				//else
+				//{
+				//    AttemptToLoadFromCache();
+				//}
+			}
             else
             {
                 isAttemptingAdminLogin = true;

@@ -169,9 +169,9 @@ namespace WebApplication.Controls
 
 			items = items.ToList();
 
-            this.ItemsList.DataSource = items;
-            this.ItemsList.DataBind();
-        }
+			this.ItemsList.DataSource = items;
+			this.ItemsList.DataBind();
+		}
 
         protected void ItemsList_OnLayoutCreated(object sender, EventArgs e)
         {
@@ -274,7 +274,7 @@ namespace WebApplication.Controls
 
                 if (IsBreadCrumbMenu)
                 {
-                    if (URIHelper.GetCurrentVirtualPath() == virtualPath)
+                    if (currentVirtualPath == virtualPath)
                     {
                         Link.NavigateUrl = "javascript:void(0);";
                     }
@@ -316,18 +316,19 @@ namespace WebApplication.Controls
 
                 if ((rootMedia != null) && (detail.MediaID != rootMedia.ID))
                 {
-                    //childItems = new List<IMediaDetail>();
-                    //childItems = detail.ChildMediaDetails.Where(i=>i.ShowInMenu);
-                    
-                    //childItems = details.Media.ChildMedias.SelectMany(i => i.MediaDetails.Where(j => j.HistoryVersionNumber == 0 && !j.IsDeleted && j.PostPublishDate <= DateTime.Now && j.LanguageID == details.LanguageID));
-                    //childItems = MediaDetailsMapper.FilterOutDeletedAndArchived(MediaDetailsMapper.GetAllChildMediaDetails(details.Media, details.Language));
+					//childItems = new List<IMediaDetail>();
+					//childItems = detail.ChildMediaDetails.Where(i=>i.ShowInMenu);
 
-                    if (!RenderHiddenPages)
-                        childItems = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.ShowInMenu && i.Media.ParentMediaID == detail.Media.ID && i.HistoryVersionNumber == 0 && i.LanguageID == detail.LanguageID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex);
-                    else
-                        childItems = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == detail.Media.ID && i.HistoryVersionNumber == 0 && i.LanguageID == detail.LanguageID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex);
+					//childItems = details.Media.ChildMedias.SelectMany(i => i.MediaDetails.Where(j => j.HistoryVersionNumber == 0 && !j.IsDeleted && j.PostPublishDate <= DateTime.Now && j.LanguageID == details.LanguageID));
+					//childItems = MediaDetailsMapper.FilterOutDeletedAndArchived(MediaDetailsMapper.GetAllChildMediaDetails(details.Media, details.Language));
 
-					childItems = childItems.Where(i => i.MediaType.ShowInSiteTree);
+					if (!RenderHiddenPages)
+						childItems = detail.ChildMediaDetails; //MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.ShowInMenu && i.Media.ParentMediaID == detail.Media.ID && i.HistoryVersionNumber == 0 && i.LanguageID == detail.LanguageID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex);
+
+					else
+						childItems = detail.ChildMediaDetails; //MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.Media.ParentMediaID == detail.Media.ID && i.HistoryVersionNumber == 0 && i.LanguageID == detail.LanguageID && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderBy(i => i.Media.OrderIndex);
+
+					//childItems = childItems.Where(i => i.MediaType.ShowInSiteTree);
 				}
 
                 if(!detail.CssClasses.Contains("NoChildren") && childItems.Any())
@@ -351,9 +352,9 @@ namespace WebApplication.Controls
 
                         if (!displayProtectedSections)
                         {
-                            var list = childItems.OrderBy(i => i.Media.OrderIndex).ToList();
+							var list = childItems;//.OrderBy(i => i.Media.OrderIndex).ToList();
 
-                            if (list.Count > 0)
+                            if (list.Any())
                                 li.Attributes["class"] += " has-children";
 
                             if ((currentDepth > 0) && (RenderParentItemInChildNav))

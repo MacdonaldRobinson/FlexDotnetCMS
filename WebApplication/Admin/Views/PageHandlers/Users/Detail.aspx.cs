@@ -135,8 +135,9 @@ namespace WebApplication.Admin.Views.Users
                 SelectedItem = BaseMapper.GetObjectFromContext<User>(SelectedItem);
 
             SelectedItem.AuthenticationType = AuthType.Forms.ToString();
+			SelectedItem.ResetCode = "";
 
-            UpdateObjectFromFields();
+			UpdateObjectFromFields();
 
             Return returnObj = SelectedItem.Validate();
 

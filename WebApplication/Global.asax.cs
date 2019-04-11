@@ -18,14 +18,13 @@ namespace WebApplication
             RegisterRoutes(RouteTable.Routes);
 			//JobManager.Initialize(new FrameworkLibrary.Classes.JobSchedulerRegistry());
 
-			ImageProcessingModule.OnProcessQuerystring += ImageProcessingModule_OnProcessQuerystring;
+			ImageProcessingModule.ValidatingRequest += ImageProcessingModule_ValidatingRequest;
 		}
 
-		private string ImageProcessingModule_OnProcessQuerystring(object sender, ImageProcessor.Web.Helpers.ProcessQueryStringEventArgs args)
+		private void ImageProcessingModule_ValidatingRequest(object sender, ImageProcessor.Web.Helpers.ValidatingRequestEventArgs e)
 		{
-			return args.Querystring += "&quality=80";
+			e.QueryString += "&quality=80&width=2000&height=1000&mode=min";
 		}
-
 		private void Application_BeginRequest(Object source, EventArgs e)
         {
             var installerPath = "~/Installer/";

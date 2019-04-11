@@ -237,14 +237,17 @@ namespace FrameworkLibrary
                 //}
                 var fileInfo = GetFileInfoFromUrl(url);
 
-                if (fileInfo.Exists)
-                {
-                    if ((CacheDurationInSeconds != null) && (DateTime.Now > fileInfo.LastWriteTime.AddSeconds((double)CacheDurationInSeconds)))
-                    {
-                        File.Delete(fileInfo.FullName);
-                        returnObj.Error = new Elmah.Error(new Exception("Cache has expired"));                        
-                        return returnObj;
-                    }
+				if (fileInfo.Exists)
+				{
+					//if (BaseMapper.CanConnectToDB != null && BaseMapper.CanConnectToDB == true)
+					//{
+					//	if ((CacheDurationInSeconds != null) && (DateTime.Now > fileInfo.LastWriteTime.AddSeconds((double)CacheDurationInSeconds)))
+					//	{
+					//		File.Delete(fileInfo.FullName);
+					//		returnObj.Error = new Elmah.Error(new Exception("Cache has expired"));
+					//		return returnObj;
+					//	}
+					//}
 
                     using (FileStream fs = new FileStream(fileInfo.FullName,
                                                             FileMode.Open,

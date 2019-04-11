@@ -1365,8 +1365,17 @@ namespace FrameworkLibrary
                     {
                         var fileContent = File.ReadAllText(absPath);
 
+						var razorFieldParams = new RazorFieldParams();
+						razorFieldParams.MediaDetail = mediaDetail;
+						razorFieldParams.Arguments = queryStringObject;
+
+						if (passToParser is RazorFieldParams)
+						{
+							razorFieldParams.Field = (passToParser as RazorFieldParams).Field;
+						}
+
 						fileContent = ParserHelper.ParseData(fileContent, queryStringObject);
-						fileContent = ParserHelper.ParseData(fileContent, new RazorFieldParams() { MediaDetail = mediaDetail, Arguments = queryStringObject });
+						fileContent = ParserHelper.ParseData(fileContent, razorFieldParams);
 
 						customCode = customCode.Replace(item.ToString().ToString(), fileContent);
 					}

@@ -111,12 +111,13 @@ namespace WebApplication.Services
         }
 
 		[WebMethod]
-		public void GetFieldsByID(long id)
+		public void GetField(long id, string fieldCode)
 		{
 			string json = "";
 
-			IMediaDetail detail = MediaDetailsMapper.GetByID(id);
+			var field = MediasMapper.GetByID(id).GetLiveMediaDetail()?.LoadField(fieldCode);
 
+			json = field.ToJson(3);
 
 			WriteJSON(json);
 		}

@@ -294,14 +294,14 @@ namespace WebApplication.Handlers
                             }
                             else
                             {
-                                HttpContext.Current.Response.RedirectPermanent("/", true);
-                            }
+								RedirectToHomePage();
+							}
                         }
                     }
                     else
                     {
-                        HttpContext.Current.Response.RedirectPermanent("/", true);
-                    }
+						RedirectToHomePage();
+					}
                 }
 
 				if ((detail == null) || (!IsValidRequest(detail)))
@@ -380,6 +380,18 @@ namespace WebApplication.Handlers
 
             return new DefaultHttpHandler();
         }
+
+		private void RedirectToHomePage()
+		{
+			var homePagePath = "/";
+
+			if (!string.IsNullOrEmpty(HttpContext.Current.Request["homePagePath"]))
+			{
+				homePagePath = HttpContext.Current.Request["homePagePath"];
+			}
+
+			HttpContext.Current.Response.RedirectPermanent(homePagePath, true);
+		}
 
         private bool IsValidRequest(IMediaDetail detail)
         {

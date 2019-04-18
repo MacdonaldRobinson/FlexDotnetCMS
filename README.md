@@ -3,10 +3,10 @@ A powerful, flexible, easy to use and Fully Featured ASP .NET CMS
 
 To view the complete developer guide click here: https://github.com/MacdonaldRobinson/FlexDotnetCMS/raw/master/WebApplication/Admin/media/docs/FlexDotnetCMSGuide.docx
 
-## Single Page App also can be used as a Headless CMS
+## Single Page App
 - Automatic Single Page App functionality with SSR ( Server Side Rendering ) via the Single Page App library that I built ( https://github.com/MacdonaldRobinson/jquery-ajax-loader )
 - Comes with a API that allows you to load content via AJAX and use the CMS as a Headless CMS ( /WebServices/Site.asmx/GetField?id=11145&fieldCode=TestField )
-
+- The CMS is also a Static File Generator which builds static pages and stores them in the Cache folder, and then on every other request it loads the page via cache making the performance extremely fast ( Please view the Cache section below to see how caching works )
 
 ## Editing
 - FrontEnd Editing: Every field can be edited from the frontend of the website

@@ -45,7 +45,7 @@ namespace WebApplication.Handlers
 				Response.Redirect("/#" + Request.Url.PathAndQuery, true);
 			}
 
-			if (Request.QueryString.Count == 0 || (Request.QueryString.Count == 1 && Request.QueryString[HomePagePath] != null))
+			if (Request.QueryString.Count == 0 || (Request.QueryString.Count == 1 && Request.QueryString[BasePage.HomePagePath] != null))
             {
 				if (Request.HttpMethod == "GET" && ((BaseMapper.CanConnectToDB != null && !(bool)BaseMapper.CanConnectToDB) || AppSettings.EnableOutputCaching))
 				{
@@ -390,22 +390,13 @@ namespace WebApplication.Handlers
 		{
 			var homePagePath = "/";
 
-			if (!string.IsNullOrEmpty(HttpContext.Current.Request[HomePagePath]))
+			if (!string.IsNullOrEmpty(HttpContext.Current.Request[BasePage.HomePagePath]))
 			{
-				homePagePath = HttpContext.Current.Request[HomePagePath];
+				homePagePath = HttpContext.Current.Request[BasePage.HomePagePath];
 			}
 
 			HttpContext.Current.Response.RedirectPermanent(homePagePath, true);
 		}
-
-		private string HomePagePath
-		{
-			get
-			{
-				return "homePagePath";
-			}
-		}
-
 
 		private bool IsValidRequest(IMediaDetail detail)
         {

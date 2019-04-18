@@ -332,8 +332,8 @@ namespace WebApplication
 
             html = ParserHelper.ParseData(html, TemplateVars);
 
-            if (FrameworkSettings.CurrentUser == null && Request.QueryString.Count == 0)
-            {
+			if (Request.QueryString.Count == 0 || (Request.QueryString.Count == 1 && Request.QueryString[HomePagePath] != null))
+			{
                 if (CurrentMediaDetail != null)
                 {
                     /*if (!IsAjaxRequest)

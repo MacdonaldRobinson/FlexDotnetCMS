@@ -49,7 +49,15 @@ namespace WebApplication
             return SettingsMapper.GetSettings();
         }
 
-        private string HandleMobileLayout(string html)
+		public static string HomePagePath
+		{
+			get
+			{
+				return "homePagePath";
+			}
+		}
+
+		private string HandleMobileLayout(string html)
         {
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(html);

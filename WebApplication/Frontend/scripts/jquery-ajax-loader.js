@@ -1,12 +1,11 @@
 var ajaxOptions = {
-	homePagePath: "/home/",
 	targetElement: "#DynamicContent",
 	preloadLinks: false,
-	animateIn: function (selector, html) {		
+	animateIn: function (selector, html) {
 		$(selector).each(function (index, el) {
 			//$(el).html(html);
 
-			$(el).toggle("fade", 250, function () {				
+			$(el).toggle("fade", 250, function () {
 				$(el).html(html);
 				//$(el).css("height", "100%");
 				// $("#mainNav").effect("fade");
@@ -43,6 +42,8 @@ function preloadLinks() {
 }
 
 $(document).ready(function () {
+
+	trackPageView();
 
 	if (ajaxOptions.preloadLinks) {
 		preloadLinks();
@@ -126,11 +127,11 @@ function pushHistory(href, bodyHtml) {
 
 function _loadData(href, el, bodyHtml, callBackFunction) {
 
-	if ($("#DynamicContent").length > 0 && bodyHtml.indexOf("DynamicContent") != -1) {		
-		var doc = $('<output>').append($.parseHTML(bodyHtml, document, true));
-		var dynamicContent = doc.find("#DynamicContent").html();
+	var dynamicContent = bodyHtml;
 
-		bodyHtml = dynamicContent;
+	if ($("#DynamicContent").length > 0 && bodyHtml.indexOf("DynamicContent") != -1) {
+		var doc = $('<output>').append($.parseHTML(bodyHtml, document, true));
+		dynamicContent = doc.find("#DynamicContent").html();
 	}
 
 
@@ -141,7 +142,7 @@ function _loadData(href, el, bodyHtml, callBackFunction) {
 		updateTitle(href, bodyHtml);
 		pushHistory(href, bodyHtml);
 
-		loadeData($(el), bodyHtml);
+		loadeData($(el), dynamicContent);
 	}
 
 	if (el != "") {

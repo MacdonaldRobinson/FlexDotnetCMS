@@ -5,7 +5,7 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 
 ## Editing
 - Automatic Single Page App functionality with SSR ( Server Side Rendering ) via the Single Page App library that I built ( https://github.com/MacdonaldRobinson/jquery-ajax-loader )
-- Comes with a API that allows you to load content via AJAX and use the CMS as a Headless CMS
+- Comes with a API that allows you to load content via AJAX and use the CMS as a Headless CMS ( /WebServices/Site.asmx/GetField?id=11145&fieldCode=TestField )
 - FrontEnd Editing: Every field can be edited from the frontend of the website
 - Visual Layout Editor ( Experimental ): Once logged into the cms and browsing the frontend of the website, you can toggle the visual layout editor, which allows you to create, delete, reorder the rows, columns and fields
 - Every time you save a page in the CMS it will automatically create a history version which you can then reload and publish LIVE again.

@@ -233,6 +233,17 @@ function convertHrefToPath(href) {
 
 var ajaxRequests = [];
 function ajaxLoadUrl(href, targetElement, callBackFunction) {
+
+	var querySeperator = "?";
+
+	if (href.indexOf("?") != -1) {
+		querySeperator = "&";
+	}
+
+	if (href.indexOf("homePagePath") == -1) {
+		href = href + querySeperator + "homePagePath=" + ajaxOptions.homePagePath;
+	}
+
 	var urlSegment = href.split("?")[0];
 
 	if ((href != undefined && href != null && href != "" && href.toLowerCase().indexOf("@") == -1 && href.toLowerCase().indexOf("javascript") == -1 && href.indexOf("javascript") == -1 && href.indexOf("tel:") == -1 && href != "/") && (href.indexOf("http") == -1 || (href.indexOf("http") != -1 && href.indexOf(window.location.host) != -1)) || (href.charAt(0) == "/")) {

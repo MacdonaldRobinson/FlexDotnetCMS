@@ -40,7 +40,12 @@ namespace WebApplication.Handlers
                 URIHelper.ForceSSL();
             }
 
-            if (Request.QueryString.Count == 0)
+			if (Request.Url.AbsolutePath != "/" && !BasePage.IsAjaxRequest)
+			{
+				Response.Redirect("/#" + Request.Url.PathAndQuery, true);
+			}
+
+			if (Request.QueryString.Count == 0 || (Request.QueryString.Count == 1 && Request.QueryString[HomePagePath] != null))
             {
 				if (Request.HttpMethod == "GET" && ((BaseMapper.CanConnectToDB != null && !(bool)BaseMapper.CanConnectToDB) || AppSettings.EnableOutputCaching))
 				{
@@ -49,7 +54,7 @@ namespace WebApplication.Handlers
                     if (BasePage.IsMobile)
                         userSelectedVersion = RenderVersion.Mobile;
 
-                    var cacheKey = (userSelectedVersion.ToString() + Request.Url.PathAndQuery).ToLower();
+					var cacheKey = (userSelectedVersion.ToString() + Request.Url.LocalPath).ToLower();
 
                     if (AppSettings.EnableLevel1MemoryCaching)
                     {
@@ -385,15 +390,24 @@ namespace WebApplication.Handlers
 		{
 			var homePagePath = "/";
 
-			if (!string.IsNullOrEmpty(HttpContext.Current.Request["homePagePath"]))
+			if (!string.IsNullOrEmpty(HttpContext.Current.Request[HomePagePath]))
 			{
-				homePagePath = HttpContext.Current.Request["homePagePath"];
+				homePagePath = HttpContext.Current.Request[HomePagePath];
 			}
 
 			HttpContext.Current.Response.RedirectPermanent(homePagePath, true);
 		}
 
-        private bool IsValidRequest(IMediaDetail detail)
+		private string HomePagePath
+		{
+			get
+			{
+				return "homePagePath";
+			}
+		}
+
+
+		private bool IsValidRequest(IMediaDetail detail)
         {
 			if (detail == null)
                 return false;

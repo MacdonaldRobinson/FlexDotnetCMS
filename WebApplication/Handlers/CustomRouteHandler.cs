@@ -40,10 +40,10 @@ namespace WebApplication.Handlers
                 URIHelper.ForceSSL();
             }
 
-			if (Request.Url.AbsolutePath != "/" && !BasePage.IsAjaxRequest)
-			{
-				Response.Redirect("/#" + Request.Url.PathAndQuery, true);
-			}
+			//if (Request.Url.AbsolutePath != "/" && !BasePage.IsAjaxRequest)
+			//{
+			//	Response.Redirect("/#" + Request.Url.PathAndQuery, true);
+			//}
 
 			if (Request.QueryString.Count == 0 || (Request.QueryString.Count == 1 && Request.QueryString[BasePage.HomePagePath] != null))
             {

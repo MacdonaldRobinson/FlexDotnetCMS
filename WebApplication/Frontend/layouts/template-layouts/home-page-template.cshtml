@@ -16,11 +16,10 @@
 
     <Site:LoggedInHeader runat="server" />
 
-    <!-- Header -->
-    {IncludeFile:'/Frontend/layouts/includes/header-home.cshtml'}
-
-    <!-- PageContent -->
-    {PageContent}
+	<div id="DynamicContent">
+		<!-- PageContent -->
+		{PageContent}
+	</div>
 
     <!-- Footer -->
     {{Load:9}.UseMainLayout}

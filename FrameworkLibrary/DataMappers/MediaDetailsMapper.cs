@@ -1378,6 +1378,8 @@ namespace FrameworkLibrary
 						fileContent = ParserHelper.ParseData(fileContent, razorFieldParams);
 
 						customCode = customCode.Replace(item.ToString().ToString(), fileContent);
+
+						customCode = ParseSpecialTags(mediaDetail, customCode);
 					}
                 }
             }

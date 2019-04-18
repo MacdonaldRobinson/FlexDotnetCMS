@@ -2,10 +2,11 @@ var ajaxOptions = {
 	homePagePath: "/home/",
 	targetElement: "#DynamicContent",
 	preloadLinks: false,
-	animateIn: function (selector, html) {
+	animateIn: function (selector, html) {		
 		$(selector).each(function (index, el) {
 			//$(el).html(html);
-			$(el).toggle("fade", 250, function () {
+
+			$(el).toggle("fade", 250, function () {				
 				$(el).html(html);
 				//$(el).css("height", "100%");
 				// $("#mainNav").effect("fade");
@@ -23,6 +24,7 @@ function initAjaxOptions(options) {
 function loadeData(selector, html) {
 	$(".nav-link").parent().removeClass("current");
 	$(".searchList").val("");
+
 	ajaxOptions.animateIn(selector, html);
 }
 
@@ -46,13 +48,13 @@ $(document).ready(function () {
 		preloadLinks();
 	}
 
-	if (window.location.hash != "") {
+	/*if (window.location.hash != "") {
 		var url = window.location.hash.replace("#", "");
 		ajaxLoadUrl(url, ajaxOptions.targetElement);
 	}
 	else {
 		ajaxLoadUrl(ajaxOptions.homePagePath + window.location.search, ajaxOptions.targetElement);
-	}
+	}*/
 
 	window.onpopstate = function (event) {
 
@@ -123,6 +125,14 @@ function pushHistory(href, bodyHtml) {
 
 
 function _loadData(href, el, bodyHtml, callBackFunction) {
+
+	if ($("#DynamicContent").length > 0 && bodyHtml.indexOf("DynamicContent") != -1) {		
+		var doc = $('<output>').append($.parseHTML(bodyHtml, document, true));
+		var dynamicContent = doc.find("#DynamicContent").html();
+
+		bodyHtml = dynamicContent;
+	}
+
 
 	if (callBackFunction != undefined && callBackFunction != "" && callBackFunction != null) {
 		callBackFunction($(el), bodyHtml);
@@ -240,9 +250,9 @@ function ajaxLoadUrl(href, targetElement, callBackFunction) {
 		querySeperator = "&";
 	}
 
-	if (href.indexOf("homePagePath") == -1) {
-		href = href + querySeperator + "homePagePath=" + ajaxOptions.homePagePath;
-	}
+	//if (href.indexOf("homePagePath") == -1) {
+	//	href = href + querySeperator + "homePagePath=" + ajaxOptions.homePagePath;
+	//}
 
 	var urlSegment = href.split("?")[0];
 

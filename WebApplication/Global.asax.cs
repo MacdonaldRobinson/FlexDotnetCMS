@@ -131,7 +131,7 @@ namespace WebApplication
             routes.Ignore("{*allsvc}", new { allsvc = @".*\.svc(/.*)?" });
             routes.Ignore("{*allasmx}", new { allasmx = @".*\.asmx(/.*)?" });
 
-            routes.Ignore("{*staticfile}", new { staticfile = @".*\.(jpg|gif|jpeg|png|js|css|htc|ico)$" });
+            routes.Ignore("{*staticfile}", new { staticfile = @".*\.(jpg|gif|jpeg|png|js|css|htc|ico|svg)$" });
 
             routes.Add("CatchAll", new Route("{*virtualPath}", new Handlers.CustomRouteHandler()));
         }

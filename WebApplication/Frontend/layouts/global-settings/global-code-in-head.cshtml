@@ -6,11 +6,11 @@
 	var Response = HttpContext.Current.Response;
 	var Server = HttpContext.Current.Server;
 	
-	if(Request.Url.AbsolutePath != "/" && !BasePage.IsAjaxRequest)
+	/*if(Request.Url.AbsolutePath != "/" && !BasePage.IsAjaxRequest)
 	{		
 		Response.Redirect("/#"+Request.Url.PathAndQuery);
 		<meta http-equiv="refresh" content="0;URL='/#@Request.Url.PathAndQuery'">
-	}
+	}*/
 
 	if (!AppSettings.IsRunningOnProd)
 	{

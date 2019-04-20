@@ -3,11 +3,19 @@ A powerful, flexible, easy to use and Fully Featured ASP .NET CMS
 
 To view the complete developer guide click here: https://github.com/MacdonaldRobinson/FlexDotnetCMS/raw/master/WebApplication/Admin/media/docs/FlexDotnetCMSGuide.docx
 
-## Single Page App
+## Single Page App / Universal App
 - Automatic Single Page App functionality with SSR ( Server Side Rendering ) via the Single Page App library that I built ( https://github.com/MacdonaldRobinson/jquery-ajax-loader )
-- Comes with a API that allows you to load content via AJAX and use the CMS as a Headless CMS ( /WebServices/Site.asmx/GetField?id=11145&fieldCode=TestField )
+- Since the page is rendered Server Side on the first request, you dont run into any SEO issues as you would in a classic SPA
+
+## Static File Generator
 - The CMS is also a Static File Generator which builds static pages and stores them in the Cache folder, and then on every other request it loads the page via cache making the performance extremely fast ( Please view the Cache section below to see how caching works )
   - Please note that these static files are dynamicly generated based on changes made in the CMS, so there is no need of a build  and deployment process
+
+## Headless CMS
+- Comes with a API that allows you to load content via AJAX which means you can use the CMS as a Headless CMS ( /WebServices/Site.asmx/GetField?id=11145&fieldCode=TestField ) 
+
+## Works well with other Javascript Frameworks like React / Vue / Angular
+- If you prefer to not use the built in SPA library, you could use any other javascript framework and place it in the "Frontend" folder, the only thing you need to do is to make sure that you are loading the index page from the frontend folder from the layout section in the CMS i.e include the file in the Layout section using {IncludeFile:'/Frontend/PATH_TO_INDEX_FILE'}
 
 ## Editing
 - FrontEnd Editing: Every field can be edited from the frontend of the website

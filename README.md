@@ -6,7 +6,8 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 ## Automatic Single Page App / Universal App with SSR ( Server Side Rendering )
 - Automatic Single Page App functionality with SSR via the Single Page App library that I built ( https://github.com/MacdonaldRobinson/jquery-ajax-loader )
 - Since the pages are rendred Server Side, you do not lose any of the functionality offered by the CMS like frontend editing / dynamic nav generation based on the site tree in the CMS.
-- Also, Since the page is rendered Server Side on the first request, you dont run into any SEO issues as you would in a classic SPA ( This is similar to how Nuxt.js works )
+- Since the pages are rendered Server Side on the first request, you dont run into any SEO issues as you would in a classic SPA ( This is similar to how NuxtJS works )
+- You can even use other frontend libraries like VueJS as a javascript include to enhance form submissions etc and it works well with the built in SPA library.
 
 
 ## Static File Generator
@@ -17,7 +18,8 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 - Comes with a API that allows you to load content via AJAX which means you can use the CMS as a Headless CMS ( /WebServices/Site.asmx/GetField?id=11145&fieldCode=TestField ) 
 
 ## Works well with other Javascript Frameworks like React / Vue / Angular
-- If you prefer to not use the built in SPA library, you could use any other javascript framework and place it in the "Frontend" folder, the only thing you need to do is to make sure that you are loading the index page from the frontend folder from the layout section in the CMS i.e include the file in the Layout section using {IncludeFile:'/Frontend/PATH_TO_INDEX_FILE'}
+- If you prefer to not use the built in SPA library, you could use any other javascript framework and place it in the "Frontend" folder, the only thing you need to do is to make sure that you are loading the index page for all virtual page requests. 
+  - You can do this from the CMS by changing the code in the Layouts section for evey template to load the index file {IncludeFile:'/Frontend/PATH_TO_INDEX_FILE'}
 
 ## Editing
 - FrontEnd Editing: Every field can be edited from the frontend of the website

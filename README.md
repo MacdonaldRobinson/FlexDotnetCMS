@@ -3,8 +3,8 @@ A powerful, flexible, easy to use and Fully Featured ASP .NET CMS
 
 To view the complete developer guide click here: https://github.com/MacdonaldRobinson/FlexDotnetCMS/raw/master/WebApplication/Admin/media/docs/FlexDotnetCMSGuide.docx
 
-## Single Page App / Universal App
-- Automatic Single Page App functionality with SSR ( Server Side Rendering ) via the Single Page App library that I built ( https://github.com/MacdonaldRobinson/jquery-ajax-loader )
+## Automatic Single Page App / Universal App with SSR ( Server Side Rendering )
+- Automatic Single Page App functionality with SSR via the Single Page App library that I built ( https://github.com/MacdonaldRobinson/jquery-ajax-loader )
 - Since the pages are rendred Server Side, you do not lose any of the functionality offered by the CMS like frontend editing / dynamic nav generation based on the site tree in the CMS.
 - Also, Since the page is rendered Server Side on the first request, you dont run into any SEO issues as you would in a classic SPA
 

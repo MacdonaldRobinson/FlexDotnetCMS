@@ -9,6 +9,8 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 - Since the pages are rendered Server Side on the first request, you dont run into any SEO issues as you would in a classic SPA ( This is similar to how NuxtJS works )
 - You can even use other frontend libraries like VueJS as a javascript include to enhance form submissions etc and it works well with the built in SPA library.
 
+## Automatic Image Optimization
+- The Framework automaticly optimizes ALL image requestes using the Image Processor Library ( https://imageprocessor.org/imageprocessor-web/imageprocessingmodule/quality/ )
 
 ## Static File Generator
 - The CMS is also a Static File Generator which builds static pages and stores them in the Cache folder, and then on every other request it loads the page via cache making the performance extremely fast ( Please view the Cache section below to see how caching works )

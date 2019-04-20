@@ -12,7 +12,7 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 
 ## Static File Generator
 - The CMS is also a Static File Generator which builds static pages and stores them in the Cache folder, and then on every other request it loads the page via cache making the performance extremely fast ( Please view the Cache section below to see how caching works )
-  - Please note that these static files are dynamicly generated on the first request of the page, and are dynamicly re-generated based on changes made in the CMS, so there is no need of a build  and deployment process
+  - Please note that these static files are dynamicly generated on the first request of the page, and are then re-generated based on changes made in the CMS, so there is no need of a build  and deployment process
 
 ## Headless CMS
 - Comes with a API that allows you to load content via AJAX which means you can use the CMS as a Headless CMS ( /WebServices/Site.asmx/GetField?id=11145&fieldCode=TestField ) 

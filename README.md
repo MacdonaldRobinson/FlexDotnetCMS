@@ -45,7 +45,8 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 - You can write Razor Code in any of the layout views in the CMS
 - You can use short codes in any of the layout tabs and fields
 - You can automatically execute some razor code when a page is published in the CMS by putting the code in the "On Publish Execute Code" Accordian tab under the Layouts tab for an individual page, or if you want to have the same code execute for all pages of the same type you can put this in the media type layouts section.
-- Instead of programming directly in the CMS you can use an include ShortCode "{IncludeFile:'[Path-To-File]'}" which allows you to load a cshtml file, which will be executed at runtime, without any build process, kinda makes your workflow similar to PHP, simply make your change and refresh the page.
+
+**Instead of programming directly in the CMS you can use an include ShortCode "{IncludeFile:'[Path-To-File]'}" which allows you to load a cshtml file, which will be executed at runtime, without any build process, kinda makes your workflow similar to PHP, simply make your change and refresh the page.**
 
 
 ## Multi Language

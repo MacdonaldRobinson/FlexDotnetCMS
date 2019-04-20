@@ -23,7 +23,7 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 - If you prefer to not use the built in SPA library, you could use any other javascript framework and place it in the "Frontend" folder, the only thing you need to do is to make sure that you are loading the index page for all virtual page requests. 
   - You can do this from the CMS by changing the code in the Layouts section for every template to load the index file {IncludeFile:'/Frontend/PATH_TO_INDEX_FILE'}
 - You can then use the CMS has a Headless CMS and load content via the API
-- This gives you the benefit of having only one host hosting both your frontend and backend system.  
+- This gives you the benefit of having only one host hosting both your frontend and backend systems.  
   
 ## Editing
 - FrontEnd Editing: Every field can be edited from the frontend of the website

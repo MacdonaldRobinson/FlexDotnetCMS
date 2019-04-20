@@ -6,6 +6,7 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 ## Single Page App / Universal App
 - Automatic Single Page App functionality with SSR ( Server Side Rendering ) via the Single Page App library that I built ( https://github.com/MacdonaldRobinson/jquery-ajax-loader )
 - Since the page is rendered Server Side on the first request, you dont run into any SEO issues as you would in a classic SPA
+- Since the pages are rendred Server Side, you do not lose any of the functionality offered by the CMS like frontend editing / dynamic nav generation based on the site tree in the CMS
 
 ## Static File Generator
 - The CMS is also a Static File Generator which builds static pages and stores them in the Cache folder, and then on every other request it loads the page via cache making the performance extremely fast ( Please view the Cache section below to see how caching works )

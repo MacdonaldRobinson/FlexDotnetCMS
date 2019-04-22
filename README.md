@@ -16,7 +16,7 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 - I built a Google Site Map Generator that is dynamicly updated based on the changes in the CMS, the site map generator is automaticly called from the robots.txt file, so you dont even need to submit your site map.
 
 ## Automatic RSS and JSON Generator
-- I built a RSS generator and a JSON generator which automaticly updated based on changes in the CMS
+- I built a RSS generator and a JSON generator which are dynamicly generated based on changes in the CMS
   - You can call the RSS generator by simply adding "?format=rss" at the end of any URL
   - You can call the JSON generator by simply adding "?format=json" at the end of any URL ( This doubles as the Headless CMS API )
   

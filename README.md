@@ -22,7 +22,7 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
   
 ## Decoupled CMS
 - The CMS is only used to house content
-- You can easily pull CMS content into your cshtml files
+- You can easily pull CMS content into your cshtml files, please scroll down to the section labeled ( Example showing how you can pull content from the CMS from a cshtml file )
   
 ## Headless CMS
 - Comes with a API that allows you to load content via AJAX which means you can use the CMS as a Headless CMS ( Simply add "?format=json" at the end of the URL of any page an that will return a JSON representation of all the fields, incluiding the custom fields that you have created in the CMS ) 

@@ -33,8 +33,11 @@ namespace FrameworkLibrary
 
 			if (MediaType.ShowInSiteTree)
 			{
-				dictionary["Url"] = AbsoluteUrl;
+				dictionary["FriendlyUrl"] = AbsoluteUrl;
 			}
+
+			dictionary["PermaUrl"] = URIHelper.ConvertToAbsUrl(PermaLink);
+			dictionary["PermaApiUrl"] = dictionary["PermaUrl"] + "&format=json";
 
 			var children = new List<Dictionary<string, object>>();
 

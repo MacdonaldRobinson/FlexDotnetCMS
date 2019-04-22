@@ -12,12 +12,20 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 ## Automatic Image Optimization
 - The Framework automaticly optimizes ALL image requestes using the Image Processor Library ( https://imageprocessor.org/imageprocessor-web/imageprocessingmodule/quality/ )
 
+## Automatic Google Site Map Generator
+- I built a Google Site Map Generator that is dynamicly updated based on the changes in the CMS, the site map generator is automaticly called from the robots.txt file, so you dont even need to submit your site map.
+
+## Automatic RSS and JSON Generator
+- I built a RSS generator and a JSON generator which automaticly updated based on changes in the CMS
+  - You can call the RSS generator by simply adding "?format=rss" at the end of any URL
+  - You can call the JSON generator by simply adding "?format=json" at the end of any URL ( This doubles as the Headless CMS API )
+  
+## Headless CMS
+- Comes with a API that allows you to load content via AJAX which means you can use the CMS as a Headless CMS ( Simply add "?format=json" at the end of the URL of any page an that will return a JSON representation of all the fields, incluiding the custom fields that you have created in the CMS ) 
+
 ## Static File Generator
 - The CMS is also a Static File Generator which builds static pages and stores them in the Cache folder, and then on every other request it loads the page via cache making the performance extremely fast ( Please view the Cache section below to see how caching works )
   - Please note that these static files are dynamicly generated on the first request of the page, and are then re-generated based on changes made in the CMS, so there is no need of a build  and deployment process
-
-## Headless CMS
-- Comes with a API that allows you to load content via AJAX which means you can use the CMS as a Headless CMS ( Simply add "?format=json" at the end of the URL of any page an that will return a JSON representation of all the fields, incluiding the custom fields that you have created in the CMS) 
 
 ## Works side by side with other SPA Javascript Frameworks like React / Vue / Angular
 - If you prefer to not use the built in SPA library, you could use any other javascript framework and place it in the "Frontend" folder, the only thing you need to do is to make sure that you are loading the index page for all virtual page requests. 

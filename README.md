@@ -62,6 +62,8 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 
 **Instead of programming directly in the CMS you can use an include ShortCode "{IncludeFile:'[Path-To-File]'}" which allows you to load a cshtml file, which will be executed at runtime, without any build process, kinda makes your workflow similar to PHP, simply make your change and refresh the page.**
 
+*You will get full intellisence and code completion support when using Visual Studio*
+
 
 ## Multi Language
 - You can create as many languages in the CMS as you like.
@@ -113,8 +115,9 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 - Code completion examples are provided to get started with programming in the Layouts tab using C# and the Razor Code syntax.
 
 ## Example showing how you can pull content from the CMS from a cshtml file
+You will get full intellisence and code completion support when using Visual Studio
 
-```
+```html
 @using FrameworkLibrary
 @{
 	var currentPage = Model.MediaDetail as MediaDetail;

@@ -3,6 +3,28 @@ A powerful, flexible, easy to use and Fully Featured ASP .NET CMS
 
 To view the complete developer guide click here: https://github.com/MacdonaldRobinson/FlexDotnetCMS/raw/master/WebApplication/Admin/media/docs/FlexDotnetCMSGuide.docx
 
+## Automatic Single Page App / Universal App with SSR ( Server Side Rendering )
+- Automatic Single Page App functionality with SSR via the Single Page App library that I built ( https://github.com/MacdonaldRobinson/jquery-ajax-loader )
+- Since the pages are rendred Server Side, you do not lose any of the functionality offered by the CMS like frontend editing / dynamic nav generation based on the site tree in the CMS.
+- Since the pages are rendered Server Side on the first request, you dont run into any SEO issues as you would in a classic SPA ( This is similar to how NuxtJS works )
+- You can even use other frontend libraries like VueJS as a javascript include to enhance form submissions etc and it works well with the built in SPA library.
+
+## Automatic Image Optimization
+- The Framework automaticly optimizes ALL image requestes using the Image Processor Library ( https://imageprocessor.org/imageprocessor-web/imageprocessingmodule/quality/ )
+
+## Static File Generator
+- The CMS is also a Static File Generator which builds static pages and stores them in the Cache folder, and then on every other request it loads the page via cache making the performance extremely fast ( Please view the Cache section below to see how caching works )
+  - Please note that these static files are dynamicly generated on the first request of the page, and are then re-generated based on changes made in the CMS, so there is no need of a build  and deployment process
+
+## Headless CMS
+- Comes with a API that allows you to load content via AJAX which means you can use the CMS as a Headless CMS ( /WebServices/Site.asmx/GetField?id=11145&fieldCode=TestField ) 
+
+## Works side by side with other SPA Javascript Frameworks like React / Vue / Angular
+- If you prefer to not use the built in SPA library, you could use any other javascript framework and place it in the "Frontend" folder, the only thing you need to do is to make sure that you are loading the index page for all virtual page requests. 
+  - You can do this from the CMS by changing the code in the Layouts section for every template to load the index file {IncludeFile:'/Frontend/PATH_TO_INDEX_FILE'}
+- You can then use the CMS has a Headless CMS and load content via the API
+- This gives you the benefit of having only one host hosting both your frontend and backend systems.  
+  
 ## Editing
 - FrontEnd Editing: Every field can be edited from the frontend of the website
 - Visual Layout Editor ( Experimental ): Once logged into the cms and browsing the frontend of the website, you can toggle the visual layout editor, which allows you to create, delete, reorder the rows, columns and fields
@@ -25,7 +47,8 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 - You can write Razor Code in any of the layout views in the CMS
 - You can use short codes in any of the layout tabs and fields
 - You can automatically execute some razor code when a page is published in the CMS by putting the code in the "On Publish Execute Code" Accordian tab under the Layouts tab for an individual page, or if you want to have the same code execute for all pages of the same type you can put this in the media type layouts section.
-- Instead of programming directly in the CMS you can use an include ShortCode "{IncludeFile:'[Path-To-File]'}" which allows you to load a cshtml file, which will be executed at runtime, without any build process, kinda makes your workflow similar to PHP, simply make your change and refresh the page.
+
+**Instead of programming directly in the CMS you can use an include ShortCode "{IncludeFile:'[Path-To-File]'}" which allows you to load a cshtml file, which will be executed at runtime, without any build process, kinda makes your workflow similar to PHP, simply make your change and refresh the page.**
 
 
 ## Multi Language

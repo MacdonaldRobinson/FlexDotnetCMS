@@ -17,7 +17,7 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
   - Please note that these static files are dynamicly generated on the first request of the page, and are then re-generated based on changes made in the CMS, so there is no need of a build  and deployment process
 
 ## Headless CMS
-- Comes with a API that allows you to load content via AJAX which means you can use the CMS as a Headless CMS ( /WebServices/Site.asmx/GetField?id=11145&fieldCode=TestField ) 
+- Comes with a API that allows you to load content via AJAX which means you can use the CMS as a Headless CMS ( Simply add "?format=json" at the end of the URL of any page an that will return a JSON representation of all the fields, incluiding the custom fields that you have created in the CMS) 
 
 ## Works side by side with other SPA Javascript Frameworks like React / Vue / Angular
 - If you prefer to not use the built in SPA library, you could use any other javascript framework and place it in the "Frontend" folder, the only thing you need to do is to make sure that you are loading the index page for all virtual page requests. 

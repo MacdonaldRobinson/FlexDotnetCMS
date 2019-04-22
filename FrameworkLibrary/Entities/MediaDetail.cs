@@ -27,6 +27,49 @@ namespace FrameworkLibrary
 			}
 		}
 
+		public Dictionary<string, object> GetFieldValuePairs()
+		{
+			var dictionary = new Dictionary<string, object>();
+
+			if (MediaType.ShowInSiteTree)
+			{
+				dictionary["Url"] = AbsoluteUrl;
+			}
+
+			var children = new List<Dictionary<string, object>>();
+
+			foreach (MediaDetail mediaDetail in ChildMediaDetails.Where(i=>i.ShowInMenu))
+			{
+				children.Add(mediaDetail.GetFieldValuePairs());
+			}
+
+			dictionary["Children"] = children;
+
+			foreach (var field in Fields)
+			{
+				var fieldAssociations = field.GetPublishedFieldAssociations();
+
+				if (!fieldAssociations.Any())
+				{
+					dictionary[field.FieldCode] = field.FieldValue;
+				}
+				else
+				{
+					var fieldDoctionary = new List<Dictionary<string,object>>();
+					foreach (var association in fieldAssociations)
+					{
+						var mediaDetail = association.MediaDetail;
+
+						fieldDoctionary.Add(mediaDetail.GetFieldValuePairs());
+					}
+
+					dictionary[field.FieldCode] = fieldDoctionary;
+				}
+			} 
+
+			return dictionary;
+		}
+
 		public bool HasADeletedParent()
 		{
 			if (this.GetParentMediaDetails().Any(i => i.IsDeleted))

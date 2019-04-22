@@ -123,6 +123,18 @@ namespace WebApplication.Services
 		}
 
 		[WebMethod]
+		public void GetByMediaID(long id)
+		{
+			string json = "";
+
+			var mediaDetail = MediasMapper.GetByID(id).GetLiveMediaDetail() as MediaDetail;
+
+			json = JsonConvert.SerializeObject(mediaDetail.GetFieldValuePairs());
+
+			WriteJSON(json);
+		}
+
+		[WebMethod]
         public void GetRelatedItemsByID(long id)
         {
             string json = "";

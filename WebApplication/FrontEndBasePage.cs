@@ -1,5 +1,6 @@
 ﻿using FrameworkLibrary;
 using HtmlAgilityPack;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -384,9 +385,9 @@ namespace WebApplication
             {
                 case "json":
                     {
-                        var depth = (!string.IsNullOrEmpty(depthQueryString)) ? long.Parse(depthQueryString) : 1;
+						 var pairs = (mediaDetail as MediaDetail).GetFieldValuePairs();
 
-                        RenderJSON(mediaDetail, depth);
+						RenderJSON(pairs);
                     }
                     break;
                 case "rss":
@@ -395,7 +396,7 @@ namespace WebApplication
             }
         }
 
-        public static void RenderJSON(IMediaDetail mediaDetail, long depth)
+        public static void RenderJSON(object data)
         {
             var Response = HttpContext.Current.Response;
 
@@ -403,7 +404,7 @@ namespace WebApplication
             Response.ContentType = "application/json";
             Response.StatusCode = 200;
 
-            var json = mediaDetail.ToJson(depth);
+			var json = JsonConvert.SerializeObject(data);
 
             Response.Write(json);
 

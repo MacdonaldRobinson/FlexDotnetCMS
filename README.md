@@ -122,9 +122,9 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
   
 	if (referencesField != null && !string.IsNullOrEmpty(referencesField.FieldValue))
 	{
-    var content = currentPage.RenderField("References");
-    <p>@content</p>
-  }
+		var content = currentPage.RenderField("References");
+		<p>@content</p>
+	}
   
 	var resourcesField = (MediaDetailField)currentPage.LoadField("Resources");
 
@@ -154,7 +154,7 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 			}
 			</div>
 		</div>	  
-  }
-  
+	}  
 }
+
 ```

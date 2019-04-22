@@ -20,6 +20,10 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
   - You can call the RSS generator by simply adding "?format=rss" at the end of any URL
   - You can call the JSON generator by simply adding "?format=json" at the end of any URL ( This doubles as the Headless CMS API )
   
+## Decoupled CMS
+- The CMS is only used to house content
+- You can easily pull CMS content into your cshtml files
+  
 ## Headless CMS
 - Comes with a API that allows you to load content via AJAX which means you can use the CMS as a Headless CMS ( Simply add "?format=json" at the end of the URL of any page an that will return a JSON representation of all the fields, incluiding the custom fields that you have created in the CMS ) 
 
@@ -96,7 +100,6 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 - You can view the email logs from the CMS ( provided the emails were sent using the system its self )
 - You can view the error logs from the CMS 
 
-
 ## Additional Functionality  / Features
 - Built in Blog functionality, including moderated blog posts
 - Built in File Manager with the following functionality:
@@ -108,3 +111,50 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 - Ability to search for a page based on any field value in the backend for quick access
 - Several prebuilt field types are included which should sute most use cases.
 - Code completion examples are provided to get started with programming in the Layouts tab using C# and the Razor Code syntax.
+
+## Example showing how you can pull content from the CMS from a cshtml file
+
+```
+@using FrameworkLibrary
+@{
+	var currentPage = Model.MediaDetail as MediaDetail;
+	var referencesField = currentPage.LoadField("References");	
+  
+	if (referencesField != null && !string.IsNullOrEmpty(referencesField.FieldValue))
+	{
+    var content = currentPage.RenderField("References");
+    <p>@content</p>
+  }
+  
+	var resourcesField = (MediaDetailField)currentPage.LoadField("Resources");
+
+	if (resourcesField != null && resourcesField.FieldAssociations.Any())
+	{  
+		<div>
+			<h2>Resources</h2>
+			<div class="resources__cards">
+			@foreach (var fieldsAssociation in resourcesField.FieldAssociations)
+			{
+				var sectionTitle = fieldsAssociation.MediaDetail.SectionTitle;
+				var briefDescription = fieldsAssociation.MediaDetail.RenderField("BriefDescription", false);
+				var websiteAddress = fieldsAssociation.MediaDetail.RenderField("WebsiteAddress", false);
+				
+					<a href="@websiteAddress">
+						<div></div>
+						<div>
+							<div>
+								<h4>@sectionTitle</h4>
+							</div>
+							@Raw(briefDescription)
+						</div>
+						<div>
+							<span>View Resource</span>
+						</div>
+					</a>
+			}
+			</div>
+		</div>	  
+  }
+  
+}
+```

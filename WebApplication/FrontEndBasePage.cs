@@ -367,7 +367,7 @@ namespace WebApplication
                 html = html.Replace("http:", "https:");
             }*/
 
-            html = ParserHelper.ReplaceHrefAndSrcsToAbsoluteUrls(html);
+            //html = ParserHelper.ReplaceHrefAndSrcsToAbsoluteUrls(html);
 
             writer.Write(html);
         }

@@ -1,30 +1,28 @@
 var ajaxOptions = {
 	targetElement: "#DynamicContent",
+	omitElementSelector: ".not-ajax",
 	preloadLinks: false,
-	animateIn: function (selector, html) {
-		$(selector).each(function (index, el) {
-			//$(el).html(html);
-
-			$(el).toggle("fade", 250, function () {
-				$(el).html(html);
-				//$(el).css("height", "100%");
-				// $("#mainNav").effect("fade");
-				$(el).toggle("fade", 400);
-				//$("body").scrollTop(0);
-			});
-		});
+	onLoad: function () { },
+	block: function () {
+		$.blockUI({ message: "Loading ..." });
+		console.log("Ran block")
+	},
+	unBlock: function () {
+		$.unblockUI();
+		console.log("Ran unblockUI")
+	},
+	animateOut: function (el) {
+		$(el).fadeOut();
+		console.log("Ran animateOut");
+	},
+	animateIn: function (el) {
+		$(el).fadeIn();
+		console.log("Ran animateIn");
 	}
 }
 
 function initAjaxOptions(options) {
 	ajaxOptions = options;
-}
-
-function loadeData(selector, html) {
-	$(".nav-link").parent().removeClass("current");
-	$(".searchList").val("");
-
-	ajaxOptions.animateIn(selector, html);
 }
 
 function preloadLinks() {
@@ -59,38 +57,34 @@ $(document).ready(function () {
 
 	window.onpopstate = function (event) {
 
-
 		if (event.state != null) {
+			console.log("Ran window.onpopstate");
 
-			loadeData(lastTargetElement, event.state.html);
-			updateTitle(event.state.href, event.state.html);
-
+			_loadData(event.state.href, lastTargetElement, event.state.html, function () { }, false);
 			/*ajaxLoadUrl(event.state.href, lastTargetElement, function (el, bodyHtml) {				
 				event.state.html = bodyHtml;
 			});*/
 		}
 	};
 
-	$(document).on("click", "a:not(.not-ajax)", function (event) {
+	$(document).on("click", "a:not(" + ajaxOptions.omitElementSelector + ")", function (event) {
+
+		if ($(this).closest(ajaxOptions.omitElementSelector).length > 0)
+			return;
 
 		var href = $(this).attr("href");
 		var target = $(this).attr("target");
 
-		if ($(this).parents("form").length > 0)
-			return;
-
-		if (target != "_blank" && !$(this).hasClass("edit") && $(this).parents("#AccessCMSPermissionsPanel").length == 0) {
+		if (href != undefined && target != "_blank" && !$(this).hasClass("edit") && href.indexOf("javascript:") == -1 && $(this).parents("#AccessCMSPermissionsPanel").length == 0 && href.charAt(0) != "#") {
 
 			var urlSegment = href.split("?")[0];
 			var segment = href.replace(window.location.origin, "");
 
 			if (segment != "") {
 
-				var loaded = ajaxLoadUrl(href, "#DynamicContent");
+				var loaded = ajaxLoadUrl(href, ajaxOptions.targetElement);
 
-				//console.log(loaded, href, segment, window.location.pathname);				
-
-				if (loaded || (segment == window.location.pathname || (segment == href && segment.indexOf("mailto") == -1 && segment.indexOf("tel") == -1))) {
+				if (loaded || (segment == window.location.pathname || (segment == href && segment.indexOf("mailto:") == -1 && segment.indexOf("tel:") == -1))) {
 					event.preventDefault();
 				}
 			}
@@ -125,36 +119,63 @@ function pushHistory(href, bodyHtml) {
 }
 
 
-function _loadData(href, el, bodyHtml, callBackFunction) {
+function _loadData(href, el, bodyHtml, callBackFunction, addToHistory) {
+
+	if (addToHistory == undefined)
+		addToHistory = true;
 
 	var dynamicContent = bodyHtml;
 
-	if ($("#DynamicContent").length > 0 && bodyHtml.indexOf("DynamicContent") != -1) {
+	var targetSelector = ajaxOptions.targetElement;
+	var targetName = ajaxOptions.targetElement.replace("#", "");
+
+	if ($(targetSelector).length > 0 && bodyHtml.indexOf(targetName) != -1) {
+		ajaxOptions.animateOut(el);
+
 		var doc = $('<output>').append($.parseHTML(bodyHtml, document, true));
-		dynamicContent = doc.find("#DynamicContent").html();
-	}
+		//dynamicContent = doc.find(targetSelector).html();		
 
+		var foundElements = doc.find(targetSelector);
 
-	if (callBackFunction != undefined && callBackFunction != "" && callBackFunction != null) {
-		callBackFunction($(el), bodyHtml);
-	}
-	else {
+		foundElements.each(function () {
+			var id = $(this).attr("id");
+
+			var currentElem = $("#" + id);
+
+			var currentElemHtml = currentElem.html();
+			var newHtml = $(this).html();
+
+			if (currentElemHtml != newHtml) {
+				currentElem.replaceWith(this);
+			}
+		});
+
+		$(window).scrollTop(0);
+
+		if (callBackFunction != undefined && callBackFunction != "" && callBackFunction != null) {
+			callBackFunction($(el), bodyHtml);
+		}
+
 		updateTitle(href, bodyHtml);
-		pushHistory(href, bodyHtml);
 
-		loadeData($(el), dynamicContent);
+		if (addToHistory) {
+			pushHistory(href, dynamicContent);
+		}
+
+		if (el != "") {
+			trackPageView();
+			//preloadLinks();
+		}
+
+		ajaxOptions.onLoad(bodyHtml);
+		ajaxOptions.animateIn(el);
 	}
 
-	if (el != "") {
-		trackPageView();
-
-		//preloadLinks();
-	}
 }
 
 function trackPageView() {
-	setTimeout(function () {
 
+	setTimeout(function () {
 
 		if (typeof ga == 'undefined') {
 			console.log("Google Analytics Not installed! No PageViews will be tracked!");
@@ -163,63 +184,50 @@ function trackPageView() {
 
 		var trackingId = "";
 
-		ga.getAll().forEach(function (tracker) {
-			trackingId = tracker.get("trackingId");
+		ga(function () {
+			ga.getAll().forEach(function (tracker) {
+				trackingId = tracker.get("trackingId");
+			});
+			if (trackingId == "") {
+				console.log("Error: Unable to get Google Analytics Tracking ID");
+				return;
+			}
+
+			console.log("Found Google Analytics Tracking ID ( " + trackingId + " )!");
+
+			if (typeof gtag != 'undefined') {
+
+				console.log("Found gtag");
+
+				gtag('config', trackingId, {
+					'page_title': document.title,
+					'page_path': document.location.pathname
+				});
+
+				console.log("Sent PageView for - " + document.location.pathname);
+
+			}
+			else if (typeof ga != 'undefined') {
+				console.log("No 'gtag' found, falling back to 'ga'");
+
+				ga('create', trackingId, 'auto');
+				ga('set', 'page', location.pathname);
+				ga('send', 'pageview');
+
+				//ga('send', 'pageview', location.pathname);
+
+				console.log("Sent PageView for - " + document.location.pathname);
+			}
+			else {
+				console.log("Error tracking no ga or gtag were found, No PageViews will be tracked!");
+			}
 		});
 
-		if (trackingId == "") {
-			console.log("Error: Unable to get Google Analytics Tracking ID");
-			return;
-		}
-
-		console.log("Found Google Analytics Tracking ID ( " + trackingId + " )!");
-
-		if (typeof gtag != 'undefined') {
-
-			console.log("Found gtag");
-
-			gtag('config', trackingId, {
-				'page_title': document.title,
-				'page_path': document.location.pathname
-			});
-
-			console.log("Sent PageView for - " + document.location.pathname);
-
-		}
-		else if (typeof ga != 'undefined') {
-			console.log("No 'gtag' found, falling back to 'ga'");
-
-			ga('create', trackingId, 'auto');
-			ga('set', 'page', location.pathname);
-			ga('send', 'pageview');
-
-			//ga('send', 'pageview', location.pathname);
-
-			console.log("Sent PageView for - " + document.location.pathname);
-		}
-		else {
-			console.log("Error tracking no ga or gtag were found, No PageViews will be tracked!");
-		}
 	}, 1000);
 }
 
 var isLoading = false;
 var cache = [];
-
-var timer = null;
-
-function block() {
-	console.log("Ran block");
-	timer = setTimeout(function () {
-		$.blockUI({
-			message: '<div class="lds-ring"><div></div><div></div><div></div><div></div></div>',
-			css: {
-				border: 'none',
-				background: 'none'
-			}
-		});
-	}, 500);
-}
 
 function stopRequests() {
 	console.log("Ran stopRequests");
@@ -227,15 +235,6 @@ function stopRequests() {
 	ajaxRequests.forEach(function (request) {
 		request.abort();
 	})
-}
-
-function unBlock() {
-	console.log("Ran unBlock");
-
-	$.unblockUI();
-	if (timer != null) {
-		clearTimeout(timer);
-	}
 }
 
 function convertHrefToPath(href) {
@@ -281,8 +280,7 @@ function ajaxLoadUrl(href, targetElement, callBackFunction) {
 		else {
 
 			if (targetElement != "") {
-				//stopRequests();
-				block();
+				ajaxOptions.block();
 			}
 
 			var ajaxRequest = $.get(href, function (data) {
@@ -296,7 +294,7 @@ function ajaxLoadUrl(href, targetElement, callBackFunction) {
 				_loadData(href, el, bodyHtml, callBackFunction);
 
 				if (targetElement != "") {
-					unBlock();
+					ajaxOptions.unBlock();
 				}
 
 			});

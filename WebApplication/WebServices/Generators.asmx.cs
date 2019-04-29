@@ -38,7 +38,6 @@ namespace WebApplication.Services
         {
             var entryXML = $@"<url>
     <loc>{mediaDetail.AbsoluteUrl}</loc> 
-	<lastmod>{mediaDetail.DateLastModified.ToString("o")}</lastmod>
 </url>";
 
             return entryXML;

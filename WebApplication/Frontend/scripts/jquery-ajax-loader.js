@@ -82,6 +82,9 @@ $(document).ready(function () {
 
 			if (segment != "") {
 
+				if (href.indexOf("://") != -1 && href.indexOf(window.location.host) == -1)
+					return;
+
 				var loaded = ajaxLoadUrl(href, ajaxOptions.targetElement);
 
 				if (loaded || (segment == window.location.pathname || (segment == href && segment.indexOf("mailto:") == -1 && segment.indexOf("tel:") == -1))) {

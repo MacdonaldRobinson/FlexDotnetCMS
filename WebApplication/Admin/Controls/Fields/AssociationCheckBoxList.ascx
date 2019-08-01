@@ -10,10 +10,10 @@
         });
     </script>--%>
 
-    <asp:CheckBoxList runat="server" ID="CheckBoxList" RepeatLayout="UnorderedList" Visible="false">
+    <asp:CheckBoxList runat="server" ID="CheckBoxList" RepeatLayout="UnorderedList" Visible="false" CssClass="sortable">
     </asp:CheckBoxList>
 
-    <asp:RadioButtonList runat="server" ID="RadioButtonList" RepeatLayout="UnorderedList" Visible="false">
+    <asp:RadioButtonList runat="server" ID="RadioButtonList" RepeatLayout="UnorderedList" Visible="false" CssClass="sortable">
     </asp:RadioButtonList>
 
     <asp:HiddenField ID="Values" runat="server" />

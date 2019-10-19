@@ -975,6 +975,7 @@
             //clone.find(".editor").removeClass("editor");
 
             clone.find(".ToolBar, .Handle").remove();
+            clone.find("#LoggedInHeaderPanel").remove();
             clone.find(".field").each(function () {
                 var fieldCode = $(this).attr("data-fieldcode")
                 var mediaId = $(this).attr("data-mediaid")

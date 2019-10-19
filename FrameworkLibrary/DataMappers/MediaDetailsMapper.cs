@@ -650,9 +650,10 @@ namespace FrameworkLibrary
 
 
 
-            var item = BaseMapper.GetDataModel().MediaDetails.Where(i => i.LanguageID == currentLanguage.ID && i.HistoryVersionNumber == versionNumber &&
-                                                                i.MediaType.ShowInSiteTree && (i.CachedVirtualPath == virtualPathByCurrentHost || i.CachedVirtualPath == virtualPath)
-                                                        ).OrderByDescending(i => i.DateLastModified).FirstOrDefault();
+            var item = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.LanguageID == currentLanguage.ID && i.HistoryVersionNumber == versionNumber &&
+                                                                i.MediaType.ShowInSiteTree && i.MediaType.Name != MediaTypeEnum.RootPage.ToString() && 
+                                                                (i.CachedVirtualPath == virtualPathByCurrentHost || i.CachedVirtualPath == virtualPath)
+                                                        );
 
             if (item != null)
                 return item;

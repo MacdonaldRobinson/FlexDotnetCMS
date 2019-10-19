@@ -12,15 +12,11 @@
 			</asp:Panel>
 
 			<div>
-				<label>Email</label><asp:TextBox runat="server" ID="Username" required CssClass="" />
+				<label>Email</label><br>
+                <asp:TextBox runat="server" ID="Username" required CssClass="" />
 			</div>    
 			<div class="password__con">
-				<label>Password </label>
-				<span class="password-toggle">
-					<span class="password-show">Show <i class="fa fa-eye"></i></span>
-					
-					<span class="password-hide">Hide <i class="fa fa-eye-slash"></i></span>
-				</span>
+				<label>Password </label><br>
 				<asp:TextBox runat="server" ID="Password" TextMode="Password" required/>
 				
 			</div>    

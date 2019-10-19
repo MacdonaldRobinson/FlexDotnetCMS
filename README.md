@@ -3,9 +3,10 @@ A powerful, flexible, easy to use and Fully Featured ASP .NET CMS
 
 To view the complete developer guide click here: https://github.com/MacdonaldRobinson/FlexDotnetCMS/raw/master/WebApplication/Admin/media/docs/FlexDotnetCMSGuide.docx
 
-Demo Site: http://flexdotnetcms.somee.com
-- *Username:* test_dev
-- *Password:* test_password
+# Demo Site #
+- **Url:**: http://flexdotnetcms.somee.com
+- **Username:** test_dev
+- **Password:** test_password
 
 ## Automatic Single Page App / Universal App with SSR ( Server Side Rendering )
 - Automatic Single Page App functionality with SSR via the Single Page App library that I built ( https://github.com/MacdonaldRobinson/jquery-spa )

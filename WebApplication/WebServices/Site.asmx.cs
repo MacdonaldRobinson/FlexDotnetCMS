@@ -159,7 +159,10 @@ namespace WebApplication.Services
 
 			var mediaDetail = (MediaDetail)MediaDetailsMapper.GetByID(mediaDetailId);
 
-			if (!FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.Save))
+            var history = (MediaDetail)MediaDetailsMapper.CreateHistory(mediaDetail, false);
+            mediaDetail.History.Add(history);
+
+            if (!FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.Save))
 			{
 				var returnObj = BaseMapper.GenerateReturn("You do not have permissions to perform this operation");
 				WriteJSON(returnObj.ToJson());

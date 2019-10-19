@@ -393,9 +393,9 @@ namespace WebApplication.Admin.MediaArticle
             {
                 DisplaySuccessMessage("Successfully Published Item");
 
-				var mediaId = (selectedItem.Media.ParentMediaID != null) ? selectedItem.Media.ParentMediaID : selectedItem.MediaID;
+                var mediaId = (selectedItem.Media.ParentMediaID != null) ? selectedItem.Media.ParentMediaID : selectedItem.MediaID;
 
-				ExecuteRawJS("RefreshSiteTreeNodeById("+ mediaId + "); ReloadPreviewPanel();");
+                ExecuteRawJS("RefreshSiteTreeNodeById(" + mediaId + "); ReloadPreviewPanel();");
 
                 UpdateFieldsFromObject();
 
@@ -420,80 +420,9 @@ namespace WebApplication.Admin.MediaArticle
             }
         }
 
-        private IMediaDetail CreateHistory(MediaDetail fromItem, bool isDraft)
-        {
-            if (fromItem == null)
-                return null;
-
-            IMediaDetail history = null;
-
-            if ((selectedItem.ID != 0) && (historyVersion == 0))
-            {
-                history = MediaDetailsMapper.CreateObject(fromItem.MediaTypeID, fromItem.Media, fromItem.Media.ParentMedia, false);
-                history.CopyFrom(BaseMapper.GetObjectFromContext(fromItem));
-                history.IsDraft = isDraft;
-
-                CopyProperties(history, fromItem);
-            }
-
-            return history;
-        }
-
-        public void CopyProperties(IMediaDetail toItem, IMediaDetail fromItem)
-        {            
-            foreach (var field in fromItem.Fields)
-            {
-                var newField = new MediaDetailField();
-
-                var foundField = toItem.Fields.FirstOrDefault(i => i.FieldCode == field.FieldCode);
-
-                if(foundField != null)
-                {
-                    newField = foundField;
-                }
-
-                newField.CopyFrom(field);
-
-                foreach (var fieldAssociation in field.FieldAssociations)
-                {
-                    var newFieldAssociation = new FieldAssociation();
-                    newFieldAssociation.CopyFrom(fieldAssociation);
-
-                    var associatedMediaDetail = (MediaDetail)MediaDetailsMapper.GetByID(newFieldAssociation.AssociatedMediaDetailID);
-
-                    if (associatedMediaDetail == null)
-                        continue;
-
-                    if (!associatedMediaDetail.MediaType.ShowInSiteTree)
-                    {
-                        newFieldAssociation.MediaDetail = (MediaDetail)MediaDetailsMapper.CreateObject(associatedMediaDetail.MediaType.ID, MediasMapper.CreateObject(), associatedMediaDetail.Media.ParentMedia);
-                        newFieldAssociation.MediaDetail.CopyFrom(associatedMediaDetail);
-                        newFieldAssociation.MediaDetail.DateCreated = newFieldAssociation.MediaDetail.DateLastModified = DateTime.Now;
-                        newFieldAssociation.MediaDetail.CreatedByUser = newFieldAssociation.MediaDetail.LastUpdatedByUser = FrameworkSettings.CurrentUser;
-
-                        CopyProperties(newFieldAssociation.MediaDetail, associatedMediaDetail);
-                    }
-
-                    /*if (newFieldAssociation.MediaDetail != null)
-                    {
-                        newFieldAssociation.MediaDetail.HistoryForMediaDetailID = fieldAssociation.AssociatedMediaDetailID;
-                        newFieldAssociation.MediaDetail.HistoryVersionNumber = newFieldAssociation.MediaDetail.HistoryVersionNumber + 1;
-                    }*/
-
-
-                    newField.FieldAssociations.Add(newFieldAssociation);
-                }
-
-                if(newField.ID == 0)
-                {
-                    toItem.Fields.Add(newField);
-                }
-            }
-        }
-
         private IMediaDetail CreateHistory(bool isDraft)
         {
-            return CreateHistory((MediaDetail)selectedItem, isDraft);
+            return MediaDetailsMapper.CreateHistory((MediaDetail)selectedItem, isDraft);
         }
 
         private Return SaveHistory(IMediaDetail history)

@@ -62,6 +62,78 @@ namespace FrameworkLibrary
             return tags.Distinct();
         }
 
+        public static IMediaDetail CreateHistory(MediaDetail fromItem, bool isDraft)
+        {
+            if (fromItem == null)
+                return null;
+
+            IMediaDetail history = null;
+
+            if ((fromItem.ID != 0) && (fromItem.HistoryVersionNumber == 0))
+            {
+                history = MediaDetailsMapper.CreateObject(fromItem.MediaTypeID, fromItem.Media, fromItem.Media.ParentMedia, false);
+                history.CopyFrom(BaseMapper.GetObjectFromContext(fromItem));
+                history.IsDraft = isDraft;
+                history.HistoryVersionNumber = fromItem.Media.MediaDetails.Count + 1;
+
+                CopyProperties(history, fromItem);
+            }
+
+            return history;
+        }
+
+        public static void CopyProperties(IMediaDetail toItem, IMediaDetail fromItem)
+        {
+            foreach (var field in fromItem.Fields)
+            {
+                var newField = new MediaDetailField();
+
+                var foundField = toItem.Fields.FirstOrDefault(i => i.FieldCode == field.FieldCode);
+
+                if (foundField != null)
+                {
+                    newField = foundField;
+                }
+
+                newField.CopyFrom(field);
+
+                foreach (var fieldAssociation in field.FieldAssociations)
+                {
+                    var newFieldAssociation = new FieldAssociation();
+                    newFieldAssociation.CopyFrom(fieldAssociation);
+
+                    var associatedMediaDetail = (MediaDetail)MediaDetailsMapper.GetByID(newFieldAssociation.AssociatedMediaDetailID);
+
+                    if (associatedMediaDetail == null)
+                        continue;
+
+                    if (!associatedMediaDetail.MediaType.ShowInSiteTree)
+                    {
+                        newFieldAssociation.MediaDetail = (MediaDetail)MediaDetailsMapper.CreateObject(associatedMediaDetail.MediaType.ID, MediasMapper.CreateObject(), associatedMediaDetail.Media.ParentMedia);
+                        newFieldAssociation.MediaDetail.CopyFrom(associatedMediaDetail);
+                        newFieldAssociation.MediaDetail.DateCreated = newFieldAssociation.MediaDetail.DateLastModified = DateTime.Now;
+                        newFieldAssociation.MediaDetail.CreatedByUser = newFieldAssociation.MediaDetail.LastUpdatedByUser = FrameworkSettings.CurrentUser;
+
+                        CopyProperties(newFieldAssociation.MediaDetail, associatedMediaDetail);
+                    }
+
+                    /*if (newFieldAssociation.MediaDetail != null)
+                    {
+                        newFieldAssociation.MediaDetail.HistoryForMediaDetailID = fieldAssociation.AssociatedMediaDetailID;
+                        newFieldAssociation.MediaDetail.HistoryVersionNumber = newFieldAssociation.MediaDetail.HistoryVersionNumber + 1;
+                    }*/
+
+
+                    newField.FieldAssociations.Add(newFieldAssociation);
+                }
+
+                if (newField.ID == 0)
+                {
+                    toItem.Fields.Add(newField);
+                }
+            }
+        }
+
         public static IEnumerable<IMediaDetail> GetRelatedItems(IMediaDetail item, long mediaTypeId = 0)
         {
             if (item == null)
@@ -73,7 +145,7 @@ namespace FrameworkLibrary
 
             if (mediaTypeId == 0)
             {
-                mediaDetails = BaseMapper.GetDataModel().MediaDetails.Where(i =>i.ID != item.ID && i.HistoryForMediaDetail == null && !i.IsDeleted && i.Media.MediaTags.Select(j => j.TagID).Any(j => tagIds.Contains(j))).OrderByDescending(i => (i.PublishDate == null)? i.DateCreated : i.PublishDate);
+                mediaDetails = BaseMapper.GetDataModel().MediaDetails.Where(i => i.ID != item.ID && i.HistoryForMediaDetail == null && !i.IsDeleted && i.Media.MediaTags.Select(j => j.TagID).Any(j => tagIds.Contains(j))).OrderByDescending(i => (i.PublishDate == null) ? i.DateCreated : i.PublishDate);
             }
             else
             {
@@ -143,10 +215,10 @@ namespace FrameworkLibrary
                 return content;
             }
 
-			content = content.Replace(URIHelper.BaseUrl, "{BaseUrl}");
+            content = content.Replace(URIHelper.BaseUrl, "{BaseUrl}");
 
 
-			/*string pattern = @"/[/a-zA-Z0-9-.]{3,}";
+            /*string pattern = @"/[/a-zA-Z0-9-.]{3,}";
             var newString = Regex.Replace(content, pattern, match => {
                 var mediaDetail = MediaDetailsMapper.GetByVirtualPath(URIHelper.ConvertAbsUrlToTilda(match.Value));
 
@@ -160,7 +232,7 @@ namespace FrameworkLibrary
                 }
             });*/
 
-			/*var document = new HtmlAgilityPack.HtmlDocument();
+            /*var document = new HtmlAgilityPack.HtmlDocument();
             document.LoadHtml(content);
 
             var aTags = document.DocumentNode.SelectNodes("//a");
@@ -196,7 +268,7 @@ namespace FrameworkLibrary
 
             return document.DocumentNode.WriteContentTo();*/
 
-			return content;
+            return content;
         }
 
         public static IEnumerable<IMediaDetail> SearchForTerm(string searchTerm)
@@ -207,7 +279,7 @@ namespace FrameworkLibrary
             var currentLanguage = FrameworkSettings.GetCurrentLanguage();
 
             searchTerm = searchTerm.ToLower().Trim();
-            var foundItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ShowInSiteTree &&                                                                            
+            var foundItems = BaseMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ShowInSiteTree &&
                                                                             !i.IsDeleted &&
                                                                             i.HistoryVersionNumber == 0 &&
                                                                             i.LanguageID == currentLanguage.ID &&
@@ -223,7 +295,7 @@ namespace FrameworkLibrary
                                                                                                                             k.MediaDetail.Fields.FirstOrDefault(l => l.FieldCode == "MainContent").FieldValue.ToLower().Contains(searchTerm) ||
                                                                                                                             k.MediaDetail.Fields.FirstOrDefault(l => l.FieldCode == "MainLayout").FieldValue.ToLower().Contains(searchTerm))
                                                                                                                         ))
-                                                                            )).OrderByDescending(i=>i.PublishDate).ToList().Where(i=>i.CanRender && !i.HasADeletedParent());
+                                                                            )).OrderByDescending(i => i.PublishDate).ToList().Where(i => i.CanRender && !i.HasADeletedParent());
 
 
             return foundItems;
@@ -409,7 +481,7 @@ namespace FrameworkLibrary
             {
                 var parentMediaDetail = mediaDetail.Media.ParentMedia?.GetLiveMediaDetail();
 
-                if(parentMediaDetail != null)
+                if (parentMediaDetail != null)
                 {
                     returnObj = CanAccessMediaDetail(parentMediaDetail, user);
                 }
@@ -437,15 +509,15 @@ namespace FrameworkLibrary
 
             return newItem;
         }
-        
+
         public static IEnumerable<IMediaDetail> GetItemsByMediaTypeAndLanguage(long mediaTypeId, long languageId = 0)
         {
-            if(languageId == 0)
+            if (languageId == 0)
             {
                 languageId = FrameworkSettings.GetCurrentLanguage().ID;
             }
 
-            return MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ID == mediaTypeId && i.LanguageID == languageId && i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now));            
+            return MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ID == mediaTypeId && i.LanguageID == languageId && i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now));
         }
 
         public static IEnumerable<IMediaDetail> GetItemsWhereFieldAssociationsAreTheSame(long mediaId, List<string> fieldCodes, long mediaTypeId, int take = -1)
@@ -472,14 +544,14 @@ namespace FrameworkLibrary
 
                 fieldCodeMediaIds.Add(fieldCode, mediaIds);
             }
-            
-            //return MediaDetailsMapper.GetItemsByMediaTypeAndLanguage(mediaTypeId, mediaDetail.LanguageID).Where(i => i.Fields.Any(j => j.FieldCode == FieldCode && j.FieldAssociations.Any(k => mediaIds.Contains(k.MediaDetail.MediaID)))).ToList();
-            var items =  MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ID == mediaTypeId && i.LanguageID == mediaDetail.LanguageID && i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderByDescending(i=>i.DateCreated).ToList().Where(i=> 
-                                                                                    i.Fields.Any(j => fieldCodeMediaIds.Keys.Contains(j.FieldCode) && 
-                                                                                                    j.FieldAssociations.Any(k => fieldCodeMediaIds[j.FieldCode].Contains(k.MediaDetail.MediaID))
-                                                                                    ));
 
-            if(take > 0)
+            //return MediaDetailsMapper.GetItemsByMediaTypeAndLanguage(mediaTypeId, mediaDetail.LanguageID).Where(i => i.Fields.Any(j => j.FieldCode == FieldCode && j.FieldAssociations.Any(k => mediaIds.Contains(k.MediaDetail.MediaID)))).ToList();
+            var items = MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.MediaType.ID == mediaTypeId && i.LanguageID == mediaDetail.LanguageID && i.HistoryVersionNumber == 0 && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate > DateTime.Now)).OrderByDescending(i => i.DateCreated).ToList().Where(i =>
+                                                                                     i.Fields.Any(j => fieldCodeMediaIds.Keys.Contains(j.FieldCode) &&
+                                                                                                     j.FieldAssociations.Any(k => fieldCodeMediaIds[j.FieldCode].Contains(k.MediaDetail.MediaID))
+                                                                                     ));
+
+            if (take > 0)
             {
                 items = items.Take(take).ToList();
             }
@@ -490,7 +562,7 @@ namespace FrameworkLibrary
 
             return items;
 
-        }        
+        }
 
         public static IEnumerable<IMediaDetail> GetByMediaType(MediaType mediaType)
         {
@@ -504,28 +576,28 @@ namespace FrameworkLibrary
 
         public static IEnumerable<IMediaDetail> GetAllActiveByMediaType(long mediaTypeId, int take = -1)
         {
-            if(take > 0)
-                return MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ID == mediaTypeId && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate >= DateTime.Now)).Take(take).OrderByDescending(i=>i.Media.OrderIndex);
+            if (take > 0)
+                return MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ID == mediaTypeId && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate >= DateTime.Now)).Take(take).OrderByDescending(i => i.Media.OrderIndex);
             else
                 return MediaDetailsMapper.GetDataModel().MediaDetails.Where(i => i.HistoryVersionNumber == 0 && i.MediaType.ID == mediaTypeId && !i.IsDeleted && i.PublishDate <= DateTime.Now && (i.ExpiryDate == null || i.ExpiryDate >= DateTime.Now)).OrderByDescending(i => i.Media.OrderIndex);
         }
 
-		public static IEnumerable<IMediaDetail> GetAllActiveByMediaType(MediaTypeEnum mediaTypeEnum, int take = -1)
-		{
-			var mediaType = MediaTypesMapper.GetByEnum(mediaTypeEnum);
+        public static IEnumerable<IMediaDetail> GetAllActiveByMediaType(MediaTypeEnum mediaTypeEnum, int take = -1)
+        {
+            var mediaType = MediaTypesMapper.GetByEnum(mediaTypeEnum);
 
-			return GetAllActiveByMediaType(mediaType.ID, take);
-		}
+            return GetAllActiveByMediaType(mediaType.ID, take);
+        }
 
 
-		public static IMediaDetail GetByID(long id)
+        public static IMediaDetail GetByID(long id)
         {
             return MediaDetailsMapper.GetDataModel().MediaDetails.FirstOrDefault(item => item.ID == id);
         }
 
         public static IMediaDetail GetByVirtualPath(string virtualPath, bool selectParentIfPossible = false, bool saveLanguage = true)
         {
-            if(virtualPath.StartsWith("/"))
+            if (virtualPath.StartsWith("/"))
             {
                 virtualPath = $"~{virtualPath}";
             }
@@ -534,14 +606,14 @@ namespace FrameworkLibrary
             var activeLanguages = LanguagesMapper.GetAllActive();
             var websiteByCurrentHost = WebsitesMapper.GetWebsite();
 
-			var versionNumber = 0;
+            var versionNumber = 0;
 
-			if ((HttpContext.Current.Request["version"] != null) && (virtualPath != "~/"))
-			{
-				versionNumber = int.Parse(HttpContext.Current.Request["version"]);
-			}
+            if ((HttpContext.Current.Request["version"] != null) && (virtualPath != "~/"))
+            {
+                versionNumber = int.Parse(HttpContext.Current.Request["version"]);
+            }
 
-			foreach (var activeLanguage in activeLanguages)
+            foreach (var activeLanguage in activeLanguages)
             {
                 var activeLaunguageBase = URIHelper.ConvertAbsUrlToTilda(URIHelper.GetBaseUrlWithLanguage(activeLanguage));
 
@@ -582,10 +654,10 @@ namespace FrameworkLibrary
                                                                 i.MediaType.ShowInSiteTree && (i.CachedVirtualPath == virtualPathByCurrentHost || i.CachedVirtualPath == virtualPath)
                                                         ).OrderByDescending(i => i.DateLastModified).FirstOrDefault();
 
-			if (item != null)
-				return item;
+            if (item != null)
+                return item;
 
- 			/*if (item != null && (item.HasADeletedParent() || item.CanRender))
+            /*if (item != null && (item.HasADeletedParent() || item.CanRender))
 			{
 				if (FrameworkSettings.CurrentUser != null && FrameworkSettings.CurrentUser.HasPermission(PermissionsEnum.AccessAdvanceOptions))
 				{
@@ -597,7 +669,7 @@ namespace FrameworkLibrary
 				}
 			}*/
 
-			if (((selectParentIfPossible) || (forceSelectParent)) && virtualPath.Contains(websiteByCurrentHost.AutoCalculatedVirtualPath))
+            if (((selectParentIfPossible) || (forceSelectParent)) && virtualPath.Contains(websiteByCurrentHost.AutoCalculatedVirtualPath))
             {
                 var segments = URIHelper.GetUriSegments(virtualPath).ToList();
 
@@ -687,13 +759,13 @@ namespace FrameworkLibrary
         {
             var listMediaDetail = new List<IMediaDetail>();
 
-			var childMedias = BaseMapper.GetDataModel().AllMedia.Where(i => i.ParentMediaID == media.ID && i.MediaDetails.Any(j => j.HistoryVersionNumber == 0 && j.MediaType.ShowInSiteTree)).OrderBy(i => i.OrderIndex).ToList();
+            var childMedias = BaseMapper.GetDataModel().AllMedia.Where(i => i.ParentMediaID == media.ID && i.MediaDetails.Any(j => j.HistoryVersionNumber == 0 && j.MediaType.ShowInSiteTree)).OrderBy(i => i.OrderIndex).ToList();
 
-			foreach (var item in childMedias)
+            foreach (var item in childMedias)
             {
                 var mediaDetail = GetAtleastOneByMedia(item, language);
 
-                if(mediaDetail != null)
+                if (mediaDetail != null)
                 {
                     listMediaDetail.Add(mediaDetail);
                 }
@@ -866,7 +938,7 @@ namespace FrameworkLibrary
             return parentsWithField.Reverse();
         }
 
-		/*public static IEnumerable<IMediaDetail> GetAllParentMediaDetails(IMediaDetail item, Language language, bool ignoreCanRender = false)
+        /*public static IEnumerable<IMediaDetail> GetAllParentMediaDetails(IMediaDetail item, Language language, bool ignoreCanRender = false)
         {
             var items = new List<IMediaDetail>();
             var absoluteRoot = MediasMapper.GetAbsoluteRoot();
@@ -995,7 +1067,7 @@ namespace FrameworkLibrary
                         return true;
                     }
 
-                    return false;                        
+                    return false;
                 });
 
                 foreach (var item in childMedias)
@@ -1031,7 +1103,7 @@ namespace FrameworkLibrary
             var history = obj.History.ToList();
             foreach (MediaDetail item in history)
             {
-				ClearObjectRelations(item);
+                ClearObjectRelations(item);
                 GetDataModel().MediaDetails.Remove(item);
             }
 
@@ -1067,16 +1139,16 @@ namespace FrameworkLibrary
                 GetDataModel().FieldAssociations.Remove(item);
             }
 
-			if (!obj.IsHistory)
-			{
-				var comments = obj.Media?.Comments?.ToList();
+            if (!obj.IsHistory)
+            {
+                var comments = obj.Media?.Comments?.ToList();
 
-				if (comments != null)
-				{
-					foreach (var item in comments)
-						GetDataModel().Comments.Remove(item);
-				}
-			}
+                if (comments != null)
+                {
+                    foreach (var item in comments)
+                        GetDataModel().Comments.Remove(item);
+                }
+            }
 
             return obj;
         }
@@ -1095,10 +1167,10 @@ namespace FrameworkLibrary
 
             ClearObjectRelations(obj);
 
-			if (!obj.IsHistory)
-			{
-				obj.Media?.Comments?.Clear();
-			}
+            if (!obj.IsHistory)
+            {
+                obj.Media?.Comments?.Clear();
+            }
 
             returnObj = Delete(MapperKey, obj);
 
@@ -1134,13 +1206,13 @@ namespace FrameworkLibrary
             {
                 if (masterPage.UseLayout)
                 {
-					//var html = masterPage.Layout.Replace("{PageContent}", $"<div id='PageContent' data-mediadetailid='{mediaDetail.ID}' data-mediaid='{mediaDetail.MediaID}'>\r\n{mediaDetail.UseMainLayout}\r\n</div>");
+                    //var html = masterPage.Layout.Replace("{PageContent}", $"<div id='PageContent' data-mediadetailid='{mediaDetail.ID}' data-mediaid='{mediaDetail.MediaID}'>\r\n{mediaDetail.UseMainLayout}\r\n</div>");
 
-					var parseTemplateLayout = ParseSpecialTags(mediaDetail, masterPage.Layout);
+                    var parseTemplateLayout = ParseSpecialTags(mediaDetail, masterPage.Layout);
 
-					var html = parseTemplateLayout.Replace("{PageContent}", $"<div id='PageContent' data-mediadetailid='{mediaDetail.ID}' data-mediaid='{mediaDetail.MediaID}'>\r\n{mediaDetail.UseMainLayout}\r\n</div>");
+                    var html = parseTemplateLayout.Replace("{PageContent}", $"<div id='PageContent' data-mediadetailid='{mediaDetail.ID}' data-mediaid='{mediaDetail.MediaID}'>\r\n{mediaDetail.UseMainLayout}\r\n</div>");
 
-					parseTemplateLayout = ParseSpecialTags(mediaDetail, html);
+                    parseTemplateLayout = ParseSpecialTags(mediaDetail, html);
 
                     //html = masterPage.Layout.Replace("{PageContent}", html);
 
@@ -1153,9 +1225,9 @@ namespace FrameworkLibrary
                 }
             }
 
-			Engine.Razor.Dispose();
+            Engine.Razor.Dispose();
 
-			return mediaDetail.UseMainLayout;
+            return mediaDetail.UseMainLayout;
         }
 
         public static string ReplaceFieldWithParsedValue(string originalText, string textToReplace, IField mediaField, string parsedValue, bool includeFieldWrapper, Dictionary<string, string> arguments)
@@ -1179,20 +1251,20 @@ namespace FrameworkLibrary
                     returnObj = BaseMapper.GenerateReturn("Cannot get media detail");
                 }
 
-                if(returnObj.IsError)
+                if (returnObj.IsError)
                 {
                     includeFieldWrapper = false;
                     byPassEditorCheck = true;
                 }
             }
 
-            if(!byPassEditorCheck && arguments.ContainsKey("editor"))
+            if (!byPassEditorCheck && arguments.ContainsKey("editor"))
             {
-                if(arguments["editor"].ToLower() == "true" || arguments["editor"].ToLower() == "false")
+                if (arguments["editor"].ToLower() == "true" || arguments["editor"].ToLower() == "false")
                 {
                     bool.TryParse(arguments["editor"], out includeFieldWrapper);
                     mediaField.ShowFrontEndFieldEditor = includeFieldWrapper;
-                }     
+                }
             }
 
             if (!byPassEditorCheck && arguments.ContainsKey("GetPathFromHtml"))
@@ -1216,16 +1288,16 @@ namespace FrameworkLibrary
             if (mediaDetail == null)
                 return "";
 
-            var customCode = propertyName;		
+            var customCode = propertyName;
 
-			if (customCode.Contains("{{Load"))
+            if (customCode.Contains("{{Load"))
             {
-				/*if (customCode.Contains("@"))
+                /*if (customCode.Contains("@"))
 				{
 					customCode = ParserHelper.ParseData(customCode, new RazorFieldParams { MediaDetail = mediaDetail, Field = new MediaDetailField(), Control = new  Control()});
 				}*/
 
-				/*customCode = Regex.Replace(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:@).?&' }]+", me =>
+                /*customCode = Regex.Replace(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:@).?&' }]+", me =>
                 {
                     var shortCode = me.Value;
 
@@ -1272,7 +1344,7 @@ namespace FrameworkLibrary
                     return shortCode;
                 }, RegexOptions.IgnoreCase);*/
 
-				var loadMediaDetailsProperty = Regex.Matches(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:@).?&' }]+");
+                var loadMediaDetailsProperty = Regex.Matches(customCode, "{{Load:[0-9]+}.[{}a-zA-Z0-9\\[\\]\\(\\=\"\"\\:@).?&' }]+");
 
                 foreach (var item in loadMediaDetailsProperty)
                 {
@@ -1293,22 +1365,22 @@ namespace FrameworkLibrary
                         {
                             var returnValue = property;
 
-							var liveMediaDetail = selectMedia.GetLiveMediaDetail();
+                            var liveMediaDetail = selectMedia.GetLiveMediaDetail();
 
-							if (liveMediaDetail == null)
-							{
-								liveMediaDetail = selectMedia.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage());
-							}
+                            if (liveMediaDetail == null)
+                            {
+                                liveMediaDetail = selectMedia.GetLiveMediaDetail(LanguagesMapper.GetDefaultLanguage());
+                            }
 
-							if (returnValue.Contains("@"))
-							{
-								returnValue = ParseSpecialTags(mediaDetail, returnValue);
-								returnValue = ParseSpecialTags(liveMediaDetail, returnValue);
-							}
-							else
-							{
-								returnValue = ParseSpecialTags(liveMediaDetail, returnValue);
-							}
+                            if (returnValue.Contains("@"))
+                            {
+                                returnValue = ParseSpecialTags(mediaDetail, returnValue);
+                                returnValue = ParseSpecialTags(liveMediaDetail, returnValue);
+                            }
+                            else
+                            {
+                                returnValue = ParseSpecialTags(liveMediaDetail, returnValue);
+                            }
 
                             customCode = customCode.Replace(itemAsString, returnValue);
                         }
@@ -1342,45 +1414,45 @@ namespace FrameworkLibrary
                 {
                     var path = item.ToString().Replace("{IncludeFile:", "").Replace("}", "").Replace("'", "");
 
-					var pathSplit = path.Split('?');
-					var queryString = "";
-					var queryStringObject = new Dictionary<string, string>();
+                    var pathSplit = path.Split('?');
+                    var queryString = "";
+                    var queryStringObject = new Dictionary<string, string>();
 
-					if (pathSplit.Length > 1)
-					{
-						path = pathSplit[0];
-						queryString = pathSplit[1];
+                    if (pathSplit.Length > 1)
+                    {
+                        path = pathSplit[0];
+                        queryString = pathSplit[1];
 
-						var tmpQueryStringObj = HttpUtility.ParseQueryString(queryString);
+                        var tmpQueryStringObj = HttpUtility.ParseQueryString(queryString);
 
-						foreach (string key in tmpQueryStringObj.Keys)
-						{
-							queryStringObject.Add(key, tmpQueryStringObj[key]);
-						}
-					}
+                        foreach (string key in tmpQueryStringObj.Keys)
+                        {
+                            queryStringObject.Add(key, tmpQueryStringObj[key]);
+                        }
+                    }
 
-					var absPath = HttpContext.Current.Server.MapPath(path);
+                    var absPath = HttpContext.Current.Server.MapPath(path);
 
                     if (File.Exists(absPath))
                     {
                         var fileContent = File.ReadAllText(absPath);
 
-						var razorFieldParams = new RazorFieldParams();
-						razorFieldParams.MediaDetail = mediaDetail;
-						razorFieldParams.Arguments = queryStringObject;
+                        var razorFieldParams = new RazorFieldParams();
+                        razorFieldParams.MediaDetail = mediaDetail;
+                        razorFieldParams.Arguments = queryStringObject;
 
-						if (passToParser is RazorFieldParams)
-						{
-							razorFieldParams.Field = (passToParser as RazorFieldParams).Field;
-						}
+                        if (passToParser is RazorFieldParams)
+                        {
+                            razorFieldParams.Field = (passToParser as RazorFieldParams).Field;
+                        }
 
-						fileContent = ParserHelper.ParseData(fileContent, queryStringObject);
-						fileContent = ParserHelper.ParseData(fileContent, razorFieldParams);
+                        fileContent = ParserHelper.ParseData(fileContent, queryStringObject);
+                        fileContent = ParserHelper.ParseData(fileContent, razorFieldParams);
 
-						customCode = customCode.Replace(item.ToString().ToString(), fileContent);
+                        customCode = customCode.Replace(item.ToString().ToString(), fileContent);
 
-						customCode = ParseSpecialTags(mediaDetail, customCode);
-					}
+                        customCode = ParseSpecialTags(mediaDetail, customCode);
+                    }
                 }
             }
 
@@ -1463,7 +1535,7 @@ namespace FrameworkLibrary
 
             if (customCode.Contains("{Field:"))
             {
-				/*customCode = Regex.Replace(customCode, "{Field:[a-zA-Z0-9&?=' ]+}", me =>
+                /*customCode = Regex.Replace(customCode, "{Field:[a-zA-Z0-9&?=' ]+}", me =>
                 {
                     var shortCode = me.Value;
 
@@ -1554,9 +1626,9 @@ namespace FrameworkLibrary
                     return shortCode;
                 }, RegexOptions.IgnoreCase);*/
 
-				var fields = Regex.Matches(customCode, "{Field:[a-zA-Z0-9@&?=.' ]+}");
+                var fields = Regex.Matches(customCode, "{Field:[a-zA-Z0-9@&?=.' ]+}");
 
-				foreach (var field in fields)
+                foreach (var field in fields)
                 {
                     var fieldCode = field.ToString().Replace("{Field:", "").Replace("}", "");
 
@@ -1621,19 +1693,19 @@ namespace FrameworkLibrary
                         }
 
                         if (!string.IsNullOrEmpty(frontEndLayout))
-                        {							
+                        {
                             var parsedValue = ParseSpecialTags(mediaDetail, frontEndLayout, 0, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments });
-							//var parsedValue = ParserHelper.ParseData(frontEndLayout, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments });
-							customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, parsedValue, includeFieldWrapper, arguments);
+                            //var parsedValue = ParserHelper.ParseData(frontEndLayout, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments });
+                            customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, parsedValue, includeFieldWrapper, arguments);
                         }
                         else
                         {
                             if (mediaField.GetAdminControlValue.Contains("@"))
                             {
-								var parsedValue = ParseSpecialTags(mediaDetail, mediaField.FieldValue, 0, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments });
-								//var parsedValue = ParserHelper.ParseData(mediaField.FieldValue, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments });
+                                var parsedValue = ParseSpecialTags(mediaDetail, mediaField.FieldValue, 0, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments });
+                                //var parsedValue = ParserHelper.ParseData(mediaField.FieldValue, new RazorFieldParams { Control = control, Field = mediaField, MediaDetail = mediaDetail, Arguments = arguments });
 
-								customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, parsedValue, includeFieldWrapper, arguments);
+                                customCode = ReplaceFieldWithParsedValue(customCode, field.ToString(), mediaField, parsedValue, includeFieldWrapper, arguments);
                                 //customCode = customCode.Replace(field.ToString(), parsedValue);
                             }
                             else
@@ -1729,8 +1801,8 @@ namespace FrameworkLibrary
                 foreach (var settingsShortCode in settingsShortCodes)
                 {
                     var setting = settingsShortCode.ToString().Replace("Settings:", "");
-                    var returnString =  ParserHelper.ParseData(setting, settings);
-                    
+                    var returnString = ParserHelper.ParseData(setting, settings);
+
                     customCode = customCode.Replace(settingsShortCode.ToString(), returnString);
                 }
             }

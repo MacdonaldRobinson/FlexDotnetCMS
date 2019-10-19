@@ -141,6 +141,10 @@
 
     <script type="text/javascript">
 
+        ajaxOptions.onLoad = function (el) {
+            CreateFieldsEditor();
+        }
+
         function RefreshPage()
 		{            
 			//if (popCloseRefreshPage) {

@@ -608,7 +608,7 @@ namespace FrameworkLibrary
 
             var versionNumber = 0;
 
-            if ((HttpContext.Current.Request["version"] != null) && (virtualPath != "~/"))
+            if (HttpContext.Current.Request["version"] != null)
             {
                 versionNumber = int.Parse(HttpContext.Current.Request["version"]);
             }

@@ -6,8 +6,8 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 ## Demo Site ##
 - **URL**: http://flexdotnetcms.somee.com/
 - **CMS Login URL**: http://flexdotnetcms.somee.com/admin/
-- **Username:** test_dev
-- **Password:** test_password
+	- **Username:** test_dev
+	- **Password:** test_password
 
 ## Automatic Single Page App / Universal App with SSR ( Server Side Rendering )
 - Automatic Single Page App functionality with SSR via the Single Page App library that I built ( https://github.com/MacdonaldRobinson/jquery-spa )

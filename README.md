@@ -4,7 +4,7 @@ A powerful, flexible, easy to use and Fully Featured ASP .NET CMS
 To view the complete developer guide click here: https://github.com/MacdonaldRobinson/FlexDotnetCMS/raw/master/WebApplication/Admin/media/docs/FlexDotnetCMSGuide.docx
 
 ## Demo Site ##
-- **URL:**: http://flexdotnetcms.somee.com
+- **URL:**: http://flexdotnetcms.somee.com/admin
 - **Username:** test_dev
 - **Password:** test_password
 

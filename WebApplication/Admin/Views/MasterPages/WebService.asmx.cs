@@ -233,8 +233,8 @@ namespace WebApplication.Admin.Views.MasterPages
         [WebMethod(EnableSession = true)]
         public void GetRootNodes()
         {
-            var rootNode = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetail == null && i.Media.ParentMedia == null);
-            WriteJSON(StringHelper.ObjectToJson(GetJsTreeNode(rootNode)));
+			var rootNode = BaseMapper.GetDataModel().MediaDetails.FirstOrDefault(i => i.HistoryForMediaDetail == null && i.Media.ParentMedia == null && i.MediaType.Name == MediaTypeEnum.RootPage.ToString());
+			WriteJSON(StringHelper.ObjectToJson(GetJsTreeNode(rootNode)));
         }
 
         private bool SearchWithinMediaDetail(IMediaDetail mediaDetail, string filterText)

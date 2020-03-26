@@ -309,16 +309,19 @@ namespace FrameworkLibrary
 
         public static string RunOrCompileRazorCode(string tag, string code, object obj, bool compileRazor)
         {
-            //Only UnComment to debug Razor code, make sure to comment it again because it extremely slows down rendering
-            /*var config = new TemplateServiceConfiguration();
-            config.Debug = true;
+			//Only UnComment to debug Razor code, make sure to comment it again because it slows down rendering
+			if (FrameworkSettings.CurrentUser != null && FrameworkSettings.CurrentUser.IsInRole(RoleEnum.Developer))
+			{
+				var config = new TemplateServiceConfiguration();
+				config.Debug = true;
 
-            config.EncodedStringFactory = new RawStringFactory();
-            var service = RazorEngineService.Create(config);
+				config.EncodedStringFactory = new RawStringFactory();
+				var service = RazorEngineService.Create(config);
 
-            Engine.Razor = service;*/
+				Engine.Razor = service;
+			}
 
-            if (!string.IsNullOrEmpty(code) && (code.Contains("@{") || code.Contains("@using") || code.Contains("@for") || code.Contains("@Model") || code.Contains("@Raw")) && compileRazor)
+			if (!string.IsNullOrEmpty(code) && (code.Contains("@{") || code.Contains("@using") || code.Contains("@for") || code.Contains("@Model") || code.Contains("@Raw")) && compileRazor)
             {
                 code = "@using FrameworkLibrary\n@using WebApplication\n@using System\n@using System.Linq\n@using System.Web\n" + code;
                 var key = "templateKey:" + code;

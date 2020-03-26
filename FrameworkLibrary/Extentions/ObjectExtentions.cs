@@ -389,7 +389,14 @@ namespace FrameworkLibrary
 										//tmpJson += ObjectExtentions.ToJson(item, depthCount);
 										/*if (item.GetType().GetInterface("IEnumerator") != null)
 										{*/
-										tmpJson += ObjectExtentions._ToJson(item, depthCount);
+										if (item.GetType().IsPrimitive)
+										{
+											tmpJson += item;
+										}
+										else
+										{
+											tmpJson += ObjectExtentions._ToJson(item, depthCount);
+										}
 
 										if (counter >= max)
 											continue;

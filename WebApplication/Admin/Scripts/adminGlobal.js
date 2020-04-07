@@ -1351,7 +1351,8 @@ function BindDataTable() {
             "ordering": true,
             "info": true,
             "lengthChange": true,     
-            destroy: true,
+			destroy: true,
+			stateSave: true
             //rowReorder: true
             /*dom: 'Bfrtip',
             buttons: [

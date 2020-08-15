@@ -33,7 +33,7 @@ jobs:
         password: ***REMOVED***
         
         # Specifies a local directory to sync from as if it were the git project root path.
-        syncroot: ./WebApplication/
+        syncroot: ./WebApplication
         
         # Additional options
         options: --auto-init -vv

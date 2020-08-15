@@ -34,3 +34,6 @@ jobs:
         
         # Specifies a local directory to sync from as if it were the git project root path.
         syncroot: ./WebApplication/
+        
+        # Additional options
+        options: -vv --dry-run 

@@ -36,6 +36,6 @@ jobs:
         syncroot: ./WebApplication
         
         # Additional options
-        options: --auto-init -vv
+        options: --auto-init -v
         
         

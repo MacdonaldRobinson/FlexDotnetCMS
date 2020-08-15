@@ -36,4 +36,4 @@ jobs:
         syncroot: ./WebApplication/
         
         # Additional options
-        options: -vv --dry-run 
+        options: -vv

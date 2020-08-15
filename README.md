@@ -5,7 +5,8 @@ To view the complete developer guide click here: https://github.com/MacdonaldRob
 
 ## Demo Site ##
 - **URL**: http://flexdotnetcms.somee.com/
-- **Base Api Url**: http://flexdotnetcms.somee.com/?format=json
+- **Base Headless Api Url**: http://flexdotnetcms.somee.com/?format=json
+
 - **CMS Login URL**: http://flexdotnetcms.somee.com/admin/
 	- **Username:** test_dev
 	- **Password:** test_password

@@ -18,13 +18,13 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v1
       
     - name: git-ftp-action
       uses: sebastianpopp/git-ftp-action@3.0.0
       with:
         # URL
-        url: 66.85.73.158
+        url: "***REMOVED***"
         
         # FTP login name:  
         user: mac
@@ -33,7 +33,4 @@ jobs:
         password: ***REMOVED***
         
         # Specifies a local directory to sync from as if it were the git project root path.
-        syncroot: ./WebApplication/ 
-        
-        # Additional options       
-        options: --auto-init        
+        syncroot: ./WebApplication/

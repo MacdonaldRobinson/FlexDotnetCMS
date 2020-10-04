@@ -25,36 +25,18 @@ namespace WebApplication.Admin.Views.PageHandlers.FileEditor
             LoadFile();
         }
 
+
+
         private void LoadFile()
         {
             var relPathToFile = FileSelector.GetValue().ToString();
             var absPathToFile = URIHelper.ConvertToAbsPath(relPathToFile);
-            var fileManagerConfig = BasePage.GetFileManagerConfig();
-            
-            var extention = BasePage.GetExtentionFromString(relPathToFile);
-
-            if(!absPathToFile.Contains(fileManagerConfig.strDocRoot))
-            {
-                DisplaySuccessMessage($@"You cannot load files from outside the web root directory ( {absPathToFile} ) ");
-            }
-            else if (!fileManagerConfig.arrAllowedFileExtensions.Contains(extention))
-            {
-                DisplaySuccessMessage($@"You cannot load files with the extention ( {extention} ) ");
-            }
-            else if (!File.Exists(absPathToFile))
-            {
-                DisplaySuccessMessage($@"The file does not exist ( {absPathToFile} ) ");
-            }
-            else if (File.Exists(absPathToFile))
+            if (this.ValidatePath(relPathToFile))
             {
                 var fileContent = File.ReadAllText(absPathToFile);
                 Editor.Text = fileContent;
 
-                DisplaySuccessMessage($@"Successfully loaded file ( {absPathToFile} ) ");
-            }
-            else
-            {
-                DisplayErrorMessage($"Error Loading the file ( {absPathToFile} ) ");
+                DisplaySuccessMessage($@"Successfully loaded file ( {absPathToFile} )");
             }            
         }
 
@@ -63,17 +45,20 @@ namespace WebApplication.Admin.Views.PageHandlers.FileEditor
             var relPathToFile = FileSelector.GetValue().ToString();
             var absPathToFile = URIHelper.ConvertToAbsPath(relPathToFile);
 
-            try
+            if (this.ValidatePath(relPathToFile))
             {
-                File.WriteAllText(absPathToFile, Editor.Text);
+                try
+                {
+                    File.WriteAllText(absPathToFile, Editor.Text);
 
-                DisplaySuccessMessage($@"Successfully saved ( {absPathToFile} )");
-            }
-            catch(Exception ex)
-            {
-                ErrorHelper.LogException(ex);
+                    DisplaySuccessMessage($@"Successfully saved ( {absPathToFile} )");
+                }
+                catch (Exception ex)
+                {
+                    ErrorHelper.LogException(ex);
 
-                DisplayErrorMessage("Error saving", ErrorHelper.CreateError(ex));
+                    DisplayErrorMessage("Error saving", ErrorHelper.CreateError(ex));
+                }
             }
         }
     }

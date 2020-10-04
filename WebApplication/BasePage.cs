@@ -662,6 +662,39 @@ namespace WebApplication
             return Path.GetExtension(fileName).Replace(".", "");
         }
 
+        public bool ValidatePath(string relPathToFile)
+        {
+            var absPathToFile = URIHelper.ConvertToAbsPath(relPathToFile);
+            var fileManagerConfig = BasePage.GetFileManagerConfig();
+
+            var extention = BasePage.GetExtentionFromString(relPathToFile);
+
+            if (!absPathToFile.Contains(fileManagerConfig.strDocRoot))
+            {
+                DisplaySuccessMessage($@"You cannot load files from outside the web root directory ( {absPathToFile} ) ");
+                return false;
+            }
+            else if (!fileManagerConfig.arrAllowedFileExtensions.Contains(extention))
+            {
+                DisplaySuccessMessage($@"You cannot load files with the extention ( {extention} ) ");
+                return false;
+            }
+            else if (!File.Exists(absPathToFile))
+            {
+                DisplaySuccessMessage($@"The file does not exist ( {absPathToFile} ) ");
+                return false;
+            }
+            else if (File.Exists(absPathToFile))
+            {
+                return true;        
+            }
+            else
+            {
+                DisplayErrorMessage($"Error Loading the file ( {absPathToFile} ) ");
+                return false;
+            }
+        }
+
         public static bool IsExtentionAllowed(string fileName)
         {
             var fileManagerConfig = new TinyFileManager.NET.clsConfig();

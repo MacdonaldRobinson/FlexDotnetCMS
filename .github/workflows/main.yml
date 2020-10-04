@@ -24,13 +24,13 @@ jobs:
       uses: sebastianpopp/git-ftp-action@3.0.0
       with:
         # URL
-        url: "***REMOVED***"
+        url: "${{ secrets.SOMEE_FTP_URL }}"
         
         # FTP login name:  
-        user: mac
+        user: ${{ secrets.SOMEE_FTP_USER }}
         
         # FTP password:  
-        password: ***REMOVED***
+        password: ${{ secrets.SOMEE_FTP_PASSWORD }}
         
         # Specifies a local directory to sync from as if it were the git project root path.
         syncroot: WebApplication/

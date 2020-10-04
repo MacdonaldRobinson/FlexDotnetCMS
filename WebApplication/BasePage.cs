@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using TinyFileManager.NET;
 
 namespace WebApplication
 {
@@ -654,6 +655,26 @@ namespace WebApplication
 						$"{comment.Message}";
 
             SendEmailToUser(liveMediaDetail.CreatedByUser, message, "Comment Approval Request");
+        }
+
+        public static string GetExtentionFromString(string fileName)
+        {
+            return Path.GetExtension(fileName).Replace(".", "");
+        }
+
+        public static bool IsExtentionAllowed(string fileName)
+        {
+            var fileManagerConfig = new TinyFileManager.NET.clsConfig();
+            var allowedExtentions = fileManagerConfig.strAllowedAllExtensions.Replace("'", "").Replace("\"", "").Replace(" ", "").Split(',');
+
+            var newExtention = GetExtentionFromString(fileName);
+
+            return allowedExtentions.Contains(newExtention);
+        }
+        public static clsConfig GetFileManagerConfig()
+        {
+            var fileManagerConfig = new clsConfig();
+            return fileManagerConfig;
         }
     }
 }

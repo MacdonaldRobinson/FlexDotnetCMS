@@ -29,8 +29,23 @@ namespace WebApplication.Admin.Views.PageHandlers.FileEditor
         {
             var relPathToFile = FileSelector.GetValue().ToString();
             var absPathToFile = URIHelper.ConvertToAbsPath(relPathToFile);
+            var fileManagerConfig = BasePage.GetFileManagerConfig();
+            
+            var extention = BasePage.GetExtentionFromString(relPathToFile);
 
-            if (File.Exists(absPathToFile))
+            if(!absPathToFile.Contains(fileManagerConfig.strDocRoot))
+            {
+                DisplaySuccessMessage($@"You cannot load files from outside the web root directory ( {absPathToFile} ) ");
+            }
+            else if (!fileManagerConfig.arrAllowedFileExtensions.Contains(extention))
+            {
+                DisplaySuccessMessage($@"You cannot load files with the extention ( {extention} ) ");
+            }
+            else if (!File.Exists(absPathToFile))
+            {
+                DisplaySuccessMessage($@"The file does not exist ( {absPathToFile} ) ");
+            }
+            else if (File.Exists(absPathToFile))
             {
                 var fileContent = File.ReadAllText(absPathToFile);
                 Editor.Text = fileContent;
@@ -39,7 +54,7 @@ namespace WebApplication.Admin.Views.PageHandlers.FileEditor
             }
             else
             {
-                DisplayErrorMessage($"File does not exist ( {absPathToFile} ) ");
+                DisplayErrorMessage($"Error Loading the file ( {absPathToFile} ) ");
             }            
         }
 

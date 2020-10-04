@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Xml.Linq;
 using FrameworkLibrary;
@@ -510,14 +511,20 @@ namespace TinyFileManager.NET
 
             return arrExt;
         }   // getArrayFromString
-
         private void LoadConfig(string strProfile)
         {
             string strConfig;
             XDocument objDoc;
             XElement objProfiles;
 
+
             strConfig = HttpContext.Current.Server.MapPath("web.config");
+
+            if(!File.Exists(strConfig))
+            {
+                strConfig = HttpContext.Current.Server.MapPath("~/Scripts/tinyfilemanager.net/Web.config");
+            }
+
             objDoc = XDocument.Load(strConfig);
             objProfiles = objDoc.Element("configuration").Element("TFMProfiles");
             foreach (XElement objProfile in objProfiles.Descendants("profile"))

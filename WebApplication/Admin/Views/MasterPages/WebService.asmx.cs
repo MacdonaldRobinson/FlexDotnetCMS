@@ -55,7 +55,7 @@ namespace WebApplication.Admin.Views.MasterPages
 
     public class WebService : WebApplication.Services.BaseService
     {
-		public WebService():base()
+        public WebService():base()
 		{
 		}
 		private void UpdateTreeNode(JsTreeNode node, IMediaDetail detail)
@@ -503,6 +503,9 @@ namespace WebApplication.Admin.Views.MasterPages
         [WebMethod(EnableSession = true)]
         public void RenameFileManagerItem(string oldText, string newText, string href)
         {
+            if (!BasePage.IsExtentionAllowed(newText))
+                return;
+
             var hrefQueryString = System.Web.HttpUtility.ParseQueryString(href);
 
             var hrefFile =  hrefQueryString["file"];

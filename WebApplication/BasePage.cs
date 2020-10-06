@@ -669,19 +669,24 @@ namespace WebApplication
 
             var extention = BasePage.GetExtentionFromString(relPathToFile);
 
-            if (!absPathToFile.Contains(fileManagerConfig.strDocRoot))
+            if (absPathToFile.Contains(".."))
             {
-                DisplaySuccessMessage($@"You cannot load files from outside the web root directory ( {absPathToFile} ) ");
+                DisplayErrorMessage($@"You cannot user '..'");
+                return false;
+            }
+            else if (!absPathToFile.Contains(fileManagerConfig.strDocRoot))
+            {
+                DisplayErrorMessage($@"You cannot load files from outside the web root directory ( {absPathToFile} ) ");
                 return false;
             }
             else if (!fileManagerConfig.arrAllowedFileExtensions.Contains(extention))
             {
-                DisplaySuccessMessage($@"You cannot load files with the extention ( {extention} ) ");
+                DisplayErrorMessage($@"You cannot load files with the extention ( {extention} ) ");
                 return false;
             }
             else if (!File.Exists(absPathToFile))
             {
-                DisplaySuccessMessage($@"The file does not exist ( {absPathToFile} ) ");
+                DisplayErrorMessage($@"The file does not exist ( {absPathToFile} ) ");
                 return false;
             }
             else if (File.Exists(absPathToFile))

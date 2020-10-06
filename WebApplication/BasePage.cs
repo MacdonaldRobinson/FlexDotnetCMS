@@ -671,7 +671,7 @@ namespace WebApplication
 
             if (absPathToFile.Contains(".."))
             {
-                DisplayErrorMessage($@"You cannot user '..'");
+                DisplayErrorMessage($@"You cannot use '..'");
                 return false;
             }
             else if (!absPathToFile.Contains(fileManagerConfig.strDocRoot))
